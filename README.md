@@ -122,6 +122,7 @@ carries its original history forward.
 | 0108 | Floor-anchor in both AR and VR, opaque sky only in VR | committed      |
 | 0109 | Payment rails and the phygital registry, not the moat | abandoned      |
 | 0110 | RepoResident, a file-based operating harness          | committed      |
+| 0111 | The 3DAIGC-API reference, not restated here           | committed      |
 
 ## DRY policy
 
