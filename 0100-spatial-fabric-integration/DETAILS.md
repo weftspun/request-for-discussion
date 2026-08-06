@@ -83,3 +83,9 @@ props.
 
 DGX: `/home/sifr/MSF_Map_Svc` runs the MSF Map Service and the Scene
 Assembler.
+
+`TaskManager.jsx` reads its API endpoint from `getApiEndpoint()`
+only. It carries no second, duplicate `apiEndpoint` prop for the
+same value. Product strings in this area say "Weftspun3DStudio";
+"Character Studio" appears only as attribution, never as the
+product name.

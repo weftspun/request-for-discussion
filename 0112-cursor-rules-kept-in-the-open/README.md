@@ -5,12 +5,12 @@
 
 ## Problem
 
-`rules/` holds 34 raw `.mdc` files, moved unfiltered from
-weftspun-3d-studio's own `.cursor/rules/` directory. No RFD covers
+`rules/` held 34 raw `.mdc` files, moved unfiltered from
+weftspun-3d-studio's own `.cursor/rules/` directory. No RFD covered
 the set. RFD 0000's DRY policy says an RFD points to its source and
-does not copy it. Each of these files is itself already a copy, kept
-in sync by hand with the file of the same name in the app
-repository.
+does not copy it. Each of these files was itself already a copy,
+kept in sync by hand with the file of the same name in the app
+repository. Twenty files remain, after the guard rules converted.
 
 One file, `weftspun-moat-protected.mdc`, restates RFD 0106 in a more
 raw form, and names revenue mechanisms RFD 0106 leaves out on

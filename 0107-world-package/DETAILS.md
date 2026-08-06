@@ -107,6 +107,33 @@ camera-up instead. The client loads LingBot Gaussians with
 `orientationMode: 'none'`. See `3DAIGC-API/docs/LINGBOT_MAP_ENVIRONMENT_SCAN.md`
 for the full scan pipeline.
 
+`worldSceneLoader.js` routes by source type, not by pipeline name.
+An `environment.type` of `gaussian_splat` or `spark`, or any
+Gaussian source, loads through the Spark loader only; routing it
+through the point-cloud loader instead scatters the Gaussian PLY.
+`point_cloud` or `points` loads through the XYZRGB point loader
+instead. A gravity-aligned LingBot Gaussian world skips
+`anchorObjectBottomToFloor`; running it hoists the whole room, since
+the scan is already floor-aligned. LingBot Gaussians also skip
+TripoSplat's own 180-degree X flip.
+
+## Floor-Y computation, world layers only
+
+`computeXrFloorAlignmentY` reads bounds from `playerRoot`,
+`worldRoot`, and `propsRoot` only, never every child of the XR
+scene wrapper; including `viewportGridHelper` or
+`viewportAxesHelper` in that bounds pass reintroduces a roughly 1 m
+lift. `shouldSkipXrFloorWrap()` excludes the grid, the axes, the
+skybox, and other helpers from XR wrapping for the same reason. A
+rigged or VRM avatar's own floor bounds come from
+`getViewportFloorAnchorBounds(..., { meshFeetOnly: true })`, not a
+full-scene `setFromObject`; a multi-skin VRM0 passthrough upload
+needs its mesh-feet bounds specifically, since an armature-only or
+hips-only bounds box misplaces the feet. A correct computation logs
+`[XR][floor]` with `boundsMinY` near zero and the wrapped source
+names; a `boundsMinY` near 1, or a wrapped-object count that
+includes a helper, is the regression signal.
+
 If the API answers 404 for a job whose files still exist on the
 DGX, rehydrate Redis there directly:
 

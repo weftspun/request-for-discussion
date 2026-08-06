@@ -127,6 +127,9 @@ carries its original history forward.
 | 0113 | Image preview stays 250px, expand modal stays separate | committed      |
 | 0114 | App chrome layout invariants                          | committed      |
 | 0115 | VRM animation playback, one mixer, normalized bones   | committed      |
+| 0116 | Tasks panel, Clear unloads the model                  | committed      |
+| 0117 | Text-to-image chains into Image-to-3D                 | committed      |
+| 0118 | XR embody, view toggle, and Move stay input           | committed      |
 
 ## DRY policy
 
