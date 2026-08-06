@@ -168,10 +168,12 @@ ambiguity the format leaves open.
 `fix-usdz-relative-texture-path`, and
 [github.com/coryrylan/usd-viewer/pull/4](https://github.com/coryrylan/usd-viewer/pull/4)
 carries that same fix upstream. Until a fix lands upstream and a new
-published version picks it up, `priv/static/gallery/vendor/usd-viewer/render-delegate.js`
-and `usd_viewer_app/public/vendor/usd-viewer/render-delegate.js`
-carry the identical patch by hand, a stated mirror of the real
-submitted fix, not an unexplained local hack.
+published version picks it up, RFD 0076 carries the identical patch
+forward as a real `patch-package` patch,
+`apps/usd_viewer_app/patches/usd-viewer+0.0.0.patch`, applied by
+`npm ci`'s own `postinstall` — not the two hand-patched vendor
+copies this session first shipped. A stated mirror of the real
+submitted fix either way, not an unexplained local hack.
 
 ## A second real usd-viewer bug: no sRGB decode
 
@@ -183,7 +185,7 @@ the sRGB transfer curve before use as a `diffuseColor`, the spec's
 own default ("auto") behavior even with no attribute authored at
 all, and our card's `.usda` sets it explicitly to `"sRGB"` besides.
 
-Grepping the vendored `render-delegate.js` for `sourceColorSpace`,
+Grepping the patched `render-delegate.js` for `sourceColorSpace`,
 `colorSpace`, or `encoding` found zero matches. `usd-viewer` never
 reads the authored color space and never marks a loaded texture as
 sRGB, so three.js (pinned at `0.149.0`, the pre-`colorSpace` API
@@ -193,12 +195,12 @@ transform brightens an already-too-high value a second time. That
 is the real, confirmed mechanism behind "too bright," not an HDR
 display artifact.
 
-Patched only the two vendored copies for this one, scoped to
-`diffuseColor` and `emissiveColor`, per the spec's own guidance,
-leaving `roughness`, `metallic`, `normal`, `occlusion`, and
-`opacity` linear, matching UsdPreviewSurface's own convention that
-only color-like channels are sRGB. Not filed upstream, unlike the
-path-lookup bug above.
+Patched, scoped to `diffuseColor` and `emissiveColor`, per the
+spec's own guidance, leaving `roughness`, `metallic`, `normal`,
+`occlusion`, and `opacity` linear, matching UsdPreviewSurface's own
+convention that only color-like channels are sRGB. Not filed
+upstream, unlike the path-lookup bug above. Carried forward in the
+same `patch-package` patch RFD 0076 gives the path-lookup fix.
 
 ## A third real usd-viewer bug: single-sided once a real texture applies
 
@@ -213,39 +215,52 @@ all, three.js's own default, `FrontSide` only. A single-sided flat
 quad is invisible from behind, and `autoRotate` guarantees the
 camera reaches behind it once per cycle.
 
-Patched both vendored copies to carry `side` over from the shared
-fallback material (`d.side`, already `DoubleSide`) into the
-replacement material, rather than dropping it. Not filed upstream,
-per this session's own direction, same as the sRGB fix above.
+Patched to carry `side` over from the shared fallback material
+(`d.side`, already `DoubleSide`) into the replacement material,
+rather than dropping it. Not filed upstream, per this session's own
+direction, same as the sRGB fix above. Carried forward in the same
+`patch-package` patch, confirmed still present by RFD 0076's own
+Playwright screenshot of the live proxy chain.
 
 ## What full scale still needs
 
 Running `make_billboard_gallery.py --shards 42` and pushing every
 resulting card through `push_gallery_to_vgw.exs`, from inside the
-deployed container, not from this session's local machine. The Fly
-Volume's default size needs raising to hold the roughly 115 MB
-result, plus CockroachDB's own data. Neither step ran this session.
+deployed container, not from a developer's own local machine. The
+Fly Volume's default size needs raising to hold the roughly 115 MB
+result, plus CockroachDB's own data. Neither step has run yet.
 
-The companion `usd_viewer_app` does not yet fetch from `versitygw`
-at all. It has the three verified proof files under
-`public/usd/`, served as static files today, not yet through the S3
-API this RFD just proved. Wiring that fetch path is the next step,
-not something this session reached.
+`usd_viewer_app` (now `apps/usd_viewer_app/`, its own deployed app
+per RFD 0076) still does not fetch from `versitygw` at all. It holds
+the three verified proof files under `public/usd/`, baked into its
+own Docker image at build time and served as static files, not yet
+through the S3 API this RFD already proved. Wiring that fetch path
+is still the next step, unchanged by RFD 0076's own restructuring —
+only which app would hold that fetch code changed.
 
-## The live gallery's asset is a stopgap, stated plainly
+## The gallery's asset is still a stopgap, in a new shape
 
-The deployed gallery serves `sample_billboard.usdz` from
-`priv/static/gallery/usd/`, baked into the release image, through
-`GET /sample_billboard.usdz` in `router.ex`. That is not the
-architecture this session already committed to. The asset belongs
-in `versitygw`, fetched through its real S3 API, the same one
-`versitygw test full-flow` already proved end to end.
+RFD 0076 replaced the stopgap this section originally named
+(`weftspun_studio` serving `sample_billboard.usdz` from
+`priv/static/gallery/usd/`, through a direct `GET
+/sample_billboard.usdz` route in `router.ex`) with a different one,
+not the `versitygw`-backed architecture this RFD called for either.
+Today: `apps/usd_viewer_app/` bakes the same proof files into its
+own Docker image (`COPY public public` in its `Dockerfile`), serves
+them through its own `server.js`, and `weftspun_studio` reaches them
+by reverse-proxying through `WeftspunStudio.Ports.GallerySource` /
+`Adapters.HttpGallery`. `weftspun_studio` no longer holds the
+gallery's bytes on disk at all, a real improvement RFD 0076 records,
+but the asset is still image-baked, not fetched from `versitygw`.
 
-The proper version needs `ex_aws`/`ex_aws_s3` as a real
-`weftspun_studio` dependency, not only a `Mix.install` script, a
-boot-time push of the seed asset into the `gallery` bucket, and a
-proxy route that fetches from `versitygw` instead of `priv/static`.
+The asset still belongs in `versitygw`, fetched through its real S3
+API, the same one `versitygw test full-flow` already proved end to
+end. The proper version needs `ex_aws`/`ex_aws_s3` as a real
+dependency of whichever app does the fetching (`apps/usd_viewer_app/`
+is the natural owner now, since it is the one serving the gallery's
+bytes at all, per RFD 0076), not only a `Mix.install` script, plus a
+boot-time or on-demand push of each card into the `gallery` bucket.
 That is real new code and another full deploy cycle, not a small
-edit. Deliberately deferred, not silently accepted: the current
-static-file route is a stated stopgap for one deployment, not the
+edit. Deliberately deferred, not silently accepted, across two RFDs
+now: the current image-baked asset is a stated stopgap, not the
 decided shape.
