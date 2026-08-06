@@ -1,6 +1,6 @@
 # RFD 0100: Publishing to the Open Metaverse Browser's spatial fabric
 
-**State:** published
+**State:** abandoned
 **Scope:** `spatialFabricAdapter.js`, `useSpatialFabric.js`, `3DAIGC-API`'s `/api/v1/spatial-fabric/*`
 
 ## Problem
