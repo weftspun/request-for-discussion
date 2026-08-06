@@ -1,107 +1,85 @@
-# Preparing Assets
+# Preparing assets
 
-Clone and install [Weftspun3DStudio](https://github.com/weftspun/weftspun-3d-studio). Then copy your assets into the public folder and check the `.env` variable to make sure it is configured to the right location.
-
-
----
+Clone and install [Weftspun3DStudio](https://github.com/weftspun/weftspun-3d-studio).
+Copy your assets into the `public` folder, then check the `.env`
+variables point at the right location.
 
 ## Blender
 
-**Requirements**:
-- https://www.blender.org/download/lts/ Tested with Blender 3.6
-- https://github.com/saturday06/VRM-Addon-for-Blender Need this plugin
+Requirements: [Blender LTS](https://www.blender.org/download/lts/)
+(tested with 3.6; Blender 4.0's material export did not work
+correctly in the last test, so prefer 3.6 if you hit problems), and
+the [Saturday06 VRM add-on](https://github.com/saturday06/VRM-Addon-for-Blender).
 
-**When modeling traits**
+**Modeling traits.** Keep each trait type in its own blend file: one
+for clothing, one for hair, and so on, so a file does not grow too
+big to open and debug. An artist designing a trait imports the
+rigged base mesh first, since it keeps the parts aligned to merge
+correctly into a VRM. The app cannot adjust position, scale, or
+rotation after import yet, so make those adjustments in Blender.
 
-Keep each trait type in its own blend file. Use one file for clothing, one for hair, and so on. You do not want blend files to get too big or it will be hard to open and debug later.
-
-Pro tip: An artist who designs a trait must import the rigged base mesh. The base mesh keeps the parts aligned, so they merge correctly into a VRM file. We do not have the ability to adjust position/scale/rotation after importing in the app yet, so adjust in blender.
-
-**Preparing to export**
-
-> Note: If you find problems, use Blender LTS 3.6. In the last test of Blender 4.0, the material export did not work correctly.
-
-You should first have the [Saturday06 VRM add-on](https://github.com/saturday06/VRM-Addon-for-Blender) downloaded and installed first. Each trait has a VRM armature as its parent. The project mostly uses VRM version 0. Some traits hold more bones than others. Each trait therefore has its own VRM armature, and not one shared armature.
+**Exporting.** Each trait carries its own VRM armature as its
+parent, not a shared one, since some traits hold more bones than
+others. The project targets VRM version 0.
 
 ![](/img/SJebjntDeT.jpg)
 
-**REMEMBER TO CHANGE EXPORT PATH!**
+A batch export script writes every VRM in a blend file to a
+destination folder. Set `export_path` in the script before running
+it:
 
-A Blender python script exports VRM files in a batch. Change the export path to your destination folder. The script writes every VRM file there.
-
-Here is how to run it: `blender -b -P scripts/blender_export.py -- blends/Waist.blend`
-
-```python!
+```python
 import bpy
 import os
 import sys
 
 def export_vrm(input_blend):
-    # Set the path to the input blend file
     bpy.ops.wm.open_mainfile(filepath=os.path.abspath(input_blend))
 
-    # REMEMBER TO SET THE VIEW LAYER NAME
     view_layer_name = 'ViewLayer'
     view_layer = bpy.context.scene.view_layers.get(view_layer_name)
-
     if view_layer is None:
         print(f"View Layer '{view_layer_name}' not found.")
         sys.exit(1)
-
     bpy.context.window.view_layer = view_layer
 
-    # Get a list of all visible objects in the scene
     visible_objects = [obj for obj in bpy.context.scene.objects if obj.parent is None]
 
-    # Iterate over each visible object and export it as a separate VRM file
     for obj in visible_objects:
-        # Skip objects not in the specified view layer
         if obj.name not in view_layer.objects:
             print(f"Object '{obj.name}' is not in view layer '{view_layer_name}'. Skipping.")
             continue
 
-        # Search for a mesh in the hierarchy of children
-        mesh = None
         for child in obj.children_recursive:
-            if child.type == 'MESH':
-                mesh = child
-                # If a mesh is found and it's in the view layer, select it for export
-                if mesh and mesh.name in view_layer.objects:
-                    # Set the filename for the exported VRM file
-                    armature = mesh.parent
-                    armature.data.vrm_addon_extension.spec_version = "0.0"
-                    filename = mesh.name + ".vrm"
+            if child.type != 'MESH':
+                continue
+            mesh = child
+            if mesh.name not in view_layer.objects:
+                continue
 
-                    # Select the mesh for export
-                    bpy.context.view_layer.objects.active = mesh
-                    mesh.select_set(True)
+            armature = mesh.parent
+            armature.data.vrm_addon_extension.spec_version = "0.0"
+            filename = mesh.name + ".vrm"
 
-                    # Export the mesh (VRM)
-                    bpy.ops.export_scene.vrm(
-                        filepath=os.path.join(export_path, filename),  # Corrected line
-                        export_invisibles=False,
-                        enable_advanced_preferences=True,
-                        export_fb_ngon_encoding=False,
-                        export_only_selections=True,
-                        armature_object_name=obj.name
-                    )
+            bpy.context.view_layer.objects.active = mesh
+            mesh.select_set(True)
+
+            bpy.ops.export_scene.vrm(
+                filepath=os.path.join(export_path, filename),
+                export_invisibles=False,
+                enable_advanced_preferences=True,
+                export_fb_ngon_encoding=False,
+                export_only_selections=True,
+                armature_object_name=obj.name
+            )
 
 if __name__ == "__main__":
-    # Check if the command line arguments are provided
-    if "--" in sys.argv:
-        argv = sys.argv[sys.argv.index("--") + 1:]  # Get arguments after "--"
-    else:
-        argv = []
+    argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
 
-    # Default export path, CHANGE THIS!
-    export_path = "/home/user/Desktop/Exports"
-
-    # Ensure the export folder exists; create it if it doesn't
+    export_path = "/home/user/Desktop/Exports"  # change this
     os.makedirs(export_path, exist_ok=True)
 
-    # Set the path to the input blend file
     input_blend = os.path.abspath(argv[0]) if argv else None
-
     if not input_blend:
         print("Error: Input .blend file not provided.")
         sys.exit(1)
@@ -109,23 +87,13 @@ if __name__ == "__main__":
     export_vrm(input_blend)
 ```
 
-Run the script from the Scripting tab of the Blender interface. Or save it as a python script and run Blender with no window. Pass the blend file as an argument:
-
-`blender -b -P blender_export.py -- clothing_traits.blend`
-
+Run it headless: `blender -b -P scripts/blender_export.py -- blends/Waist.blend`.
+Or open the Scripting tab in Blender and run it there.
 
 ![](/img/Bke-i2YPeT.jpg)
 
-
----
-
 ## Unity
 
-Requirements:
-- https://github.com/vrm-c/UniVRM/
+Requirements: [UniVRM](https://github.com/vrm-c/UniVRM/).
 
 ![](/img/HkeZs2Kvla.jpg)
-
-
-
-reference: https://hackmd.io/@XR/weftspun3dstudio-overview
