@@ -31,4 +31,9 @@ full RED/GREEN/REFACTOR account.
 ## Related
 
 RFD 0076 gives the proxy chain this fixes. RFD 0058 and RFD 0067
-give the "no demonstrated load" finding this reapplies.
+give the "no demonstrated load" finding this reapplies. RFD 0073
+adopts this RFD's REFACTOR step, Tigris, for a different reason:
+not load, but that `versitygw` (RFD 0058's loopback-only bind)
+became unreachable from `apps/usd_viewer_app/` once RFD 0076 split
+it onto its own machine. A real reachability blocker, not a
+capacity one, moved that decision to "now," not "if load ever does."

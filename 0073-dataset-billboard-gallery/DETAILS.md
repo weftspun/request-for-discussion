@@ -70,6 +70,14 @@ script, same `ex_aws_s3` mechanism, pointed at `127.0.0.1:10000`
 instead. It must run from inside the container, or over
 `flyctl ssh console`, since the port is loopback-only by design.
 
+**RFD 0077 reverses this choice**, back to Tigris, once RFD 0076
+split `usd_viewer_app` onto its own machine and made `versitygw`'s
+loopback bind unreachable from it. No technical objection to Tigris
+is recorded anywhere in this history; the original switch to
+`versitygw` cites RFD 0058's own words, "per the user's existing
+setup," not a defect Tigris had. See "The gallery's asset is still
+a stopgap" below for the reasoning behind reversing it again.
+
 ## The live deployment
 
 `weftspun-studio` is a real Fly.io app, not only a local Docker
@@ -225,42 +233,54 @@ Playwright screenshot of the live proxy chain.
 ## What full scale still needs
 
 Running `make_billboard_gallery.py --shards 42` and pushing every
-resulting card through `push_gallery_to_vgw.exs`, from inside the
-deployed container, not from a developer's own local machine. The
-Fly Volume's default size needs raising to hold the roughly 115 MB
-result, plus CockroachDB's own data. Neither step has run yet.
+resulting card to object storage (RFD 0077 decides which, below),
+not baking them into a Docker image. Neither step has run yet.
 
 `usd_viewer_app` (now `apps/usd_viewer_app/`, its own deployed app
-per RFD 0076) still does not fetch from `versitygw` at all. It holds
-the three verified proof files under `public/usd/`, baked into its
-own Docker image at build time and served as static files, not yet
-through the S3 API this RFD already proved. Wiring that fetch path
-is still the next step, unchanged by RFD 0076's own restructuring —
-only which app would hold that fetch code changed.
+per RFD 0076) still does not fetch from object storage at all. It
+holds the three verified proof files under `public/usd/`, baked
+into its own Docker image at build time and served as static files.
+Wiring that fetch path is still the next step, unchanged by RFD
+0076's own restructuring — only which app would hold that fetch
+code changed, and RFD 0077 changes which storage it fetches from.
 
-## The gallery's asset is still a stopgap, in a new shape
+## The gallery's asset is still a stopgap, decided which shape replaces it
 
 RFD 0076 replaced the stopgap this section originally named
 (`weftspun_studio` serving `sample_billboard.usdz` from
 `priv/static/gallery/usd/`, through a direct `GET
-/sample_billboard.usdz` route in `router.ex`) with a different one,
-not the `versitygw`-backed architecture this RFD called for either.
-Today: `apps/usd_viewer_app/` bakes the same proof files into its
-own Docker image (`COPY public public` in its `Dockerfile`), serves
+/sample_billboard.usdz` route in `router.ex`) with a different one:
+`apps/usd_viewer_app/` bakes the same proof files into its own
+Docker image (`COPY public public` in its `Dockerfile`), serves
 them through its own `server.js`, and `weftspun_studio` reaches them
 by reverse-proxying through `WeftspunStudio.Ports.GallerySource` /
 `Adapters.HttpGallery`. `weftspun_studio` no longer holds the
 gallery's bytes on disk at all, a real improvement RFD 0076 records,
-but the asset is still image-baked, not fetched from `versitygw`.
+but the asset is still image-baked, not fetched from object storage.
 
-The asset still belongs in `versitygw`, fetched through its real S3
-API, the same one `versitygw test full-flow` already proved end to
-end. The proper version needs `ex_aws`/`ex_aws_s3` as a real
-dependency of whichever app does the fetching (`apps/usd_viewer_app/`
-is the natural owner now, since it is the one serving the gallery's
-bytes at all, per RFD 0076), not only a `Mix.install` script, plus a
-boot-time or on-demand push of each card into the `gallery` bucket.
-That is real new code and another full deploy cycle, not a small
-edit. Deliberately deferred, not silently accepted, across two RFDs
-now: the current image-baked asset is a stated stopgap, not the
-decided shape.
+**This section originally named `versitygw` as where the asset
+belongs. RFD 0077 changes that decision: Tigris, not `versitygw`.**
+`versitygw` binds `127.0.0.1:10000`, loopback-only inside
+`weftspun_studio`'s own Fly machine, per RFD 0058's zero-trust rule.
+`apps/usd_viewer_app/` is a separate Fly machine now, per RFD 0076,
+and cannot reach a loopback-bound port on a different machine at
+all — a real blocker `versitygw`'s own architecture creates, not
+present before RFD 0076 split the two apps apart. Tigris, Fly's own
+managed, S3-compatible object storage, has no such constraint: any
+Fly app reaches it over its own public S3 endpoint
+(`t3.storage.dev`), with no private-network wiring and no colocated
+container, and RFD 0077 already names its automatic edge replication
+as a real, working substitute for the CDN this project asked about
+separately. Migration cost is small: only the two files
+`versitygw test full-flow` already proved land, need moving.
+
+The proper version needs an S3 client (`ex_aws`/`ex_aws_s3`, or
+Tigris's own recommended SDK path) as a real dependency of
+`apps/usd_viewer_app/`, the natural owner now since it is the one
+serving the gallery's bytes at all, per RFD 0076, plus a boot-time
+or on-demand push of each card to Tigris instead of
+`scripts/push_gallery_to_vgw.exs`'s `versitygw` target. That is real
+new code and another full deploy cycle, not a small edit.
+Deliberately deferred, not silently accepted, across three RFDs now:
+the current image-baked asset is a stated stopgap, and Tigris, not
+`versitygw`, is the decided shape that replaces it.
