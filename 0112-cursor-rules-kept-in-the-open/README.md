@@ -13,9 +13,9 @@ in sync by hand with the file of the same name in the app
 repository.
 
 One file, `weftspun-moat-protected.mdc`, restates RFD 0106 in a more
-raw form, and names revenue mechanisms RFD 0106 leaves out of its
-own public words on purpose. A second file, `dgx-sync-reminder.mdc`,
-names a private machine's local IP address and file paths.
+raw form, and names revenue mechanisms RFD 0106 leaves out on
+purpose. A second file, `dgx-sync-reminder.mdc`, names a private
+machine's local IP address and file paths.
 
 ## Decision
 
@@ -27,14 +27,14 @@ instructions the project's own maintainer runs under.
 
 `weftspun-moat-protected.mdc` and `dgx-sync-reminder.mdc` stay too,
 unedited. Neither file is wrong. RFD 0106 gives the public-safe
-summary; this file gives the working detail behind it. See
+summary. This file gives the working detail behind it. See
 `DETAILS.md` for the per-file table: which rules guard a feature an
 existing RFD already covers, which are pure process with no matching
 RFD, and which restate a published RFD.
 
 ## Related
 
-RFD 0000 names the DRY policy this RFD sets aside, by name, for this
-one directory. RFD 0106 gives the public-safe restatement of
-`weftspun-moat-protected.mdc`. RFD 0110 gives the RepoResident
-harness that `agent-continuity-startup.mdc` starts.
+RFD 0000 names the DRY policy this RFD sets aside for this
+directory. RFD 0106 gives the public-safe restatement of
+`weftspun-moat-protected.mdc`. RFD 0113 is the one new RFD this
+table's own review produced.

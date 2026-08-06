@@ -124,6 +124,7 @@ carries its original history forward.
 | 0110 | RepoResident, a file-based operating harness          | committed      |
 | 0111 | The 3DAIGC-API reference, not restated here           | committed      |
 | 0112 | The Cursor rules, kept in the open                    | discussion     |
+| 0113 | Image preview stays 250px, expand modal stays separate | committed      |
 
 ## DRY policy
 

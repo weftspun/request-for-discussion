@@ -22,14 +22,22 @@ more raw or more dated words.
 | `facekeeper-black-screen.mdc` | Android XR Face Bridge screen | 0096 |
 | `spatial-fabric-rp1-protected.mdc` | spatial-fabric publish | 0100 |
 | `xr-avatar-view-locomotion-protected.mdc` | XR embody, third-person, Move | 0090 |
-| `xr-floor-anchor-protected.mdc` | XR floor anchoring | 0108 |
-| `image-preview-sizing-protected.mdc` | Preview vs Expand panel sizes | none yet |
-| `spark-msf-xr-url-separation.mdc` | Scene Assembler vs XR Voice URLs | none yet |
-| `xr-strategy.mdc` | Face Bridge and Character Studio XR architecture | none yet |
+| `xr-floor-anchor-protected.mdc` | XR floor anchoring | 0010, 0108 |
+| `image-preview-sizing-protected.mdc` | Preview vs Expand panel sizes | 0113 |
+| `spark-msf-xr-url-separation.mdc` | Scene Assembler vs XR Voice URLs | 0095, 0099 |
+| `xr-strategy.mdc` | Face Bridge and Character Studio XR architecture | 0010, 0082, 0096, 0108 |
 
-The three rows marked "none yet" guard a real, shipped invariant.
-No RFD states the design behind it. Each is a candidate for a future
-RFD, written from the guard rule as its own source.
+RFD 0113 is new; it wrote up `image-preview-sizing-protected.mdc`'s
+invariant, since no earlier RFD held it.
+`spark-msf-xr-url-separation.mdc`'s port table already lives in RFD
+0099's own port table and RFD 0095's proxy step; nothing here
+needed a new RFD. `xr-strategy.mdc` splits three ways: its Face
+Bridge section restates RFD 0082 and RFD 0096, its VR/AR and
+floor-anchor section restates RFD 0010 and RFD 0108, and its
+"Broader Character Studio WebXR Strategy" roadmap section (the
+WebXR Face Tracking API, moeChat/AIRI, multi-user spectator) stays
+without an RFD, on purpose, since RFD 0070 opens no RFD for a build
+this project has not committed to.
 
 ## Process rules
 
