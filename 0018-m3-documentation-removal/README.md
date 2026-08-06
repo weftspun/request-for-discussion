@@ -1,14 +1,16 @@
 # RFD 0018: M3 documentation removal
 
 **State:** discussion
-**Scope:** `docs/`
+**Scope:** `m3/`
 
 ## Problem
 
-The docs tree holds a fork of the M3 Character Studio site. M3 holds
-the copyright for that content. The file `docs/LICENSE` records the
-M3 copyright. The MIT terms require the repository to keep that
-notice while the M3 content stays.
+`m3/` holds a fork of the M3 Character Studio site. M3 holds the
+copyright for that content. The file `m3/LICENSE` records the M3
+copyright. The MIT terms require the repository to keep that notice
+while the M3 content stays. This tree moved here from
+weftspun-3d-studio's own `docs/`; the paths below read `m3/docs/`
+and `m3/static/`, the current location.
 
 The site costs more than it returns. No pipeline builds the site. The
 site keeps a separate package file and two lock files. The site
@@ -27,11 +29,11 @@ the README links to them.
 Rewrite each remaining M3 guide in Weftspun words. Then delete the M3
 original. A rewrite must describe the current code, not the M3 code.
 
-Keep `docs/LICENSE` until the last M3 file goes. A deletion before
+Keep `m3/LICENSE` until the last M3 file goes. A deletion before
 that step would drop a notice the MIT terms require.
 
-See `DETAILS.md` for the step-by-step plan, the risks, and file
-references.
+Keep an `m3/static/` image only while a surviving markdown file names
+it under `/img/`. Delete the rest now. See `DETAILS.md` for the list.
 
 ## Related
 

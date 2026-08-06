@@ -27,18 +27,27 @@ Steps 1 and 2 are complete. Steps 3 to 7 remain open.
 
 ## Risk
 
-The image folder holds 30 MB. The history page uses those images. A
-rewrite of the history page must drop the unused images.
+The image folder holds 29 MB. The history page uses many of those
+images. A rewrite of the history page must drop the unused images.
 
 The GitHub Pages workflow named an M3 host. The workflow now runs as
 a check only. It builds the app and runs the animation tests. It no
 longer publishes to any host. RFD 0013 keeps Vercel as the deploy
 path for the public demo.
 
+## Static assets
+
+`m3/static/img/` holds 40 files. Ten markdown files under `m3/docs/`
+name 37 of them, under `/img/`. Three go unnamed anywhere in the
+repository: `charstudio.jpg`, `overview-app.jpg`,
+`overview-schema.jpg`. Delete those three now. Delete each remaining
+image only when the guide rewrite that named it either drops the
+image or moves to a source the reader can reach on their own.
+
 ## References
 
-- M3 notice: `docs/LICENSE`
-- Site config: `docs/docusaurus.config.js`
-- Code map: `docs/CODE_MAP.md`
-- DRY policy: `decisions/README.md`
+- M3 notice: `m3/LICENSE`
+- Site config: `m3/docs/docusaurus.config.js` (if still present)
+- Code map: `m3/docs/CODE_MAP.md` (to add)
+- DRY policy: RFD 0000
 - Attribution: `README.md`, section Third-Party Trademarks
