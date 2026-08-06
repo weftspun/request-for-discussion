@@ -23,7 +23,7 @@ The work follows this order:
 6. Delete the site config, the sidebars, and the package files.
 7. Delete `docs/LICENSE`.
 
-Steps 1 and 2 are complete. Steps 3 to 7 remain open.
+Steps 1, 2, 4, and 5 are complete. Steps 3, 6, and 7 remain open.
 
 ## Risk
 
@@ -73,6 +73,20 @@ The remaining four are resolved too, none rewritten:
 | `THREEJS_WEBGPU_WEBXR_MIGRATION.md` | Deleted. Same drift; RFD 0009 dropped its own reference to this file and gained a `DETAILS.md` with the real renderer fallback chain instead |
 | `FACE_EXPRESSION_TUNING_REFERENCE.md` | Deleted from this repo only. The live copy is the app's own `docs/FACE_EXPRESSION_TUNING_REFERENCE.md`, named directly in `xrExpressionTrackingDriver.js`'s header; a copy here would drift. RFD 0096 points to it now |
 | `model-format-specification.md` | Deleted. Confused "Open3DStudio (Weftspun3DStudio)" bridge framing for what RFD 0102 shows is one codebase under its old and new name; the real, current export fields moved into RFD 0005's `DETAILS.md` |
+
+## history.md's dropped Roadmap section
+
+The pre-rewrite `history.md` carried a "Roadmap" section mixed into
+the history page: real, current content (WebXR, Kimodo, moeChat and
+AIRI, with working RFD links), beside two abandoned wallet items
+("Connect wallet to load profiles or mint files," an external
+Solana/Arweave launchpad) RFD 0012 already abandons, and a closing
+link to `MONETIZATION_ROADMAP.md`, a file `weftspun-moat-protected.mdc`
+names as never committed. That link pointed at a file this public
+repository does not, and should not, hold. The rewrite drops the
+whole Roadmap section; a history page states lineage, not a live
+roadmap, and RFD 0106 already gives the public-safe open/proprietary
+split this section partly restated.
 
 ## References
 

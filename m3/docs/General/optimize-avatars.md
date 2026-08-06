@@ -1,33 +1,23 @@
 # Optimize avatars
 
-Optimizing VRM models by hand can be very tedious and time consuming. We have designed a simple drag and drop solution that can reduce the amount of draw calls and overall filesize of VRM avatars by:
+Hand-optimizing a VRM model takes time. The Optimizer page reduces
+an avatar's draw calls and file size instead, through drag and drop:
 
-- merging textures together with an image atlas
-  - handles transparent textures separatly
-- merging skinned meshes together
+- Merge textures into one image atlas. A transparent texture merges
+  into a separate atlas from an opaque one.
+- Merge skinned meshes together.
 
-The information on the right hand side will let you know how many skinned meshes and texture materials you have to pick the best option.
+The Optimizer page reports the current skinned-mesh and
+texture-material count, so you can weigh the options before
+committing.
 
-![Screenshot from 2024-02-15 12-52-24](/img/r1EneCsip.png)
+![Optimizer panel](/img/r1EneCsip.png)
 
-Here is how the output textures look when picking the option to keep both standard and mtoon shader materials:
+Merging to one shader, either MToon or Standard, cuts draw calls and
+file size the most. Keeping both shaders costs more space, but keeps
+the closest likeness to a model built with both.
 
-![image](/img/rkH3-CjjT.png)
+![Texture atlas comparison](/img/rkH3-CjjT.png)
 
-Here is how the texture files look when deciding to merge to mtoon or standard:
-
-![image](/img/BkED-RssT.png)
-
-Overall deciding to merge to mtoon or standard shader will result in less draw calls and file size, whereas keeping both can retain the closest likeness to the original incase you have both shaders in the original.
-
-![image](/img/S1J-b0jip.png)
-
-In this example I was able to shave an extra 20% off the filesize from choosing to merge to mtoon shader. Here is results from other files we tested:
-
-![image](/img/B19_9WDNa.png)
-https://twitter.com/dankvr/status/1724189158623654346
-
-- https://twitter.com/dankvr/status/1725247568446165082
-- https://twitter.com/dankvr/status/1722857264606814394
-
-If interested in modifying the optimizer page, see `src/pages/Optimizer.jsx` and its related dependencies.
+See `src/pages/Optimizer.jsx` and `src/library/textureOptimizer.js`
+for the atlas-size defaults and the merge logic.

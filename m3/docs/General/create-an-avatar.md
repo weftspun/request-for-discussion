@@ -1,47 +1,32 @@
-# Create an Avatar
+# Create an avatar
 
-There is a few ways to make an avatar with Weftspun3DStudio:
+Weftspun3DStudio builds an avatar in three ways:
 
-- Select from preloaded assets
-- Drag and drop your own 3D models and textures
-- Generate based on a manifest.json file
+- Select from preloaded assets.
+- Drag and drop your own 3D models and textures.
+- Generate an avatar from a manifest file.
 
 ## Select traits
 
-The simple way to dress an avatar is to pick from the assets the app loads. Mix them to build a style, as other character creator programs do.
+Pick from the assets the app loads, and mix them to build a style,
+the way other character creators work.
 
 ![](/img/v2zJEiy.gif)
 
-If you want to create your own preloaded asset configuration, check the manifest file documentation to learn more.
+To create your own preloaded asset configuration, read the manifest
+file documentation under `Modders/manifest-files/`.
 
 ## Drag and drop your own assets
 
-> Note: Files must be in VRM format, recommended to use version 0.0 for now
+Upload files in VRM format. Weftspun3DStudio also overwrites a
+trait's texture the same way: select the trait, then drag an image
+file into the browser window. Click the target category first. The
+image needs a UV layout that matches the base mesh.
 
-Weftspun3DStudio also features the ability to overwrite textures in a similar way as well. Select the trait whose texture you want to replace. Then drag the image file into the browser window. It would help if the image had a matching UV of the base mesh.
+## Generate from a manifest
 
-https://www.youtube.com/watch?v=zhpFK4Htxdo
-
-Note: Make sure to click the category you are overwriting the trait for before drag and dropping into the browser window.
-
-## Configure programmatically
-
-> WIP
-
-Weftspun3DStudio has the ability to assemble and export VRMs by loading a JSON file containing information about the traits. This process suits batch assembly of Anata VRM files. It does not yet serve a general purpose.
-
-The project studies ways to read owned assets from a connected
-wallet. Code could then configure avatars and wearables.
-
-One idea loads POAPs and other approved collections as
-[badges and pins](https://sketchfab.com/3d-models/3d-skill-role-badges-and-pins-e3329ed59b874aad98586657a5f11630).
-You attach these to a wearable.
-
-![](/img/rFV2t9G.png)
-
-To learn how to configure an avatar from code, or to create a VRM
-collection, join the [M3 discord](https://m3org.com/discord) and
-introduce yourself.
-
-A developer can also read the documentation on the manifest files.
-The discord holds discussion about this method of avatar assembly.
+Weftspun3DStudio assembles and exports a VRM from a JSON manifest
+naming each trait. This path suits a batch of VRM files sharing one
+trait structure, not a one-off avatar edit. See
+`Modders/manifest-files/overview.md` for the schema, and
+`Modders/getting-started.md` for the walkthrough.
