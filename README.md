@@ -1,11 +1,19 @@
 # RFD Index
 
-This directory holds Request-for-Discussion documents. It follows the
-Oxide RFD style.
+This repository holds Request-for-Discussion documents, across every
+weftspun project, one shared numbering space. It follows the Oxide
+RFD style.
 
 Each RFD is a reference design. It records a decision and points to
-the canonical documentation. It does not restate the documentation.
-See the STE policy below for the writing rules.
+the canonical documentation, in whichever project's own repository
+holds the code. It does not restate the documentation. See the STE
+policy below for the writing rules.
+
+RFD 0000 through RFD 0078 moved here from
+[weftspun/weftspun-3d-studio](https://github.com/weftspun/weftspun-3d-studio)'s
+own `decisions/`, per that project's own RFD convention already
+naming this repository's shape. `git log` on each RFD's own files
+carries its original history forward.
 
 ## Index
 
