@@ -87,6 +87,41 @@ carries its original history forward.
 | 0067 | CockroachDB, reranked against FoundationDB            | published      |
 | 0070 | Keep options open                                     | published      |
 | 0073 | A billboard gallery of the RFD 0064 dataset           | discussion     |
+| 0074 | A caption label over each billboard card              | moved          |
+| 0075 | GitHub OAuth login, gated on weftspun org membership  | prediscussion  |
+| 0076 | usd_viewer_app, its own app, reached through a port   | prediscussion  |
+| 0077 | An H2O edge, not yet a CDN                            | prediscussion  |
+| 0078 | An H2O/FoundationDB game-state server                 | moved          |
+| 0079 | AppSignal observability, and versitygw's removal      | published      |
+| 0080 | What the three Fly deploys cost                       | published      |
+| 0082 | A companion APK relays face weights past Chrome's gap | discussion     |
+| 0083 | The API avatar rig export contract                    | committed      |
+| 0084 | The avatar pipeline, image to downloaded VRM          | published      |
+| 0085 | A code map, not a copied API reference                | published      |
+| 0086 | Dev machine topology, and the Surface/DGX sync rule   | published      |
+| 0087 | MindLink, a write-as-you-go memory protocol           | abandoned      |
+| 0088 | HTTPS for local WebXR development                     | published      |
+| 0089 | HY-World 2.0, a quality path beside the fast one      | discussion     |
+| 0090 | IWSDK, a separate `/xr` lab, Galaxy XR as source of truth | abandoned  |
+| 0091 | A local IWSDK fork, linked, not published             | abandoned      |
+| 0092 | Kimodo backend integration                            | committed      |
+| 0093 | Loot assets, fetched, never committed                 | published      |
+| 0094 | Multiple photos, routed by count, not by user choice  | committed      |
+| 0095 | A voice XR path, beside Task Manager, same backend    | published      |
+| 0096 | OpenXR face tracking, native and web, on Android XR   | discussion     |
+| 0098 | Two deploy modes, one build that fails on a secret leak | published    |
+| 0099 | One cheat sheet, every operator command                | published      |
+| 0100 | Publishing to the Open Metaverse Browser's spatial fabric | abandoned  |
+| 0101 | Two SSH hosts only, `DGX-Local` and `DGX-Remote`      | abandoned      |
+| 0102 | The supported 3DAIGC task catalog, one live source    | published      |
+| 0103 | Loot assets from a CDN, not a full clone, on Vercel   | published      |
+| 0104 | Uploaded VRM, rotate the scene root, never the hips   | committed      |
+| 0105 | Webcam avatar control, off during WebXR               | published      |
+| 0106 | The open/proprietary boundary, in public words        | published      |
+| 0107 | The world package format, splats plus optional props  | published      |
+| 0108 | Floor-anchor in both AR and VR, opaque sky only in VR | committed      |
+| 0109 | Payment rails and the phygital registry, not the moat | abandoned      |
+| 0110 | RepoResident, a file-based operating harness          | committed      |
 
 ## DRY policy
 
