@@ -33,5 +33,5 @@ RFD 0062 gives the Fly.io toplevel this RFD's app first deployed
 beside. RFD 0076 moves that companion app to its own deploy target
 entirely (`apps/usd_viewer_app/`), reached through a
 `GallerySource` port, and gives the `usd-viewer` patch's real,
-current form; see `DETAILS.md` for what changed and what is still
-open.
+current form. RFD 0077 decides Tigris, not `versitygw`, as the
+object storage the still-open fetch path in `DETAILS.md` targets.
