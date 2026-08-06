@@ -1,6 +1,5 @@
 # Create an Avatar
 
-
 There is a few ways to make an avatar with Weftspun3DStudio:
 
 - Select from preloaded assets
@@ -20,7 +19,6 @@ If you want to create your own preloaded asset configuration, check the manifest
 > Note: Files must be in VRM format, recommended to use version 0.0 for now
 
 Weftspun3DStudio also features the ability to overwrite textures in a similar way as well. Select the trait whose texture you want to replace. Then drag the image file into the browser window. It would help if the image had a matching UV of the base mesh.
-
 
 https://www.youtube.com/watch?v=zhpFK4Htxdo
 

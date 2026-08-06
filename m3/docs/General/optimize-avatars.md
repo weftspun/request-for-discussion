@@ -1,11 +1,9 @@
 # Optimize avatars
 
-
-
 Optimizing VRM models by hand can be very tedious and time consuming. We have designed a simple drag and drop solution that can reduce the amount of draw calls and overall filesize of VRM avatars by:
 
 - merging textures together with an image atlas
-    - handles transparent textures separatly
+  - handles transparent textures separatly
 - merging skinned meshes together
 
 The information on the right hand side will let you know how many skinned meshes and texture materials you have to pick the best option.
@@ -15,7 +13,6 @@ The information on the right hand side will let you know how many skinned meshes
 Here is how the output textures look when picking the option to keep both standard and mtoon shader materials:
 
 ![image](/img/rkH3-CjjT.png)
-
 
 Here is how the texture files look when deciding to merge to mtoon or standard:
 
