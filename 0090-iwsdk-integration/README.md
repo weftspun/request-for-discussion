@@ -1,6 +1,6 @@
 # RFD 0090: IWSDK, a separate `/xr` lab, Galaxy XR as the source of truth
 
-**State:** published
+**State:** abandoned
 **Scope:** `@iwsdk/*`, `src/pages/IwsdkImmersive.jsx`, `src/library/iwsdkWorld.js`
 
 ## Problem
