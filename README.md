@@ -131,6 +131,7 @@ carries its original history forward.
 | 0117 | Text-to-image chains into Image-to-3D                 | committed      |
 | 0118 | XR embody, view toggle, and Move stay input           | committed      |
 | 0119 | Target hardware stays generic                          | discussion     |
+| 0120 | Split apps/ into their own repos                       | committed      |
 
 ## DRY policy
 
