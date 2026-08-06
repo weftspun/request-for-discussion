@@ -65,9 +65,14 @@ none linked from any `README.md`:
 | `WIRELESS_ADB_SETUP.md` | Same script supersedes this guide |
 | `SceneControlsIntegration.md` | Documents merging `SceneControlsBackup.jsx`, a file that no longer exists; the merge already completed |
 
-Four guides remain under review: `THREEJS_QUICK_START.md`,
-`THREEJS_WEBGPU_WEBXR_MIGRATION.md`, `model-format-specification.md`,
-and `FACE_EXPRESSION_TUNING_REFERENCE.md`.
+The remaining four are resolved too, none rewritten:
+
+| File | Disposition |
+| ---- | ----------- |
+| `THREEJS_QUICK_START.md` | Deleted. `getRendererInfo()`, `setupPostProcessing()`, and `createPositionalAudio()` do not exist in `sceneManager.js`; a build that never shipped, or shipped then shrank |
+| `THREEJS_WEBGPU_WEBXR_MIGRATION.md` | Deleted. Same drift; RFD 0009 dropped its own reference to this file and gained a `DETAILS.md` with the real renderer fallback chain instead |
+| `FACE_EXPRESSION_TUNING_REFERENCE.md` | Deleted from this repo only. The live copy is the app's own `docs/FACE_EXPRESSION_TUNING_REFERENCE.md`, named directly in `xrExpressionTrackingDriver.js`'s header; a copy here would drift. RFD 0096 points to it now |
+| `model-format-specification.md` | Deleted. Confused "Open3DStudio (Weftspun3DStudio)" bridge framing for what RFD 0102 shows is one codebase under its old and new name; the real, current export fields moved into RFD 0005's `DETAILS.md` |
 
 ## References
 

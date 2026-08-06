@@ -24,7 +24,8 @@ One scene keeps WebXR and state consistent.
 - Viewport: `src/components/Scene3D.jsx`
 - Splats: `src/library/sparkSplatManager.js`
 - Context: `src/context/SceneContext.jsx`
-- Migration: `docs/THREEJS_WEBGPU_WEBXR_MIGRATION.md`
+
+See `DETAILS.md` for the renderer fallback chain.
 
 ## Related
 

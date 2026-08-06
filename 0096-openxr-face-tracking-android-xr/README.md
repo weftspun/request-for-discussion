@@ -34,4 +34,7 @@ contract in both its shapes, and the mapping-fidelity caveats.
 same topic, with real content differences. Neither version is
 authoritative; that reconciliation is still open. RFD 0082 gives the
 companion APK that implements this spec's native side. RFD 0105
-gives the WebXR-only fallback this RFD's web driver also serves.
+gives the WebXR-only fallback this RFD's web driver also serves. The
+app's own `docs/FACE_EXPRESSION_TUNING_REFERENCE.md`, named directly
+in `xrExpressionTrackingDriver.js`'s header, holds the numeric
+tuning baseline; not restated here, per RFD 0000's DRY policy.
