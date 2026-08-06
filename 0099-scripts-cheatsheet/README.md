@@ -1,0 +1,36 @@
+# RFD 0099: One cheat sheet, every operator command, machine plus folder plus command
+
+**State:** published
+**Scope:** every operator script under `scripts/`, on both the Surface and the DGX
+
+## Problem
+
+Two machines, two roles, and roughly twenty separate operational
+areas (sync, the dev server, the DGX API, model smoke tests, XR
+logging, the spatial fabric, and more) each carry their own start,
+stop, and verify commands. An agent or a developer needs one place
+naming which machine, which folder, and which exact command, not a
+memory of which of a dozen scripts is current.
+
+## Decision
+
+One file, kept in sync both ways: DGX edits push to the Surface with
+`bash scripts/sync-changes-to-pc.sh --retry-until-complete`, which
+also mirrors to the Surface desktop automatically when this file
+itself changed. Every entry states machine, folder, command, and
+what the command does, in that order. A dedicated section 21 names
+every deprecated command and its replacement, so an old note does
+not silently resurface. Section 22 states the same four-part format
+as the rule agents themselves must follow when giving a command.
+Secrets never appear here: API keys and tokens live only in `.env`
+or local MCP config.
+
+See `DETAILS.md` for the full inventory, all 22 sections, from repo
+paths and SSH through the spatial fabric, the Sneeze engine, and
+deprecated commands.
+
+## Related
+
+RFD 0086 gives the Surface/DGX topology this cheat sheet's sync
+commands depend on. RFD 0095 and RFD 0100 give the XR voice stack
+and the spatial fabric this sheet's own section 19 also covers.
