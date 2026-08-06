@@ -1,6 +1,6 @@
 # RFD 0101: Two SSH hosts only, `DGX-Local` and `DGX-Remote`
 
-**State:** published
+**State:** abandoned
 **Scope:** `~/.ssh/config`, `~/.ssh/config-cursor`, `scripts/*-dgx-*`
 
 ## Problem
