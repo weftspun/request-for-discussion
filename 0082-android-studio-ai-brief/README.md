@@ -8,7 +8,9 @@
 Chrome on Android XR does not grant WebXR's `expression-tracking`
 feature, so `XRFrame.expressions` never reaches the web app inside
 an immersive session, and a VRM avatar's face cannot follow the
-user's own face in AR or VR through Chrome alone.
+user's own face in AR or VR through Chrome alone. This gap is
+specific to Android XR's own Chrome build; a headset whose browser
+grants `expression-tracking` needs no bridge at all.
 
 ## Decision
 
@@ -32,4 +34,6 @@ status table, the platform constraints, and the test steps.
 topic, with real content differences. Neither version is
 authoritative; that reconciliation is still open. RFD 0096 gives the
 OpenXR spec this bridge's native path implements. RFD 0105 gives the
-webcam-driven fallback this bridge complements.
+webcam-driven fallback this bridge complements. RFD 0119 gives the
+general hardware requirement this Android-only bridge is one
+enhancement on top of, not a dependency.

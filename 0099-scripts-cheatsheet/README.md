@@ -33,4 +33,7 @@ deprecated commands.
 
 RFD 0086 gives the Surface/DGX topology this cheat sheet's sync
 commands depend on. RFD 0095 and RFD 0100 give the XR voice stack
-and the spatial fabric this sheet's own section 19 also covers.
+and the spatial fabric this sheet's own section 19 also covers. RFD
+0119 gives the general hardware rule; this sheet documents one
+team's own reference deployment against that rule, not a
+requirement for running the project elsewhere.

@@ -25,7 +25,8 @@ and the activation peak, which depends on the resolution and the
 batch size.
 
 Every model in the catalog reaches a 24 GB card, once staged loading
-frees each stage's weights before the next stage loads. See
+frees each stage's weights before the next stage loads. An RTX 4090
+is a real, supported 24 GB tier, not only a hypothetical one. See
 `DETAILS.md` for the tier table, the staging reasoning, the
 quantization cost tradeoff, and the resulting checklist.
 

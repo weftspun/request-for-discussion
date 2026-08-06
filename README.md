@@ -130,6 +130,7 @@ carries its original history forward.
 | 0116 | Tasks panel, Clear unloads the model                  | committed      |
 | 0117 | Text-to-image chains into Image-to-3D                 | committed      |
 | 0118 | XR embody, view toggle, and Move stay input           | committed      |
+| 0119 | Target hardware stays generic                          | discussion     |
 
 ## DRY policy
 

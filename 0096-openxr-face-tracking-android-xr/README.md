@@ -22,19 +22,19 @@ live registry version. `xrCreateFaceTrackerANDROID` and
 (`xrExpressionTrackingDriver.js`) reads either the browser's own
 `XRFrame.expressions`, or a native bridge's relayed weights,
 whichever is fresher, with native weights overriding WebXR's own
-values for that frame when both are present.
-
-See `DETAILS.md` for every canonical reference link, the payload
-contract in both its shapes, and the mapping-fidelity caveats.
+values for that frame when both are present. `XR_ANDROID_face_tracking`
+is Android-only by name; a Quest 3 or Vision Pro session runs the
+`XRFrame.expressions` path alone, through the same driver, with no
+native bridge involved. See `DETAILS.md` for every canonical
+reference link, the payload contract in both its shapes, and the
+mapping-fidelity caveats.
 
 ## Related
 
 **Unresolved duplicate:** weftspun-3d-studio's own
 `thirdparty/m3/docs/OPENXR_FACE_TRACKING_ANDROID_XR.md` covers the
-same topic, with real content differences. Neither version is
-authoritative; that reconciliation is still open. RFD 0082 gives the
-companion APK that implements this spec's native side. RFD 0105
-gives the WebXR-only fallback this RFD's web driver also serves. The
-app's own `docs/FACE_EXPRESSION_TUNING_REFERENCE.md`, named directly
-in `xrExpressionTrackingDriver.js`'s header, holds the numeric
-tuning baseline; not restated here, per RFD 0000's DRY policy.
+same topic, with real content differences; not yet reconciled. RFD
+0082 gives the companion APK implementing the native side. RFD 0105
+gives the WebXR-only fallback, and RFD 0119 the general hardware
+requirement. The app's own `docs/FACE_EXPRESSION_TUNING_REFERENCE.md`
+holds the numeric tuning baseline, not restated here, per RFD 0000.
