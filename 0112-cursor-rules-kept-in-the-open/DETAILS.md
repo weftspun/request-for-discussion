@@ -11,9 +11,6 @@ more raw or more dated words.
 | File | Guards | RFD |
 | ---- | ------ | --- |
 | `tasks-panel-ui-protected.mdc` | Tasks panel collapse and Clear | 0003 |
-| `vrm-animation-protected.mdc` | Mixamo presets, Kimodo playback | 0005 |
-| `vrm-upload-protected.mdc` | VRM upload passthrough | 0005 |
-| `weftspun3d-vrm-animation-playback.mdc` | Mixamo playback invariants | 0005 |
 | `krea2-text-to-3d-pipeline-protected.mdc` | Krea 2 to Image-to-3D chain | 0042 |
 | `lingbot-env-scan-orientation-protected.mdc` | env-scan client load | 0050 |
 | `spatial-fabric-rp1-protected.mdc` | spatial-fabric publish | 0100 |
@@ -29,6 +26,8 @@ and `rules/` no longer holds the file.
 | ---- | --------------- |
 | `app-chrome-layout-protected.mdc`, `collapsed-rail-icons.mdc`, `sidebar-z-index.mdc` | RFD 0114 (new) |
 | `image-preview-sizing-protected.mdc` | RFD 0113 (new) |
+| `vrm-animation-protected.mdc`, `weftspun3d-vrm-animation-playback.mdc` | RFD 0115 (new, merged; the two files were near-duplicates) |
+| `vrm-upload-protected.mdc` | RFD 0104 (already covered) |
 | `spark-msf-xr-url-separation.mdc` | RFD 0099's port table, RFD 0095's proxy step (already covered) |
 | `facekeeper-black-screen.mdc` | RFD 0082's DETAILS.md, a new section (extended, not new) |
 | `xr-strategy.mdc` | its Face Bridge section into RFD 0082 and RFD 0096; its VR/AR and floor-anchor section into RFD 0010 and RFD 0108; its "Broader Character Studio WebXR Strategy" roadmap (the WebXR Face Tracking API, moeChat/AIRI, multi-user spectator) into nothing, on purpose, since RFD 0070 opens no RFD for a build this project has not committed to |
