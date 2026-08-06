@@ -10,34 +10,28 @@ more raw or more dated words.
 
 | File | Guards | RFD |
 | ---- | ------ | --- |
-| `app-chrome-layout-protected.mdc` | header, task bar, side rails | 0001 |
-| `collapsed-rail-icons.mdc` | side-rail icon symmetry | 0001 |
-| `sidebar-z-index.mdc` | panel stacking order | 0001 |
 | `tasks-panel-ui-protected.mdc` | Tasks panel collapse and Clear | 0003 |
 | `vrm-animation-protected.mdc` | Mixamo presets, Kimodo playback | 0005 |
 | `vrm-upload-protected.mdc` | VRM upload passthrough | 0005 |
 | `weftspun3d-vrm-animation-playback.mdc` | Mixamo playback invariants | 0005 |
 | `krea2-text-to-3d-pipeline-protected.mdc` | Krea 2 to Image-to-3D chain | 0042 |
 | `lingbot-env-scan-orientation-protected.mdc` | env-scan client load | 0050 |
-| `facekeeper-black-screen.mdc` | Android XR Face Bridge screen | 0096 |
 | `spatial-fabric-rp1-protected.mdc` | spatial-fabric publish | 0100 |
 | `xr-avatar-view-locomotion-protected.mdc` | XR embody, third-person, Move | 0090 |
 | `xr-floor-anchor-protected.mdc` | XR floor anchoring | 0010, 0108 |
-| `image-preview-sizing-protected.mdc` | Preview vs Expand panel sizes | 0113 |
-| `spark-msf-xr-url-separation.mdc` | Scene Assembler vs XR Voice URLs | 0095, 0099 |
-| `xr-strategy.mdc` | Face Bridge and Character Studio XR architecture | 0010, 0082, 0096, 0108 |
 
-RFD 0113 is new; it wrote up `image-preview-sizing-protected.mdc`'s
-invariant, since no earlier RFD held it.
-`spark-msf-xr-url-separation.mdc`'s port table already lives in RFD
-0099's own port table and RFD 0095's proxy step; nothing here
-needed a new RFD. `xr-strategy.mdc` splits three ways: its Face
-Bridge section restates RFD 0082 and RFD 0096, its VR/AR and
-floor-anchor section restates RFD 0010 and RFD 0108, and its
-"Broader Character Studio WebXR Strategy" roadmap section (the
-WebXR Face Tracking API, moeChat/AIRI, multi-user spectator) stays
-without an RFD, on purpose, since RFD 0070 opens no RFD for a build
-this project has not committed to.
+## Converted and deleted
+
+Each row already went through: the RFD named now holds the design,
+and `rules/` no longer holds the file.
+
+| File | Converted into |
+| ---- | --------------- |
+| `app-chrome-layout-protected.mdc`, `collapsed-rail-icons.mdc`, `sidebar-z-index.mdc` | RFD 0114 (new) |
+| `image-preview-sizing-protected.mdc` | RFD 0113 (new) |
+| `spark-msf-xr-url-separation.mdc` | RFD 0099's port table, RFD 0095's proxy step (already covered) |
+| `facekeeper-black-screen.mdc` | RFD 0082's DETAILS.md, a new section (extended, not new) |
+| `xr-strategy.mdc` | its Face Bridge section into RFD 0082 and RFD 0096; its VR/AR and floor-anchor section into RFD 0010 and RFD 0108; its "Broader Character Studio WebXR Strategy" roadmap (the WebXR Face Tracking API, moeChat/AIRI, multi-user spectator) into nothing, on purpose, since RFD 0070 opens no RFD for a build this project has not committed to |
 
 ## Process rules
 

@@ -28,6 +28,38 @@ Chrome for WebXR (+ face)." The APK must keep face tracking alive
 while Chrome is foreground, through picture-in-picture,
 `FaceKeeperActivity`, and a foreground service.
 
+## FaceKeeperActivity, black-screen guard
+
+`FaceKeeperActivity` is a transparent 1x1 activity. It keeps the
+Jetpack XR session host alive while Chrome runs WebXR. A missing
+guard below shows the user a black-screen flash on "Open in Chrome
+for WebXR (+ face)."
+
+`Theme.FaceKeeper`, in `themes.xml`, must keep every one of:
+`windowIsTranslucent` true, `windowBackground` and `colorBackground`
+transparent, `windowNoTitle` true, `windowContentOverlay` null,
+`backgroundDimEnabled` false, `windowDisablePreview` true (this is
+the one that stops the starting-window snapshot flash), and
+`windowAnimationStyle` null. `AndroidManifest.xml` must set this
+theme on `FaceKeeperActivity`.
+
+In `FaceKeeperActivity.kt`, `onCreate()` and `onResume()` must call
+`finish()` plus `overridePendingTransition(0, 0)` when
+`FaceHandoffState.isChromeHandoff()` is false.
+`FaceKeeperActivity` must never call `setChromeHandoff(true)` itself;
+only `MainActivity`, PiP, or the Chrome flow sets that. `FaceKeeper`'s
+own `acquire()` and `release()` must add
+`Intent.FLAG_ACTIVITY_NO_ANIMATION`, and the caller must call
+`overridePendingTransition(0, 0)` after `startActivity()`.
+
+`recordRelayPostSuccess()` fires only on a successful HTTP ingest in
+`FaceHttpRelay`, never on a handoff toggle. A cold launcher start
+(`ACTION_MAIN`, `CATEGORY_LAUNCHER`, no saved state) must call
+`clearChromeHandoff()`. `canRestoreHandoffSession(inPiP,
+pausingForChrome)` gates the keeper restore; it returns true only
+when a handoff is active and the app is in PiP or transitioning to
+Chrome.
+
 ## What is already implemented
 
 | Area | Status |

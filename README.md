@@ -125,6 +125,7 @@ carries its original history forward.
 | 0111 | The 3DAIGC-API reference, not restated here           | committed      |
 | 0112 | The Cursor rules, kept in the open                    | discussion     |
 | 0113 | Image preview stays 250px, expand modal stays separate | committed      |
+| 0114 | App chrome layout invariants                          | committed      |
 
 ## DRY policy
 
