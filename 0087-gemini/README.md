@@ -1,6 +1,6 @@
 # RFD 0087: MindLink, a write-as-you-go memory protocol for an AI session
 
-**State:** committed
+**State:** abandoned
 **Scope:** `.brain/MEMORY.md`, `.brain/SESSION.md`, `.brain/LOG.md`, `.brain/SHARED.md`
 
 ## Problem
