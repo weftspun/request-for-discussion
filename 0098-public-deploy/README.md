@@ -1,6 +1,6 @@
 # RFD 0098: Two deploy modes, one build that fails on a secret leak
 
-**State:** published
+**State:** abandoned
 **Scope:** `vercel.json`, `scripts/verify-public-build-env.mjs`
 
 ## Problem
