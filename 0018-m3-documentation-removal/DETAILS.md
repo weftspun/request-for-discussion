@@ -44,6 +44,31 @@ repository: `charstudio.jpg`, `overview-app.jpg`,
 image only when the guide rewrite that named it either drops the
 image or moves to a source the reader can reach on their own.
 
+## Misc top-level guides, beyond the original plan
+
+The original plan named the `Modders` and `General` guides, the
+quickstart, and the history page. `m3/docs/` also held nine other
+top-level guides the plan did not name. Four left the tree mid-session,
+outside this RFD's own work: `E2E_DGX_DEVTOOLS.md`,
+`IWSDK_OPTION_A_MIGRATION_BLUEPRINT.md`, `MCP_SETUP.md`,
+`quickstart.md`.
+
+Six more are deleted now, each superseded rather than rewritten, and
+none linked from any `README.md`:
+
+| File | Why deletion, not a rewrite |
+| ---- | ---------------------------- |
+| `WALLET_OWNED_ASSETS_AVATAR_APPROACH.md` | Wallet, minting, and Thirdweb; RFD 0012 abandons this line of work |
+| `THIRDWEB_BENEFITS_AND_UI.md` | Same abandoned line, RFD 0012 |
+| `QUICK_RECONNECT_STEPS.md` | Manual ADB reconnect steps; `scripts/reconnect-galaxy-xr-debug.ps1` automates this now, per RFD 0099 |
+| `SIMPLE_ADB_CONNECT_GUIDE.md` | Same script supersedes this Cursor-IDE clickthrough |
+| `WIRELESS_ADB_SETUP.md` | Same script supersedes this guide |
+| `SceneControlsIntegration.md` | Documents merging `SceneControlsBackup.jsx`, a file that no longer exists; the merge already completed |
+
+Four guides remain under review: `THREEJS_QUICK_START.md`,
+`THREEJS_WEBGPU_WEBXR_MIGRATION.md`, `model-format-specification.md`,
+and `FACE_EXPRESSION_TUNING_REFERENCE.md`.
+
 ## References
 
 - M3 notice: `m3/LICENSE`
