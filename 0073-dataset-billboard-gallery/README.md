@@ -1,7 +1,7 @@
 # RFD 0073: A billboard gallery of the RFD 0064 dataset, in one USD stage
 
 **State:** prediscussion
-**Scope:** RFD 0064's dataset, `usd_viewer_app/`
+**Scope:** RFD 0064's dataset, `apps/usd_viewer_app/`
 
 ## Problem
 
@@ -29,4 +29,9 @@ reasoning, and what running the remaining 41 shards needs.
 RFD 0064 gives the dataset this RFD displays. RFD 0053 makes USD the
 internal format, and this RFD is the deliberate, scoped exception:
 a preview stage, in a companion app, not the main studio client.
-RFD 0062 gives the Fly.io toplevel this RFD's app deploys beside.
+RFD 0062 gives the Fly.io toplevel this RFD's app first deployed
+beside. RFD 0076 moves that companion app to its own deploy target
+entirely (`apps/usd_viewer_app/`), reached through a
+`GallerySource` port, and gives the `usd-viewer` patch's real,
+current form; see `DETAILS.md` for what changed and what is still
+open.
