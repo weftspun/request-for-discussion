@@ -1,6 +1,6 @@
 # Weftspun 3D Studio: design notes, moved from `thirdparty/`
 
-These 28 files (this README makes 29) came from
+These 26 files (this README makes 27) came from
 [weftspun/weftspun-3d-studio](https://github.com/weftspun/weftspun-3d-studio)'s
 `thirdparty/` directory root, per the user's own direction. They
 are not vendored third-party content — several reference `../README.md`
@@ -17,9 +17,17 @@ of a vendored-code directory and into a documentation repository
 where they belong. Three PDFs that sat alongside them at the same
 `thirdparty/` root did not move, per the user's own direction.
 
-Some content here may be stale (`activeContext.md` and `progress.md`
-read as point-in-time working notes, not living documents) or may
-duplicate a file that also exists inside a genuinely vendored
-subtree (`thirdparty/m3/docs/`, for instance) — that duplication was
-not resolved as part of this move, only the loose, orphaned copies
-at the `thirdparty/` root were relocated.
+**Two files, `activeContext.md` and `progress.md`, moved here
+briefly and were removed.** Both carried the source repository's own
+internal-only markers ("stays gitignored", "Never push to GitHub",
+"local only, gitignored", a "moat-critical" section), unlike
+`WEFTSPUN_MOAT_OVERVIEW.md`, which explicitly states it holds no
+pricing, revenue, or investor detail. Removed once found, per the
+user's own direction, not converted to an RFD.
+
+Some content here may be stale, a point-in-time working note rather
+than a living document, or may duplicate a file that also exists
+inside a genuinely vendored subtree (`thirdparty/m3/docs/`, for
+instance) — that duplication was not resolved as part of this move,
+only the loose, orphaned copies at the `thirdparty/` root were
+relocated.
