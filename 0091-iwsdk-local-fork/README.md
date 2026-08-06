@@ -1,6 +1,6 @@
 # RFD 0091: A local IWSDK fork, linked, not published
 
-**State:** published
+**State:** abandoned
 **Scope:** `AlfaOmegaGrafx/immersive-web-sdk`, this project's own `package.json`
 
 ## Problem
