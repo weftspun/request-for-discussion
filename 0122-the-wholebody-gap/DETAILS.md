@@ -196,92 +196,80 @@ caches stages by identifier, so three controls reported the second one's defect 
 still printed FAIL. And `GetFamilyType` read the wrong prim, so relaxing the basemesh family
 type to `unrestricted` was invisible and the layer validated while claiming no partition.
 
-## Colour sketch: FastCUT, not CycleGAN and not CUT
+## Colour sketch: Qwen-Image-Edit
 
-The fourth appearance is a colour sketch. The tool is **FastCUT**, from
-`taesungp/contrastive-unpaired-translation`. Three findings decided it, and one of them
-disqualifies the obvious upgrade.
+The fourth appearance is a colour sketch, produced by Qwen-Image-Edit. It is Apache-2.0,
+independently checked, and it is already in the catalog as `qwen_q4_k_m_image_edit`, so the
+style needs no training run and no new domain corpus.
 
-### Licence, read from the file
+Two costs come with that choice. Both are accepted rather than absent, and both are stated
+here so nobody rediscovers them.
 
-BSD-2-Clause, `Copyright (c) 2020, Taesung Park and Jun-Yan Zhu`, with CycleGAN's BSD text
-concatenated below it. No non-commercial clause and no no-derivatives clause.
+**The photoreal branch is the same model.** Two of the four appearances now come from one
+model, so their errors correlate. Qwen's idea of a hand appears in two domains rather than one,
+and the four-way spread narrows to something closer to three. The purpose of four appearances
+is independent error modes, so this is a real reduction in what step 2 buys.
 
-GitHub reports `NOASSERTION`, for exactly the reason the CycleGAN image already documents. Two
-licence texts in one file defeat the detector. Read the file, not the badge.
+Report the two Qwen-derived domains together when scoring, not as two independent columns. An
+average over four domains where two share a model overstates the spread.
 
-### Full CUT is disqualified, and the reason is the feature
+**There is no depth control on this path.** The packaged interface takes `image`,
+`instruction`, `strength`, `steps` and `seed`. Geometry preservation therefore rests on
+`strength` alone. RFD 0121 requires a depth control wherever generated geometry must match an
+authored pose, and this path has none, so the guarantee is weaker than the stylised branch had
+before.
 
-CUT drops cycle consistency and replaces it with a patchwise contrastive loss. That sounds
-strictly better, and for our use it is not, because of what the authors themselves report:
+That matters most at the setting a real sketch needs. A low `strength` preserves the pose and
+barely changes the picture. A high `strength` gives a convincing sketch and is free to move a
+limb. The usable window is an empirical question and it may be empty. Measure it before
+scaling, and treat an empty window as the signal to reconsider rather than as a tuning problem.
+
+The default is 0.8, which is high for this purpose. Do not inherit it.
+
+### The server must return its checkpoint hash
+
+`interactor-qwen-image-edit` returns `{image, seed, stub}`. It does not return the checkpoint
+hash or echo the instruction.
+
+That is sufficient for interactive editing and insufficient here. Condition 1 requires the
+generating model, checkpoint and conditioning recorded **with the data**, and the CycleGAN
+image already returns `checkpoint_sha256` per result for exactly that reason, because a hash in
+a server log is not with the data.
+
+So this is a change to `qwen-image-edit`'s `server.py`, not a note. Return the checkpoint hash
+and the instruction with every result before the corpus uses this path.
+
+Note also RFD 0043's open question. No measurement compares Q4_K_M against bf16 for this model,
+and Q4_K_M is the only format the image ships. A quantisation artefact in a corpus is harder to
+find later than a quantisation artefact in one edit.
+
+### Why not a GAN, recorded because it was nearly the answer
+
+The GAN route was worked through and is kept here, because it explains what the alternative
+would have cost and because one of its findings survives the change of direction.
+
+**Full CUT is disqualified by its own headline feature.** The authors report:
 
 > Our full method CUT has the flexibility to **enlarge the horses**, as a means of better
 > matching of the training statistics than CycleGAN. FastCUT behaves more conservatively like
 > CycleGAN.
 
-Changing object size to match target statistics is the advertised advantage. It is also the one
+Changing object size to match target statistics is the advertised advantage, and it is the one
 behaviour a labelled corpus cannot tolerate. A stylizer that enlarges a body moves every joint,
-and the keypoint label then describes a picture that no longer exists. The label becomes a lie
-in the exact way step 4 exists to catch.
+and the keypoint label then describes a picture that no longer exists. That finding stands
+whatever tool is chosen, so CUT stays excluded for any labelled corpus, not only this one.
 
-So the property that makes CUT better at translation makes it unusable here. Stated plainly
-because the paper's headline result reads as a straightforward win.
+**FastCUT was the strong candidate.** BSD-2, read from the LICENSE file rather than the
+`NOASSERTION` badge, which reports that only because two licence texts share one file. Same
+ResNet generator as CycleGAN, so the server and hash discipline carry over. About half the
+training memory and about twice the speed. And single-image training, where each domain is one
+image, so the colour-sketch domain needed one licence-clean sketch rather than a corpus.
 
-### FastCUT against CycleGAN, on our criteria
+It costs a training run, which Qwen-Image-Edit does not. That is the trade that was made.
 
-| criterion | CycleGAN | FastCUT |
-| --- | --- | --- |
-| geometry | conservative | conservative, per the authors |
-| licence | BSD, already cleared | BSD-2, read from the file |
-| generator | ResNet-9block | the same, so the server and hash discipline carry over |
-| training memory | baseline | about half |
-| training time | baseline | about twice as fast |
-| domain B | needs a corpus | **a single image suffices** |
-
-The last row is the one that changes the plan. CUT supports single-image training, where each
-domain is one image. A colour-sketch domain can therefore come from **one** licence-clean
-sketch rather than from a sourced corpus.
-
-That removes the blocker the previous version of this section spent most of its length on. The
-cost was never the model. It was finding a licence-clean set of colour sketches, and a set of
-one is a far easier thing to clear and to cite.
-
-FastCUT is trained without the identity loss and with `lambda_NCE=10.0`. CUT uses the identity
-preservation loss with `lambda_NCE=1`. The distinction is a training flag, `--CUT_mode FastCUT`,
-so the wrong choice is one argument away and must be pinned rather than assumed.
-
-### Was anything better available
-
-Considered and not chosen, with the reason rather than a ranking.
-
-**Exemplar transfer.** `AdaAttN` is Apache-2.0, verified by reading the LICENSE file, and takes
-a style image at inference with no training at all. `CAST` is Apache-2.0 and `EFDM` is MIT.
-Each removes the training run entirely. Each also adds a second code path and a second
-checkpoint discipline for one style, and `AdaAttN`'s weights come from a personal drive link,
-which is a pinning problem rather than a licence one. Worth revisiting if more styles are
-wanted, because the marginal cost of style eleven is zero for an exemplar model and a training
-run for FastCUT.
-
-**A written filter.** Edge extraction, flat colour quantisation and a paper ground are
-deterministic, so the output would be constructed rather than generated and would need no
-licence at all. Rejected as the primary route for a stated reason. A filter looks like a
-filter, so its domain shift is narrower than a drawn sketch, and a fourth domain that only
-teaches the model about our own filter has not widened anything. It stays the fallback if
-single-image FastCUT does not hold geometry.
-
-**Diffusion restyling.** Rejected on common-mode grounds, which the CycleGAN image already
-records. The photoreal branch is already Qwen-Image-Edit. Driving the stylised branch from the
-same family would give every domain one set of texture statistics, hands and faces.
-
-**`StyTR2`** stays excluded. It is the tool SDPose-OOD used for this exact job, and it carries
-no licence.
-
-### What must still be measured
-
-FastCUT is conservative *relative to CUT*. That is a comparison, not a guarantee, and this
-workspace does not accept a comparison as a bound. Run `pose-consensus`'s soft silhouette and
-soft depth against the render each frame came from, and read the pose back with MediaPipe. A
-style that moves a limb invalidated its own labels, whatever the authors report.
+`StyTR2` remains excluded for carrying no licence. `AdaAttN` is Apache-2.0 and exemplar-driven,
+`CAST` is Apache-2.0, `EFDM` is MIT. Any of them remains available if the common-mode cost
+above turns out to matter, and picking one then is cheaper than regretting it later.
 
 ## What exists, and what does not## What exists, and what does not
 
@@ -292,7 +280,8 @@ style that moves a limb invalidated its own labels, whatever the authors report.
 | `AnnyInverter` and LBFGS | solves pose, phenotype and local changes jointly | exists |
 | **renderer** | image, keypoints, masks, camera parameters. Nothing turns a posed mesh into a labelled frame | **build** |
 | appearance generators | Qwen-Image-Edit, CycleGAN monet and ukiyoe, algorithmic corruption, all licence-cleared | exists |
-| **colour-sketch checkpoint** | FastCUT, single-image training. One licence-clean sketch needed | **build** |
+| colour sketch | Qwen-Image-Edit, Apache-2.0, already in the catalog | exists |
+| **checkpoint hash on the Qwen path** | `server.py` returns no hash and no instruction. Condition 1 needs both | **build** |
 | drift and hand verification | `silhouette.py`, `depth_term.py`, `soma_referee.py`, controls passing | exists |
 | schema | `KEYPOINTS_2D`, `SEGMENTATION`, `RENDERS` defined. `visibility` int8 and `topology_id` pending | exists |
 | COCO-format bridge | `gen_coco_dataset.py`, `gen_reference_keypoints.py`, `gen_reference_loss.py` | exists |

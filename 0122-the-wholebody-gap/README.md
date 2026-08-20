@@ -29,34 +29,29 @@ Face-expression data is normally expensive. It needs a head-mounted camera rig a
 calibration. Here we typed the number in, so we already have it.
 
 **2. Mix domains without mixing labels.** Restyle one render four ways. Qwen-Image-Edit makes
-it photographic. CycleGAN makes ukiyo-e and Monet, and FastCUT makes a colour sketch.
-Corruption comes from
+it photographic and also makes a colour sketch. CycleGAN makes ukiyo-e and Monet. Corruption
+comes from
 ordinary code, not from asking a model for a corrupted photo, so we can set the severity and
 repeat it exactly.
 
-Colour sketch uses **FastCUT**, from the same authors as CycleGAN and the same ResNet
-generator, so the server and the checkpoint hash discipline carry over. BSD-2, read from the
-LICENSE file rather than the badge, which reports `NOASSERTION` because two licence texts sit
-in one file.
+Colour sketch also uses Qwen-Image-Edit. It is Apache-2.0, already in the catalog, and needs
+no training run and no new domain corpus.
 
-**Full CUT is disqualified, and the reason is its headline feature.** The authors report that
-CUT has the flexibility to enlarge the horses, to match target statistics better than
-CycleGAN, and that FastCUT behaves more conservatively. Changing object size is the advertised
-advantage. It is also the one behaviour a labelled corpus cannot tolerate, because a stylizer
-that enlarges a body moves every joint and the keypoint label then describes a picture that no
-longer exists.
+Two costs come with that, and both are accepted rather than absent.
 
-**FastCUT beats CycleGAN on the thing that was blocking.** It trains in about half the memory
-and about twice the speed, and it supports single-image training, where each domain is one
-image. So the colour-sketch domain needs **one** licence-clean sketch rather than a sourced
-corpus. That was the whole cost of this appearance, and it is now small.
+**Two of the four appearances now share one model**, so their errors correlate. Qwen's idea of
+a hand appears in two domains rather than one, and the spread narrows to nearer three. Report
+the two Qwen-derived domains together when scoring, because an average over four columns where
+two share a model overstates the spread.
 
-Train the checkpoint. Do not download one. A third-party checkpoint carries no readable licence
-and no record of the corpus it learned from, so condition 1 cannot be satisfied. That is the
-DeepFashion pattern, already blocklisted.
+**This path has no depth control.** The interface takes an instruction and a strength, so
+geometry preservation rests on `strength` alone. A low strength keeps the pose and barely
+changes the picture. A high strength gives a real sketch and is free to move a limb. The
+usable window is empirical and it may be empty. The default of 0.8 is high for this purpose
+and should not be inherited.
 
-Conservative *relative to CUT* is a comparison and not a bound. `DETAILS.md` states what has to
-be measured before this is trusted.
+`DETAILS.md` also records a change the packaged server needs. It returns no checkpoint hash, so
+condition 1 is not satisfied on this path until it does.
 
 **3. Train one head on heterogeneous annotation.** The head outputs 104 points. On a real COCO
 photo only the 14 points COCO labelled score, and the other 90 are masked out. On our render
