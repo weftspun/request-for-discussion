@@ -229,3 +229,84 @@ Two reasons this is not a refutation, only a failure to reproduce:
 So the two-bundle design is not known to be blocked, and it is not known
 to work either. The test that settles it is the same bundle against a
 real endpoint that completes a handshake.
+
+## The connection failure: FoundationDB prefers IPv6 and does not fall back
+
+Supplying the port removed `lookup_failed` and left
+`connection_failed`. That is a second, independent fault, and it is the
+one that kept every backup from starting.
+
+FoundationDB resolves the endpoint, receives an A record and a AAAA
+record, and connects to exactly one of them.
+`flow/include/flow/IConnection.h`:
+
+    if (ipV4Addresses.size() > 0 && FLOW_KNOBS->RESOLVE_PREFER_IPV4_ADDR)
+        return ipV4...
+    if (ipV6Addresses.size() > 0)
+        return ipV6Addresses[random];
+
+`flow/Knobs.cpp` initialises `RESOLVE_PREFER_IPV4_ADDR` to false, so
+IPv6 wins whenever a AAAA exists. There is no second attempt with the
+other family. A unit test asserts IPv6 is always chosen when present,
+so this is deterministic: every retry picks the same unreachable
+address and fails the same way.
+
+On a host without working IPv6 egress `connect()` returns
+`ENETUNREACH`, which arrives as `connection_failed`. The name describes
+the symptom and says nothing about the family that was chosen.
+
+### Why the cluster never noticed
+
+A cluster file carries literal addresses. Nothing is resolved, so
+`pickOneAddress` is never on that path.
+
+That is the tell, and it was visible for hours before it was read: peer
+traffic stayed healthy across machine kills, quorum loss and recovery
+while every backup failed. Two paths through one binary, one of which
+resolves names and one of which does not.
+
+### Measured
+
+| condition | result |
+| --- | --- |
+| no knob, plaintext port 80 | `connection_failed` |
+| no knob, TLS port 443 | `connection_failed` |
+| `curl` and raw TCP, same host and ports | HTTP 200 in 12 ms, TCP ok |
+| `--knob_resolve_prefer_ipv4_addr=1` | `backup_auth_missing` |
+
+The last row is the fix. `backup_auth_missing` is the connection
+succeeding and deliberately bogus credentials being rejected after it.
+
+Plaintext and TLS failing identically is what eliminated TLS, the CA
+bundle, the two-anchor design and SNI in one step. The `curl` row is
+the control: without it, "the network is broken" reads the same way.
+
+### The fix
+
+`knob_resolve_prefer_ipv4_addr = true` in the `[backup_agent]` section
+of `foundationdb.conf`. `true` and `1` are both accepted; a value the
+binary rejects logs `Invalid`.
+
+**Confirmed on Ubuntu under WSL2, which has no IPv6 default route.**
+On Fly it is inference: both IPv4 and IPv6 egress answered there, so a
+missing route cannot be the explanation, and outbound IPv6 varies per
+machine. The cluster was torn down before the probe ran. Do not record
+Fly as fixed.
+
+### Expect an auth error next, not a regression
+
+`guessRegionFromDomain` does not recognise `fly.storage.tigris.dev`, so
+`region=` stays explicit in the URL, and
+`--knob_http_request_aws_v4_header` defaults true in 7.3. The next
+failure should be auth or region shaped. That is progress.
+
+### Not documented anywhere
+
+No issue or forum thread names this root cause, and none tracks the
+missing IPv4 fallback. One thread reports the same shape with a
+different symptom -- a routing blackhole timing out rather than an
+immediate `ENETUNREACH` -- and was closed by enabling IPv6 in Docker.
+Nobody named the knob.
+
+Both faults in this RFD are ours to write down. That is the reason this
+file is long.
