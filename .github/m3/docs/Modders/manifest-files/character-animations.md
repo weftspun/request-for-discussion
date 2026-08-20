@@ -96,4 +96,3 @@ These links help:
 - https://github.com/M3-org/CharacterStudio/tree/main/public/3d/animations
 
 ![Screenshot_2024-02-19_21-25-22](/img/HJMapKb36.jpg)
-

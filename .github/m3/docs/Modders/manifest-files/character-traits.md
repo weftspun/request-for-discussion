@@ -292,7 +292,7 @@ Example:
     "authors":["Author Name"],
     "version":"v1",
     "commercialUssageName": "personalNonProfit",
-    "contactInformation": "https://example.com/", 
+    "contactInformation": "https://example.com/",
     "allowExcessivelyViolentUsage":false,
     "allowExcessivelySexualUsage":false,
     "allowPoliticalOrReligiousUsage":false,

@@ -386,7 +386,7 @@ def generate_manifest(directory_path):
         "traitIconsDirectorySvg": "./loot/icons/",
         "defaultCullingLayer": -1,
         "defaultCullingDistance": [0.1, 0.01],
-        "initialTraits": ["Body", "Head", "Hand", "Foot", "Chest", "Waist", "Neck"], 
+        "initialTraits": ["Body", "Head", "Hand", "Foot", "Chest", "Waist", "Neck"],
         "offset": [0.0, 0.48, 0.0],
         "traits": generate_traits(directory_path),
         "textureCollections": [],
