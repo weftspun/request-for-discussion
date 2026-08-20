@@ -40,3 +40,27 @@ repos:
         entry: python scripts/check-model-images.py
         language: system
         files: '^\d{4}-.*/(Dockerfile|server\.py|test_input\.json)$'
+
+  # Markdown hygiene. Structural only, deliberately.
+  #
+  # RFD 0063 moves ASD-STE100 enforcement to the simplified-technical-english
+  # plugin, and says why no repository-local script duplicates it. These hooks
+  # therefore check nothing about the prose. They check the bytes: a trailing
+  # space that a diff shows and a reader cannot see, a missing final newline
+  # that makes the next commit touch a line nobody edited, and a CRLF that
+  # arrives from a Windows checkout and rewrites a whole file.
+  #
+  # Scoped to markdown. The Elixir and model-image hooks above own their own
+  # file types, and a hook that reformats somebody else's is a hook that
+  # widens without being asked.
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        files: '\.md$'
+        args: [--markdown-linebreak-ext=md]
+      - id: end-of-file-fixer
+        files: '\.md$'
+      - id: mixed-line-ending
+        files: '\.md$'
+        args: [--fix=lf]
