@@ -29,11 +29,34 @@ Face-expression data is normally expensive. It needs a head-mounted camera rig a
 calibration. Here we typed the number in, so we already have it.
 
 **2. Mix domains without mixing labels.** Restyle one render four ways. Qwen-Image-Edit makes
-it photographic. CycleGAN makes ukiyo-e and Monet. Corruption comes from ordinary code, not
-from asking a model for a corrupted photo, so we can set the severity and repeat it exactly.
+it photographic. CycleGAN makes ukiyo-e and Monet, and FastCUT makes a colour sketch.
+Corruption comes from
+ordinary code, not from asking a model for a corrupted photo, so we can set the severity and
+repeat it exactly.
 
-All four share one render, so all four share one set of answers. Scraping cannot give that.
-You never find one person drawn four ways with the layers already separated.
+Colour sketch uses **FastCUT**, from the same authors as CycleGAN and the same ResNet
+generator, so the server and the checkpoint hash discipline carry over. BSD-2, read from the
+LICENSE file rather than the badge, which reports `NOASSERTION` because two licence texts sit
+in one file.
+
+**Full CUT is disqualified, and the reason is its headline feature.** The authors report that
+CUT has the flexibility to enlarge the horses, to match target statistics better than
+CycleGAN, and that FastCUT behaves more conservatively. Changing object size is the advertised
+advantage. It is also the one behaviour a labelled corpus cannot tolerate, because a stylizer
+that enlarges a body moves every joint and the keypoint label then describes a picture that no
+longer exists.
+
+**FastCUT beats CycleGAN on the thing that was blocking.** It trains in about half the memory
+and about twice the speed, and it supports single-image training, where each domain is one
+image. So the colour-sketch domain needs **one** licence-clean sketch rather than a sourced
+corpus. That was the whole cost of this appearance, and it is now small.
+
+Train the checkpoint. Do not download one. A third-party checkpoint carries no readable licence
+and no record of the corpus it learned from, so condition 1 cannot be satisfied. That is the
+DeepFashion pattern, already blocklisted.
+
+Conservative *relative to CUT* is a comparison and not a bound. `DETAILS.md` states what has to
+be measured before this is trusted.
 
 **3. Train one head on heterogeneous annotation.** The head outputs 104 points. On a real COCO
 photo only the 14 points COCO labelled score, and the other 90 are masked out. On our render
@@ -77,16 +100,45 @@ ranges, not 992 in one.** That is **125** joint cubes, not 124.
 mesh with no overlap and no gap. Coverage fails only through `hm08_config.json`'s twelve
 ranges. RFD 0121 records the measurement and `2-contract/hm08-partition` proves it.
 
-## One claim is marked unverified
+## Retracted: the topology loads, and there was no blocker
 
-The plan says only the `anny` topology carries UVs, all 52 facial actions and the hm08 group
-ranges, which makes the choice over-determined. We could not re-derive the UV half.
+An earlier version of this RFD marked the UV claim UNVERIFIED and said the topology the corpus
+depends on does not load. **Both statements were wrong, and the error was mine.**
 
-`anny.Anny(topology=TopologyConfig(base_mesh="anny"))` raises `FileNotFoundError` for
-`anny/data/topology/anny.obj`, and that file does not ship. This matters more than a missing
-measurement. The topology the whole corpus depends on does not load here.
+`TopologyConfig(base_mesh=...)` and the `topology=` spec string take different vocabularies.
+`AlternativeTopology` is `smplx`, `smpl`, `soma`, `anny_from_soma`, `notoes` and three collapse
+variants. `"anny"` is not in it. Passing `base_mesh="anny"` falls through to
+`data/topology/anny.obj`, a file that was never meant to exist, so the error named a missing
+asset rather than a bad argument. I read a packaging fault into an invalid argument.
 
-A silent skip reads exactly like a pass, so this is named and counted rather than omitted.
+The spec string works, and the claim re-derives exactly.
+
+| call | vertices | `texture_coordinates` |
+| --- | --- | --- |
+| `topology="anny"` | 13,718 | (21334, 2) |
+| `topology="soma"` | 18,056 | `None` |
+
+The PBR bake is not blocked. Nothing in the package is missing.
+
+**And the helper geometry was recovered.** `Anny.faces` is the body submodel, 27,420 triangles
+reaching index 14741. `basemesh_face_to_vertex_table.json.gz` holds 18,486 quads reaching
+19,157 and references all 19,158 vertices with none left over. Every group has faces, the hair,
+tights and skirt helpers included.
+
+## OpenUSD carries the topology, so the question cannot recur
+
+RFD 0053 makes OpenUSD the internal format. The body now enters it at one point.
+`2-contract/hm08-partition/export_hm08_usd.py` writes a layer with two prims.
+
+    /Hm08/Basemesh   19,158 points, 18,486 quads, all 12 groups, partition
+    /Hm08/Body       13,718 points, 27,420 triangles, UVs
+
+Downstream stages compose against that layer rather than importing `anny`. A layer has one way
+to be opened, so no stage has to know which loader path ships in which release.
+
+`UsdGeomSubset` carries a `partition` family type and USD validates it. The property
+`three_groups_cover` proves is now enforced by the data format. `groups_by_range` is written
+as `nonOverlapping` on purpose, because the Lean file proves it is not a partition.
 
 ## The cheapest thing that could change the plan
 

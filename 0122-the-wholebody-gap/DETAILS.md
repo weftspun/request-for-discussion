@@ -139,31 +139,151 @@ constant zero and needs no map. Bake once and reuse it in every render.
 Do the bake in Blender. MPFB2 is a Blender addon, so the bake happens in the tool the material
 was authored for rather than in a reimplementation of it.
 
-**This step is blocked by the unverified claim below.** A bake needs UVs, and the topology
-that carries them does not load here.
+The bake needs UVs, and they exist. `texture_coordinates` is (21334, 2) under
+`topology="anny"`. An earlier version of this file called the bake blocked, which the section
+below retracts.
 
-## The claim we could not re-derive
+## Retracted: the topology loads
 
-The plan states that `texture_coordinates` is `(21334, 2)` under `topology="anny"` and `None`
-under `"soma"`, and that only `anny` carries UVs, all 52 facial actions and the hm08 group
-ranges.
+An earlier version of this file marked the UV claim UNVERIFIED and reported that the topology
+the corpus depends on does not load. Both were wrong. The retraction stays here beside what
+replaces it.
 
-Half re-derived. `base_mesh="soma"` loads and its `texture_coordinates` is `None`.
+`TopologyConfig(base_mesh=...)` and the `topology=` spec string take different vocabularies.
+`AlternativeTopology` is `smplx`, `smpl`, `soma`, `anny_from_soma`, `notoes` and three collapse
+variants. `"anny"` is not among them, so `base_mesh="anny"` falls through to
+`data/topology/anny.obj`. That file was never meant to exist, and the resulting
+`FileNotFoundError` names a missing asset rather than a bad argument. The failure mode invites
+the wrong reading, and it got one.
 
-Half **UNVERIFIED**, and the reason is worse than a missing number:
+The claim re-derives exactly through the spec string.
 
-    anny.Anny(topology=TopologyConfig(base_mesh="anny"))
-    FileNotFoundError: anny/data/topology/anny.obj
+| call | vertices | `texture_coordinates` |
+| --- | --- | --- |
+| `topology="anny"` | 13,718 | (21334, 2) |
+| `topology="soma"` | 18,056 | `None` |
 
-`anny/data/topology/` ships `legacy_default.obj`, `notoes.obj` and three collapse variants. It
-does not ship `anny.obj`. `retopology.py` line 39 builds that filename, so the path fails
-rather than falling back. A cached `data/cached/anny.pth` exists and the failing path does not
-consult it.
+The PBR bake is not blocked.
 
-So the topology the whole corpus depends on does not load in this environment. Resolve that
-before the PBR bake is scheduled, because the bake needs the UVs that topology carries.
+**The helper geometry was recovered too.** `Anny.faces` is the body submodel: 27,420 triangles
+reaching vertex index 14741, and no higher under any of the eight combinations of
+`eyes`, `tongue` and `nudity_edits`. Read as the whole mesh, it says `helper-hair`,
+`helper-tights` and `helper-skirt` have no faces.
 
-## What exists, and what does not
+They do. `basemesh_face_to_vertex_table.json.gz` holds **18,486 quads** reaching **19,157**,
+referencing all 19,158 vertices with none unreferenced. Every group has faces. A proxy surface
+with no appearance is a different thing from absent geometry, and RFD 0121 means the first.
+
+## OpenUSD is where the topology now lives
+
+RFD 0053 makes OpenUSD the internal format. `export_hm08_usd.py` in
+`2-contract/hm08-partition` is the body's entry point.
+
+    /Hm08/Basemesh   19,158 points, 18,486 quads, all 12 groups, partition
+    /Hm08/Body       13,718 points, 27,420 triangles, UVs (21334, 2)
+
+The map between the two spaces is measured rather than assumed. `ref` is the ascending unique
+index set of `Anny.faces`, the maximum positional difference between `basemesh[ref]` and the
+body mesh is 0.0 exactly, so `body_index = searchsorted(ref, basemesh_index)`.
+
+`UsdGeomSubset` carries a `partition` family type and USD validates it, so `three_groups_cover`
+is enforced by the format rather than argued in a comment. `groups_by_range` is written as
+`nonOverlapping` on purpose, because the Lean file proves it is not a partition.
+
+Four negative controls ship with it. Two found real defects in the validator while being
+written. A reused temporary filename handed each control the previous one's stage, because USD
+caches stages by identifier, so three controls reported the second one's defect while all four
+still printed FAIL. And `GetFamilyType` read the wrong prim, so relaxing the basemesh family
+type to `unrestricted` was invisible and the layer validated while claiming no partition.
+
+## Colour sketch: FastCUT, not CycleGAN and not CUT
+
+The fourth appearance is a colour sketch. The tool is **FastCUT**, from
+`taesungp/contrastive-unpaired-translation`. Three findings decided it, and one of them
+disqualifies the obvious upgrade.
+
+### Licence, read from the file
+
+BSD-2-Clause, `Copyright (c) 2020, Taesung Park and Jun-Yan Zhu`, with CycleGAN's BSD text
+concatenated below it. No non-commercial clause and no no-derivatives clause.
+
+GitHub reports `NOASSERTION`, for exactly the reason the CycleGAN image already documents. Two
+licence texts in one file defeat the detector. Read the file, not the badge.
+
+### Full CUT is disqualified, and the reason is the feature
+
+CUT drops cycle consistency and replaces it with a patchwise contrastive loss. That sounds
+strictly better, and for our use it is not, because of what the authors themselves report:
+
+> Our full method CUT has the flexibility to **enlarge the horses**, as a means of better
+> matching of the training statistics than CycleGAN. FastCUT behaves more conservatively like
+> CycleGAN.
+
+Changing object size to match target statistics is the advertised advantage. It is also the one
+behaviour a labelled corpus cannot tolerate. A stylizer that enlarges a body moves every joint,
+and the keypoint label then describes a picture that no longer exists. The label becomes a lie
+in the exact way step 4 exists to catch.
+
+So the property that makes CUT better at translation makes it unusable here. Stated plainly
+because the paper's headline result reads as a straightforward win.
+
+### FastCUT against CycleGAN, on our criteria
+
+| criterion | CycleGAN | FastCUT |
+| --- | --- | --- |
+| geometry | conservative | conservative, per the authors |
+| licence | BSD, already cleared | BSD-2, read from the file |
+| generator | ResNet-9block | the same, so the server and hash discipline carry over |
+| training memory | baseline | about half |
+| training time | baseline | about twice as fast |
+| domain B | needs a corpus | **a single image suffices** |
+
+The last row is the one that changes the plan. CUT supports single-image training, where each
+domain is one image. A colour-sketch domain can therefore come from **one** licence-clean
+sketch rather than from a sourced corpus.
+
+That removes the blocker the previous version of this section spent most of its length on. The
+cost was never the model. It was finding a licence-clean set of colour sketches, and a set of
+one is a far easier thing to clear and to cite.
+
+FastCUT is trained without the identity loss and with `lambda_NCE=10.0`. CUT uses the identity
+preservation loss with `lambda_NCE=1`. The distinction is a training flag, `--CUT_mode FastCUT`,
+so the wrong choice is one argument away and must be pinned rather than assumed.
+
+### Was anything better available
+
+Considered and not chosen, with the reason rather than a ranking.
+
+**Exemplar transfer.** `AdaAttN` is Apache-2.0, verified by reading the LICENSE file, and takes
+a style image at inference with no training at all. `CAST` is Apache-2.0 and `EFDM` is MIT.
+Each removes the training run entirely. Each also adds a second code path and a second
+checkpoint discipline for one style, and `AdaAttN`'s weights come from a personal drive link,
+which is a pinning problem rather than a licence one. Worth revisiting if more styles are
+wanted, because the marginal cost of style eleven is zero for an exemplar model and a training
+run for FastCUT.
+
+**A written filter.** Edge extraction, flat colour quantisation and a paper ground are
+deterministic, so the output would be constructed rather than generated and would need no
+licence at all. Rejected as the primary route for a stated reason. A filter looks like a
+filter, so its domain shift is narrower than a drawn sketch, and a fourth domain that only
+teaches the model about our own filter has not widened anything. It stays the fallback if
+single-image FastCUT does not hold geometry.
+
+**Diffusion restyling.** Rejected on common-mode grounds, which the CycleGAN image already
+records. The photoreal branch is already Qwen-Image-Edit. Driving the stylised branch from the
+same family would give every domain one set of texture statistics, hands and faces.
+
+**`StyTR2`** stays excluded. It is the tool SDPose-OOD used for this exact job, and it carries
+no licence.
+
+### What must still be measured
+
+FastCUT is conservative *relative to CUT*. That is a comparison, not a guarantee, and this
+workspace does not accept a comparison as a bound. Run `pose-consensus`'s soft silhouette and
+soft depth against the render each frame came from, and read the pose back with MediaPipe. A
+style that moves a limb invalidated its own labels, whatever the authors report.
+
+## What exists, and what does not## What exists, and what does not
 
 | piece | note | state |
 | --- | --- | --- |
@@ -171,7 +291,8 @@ before the PBR bake is scheduled, because the bake needs the UVs that topology c
 | `extract_poses.py` | world-space joint positions, convention-free, avoiding the Euler trap | exists |
 | `AnnyInverter` and LBFGS | solves pose, phenotype and local changes jointly | exists |
 | **renderer** | image, keypoints, masks, camera parameters. Nothing turns a posed mesh into a labelled frame | **build** |
-| appearance generators | Qwen-Image-Edit, CycleGAN, algorithmic corruption, all licence-cleared | exists |
+| appearance generators | Qwen-Image-Edit, CycleGAN monet and ukiyoe, algorithmic corruption, all licence-cleared | exists |
+| **colour-sketch checkpoint** | FastCUT, single-image training. One licence-clean sketch needed | **build** |
 | drift and hand verification | `silhouette.py`, `depth_term.py`, `soma_referee.py`, controls passing | exists |
 | schema | `KEYPOINTS_2D`, `SEGMENTATION`, `RENDERS` defined. `visibility` int8 and `topology_id` pending | exists |
 | COCO-format bridge | `gen_coco_dataset.py`, `gen_reference_keypoints.py`, `gen_reference_loss.py` | exists |
