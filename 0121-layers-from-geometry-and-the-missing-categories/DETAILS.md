@@ -115,17 +115,66 @@ Both lists live in `common/utils/inference_utils.py`.
 | `eyelash` | eyelash helpers | separated |
 | `front hair`, `back hair` | `helper-hair` | proxy only, and no front and back split |
 | `topwear`, `bottomwear`, `legwear` | `helper-tights`, `helper-skirt` | proxy only |
-| `headwear`, `eyewear`, `earwear`, `eyebrow` | none | absent |
+| `eyebrow` | none, painted into the skin texture | absent, attached like a garment |
+| `headwear`, `eyewear`, `earwear` | none | absent |
 | `neckwear`, `handwear`, `footwear` | none | absent |
 | `tail`, `wings`, `objects` | none | absent |
 
 Ten tags are absent. Five have a proxy volume and no appearance. Nine need a partition of
 geometry that already exists.
 
-`eyebrow` differs from the other nine absent tags. MakeHuman paints it into the skin texture.
-A painted feature shares the skin's depth, so the depth-order rule gives it no layer of its
-own. A rebuild does not fix this. Either `eyebrow` becomes geometry or it stays a 2D problem.
-State the choice rather than letting the tag fall through.
+`eyebrow` is not a special case. It joins the absent list, which makes **ten**, not nine.
+
+MakeHuman paints it into the skin texture, so it shares the skin's depth and the depth-order
+rule gives it no layer of its own. The fix is the same as for every other absent tag. It
+becomes a separate attached mesh, handled like a garment or an object, with its own geometry
+and therefore its own depth.
+
+The ten absent tags are `eyebrow`, `headwear`, `eyewear`, `earwear`, `neckwear`, `handwear`,
+`footwear`, `tail`, `wings` and `objects`. One route serves all of them.
+
+An earlier draft carved `eyebrow` out and proposed authoring it against the basemesh. That was
+wrong twice. It invented a special case where the ordinary one works, and it pointed at the
+one mesh that must not be edited.
+
+## The basemesh vertex order is frozen
+
+This is the hard constraint, and it is about **order**, not count.
+
+Two things read the basemesh by index, and both break silently under a permutation.
+
+**`coco.pth` weights are per-index.** Each keypoint is a weight vector 19,158 wide. The
+weights for `nose` are non-zero at indices 161, 162, 163, 164, 184, 197 and others. Reorder
+the mesh and the vector still has 19,158 entries, still multiplies, and puts the nose
+somewhere else.
+
+**Every hm08 group is a range.** `body` is `[[0, 13379]]`. `helper-hair` is `[[18722, 19149]]`.
+A range is an order claim. Reordering invalidates every group, so it invalidates every mask.
+
+So no part may be merged into the basemesh, and no operation may renumber it. Attached parts
+carry their own vertex arrays. This is what makes "treat it like a garment" the safe answer
+rather than merely the tidy one.
+
+### The count gate was decoration
+
+The earlier gate asserted 19,158 vertices. A permutation keeps that count exactly, so the gate
+passes on the broken input it exists to catch.
+
+The order-sensitive form hashes the face index array, because face indices reference vertex
+indices and therefore encode the order:
+
+    faces        (27420, 3)
+    sha256       6b98503de9657efce24300113b90bdc5a4e06a87e2f7d7f7067400a563185da4
+
+Permuting the vertices leaves the count at 19,158 and changes that hash to
+`616c75243f...`. That is the negative control, and it is the reason the hash replaces the
+count rather than joining it.
+
+**State the coverage honestly.** The face array references vertex indices up to 14741 only, so
+the hash pins the order of that span and says nothing about 14742 to 19157. The group-range
+assertions in `check_hm08_claims.py` cover the remainder. Neither check alone is sufficient,
+and reporting the hash as though it pinned the whole mesh would be the same error one level
+down.
 
 ## Why the depth order needs no inpainting
 
@@ -236,6 +285,8 @@ that must fail.
 | control reached | depth control present in the call record | a run with the control dropped |
 | provenance | checkpoint and prompt recorded per Half B row | a row with the checkpoint missing |
 | vertex count | the posed mesh has 19,158 vertices | a run on the 13,718 default |
+| vertex order | the face-index hash matches | the mesh permuted, count unchanged |
+| basemesh untouched | every added part is its own mesh | any part merged into the basemesh |
 | output set | the corpus row holds image, keypoints and shape | a row with a fourth output |
 
 Report the floor beside each number. A residual with no baseline is not a measurement.
