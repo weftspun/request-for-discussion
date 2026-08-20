@@ -1,6 +1,6 @@
 # RFD 0067: CockroachDB, reranked against FoundationDB
 
-**State:** published
+**State:** abandoned
 **Scope:** `weftspun_studio/`, `character_taxonomy/`
 
 ## Problem
@@ -11,7 +11,49 @@ mvsqlite. One of them, `h2o-bench-tpcc`, picked FoundationDB over
 CockroachDB, and called the CockroachDB fork this project pins "a
 dead engine." Does that verdict carry over here.
 
-## Decision
+## Retracted on 2026-08-20
+
+**The decision below no longer holds.** `weftspun/cockroach-local` is archived and is out of
+`default.xml`. `datasource-foundationdb` and `datasource-store` are forked in on side 6.
+
+Abandoned here means the decision was in force and has been reversed. It does not mean nobody
+acted on it. The reasoning stays in place because it records what was true, and because two of
+its three reasons were answered rather than found wrong.
+
+**Reason 2 was answered by a repository that no longer exists.** It rejected FoundationDB
+because the one Ecto-compatible path embedded a JVM through a Rustler NIF, with no crash
+isolation, a JDK and Rust build step, and no per-call timeout. That path was
+`ecto-fdb-relational`, and it is archived. Its own last merged change reverted a bump because
+main did not compile.
+
+**Reason 3 was answered by the shape that replaced it.** It rejected raw FoundationDB for
+dropping SQL and Ecto, which would mean rewriting every `Ecto.Schema` by hand.
+`datasource-store` is not raw FoundationDB. It is SQLite with a VFS whose pages live in the
+cluster, so SQL comes back, and no JVM comes with it. This RFD never assessed that shape,
+because it did not exist here when the RFD was written.
+
+**Reason 1 is still correct and never argued for moving.** Our load is nowhere near TPC-C at
+MMO scale, so throughput was not the reason to keep CockroachDB and it is not the reason to
+leave. Nothing about reason 1 changed.
+
+So the retraction is narrow. Two reasons were removed by events, one was never load bearing,
+and the open work this RFD named as the real risk is what remains.
+
+**The dead-fork risk was the open item, and it is the part that aged badly.** The RFD called it
+real, not a throughput question, and deferred it as open work rather than a reason to move
+today. Today arrived.
+
+## What this leaves unanswered
+
+RFD 0020 picks CockroachDB and this RFD said it stands. RFD 0020 is still `discussion` and now
+rests on a reranking that has been retracted, so it needs its own reading rather than
+inheriting this one.
+
+`character_taxonomy/` runs on CockroachDB per RFD 0065. Archiving the datasource does not move
+that application, so somebody has to decide what it runs on. This retraction does not decide
+it.
+
+## Decision, as published and now retracted
 
 Keep CockroachDB. RFD 0020 stands. See `DETAILS.md` for the
 repository-by-repository evidence this reranking draws on.
