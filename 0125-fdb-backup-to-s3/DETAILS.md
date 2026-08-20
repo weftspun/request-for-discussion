@@ -134,3 +134,98 @@ options are:
 3. Back up through a machine that is not on Fly.
 
 None is tested. Do not record any of them as the answer.
+
+## Retraction: it was never DNS
+
+The section above is wrong about the cause, and it is kept because the
+road it went down is worth knowing.
+
+FoundationDB substitutes a service *name* when a blobstore URL carries
+no port. `fdbclient/S3BlobStore.actor.cpp`:
+
+    service = b->knobs.secure_connection ? "https" : "http";
+
+That string reaches `getaddrinfo`, which resolves it through
+`/etc/services`. `flow/Net2.actor.cpp` then collapses every resolver
+error to one code:
+
+    if (ec) { promise.sendError(lookup_failed()); return; }
+
+So `EAI_SERVICE` is reported as `lookup_failed` (1041), whose text is
+"DNS lookup failed".
+
+**`debian:bookworm-slim` does not ship `/etc/services`.** It comes from
+`netbase`, which is not among the base image's 74 packages, and none of
+`curl ca-certificates dnsutils procps openssl` pulls it in.
+
+That single fact explains every observation at once:
+
+| observation | why |
+| --- | --- |
+| every hostname fails, `s3.amazonaws.com` too | the name is never the problem |
+| `/etc/hosts` does not help | the name is never looked up |
+| a second nameserver does not help | the same |
+| `getent` and `curl` work | neither reads `/etc/services` |
+| an IP with `:443` gets past it | the port, not the IP, is the fix |
+
+The last row is the one that reads as a contradiction and is not. The
+IP test carried an explicit `:443`, so it supplied the port the URL was
+missing. It confirms the diagnosis rather than the addressing theory it
+was run to test.
+
+## The fix
+
+Two changes, either sufficient, both applied:
+
+1. `netbase` in `Containerfile.fdb`. About 30 kB, and it repairs every
+   other tool in the image at the same time.
+2. An explicit port in the blobstore URL, which is what every working
+   example on the FoundationDB forums writes:
+
+       blobstore://<key>@<host>:443/<name>?bucket=<bucket>&region=auto&sc=1
+
+The blob credentials key stays `<key>@<host>` with no port. It is
+host-only, so adding `:443` to the URL does not change it.
+
+## Not a reported bug
+
+No issue, pull request or forum thread describes this. The
+error-flattening in `resolveTCPEndpoint_impl` is a real usability
+defect worth reporting upstream: `EAI_SERVICE`, `EAI_NONAME`,
+`EAI_AGAIN` and `EAI_FAIL` all arrive as "DNS lookup failed".
+
+**Untested.** The cluster was torn down before either fix could run.
+Neither is confirmed, and the check is two commands on a rebuilt image:
+
+    ls -l /etc/services
+    getent services https
+
+## Correction: the multi-anchor segfault did not reproduce
+
+The section "A defect found on the way" above records `fdbbackup`
+crashing with exit 139 on a CA file holding our root plus the public
+roots, and treats it as a FoundationDB defect blocking the two-bundle
+design. It did not reproduce.
+
+Measured with 7.3.76 on Ubuntu, one run for each bundle:
+
+| CA file | anchors | exit |
+| --- | --- | --- |
+| public bundle only | 146 | 124 |
+| our root + public bundle | 147 | 124 |
+| our root only | 1 | 124 |
+
+All three behave the same and none crashes. 124 is the harness timeout,
+not a result from FoundationDB.
+
+Two reasons this is not a refutation, only a failure to reproduce:
+
+* The environment differs. The crash was seen in the Fly container; this
+  ran on Ubuntu under WSL.
+* The host was `example.invalid`, so no handshake was attempted. A crash
+  in certificate *verification* rather than certificate *loading* would
+  not be reached by this test.
+
+So the two-bundle design is not known to be blocked, and it is not known
+to work either. The test that settles it is the same bundle against a
+real endpoint that completes a handshake.
