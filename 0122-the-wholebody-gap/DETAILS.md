@@ -139,31 +139,139 @@ constant zero and needs no map. Bake once and reuse it in every render.
 Do the bake in Blender. MPFB2 is a Blender addon, so the bake happens in the tool the material
 was authored for rather than in a reimplementation of it.
 
-**This step is blocked by the unverified claim below.** A bake needs UVs, and the topology
-that carries them does not load here.
+The bake needs UVs, and they exist. `texture_coordinates` is (21334, 2) under
+`topology="anny"`. An earlier version of this file called the bake blocked, which the section
+below retracts.
 
-## The claim we could not re-derive
+## Retracted: the topology loads
 
-The plan states that `texture_coordinates` is `(21334, 2)` under `topology="anny"` and `None`
-under `"soma"`, and that only `anny` carries UVs, all 52 facial actions and the hm08 group
-ranges.
+An earlier version of this file marked the UV claim UNVERIFIED and reported that the topology
+the corpus depends on does not load. Both were wrong. The retraction stays here beside what
+replaces it.
 
-Half re-derived. `base_mesh="soma"` loads and its `texture_coordinates` is `None`.
+`TopologyConfig(base_mesh=...)` and the `topology=` spec string take different vocabularies.
+`AlternativeTopology` is `smplx`, `smpl`, `soma`, `anny_from_soma`, `notoes` and three collapse
+variants. `"anny"` is not among them, so `base_mesh="anny"` falls through to
+`data/topology/anny.obj`. That file was never meant to exist, and the resulting
+`FileNotFoundError` names a missing asset rather than a bad argument. The failure mode invites
+the wrong reading, and it got one.
 
-Half **UNVERIFIED**, and the reason is worse than a missing number:
+The claim re-derives exactly through the spec string.
 
-    anny.Anny(topology=TopologyConfig(base_mesh="anny"))
-    FileNotFoundError: anny/data/topology/anny.obj
+| call | vertices | `texture_coordinates` |
+| --- | --- | --- |
+| `topology="anny"` | 13,718 | (21334, 2) |
+| `topology="soma"` | 18,056 | `None` |
 
-`anny/data/topology/` ships `legacy_default.obj`, `notoes.obj` and three collapse variants. It
-does not ship `anny.obj`. `retopology.py` line 39 builds that filename, so the path fails
-rather than falling back. A cached `data/cached/anny.pth` exists and the failing path does not
-consult it.
+The PBR bake is not blocked.
 
-So the topology the whole corpus depends on does not load in this environment. Resolve that
-before the PBR bake is scheduled, because the bake needs the UVs that topology carries.
+**The helper geometry was recovered too.** `Anny.faces` is the body submodel: 27,420 triangles
+reaching vertex index 14741, and no higher under any of the eight combinations of
+`eyes`, `tongue` and `nudity_edits`. Read as the whole mesh, it says `helper-hair`,
+`helper-tights` and `helper-skirt` have no faces.
 
-## What exists, and what does not
+They do. `basemesh_face_to_vertex_table.json.gz` holds **18,486 quads** reaching **19,157**,
+referencing all 19,158 vertices with none unreferenced. Every group has faces. A proxy surface
+with no appearance is a different thing from absent geometry, and RFD 0121 means the first.
+
+## OpenUSD is where the topology now lives
+
+RFD 0053 makes OpenUSD the internal format. `export_hm08_usd.py` in
+`2-contract/hm08-partition` is the body's entry point.
+
+    /Hm08/Basemesh   19,158 points, 18,486 quads, all 12 groups, partition
+    /Hm08/Body       13,718 points, 27,420 triangles, UVs (21334, 2)
+
+The map between the two spaces is measured rather than assumed. `ref` is the ascending unique
+index set of `Anny.faces`, the maximum positional difference between `basemesh[ref]` and the
+body mesh is 0.0 exactly, so `body_index = searchsorted(ref, basemesh_index)`.
+
+`UsdGeomSubset` carries a `partition` family type and USD validates it, so `three_groups_cover`
+is enforced by the format rather than argued in a comment. `groups_by_range` is written as
+`nonOverlapping` on purpose, because the Lean file proves it is not a partition.
+
+Four negative controls ship with it. Two found real defects in the validator while being
+written. A reused temporary filename handed each control the previous one's stage, because USD
+caches stages by identifier, so three controls reported the second one's defect while all four
+still printed FAIL. And `GetFamilyType` read the wrong prim, so relaxing the basemesh family
+type to `unrestricted` was invisible and the layer validated while claiming no partition.
+
+## Colour sketch: Qwen-Image-Edit
+
+The fourth appearance is a colour sketch, produced by Qwen-Image-Edit. It is Apache-2.0,
+independently checked, and it is already in the catalog as `qwen_q4_k_m_image_edit`, so the
+style needs no training run and no new domain corpus.
+
+Two costs come with that choice. Both are accepted rather than absent, and both are stated
+here so nobody rediscovers them.
+
+**The photoreal branch is the same model.** Two of the four appearances now come from one
+model, so their errors correlate. Qwen's idea of a hand appears in two domains rather than one,
+and the four-way spread narrows to something closer to three. The purpose of four appearances
+is independent error modes, so this is a real reduction in what step 2 buys.
+
+Report the two Qwen-derived domains together when scoring, not as two independent columns. An
+average over four domains where two share a model overstates the spread.
+
+**There is no depth control on this path.** The packaged interface takes `image`,
+`instruction`, `strength`, `steps` and `seed`. Geometry preservation therefore rests on
+`strength` alone. RFD 0121 requires a depth control wherever generated geometry must match an
+authored pose, and this path has none, so the guarantee is weaker than the stylised branch had
+before.
+
+That matters most at the setting a real sketch needs. A low `strength` preserves the pose and
+barely changes the picture. A high `strength` gives a convincing sketch and is free to move a
+limb. The usable window is an empirical question and it may be empty. Measure it before
+scaling, and treat an empty window as the signal to reconsider rather than as a tuning problem.
+
+The default is 0.8, which is high for this purpose. Do not inherit it.
+
+### The server must return its checkpoint hash
+
+`interactor-qwen-image-edit` returns `{image, seed, stub}`. It does not return the checkpoint
+hash or echo the instruction.
+
+That is sufficient for interactive editing and insufficient here. Condition 1 requires the
+generating model, checkpoint and conditioning recorded **with the data**, and the CycleGAN
+image already returns `checkpoint_sha256` per result for exactly that reason, because a hash in
+a server log is not with the data.
+
+So this is a change to `qwen-image-edit`'s `server.py`, not a note. Return the checkpoint hash
+and the instruction with every result before the corpus uses this path.
+
+Note also RFD 0043's open question. No measurement compares Q4_K_M against bf16 for this model,
+and Q4_K_M is the only format the image ships. A quantisation artefact in a corpus is harder to
+find later than a quantisation artefact in one edit.
+
+### Why not a GAN, recorded because it was nearly the answer
+
+The GAN route was worked through and is kept here, because it explains what the alternative
+would have cost and because one of its findings survives the change of direction.
+
+**Full CUT is disqualified by its own headline feature.** The authors report:
+
+> Our full method CUT has the flexibility to **enlarge the horses**, as a means of better
+> matching of the training statistics than CycleGAN. FastCUT behaves more conservatively like
+> CycleGAN.
+
+Changing object size to match target statistics is the advertised advantage, and it is the one
+behaviour a labelled corpus cannot tolerate. A stylizer that enlarges a body moves every joint,
+and the keypoint label then describes a picture that no longer exists. That finding stands
+whatever tool is chosen, so CUT stays excluded for any labelled corpus, not only this one.
+
+**FastCUT was the strong candidate.** BSD-2, read from the LICENSE file rather than the
+`NOASSERTION` badge, which reports that only because two licence texts share one file. Same
+ResNet generator as CycleGAN, so the server and hash discipline carry over. About half the
+training memory and about twice the speed. And single-image training, where each domain is one
+image, so the colour-sketch domain needed one licence-clean sketch rather than a corpus.
+
+It costs a training run, which Qwen-Image-Edit does not. That is the trade that was made.
+
+`StyTR2` remains excluded for carrying no licence. `AdaAttN` is Apache-2.0 and exemplar-driven,
+`CAST` is Apache-2.0, `EFDM` is MIT. Any of them remains available if the common-mode cost
+above turns out to matter, and picking one then is cheaper than regretting it later.
+
+## What exists, and what does not## What exists, and what does not
 
 | piece | note | state |
 | --- | --- | --- |
@@ -171,7 +279,9 @@ before the PBR bake is scheduled, because the bake needs the UVs that topology c
 | `extract_poses.py` | world-space joint positions, convention-free, avoiding the Euler trap | exists |
 | `AnnyInverter` and LBFGS | solves pose, phenotype and local changes jointly | exists |
 | **renderer** | image, keypoints, masks, camera parameters. Nothing turns a posed mesh into a labelled frame | **build** |
-| appearance generators | Qwen-Image-Edit, CycleGAN, algorithmic corruption, all licence-cleared | exists |
+| appearance generators | Qwen-Image-Edit, CycleGAN monet and ukiyoe, algorithmic corruption, all licence-cleared | exists |
+| colour sketch | Qwen-Image-Edit, Apache-2.0, already in the catalog | exists |
+| **checkpoint hash on the Qwen path** | `server.py` returns no hash and no instruction. Condition 1 needs both | **build** |
 | drift and hand verification | `silhouette.py`, `depth_term.py`, `soma_referee.py`, controls passing | exists |
 | schema | `KEYPOINTS_2D`, `SEGMENTATION`, `RENDERS` defined. `visibility` int8 and `topology_id` pending | exists |
 | COCO-format bridge | `gen_coco_dataset.py`, `gen_reference_keypoints.py`, `gen_reference_loss.py` | exists |
