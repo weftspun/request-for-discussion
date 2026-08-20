@@ -1,6 +1,18 @@
 # RFD 0020 details: reasoning, schema, setup, status
 
+> **The store is SQLite now.** The README retracts the CockroachDB decision and gives the
+> reasons. This file is kept as written, because the schema, the modules and the seed all
+> carried over unchanged, and because the parts that did not carry over are worth reading
+> next to what replaced them.
+>
+> Read every mention of a cluster, a node, a port or `mix weftspun.crdb` as history. The
+> sections below are marked where they stopped being true.
+
 ### Why CockroachDB
+
+**Retracted.** The reasons below are sound and stopped applying. "One API server or many" was
+the argument, and the load never grew into it. RFD 0067 measured the same thing from the other
+side and kept CockroachDB anyway, and that RFD is now abandoned too.
 
 CockroachDB gives one API server or many. A single node runs on a
 developer machine. The same binary joins a cluster later. The API
@@ -10,6 +22,11 @@ The wire protocol is the PostgreSQL protocol. A developer who knows
 `psql` needs no new tool.
 
 ### Two constraints
+
+**One left, one stayed.** `migration_lock: false` went with the database, because it existed
+for CockroachDB's missing advisory lock. The natural keys stayed, for a better reason than the
+one below: a catalog fact has a natural key, so an integer id would be a second name for the
+same row.
 
 CockroachDB has no PostgreSQL advisory lock. The Ecto migrator takes
 such a lock by default. Every repository configuration therefore sets
@@ -21,6 +38,10 @@ model id as the primary key. A catalog fact already has a natural
 key, so this costs nothing.
 
 ## The facts table
+
+**Unchanged.** Every type here is portable, including `tags`. `ecto_sqlite3` stores an array as
+JSON, and it round-trips and queries through `json_each`, which was measured rather than
+assumed.
 
 | Column | Type | Holds |
 | --- | --- | --- |
@@ -79,6 +100,9 @@ line offers `weftspun db migrate`, `weftspun db seed`, and
 
 ## Local setup
 
+**Gone.** There is no cluster to start. The database is a file created on demand, so
+`mix ecto.migrate` is the whole instruction and `mix test` needs nothing before it.
+
 The `cockroach_local` library owns the host lifecycle. It resolves
 the binary from `COCKROACH_BIN`, then `priv/cockroach/`, then the
 path. A Mix task wraps it:
@@ -123,6 +147,8 @@ lets `weftspun models list` run on a host with no cluster.
 
 ## Risks
 
+**This risk is unchanged, and the two below are spent.**
+
 A second store is a second source of truth. The HTTP surface still
 reads the in memory store, so the two can drift. The next step points
 the router at `EctoFactStore` and deletes the Agent.
@@ -144,7 +170,8 @@ Done:
 - 16 tests cover the seed, the search, the trust moves, and the
   retraction. The whole suite passes with 78 tests.
 - `cockroach_local` provisions and runs the host, through
-  `mix weftspun.crdb`.
+  `mix weftspun.crdb`. **Both are deleted.** The dependency is out of
+  every `mix.exs`, and the Mix task went with it.
 
 ### The provisioner never reached the binary
 
