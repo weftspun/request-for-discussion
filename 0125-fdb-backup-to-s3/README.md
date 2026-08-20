@@ -37,14 +37,38 @@ TLS policy for blob store connections, so the agent must trust the
 public roots as well as ours. The `fdbserver` processes must not. See
 `DETAILS.md`.
 
-## State: this does not work yet
+## State: two faults found and fixed, neither confirmed end to end
 
-The configuration is written and deployed. No backup runs. FoundationDB
-cannot resolve the object store's hostname on Fly.
+The configuration is written. No backup has run yet, and nothing has
+been restored. Two separate faults were found, and both reported
+themselves as something other than what they were.
 
-The error is `lookup_failed` (1041), not a TLS error and not a
-credential error. `DETAILS.md` holds the evidence and the three
-hypotheses this replaced.
+**1. A missing file, reported as DNS.** With no port in the URL,
+FoundationDB resolves the service name `https` through
+`/etc/services`, which `debian:bookworm-slim` does not ship. Every
+lookup failed as `lookup_failed` (1041), whose text reads "DNS lookup
+failed". Fixed by `netbase` in the image and an explicit port.
+
+**2. A family choice, reported as a connection failure.** FoundationDB
+picks one address from the A and AAAA records and prefers IPv6, with
+no fallback. Without working IPv6 egress every attempt returns
+`ENETUNREACH`, reported as `connection_failed`. Fixed by
+`knob_resolve_prefer_ipv4_addr` on the backup agent.
+
+The second was hidden behind the first: the port had to be supplied
+before the connection fault could be seen at all.
+
+**What is confirmed.** Fault 2, on one host, by the error moving from
+`connection_failed` to `backup_auth_missing` -- the connection
+succeeding and deliberately bogus credentials being rejected after it.
+
+**What is not.** Neither fix has run on Fly. The cluster was torn down
+before the probe ran, and outbound IPv6 there behaved differently from
+the host where fault 2 was confirmed, so it may be a third cause
+wearing the same message. Do not read this RFD as "backup works".
+
+Expect the next failure to be auth or region shaped rather than
+connection shaped. That is progress, not a regression.
 
 ## Related
 
