@@ -93,19 +93,23 @@ route stays closed, because the destination is a training corpus.
 **Verification.** The `pose-consensus` referee refits the generated body to the pose that
 conditioned it. A control pose that nobody checks is a pose we assumed.
 
-**Eyebrow is the exception worth naming.** MakeHuman paints eyebrows into the skin texture.
-A painted feature has no depth of its own. The depth-order rule cannot produce it as a layer,
-before or after a rebuild. `eyebrow` needs geometry or it stays a 2D problem.
+**Eyebrow is not an exception. It joins the absent list, making ten.** MakeHuman paints
+eyebrows into the skin texture, so a brow shares the skin's depth and the depth-order rule
+gives it no layer. The fix is the ordinary one. It becomes a separate attached mesh, handled
+like a garment or an object.
 
-**What the corpus writes stays closed.** The render emits the image, the keypoint positions
-and the 3D shape. The keypoint detector asked for the first two. Pixal3D asked for the first
-and the third. Nothing else is written. Depth and the group index are render intermediates and
-do not land beside the image. A fourth output is drift unless a consumer asked for it.
+The ten are `eyebrow`, `headwear`, `eyewear`, `earwear`, `neckwear`, `handwear`, `footwear`,
+`tail`, `wings` and `objects`. One route serves all of them.
 
-The keypoints come from `coco.pth`, which holds 23 points, not 17. Each is a weight vector
-over the mesh, so a position is a weighted sum of posed vertices. The label is computed, never
-detected. The vectors are 19,158 wide, so the render must pin the topology that returns that
-count. The default returns 13,718 and would silently fail to multiply.
+**The basemesh vertex order is frozen.** This is a hard constraint and it is about order, not
+count. `coco.pth` stores each keypoint as a weight vector indexed by vertex, and every hm08
+group is a range. A permutation keeps the count at 19,158, still multiplies, and moves every
+keypoint and every group boundary. So no part is ever merged into the basemesh, and nothing
+renumbers it. Attached parts carry their own vertex arrays.
+
+The count gate this RFD first proposed was decoration, because a permutation passes it. It is
+replaced by a hash of the face index array, which encodes the order. `DETAILS.md` gives the
+hash, the negative control, and the span it does not cover.
 
 ## The other agent
 
