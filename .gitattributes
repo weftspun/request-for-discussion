@@ -1,0 +1,16 @@
+# Line endings, in one rule rather than per suffix.
+#
+# `core.autocrlf=true` was checking these files out as CRLF while the index held LF, so
+# `git ls-files --eol` reported `i/lf w/crlf` on 75 of 323 files. Nothing was wrong in the
+# index and nothing needed renormalizing -- the damage was confined to the working tree,
+# where it surfaces as spurious diffs and as tools that read a stray carriage return as
+# part of a value.
+#
+# A suffix list is what failed the previous five times: it answers for the extensions
+# somebody remembered and stays silent about the rest. `*` cannot be incomplete.
+* text=auto eol=lf
+
+# Detected as binary already; named so the rule above can never be asked about them.
+*.png binary
+*.jpg binary
+*.gif binary
