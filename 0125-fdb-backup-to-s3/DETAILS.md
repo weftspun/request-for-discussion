@@ -310,3 +310,70 @@ Nobody named the knob.
 
 Both faults in this RFD are ours to write down. That is the reason this
 file is long.
+
+## IPv4 cannot be required, only preferred
+
+`RESOLVE_PREFER_IPV4_ADDR` is the only IPv4 knob in the binary. There
+is no "require IPv4" setting, and `pickOneAddress` reaches the IPv4
+branch only when the resolver returned at least one A record:
+
+    if (ipV4Addresses.size() > 0 && FLOW_KNOBS->RESOLVE_PREFER_IPV4_ADDR)
+
+So an endpoint publishing only AAAA falls back to the path that cannot
+connect, and reports `connection_failed` -- naming the network rather
+than the address family it chose.
+
+Three ways to force it were considered and rejected:
+
+* **An IPv4 literal in the URL.** `Host` is set from `bstore->host`
+  unconditionally and SigV4 signs it, so the `header=` parameter
+  produces a malformed `Host: 1.2.3.4,real.name`. A diagnostic, not a
+  fix.
+* **`/etc/gai.conf` precedence.** No effect. FoundationDB sorts the
+  resolver's answer into separate v4 and v6 lists and chooses from
+  those, so the system precedence table is discarded.
+* **A local AAAA-filtering resolver.** Would work, and is a daemon in
+  every container to correct a one-line preference.
+
+So the precondition is asserted instead. The entrypoint refuses to
+start when the object store has no A record:
+
+| host | result |
+| --- | --- |
+| `fly.storage.tigris.dev` | A present, proceed |
+| `s3.amazonaws.com` | A present, proceed |
+| `ipv6.google.com` | no A, FATAL |
+| `no-such-host.invalid` | no A, FATAL |
+
+`ipv6.google.com` is genuinely AAAA-only, so the negative control fails
+for the reason the guard exists rather than because the input was
+broken. The check is guarded on `getent`, so an image without it
+degrades to the previous behaviour rather than refusing to boot.
+
+This covers every S3-compatible endpoint in practice and fails loudly
+on the one case it cannot cover. That is the boundary, stated rather
+than left to be discovered.
+
+## Where this stands at shutdown
+
+The cluster and its app are destroyed. Nothing here has run against
+Fly.
+
+**Fixed in the repository, unverified in deployment:** `netbase`,
+`knob_resolve_prefer_ipv4_addr`, the A-record guard, and the
+constructed backup URL.
+
+**The one measurement still owed** is the probe: one machine, both
+endpoints, with and without the knob, reading which *error* appears.
+`connection_failed` means it never connected; `backup_auth_missing` or
+an HTTP status means it did, and bogus credentials were rejected
+afterwards, which is the pass.
+
+A caution for whoever runs it. Fly answered on both IPv4 and IPv6 when
+measured, so a missing IPv6 route -- the confirmed cause elsewhere --
+cannot be the explanation there. If the knob fixes Fly anyway, the
+causal story is incomplete and the knob is treating a symptom. That is
+worth knowing before it is recorded as solved.
+
+**Still true:** no backup has ever been written, and nothing has been
+restored, here or anywhere.
