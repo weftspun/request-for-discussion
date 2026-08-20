@@ -38,12 +38,21 @@ mutual. A client without a certificate is refused like any other peer.
 The cluster serves over TLS. It runs 6 processes on 3 machines in 3
 zones, in double redundancy, with fault tolerance 1.
 
+## Rollover
+
+The test is complete. The negative control passes: a certificate from a
+different CA never gets access. The rotation also passes. We replaced
+all three certificates one machine at a time. One poll sample in 34 saw
+an unavailable cluster, at a 2 second poll interval.
+
+The role caps the lifetime at 90 days, not the one year we asked for. So
+this rotation must run four times each year.
+
 ## Not done
 
-The rollover test is not complete. Its negative control passes: a
-certificate from a different CA never gets access. The rotation itself
-is still manual. RFD 0124 `DETAILS.md` lists the two defects the control
-found.
+The rotation is still manual. Option 2 in `DETAILS.md`, where each
+machine asks the CA for its own certificate at boot, removes the manual
+step. `DETAILS.md` also lists two defects the negative control found.
 
 ## Related
 

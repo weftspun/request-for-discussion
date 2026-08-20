@@ -147,6 +147,47 @@ CA file is not additive. "Add our root to the existing bundle" is not a
 safe instruction. `fdb-entrypoint.sh` counts self-signed anchors for
 this reason.
 
+## The rotation half of rollover
+
+We issued four new certificates from the same CA. Then we updated the
+three machines one at a time. A poller on a machine that was not under
+update asked for `status minimal` every 2 seconds.
+
+| window | machine under update | samples | unavailable |
+| --- | --- | --- | --- |
+| 1 | `871e61c0354168` | 13 | 0 |
+| 2 | `839743a7613568` | 13 | 1 |
+| 3 | `0804290c964d28` | 8 | 0 |
+
+Four more samples reported "available, but has issues". That is the
+recovery state, not an outage.
+
+So one sample in 34 saw an unavailable cluster. The poll interval is
+2 seconds, so this measurement cannot see a gap shorter than that, and
+it cannot place the gap inside the interval. The correct statement is
+"one interval of at most 2 seconds", not "2 seconds of downtime".
+
+All three machines now hold the new serial:
+
+    871e61c0354168   207A221A064C4330CDAB1F70ADA89B264320B24B
+    839743a7613568   294F56AC08237E0A2B72EC932260BAEE53CE4C4A
+    0804290c964d28   1176DBB2FD908E0B1C52B0567CEA8B59FC84E12A
+
+The cluster kept 6 processes, 3 zones, 3 machines and fault tolerance 1
+through the whole sequence.
+
+**The role caps the lifetime at 90 days.** We asked for `ttl=8760h`,
+which is one year. The certificates expire on 18 November 2026, which is
+90 days. The role's `max_ttl` silently reduced the request. So this
+rotation must run every 90 days, not every year. A request that is
+quietly cut down looks the same as a request that was met.
+
+**A boot race, recorded because it looked like a failure.** A check of
+the new certificate ran one second before the entrypoint wrote it. It
+printed `Unable to load certificate`. The machine was correct and the
+check was early. Read the machine's own log before you trust a probe
+that runs during a restart.
+
 ## Costs to record
 
 **There is no in-place move from a plaintext cluster to a TLS cluster.**
