@@ -528,10 +528,9 @@ https://github.com/M3-org/CharacterStudio/blob/lora-data-creator/public/lora-ass
             "cameraPosition":[-0.5,-0.5,1],
             "cameraFrame":"fullShot",
             "description":"a person standing sad"
-        }   
+        }  
     ]
 }
 ```
 
 </details>
-
