@@ -51,6 +51,81 @@ topologies share zero vertices, measured in both directions.
 **Root translation is absent on purpose.** It follows from `constraints` and the chain, so
 storing it would be a derivable column.
 
+```mermaid
+erDiagram
+  topologies    ||--o{ rest_mesh      : topology_id
+  identities    ||--o{ renders        : identity_id
+  bones         ||--o{ pose_rotations : bone_id
+  pose_rotations||--o{ renders        : pose_id
+  pose_rotations||--o{ constraints    : pose_id
+  renders       ||--o{ keypoints_2d   : render_id
+  renders       ||--o{ segmentation   : render_id
+  renders       ||--o{ depth_map      : render_id
+  renders       ||--o{ meshes         : render_id
+  bones         ||--o{ keypoints_2d   : bone_id
+
+  topologies {
+    int16 topology_id PK
+    string name "anny is 13,718 vertices"
+  }
+  identities {
+    int16 identity_id PK
+    float32 phenotype "11"
+    float32 local_change "256"
+    float32 facial_action "52"
+  }
+  bones {
+    int16 bone_id PK
+    int16 parent_bone_id "104 rows, -1 is a value not a NULL"
+  }
+  pose_rotations {
+    int64 pose_id PK
+    int16 bone_id FK
+    float32 rotation "3x2, never a quaternion"
+  }
+  rest_mesh {
+    int32 vertex_id PK
+    int16 topology_id FK
+    float32 xyz
+    int16 group_id FK
+  }
+  constraints {
+    int64 pose_id FK
+    int16 bone_id FK
+    string kind "connect or limit, MJCF"
+  }
+  renders {
+    int64 render_id PK
+    int16 identity_id FK
+    int64 pose_id FK
+    int16 camera_id FK
+    int8 appearance "1 of 4"
+  }
+  keypoints_2d {
+    int64 render_id FK
+    int16 bone_id FK
+    float32 xy
+    int8 visibility "not bool, three states"
+  }
+  segmentation {
+    int64 render_id FK
+    bytes mask "from hm08 groups"
+  }
+  depth_map {
+    int64 render_id FK
+    float32 z
+  }
+  meshes {
+    int64 render_id FK
+    bytes geometry "for Pixal3D"
+  }
+```
+
+Authored relations are on the left of `renders` and emitted relations on the right. Everything
+right of `renders` is exact by projection rather than annotated, which is the property the
+whole corpus is built to have. Root translation appears nowhere on purpose: it follows from
+`constraints` and the chain, so a column for it would be derivable.
+
 ## Correspondence is 14 of 17, and it fails informatively
 
 Shoulders, elbows, wrists, hips, knees, ankles and eyes map to ANNY bones. The nose and both
@@ -271,7 +346,7 @@ It costs a training run, which Qwen-Image-Edit does not. That is the trade that 
 `CAST` is Apache-2.0, `EFDM` is MIT. Any of them remains available if the common-mode cost
 above turns out to matter, and picking one then is cheaper than regretting it later.
 
-## What exists, and what does not## What exists, and what does not
+## What exists, and what does not
 
 | piece                                | note                                                                                           | state     |
 | ------------------------------------ | ---------------------------------------------------------------------------------------------- | --------- |
@@ -288,6 +363,30 @@ above turns out to matter, and picking one then is cheaper than regretting it la
 | **training loop**                    | upstream RF-DETR is Apache-2.0. The masked-loss run does not exist                             | **build** |
 | GGUF conversion                      | `convert_keypoints_to_gguf.py`                                                                 | exists    |
 | `rf-detr-cpp` inference              | working port, head is COCO-17                                                                  | exists    |
+
+```mermaid
+flowchart LR
+  P["ANNY pose<br/>authored or licence-clean mocap"] --> R
+  R["RENDER<br/>104 joints, 52 ARKit<br/>masks, cameras, mesh and PBR"] --> A
+  A["4 appearances<br/>Qwen-Image-Edit, CycleGAN<br/>algorithmic corruption"] --> V
+  V["verify<br/>drift, hands, reachability<br/>only verified frames pass"] --> T
+  T["MASKED TRAIN<br/>104 out, COCO masks 90<br/>plus licence-filtered COCO"] --> G
+  G["GGUF<br/>convert_keypoints_to_gguf"] --> C
+  C["rf-detr-cpp<br/>inference port"] --> E
+  E["evaluate<br/>blinded val2017, real photographs only"]
+  V -. "second student, same frames" .-> X["FINE-TUNE PIXAL3D<br/>image and mesh"]
+  S["SLAT stays decode-only<br/>upstream encodes internally"]
+  classDef build stroke-dasharray:6 3,stroke-width:2px;
+  classDef aside opacity:0.55,stroke-dasharray:3 3;
+  class R,T,X build
+  class S aside
+```
+
+Dashed boxes are the **build** rows of the table above: `RENDER` is the renderer and
+`MASKED TRAIN` is the masked-loss run. The table carries a third build row the diagram cannot
+show as a box, because it is not a stage: the Qwen path's `server.py` returns no checkpoint
+hash, so condition 1 is unsatisfied on an edge rather than at a node. `SLAT stays decode-only`
+sits off the path deliberately, as a reminder that supplying geometry is not owning an encoder.
 
 ## What the chain is for
 
