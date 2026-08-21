@@ -405,6 +405,19 @@ The estimator panel never had that property, because its members were all COCO-t
 their errors correlated. Every fit here is descent through a forward we own. Where the forward
 is differentiable there is no inverse model to license, train or trust.
 
+**Half of that last sentence is retracted by RFD 107e, and the retraction stays here beside
+it.** Descent is what makes the chain unrunnable on an inference accelerator:
+`lbfgs_polish.py` solves in `float64` and the part carries INT8, so three of the six stages
+above cannot deploy at any memory size. RFD 107e replaces them with a regressor trained on
+this corpus, which reintroduces the inverse model this sentence claims not to need.
+
+"To license" survives, because the student is ours. "Train or trust" does not. There is a
+model now, it has to be trained, and trust becomes a measurement rather than a property of
+the architecture. Two numbers carry it: the accuracy cost against LBFGS as a baseline, and
+the error correlation between the student and the keypoint head. Both learn from these same
+renders, so the sentence above about correlated members applies to them as directly as it
+applied to the panel it was written about.
+
 The last row is what RFD 1079 answers.
 
 ## The corrected hm08 claim
