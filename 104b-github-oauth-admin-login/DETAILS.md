@@ -41,7 +41,7 @@ Two routes, added to `lib/weftspun_studio/router.ex`:
 URL, `https://github.com/login/oauth/authorize`, with `client_id`,
 the callback `redirect_uri`, and `scope=read:org`. That scope reads
 org membership only; it does not grant repo access, matching RFD
-0058's zero-trust habit of asking for no more than the task needs.
+103a's zero-trust habit of asking for no more than the task needs.
 
 **`GET /auth/github/callback`** receives the `code` GitHub appends,
 exchanges it for an access token at

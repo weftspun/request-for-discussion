@@ -27,7 +27,7 @@ proprietary boundary.
 ## Related
 
 RFD 100c abandons the wallet, minting, and x402 payment rail. RFD
-0015 abandons the phygital passport, and records its own strip
+100f abandons the phygital passport, and records its own strip
 complete: the passport code and documents are gone from the
 codebase. RFD 106a is this RFD's own source table, corrected to
 match.

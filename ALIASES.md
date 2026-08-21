@@ -1,11 +1,16 @@
 # Old numbers
 
-Every RFD in this repository changed number. The old number was decimal and
-named a document in another organization as well. The new number starts with
-the organization digit 1. RFD 1000 gives the rule.
+Every RFD that existed at the migration changed number. The old number was
+decimal and named a document in another organization as well. The new number
+starts with the organization digit 1. RFD 1000 gives the rule.
 
 Git history and pull request titles keep the old numbers. This table is how a
 reader resolves them. It is a lookup and not a repair.
+
+The migration was a closed set. An RFD written after it has no old number and
+therefore no row here. RFD 107b is the last number the table covers, and
+`check-rfd-numbers.py` reads that boundary out of the table rather than
+holding a copy of it.
 
 | old      | new      | slug                                            |
 | -------- | -------- | ----------------------------------------------- |

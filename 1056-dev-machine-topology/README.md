@@ -34,6 +34,6 @@ the file-ownership table, and the full sync command reference.
 RFD 1077 gives the general hardware requirement this RFD's own
 Surface/DGX pair is one example of. RFD 1058 gives the HTTPS
 certificate setup this topology's headset access depends on. RFD
-0101 gives the two SSH host names this RFD also names.
+1065 gives the two SSH host names this RFD also names.
 weftspun-3d-studio's own `thirdparty/m3/docs/DEV_MACHINE_TOPOLOGY.md`
 holds the same content, byte-identical, as of this writing.

@@ -8,7 +8,7 @@ against something real, and only then decide what to build.
 
 The claim on the table: "stand up `h2o-bench-tpcc` (or H2O) in
 multiple Fly regions as a CDN, fixes the no-caching gap in RFD
-0076's proxy chain."
+104c's proxy chain."
 
 Two checks, both against real sources, both fail the claim before
 any container gets built:

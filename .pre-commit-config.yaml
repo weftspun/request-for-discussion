@@ -31,6 +31,20 @@ repos:
         language: system
         files: '^[0-9a-f]{4}-.*\.exs?$'
 
+      - id: rfd-structure
+        name: rfd structure (commonmark)
+        description: >-
+          Checks each RFD against the shape the corpus already uses:
+          the title, the State/Feature/Scope preamble, the section
+          spine, and every RFD citation. It reads a CommonMark AST,
+          so a citation wrapped over two lines is one citation.
+          RFD 107c gives the rules and how each was measured.
+        entry: python scripts/check-rfd-structure.py
+        language: python
+        additional_dependencies: [markdown-it-py==3.0.0]
+        files: '^([0-9a-f]{4}-.*/(README|DETAILS)\.md|ALIASES\.md)$'
+        pass_filenames: false
+
       - id: dockerfile-and-server
         name: model images parse
         description: >-

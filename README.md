@@ -26,6 +26,18 @@ An RFD that restates a document will drift. It must instead link the
 document. When a design changes, update the source first. Then update
 the RFD to point at the new source.
 
+## Structure gate
+
+`scripts/check-rfd-structure.py` checks the shape of each RFD against a
+CommonMark AST: the title, the `State`/`Feature`/`Scope` preamble, the
+section order, the README line limit, and every RFD citation.
+`scripts/check-rfd-numbers.py` checks numbering. Both carry negative
+controls and run in CI.
+
+Every rule the structure gate holds was measured against all RFDs first.
+RFD 107c gives each rule, its count, and the conventions that were
+measured and deliberately left ungated.
+
 ## STE policy
 
 Each RFD uses ASD-STE100 Simplified Technical English. The rules:

@@ -4,6 +4,14 @@
 RFD 1000 gives the rule. This script enforces it. Run --self-test to see each
 check reject a known-bad input, because a check that passes on broken input
 certifies the defect instead of catching it.
+
+This gate owns numbering: directory names, the organization digit, serial
+uniqueness, heading agreement, and ALIASES.md coverage. It used to also scan
+for unmigrated decimal citations, and no longer does. That scan read the raw
+bytes, so a citation an RFD wrapped over two lines never matched it: it found
+3 of the 37 in the tree. `check-rfd-structure.py` reads the same citations off
+a CommonMark AST and finds all of them, so the scan moved there rather than
+being kept in two places at two strengths. RFD 107c records the move.
 """
 import os
 import re
@@ -11,9 +19,6 @@ import sys
 
 ORG = "1"
 DIR_RE = re.compile(r"^([0-9a-f]{4})-[a-z0-9-]+$")
-# An old number always began with 0. No organization digit is 0, so a leading
-# zero is what tells an unmigrated citation apart from a valid new one.
-OLD_CITE_RE = re.compile(r"\bRFD (0\d{3})\b")
 HEAD_RE = re.compile(r"^# RFD ([0-9a-f]{4}):")
 
 
@@ -56,36 +61,28 @@ def check(root):
         elif h.group(1) != num:
             problems.append(f"{d}: heading says {h.group(1)}, directory says {num}")
 
-    # A decimal citation is an unmigrated reference. They are prose, not links,
-    # so nothing else would ever report them.
-    me = os.path.abspath(__file__)
-    for cur, dirs_, files in os.walk(root):
-        parts = cur.split(os.sep)
-        if ".git" in parts or "__pycache__" in parts:
-            continue
-        for f in files:
-            # ALIASES.md holds old numbers on purpose, and this script holds
-            # them in its own negative-control fixtures.
-            if f == "ALIASES.md" or os.path.abspath(os.path.join(cur, f)) == me:
-                continue
-            p = os.path.join(cur, f)
-            try:
-                with open(p, encoding="utf-8", errors="ignore") as fh:
-                    body = fh.read()
-            except OSError:
-                continue
-            for m in OLD_CITE_RE.finditer(body):
-                problems.append(f"{p}: cites RFD {m.group(1)} in the old decimal form")
-
     aliases = os.path.join(root, "ALIASES.md")
     if not os.path.exists(aliases):
         problems.append("ALIASES.md is missing, so old numbers do not resolve")
     else:
         with open(aliases, encoding="utf-8") as fh:
             mapped = {m.group(1) for m in re.finditer(r"RFD ([0-9a-f]{4})", fh.read())}
-        for num in sorted(seen):
-            if num not in mapped:
-                problems.append(f"ALIASES.md has no row for RFD {num}")
+        # The migration was a closed set. It renumbered a contiguous range and
+        # ended, so only a number inside that range can have an old number to
+        # resolve. An RFD written afterwards has none, and demanding a row for
+        # it would put a lookup entry that maps from nothing into the table.
+        # The range is read from ALIASES.md rather than written here, because
+        # the table is the record of what the migration covered.
+        migrated = {n for n in mapped if n[0] == ORG}
+        if not migrated:
+            # An empty table would make the range empty and every check below
+            # vacuous, which reads exactly like a pass.
+            problems.append("ALIASES.md maps no RFD in this organization")
+        else:
+            last = max(migrated)
+            for num in sorted(seen):
+                if num <= last and num not in mapped:
+                    problems.append(f"ALIASES.md has no row for RFD {num}")
     return problems
 
 
@@ -94,23 +91,31 @@ def self_test():
     import tempfile
 
     def build(tmp, **kw):
+        for name, head in kw.get("extra_dirs", []):
+            os.makedirs(os.path.join(tmp, name))
+            with open(os.path.join(tmp, name, "README.md"), "w", encoding="utf-8") as fh:
+                fh.write(head)
         d = os.path.join(tmp, kw.get("dirname", "1001-a-slug"))
         os.makedirs(d)
         with open(os.path.join(d, "README.md"), "w", encoding="utf-8") as fh:
             fh.write(kw.get("heading", "# RFD 1001: A slug\n"))
         with open(os.path.join(tmp, "ALIASES.md"), "w", encoding="utf-8") as fh:
-            fh.write(kw.get("aliases", "| RFD 1001 | x |\n"))
-        if "extra" in kw:
-            with open(os.path.join(tmp, "note.md"), "w", encoding="utf-8") as fh:
-                fh.write(kw["extra"])
+            fh.write(kw.get("aliases", "| RFD 0001 | RFD 1001 | x |\n"))
 
     cases = [
         ("a clean tree passes", {}, False),
         ("wrong organization digit", {"dirname": "2001-a-slug"}, True),
         ("decimal directory name", {"dirname": "0001-a-slug"}, True),
         ("heading disagrees with directory", {"heading": "# RFD 1002: A slug\n"}, True),
-        ("an unmigrated decimal citation", {"extra": "see RFD 0021 for this\n"}, True),
-        ("ALIASES.md missing the row", {"aliases": "| RFD 9999 | x |\n"}, True),
+        ("ALIASES.md maps nothing in this organization",
+         {"aliases": "| RFD 0009 | RFD 9999 | x |\n"}, True),
+        # The pair below is the boundary. Inside the migrated range a missing
+        # row is a defect. Above it there is no old number to record.
+        ("a migrated number with no row",
+         {"aliases": "| RFD 0009 | RFD 1009 | x |\n"}, True),
+        ("a post-migration number needs no row",
+         {"extra_dirs": [("1002-a-slug", "# RFD 1002: A slug\n")],
+          "aliases": "| RFD 0001 | RFD 1001 | x |\n"}, False),
     ]
     ok = True
     for name, kw, should_fail in cases:

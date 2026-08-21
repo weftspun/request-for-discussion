@@ -67,7 +67,7 @@ APK, run `npm run dev` on a PC, open Chrome's menu, "Open in Chrome
 for WebXR (+ face)" (`?nativeFaceRelay=1`), and keep the APK visible
 or in picture-in-picture so Jetpack or OpenXR PBuffer face tracking
 can relay to the dev server during Chrome's Full Space AR. See RFD
-0096 and the Android Studio AI brief (weftspun-3d-studio-designs'
+1060 and the Android Studio AI brief (weftspun-3d-studio-designs'
 own numbering) for the fuller setup.
 
 First-frame diagnostics log as `[XR][expression] First-frame

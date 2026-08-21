@@ -241,7 +241,7 @@ per RFD 104c) still does not fetch from object storage at all. It
 holds the three verified proof files under `public/usd/`, baked
 into its own Docker image at build time and served as static files.
 Wiring that fetch path is still the next step, unchanged by RFD
-0076's own restructuring — only which app would hold that fetch
+104c's own restructuring — only which app would hold that fetch
 code changed, and RFD 104d changes which storage it fetches from.
 
 ## The gallery's asset is still a stopgap, decided which shape replaces it

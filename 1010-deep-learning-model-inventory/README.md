@@ -23,6 +23,6 @@ excludes.
 ## Related
 
 RFD 1004 catalogs the tasks. RFD 101a gives the memory per model. RFD
-0028 records the license gate. RFD 101e records the See-Through
+101c records the license gate. RFD 101e records the See-Through
 components. RFD 1021 lists the geometric algorithms. RFD 1023 lists
 the legacy identifiers.

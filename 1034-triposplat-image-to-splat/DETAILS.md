@@ -21,7 +21,7 @@
 
 decisions/agent/DECISIONS.md records the rule from 2026-07-26. A
 TripoSplat cloud takes an X-flip. A LingBot cloud does not, and RFD
-0050 states that.
+1032 states that.
 
 Apply the flip inside this model image, and write the result already
 flipped. A caller must never decide, because the two clouds then look

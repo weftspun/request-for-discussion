@@ -1,6 +1,6 @@
 # RFD 1040: Character Concept Generator
 
-**State:** pre-discussion
+**State:** prediscussion
 **Scope:** To be determined
 
 ## Problem
@@ -35,6 +35,6 @@ run it on Fly.io with Nx, with no GPU acceleration.
 
 RFD 1025 gives the domain/problem split. RFD 1041 gives the schema
 this step's `domain.ex` and `problem.ex` files follow. RFD 102a, RFD
-0043, RFD 102c, RFD 1028, RFD 102d, and RFD 102e give the postponed
+102b, RFD 102c, RFD 1028, RFD 102d, and RFD 102e give the postponed
 stages. `DETAILS.md` holds the reference links and the critical-path
 diagram.

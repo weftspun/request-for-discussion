@@ -261,7 +261,7 @@ the Surface's own dev server.
 Avatar rig GLBs come from the `3DAIGC-API` export on the DGX
 (UniRig, then a Blender GLB step). Copying this project's docs to
 the DGX does not fix a broken rig; the API itself must implement RFD
-0083's contract. Re-opening an old, completed task still downloads
+1053's contract. Re-opening an old, completed task still downloads
 the same GLB; a new avatar-from-image job is needed after an API
 fix.
 

@@ -15,7 +15,7 @@ this repository's browser compression lacks.
   chunks. Nothing here gets resent.
 - **USD-native mesh and VRM handling** (`idtx_import_usd.cpp`,
   `idtx_export_usd.cpp`, `idtx_vrm.cpp`), which composes with RFD
-  0053's decision to make OpenUSD the internal format instead of
+  1035's decision to make OpenUSD the internal format instead of
   round-tripping GLB at every stage.
 - **AES + zstd transport** (`idtx_aes.cpp`, `idtx_transport.cpp`)
   already built for exactly this shape of problem. The same

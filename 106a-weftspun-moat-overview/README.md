@@ -29,4 +29,4 @@ with none of the proprietary services exposed. Trademark terms live
 in this project's own `README.md` and `TRADEMARKS`. RFD 106d gives
 the payment-rail and phygital-registry areas this page's own source
 document once listed; both are abandoned, per RFD 100c and RFD
-0015, and removed from this table.
+100f, and removed from this table.

@@ -1,0 +1,413 @@
+#!/usr/bin/env python3
+"""Check that every RFD document has the shape the corpus already uses.
+
+The rules here were measured, not recalled. Each one was run against all 116
+RFDs first, and only the rules that hold with no exception became checks. The
+counts behind each decision, including the two conventions that were measured
+and deliberately not gated, are in RFD 107c.
+
+Every check reads a CommonMark AST rather than the bytes. That is not
+decoration. The regex gate beside this one looks for `RFD 0123` in the raw
+text, and an RFD wraps its prose at about 72 columns, so a citation split
+across a line break was invisible to it. The AST joins a paragraph's inline
+text before matching, which is the quantity the reader sees. On the corpus as
+it stood, the byte scan found 3 unmigrated citations and this one found 37.
+
+Run --self-test to see each check reject a known-bad input, because a check
+that passes on broken input certifies the defect instead of catching it.
+"""
+import os
+import re
+import sys
+
+from markdown_it import MarkdownIt
+
+MD = MarkdownIt("commonmark")
+
+DIR_RE = re.compile(r"^([0-9a-f]{4})-[a-z0-9-]+$")
+TITLE_RE = re.compile(r"^RFD ([0-9a-f]{4}): (\S.*)$")
+DETAILS_TITLE_RE = re.compile(r"^RFD ([0-9a-f]{4}) details: (\S.*)$")
+# A state list in RFD 1000's own prose, so the gate and the document cannot
+# drift apart. "a state: a, b, or c" is the sentence it parses.
+STATE_LIST_RE = re.compile(r"has a state:\s*([a-z,\s]+?)\.", re.S)
+# The README length bound, also read out of RFD 1000 rather than held here.
+LIMIT_RE = re.compile(r"stays at (\d+) lines or fewer")
+# An old number always began with 0, and no organization digit is 0. The
+# whitespace class is what the byte-level scan could not spell.
+OLD_CITE_RE = re.compile(r"\bRFD\s+(0\d{3})\b")
+CITE_RE = re.compile(r"\bRFD\s+([0-9a-f]{4})\b")
+
+# The order these carry when present. Extra headings may sit between them.
+SPINE = ("Problem", "Decision", "References", "Related")
+# A retracted decision renames its own heading, so the match is a prefix.
+# RFD 1043's "Decision, as published and now retracted" is the case.
+REQUIRED = "Decision"
+# A moved RFD develops elsewhere and states only where. Both of them carry no
+# Decision, which is the whole point of the state.
+NO_DECISION_STATES = {"moved"}
+
+
+def blocks(tokens):
+    """Top-level block opens, in document order."""
+    return [t for t in tokens if t.level == 0 and t.type.endswith("_open")]
+
+
+def headings(tokens):
+    """(level, text, line) for every heading, text taken from the AST."""
+    out = []
+    for i, t in enumerate(tokens):
+        if t.type == "heading_open":
+            out.append((int(t.tag[1]), tokens[i + 1].content, t.map[0] + 1))
+    return out
+
+
+def inline_text(tokens):
+    """Every inline run, soft breaks collapsed to one space.
+
+    This is the string a reader sees. A citation wrapped over two source
+    lines is one citation here, and is two unrelated tokens to a byte scan.
+    """
+    out = []
+    for t in tokens:
+        if t.type != "inline":
+            continue
+        parts = [c.content for c in (t.children or []) if c.type in ("text", "code_inline")]
+        out.append(re.sub(r"\s+", " ", " ".join(parts)))
+    return out
+
+
+def _conventions_text(root):
+    p = os.path.join(root, "1000-conventions", "README.md")
+    if not os.path.exists(p):
+        return None
+    with open(p, encoding="utf-8") as fh:
+        return " ".join(inline_text(MD.parse(fh.read())))
+
+
+def parse_states(root):
+    """Read the valid states out of RFD 1000, not out of this file."""
+    text = _conventions_text(root)
+    if text is None:
+        return None
+    m = STATE_LIST_RE.search(text)
+    if not m:
+        return None
+    words = [w.strip() for w in m.group(1).split(",")]
+    # The last item reads "or moved". The conjunction is prose, not a state.
+    words = [re.sub(r"^or\s+", "", w) for w in words]
+    return {w for w in words if w}
+
+
+def parse_limit(root):
+    """Read the README length bound out of RFD 1000, for the same reason.
+
+    The bound is 40 and the corpus lands 12 READMEs exactly on it, so it is
+    inclusive. RFD 1000 said "under 40" until this gate measured that, and
+    RFD 107c records the correction rather than the gate carrying an
+    off-by-one to match prose nobody had checked.
+    """
+    text = _conventions_text(root)
+    if text is None:
+        return None
+    m = LIMIT_RE.search(text)
+    return int(m.group(1)) if m else None
+
+
+def known_numbers(root, dirs):
+    """A citation resolves to a directory, or to an ALIASES.md row.
+
+    The tombstone rows matter. RFD 1046 deleted three speculative RFDs and
+    still cites them by number, and ALIASES.md keeps a row for each. Requiring
+    a directory would reject the citation that records the deletion.
+    """
+    nums = {d[:4] for d in dirs}
+    p = os.path.join(root, "ALIASES.md")
+    if os.path.exists(p):
+        with open(p, encoding="utf-8") as fh:
+            nums |= set(re.findall(r"RFD ([0-9a-f]{4})", fh.read()))
+    return nums
+
+
+def check_title(name, num, tokens, regex, kind):
+    problems = []
+    hs = headings(tokens)
+    h1s = [h for h in hs if h[0] == 1]
+    if len(h1s) != 1:
+        problems.append(f"{name}: has {len(h1s)} level-1 headings, and needs exactly 1")
+        return problems
+    first = blocks(tokens)[0] if blocks(tokens) else None
+    if first is None or first.type != "heading_open" or first.tag != "h1":
+        problems.append(f"{name}: does not open with its title heading")
+    m = regex.match(h1s[0][1])
+    if not m:
+        problems.append(f"{name}: title is not '{kind}', it is {h1s[0][1]!r}")
+    elif m.group(1) != num:
+        problems.append(f"{name}: title says {m.group(1)}, directory says {num}")
+    return problems
+
+
+def check_preamble(name, tokens, states):
+    """The paragraph under the title carries State, then Feature, then Scope."""
+    problems = []
+    bs = blocks(tokens)
+    if len(bs) < 2 or bs[1].type != "paragraph_open":
+        problems.append(f"{name}: no metadata paragraph under the title")
+        return problems, None
+    lines = inline_text(tokens)
+    body = lines[1] if len(lines) > 1 else ""
+    keys = strong_fields(tokens, bs[1])
+    if not keys:
+        problems.append(f"{name}: metadata paragraph carries no '**Key:** value' field")
+        return problems, None
+    if keys[0] != "State":
+        problems.append(f"{name}: first metadata field is {keys[0]!r}, and must be 'State'")
+    allowed = ["State", "Feature", "Scope"]
+    for k in keys:
+        if k not in allowed:
+            problems.append(f"{name}: metadata field {k!r} is not one of {allowed}")
+    if len(set(keys)) != len(keys):
+        problems.append(f"{name}: a metadata field is repeated: {keys}")
+    ranks = [allowed.index(k) for k in keys if k in allowed]
+    if ranks != sorted(ranks):
+        problems.append(f"{name}: metadata fields are out of order: {keys}")
+    m = re.search(r"State:\s*(\S+)", body)
+    state = m.group(1) if m else None
+    if state is None:
+        problems.append(f"{name}: State has no value")
+    elif states is not None and state not in states:
+        problems.append(
+            f"{name}: state {state!r} is not one RFD 1000 lists: {sorted(states)}"
+        )
+    return problems, state
+
+
+def strong_fields(tokens, block):
+    """The `**Key:**` names in one paragraph, read off the AST.
+
+    A field is bold text ending in a colon. The AST already separated that
+    markup from the value beside it, so nothing here re-parses asterisks.
+    """
+    keys = []
+    for t in tokens:
+        if t.type != "inline" or t.map != block.map:
+            continue
+        depth = 0
+        for c in (t.children or []):
+            if c.type == "strong_open":
+                depth = 1
+            elif c.type == "strong_close":
+                depth = 0
+            elif depth and c.type == "text" and c.content.rstrip().endswith(":"):
+                keys.append(c.content.rstrip().rstrip(":").strip())
+    return keys
+
+
+def check_length(name, source, limit):
+    """RFD 1000 keeps a README to the problem and the decision.
+
+    The count is a proxy for that, and it is the proxy RFD 1000 states, so it
+    is the one enforced. What overruns it is a measurement, a walkthrough or a
+    retraction, and each of those has a sibling file to live in.
+    """
+    if limit is None:
+        return []
+    n = len(source.splitlines())
+    if n > limit:
+        return [f"{name}: is {n} lines, and the limit RFD 1000 gives is {limit}"]
+    return []
+
+
+def check_sections(name, tokens, state):
+    problems = []
+    h2 = [h[1] for h in headings(tokens) if h[0] == 2]
+    seen = []
+    for text in h2:
+        for canon in SPINE:
+            if text == canon or text.startswith(canon + ","):
+                seen.append(canon)
+                break
+    if len(set(seen)) != len(seen):
+        problems.append(f"{name}: a spine section appears twice: {seen}")
+    ranks = [SPINE.index(s) for s in seen]
+    if ranks != sorted(ranks):
+        problems.append(
+            f"{name}: sections run {seen}, and the order is {list(SPINE)}"
+        )
+    if REQUIRED not in seen and state not in NO_DECISION_STATES:
+        problems.append(f"{name}: has no '## {REQUIRED}' section")
+    return problems
+
+
+def check_citations(name, tokens, nums):
+    problems = []
+    for line in inline_text(tokens):
+        for m in OLD_CITE_RE.finditer(line):
+            problems.append(f"{name}: cites RFD {m.group(1)} in the old decimal form")
+        for m in CITE_RE.finditer(line):
+            n = m.group(1)
+            if n.startswith("0"):
+                continue  # already reported above
+            if n not in nums:
+                problems.append(
+                    f"{name}: cites RFD {n}, which has no directory and no ALIASES.md row"
+                )
+    return problems
+
+
+def check(root):
+    problems = []
+    dirs = sorted(
+        d for d in os.listdir(root)
+        if DIR_RE.match(d) and os.path.isdir(os.path.join(root, d))
+    )
+    if not dirs:
+        problems.append("no RFD directories found, which is never correct here")
+        return problems
+
+    states = parse_states(root)
+    if states is None:
+        problems.append(
+            "RFD 1000 no longer states its list of states, so this gate cannot read it"
+        )
+    limit = parse_limit(root)
+    if limit is None:
+        problems.append(
+            "RFD 1000 no longer states its README line limit, so this gate cannot read it"
+        )
+    nums = known_numbers(root, dirs)
+
+    for d in dirs:
+        num = DIR_RE.match(d).group(1)
+        readme = os.path.join(root, d, "README.md")
+        if not os.path.exists(readme):
+            problems.append(f"{d}/README.md: missing")
+            continue
+        with open(readme, encoding="utf-8") as fh:
+            source = fh.read()
+        toks = MD.parse(source)
+        name = f"{d}/README.md"
+        problems += check_length(name, source, limit)
+        problems += check_title(name, num, toks, TITLE_RE, "RFD <num>: <title>")
+        pre, state = check_preamble(name, toks, states)
+        problems += pre
+        problems += check_sections(name, toks, state)
+        problems += check_citations(name, toks, nums)
+
+        details = os.path.join(root, d, "DETAILS.md")
+        if os.path.exists(details):
+            # RFD 1000: a README moves the long material out and names where
+            # it went. A sibling nothing points at is a file nobody opens.
+            if "DETAILS.md" not in " ".join(inline_text(toks)):
+                problems.append(f"{name}: has a DETAILS.md and never names it")
+            with open(details, encoding="utf-8") as fh:
+                dtoks = MD.parse(fh.read())
+            dname = f"{d}/DETAILS.md"
+            problems += check_title(
+                dname, num, dtoks, DETAILS_TITLE_RE, "RFD <num> details: <title>"
+            )
+            problems += check_citations(dname, dtoks, nums)
+    return problems
+
+
+GOOD_README = """# RFD 1001: A title
+
+**State:** published
+**Feature:** a feature
+
+## Problem
+
+A problem. RFD 1002 is the neighbour.
+
+## Decision
+
+A decision.
+
+## Related
+
+See `DETAILS.md` for the rest.
+"""
+GOOD_DETAILS = "# RFD 1001 details: the rest\n\nProse.\n"
+GOOD_CONVENTIONS = """# RFD 1000: Conventions
+
+**State:** published
+**Scope:** all files
+
+## Decision
+
+Each RFD has a state: prediscussion, ideation, discussion, published,
+committed, abandoned, or moved.
+
+Each RFD's `README.md` stays at 40 lines or fewer.
+"""
+
+
+def self_test():
+    import shutil
+    import tempfile
+
+    def build(tmp, readme=GOOD_README, details=GOOD_DETAILS, aliases=None):
+        for n, body in (("1000-conventions", GOOD_CONVENTIONS), ("1001-a-slug", readme)):
+            os.makedirs(os.path.join(tmp, n))
+            with open(os.path.join(tmp, n, "README.md"), "w", encoding="utf-8") as fh:
+                fh.write(body)
+        if details is not None:
+            with open(os.path.join(tmp, "1001-a-slug", "DETAILS.md"), "w", encoding="utf-8") as fh:
+                fh.write(details)
+        with open(os.path.join(tmp, "ALIASES.md"), "w", encoding="utf-8") as fh:
+            fh.write(aliases if aliases is not None else "| RFD 0001 | RFD 1002 | x |\n")
+
+    wrapped = GOOD_README.replace("RFD 1002 is the neighbour.", "RFD\n0001 is the neighbour.")
+    cases = [
+        ("a clean tree passes", {}, False),
+        ("title number disagrees with the directory",
+         {"readme": GOOD_README.replace("# RFD 1001:", "# RFD 1003:")}, True),
+        ("the title is not the first block",
+         {"readme": "Loose prose first.\n\n" + GOOD_README}, True),
+        ("a second level-1 heading",
+         {"readme": GOOD_README + "\n# RFD 1001: Again\n"}, True),
+        ("no metadata paragraph",
+         {"readme": GOOD_README.replace("**State:** published\n**Feature:** a feature\n\n", "")}, True),
+        ("a state RFD 1000 does not list",
+         {"readme": GOOD_README.replace("published", "in-progress")}, True),
+        ("Scope written before Feature",
+         {"readme": GOOD_README.replace("**Feature:** a feature", "**Scope:** x\n**Feature:** y")}, True),
+        ("an unknown metadata field",
+         {"readme": GOOD_README.replace("**Feature:** a feature", "**Owner:** somebody")}, True),
+        ("no Decision section",
+         {"readme": GOOD_README.replace("## Decision\n\nA decision.\n\n", "")}, True),
+        ("Decision written before Problem",
+         {"readme": GOOD_README.replace("## Problem", "## Zzz").replace("## Related", "## Problem")}, True),
+        ("a decimal citation split across a line break", {"readme": wrapped}, True),
+        ("a citation that resolves nowhere",
+         {"readme": GOOD_README.replace("RFD 1002", "RFD 1099")}, True),
+        ("a DETAILS.md the README never names",
+         {"readme": GOOD_README.replace("See `DETAILS.md` for the rest.", "Nothing here.")}, True),
+        ("a DETAILS.md titled for another RFD",
+         {"details": "# RFD 1009 details: the rest\n"}, True),
+        ("a README past the line limit RFD 1000 gives",
+         {"readme": GOOD_README + "\nfiller\n" * 40}, True),
+    ]
+    ok = True
+    print("self-test: each known-bad input must be rejected")
+    for label, kw, should_fail in cases:
+        tmp = tempfile.mkdtemp()
+        try:
+            build(tmp, **kw)
+            failed = bool(check(tmp))
+            if failed != should_fail:
+                ok = False
+            mark = "ok " if failed == should_fail else "BAD"
+            print(f"  {mark} {label}: {'rejected' if failed else 'accepted'}")
+        finally:
+            shutil.rmtree(tmp)
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    if "--self-test" in sys.argv:
+        sys.exit(self_test())
+    found = check(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    for line in found:
+        print(line)
+    print(f"{len(found)} problems")
+    sys.exit(1 if found else 0)

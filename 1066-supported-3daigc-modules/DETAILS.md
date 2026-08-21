@@ -21,7 +21,7 @@
 
 Also shipped, client plus API: multi-image input, a primary photo
 plus up to seven references, on splat, world, and avatar tasks (RFD
-0094); Publish RP1/OMB validate, sending a mesh job to the spatial
+105e); Publish RP1/OMB validate, sending a mesh job to the spatial
 fabric through the MSF Map Service (RFD 1064); Kimodo
 text-to-motion, an animation-bar prompt into a SOMA motion job into
 viewport playback on a VRM or a rigged GLB
@@ -78,7 +78,7 @@ viewport's own TripoSplat preview, not the same code path as
 ```
 
 `/xr` stays an IWSDK lab for grab and locomotion regression (RFD
-0090). The main app (`/`) runs IWSDK Option A on `SceneManager`:
+105a). The main app (`/`) runs IWSDK Option A on `SceneManager`:
 distance and proximity grab (trigger), a grip that opens a context
 menu or pans, and thumbstick locomotion, alongside loaded splat
 worlds and a VRM, in the same session.
@@ -95,7 +95,7 @@ primary on-device target; `bounded-floor`, `local-floor`, `local`,
 and `viewer` reference spaces (RFD 106c gives the implementation);
 WebXR expression tracking when the browser exposes it, a native face
 relay through a companion APK when it does not (RFD 1060, RFD
-0082).
+1052).
 
 Also shipped: WebGPU rendering with an automatic WebGL fallback;
 SSAO, Bloom, and FXAA post-processing; positional (spatial) audio;
@@ -131,7 +131,7 @@ from that foundation to the current rendering stack.
 RFD 105e (multi-image routing), RFD 105f (NVIDIA XR AI), RFD 1056
 (dev machine topology), RFD 106b (world package format), RFD 1064
 (spatial fabric/RP1), RFD 1054 (avatar pipeline, client side), RFD
-0090 (IWSDK integration), RFD 1060 (OpenXR face tracking), RFD 1052
+105a (IWSDK integration), RFD 1060 (OpenXR face tracking), RFD 1052
 (the Android XR face-bridge APK), RFD 1069 (webcam/avatar control),
 RFD 106c (XR floor anchoring and backgrounds), RFD 1058 (HTTPS
 setup), RFD 1055 (the code map).

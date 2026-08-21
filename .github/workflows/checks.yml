@@ -37,3 +37,16 @@ jobs:
       # certifies the defect, so it proves itself before it judges the repo.
       - run: python scripts/check-rfd-numbers.py --self-test
       - run: python scripts/check-rfd-numbers.py
+
+  rfd-structure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      # The CommonMark parser is the one dependency these gates take, and it
+      # is pinned. RFD 107c says why the AST is worth it.
+      - run: pip install -r scripts/requirements.txt
+      - run: python scripts/check-rfd-structure.py --self-test
+      - run: python scripts/check-rfd-structure.py

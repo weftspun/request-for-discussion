@@ -31,7 +31,8 @@ Measure paired together. The menu panel's bottom edge sits on the
 controller grip; it does not float roughly 0.5 m ahead of it.
 
 `bash scripts/verify_xr_avatar_view_locomotion.sh` runs before a
-merge touching this file.
+merge touching this file. See `DETAILS.md` for the changes this RFD
+forbids without an explicit user request.
 
 ## Related
 
