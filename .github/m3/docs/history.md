@@ -16,7 +16,7 @@ classes, an AI personality generator, and a mint function.
 ![image](/img/rJ80Rwpja.png)
 
 **V3: M3** carried the fork forward as Anata. Weftspun3DStudio forks
-from that line; RFD 0017, in `weftspun/request-for-discussion`,
+from that line; RFD 1011, in `weftspun/request-for-discussion`,
 records the rebrand.
 
 ![Screenshot from 2023-12-30 15-53-13](/img/rJzD026jp.png)

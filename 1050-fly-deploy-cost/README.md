@@ -1,0 +1,32 @@
+# RFD 1050: What the three Fly deploys cost
+
+**State:** published
+**Scope:** the deploy target
+
+## Problem
+
+`weftspun-studio`, `weftspun-character-taxonomy`, and
+`weftspun-usd-viewer` all run as real, billed Fly Machines and
+Volumes now. No record states what that costs, hourly, monthly, or
+yearly.
+
+## Decision
+
+Record it, from Fly's own published pricing page, against this
+deployment's own real machine sizes, checked live with `flyctl`, not
+estimated. See `DETAILS.md` for the full breakdown.
+
+**Total: $0.012845/hour, $9.26/month, $111.12/year**, at today's
+sizes: three `shared-cpu-1x` machines (two 512MB, one 256MB, the
+last scaled from Fly's default 2-machine HA pair to one), a 3GB
+Volume, and a 1GB Volume.
+
+Not included: outbound bandwidth (usage-based, has a free tier
+before per-GB billing), and any future Tigris usage RFD 1049's
+still-open fetch-path work would add.
+
+## Related
+
+RFD 103e gives the Fly.io toplevel. RFD 104c gives the `apps/` split
+across three Fly apps. RFD 104f gives `versitygw`'s removal, no
+change to this total since it ran inside an already-billed machine.

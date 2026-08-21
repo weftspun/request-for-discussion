@@ -1,6 +1,6 @@
 """Checks each model folder's Docker image.
 
-RFD 0036 gives the rules. This script covers the ones a reader
+RFD 1024 gives the rules. This script covers the ones a reader
 forgets, and it leaves the rest to `docker build`.
 
 A broken server.py fails when a rented GPU starts it, which is money
@@ -12,7 +12,7 @@ import json
 import sys
 from pathlib import Path
 
-# RFD 0036. Neither this box's own worker nor vast.ai runs a health
+# RFD 1024. Neither this box's own worker nor vast.ai runs a health
 # probe of its own, thus a caller polls /health until ready.
 REQUIRED_ROUTES = ["/health", "/predict"]
 
@@ -28,7 +28,7 @@ def check_server(path: Path) -> list[str]:
 
     for route in REQUIRED_ROUTES:
         if f'"{route}"' not in source:
-            problems.append(f"serves no {route}, which RFD 0036 requires")
+            problems.append(f"serves no {route}, which RFD 1024 requires")
 
     # The contract stage runs with no GPU and no weights. Without this
     # switch the image cannot be tested anywhere but a rented card.
@@ -43,14 +43,14 @@ def check_dockerfile(path: Path) -> list[str]:
     source = path.read_text(encoding="utf-8")
 
     if "AS contract" not in source:
-        problems.append("has no contract stage, which RFD 0036 requires")
+        problems.append("has no contract stage, which RFD 1024 requires")
 
     if "AS worker" not in source:
         problems.append("has no worker stage")
 
-    # Cog is gone. RFD 0036 records why.
+    # Cog is gone. RFD 1024 records why.
     if "cog.yaml" in source or "runpod" in source.lower():
-        problems.append("names Cog or RunPod, and RFD 0036 selects plain Docker instead")
+        problems.append("names Cog or RunPod, and RFD 1024 selects plain Docker instead")
 
     return problems
 

@@ -1,0 +1,32 @@
+name: Checks
+
+on:
+  pull_request:
+  merge_group:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  prek:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: pip install prek
+      - run: prek run --all-files --show-diff-on-failure --color always
+
+  rfd-numbers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      # The self-test runs first. A gate that cannot reject a known-bad tree
+      # certifies the defect, so it proves itself before it judges the repo.
+      - run: python scripts/check-rfd-numbers.py --self-test
+      - run: python scripts/check-rfd-numbers.py
