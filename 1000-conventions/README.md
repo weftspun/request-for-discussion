@@ -7,7 +7,8 @@
 
 This repository writes Request-for-Discussion documents in the Oxide
 style. Each RFD has a state: prediscussion, ideation, discussion,
-published, committed, or abandoned.
+published, committed, abandoned, or moved. A moved RFD names the
+repository that now develops it.
 
 The repository writes prose in ASD-STE100 Simplified Technical
 English. Code and identifiers do not follow STE. STE applies to
@@ -17,12 +18,13 @@ The repository keeps designs in one place. The decisions directory
 records durable decisions. The docs tree holds detailed designs.
 An RFD points to its source. It does not copy the source.
 
-Each RFD's `README.md` stays under 40 lines. It states the problem
-and the decision, in the fewest lines that keep both true. A
-measurement, a verification log, a deep walkthrough, or a code
+Each RFD's `README.md` stays at 40 lines or fewer. It states the
+problem and the decision, in the fewest lines that keep both true.
+A measurement, a verification log, a deep walkthrough, or a code
 sample does not fit. Move it to a sibling file, such as
-`DETAILS.md`, in the same RFD folder. The `README.md` names that
-file in one line.
+`DETAILS.md`, in the same RFD folder, and name that file in one
+line. A retraction moves with the rest, and stays next to what it
+retracts, which after the move is the detail it corrects.
 
 ## References
 

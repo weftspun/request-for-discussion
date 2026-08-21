@@ -1,0 +1,11 @@
+# The one dependency the RFD gates take, pinned.
+#
+# `check-rfd-structure.py` reads a CommonMark AST rather than the bytes, and
+# nothing in the standard library parses CommonMark. markdown-it-py is the
+# maintained Python port of the reference parser and tracks the CommonMark
+# spec version it implements. RFD 107c records why the AST is worth a
+# dependency in a repository that had none.
+#
+# Pinned rather than floated. A parser change would move what the gate sees,
+# and a gate that changes verdict without a diff is not a gate.
+markdown-it-py==3.0.0

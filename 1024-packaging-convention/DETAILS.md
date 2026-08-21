@@ -1,5 +1,16 @@
 # RFD 1024 details: the target, the rules, stages, files, composites, status
 
+## Retracted: Replicate Cog as the package format
+
+This RFD first selected Replicate Cog. Cog is a good package format,
+and it targets one host. RFD 1037 now runs the worker on this box's
+own 4090 first, plain Docker, no rental. vast.ai stays priced for
+later, the same plain-Docker shape once this box is not enough.
+
+The rule that replaced it is in the README, and the reason Cog does
+not fit either host is beside it. This entry stays so a reader who
+finds a Cog reference elsewhere knows which way the decision went.
+
 ## The target
 
 An RTX 4090 with 24 GB, at about 0.35 to 0.37 US dollars per hour on

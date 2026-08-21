@@ -20,4 +20,4 @@ interface, and why the UV unwrap must not hide inside this model image.
 ## Related
 
 RFD 1026 holds the weights. RFD 1024 gives the model image convention. RFD
-0033 records the UV stage.
+1021 records the UV stage.

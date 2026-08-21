@@ -6,7 +6,7 @@
 ## Problem
 
 `src/library/` held 139 files and 56,376 lines. It predates RFD
-0019's strangler fig and RFD 1017's `src/core/` split. 108 files
+1013's strangler fig and RFD 1017's `src/core/` split. 108 files
 outside it still imported from it. RFD 1017's per-file move rule
 gave no place to put those 108 files a port did not cover yet.
 

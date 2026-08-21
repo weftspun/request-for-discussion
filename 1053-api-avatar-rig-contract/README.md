@@ -22,7 +22,7 @@ on a critical code (upside down, facing backward, no skinned mesh,
 too few joints); the client applies only targeted skinned-mesh
 repair, and never reuses VRM-loader flags on an AIGC GLB, since a
 VRM upload and an AIGC rig follow deliberately separate paths (RFD
-0104 gives the VRM side).
+1068 gives the VRM side).
 
 See `DETAILS.md` for the coordinate system, the full requirement and
 failure-code tables, the Blender export steps, and the retest

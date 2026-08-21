@@ -1,4 +1,4 @@
-# Numbering
+# RFD 1000 details: numbering
 
 ## The problem this rule answers
 

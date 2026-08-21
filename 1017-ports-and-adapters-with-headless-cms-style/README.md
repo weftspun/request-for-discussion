@@ -31,7 +31,7 @@ Two rules hold the split together: `domain/` may import from
 library or a `src/chain/` module.
 
 The client keeps every other file. This is a strangler fig, as RFD
-0019 records. A module moves when a port covers it, and not before.
+1013 records. A module moves when a port covers it, and not before.
 
 See `DETAILS.md` for the full layout, the content/not-content split,
 the `OwnedAssetSource` port, the boundary test, the method, the

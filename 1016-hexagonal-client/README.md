@@ -30,7 +30,7 @@ and adapters split the Elixir side uses: a `domain/` of pure rules,
 `ports/` of contracts, and `adapters/` one per data source.
 
 The client keeps every other file. This is a strangler fig, as RFD
-0019 records. Nothing moves until a port covers it.
+1013 records. Nothing moves until a port covers it.
 
 See `DETAILS.md` for the full shape, why a port is a contract test,
 the first port this RFD builds, the method, and the risks.

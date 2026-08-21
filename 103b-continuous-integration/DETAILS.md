@@ -28,6 +28,22 @@ because this project develops against Podman (RFD 103a), while
 GitHub's runners ship Docker. The Dockerfiles are engine-agnostic.
 Neither one assumes Podman.
 
+## Retracted for now: the GitHub workflow that called the script
+
+`.github/workflows/main.yml` once installed the toolchains and called
+`scripts/ci.sh`, and nothing in it duplicated a step the script already
+ran. That file is deleted, on purpose.
+
+`scripts/ci.sh` still exists, still runs the same one command, and a
+developer still runs it before committing. The browser client's own
+test suite carries many pre-existing failures across several files,
+unrelated to any one commit, and every push turned red for that reason
+alone. RFD 1039 tracks restoring the workflow once that suite is fixed.
+
+The decision this retracts is Fowler's, not this repository's, and it
+still holds. One command builds and self-tests the system. What is
+missing is the machine that runs it, not the command.
+
 ## What this does not cover
 
 Playwright (`test:e2e`) and the smoke scripts under

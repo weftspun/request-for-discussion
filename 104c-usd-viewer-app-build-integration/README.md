@@ -20,7 +20,7 @@ itself had no deploy of its own.
 and Quadlet pair, served by `server.js`, a small static server.
 
 `weftspun_studio` stops holding the gallery's bytes on disk. RFD
-0022/0023's ports-and-adapters split gives the shape:
+1016/0023's ports-and-adapters split gives the shape:
 `WeftspunStudio.Ports.GallerySource` (one `fetch/2`), and
 `WeftspunStudio.Adapters.HttpGallery`, a plain reverse-proxy
 adapter, the shape `Adapters.ReplicateJobs` already has.

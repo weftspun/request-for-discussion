@@ -19,7 +19,7 @@ follow.
 
 1. `@variables` holds a trait map, keyed by trait name, one value per
    character, matching the `have`/`handle`/`loaded` pattern in RFD
-   0044's `domain.ex`. The key is a superkey, so the map sits in BCNF.
+   102c's `domain.ex`. The key is a superkey, so the map sits in BCNF.
 2. The trait taxonomy comes from the training data, not from
    preconceived categories. `capabilities` starts empty, and a
    domain action grows it as it resolves each trait value to a
@@ -37,4 +37,4 @@ redundant tuple that ETNF targets, with no fixed enum to maintain.
 
 RFD 1040 sets the domain/problem split. RFD 1025 gives the
 `:ref`/`capabilities` rules. RFD 1015 gives the `HRR` library. RFD
-0044 gives the worked `domain.ex` this schema follows.
+102c gives the worked `domain.ex` this schema follows.

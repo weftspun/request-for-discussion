@@ -9,10 +9,8 @@ The DGX API ran each model through its own adapter. Each adapter
 carried its own weight loader, its own CUDA pin, and its own output
 writer. There is no DGX now, and none of those adapters run anywhere.
 
-This RFD first selected Replicate Cog. Cog is a good package format,
-and it targets one host. RFD 1037 now runs the worker on this box's
-own 4090 first, plain Docker, no rental. vast.ai stays priced for
-later, the same plain-Docker shape once this box is not enough.
+This RFD first selected Replicate Cog, and `DETAILS.md` records why
+that choice was withdrawn.
 
 ## Decision
 

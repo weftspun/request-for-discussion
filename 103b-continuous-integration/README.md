@@ -26,19 +26,12 @@ and "Make Your Build Self-Testing" are the two. A broken `npm run`
 line that only ran on GitHub's machine shows what happens when the
 person who last touched a build never runs it.
 
-`scripts/ci.sh` is that one command, and `.github/workflows/main.yml`
-installs the toolchains and calls it. Nothing in the workflow
-duplicates a step the script already runs.
+`scripts/ci.sh` is that one command. A developer runs it before
+committing, and an integration machine runs the identical command.
 
 See `DETAILS.md` for the three steps in order, why one script beats
-three CI steps, and what this deliberately does not cover.
-
-`.github/workflows/main.yml` is deleted, on purpose. `scripts/ci.sh`
-still exists, still runs the same one command, and a developer still
-runs it before committing. The browser client's own test suite
-carries many pre-existing failures across several files, unrelated
-to any one commit, and every push turned red for that reason alone.
-RFD 1039 tracks restoring the workflow once that suite is fixed.
+three CI steps, why the GitHub workflow is deleted for now, and what
+this deliberately does not cover.
 
 ## Related
 

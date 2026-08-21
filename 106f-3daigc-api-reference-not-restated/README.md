@@ -21,7 +21,7 @@ browser client's own API surface.
 endpoint reference. `3DAIGC-API` itself ships interactive docs at
 `/docs` (Swagger UI) and `/redoc` on its own host and port, and those
 stay the source of truth for exact request and response shapes. RFD
-0102 already gives this project's own task-to-model catalog, at the
+1066 already gives this project's own task-to-model catalog, at the
 level a client developer needs. See `DETAILS.md` for the endpoint
 group names this reference held, kept as a map, not a copy.
 

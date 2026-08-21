@@ -24,4 +24,4 @@ applies here too.
 ## Related
 
 RFD 102f holds the shared domain. RFD 1026 holds the weights. RFD
-0053 gives the layer rule.
+1035 gives the layer rule.

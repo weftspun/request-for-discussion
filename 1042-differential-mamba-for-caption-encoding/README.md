@@ -16,7 +16,7 @@ Do not adopt it. Abandon this line of work.
 
 Differential Mamba reduces attention overallocation in a trained,
 autoregressive language model, for long-context retrieval. RFD
-0065's resolve step needs none of that. `HRR.encode_atom/2` is a
+1041's resolve step needs none of that. `HRR.encode_atom/2` is a
 closed-form hash into a phase vector, with no training step and no
 sequence to attend over. `HRR.Cleanup.nearest_above/3` compares that
 vector against a codebook by cosine similarity.

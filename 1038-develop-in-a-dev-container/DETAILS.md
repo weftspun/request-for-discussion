@@ -4,7 +4,7 @@
 
 This branch first swapped EXLA for Torchx, and made the dependency
 conditional on the platform. Neither workaround is the answer. RFD
-0019 selects EXLA because it compiles `Nx.Defn` graphs, while Torchx
+1013 selects EXLA because it compiles `Nx.Defn` graphs, while Torchx
 runs them one operation at a time.
 
 ## What the container carries

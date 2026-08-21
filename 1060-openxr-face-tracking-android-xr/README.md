@@ -34,7 +34,7 @@ mapping-fidelity caveats.
 **Unresolved duplicate:** weftspun-3d-studio's own
 `thirdparty/m3/docs/OPENXR_FACE_TRACKING_ANDROID_XR.md` covers the
 same topic, with real content differences; not yet reconciled. RFD
-0082 gives the companion APK implementing the native side. RFD 1069
+1052 gives the companion APK implementing the native side. RFD 1069
 gives the WebXR-only fallback, and RFD 1077 the general hardware
 requirement. The app's own `docs/FACE_EXPRESSION_TUNING_REFERENCE.md`
 holds the numeric tuning baseline, not restated here, per RFD 1000.

@@ -63,7 +63,7 @@ work. See RFD 1039.
 **Toplevel, on Fly.io:**
 
 - `Dockerfile` at the repo root (RFD 103c moved it there, and RFD
-  0058 already proved it builds a working release image) and a
+  103a already proved it builds a working release image) and a
   `fly.toml` this RFD does not yet write.
 - CockroachDB, co-located with the router the same way RFD 103a puts
   it beside `weftspun_studio` today, on a Fly Volume, since a Fly

@@ -33,5 +33,5 @@ verified status.
 RFD 1013 gives the API server. RFD 1014 pins the CockroachDB build.
 RFD 1025 gives the taskweft job/task split. RFD 1037 selects Docker
 images, on this box first. RFD 1039 tracks what is still open. RFD
-0073 wires versitygw into the Fly toplevel this RFD's loopback rule
+1049 wires versitygw into the Fly toplevel this RFD's loopback rule
 governs.
