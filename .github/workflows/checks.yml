@@ -16,6 +16,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
+      # Two of the hooks are `mix format` and `elixir scripts/...`, so the
+      # runner needs Elixir as well as Python. Without it prek fails with
+      # "No such file or directory" rather than with a formatting complaint.
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: "27"
+          elixir-version: "1.17"
       - run: pip install prek
       - run: prek run --all-files --show-diff-on-failure --color always
 
