@@ -10,9 +10,9 @@ style. Each RFD has a state: prediscussion, ideation, discussion,
 published, committed, abandoned, or moved. A moved RFD names the
 repository that now develops it.
 
-The repository writes prose in ASD-STE100 Simplified Technical
-English. Code and identifiers do not follow STE. STE applies to
-documents, comments, and user-visible text.
+Technical writing follows ASD-STE100 Simplified Technical English.
+An essay follows the AI-trope gate, and a section names which one it
+takes. RFD 107d gives that rule. Code and identifiers follow neither.
 
 The repository keeps designs in one place. The decisions directory
 records durable decisions. The docs tree holds detailed designs.
@@ -30,7 +30,7 @@ retracts, which after the move is the detail it corrects.
 
 - RFD style: `rfd-driven-architecture` skill
 - Numbering rule: `DETAILS.md`. Old numbers: `ALIASES.md`
-- STE spec: https://www.asd-ste100.org/
+- STE spec: https://www.asd-ste100.org/ Tropes: https://tropes.fyi
 - STE linter: the `simplified-technical-english` Claude Code plugin
   (`fire/claude-ste-plugin`). RFD 103f records the move off a
   repo-local script.
