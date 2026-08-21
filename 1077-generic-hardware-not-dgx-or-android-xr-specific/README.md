@@ -22,7 +22,7 @@ decides whether a GPU fits the loaded models.
 
 The client runs in any WebXR-capable browser, on any headset that
 supports it. Quest 3 and Apple Vision Pro reach the dev URL the same
-way Galaxy XR does, through `enableVR()` or `enableAR()`, per RFD 0010. Android XR's own native face-tracking bridge (RFD 1052, RFD 0096) stays Android-specific, since it calls an Android-only OpenXR
+way Galaxy XR does, through `enableVR()` or `enableAR()`, per RFD 100a. Android XR's own native face-tracking bridge (RFD 1052, RFD 1060) stays Android-specific, since it calls an Android-only OpenXR
 extension. That path is a Galaxy-XR enhancement, not a requirement
 for XR elsewhere. A headset without it still gets VR, AR, floor
 anchoring, and the WebXR-native `expression-tracking` feature where
