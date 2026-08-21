@@ -1,6 +1,6 @@
 # Rejects a taskweft domain or problem that is not valid Elixir.
 #
-# RFD 0037 records that a RECTGTN domain is Elixir DSL source, and the
+# RFD 1025 records that a RECTGTN domain is Elixir DSL source, and the
 # `plan` tool takes it as a string with format "dsl". A file that does
 # not parse fails at the planner, which is far from the edit that
 # broke it. This check names the failure at commit time.

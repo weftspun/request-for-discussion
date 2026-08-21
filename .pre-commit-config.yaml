@@ -19,7 +19,7 @@ repos:
           Elixir, thus the formatter is the first check it passes.
         entry: mix format --check-formatted
         language: system
-        files: '^\d{4}-.*\.exs?$'
+        files: '^[0-9a-f]{4}-.*\.exs?$'
         pass_filenames: false
 
       - id: elixir-parses
@@ -29,21 +29,21 @@ repos:
           catches this as well, and this hook names the failure.
         entry: elixir scripts/check-elixir-parses.exs
         language: system
-        files: '^\d{4}-.*\.exs?$'
+        files: '^[0-9a-f]{4}-.*\.exs?$'
 
       - id: dockerfile-and-server
         name: model images parse
         description: >-
           Each model folder carries a Dockerfile and a server.py.
-          RFD 0036 gives the rules, and a broken server.py fails much
+          RFD 1024 gives the rules, and a broken server.py fails much
           later, on a rented GPU.
         entry: python scripts/check-model-images.py
         language: system
-        files: '^\d{4}-.*/(Dockerfile|server\.py|test_input\.json)$'
+        files: '^[0-9a-f]{4}-.*/(Dockerfile|server\.py|test_input\.json)$'
 
   # Markdown hygiene. Structural only, deliberately.
   #
-  # RFD 0063 moves ASD-STE100 enforcement to the simplified-technical-english
+  # RFD 103f moves ASD-STE100 enforcement to the simplified-technical-english
   # plugin, and says why no repository-local script duplicates it. These hooks
   # therefore check nothing about the prose. They check the bytes: a trailing
   # space that a diff shows and a reader cannot see, a missing final newline

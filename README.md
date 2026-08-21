@@ -1,8 +1,11 @@
 # RFD Index
 
 This repository holds Request-for-Discussion documents, across every
-weftspun project, one shared numbering space. It follows the Oxide
-RFD style.
+weftspun project. It follows the Oxide RFD style.
+
+Each RFD number has four hexadecimal digits. The first digit names
+the organization. This repository uses digit 1. RFD 1000 gives the
+rule. `ALIASES.md` maps the old decimal numbers to the new ones.
 
 Each RFD is a reference design. It records a decision and points to
 the canonical documentation, in whichever project's own repository
@@ -38,5 +41,5 @@ Each RFD uses ASD-STE100 Simplified Technical English. The rules:
 The repository enforces this with the `simplified-technical-english`
 Claude Code plugin (`fire/claude-ste-plugin`), not a repo-local
 script. Its `Stop` hook lints each reply as it is written and asks
-for a rewrite on a violation. RFD 0063 records the move and why no
+for a rewrite on a violation. RFD 103f records the move and why no
 CI step or pre-commit hook duplicates it.
