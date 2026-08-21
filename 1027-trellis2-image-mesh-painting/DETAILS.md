@@ -10,12 +10,12 @@
 
 ## The interface
 
-| Input             | Type | Default |
-| ----------------- | ---- | ------- |
-| mesh              | Path | none    |
-| image             | Path | none    |
-| texture_resolution| int  | 1024    |
-| seed              | int  | -1      |
+| Input              | Type | Default |
+| ------------------ | ---- | ------- |
+| mesh               | Path | none    |
+| image              | Path | none    |
+| texture_resolution | int  | 1024    |
+| seed               | int  | -1      |
 
 `mesh` takes GLB, and the API contract in decisions/api/api.md gives
 `mesh_file_id` as the recommended handle. The model image takes a

@@ -60,10 +60,10 @@ trust the Khronos man pages linked above over any of them.
 
 ## Web versus native, side by side
 
-| Path | Where it runs | Feature | Data shape | Implementation |
-| --- | --- | --- | --- | --- |
-| WebXR | A Chrome immersive session | The optional `expression-tracking` feature | `XRFrame.expressions` | `src/library/xrExpressionTrackingDriver.js`, `applyXRFrameExpressionsToVRMS` |
-| Native bridge | The Android XR host, through OpenXR | `XR_ANDROID_face_tracking` | Serialized weights, or an `openxrParameters[]` array | The native app calls `window.__weftspun3dStudioNativeFace.push()`, into `src/library/nativeFaceBridge.js`, into `applyExpressionWeightRecordToVRMS` |
+| Path          | Where it runs                       | Feature                                    | Data shape                                           | Implementation                                                                                                                                      |
+| ------------- | ----------------------------------- | ------------------------------------------ | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| WebXR         | A Chrome immersive session          | The optional `expression-tracking` feature | `XRFrame.expressions`                                | `src/library/xrExpressionTrackingDriver.js`, `applyXRFrameExpressionsToVRMS`                                                                        |
+| Native bridge | The Android XR host, through OpenXR | `XR_ANDROID_face_tracking`                 | Serialized weights, or an `openxrParameters[]` array | The native app calls `window.__weftspun3dStudioNativeFace.push()`, into `src/library/nativeFaceBridge.js`, into `applyExpressionWeightRecordToVRMS` |
 
 The index-to-key mapping lives in
 `src/library/openxrFaceParameterMap.js`
@@ -81,12 +81,12 @@ overrides WebXR's own `expressions` for that frame, in
 When the browser does not grant `expression-tracking`, the Weftspun
 XR Face APK plus the Vite dev relay stand in:
 
-| Step | Component |
-| --- | --- |
-| 1 | `npm run dev` on the PC enables `POST /__native_face_ingest` and `GET /__native_face_sse`. |
-| 2 | The APK's Jetpack path, or OpenXR's `XR_ANDROID_face_tracking`, POSTs to that ingest endpoint at roughly 30 Hz. OpenXR uses PBuffer GLES, so ingest continues during Chrome's Full Space when `FaceKeeperActivity` is the host. |
-| 3 | Chrome opens the app with `?nativeFaceRelay=1`; `nativeFaceRelay.js`'s `EventSource` feeds `nativeFaceBridge`. |
-| 4 | The XR frame loop uses the native weights, the same as the WebView path. The web side caches for 30 seconds while `xrPresenting`; the APK's own handoff staleness is 10 seconds. |
+| Step | Component                                                                                                                                                                                                                       |
+| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1    | `npm run dev` on the PC enables `POST /__native_face_ingest` and `GET /__native_face_sse`.                                                                                                                                      |
+| 2    | The APK's Jetpack path, or OpenXR's `XR_ANDROID_face_tracking`, POSTs to that ingest endpoint at roughly 30 Hz. OpenXR uses PBuffer GLES, so ingest continues during Chrome's Full Space when `FaceKeeperActivity` is the host. |
+| 3    | Chrome opens the app with `?nativeFaceRelay=1`; `nativeFaceRelay.js`'s `EventSource` feeds `nativeFaceBridge`.                                                                                                                  |
+| 4    | The XR frame loop uses the native weights, the same as the WebView path. The web side caches for 30 seconds while `xrPresenting`; the APK's own handoff staleness is 10 seconds.                                                |
 
 RFD 1052 gives the full APK design this relay depends on.
 

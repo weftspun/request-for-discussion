@@ -62,18 +62,18 @@ Chrome.
 
 ## What is already implemented
 
-| Area | Status |
-| --- | --- |
-| Gradle app, WebView shell, dev HTTPS (debug SSL proceed) | Done |
-| `XrFaceTrackingEngine`, Jetpack `Session`, `Face.getUserFace`, roughly 30 Hz | Done |
-| `FaceHttpRelay`, an OkHttp POST to `/__native_face_ingest` | Done |
-| `FaceBridgeForegroundService` plus notification | Done |
-| `FaceKeeper`/`FaceKeeperActivity`, a transparent 1x1 host during the Chrome handoff | Done |
-| `FaceHandoffState`, `SharedPreferences` for `chromeHandoff`, a 30-second stale threshold | Done |
-| `FaceTrackingCoordinator`, Jetpack plus OpenXR, picks the freshest `lastPostAgeMs()` | Done |
-| OpenXR native (`libcs_openxr_face.so`, `OpenXrFaceEngine`, GLES/PBuffer Phase 1b) | Scaffolded, partial |
-| Permissions: `FACE_TRACKING`, notifications, camera, audio for WebView | Done |
-| Web side: `nativeFaceBridge.js`, `nativeFaceRelay.js`, a Vite plugin, tests | Done |
+| Area                                                                                     | Status              |
+| ---------------------------------------------------------------------------------------- | ------------------- |
+| Gradle app, WebView shell, dev HTTPS (debug SSL proceed)                                 | Done                |
+| `XrFaceTrackingEngine`, Jetpack `Session`, `Face.getUserFace`, roughly 30 Hz             | Done                |
+| `FaceHttpRelay`, an OkHttp POST to `/__native_face_ingest`                               | Done                |
+| `FaceBridgeForegroundService` plus notification                                          | Done                |
+| `FaceKeeper`/`FaceKeeperActivity`, a transparent 1x1 host during the Chrome handoff      | Done                |
+| `FaceHandoffState`, `SharedPreferences` for `chromeHandoff`, a 30-second stale threshold | Done                |
+| `FaceTrackingCoordinator`, Jetpack plus OpenXR, picks the freshest `lastPostAgeMs()`     | Done                |
+| OpenXR native (`libcs_openxr_face.so`, `OpenXrFaceEngine`, GLES/PBuffer Phase 1b)        | Scaffolded, partial |
+| Permissions: `FACE_TRACKING`, notifications, camera, audio for WebView                   | Done                |
+| Web side: `nativeFaceBridge.js`, `nativeFaceRelay.js`, a Vite plugin, tests              | Done                |
 
 ### Payload contract, the JSON POST body
 
@@ -88,9 +88,9 @@ spec.
 
 ## Status after a May 2026 rebuild (verify on device)
 
-| Mode | Behavior before the fix | Expected after |
-| --- | --- | --- |
-| Flat Chrome or WebView | Works: `nativeKeys` 25, 42 | Unchanged |
+| Mode                             | Behavior before the fix                             | Expected after                                                              |
+| -------------------------------- | --------------------------------------------------- | --------------------------------------------------------------------------- |
+| Flat Chrome or WebView           | Works: `nativeKeys` 25, 42                          | Unchanged                                                                   |
 | Chrome immersive AR (Full Space) | Relay stale, `nativeKeys=0`, Jetpack `not TRACKING` | The OpenXR PBuffer path plus `FaceKeeperActivity` host; Jetpack as fallback |
 
 ### Implemented that same pass
@@ -104,13 +104,13 @@ spec.
 
 ### Known gaps, not fully fixed
 
-| Issue | Detail |
-| --- | --- |
-| Web-versus-APK stale mismatch | The web side holds the last weights for 30 seconds while `xrPresenting`; the APK's own handoff staleness is 10 seconds, intentionally, trading UI stability against faster recovery. |
-| Jetpack and OpenXR running in parallel during handoff | The coordinator can still start Jetpack while `chromeHandoff` is set, even when OpenXR is already collecting, which can compete for GLES on Galaxy XR; watch logcat for session failures. |
-| The foreground-service `microphone` type | Declared only for process priority; face tracking itself does not use the microphone. Add it only if the WebView/foreground path actually records audio, or a store policy may question it. |
-| A prior assistant summary's typo | It claimed "1.5x stale = 15s"; the code actually uses 2x `effectiveStaleMs()`, roughly 20 seconds, during handoff. |
-| `OpenXrFaceEngine.kt` | `setSurface` still only nudges the pipeline when `surfaceReady`; the headless path runs through `ensureFacePipeline` with no surface, which is correct. |
+| Issue                                                 | Detail                                                                                                                                                                                      |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Web-versus-APK stale mismatch                         | The web side holds the last weights for 30 seconds while `xrPresenting`; the APK's own handoff staleness is 10 seconds, intentionally, trading UI stability against faster recovery.        |
+| Jetpack and OpenXR running in parallel during handoff | The coordinator can still start Jetpack while `chromeHandoff` is set, even when OpenXR is already collecting, which can compete for GLES on Galaxy XR; watch logcat for session failures.   |
+| The foreground-service `microphone` type              | Declared only for process priority; face tracking itself does not use the microphone. Add it only if the WebView/foreground path actually records audio, or a store policy may question it. |
+| A prior assistant summary's typo                      | It claimed "1.5x stale = 15s"; the code actually uses 2x `effectiveStaleMs()`, roughly 20 seconds, during handoff.                                                                          |
+| `OpenXrFaceEngine.kt`                                 | `setSurface` still only nudges the pipeline when `surfaceReady`; the headless path runs through `ensureFacePipeline` with no surface, which is correct.                                     |
 
 ### Success criteria, on a re-test after rebuild
 
@@ -122,18 +122,18 @@ posts.
 
 ## Key files to open first
 
-| File | Role |
-| --- | --- |
-| `MainActivity.kt` | WebView, permissions, the Chrome-handoff menu item, picture-in-picture, FaceKeeper get/release |
-| `XrFaceTrackingEngine.kt` | The Jetpack face-collect loop, `FaceHttpRelay.post`, watchdog and recycle logic |
-| `FaceKeeper.kt` / `FaceKeeperActivity.kt` | The session host while Chrome runs in XR |
-| `FaceHandoffState.kt` | The persistent Chrome-handoff flag |
-| `FaceBridgeForegroundService.kt` | The foreground service, keeper restart, reconfigure on a stale relay |
-| `FaceTrackingCoordinator.kt` | Starts and stops Jetpack plus OpenXR |
-| `FaceHttpRelay.kt` | The LAN POST to the dev server |
-| `OpenXrFaceEngine.kt` plus `app/src/main/cpp/*` | OpenXR 1.0.x, `XR_ANDROID_face_tracking`, the GLES binding |
-| `FaceBlendShapeMaps.kt` | The Jetpack-to-WebXR key mapping |
-| `AndroidXrBridgeInterface.kt` | The JS-facing `AndroidXRBridge.onBridgeReady()` |
+| File                                            | Role                                                                                           |
+| ----------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `MainActivity.kt`                               | WebView, permissions, the Chrome-handoff menu item, picture-in-picture, FaceKeeper get/release |
+| `XrFaceTrackingEngine.kt`                       | The Jetpack face-collect loop, `FaceHttpRelay.post`, watchdog and recycle logic                |
+| `FaceKeeper.kt` / `FaceKeeperActivity.kt`       | The session host while Chrome runs in XR                                                       |
+| `FaceHandoffState.kt`                           | The persistent Chrome-handoff flag                                                             |
+| `FaceBridgeForegroundService.kt`                | The foreground service, keeper restart, reconfigure on a stale relay                           |
+| `FaceTrackingCoordinator.kt`                    | Starts and stops Jetpack plus OpenXR                                                           |
+| `FaceHttpRelay.kt`                              | The LAN POST to the dev server                                                                 |
+| `OpenXrFaceEngine.kt` plus `app/src/main/cpp/*` | OpenXR 1.0.x, `XR_ANDROID_face_tracking`, the GLES binding                                     |
+| `FaceBlendShapeMaps.kt`                         | The Jetpack-to-WebXR key mapping                                                               |
+| `AndroidXrBridgeInterface.kt`                   | The JS-facing `AndroidXRBridge.onBridgeReady()`                                                |
 
 Log tags: `ON-JetpackFace`, `ON-FaceKeeper`, `ON-FaceBridgeSvc`,
 `ON-FaceHttpRelay`, `ON-OpenXrNative`, `ON-XR-WebView`.
@@ -169,13 +169,13 @@ or a LAN IP into source.
 
 ## Related web repository paths
 
-| Path | Role |
-| --- | --- |
-| `src/library/nativeFaceBridge.js` | Consumes native weights |
-| `src/library/nativeFaceRelay.js` | Chrome-side SSE/poll from the dev server |
-| `vite.config.js` | The `__native_face_ingest` and `__native_face_sse` plugins |
-| RFD 1060 | Spec links, the payload contract |
-| RFD 1069 | WebXR expression notes, remote logging |
+| Path                              | Role                                                       |
+| --------------------------------- | ---------------------------------------------------------- |
+| `src/library/nativeFaceBridge.js` | Consumes native weights                                    |
+| `src/library/nativeFaceRelay.js`  | Chrome-side SSE/poll from the dev server                   |
+| `vite.config.js`                  | The `__native_face_ingest` and `__native_face_sse` plugins |
+| RFD 1060                          | Spec links, the payload contract                           |
+| RFD 1069                          | WebXR expression notes, remote logging                     |
 
 ## One-sentence summary
 

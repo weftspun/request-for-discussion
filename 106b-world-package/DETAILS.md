@@ -40,11 +40,11 @@ worlds/
 
 ## Scene layers
 
-| Layer | Root | Contents |
-| --- | --- | --- |
+| Layer  | Root         | Contents                       |
+| ------ | ------------ | ------------------------------ |
 | Player | `playerRoot` | The rigged avatar (VRM or GLB) |
-| World | `worldRoot` | The environment splat |
-| Props | `propsRoot` | Interactable mesh props |
+| World  | `worldRoot`  | The environment splat          |
+| Props  | `propsRoot`  | Interactable mesh props        |
 
 An avatar load never replaces the world or its props; a world load
 never replaces the avatar.
@@ -56,19 +56,19 @@ Mesh props are grabbable in the main app (`/`), through
 thumbstick locomotion, and a grip that opens a context menu on a hit
 or pans on a miss.
 
-| Input (Galaxy XR) | Main `/` session |
-| --- | --- |
-| Trigger (select) | Grab, distance and proximity |
-| Grip (squeeze) | A ray hit opens a right-click/model menu; a miss pans |
-| Right stick | Locomotion, or teleport aim |
+| Input (Galaxy XR) | Main `/` session                                      |
+| ----------------- | ----------------------------------------------------- |
+| Trigger (select)  | Grab, distance and proximity                          |
+| Grip (squeeze)    | A ray hit opens a right-click/model menu; a miss pans |
+| Right stick       | Locomotion, or teleport aim                           |
 
 The `/xr` IWSDK lab stays for regression testing
 (`iwsdkWorldPackage.js`):
 
-| Input | IWSDK component | Galaxy XR action |
-| --- | --- | --- |
-| Far grab | `DistanceGrabbable` | Aim, then trigger |
-| Near grab | `OneHandGrabbable` | Walk up, then grip squeeze |
+| Input     | IWSDK component     | Galaxy XR action           |
+| --------- | ------------------- | -------------------------- |
+| Far grab  | `DistanceGrabbable` | Aim, then trigger          |
+| Near grab | `OneHandGrabbable`  | Walk up, then grip squeeze |
 
 Environment splats are visual only, through Spark.js. An optional
 `environment.collider_url` supplies a walk mesh for locomotion,

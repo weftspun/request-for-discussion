@@ -69,11 +69,11 @@ renders appears in the numbers rather than hiding in an average.
 
 Three outputs, each named against the consumer that asked for it.
 
-| output | consumer |
-| --- | --- |
-| the image | both |
+| output             | consumer              |
+| ------------------ | --------------------- |
+| the image          | both                  |
 | keypoint positions | the keypoint detector |
-| the 3D shape | Pixal3D |
+| the 3D shape       | Pixal3D               |
 
 Nothing else is written. Depth, the camera matrix and the part index are render intermediates.
 No second annotator runs. A fourth output is drift unless a consumer asked for it.
@@ -108,10 +108,10 @@ asset rather than a bad argument. I read a packaging fault into an invalid argum
 
 The spec string works, and the claim re-derives exactly.
 
-| call | vertices | `texture_coordinates` |
-| --- | --- | --- |
-| `topology="anny"` | 13,718 | (21334, 2) |
-| `topology="soma"` | 18,056 | `None` |
+| call              | vertices | `texture_coordinates` |
+| ----------------- | -------- | --------------------- |
+| `topology="anny"` | 13,718   | (21334, 2)            |
+| `topology="soma"` | 18,056   | `None`                |
 
 The PBR bake is not blocked. Nothing in the package is missing.
 

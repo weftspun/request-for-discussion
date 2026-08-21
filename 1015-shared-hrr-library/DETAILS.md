@@ -2,13 +2,13 @@
 
 ### Why the phase representation wins
 
-| Point | Phase representation | The earlier local module |
-| --- | --- | --- |
-| Bind | Adds phases. Cost is linear. | Multiplies spectra. Cost is `n log n`. |
+| Point  | Phase representation                      | The earlier local module               |
+| ------ | ----------------------------------------- | -------------------------------------- |
+| Bind   | Adds phases. Cost is linear.              | Multiplies spectra. Cost is `n log n`. |
 | Unbind | Subtracts phases. Exact for every vector. | Exact only after a unitary correction. |
-| Atoms | SHA-256 counter blocks. | A seeded normal draw. |
-| Parity | Matches a Python reference bit for bit. | None. |
-| Reuse | Two repositories share it. | One module in one repository. |
+| Atoms  | SHA-256 counter blocks.                   | A seeded normal draw.                  |
+| Parity | Matches a Python reference bit for bit.   | None.                                  |
+| Reuse  | Two repositories share it.                | One module in one repository.          |
 
 The phase form is cheaper, it is exact without a correction step, and
 a second language can produce the same vectors.
@@ -29,12 +29,12 @@ three repositories from writing it again.
 `WeftspunStudio.FactVector` holds the part that knows what a catalog
 fact is:
 
-  * `encode/2` binds the id, the category, and the tags to their
-    roles, then bundles the result.
-  * `query/2` turns free text into a probe. A term may name any of
-    the three roles, so the probe binds it to all three.
-  * `codebook/2` and `probe/4` reach `HRR.Cleanup` with the symbols a
-    fact can resolve to.
+- `encode/2` binds the id, the category, and the tags to their
+  roles, then bundles the result.
+- `query/2` turns free text into a probe. A term may name any of
+  the three roles, so the probe binds it to all three.
+- `codebook/2` and `probe/4` reach `HRR.Cleanup` with the symbols a
+  fact can resolve to.
 
 The library knows nothing about catalogs. This module knows nothing
 about phase arithmetic.

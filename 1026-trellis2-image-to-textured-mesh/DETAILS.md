@@ -2,13 +2,13 @@
 
 ## The model
 
-| Property   | Value                          |
-| ---------- | ------------------------------ |
-| Parameters | 4.0 B, estimated               |
-| bf16       | 8.0 GB                         |
-| Q4_K_M     | 2.20 GB                        |
-| License    | MIT                            |
-| Format     | bf16, per RFD 101b             |
+| Property   | Value              |
+| ---------- | ------------------ |
+| Parameters | 4.0 B, estimated   |
+| bf16       | 8.0 GB             |
+| Q4_K_M     | 2.20 GB            |
+| License    | MIT                |
+| Format     | bf16, per RFD 101b |
 
 ## The interface
 
@@ -16,12 +16,12 @@
 budget. It returns the base USD layer, and a GLB beside it. RFD 1035
 gives that rule.
 
-| Input             | Type | Default |
-| ----------------- | ---- | ------- |
-| image             | Path | none    |
-| texture_resolution| int  | 1024    |
-| decimation_target | int  | 210000  |
-| seed              | int  | -1      |
+| Input              | Type | Default |
+| ------------------ | ---- | ------- |
+| image              | Path | none    |
+| texture_resolution | int  | 1024    |
+| decimation_target  | int  | 210000  |
+| seed               | int  | -1      |
 
 `decimation_target` must not exceed 210000. That is
 `API_MAX_MESH_VERTICES` in src/library/aiModelsCatalog.js, and it

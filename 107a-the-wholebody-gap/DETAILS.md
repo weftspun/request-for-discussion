@@ -2,14 +2,14 @@
 
 ## Why the head cannot be bought
 
-| checkpoint | why it fails |
-| --- | --- |
-| Sapiens | CC-BY-NC, the exact class `filter_coco_licenses.py` drops |
-| DWPose | Apache-2.0 weights, trained on UBody, distributed only behind a registration form |
-| RTMW | the same UBody dependency, and not independent of DWPose, which distils from an RTMPose teacher |
-| OpenPose | non-commercial academic licence, and CMU is blocklisted for provenance |
-| AlphaPose | commercial use needs a separate licence |
-| MediaPipe | Apache-2.0 and verified, but 33 plus 468 plus 42 landmarks, which is not a COCO-compatible wholebody head |
+| checkpoint | why it fails                                                                                              |
+| ---------- | --------------------------------------------------------------------------------------------------------- |
+| Sapiens    | CC-BY-NC, the exact class `filter_coco_licenses.py` drops                                                 |
+| DWPose     | Apache-2.0 weights, trained on UBody, distributed only behind a registration form                         |
+| RTMW       | the same UBody dependency, and not independent of DWPose, which distils from an RTMPose teacher           |
+| OpenPose   | non-commercial academic licence, and CMU is blocklisted for provenance                                    |
+| AlphaPose  | commercial use needs a separate licence                                                                   |
+| MediaPipe  | Apache-2.0 and verified, but 33 plus 468 plus 42 landmarks, which is not a COCO-compatible wholebody head |
 
 Five of the six fail on terms. The sixth answers a different question.
 
@@ -37,8 +37,8 @@ column derivable as the cross product of the first two, which is a derivable col
 
 **`visibility` is int8, not bool.** Three separate reasons, and each alone is sufficient.
 
-1. COCO has three states. Masked training must tell *not annotated* from *annotated as
-   occluded*. A boolean cannot, so you skip the first and learn the second.
+1. COCO has three states. Masked training must tell _not annotated_ from _annotated as
+   occluded_. A boolean cannot, so you skip the first and learn the second.
 2. Multi-view labels are computed rather than annotated. Z-test each projected joint against
    the rendered depth. The answer is 2 for visible, 1 for projects inside the silhouette but
    fails the test, and 0 for outside the frame.
@@ -70,13 +70,13 @@ default returns 13,718 and would fail to multiply.
 Every piece is MIT and already packaged. They share one backbone, so the latent passes between
 them without conversion.
 
-| step | does | why it is that one |
-| --- | --- | --- |
-| Pixal3D | image in, SLAT out | it emits SLAT natively, so nothing is inverted. An ANNY-first order would pay a lossy `a_invert` on every use |
-| fit ANNY | supplies the part semantics | Pixal3D gives geometry and not labels. A fitted ANNY carries hm08 groups, so masks come from the fit rather than from a segmentation model |
-| mask by set operation | tokens, not meshes | `ANNY and Pixal3D` is body. `Pixal3D without ANNY` is garment or hair, because ANNY models anatomy and nothing else. No decode and no correspondence |
-| VoxHammer | fills what was never seen | the 3D inpainter. It replaces LaMa rather than calling it |
-| `a_splice` | preserves everything outside the mask | inversion is lossy, so without it every extracted layer perturbs the ones you did not touch |
+| step                  | does                                  | why it is that one                                                                                                                                   |
+| --------------------- | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Pixal3D               | image in, SLAT out                    | it emits SLAT natively, so nothing is inverted. An ANNY-first order would pay a lossy `a_invert` on every use                                        |
+| fit ANNY              | supplies the part semantics           | Pixal3D gives geometry and not labels. A fitted ANNY carries hm08 groups, so masks come from the fit rather than from a segmentation model           |
+| mask by set operation | tokens, not meshes                    | `ANNY and Pixal3D` is body. `Pixal3D without ANNY` is garment or hair, because ANNY models anatomy and nothing else. No decode and no correspondence |
+| VoxHammer             | fills what was never seen             | the 3D inpainter. It replaces LaMa rather than calling it                                                                                            |
+| `a_splice`            | preserves everything outside the mask | inversion is lossy, so without it every extracted layer perturbs the ones you did not touch                                                          |
 
 **VoxHammer replaces LaMa because it is consistent across views.** A 2D inpaint answers for
 one view. Fill behind the hair for a front view, then ask for a three-quarter view, and the
@@ -115,13 +115,13 @@ version of that refinement is order-dependent by construction.
 
 Read from `data_toolkit/README.md` rather than assumed.
 
-| toolkit step | who does it | state |
-| --- | --- | --- |
-| download 3D assets | skipped, because ANNY is the asset | not applicable |
-| process mesh, extract PBR | our renderer | build |
-| render multi-view and cameras | our renderer | build |
-| voxelize to O-Voxels | upstream | theirs |
-| encode shape, PBR and sparse latents | upstream | theirs |
+| toolkit step                         | who does it                        | state          |
+| ------------------------------------ | ---------------------------------- | -------------- |
+| download 3D assets                   | skipped, because ANNY is the asset | not applicable |
+| process mesh, extract PBR            | our renderer                       | build          |
+| render multi-view and cameras        | our renderer                       | build          |
+| voxelize to O-Voxels                 | upstream                           | theirs         |
+| encode shape, PBR and sparse latents | upstream                           | theirs         |
 
 The last row is why decode-only still holds for us. Supplying geometry is not owning an
 encoder.
@@ -158,10 +158,10 @@ the wrong reading, and it got one.
 
 The claim re-derives exactly through the spec string.
 
-| call | vertices | `texture_coordinates` |
-| --- | --- | --- |
-| `topology="anny"` | 13,718 | (21334, 2) |
-| `topology="soma"` | 18,056 | `None` |
+| call              | vertices | `texture_coordinates` |
+| ----------------- | -------- | --------------------- |
+| `topology="anny"` | 13,718   | (21334, 2)            |
+| `topology="soma"` | 18,056   | `None`                |
 
 The PBR bake is not blocked.
 
@@ -273,34 +273,34 @@ above turns out to matter, and picking one then is cheaper than regretting it la
 
 ## What exists, and what does not## What exists, and what does not
 
-| piece | note | state |
-| --- | --- | --- |
-| licence-clean mocap | 810 clips, CC-BY-4.0 and Apache or MIT, with `CITATION.cff` | exists |
-| `extract_poses.py` | world-space joint positions, convention-free, avoiding the Euler trap | exists |
-| `AnnyInverter` and LBFGS | solves pose, phenotype and local changes jointly | exists |
-| **renderer** | image, keypoints, masks, camera parameters. Nothing turns a posed mesh into a labelled frame | **build** |
-| appearance generators | Qwen-Image-Edit, CycleGAN monet and ukiyoe, algorithmic corruption, all licence-cleared | exists |
-| colour sketch | Qwen-Image-Edit, Apache-2.0, already in the catalog | exists |
-| **checkpoint hash on the Qwen path** | `server.py` returns no hash and no instruction. Condition 1 needs both | **build** |
-| drift and hand verification | `silhouette.py`, `depth_term.py`, `soma_referee.py`, controls passing | exists |
-| schema | `KEYPOINTS_2D`, `SEGMENTATION`, `RENDERS` defined. `visibility` int8 and `topology_id` pending | exists |
-| COCO-format bridge | `gen_coco_dataset.py`, `gen_reference_keypoints.py`, `gen_reference_loss.py` | exists |
-| **training loop** | upstream RF-DETR is Apache-2.0. The masked-loss run does not exist | **build** |
-| GGUF conversion | `convert_keypoints_to_gguf.py` | exists |
-| `rf-detr-cpp` inference | working port, head is COCO-17 | exists |
+| piece                                | note                                                                                           | state     |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------- | --------- |
+| licence-clean mocap                  | 810 clips, CC-BY-4.0 and Apache or MIT, with `CITATION.cff`                                    | exists    |
+| `extract_poses.py`                   | world-space joint positions, convention-free, avoiding the Euler trap                          | exists    |
+| `AnnyInverter` and LBFGS             | solves pose, phenotype and local changes jointly                                               | exists    |
+| **renderer**                         | image, keypoints, masks, camera parameters. Nothing turns a posed mesh into a labelled frame   | **build** |
+| appearance generators                | Qwen-Image-Edit, CycleGAN monet and ukiyoe, algorithmic corruption, all licence-cleared        | exists    |
+| colour sketch                        | Qwen-Image-Edit, Apache-2.0, already in the catalog                                            | exists    |
+| **checkpoint hash on the Qwen path** | `server.py` returns no hash and no instruction. Condition 1 needs both                         | **build** |
+| drift and hand verification          | `silhouette.py`, `depth_term.py`, `soma_referee.py`, controls passing                          | exists    |
+| schema                               | `KEYPOINTS_2D`, `SEGMENTATION`, `RENDERS` defined. `visibility` int8 and `topology_id` pending | exists    |
+| COCO-format bridge                   | `gen_coco_dataset.py`, `gen_reference_keypoints.py`, `gen_reference_loss.py`                   | exists    |
+| **training loop**                    | upstream RF-DETR is Apache-2.0. The masked-loss run does not exist                             | **build** |
+| GGUF conversion                      | `convert_keypoints_to_gguf.py`                                                                 | exists    |
+| `rf-detr-cpp` inference              | working port, head is COCO-17                                                                  | exists    |
 
 ## What the chain is for
 
 The head recovers a body from a picture. Each stage is blind to something another stage covers.
 
-| step | recovers | blind to |
-| --- | --- | --- |
-| RF-DETR wholebody | 104 keypoints in 2D | depth, shape, anything unlabelled |
-| `AnnyInverter` and LBFGS | the pose that puts those joints there | whether its correspondence is right |
-| silhouette fit | the 11 phenotypes no keypoint constrains | depth, and the interior |
-| depth fit and Marigold | interior surface, limb ordering | absolute scale |
-| MediaPipe | 51 of 52 ARKit coefficients | the tongue, verified absent from the model |
-| hm08 groups on the fit | body layers in 3D, depth-ordered, nothing inpainted | hair and garments, which ANNY does not model |
+| step                     | recovers                                            | blind to                                     |
+| ------------------------ | --------------------------------------------------- | -------------------------------------------- |
+| RF-DETR wholebody        | 104 keypoints in 2D                                 | depth, shape, anything unlabelled            |
+| `AnnyInverter` and LBFGS | the pose that puts those joints there               | whether its correspondence is right          |
+| silhouette fit           | the 11 phenotypes no keypoint constrains            | depth, and the interior                      |
+| depth fit and Marigold   | interior surface, limb ordering                     | absolute scale                               |
+| MediaPipe                | 51 of 52 ARKit coefficients                         | the tongue, verified absent from the model   |
+| hm08 groups on the fit   | body layers in 3D, depth-ordered, nothing inpainted | hair and garments, which ANNY does not model |
 
 The estimator panel never had that property, because its members were all COCO-trained and
 their errors correlated. Every fit here is descent through a forward we own. Where the forward
@@ -317,14 +317,14 @@ The first version of that file reported 992 unassigned vertices, 124 cubes and a
 mesh. All three were wrong, and the file was wrong in the class of error it was written to
 catch. It counted the ranges in one JSON field and took that count for the mesh.
 
-| statement | result |
-| --- | --- |
-| `segs_disjoint` | holds. No vertex is in two groups |
-| `not_a_partition` | the twelve-range claim fails. Vertex 13606 is in the mesh and in no group |
-| `jointCubes_card` | the block is 1,000 vertices, which is 125 cubes of 8 |
-| `covered_or_jointCubes` | the corrected claim, and it holds |
-| `three_groups_cover` | `body` and `HelperGeometry` and `JointCubes` are the whole mesh |
-| `three_groups_disjoint` | and no vertex is in two of them |
+| statement               | result                                                                    |
+| ----------------------- | ------------------------------------------------------------------------- |
+| `segs_disjoint`         | holds. No vertex is in two groups                                         |
+| `not_a_partition`       | the twelve-range claim fails. Vertex 13606 is in the mesh and in no group |
+| `jointCubes_card`       | the block is 1,000 vertices, which is 125 cubes of 8                      |
+| `covered_or_jointCubes` | the corrected claim, and it holds                                         |
+| `three_groups_cover`    | `body` and `HelperGeometry` and `JointCubes` are the whole mesh           |
+| `three_groups_disjoint` | and no vertex is in two of them                                           |
 
 `JointCubes` is `[[13606, 14597], [19150, 19157]]`. The missing eight are `joint-ground`.
 `HelperGeometry` excludes the cubes exactly, so `select_groups`' `HELPERS` entry never named

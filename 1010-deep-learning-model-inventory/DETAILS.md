@@ -4,7 +4,7 @@ Every model below is a deep learning model. Each one is packaged as its
 own model image, per RFD 1024. RFD 1021 lists the geometric algorithms.
 
 | Model id                        | Task                |
-| -------------------------------- | ------------------- |
+| ------------------------------- | ------------------- |
 | trellis2_image_to_textured_mesh | Image to 3D         |
 | trellis2_image_mesh_painting    | Image mesh painting |
 | pixal3d_image_to_textured_mesh  | Image to 3D (PBR)   |

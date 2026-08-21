@@ -68,10 +68,10 @@ The numbers come from FFmpeg 8.1.2 on the local machine. The test is 24 frames a
 1024, of a depth ramp with a 0.2 m step in it. The step is there because wavelet codecs do
 their worst at edges. A smooth ramp alone flatters them.
 
-| pixel format | bits | MB per 1000 frames | median error | worst error |
-| --- | --- | --- | --- | --- |
-| `gbrp12le` | 12 | 127 | 0.46 mm | 3.3 mm |
-| `yuv422p10le` | 10 | 94 | 2.10 mm | 7.9 mm |
+| pixel format  | bits | MB per 1000 frames | median error | worst error |
+| ------------- | ---- | ------------------ | ------------ | ----------- |
+| `gbrp12le`    | 12   | 127                | 0.46 mm      | 3.3 mm      |
+| `yuv422p10le` | 10   | 94                 | 2.10 mm      | 7.9 mm      |
 
 Quantisation alone costs 0.39 mm for each step at 12 bit and 1.56 mm at 10 bit. So CineForm
 adds about one step of error and no more.

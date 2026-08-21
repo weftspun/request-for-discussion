@@ -2,10 +2,10 @@
 
 ## What is what
 
-| Seen in NVIDIA Sync | SSH name (editor) | Address underneath | When |
-| --- | --- | --- | --- |
-| DGX Sparks local | `DGX-Local` | `dgx-spark.local` | At home |
-| DGX Sparks remote | `DGX-Remote` | `100.93.124.59` | Away |
+| Seen in NVIDIA Sync | SSH name (editor) | Address underneath | When    |
+| ------------------- | ----------------- | ------------------ | ------- |
+| DGX Sparks local    | `DGX-Local`       | `dgx-spark.local`  | At home |
+| DGX Sparks remote   | `DGX-Remote`      | `100.93.124.59`    | Away    |
 
 `DGX-Local` in the SSH config is correct; prefer Remote-SSH to
 either `DGX-Local` or `DGX-Remote` directly.

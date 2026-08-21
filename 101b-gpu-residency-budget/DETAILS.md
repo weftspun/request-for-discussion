@@ -6,18 +6,18 @@ A tier must hold the weights and the activations together. The Peak
 column is the resident weight set, which is smaller than the total for
 a model that runs in stages.
 
-| Model                          | Weights  | Peak     | Tier  |
-| ------------------------------ | -------: | -------: | ----- |
-| qwen_q4_k_m_image_edit         | 14.85 GB | 14.85 GB | 24 GB |
-| pixal3d_image_to_textured_mesh | 24.05 GB |  6.50 GB | 24 GB |
-| krea2_turbo_text_to_image      |  9.30 GB |  9.30 GB | 24 GB |
-| seethrough_layer_decomposition |  9.82 GB |  5.13 GB | 24 GB |
-| trellis2_image_to_textured_mesh|  8.00 GB |  8.00 GB | 24 GB |
-| worldmirror2_reconstruct       |  2.40 GB |  2.40 GB | 24 GB |
-| triposplat_image_to_splat      |  2.20 GB |  2.20 GB | 24 GB |
-| skintokens_auto_rig            |  1.00 GB |  1.00 GB | 24 GB |
-| p3sam_mesh_segmentation        |  0.80 GB |  0.80 GB | 24 GB |
-| kimodo_text_to_motion          |  0.60 GB |  0.60 GB | 24 GB |
+| Model                           |  Weights |     Peak | Tier  |
+| ------------------------------- | -------: | -------: | ----- |
+| qwen_q4_k_m_image_edit          | 14.85 GB | 14.85 GB | 24 GB |
+| pixal3d_image_to_textured_mesh  | 24.05 GB |  6.50 GB | 24 GB |
+| krea2_turbo_text_to_image       |  9.30 GB |  9.30 GB | 24 GB |
+| seethrough_layer_decomposition  |  9.82 GB |  5.13 GB | 24 GB |
+| trellis2_image_to_textured_mesh |  8.00 GB |  8.00 GB | 24 GB |
+| worldmirror2_reconstruct        |  2.40 GB |  2.40 GB | 24 GB |
+| triposplat_image_to_splat       |  2.20 GB |  2.20 GB | 24 GB |
+| skintokens_auto_rig             |  1.00 GB |  1.00 GB | 24 GB |
+| p3sam_mesh_segmentation         |  0.80 GB |  0.80 GB | 24 GB |
+| kimodo_text_to_motion           |  0.60 GB |  0.60 GB | 24 GB |
 
 Every model reaches a 24 GB card. That is the finding, and it is the
 opposite of what this RFD first recorded.

@@ -42,15 +42,15 @@ of it in Docker on a machine with no NVIDIA device.
 
 ## Files in each folder
 
-| File            | Holds                                        |
-| --------------- | -------------------------------------------- |
-| README.md       | The RFD. Why this model, and what it costs.  |
-| Dockerfile      | Both stages, the CUDA version, the weights.  |
-| server.py       | `/health`, `/predict`, and the type schema.  |
-| test_input.json | One request body, for the contract stage.    |
-| domain.ex       | A composite model only. See RFD 1025.        |
-| problem.ex      | A composite model only. See RFD 1025.        |
-| plan.ex         | The solved plan. The planner writes it.      |
+| File            | Holds                                       |
+| --------------- | ------------------------------------------- |
+| README.md       | The RFD. Why this model, and what it costs. |
+| Dockerfile      | Both stages, the CUDA version, the weights. |
+| server.py       | `/health`, `/predict`, and the type schema. |
+| test_input.json | One request body, for the contract stage.   |
+| domain.ex       | A composite model only. See RFD 1025.       |
+| problem.ex      | A composite model only. See RFD 1025.       |
+| plan.ex         | The solved plan. The planner writes it.     |
 
 ## What a composite model does
 

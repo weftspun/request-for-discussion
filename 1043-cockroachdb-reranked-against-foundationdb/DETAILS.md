@@ -2,12 +2,12 @@
 
 ## The rerank table
 
-| Rank | Store | Ecto path | What the sibling work found |
-| --- | --- | --- | --- |
-| 1 (kept) | CockroachDB | `Ecto.Adapters.Postgres`, unmodified | Boring. PostgreSQL wire protocol, plain Postgrex socket. Already running under RFD 1014, RFD 103a, and RFD 1041. |
-| 2 | FoundationDB Relational Layer (FRL) | `ecto-fdb-relational`, a Rustler NIF embedding a JVM | Works, at a real permanent cost. See below. |
-| 3 | mvsqlite (SQLite on FDB) | none | A ~3s p90/p95/p99 latency ceiling under concurrency, and no Ecto adapter exists. |
-| 4 | Raw FoundationDB | none | Highest measured write throughput, and no SQL layer at all. |
+| Rank     | Store                               | Ecto path                                            | What the sibling work found                                                                                      |
+| -------- | ----------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| 1 (kept) | CockroachDB                         | `Ecto.Adapters.Postgres`, unmodified                 | Boring. PostgreSQL wire protocol, plain Postgrex socket. Already running under RFD 1014, RFD 103a, and RFD 1041. |
+| 2        | FoundationDB Relational Layer (FRL) | `ecto-fdb-relational`, a Rustler NIF embedding a JVM | Works, at a real permanent cost. See below.                                                                      |
+| 3        | mvsqlite (SQLite on FDB)            | none                                                 | A ~3s p90/p95/p99 latency ceiling under concurrency, and no Ecto adapter exists.                                 |
+| 4        | Raw FoundationDB                    | none                                                 | Highest measured write throughput, and no SQL layer at all.                                                      |
 
 ## `weftspun/h2o-bench-tpcc`: FoundationDB over CockroachDB, for a different case
 

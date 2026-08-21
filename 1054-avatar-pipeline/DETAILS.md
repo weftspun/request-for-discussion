@@ -28,13 +28,13 @@ morphs need a wrap step instead (see the API's own
 
 ## Task types
 
-| Task | API | Viewport |
-| --- | --- | --- |
-| Image to 3D | mesh-generation | GLB mesh |
-| Auto rigging, template VRM | auto-rigging, `rig_mode: template` | Rigged GLB |
-| Avatar from image | mesh plus template rig chain | Rigged GLB, optional VRM download |
-| Image to Gaussian splat | splat-generation | Spark `SplatMesh` |
-| Avatar from image, splat checked | the above, plus TripoSplat in parallel | Body GLB plus splat preview |
+| Task                             | API                                    | Viewport                          |
+| -------------------------------- | -------------------------------------- | --------------------------------- |
+| Image to 3D                      | mesh-generation                        | GLB mesh                          |
+| Auto rigging, template VRM       | auto-rigging, `rig_mode: template`     | Rigged GLB                        |
+| Avatar from image                | mesh plus template rig chain           | Rigged GLB, optional VRM download |
+| Image to Gaussian splat          | splat-generation                       | Spark `SplatMesh`                 |
+| Avatar from image, splat checked | the above, plus TripoSplat in parallel | Body GLB plus splat preview       |
 
 ## Rig alignment and the contract
 
@@ -53,12 +53,12 @@ client-side rig hack.
 
 ## Blend shape sources
 
-| Source | Expressions |
-| --- | --- |
-| `template.vrm` | 124+ morphs, ARKit/Vive-style, on the template's own topology |
-| A rigged AIGC mesh | Skeleton only, until a wrap step runs |
-| Arc2Avatar (future) | FLAME, on head splats |
-| TripoSplat | Preview only, not a rigged VRM |
+| Source              | Expressions                                                   |
+| ------------------- | ------------------------------------------------------------- |
+| `template.vrm`      | 124+ morphs, ARKit/Vive-style, on the template's own topology |
+| A rigged AIGC mesh  | Skeleton only, until a wrap step runs                         |
+| Arc2Avatar (future) | FLAME, on head splats                                         |
+| TripoSplat          | Preview only, not a rigged VRM                                |
 
 XR face tracking needs a wrap or a head-stitch step, tracked in the
 API's own docs.
@@ -79,14 +79,14 @@ parses its extensions (`VRM` or `VRMC_vrm`), stores presets in
 
 ## Key files
 
-| File | Role |
-| --- | --- |
-| `src/library/avatarPipelineCatalog.js` | Template id, rig modes |
-| `src/library/taskManager.js` | `executeAvatarFromImage`, the template rig API call |
-| `src/library/avatarPipelineExport.js` | The post-pipeline VRM download |
-| `src/library/vrmTemplateMetadata.js` | VRM file parsing, splat pairing |
-| `src/library/sparkSplatManager.js` | Spark.js splats |
-| `src/components/TaskManager.jsx` | The UI tasks, the export checkbox |
+| File                                   | Role                                                |
+| -------------------------------------- | --------------------------------------------------- |
+| `src/library/avatarPipelineCatalog.js` | Template id, rig modes                              |
+| `src/library/taskManager.js`           | `executeAvatarFromImage`, the template rig API call |
+| `src/library/avatarPipelineExport.js`  | The post-pipeline VRM download                      |
+| `src/library/vrmTemplateMetadata.js`   | VRM file parsing, splat pairing                     |
+| `src/library/sparkSplatManager.js`     | Spark.js splats                                     |
+| `src/components/TaskManager.jsx`       | The UI tasks, the export checkbox                   |
 
 ## Tests
 

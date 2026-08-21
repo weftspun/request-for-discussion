@@ -18,10 +18,10 @@ no extra environment variable is required unless one is overridden.
 1. Open the project on `vercel.com`, then Settings, then Environment Variables.
 2. Add:
 
-   | Name | Value | Environments |
-   | --- | --- | --- |
-   | `VITE_ASSET_PATH` | `https://m3-org.github.io/loot-assets/` | Production, Preview, Development |
-   | `VITE_PUBLIC_DEMO` | `1` | Production, Preview; hides the API Status panel |
+   | Name               | Value                                   | Environments                                    |
+   | ------------------ | --------------------------------------- | ----------------------------------------------- |
+   | `VITE_ASSET_PATH`  | `https://m3-org.github.io/loot-assets/` | Production, Preview, Development                |
+   | `VITE_PUBLIC_DEMO` | `1`                                     | Production, Preview; hides the API Status panel |
 
    Never set `VITE_API_ENDPOINT` on the public Vercel demo; a
    self-hosted build is where a user configures their own API.
@@ -46,12 +46,12 @@ imports them directly, from `Load.jsx` and similar components).
 
 GitHub Pages serves the legacy asset tree under `/loot/`:
 
-| App path | CDN URL |
-| --- | --- |
-| Main manifest | `…/manifest.json` |
+| App path        | CDN URL                       |
+| --------------- | ----------------------------- |
+| Main manifest   | `…/manifest.json`             |
 | Models manifest | `…/loot/models/manifest.json` |
-| Model GLB | `…/loot/models/…` |
-| Animations | `…/loot/animations/…` |
+| Model GLB       | `…/loot/models/…`             |
+| Animations      | `…/loot/animations/…`         |
 
 `src/library/lootAssetsConfig.js` rewrites every path automatically
 once `VITE_ASSET_PATH` is set; no other code change is needed.

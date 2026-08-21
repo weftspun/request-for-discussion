@@ -86,7 +86,7 @@ and `expressionsNonNull`. Forward that line from a headset with
 3. Logs POST to `/__remote_log` on the same origin. Vite prints
    them and appends `logs/remote-log.txt`.
 4. A working client logs `[RemoteLog] Forwarding console to
-   /__remote_log` in the browser console.
+/__remote_log` in the browser console.
 
 ## Current behavior, summarized
 

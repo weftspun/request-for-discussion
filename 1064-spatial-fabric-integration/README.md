@@ -7,8 +7,7 @@
 
 A finished mesh job, or a viewport export, has no path into the
 Open Metaverse Browser's shared spatial fabric (RP1/OMB), a
-separate system from this project's own in-app world packages (RFD
-0107) and the `/xr` IWSDK lab.
+separate system from this project's own in-app world packages (RFD 0107) and the `/xr` IWSDK lab.
 
 ## Decision
 

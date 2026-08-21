@@ -6,16 +6,16 @@ Sourced from `app-chrome-layout-protected.mdc`,
 
 ## Tokens
 
-| Token | Purpose | Owner |
-| ----- | ------- | ----- |
-| `--app-content-top` | Measured top offset, read by the right rail | `:root`, from `App.jsx`; never `.app` |
-| `--collapsed-rail-width` | Collapsed rail width, both sides | `.app` |
-| `--collapsed-rail-icon-width` / `-icon-height` | Icon button size, matches the scene-controls hamburgers at 40x40 | `.app` |
-| `--collapsed-rail-icon-gap` | Vertical gap between icons | `.app` |
-| `--collapsed-rail-icon-padding` | Icon column padding | `.app` |
-| `--z-side-panel` | Side panel z-index, 998 | `.app` |
-| `--z-app-header` | Header z-index, 1001 | `.app` |
-| `--z-scene-controls` | Scene controls row z-index, 1002 | `.app` |
+| Token                                          | Purpose                                                          | Owner                                 |
+| ---------------------------------------------- | ---------------------------------------------------------------- | ------------------------------------- |
+| `--app-content-top`                            | Measured top offset, read by the right rail                      | `:root`, from `App.jsx`; never `.app` |
+| `--collapsed-rail-width`                       | Collapsed rail width, both sides                                 | `.app`                                |
+| `--collapsed-rail-icon-width` / `-icon-height` | Icon button size, matches the scene-controls hamburgers at 40x40 | `.app`                                |
+| `--collapsed-rail-icon-gap`                    | Vertical gap between icons                                       | `.app`                                |
+| `--collapsed-rail-icon-padding`                | Icon column padding                                              | `.app`                                |
+| `--z-side-panel`                               | Side panel z-index, 998                                          | `.app`                                |
+| `--z-app-header`                               | Header z-index, 1001                                             | `.app`                                |
+| `--z-scene-controls`                           | Scene controls row z-index, 1002                                 | `.app`                                |
 
 ## Shared selectors, styled together
 

@@ -2,11 +2,11 @@
 
 ## Coordinate system (glTF / three.js)
 
-| Axis | Role |
-| --- | --- |
-| Y | Up |
-| -Z | Character forward, faces the default camera |
-| X | Right |
+| Axis | Role                                        |
+| ---- | ------------------------------------------- |
+| Y    | Up                                          |
+| -Z   | Character forward, faces the default camera |
+| X    | Right                                       |
 
 Blender scripts run in Z-up internally; glTF import and export
 convert to and from this contract.
@@ -24,15 +24,15 @@ convert to and from this contract.
 
 ## Failure codes
 
-| Code | Blocks API export | Client |
-| --- | --- | --- |
-| `character_upside_down` | yes | fails |
-| `character_facing_backwards` | yes | fails |
-| `missing_skinned_mesh` | yes | fails |
-| `insufficient_joints` | yes, under 40 joints | — |
-| `mesh_bone_vertical_mismatch` | no, advisory | fails |
-| `hips_not_at_mesh_torso` | no, advisory | fails |
-| `api_validation_failed` | — | fails, when `rig_info.validation.passed === false` |
+| Code                          | Blocks API export    | Client                                             |
+| ----------------------------- | -------------------- | -------------------------------------------------- |
+| `character_upside_down`       | yes                  | fails                                              |
+| `character_facing_backwards`  | yes                  | fails                                              |
+| `missing_skinned_mesh`        | yes                  | fails                                              |
+| `insufficient_joints`         | yes, under 40 joints | —                                                  |
+| `mesh_bone_vertical_mismatch` | no, advisory         | fails                                              |
+| `hips_not_at_mesh_torso`      | no, advisory         | fails                                              |
+| `api_validation_failed`       | —                    | fails, when `rig_info.validation.passed === false` |
 
 Client-only structural codes: `no_model_root`, `empty_mesh_bounds`,
 `empty_bone_bounds`, `missing_hips_bone`, `no_bones_in_glb`,
@@ -47,9 +47,9 @@ fires in the viewport, a stricter second check after download.
 
 ## Design split, VRM versus AIGC
 
-| Path | Source | Client behavior |
-| --- | --- | --- |
-| VRM load | A `.vrm` file, loot assets, and so on | `vrmLoader.normalizeVRM` only; no contract flags, no `preserveExportedOrientation`. RFD 1068 gives the full pipeline. |
+| Path     | Source                                        | Client behavior                                                                                                                                                                                |
+| -------- | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| VRM load | A `.vrm` file, loot assets, and so on         | `vrmLoader.normalizeVRM` only; no contract flags, no `preserveExportedOrientation`. RFD 1068 gives the full pipeline.                                                                          |
 | AIGC GLB | Avatar-from-image or template rig, on the DGX | Validates against this contract. Targeted skinned-mesh repair runs when `needsSkinnedMeshRigRepair` fires (a contract FAIL, a feet/XZ mismatch, or a template-rig export). Feet anchor to y=0. |
 
 The DGX template rig should export a GLB in the same coordinate
@@ -61,13 +61,13 @@ DGX, never by reusing VRM loader flags on VRM files.
 
 ## Implementation
 
-| Side | File |
-| --- | --- |
-| Client validate and log | `src/library/aigcRigContract.js` |
-| Client rig repair | `src/library/rigBoneUtils.js`: `needsSkinnedMeshRigRepair`, `normalizeRiggedModelTransforms`; feet anchor via `anchorModelFeetToFloor` |
-| API export gate | `3DAIGC-API/core/utils/aigc_rig_contract.py`: `validate_aigc_rigged_glb()` |
-| Blender template rig | `3DAIGC-API/scripts/blender/apply_humanoid_template_rig.py` |
-| Job payload | `rig_info.validation = { passed, codes, metrics }`, on template rig completion |
+| Side                    | File                                                                                                                                   |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Client validate and log | `src/library/aigcRigContract.js`                                                                                                       |
+| Client rig repair       | `src/library/rigBoneUtils.js`: `needsSkinnedMeshRigRepair`, `normalizeRiggedModelTransforms`; feet anchor via `anchorModelFeetToFloor` |
+| API export gate         | `3DAIGC-API/core/utils/aigc_rig_contract.py`: `validate_aigc_rigged_glb()`                                                             |
+| Blender template rig    | `3DAIGC-API/scripts/blender/apply_humanoid_template_rig.py`                                                                            |
+| Job payload             | `rig_info.validation = { passed, codes, metrics }`, on template rig completion                                                         |
 
 ### The template-rig Blender path
 

@@ -2,30 +2,30 @@
 
 ## File map
 
-| File | Role | Loaded |
-| --- | --- | --- |
-| `CLAUDE.md` | Operating rules, protocol, routing, and project facts | Every session |
-| `AGENTS.md` | Entry point for tools using the `AGENTS.md` convention | Tool dependent |
-| `.agent/STATE.md` | Current project state and inter-session handoff | Every session |
-| `.agent/MAP.md` | Compact module and directory map | When locating code |
-| `.agent/PROJECT.md` | Architecture, constraints, glossary, and project-wide risks | Feature work or confusion |
-| `.agent/DECISIONS.md` | Binding technical choices with reasons | Before design work |
-| `.agent/ISSUES.md` | Bounded backlog for bugs, debt, and deferred work | Before design or work selection |
-| `.agent/workflows/*.md` | Procedures for task categories | One per task |
-| `.agent/designs/` | Active and archived feature designs | Active design only |
-| `.agent/areas/` | Optional deep documentation for complex modules | When working in that area |
-| `.agent/journal/` | Append-only session outcomes | Written at session close |
-| `.agent/scratch/` | Ignored temporary investigation notes | Only while active |
+| File                    | Role                                                        | Loaded                          |
+| ----------------------- | ----------------------------------------------------------- | ------------------------------- |
+| `CLAUDE.md`             | Operating rules, protocol, routing, and project facts       | Every session                   |
+| `AGENTS.md`             | Entry point for tools using the `AGENTS.md` convention      | Tool dependent                  |
+| `.agent/STATE.md`       | Current project state and inter-session handoff             | Every session                   |
+| `.agent/MAP.md`         | Compact module and directory map                            | When locating code              |
+| `.agent/PROJECT.md`     | Architecture, constraints, glossary, and project-wide risks | Feature work or confusion       |
+| `.agent/DECISIONS.md`   | Binding technical choices with reasons                      | Before design work              |
+| `.agent/ISSUES.md`      | Bounded backlog for bugs, debt, and deferred work           | Before design or work selection |
+| `.agent/workflows/*.md` | Procedures for task categories                              | One per task                    |
+| `.agent/designs/`       | Active and archived feature designs                         | Active design only              |
+| `.agent/areas/`         | Optional deep documentation for complex modules             | When working in that area       |
+| `.agent/journal/`       | Append-only session outcomes                                | Written at session close        |
+| `.agent/scratch/`       | Ignored temporary investigation notes                       | Only while active               |
 
 ## Context layers
 
-| Layer | Content |
-| --- | --- |
-| L0 | `CLAUDE.md`, the operating manual |
-| L1 | `STATE.md`, the current project state |
-| L2 | One workflow for the current request |
-| L3 | Map, project facts, decisions, issues, area docs, and active design |
-| L4 | Targeted source code |
+| Layer | Content                                                             |
+| ----- | ------------------------------------------------------------------- |
+| L0    | `CLAUDE.md`, the operating manual                                   |
+| L1    | `STATE.md`, the current project state                               |
+| L2    | One workflow for the current request                                |
+| L3    | Map, project facts, decisions, issues, area docs, and active design |
+| L4    | Targeted source code                                                |
 
 ## Working roles
 
@@ -39,15 +39,15 @@ Rules for a phase, not conversational personas.
 
 ## Workflow selection
 
-| Workflow | For |
-| --- | --- |
+| Workflow       | For                                                                                                                |
+| -------------- | ------------------------------------------------------------------------------------------------------------------ |
 | `bootstrap.md` | First session on a new or adopted project; `CLAUDE.md` still has `<fill>` placeholders, or `STATE.md` Session is 0 |
-| `patch.md` | Small fix, cause known or trivially findable, no interface change, at most two files |
-| `debug.md` | A defect whose cause is unknown; output is a named root cause with evidence, then `patch.md` or `feature.md` |
-| `feature.md` | New capability, or any change touching more than two files or any interface/schema/dependency |
-| `refactor.md` | Structure improvement with zero behavior change; a bug found mid-refactor gets parked, not bundled |
-| `review.md` | Reviewing a diff, PR, or branch; best run fresh, from a session that did not write the code |
-| `maintain.md` | Every tenth session, or when a size budget is blown, or the user asks; checks the harness against the repository |
+| `patch.md`     | Small fix, cause known or trivially findable, no interface change, at most two files                               |
+| `debug.md`     | A defect whose cause is unknown; output is a named root cause with evidence, then `patch.md` or `feature.md`       |
+| `feature.md`   | New capability, or any change touching more than two files or any interface/schema/dependency                      |
+| `refactor.md`  | Structure improvement with zero behavior change; a bug found mid-refactor gets parked, not bundled                 |
+| `review.md`    | Reviewing a diff, PR, or branch; best run fresh, from a session that did not write the code                        |
+| `maintain.md`  | Every tenth session, or when a size budget is blown, or the user asks; checks the harness against the repository   |
 
 `feature.md`'s exit test: if a change has a single known site, no
 interface change, and obvious verification, it downgrades to

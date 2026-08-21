@@ -11,11 +11,11 @@
 
 ## The interface
 
-| Input     | Type | Default |
-| --------- | ---- | ------- |
-| mesh      | Path | none    |
-| rig_mode  | str  | full    |
-| seed      | int  | -1      |
+| Input    | Type | Default |
+| -------- | ---- | ------- |
+| mesh     | Path | none    |
+| rig_mode | str  | full    |
+| seed     | int  | -1      |
 
 `rig_mode` takes `skeleton`, `skin`, or `full`. It does not take
 `template`. SkinTokens rejects template mode, and RFD 1023 records

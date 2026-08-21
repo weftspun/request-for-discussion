@@ -2,14 +2,14 @@
 
 ## Current state
 
-| Path | Images | Engine |
-| --- | --- | --- |
-| `image-to-splat`, one photo | 1 | TripoSplat |
-| `image-to-splat`, two or more photos | 2-8 | WorldMirror 2.0, into `gaussians.ply` (falls back to TripoSplat's primary view when unavailable) |
-| `image-to-splat`, three or more, no WorldMirror | 3-8 | COLMAP sparse, into a PLY |
-| `image-to-world` | 1 or more | TripoSplat environment, plus optional TRELLIS props |
-| Avatar mesh, two or more photos | 2-8 | TRELLIS v1's `run_multi_image` (TRELLIS.2 delegates to it when multiview is on) |
-| Avatar to splat preview | 1 or more | TripoSplat, or COLMAP when three or more references exist |
+| Path                                            | Images    | Engine                                                                                           |
+| ----------------------------------------------- | --------- | ------------------------------------------------------------------------------------------------ |
+| `image-to-splat`, one photo                     | 1         | TripoSplat                                                                                       |
+| `image-to-splat`, two or more photos            | 2-8       | WorldMirror 2.0, into `gaussians.ply` (falls back to TripoSplat's primary view when unavailable) |
+| `image-to-splat`, three or more, no WorldMirror | 3-8       | COLMAP sparse, into a PLY                                                                        |
+| `image-to-world`                                | 1 or more | TripoSplat environment, plus optional TRELLIS props                                              |
+| Avatar mesh, two or more photos                 | 2-8       | TRELLIS v1's `run_multi_image` (TRELLIS.2 delegates to it when multiview is on)                  |
+| Avatar to splat preview                         | 1 or more | TripoSplat, or COLMAP when three or more references exist                                        |
 
 ## Phase 1: multi-image UX and the API contract, shipped
 
@@ -18,9 +18,9 @@ its references flow through the API and into job metadata.
 
 API, optional on every splat, world, and mesh request:
 
-| Field | Role |
-| --- | --- |
-| `image_file_id` | The primary view, required for inference |
+| Field                      | Role                                                      |
+| -------------------------- | --------------------------------------------------------- |
+| `image_file_id`            | The primary view, required for inference                  |
 | `reference_image_file_ids` | Up to seven extra uploaded `file_id`s, eight images total |
 
 Client: multi-select on "Image to Splat," "Image to World," and
@@ -58,11 +58,11 @@ Goal: real photogrammetry splats from multiple photos.
 
 Backend, shipped:
 
-| Component | Status |
-| --- | --- |
-| `worldmirror2_reconstruct` | The primary path: WorldMirror 2.0's feed-forward 3DGS (`thirdparty/HY-World-2.0`) |
-| `colmap_3dgs_reconstruct` | The fallback, when WorldMirror is unavailable and three or more photos are present |
-| The `splat_generation` router | Auto-selects WorldMirror at two or more images |
+| Component                     | Status                                                                             |
+| ----------------------------- | ---------------------------------------------------------------------------------- |
+| `worldmirror2_reconstruct`    | The primary path: WorldMirror 2.0's feed-forward 3DGS (`thirdparty/HY-World-2.0`)  |
+| `colmap_3dgs_reconstruct`     | The fallback, when WorldMirror is unavailable and three or more photos are present |
+| The `splat_generation` router | Auto-selects WorldMirror at two or more images                                     |
 
 Client, shipped: `worldmirror2_reconstruct` appears in the model
 catalog; image-to-splat auto-routes, one photo to TripoSplat, two or

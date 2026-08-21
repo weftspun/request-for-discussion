@@ -2,11 +2,11 @@
 
 ## Development strategy, Galaxy XR first
 
-| Target | Command or URL | Role |
-| --- | --- | --- |
-| Samsung Galaxy XR (the truth) | `npm run dev`, then `https://<PC-LAN-IP>:3000/xr` | Real WebXR input and rendering; validate here |
-| PC localhost emulator | `npm run dev:iwsdk`, or Vite's `iwsdkDev` on localhost only | An optional Quest-like smoke test, not a substitute for the headset |
-| Automation | `npm run iwsdk:xr-smoke`, Playwright | CI or agent checks, PC only |
+| Target                        | Command or URL                                              | Role                                                                |
+| ----------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------- |
+| Samsung Galaxy XR (the truth) | `npm run dev`, then `https://<PC-LAN-IP>:3000/xr`           | Real WebXR input and rendering; validate here                       |
+| PC localhost emulator         | `npm run dev:iwsdk`, or Vite's `iwsdkDev` on localhost only | An optional Quest-like smoke test, not a substitute for the headset |
+| Automation                    | `npm run iwsdk:xr-smoke`, Playwright                        | CI or agent checks, PC only                                         |
 
 A full page reload on `/xr` is needed before "Enter VR"; hot module
 reload can kill the session. Headset logs forward to
@@ -30,12 +30,12 @@ imports directly from `@iwsdk/core` once wired up.
 
 ## Currently installed, runtime
 
-| Package | Approximate version | Role |
-| --- | --- | --- |
-| `@iwsdk/core` | 0.4.1 | The main WebXR ECS runtime (`World`, systems, session) |
-| `@iwsdk/locomotor` | a dependency of core | Locomotion: teleport, slide, turn |
-| `@iwsdk/xr-input` | a dependency of core | Controllers, hands, rays, pointers |
-| `@iwsdk/glxf` | a dependency of core | The GLXF scene loader |
+| Package            | Approximate version  | Role                                                   |
+| ------------------ | -------------------- | ------------------------------------------------------ |
+| `@iwsdk/core`      | 0.4.1                | The main WebXR ECS runtime (`World`, systems, session) |
+| `@iwsdk/locomotor` | a dependency of core | Locomotion: teleport, slide, turn                      |
+| `@iwsdk/xr-input`  | a dependency of core | Controllers, hands, rays, pointers                     |
+| `@iwsdk/glxf`      | a dependency of core | The GLXF scene loader                                  |
 
 Installed with `npm install @iwsdk/core`. `three` is already a
 dependency of this project; do not pin a second, conflicting
@@ -49,11 +49,11 @@ v5 package (`ethers@^5 || ^6`). `.npmrc` may still carry
 
 ## AI dev tooling, installed
 
-| Package | Role |
-| --- | --- |
-| `@iwsdk/vite-plugin-dev` | Quest emulation, a headless Playwright agent browser, an MCP WebSocket |
-| `@iwsdk/cli` | `iwsdk dev up`, `iwsdk xr …`, `iwsdk browser screenshot`, `iwsdk mcp stdio` |
-| `@iwsdk/reference` | A semantic IWSDK API-search MCP server (`iwsdk-reference`) |
+| Package                  | Role                                                                        |
+| ------------------------ | --------------------------------------------------------------------------- |
+| `@iwsdk/vite-plugin-dev` | Quest emulation, a headless Playwright agent browser, an MCP WebSocket      |
+| `@iwsdk/cli`             | `iwsdk dev up`, `iwsdk xr …`, `iwsdk browser screenshot`, `iwsdk mcp stdio` |
+| `@iwsdk/reference`       | A semantic IWSDK API-search MCP server (`iwsdk-reference`)                  |
 
 MCP config lives at `.cursor/mcp.json`, naming the `iwsdk-runtime`
 and `iwsdk-reference` servers; regenerate it with `npm run
@@ -116,11 +116,11 @@ npx iwsdk mcp inspect
 
 ### Add later, for product features
 
-| Package | Purpose | Install when |
-| --- | --- | --- |
-| `@iwsdk/vite-plugin-uikitml` | Compiles UIKitML into JSON, for spatial in-headset UI | Building XR-native panels, not flat React overlays |
-| `@iwsdk/vite-plugin-gltf-optimizer` | Optimizes GLTF/GLB at build time | Large world or prop assets, slow headset loads |
-| `@iwsdk/vite-plugin-metaspatial` | Meta Spatial Editor to GLXF, plus component discovery | Using the Meta Spatial Editor in the pipeline |
+| Package                             | Purpose                                               | Install when                                       |
+| ----------------------------------- | ----------------------------------------------------- | -------------------------------------------------- |
+| `@iwsdk/vite-plugin-uikitml`        | Compiles UIKitML into JSON, for spatial in-headset UI | Building XR-native panels, not flat React overlays |
+| `@iwsdk/vite-plugin-gltf-optimizer` | Optimizes GLTF/GLB at build time                      | Large world or prop assets, slow headset loads     |
+| `@iwsdk/vite-plugin-metaspatial`    | Meta Spatial Editor to GLXF, plus component discovery | Using the Meta Spatial Editor in the pipeline      |
 
 ### Do not install for this repository
 
@@ -129,10 +129,10 @@ exists, so it is never needed here.
 
 ## The immersive route
 
-| Path | Component | Notes |
-| --- | --- | --- |
+| Path  | Component                      | Notes                                       |
+| ----- | ------------------------------ | ------------------------------------------- |
 | `/xr` | `src/pages/IwsdkImmersive.jsx` | IWSDK's own `World` only, no `SceneManager` |
-| `/` | `src/App.jsx` | This project's existing authoring app |
+| `/`   | `src/App.jsx`                  | This project's existing authoring app       |
 
 Bootstrap: `src/library/iwsdkWorld.js` (`createIwsdkWorld`,
 `disposeIwsdkWorld`). Open locally at `https://localhost:3000/xr`;
@@ -140,15 +140,15 @@ HTTPS is required for on-device WebXR (RFD 1058).
 
 ### Headset controls, Galaxy XR or Quest
 
-| Action | Control |
-| --- | --- |
-| Move | The left thumbstick |
-| Turn | The right thumbstick, horizontal |
-| Teleport | Push the right thumbstick forward to aim, release to land |
-| Distance grab | Point at the target (a white dot appears), then trigger or pinch |
-| Proximity grab | Walk within roughly arm's reach, then a grip squeeze on the slightly larger hit volume |
-| Hand-only (controllers set down) | Hands take primary input; rays stay active; a red Exit panel follows the head |
-| Exit XR | The controller's Menu or B button; ray-select the head-locked red Exit panel; or an Exit XR button, or Escape, on phone or PC |
+| Action                           | Control                                                                                                                       |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Move                             | The left thumbstick                                                                                                           |
+| Turn                             | The right thumbstick, horizontal                                                                                              |
+| Teleport                         | Push the right thumbstick forward to aim, release to land                                                                     |
+| Distance grab                    | Point at the target (a white dot appears), then trigger or pinch                                                              |
+| Proximity grab                   | Walk within roughly arm's reach, then a grip squeeze on the slightly larger hit volume                                        |
+| Hand-only (controllers set down) | Hands take primary input; rays stay active; a red Exit panel follows the head                                                 |
+| Exit XR                          | The controller's Menu or B button; ray-select the head-locked red Exit panel; or an Exit XR button, or Escape, on phone or PC |
 
 `src/library/iwsdkXrEnhancements.js` runs the headset input
 pipeline: controllers stay primary for locomotion, hands stay

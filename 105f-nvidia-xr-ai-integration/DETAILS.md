@@ -24,26 +24,26 @@ inference backend, a different, XR-native voice interface.
 
 ## Repositories and paths, DGX only
 
-| Path | Role |
-| --- | --- |
-| `/home/sifr/xr-ai` | NVIDIA's `xr-ai`: the hub, STT/TTS/VLM servers, agent samples |
-| `/home/sifr/xr-ai/agent-samples/3daigc-vlm-example` | The voice VLM plus 3DAIGC mesh orchestrator |
-| `/home/sifr/3DAIGC-API` | The inference API, port 7842 |
-| `/home/sifr/3DAIGC-API/mcp` | `3daigc-mcp-http` (port 8260), MCP tools over the completed API |
-| `/home/sifr/Weftspun3DStudio/scripts/xr-spark-hub-proxy.mjs` | The optional Surface proxy, Galaxy XR to the Spark hub |
+| Path                                                         | Role                                                            |
+| ------------------------------------------------------------ | --------------------------------------------------------------- |
+| `/home/sifr/xr-ai`                                           | NVIDIA's `xr-ai`: the hub, STT/TTS/VLM servers, agent samples   |
+| `/home/sifr/xr-ai/agent-samples/3daigc-vlm-example`          | The voice VLM plus 3DAIGC mesh orchestrator                     |
+| `/home/sifr/3DAIGC-API`                                      | The inference API, port 7842                                    |
+| `/home/sifr/3DAIGC-API/mcp`                                  | `3daigc-mcp-http` (port 8260), MCP tools over the completed API |
+| `/home/sifr/Weftspun3DStudio/scripts/xr-spark-hub-proxy.mjs` | The optional Surface proxy, Galaxy XR to the Spark hub          |
 
 Overlay config, a reference to copy:
 `3DAIGC-API/mcp/yaml/xr_ai_3daigc_overlay.yaml`.
 
 ## Ports, DGX
 
-| Port | Service |
-| --- | --- |
-| 7842 | `3DAIGC-API` |
-| 8260 | `3daigc-mcp-http` (`/mcp`) |
-| 8088 | The `xr-ai` XR Media Hub web UI, over HTTPS |
-| 7880, 7882 | LiveKit (WebRTC) for the `xr-ai` hub |
-| 8443 | The Surface's own `xr-spark-hub-proxy` (optional; forwards to `https://10.0.0.158:8088`) |
+| Port       | Service                                                                                  |
+| ---------- | ---------------------------------------------------------------------------------------- |
+| 7842       | `3DAIGC-API`                                                                             |
+| 8260       | `3daigc-mcp-http` (`/mcp`)                                                               |
+| 8088       | The `xr-ai` XR Media Hub web UI, over HTTPS                                              |
+| 7880, 7882 | LiveKit (WebRTC) for the `xr-ai` hub                                                     |
+| 8443       | The Surface's own `xr-spark-hub-proxy` (optional; forwards to `https://10.0.0.158:8088`) |
 
 ## Starting the stack, DGX
 
@@ -124,19 +124,19 @@ VLM backend: `model_backend: nim` uses a hosted NVIDIA NIM
 
 ## Relationship to this project's own client
 
-| Layer | NVIDIA XR AI | This project |
-| --- | --- | --- |
-| XR input | Voice plus passthrough camera, through the `xr-ai` hub | WebXR controllers, World Library, the VRM viewport |
-| 3D generation | MCP, into `3DAIGC-API` | Task Manager's own REST calls, into the same API |
-| Output | Job files under the DGX's own `outputs/` | Download, viewport load, and an RP1 publish |
-| Companion agent | An in-hub VLM agent | A separate companion-chat handoff (open work) |
+| Layer           | NVIDIA XR AI                                           | This project                                       |
+| --------------- | ------------------------------------------------------ | -------------------------------------------------- |
+| XR input        | Voice plus passthrough camera, through the `xr-ai` hub | WebXR controllers, World Library, the VRM viewport |
+| 3D generation   | MCP, into `3DAIGC-API`                                 | Task Manager's own REST calls, into the same API   |
+| Output          | Job files under the DGX's own `outputs/`               | Download, viewport load, and an RP1 publish        |
+| Companion agent | An in-hub VLM agent                                    | A separate companion-chat handoff (open work)      |
 
 ## Troubleshooting
 
-| Symptom | Check |
-| --- | --- |
-| The stack exits on start | `curl -sf http://127.0.0.1:7842/api/v1/system/health`, then restart the API |
-| The MCP probe fails | Port 8260 already in use; `bash …/mcp/scripts/run_http.sh` |
-| The headset cannot reach `:8088` | Run `xr-spark-hub-proxy` on the Surface's own `:8443` |
-| A mesh job never finishes | `monitor_xr_ai_3daigc_stack.sh`; check the Redis queue and GPU logs under `3DAIGC-API/logs/` |
-| NIM errors | Confirm `NGC_API_KEY` is set, or switch the worker to `model_backend: local` plus `HF_TOKEN` |
+| Symptom                          | Check                                                                                        |
+| -------------------------------- | -------------------------------------------------------------------------------------------- |
+| The stack exits on start         | `curl -sf http://127.0.0.1:7842/api/v1/system/health`, then restart the API                  |
+| The MCP probe fails              | Port 8260 already in use; `bash …/mcp/scripts/run_http.sh`                                   |
+| The headset cannot reach `:8088` | Run `xr-spark-hub-proxy` on the Surface's own `:8443`                                        |
+| A mesh job never finishes        | `monitor_xr_ai_3daigc_stack.sh`; check the Redis queue and GPU logs under `3DAIGC-API/logs/` |
+| NIM errors                       | Confirm `NGC_API_KEY` is set, or switch the worker to `model_backend: local` plus `HF_TOKEN` |

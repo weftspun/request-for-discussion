@@ -5,11 +5,11 @@
 From `fly.io/docs/about/pricing/`, the published rates this
 breakdown uses directly:
 
-| Resource | Per-second | Per-month |
-| --- | --- | --- |
-| `shared-cpu-1x`, 256MB | $0.00000078 | $2.02 |
-| `shared-cpu-1x`, 512MB | $0.00000128 | $3.32 |
-| Volume storage | — | $0.15/GB |
+| Resource               | Per-second  | Per-month |
+| ---------------------- | ----------- | --------- |
+| `shared-cpu-1x`, 256MB | $0.00000078 | $2.02     |
+| `shared-cpu-1x`, 512MB | $0.00000128 | $3.32     |
+| Volume storage         | —           | $0.15/GB  |
 
 Hourly = per-second × 3600. Yearly = per-month × 12, the number Fly
 itself bills against, not hourly × 8760 (the two differ slightly
@@ -21,11 +21,11 @@ the one Fly actually charges).
 `flyctl machine list` and `flyctl volumes list`, run against all
 three apps, the same session these prices apply to:
 
-| App | Machine(s) | Volume |
-| --- | --- | --- |
-| `weftspun-studio` | 1× `shared-cpu-1x`, 512MB | 3GB |
-| `weftspun-character-taxonomy` | 1× `shared-cpu-1x`, 512MB | 1GB |
-| `weftspun-usd-viewer` | 1× `shared-cpu-1x`, 256MB | none |
+| App                           | Machine(s)                | Volume |
+| ----------------------------- | ------------------------- | ------ |
+| `weftspun-studio`             | 1× `shared-cpu-1x`, 512MB | 3GB    |
+| `weftspun-character-taxonomy` | 1× `shared-cpu-1x`, 512MB | 1GB    |
+| `weftspun-usd-viewer`         | 1× `shared-cpu-1x`, 256MB | none   |
 
 `weftspun-usd-viewer` started as Fly's default 2-machine HA pair
 (zero-downtime deploys); scaled to one (`min_machines_running = 0`
@@ -38,14 +38,14 @@ extra per-app IP charge applies.
 
 ## The breakdown, hourly / monthly / yearly
 
-| App | Hourly | Monthly | Yearly |
-| --- | --- | --- | --- |
-| `weftspun-studio` (machine) | $0.004608 | $3.32 | $39.84 |
-| `weftspun-studio` (3GB volume) | $0.000616 | $0.45 | $5.40 |
-| `weftspun-character-taxonomy` (machine) | $0.004608 | $3.32 | $39.84 |
-| `weftspun-character-taxonomy` (1GB volume) | $0.000205 | $0.15 | $1.80 |
-| `weftspun-usd-viewer` (machine) | $0.002808 | $2.02 | $24.24 |
-| **Total** | **$0.012845** | **$9.26** | **$111.12** |
+| App                                        | Hourly        | Monthly   | Yearly      |
+| ------------------------------------------ | ------------- | --------- | ----------- |
+| `weftspun-studio` (machine)                | $0.004608     | $3.32     | $39.84      |
+| `weftspun-studio` (3GB volume)             | $0.000616     | $0.45     | $5.40       |
+| `weftspun-character-taxonomy` (machine)    | $0.004608     | $3.32     | $39.84      |
+| `weftspun-character-taxonomy` (1GB volume) | $0.000205     | $0.15     | $1.80       |
+| `weftspun-usd-viewer` (machine)            | $0.002808     | $2.02     | $24.24      |
+| **Total**                                  | **$0.012845** | **$9.26** | **$111.12** |
 
 Volume hourly figures divide the monthly rate by 730 (Fly's own
 average hours-per-month), since Fly bills Volumes monthly, not

@@ -2,19 +2,19 @@
 
 ## 1. Repo roots and key paths
 
-| What | DGX Spark | Surface PC |
-| --- | --- | --- |
-| This project (frontend) | `/home/sifr/Weftspun3DStudio` | `C:\Users\alfao\Documents\GitHub\Weftspun3DStudio` |
-| `3DAIGC-API` (backend) | `/home/sifr/3DAIGC-API` | API runs on the DGX only |
-| MSF Map Service (RP1/Scene Assembler) | `/home/sifr/MSF_Map_Svc` | DGX only |
-| Sneeze (the OMB engine library) | `/home/sifr/Sneeze` | DGX only, a native build |
-| RP1/MSF secrets, gitignored | `~/.config/rp1-spatial-fabric/rp1.env` | copy the template from `rp1.env.example` |
-| Memory Bank | `.../memory-bank/` | `...\memory-bank\` |
-| SessionMem team folder | `.../.sessionmem-team/Weftspun3DStudio/` | `...\.sessionmem-team\Weftspun3DStudio\` |
-| SessionMem local database | `~/.sessionmem/memories.db` | `C:\Users\alfao\.sessionmem\memories.db` |
-| MCP config (repository) | `.../.mcp.json` | `...\.mcp.json` |
-| Graphify output | `.../graphify-out/` | `...\graphify-out\` |
-| Remote debug log | — | `...\logs\remote-log.txt` |
+| What                                  | DGX Spark                                | Surface PC                                         |
+| ------------------------------------- | ---------------------------------------- | -------------------------------------------------- |
+| This project (frontend)               | `/home/sifr/Weftspun3DStudio`            | `C:\Users\alfao\Documents\GitHub\Weftspun3DStudio` |
+| `3DAIGC-API` (backend)                | `/home/sifr/3DAIGC-API`                  | API runs on the DGX only                           |
+| MSF Map Service (RP1/Scene Assembler) | `/home/sifr/MSF_Map_Svc`                 | DGX only                                           |
+| Sneeze (the OMB engine library)       | `/home/sifr/Sneeze`                      | DGX only, a native build                           |
+| RP1/MSF secrets, gitignored           | `~/.config/rp1-spatial-fabric/rp1.env`   | copy the template from `rp1.env.example`           |
+| Memory Bank                           | `.../memory-bank/`                       | `...\memory-bank\`                                 |
+| SessionMem team folder                | `.../.sessionmem-team/Weftspun3DStudio/` | `...\.sessionmem-team\Weftspun3DStudio\`           |
+| SessionMem local database             | `~/.sessionmem/memories.db`              | `C:\Users\alfao\.sessionmem\memories.db`           |
+| MCP config (repository)               | `.../.mcp.json`                          | `...\.mcp.json`                                    |
+| Graphify output                       | `.../graphify-out/`                      | `...\graphify-out\`                                |
+| Remote debug log                      | —                                        | `...\logs\remote-log.txt`                          |
 
 Typical LAN IPs: the Surface at `10.0.0.32`, the DGX at
 `10.0.0.158`; the API URL from the Surface is
@@ -104,24 +104,24 @@ $pid = (Get-NetTCPConnection -LocalPort 3000 -State Listen).OwningProcess; Stop-
 
 Debug URLs (replace the IP if it differs):
 
-| URL | Purpose |
-| --- | --- |
+| URL                                                     | Purpose                           |
+| ------------------------------------------------------- | --------------------------------- |
 | `https://10.0.0.32:3000/?nativeFaceRelay=1&remoteLog=1` | Native face relay plus remote log |
-| `https://10.0.0.32:3000/?webcamDebug=1&remoteLog=1` | Webcam debug |
-| `https://10.0.0.32:3000/?xrDebugInputs=1&remoteLog=1` | XR input debug |
+| `https://10.0.0.32:3000/?webcamDebug=1&remoteLog=1`     | Webcam debug                      |
+| `https://10.0.0.32:3000/?xrDebugInputs=1&remoteLog=1`   | XR input debug                    |
 
 Append `&v=2` to bust the headset's own cache after a deploy.
 
 Animation playback QA, on the Surface, with Vite running on port
 3000:
 
-| Task | Command |
-| --- | --- |
-| A canned Mixamo smoke test (VRM hips move) | `npm run test:anim-smoke` |
-| A bone audit, Walking plus Kimodo (Playwright) | `npm run test:bone-audit` |
-| A Kimodo job for that audit | `set MOTION_JOB_ID=JOB_UUID&& npm run test:bone-audit` |
-| Animation regression unit tests | `npm run test:anim-regression` |
-| A manual browser hook | Open `https://10.0.0.32:3000/?animSmoke=1`, then in DevTools: `await __csAnimSmoke.auditBones()` |
+| Task                                           | Command                                                                                          |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| A canned Mixamo smoke test (VRM hips move)     | `npm run test:anim-smoke`                                                                        |
+| A bone audit, Walking plus Kimodo (Playwright) | `npm run test:bone-audit`                                                                        |
+| A Kimodo job for that audit                    | `set MOTION_JOB_ID=JOB_UUID&& npm run test:bone-audit`                                           |
+| Animation regression unit tests                | `npm run test:anim-regression`                                                                   |
+| A manual browser hook                          | Open `https://10.0.0.32:3000/?animSmoke=1`, then in DevTools: `await __csAnimSmoke.auditBones()` |
 
 Optional environment variable: `ANIM_SMOKE_URL=https://10.0.0.32:3000`
 (the default LAN HTTPS origin).
@@ -145,23 +145,23 @@ run test:anim-regression` (`vrmPlaybackLock.test.js`).
 Run on the DGX after every reboot, or whenever the Surface reports
 the API, MSF, or XR unreachable:
 
-| Profile | Folder | Command |
-| --- | --- | --- |
-| Default (API plus MSF) | `cd /home/sifr/3DAIGC-API` | `bash scripts/start-dgx-after-reboot.sh` |
-| Plus the XR voice hub | same | `bash scripts/start-dgx-after-reboot.sh --with-xr` |
-| Plus Tailscale public routing | same | `bash scripts/start-dgx-after-reboot.sh --with-routing`, or `… --with-routing funnel` |
-| API only | same | `bash scripts/start-dgx-after-reboot.sh --api-only` |
-| Skip the job drain | same | `bash scripts/start-dgx-after-reboot.sh --force` |
-| Verify the stack | same | `bash scripts/verify-spark-dev-stack.sh`, or `… --with-xr` |
+| Profile                       | Folder                     | Command                                                                               |
+| ----------------------------- | -------------------------- | ------------------------------------------------------------------------------------- |
+| Default (API plus MSF)        | `cd /home/sifr/3DAIGC-API` | `bash scripts/start-dgx-after-reboot.sh`                                              |
+| Plus the XR voice hub         | same                       | `bash scripts/start-dgx-after-reboot.sh --with-xr`                                    |
+| Plus Tailscale public routing | same                       | `bash scripts/start-dgx-after-reboot.sh --with-routing`, or `… --with-routing funnel` |
+| API only                      | same                       | `bash scripts/start-dgx-after-reboot.sh --api-only`                                   |
+| Skip the job drain            | same                       | `bash scripts/start-dgx-after-reboot.sh --force`                                      |
+| Verify the stack              | same                       | `bash scripts/verify-spark-dev-stack.sh`, or `… --with-xr`                            |
 
 What the default profile starts:
 
-| Service | Port | Script layer |
-| --- | --- | --- |
-| Redis (`3daigc-redis`) | 6379 | `restart_services.sh`, through `ensure_redis.sh` |
-| `3DAIGC-API` plus its scheduler | 7842 | `restart_services.sh` |
-| MySQL (`msf-mysql`) | 3306 | `MSF_Map_Svc/scripts/ensure-msf-mysql.sh` |
-| MSF Map Service | 8443 | `MSF_Map_Svc/scripts/run-msf-map-svc.sh` |
+| Service                         | Port | Script layer                                     |
+| ------------------------------- | ---- | ------------------------------------------------ |
+| Redis (`3daigc-redis`)          | 6379 | `restart_services.sh`, through `ensure_redis.sh` |
+| `3DAIGC-API` plus its scheduler | 7842 | `restart_services.sh`                            |
+| MySQL (`msf-mysql`)             | 3306 | `MSF_Map_Svc/scripts/ensure-msf-mysql.sh`        |
+| MSF Map Service                 | 8443 | `MSF_Map_Svc/scripts/run-msf-map-svc.sh`         |
 
 On the Surface, each development session, not the DGX: `cd
 Weftspun3DStudio`, then `npm run dev`, plus `npm run
@@ -267,10 +267,10 @@ and start; no model rebuild is needed.
 
 One-time API maintenance scripts, on the DGX:
 
-| Task | Command |
-| --- | --- |
+| Task                                                          | Command                                                                                                 |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | Confirm the detached start sources `.env` (the MSF variables) | `/home/sifr/3DAIGC-API/venv/bin/python /home/sifr/Weftspun3DStudio/scripts/dgx-api-source-env-patch.py` |
-| Add the `POST /spatial-fabric/publish-glb` route, if missing | `/home/sifr/3DAIGC-API/venv/bin/python /home/sifr/Weftspun3DStudio/scripts/dgx-api-add-publish-glb.py` |
+| Add the `POST /spatial-fabric/publish-glb` route, if missing  | `/home/sifr/3DAIGC-API/venv/bin/python /home/sifr/Weftspun3DStudio/scripts/dgx-api-add-publish-glb.py`  |
 
 Restart the API after either patch.
 
@@ -334,13 +334,13 @@ enabled (the key lives in `.env`).
 
 All on the DGX, in `/home/sifr/3DAIGC-API`, unless noted:
 
-| Task | Command |
-| --- | --- |
-| A queue snapshot | `curl -s http://127.0.0.1:7842/api/v1/system/jobs/queue/stats \| python3 -m json.tool` |
-| An auto-refreshing queue | `watch -n 2 'curl -s http://127.0.0.1:7842/api/v1/system/jobs/queue/stats \| python3 -m json.tool'` |
-| Recent jobs | `curl -s "http://127.0.0.1:7842/api/v1/system/jobs/history?limit=20" \| python3 -m json.tool` |
-| Failed jobs only | `curl -s "http://127.0.0.1:7842/api/v1/system/jobs/history?limit=20&status=failed" \| python3 -m json.tool` |
-| One job's detail | `curl -s http://127.0.0.1:7842/api/v1/system/jobs/JOB_ID \| python3 -m json.tool` |
+| Task                     | Command                                                                                                     |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| A queue snapshot         | `curl -s http://127.0.0.1:7842/api/v1/system/jobs/queue/stats \| python3 -m json.tool`                      |
+| An auto-refreshing queue | `watch -n 2 'curl -s http://127.0.0.1:7842/api/v1/system/jobs/queue/stats \| python3 -m json.tool'`         |
+| Recent jobs              | `curl -s "http://127.0.0.1:7842/api/v1/system/jobs/history?limit=20" \| python3 -m json.tool`               |
+| Failed jobs only         | `curl -s "http://127.0.0.1:7842/api/v1/system/jobs/history?limit=20&status=failed" \| python3 -m json.tool` |
+| One job's detail         | `curl -s http://127.0.0.1:7842/api/v1/system/jobs/JOB_ID \| python3 -m json.tool`                           |
 
 Quick pick: `tail -f logs/api.log logs/scheduler.log` for live
 inference, plus `watch` on the queue stats. `tail -f` and `watch`
@@ -388,16 +388,16 @@ cloud API. In this project: Task Manager, "Text to Image," model
 Image to 3D," into "Image to 3D"
 (`trellis2_image_to_textured_mesh`).
 
-| Task | Where | Folder | Command |
-| --- | --- | --- | --- |
-| Install dependencies (plus optional weights) | DGX | `cd /home/sifr/3DAIGC-API` | `bash scripts/setup_krea2.sh` |
-| Dependencies only, weights already on disk | DGX | same | `bash scripts/setup_krea2.sh --deps-only` |
-| A post-pip guard | DGX | same | `bash scripts/post_pip_guard.sh` |
-| Restart the API after a setup or adapter change | DGX | same | `bash scripts/restart_services.sh` |
-| Pipeline-lock verify, frontend | DGX or Surface | `cd Weftspun3DStudio` | `bash scripts/verify_krea2_text_to_3d_pipeline.sh` |
-| Pipeline-lock verify, backend | DGX | `cd /home/sifr/3DAIGC-API` | `./venv/bin/python scripts/verify_hf_conditioning.py` |
-| Confirm the model is listed | DGX | any | `curl -s http://127.0.0.1:7842/api/v1/system/models \| python3 -c "import json,sys; print(json.load(sys.stdin)['available_models'].get('text_to_image'))"` |
-| A smoke job, a quick 512-squared image | DGX | `cd /home/sifr/3DAIGC-API` | `curl -s -X POST http://127.0.0.1:7842/api/v1/image-generation/text-to-image -H 'Content-Type: application/json' -d '{"prompt":"a red cube on white","model_preference":"krea2_turbo_text_to_image","width":512,"height":512}'` |
+| Task                                            | Where          | Folder                     | Command                                                                                                                                                                                                                         |
+| ----------------------------------------------- | -------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Install dependencies (plus optional weights)    | DGX            | `cd /home/sifr/3DAIGC-API` | `bash scripts/setup_krea2.sh`                                                                                                                                                                                                   |
+| Dependencies only, weights already on disk      | DGX            | same                       | `bash scripts/setup_krea2.sh --deps-only`                                                                                                                                                                                       |
+| A post-pip guard                                | DGX            | same                       | `bash scripts/post_pip_guard.sh`                                                                                                                                                                                                |
+| Restart the API after a setup or adapter change | DGX            | same                       | `bash scripts/restart_services.sh`                                                                                                                                                                                              |
+| Pipeline-lock verify, frontend                  | DGX or Surface | `cd Weftspun3DStudio`      | `bash scripts/verify_krea2_text_to_3d_pipeline.sh`                                                                                                                                                                              |
+| Pipeline-lock verify, backend                   | DGX            | `cd /home/sifr/3DAIGC-API` | `./venv/bin/python scripts/verify_hf_conditioning.py`                                                                                                                                                                           |
+| Confirm the model is listed                     | DGX            | any                        | `curl -s http://127.0.0.1:7842/api/v1/system/models \| python3 -c "import json,sys; print(json.load(sys.stdin)['available_models'].get('text_to_image'))"`                                                                      |
+| A smoke job, a quick 512-squared image          | DGX            | `cd /home/sifr/3DAIGC-API` | `curl -s -X POST http://127.0.0.1:7842/api/v1/image-generation/text-to-image -H 'Content-Type: application/json' -d '{"prompt":"a red cube on white","model_preference":"krea2_turbo_text_to_image","width":512,"height":512}'` |
 
 Weights: `pretrained/krea/Krea-2-Turbo`, roughly 57 GB. VRAM:
 roughly 32 GB reserved per worker (`config/models.yaml`).
@@ -428,13 +428,13 @@ NVIDIA Kimodo's SOMA skeleton produces `studio_motion.json` for VRM
 playback. In this project: the animation bar's own
 `KimodoMotionPromptBar`.
 
-| Task | Where | Folder | Command |
-| --- | --- | --- | --- |
-| Set up the Kimodo venv and its dependencies | DGX | `cd /home/sifr/3DAIGC-API` | `bash scripts/setup_kimodo.sh` |
-| Prefetch the Llama and Kimodo weights | DGX | same | `bash scripts/prefetch_kimodo_deps.sh` |
-| Restart, then verify the stack | DGX | same | `bash scripts/restart_services.sh && bash scripts/verify_api_stack.sh` |
-| A full smoke test, a real motion job | DGX | same | `bash scripts/verify_api_stack.sh --smoke-kimodo` |
-| A drift check, an isolated venv | DGX | same | `bash scripts/check_kimodo_venv_drift.sh` |
+| Task                                        | Where | Folder                     | Command                                                                |
+| ------------------------------------------- | ----- | -------------------------- | ---------------------------------------------------------------------- |
+| Set up the Kimodo venv and its dependencies | DGX   | `cd /home/sifr/3DAIGC-API` | `bash scripts/setup_kimodo.sh`                                         |
+| Prefetch the Llama and Kimodo weights       | DGX   | same                       | `bash scripts/prefetch_kimodo_deps.sh`                                 |
+| Restart, then verify the stack              | DGX   | same                       | `bash scripts/restart_services.sh && bash scripts/verify_api_stack.sh` |
+| A full smoke test, a real motion job        | DGX   | same                       | `bash scripts/verify_api_stack.sh --smoke-kimodo`                      |
+| A drift check, an isolated venv             | DGX   | same                       | `bash scripts/check_kimodo_venv_drift.sh`                              |
 
 Environment: `TEXT_ENCODER_DEVICE=cpu` in `.env`;
 `worker_load_timeout_sec: 3600` on `kimodo_text_to_motion` in
@@ -488,15 +488,15 @@ cd /home/sifr/3DAIGC-API
 
 ## 10. SessionMem and Memory Bank
 
-| Tool | When | Where | Command |
-| --- | --- | --- | --- |
-| SessionMem sync | After a coding session | DGX | `cd /home/sifr/Weftspun3DStudio`, then `bash scripts/sync-sessionmem-team.sh` |
-| SessionMem sync | After a coding session | Surface | `cd C:\Users\alfao\Documents\GitHub\Weftspun3DStudio`, then `.\scripts\sync-sessionmem-team.ps1` |
-| Memory Bank | At the start of a task | — | An agent reads `memory-bank/*.md` automatically |
-| Memory Bank | After a big change | Chat | Say "update memory bank" |
-| Agent context, to the Surface | After a DGX agent session | DGX | `bash scripts/sync-to-pc.sh --include-agent-context` |
-| Agent context, from the DGX | At the start of a Surface session | Surface | `.\scripts\sync-from-dgx.ps1 -IncludeAgentContext` |
-| PLAN or ACT | Planning versus coding | Chat | `PLAN` for planning only, `ACT` to implement |
+| Tool                          | When                              | Where   | Command                                                                                          |
+| ----------------------------- | --------------------------------- | ------- | ------------------------------------------------------------------------------------------------ |
+| SessionMem sync               | After a coding session            | DGX     | `cd /home/sifr/Weftspun3DStudio`, then `bash scripts/sync-sessionmem-team.sh`                    |
+| SessionMem sync               | After a coding session            | Surface | `cd C:\Users\alfao\Documents\GitHub\Weftspun3DStudio`, then `.\scripts\sync-sessionmem-team.ps1` |
+| Memory Bank                   | At the start of a task            | —       | An agent reads `memory-bank/*.md` automatically                                                  |
+| Memory Bank                   | After a big change                | Chat    | Say "update memory bank"                                                                         |
+| Agent context, to the Surface | After a DGX agent session         | DGX     | `bash scripts/sync-to-pc.sh --include-agent-context`                                             |
+| Agent context, from the DGX   | At the start of a Surface session | Surface | `.\scripts\sync-from-dgx.ps1 -IncludeAgentContext`                                               |
+| PLAN or ACT                   | Planning versus coding            | Chat    | `PLAN` for planning only, `ACT` to implement                                                     |
 
 A one-time SessionMem ID migration, already done: `python3
 scripts/migrate-sessionmem-project-id.py` on the DGX, or
@@ -540,30 +540,30 @@ dev-plus-XR helper.
 
 From `C:\Users\alfao\Documents\GitHub\Weftspun3DStudio`:
 
-| Task | Command |
-| --- | --- |
-| A one-time Chromium install | `npm run playwright:install` |
-| Refresh the MCP adapters | `npm run iwsdk:adapter-sync` |
-| Development, reliable on Windows | `npm run dev:runtime` |
-| Development, the IWSDK wrapper (can fail on some Windows shells) | `npm run dev` |
-| An XR smoke test, no headset | `npm run iwsdk:xr-smoke` |
-| Development status | `npx iwsdk dev status` |
-| A browser screenshot | `npx iwsdk browser screenshot` |
-| Inspect MCP | `npx iwsdk mcp inspect` |
+| Task                                                             | Command                        |
+| ---------------------------------------------------------------- | ------------------------------ |
+| A one-time Chromium install                                      | `npm run playwright:install`   |
+| Refresh the MCP adapters                                         | `npm run iwsdk:adapter-sync`   |
+| Development, reliable on Windows                                 | `npm run dev:runtime`          |
+| Development, the IWSDK wrapper (can fail on some Windows shells) | `npm run dev`                  |
+| An XR smoke test, no headset                                     | `npm run iwsdk:xr-smoke`       |
+| Development status                                               | `npx iwsdk dev status`         |
+| A browser screenshot                                             | `npx iwsdk browser screenshot` |
+| Inspect MCP                                                      | `npx iwsdk mcp inspect`        |
 
 A Playwright MCP token belongs in the local `.env` or MCP config,
 never in this document.
 
 ## 14. Sunshine remote desktop, on the DGX
 
-| Task | Command |
-| --- | --- |
-| Script location | `/home/sifr/start-sunshine.sh` |
-| Run it | `cd /home/sifr && ./start-sunshine.sh` |
-| A manual start | `DISPLAY=:0 XAUTHORITY=/run/user/1000/gdm/Xauthority flatpak run dev.lizardbyte.app.Sunshine` |
-| After a lock or an HDMI change | `systemctl --user restart sunshine`, then `systemctl --user status sunshine` |
-| Auto-start on login | `systemctl --user enable sunshine` |
-| Re-enable keyring auto-unlock | `~/disable-keyring-auto-unlock.sh` |
+| Task                           | Command                                                                                       |
+| ------------------------------ | --------------------------------------------------------------------------------------------- |
+| Script location                | `/home/sifr/start-sunshine.sh`                                                                |
+| Run it                         | `cd /home/sifr && ./start-sunshine.sh`                                                        |
+| A manual start                 | `DISPLAY=:0 XAUTHORITY=/run/user/1000/gdm/Xauthority flatpak run dev.lizardbyte.app.Sunshine` |
+| After a lock or an HDMI change | `systemctl --user restart sunshine`, then `systemctl --user status sunshine`                  |
+| Auto-start on login            | `systemctl --user enable sunshine`                                                            |
+| Re-enable keyring auto-unlock  | `~/disable-keyring-auto-unlock.sh`                                                            |
 
 ## 15. ComfyUI, on the DGX
 
@@ -582,20 +582,20 @@ From PowerShell, in the project root: `.\scripts\restart-nvidia-sync.ps1`.
 
 ## 17. Port reference, on the DGX
 
-| Port | Service | Notes |
-| --- | --- | --- |
-| 7842 | `3DAIGC-API` (uvicorn) | The main API; the Surface reaches it over the LAN, or through the Vite proxy |
-| 8088 | The XR Spark hub (`xr_media_hub`) | The voice UI on the DGX; the Surface's own iframe uses the `:8443` proxy |
-| 8260 | `3daigc-mcp-http` | The XR voice path into `3DAIGC-API`'s own MCP |
-| 8443 | The MSF Map Service, HTTPS | The Scene Assembler, on the DGX; the Surface uses the `:8453` proxy |
-| 8453 | The MSF proxy | Surface only; `npm run msf-proxy` forwards to the DGX's own `:8443` |
-| 6379 | Redis (`3daigc-redis`) | The job queue; required for the API |
-| 3306 | MySQL (`msf-mysql`) | The MSF map database, in Docker, localhost only |
-| 22 | SSH | An editor's Remote-SSH, sync scripts, `scp` |
-| 3000 | Vite | Surface only, never on the DGX |
-| 8188 | ComfyUI | Only while ComfyUI is running |
-| 11434 | Ollama | A local LLM API |
-| 8080 | An OpenShell cluster | Separate from `3DAIGC` |
+| Port  | Service                           | Notes                                                                        |
+| ----- | --------------------------------- | ---------------------------------------------------------------------------- |
+| 7842  | `3DAIGC-API` (uvicorn)            | The main API; the Surface reaches it over the LAN, or through the Vite proxy |
+| 8088  | The XR Spark hub (`xr_media_hub`) | The voice UI on the DGX; the Surface's own iframe uses the `:8443` proxy     |
+| 8260  | `3daigc-mcp-http`                 | The XR voice path into `3DAIGC-API`'s own MCP                                |
+| 8443  | The MSF Map Service, HTTPS        | The Scene Assembler, on the DGX; the Surface uses the `:8453` proxy          |
+| 8453  | The MSF proxy                     | Surface only; `npm run msf-proxy` forwards to the DGX's own `:8443`          |
+| 6379  | Redis (`3daigc-redis`)            | The job queue; required for the API                                          |
+| 3306  | MySQL (`msf-mysql`)               | The MSF map database, in Docker, localhost only                              |
+| 22    | SSH                               | An editor's Remote-SSH, sync scripts, `scp`                                  |
+| 3000  | Vite                              | Surface only, never on the DGX                                               |
+| 8188  | ComfyUI                           | Only while ComfyUI is running                                                |
+| 11434 | Ollama                            | A local LLM API                                                              |
+| 8080  | An OpenShell cluster              | Separate from `3DAIGC`                                                       |
 
 ## 18. Other services, optional
 
@@ -623,10 +623,10 @@ Config: `~/.config/rp1-spatial-fabric/rp1.env`
 One-time setup, on the DGX, run after a fresh install or when the XR
 hub keeps dying:
 
-| Task | Folder | Command |
-| --- | --- | --- |
+| Task                                        | Folder                     | Command                                    |
+| ------------------------------------------- | -------------------------- | ------------------------------------------ |
 | An XR hub auto-restart, a systemd user unit | `cd /home/sifr/3DAIGC-API` | `bash scripts/install-xr-stack-systemd.sh` |
-| Keep systemd running after logout | any | `sudo loginctl enable-linger sifr` |
+| Keep systemd running after logout           | any                        | `sudo loginctl enable-linger sifr`         |
 
 Check the XR service: `systemctl --user status
 xr-ai-3daigc-stack.service`; logs: `tail -40
@@ -635,12 +635,12 @@ xr-ai-3daigc-stack.service`; logs: `tail -40
 Routine, on the DGX, after a reboot or a "Spark hub unreachable"
 report:
 
-| Task | Folder | Command |
-| --- | --- | --- |
-| One command, preferred | `cd /home/sifr/3DAIGC-API` | `bash scripts/start-dgx-after-reboot.sh` |
-| Plus XR voice | same | `bash scripts/start-dgx-after-reboot.sh --with-xr` |
-| Verify | same | `bash scripts/verify-spark-dev-stack.sh`, or `… --with-xr` |
-| Start or repair MSF `:8443` plus XR `:8088`, low-level | same | `bash scripts/ensure-spark-dev-services.sh` |
+| Task                                                   | Folder                     | Command                                                    |
+| ------------------------------------------------------ | -------------------------- | ---------------------------------------------------------- |
+| One command, preferred                                 | `cd /home/sifr/3DAIGC-API` | `bash scripts/start-dgx-after-reboot.sh`                   |
+| Plus XR voice                                          | same                       | `bash scripts/start-dgx-after-reboot.sh --with-xr`         |
+| Verify                                                 | same                       | `bash scripts/verify-spark-dev-stack.sh`, or `… --with-xr` |
+| Start or repair MSF `:8443` plus XR `:8088`, low-level | same                       | `bash scripts/ensure-spark-dev-services.sh`                |
 
 When only `rp1.env`'s URLs change: sync MSF and XR URLs into both
 the API's and this project's own `.env`, from
@@ -649,27 +649,27 @@ the API's and this project's own `.env`, from
 MSF and Scene Assembler, on the DGX, from `cd
 /home/sifr/MSF_Map_Svc` unless noted:
 
-| Task | Command |
-| --- | --- |
-| Apply the env into MSF's own settings | `bash scripts/configure-from-env.sh` |
-| Start MSF plus the Scene Assembler | `bash scripts/run-msf-map-svc.sh` |
-| Confirm MySQL only | `bash scripts/ensure-msf-mysql.sh` |
-| Verify the local plus public fabric URL | `bash scripts/verify-fabric-url.sh` |
-| Tailscale routing, default is Serve, tailnet only | `bash scripts/setup-dgx-public-routing.sh`, or `… serve` |
-| Tailscale Funnel, real internet, for an RP1 meetup | `bash scripts/setup-dgx-public-routing.sh funnel` |
-| A simpler MSF-only expose, an alternate script | `bash scripts/setup-tailscale-exposure.sh` (default Serve; pass `funnel` for public) |
-| Close both Tailscale Serve and Funnel | `tailscale funnel reset && tailscale serve reset` |
-| Seed a GLB into the map database | `bash scripts/seed-map-object.sh [path/to/model.glb] [object-name.glb]` |
-| Sync MSF variables into `3DAIGC-API`, from `cd /home/sifr/3DAIGC-API` | `bash scripts/sync-spatial-fabric-env.sh` |
-| Set the Scene Assembler login key | `bash scripts/set-msf-edit-key.sh 'your-key'` |
+| Task                                                                  | Command                                                                              |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Apply the env into MSF's own settings                                 | `bash scripts/configure-from-env.sh`                                                 |
+| Start MSF plus the Scene Assembler                                    | `bash scripts/run-msf-map-svc.sh`                                                    |
+| Confirm MySQL only                                                    | `bash scripts/ensure-msf-mysql.sh`                                                   |
+| Verify the local plus public fabric URL                               | `bash scripts/verify-fabric-url.sh`                                                  |
+| Tailscale routing, default is Serve, tailnet only                     | `bash scripts/setup-dgx-public-routing.sh`, or `… serve`                             |
+| Tailscale Funnel, real internet, for an RP1 meetup                    | `bash scripts/setup-dgx-public-routing.sh funnel`                                    |
+| A simpler MSF-only expose, an alternate script                        | `bash scripts/setup-tailscale-exposure.sh` (default Serve; pass `funnel` for public) |
+| Close both Tailscale Serve and Funnel                                 | `tailscale funnel reset && tailscale serve reset`                                    |
+| Seed a GLB into the map database                                      | `bash scripts/seed-map-object.sh [path/to/model.glb] [object-name.glb]`              |
+| Sync MSF variables into `3DAIGC-API`, from `cd /home/sifr/3DAIGC-API` | `bash scripts/sync-spatial-fabric-env.sh`                                            |
+| Set the Scene Assembler login key                                     | `bash scripts/set-msf-edit-key.sh 'your-key'`                                        |
 
 Surface, each development session, not the DGX, from `cd
 Weftspun3DStudio`:
 
-| Task | Command |
-| --- | --- |
-| Both proxies (MSF `:8453` plus XR `:8443`) | `npm run dev:spark-proxies` |
-| Verify the proxies reach the DGX | `npm run verify:dev-proxies` |
+| Task                                       | Command                      |
+| ------------------------------------------ | ---------------------------- |
+| Both proxies (MSF `:8453` plus XR `:8443`) | `npm run dev:spark-proxies`  |
+| Verify the proxies reach the DGX           | `npm run verify:dev-proxies` |
 
 Scene Assembler login: open the host root, never a raw `.msf` file.
 Two fields: the Fabric URL must match the host the Scene Assembler
@@ -700,14 +700,14 @@ job (image-to-3d, auto-rig) instead.
 The native OMB browser engine (`MetaversalCorp/Sneeze`), a static
 library only; not required for a Scene Assembler publish today.
 
-| Task | Folder | Command |
-| --- | --- | --- |
-| Install build prerequisites, one sudo pass | `cd /home/sifr/Sneeze` | `bash scripts/install-prereqs-dgx.sh` |
-| Pull, rebuild, and smoke-test | same | `bash scripts/build-dgx-spark.sh` |
-| An incremental, Sneeze-only rebuild | same | `bash scripts/build-linux.sh` |
-| Full dependencies plus Sneeze, first time | same | `bash scripts/build-linux.sh --all` |
-| Force a scrub and rebuild | same | `bash scripts/build-linux.sh --rebuild` |
-| Manual smoke tests | same | `builds/linux-arm64/install/release/bin/SneezeTest --wasm --net` |
+| Task                                       | Folder                 | Command                                                          |
+| ------------------------------------------ | ---------------------- | ---------------------------------------------------------------- |
+| Install build prerequisites, one sudo pass | `cd /home/sifr/Sneeze` | `bash scripts/install-prereqs-dgx.sh`                            |
+| Pull, rebuild, and smoke-test              | same                   | `bash scripts/build-dgx-spark.sh`                                |
+| An incremental, Sneeze-only rebuild        | same                   | `bash scripts/build-linux.sh`                                    |
+| Full dependencies plus Sneeze, first time  | same                   | `bash scripts/build-linux.sh --all`                              |
+| Force a scrub and rebuild                  | same                   | `bash scripts/build-linux.sh --rebuild`                          |
+| Manual smoke tests                         | same                   | `builds/linux-arm64/install/release/bin/SneezeTest --wasm --net` |
 
 Artifact: `builds/linux-arm64/install/release/lib/libSneeze.a`. More
 detail: `Sneeze/docs/guides/dgx-spark.md`.
@@ -719,12 +719,12 @@ viewer, not a third-party one. Opens an MSF fabric URL in 3D. Docs
 and examples: `MetaversalCorp/SneezeDoc`, cloned at
 `/home/sifr/SneezeDoc` (an embedding guide, plus a stool example).
 
-| Task | Folder | Command |
-| --- | --- | --- |
-| Build (needs the Sneeze dependencies) | `cd /home/sifr/WeftspunHost` | `bash scripts/build-dgx.sh` |
-| Run the SneezeDoc stool example, from a CDN | same | `bash scripts/run-dgx.sh --url https://cdn.rp1.com/sneeze/examples/stool.json` |
-| Run against the local MSF | same | `bash scripts/run-dgx.sh --url https://127.0.0.1:8443/fabric/sample.msf` |
-| Update the SneezeDoc wiki clone | `cd /home/sifr/SneezeDoc` | `git pull --ff-only` |
+| Task                                        | Folder                       | Command                                                                        |
+| ------------------------------------------- | ---------------------------- | ------------------------------------------------------------------------------ |
+| Build (needs the Sneeze dependencies)       | `cd /home/sifr/WeftspunHost` | `bash scripts/build-dgx.sh`                                                    |
+| Run the SneezeDoc stool example, from a CDN | same                         | `bash scripts/run-dgx.sh --url https://cdn.rp1.com/sneeze/examples/stool.json` |
+| Run against the local MSF                   | same                         | `bash scripts/run-dgx.sh --url https://127.0.0.1:8443/fabric/sample.msf`       |
+| Update the SneezeDoc wiki clone             | `cd /home/sifr/SneezeDoc`    | `git pull --ff-only`                                                           |
 
 Prerequisite, for the local MSF path: `bash
 /home/sifr/3DAIGC-API/scripts/start-dgx-after-reboot.sh`. Sneeze
@@ -737,21 +737,21 @@ reloads, Ctrl+Alt+F5 resets, Escape quits.
 
 ## 21. Deprecated, do not use
 
-| Old command or path | Use instead |
-| --- | --- |
-| `C:\Users\alfao\Documents\GitHub\CharacterStudio` | `...\Weftspun3DStudio` |
-| `cd ~/Weftspun3DStudio/CharacterStudio` | `cd /home/sifr/Weftspun3DStudio` |
-| `cd ~/github/3DAIGC-API` | `cd /home/sifr/3DAIGC-API` |
-| `bash start-api-in-container.sh` | `./scripts/run_local_venv.sh` (a venv, not the Docker API) |
-| `docker exec 3daigc-api pkill …` | `pkill -f 'uvicorn api.main_singleworker:app'` |
-| `./scripts/download_models.sh triposplat` | `./scripts/download_models.sh -m triposplat` |
-| `sync-from-dgx.ps1 -IncludeDocs` | `-IncludeDocs` belongs on `sync-to-dgx.ps1`, not `sync-from` |
-| `capture-nativeFaceRelay-logcat.ps1` | `.\scripts\capture-apk-logcat.ps1` |
-| A SessionMem folder named `CharacterStudio/` | `.sessionmem-team/Weftspun3DStudio/` |
-| A manual `pkill` of only the scheduler or API | `bash scripts/stop_services.sh`, then `start_services_detached.sh` or `restart_services.sh` |
-| A manual `docker start 3daigc-redis` before every restart | `bash scripts/restart_services.sh` (calls `ensure_redis.sh` automatically) |
-| `builds/.../bin/WasmTest` / `NetTest` | `SneezeTest --wasm --net`, the unified test runner |
-| Restarting the API without stopping the scheduler first | `bash scripts/restart_services.sh` (always stops the scheduler first) |
+| Old command or path                                       | Use instead                                                                                 |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `C:\Users\alfao\Documents\GitHub\CharacterStudio`         | `...\Weftspun3DStudio`                                                                      |
+| `cd ~/Weftspun3DStudio/CharacterStudio`                   | `cd /home/sifr/Weftspun3DStudio`                                                            |
+| `cd ~/github/3DAIGC-API`                                  | `cd /home/sifr/3DAIGC-API`                                                                  |
+| `bash start-api-in-container.sh`                          | `./scripts/run_local_venv.sh` (a venv, not the Docker API)                                  |
+| `docker exec 3daigc-api pkill …`                          | `pkill -f 'uvicorn api.main_singleworker:app'`                                              |
+| `./scripts/download_models.sh triposplat`                 | `./scripts/download_models.sh -m triposplat`                                                |
+| `sync-from-dgx.ps1 -IncludeDocs`                          | `-IncludeDocs` belongs on `sync-to-dgx.ps1`, not `sync-from`                                |
+| `capture-nativeFaceRelay-logcat.ps1`                      | `.\scripts\capture-apk-logcat.ps1`                                                          |
+| A SessionMem folder named `CharacterStudio/`              | `.sessionmem-team/Weftspun3DStudio/`                                                        |
+| A manual `pkill` of only the scheduler or API             | `bash scripts/stop_services.sh`, then `start_services_detached.sh` or `restart_services.sh` |
+| A manual `docker start 3daigc-redis` before every restart | `bash scripts/restart_services.sh` (calls `ensure_redis.sh` automatically)                  |
+| `builds/.../bin/WasmTest` / `NetTest`                     | `SneezeTest --wasm --net`, the unified test runner                                          |
+| Restarting the API without stopping the scheduler first   | `bash scripts/restart_services.sh` (always stops the scheduler first)                       |
 
 ## 22. The agent-facing rule
 

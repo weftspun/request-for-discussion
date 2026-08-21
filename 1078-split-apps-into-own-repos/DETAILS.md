@@ -2,12 +2,12 @@
 
 ## Repo map
 
-| Old path (in `weftspun-3d-studio`) | New repo |
-| --- | --- |
-| `apps/weftspun_studio/` | `weftspun/weftspun-studio` |
-| `apps/character_taxonomy/` | `weftspun/weftspun-character-taxonomy` |
-| `apps/usd_viewer_app/` | `weftspun/weftspun-usd-viewer` |
-| `thirdparty/3d_studio/` | `weftspun-3d-studio`'s own repo root, `3d_studio/` |
+| Old path (in `weftspun-3d-studio`)   | New repo                                                        |
+| ------------------------------------ | --------------------------------------------------------------- |
+| `apps/weftspun_studio/`              | `weftspun/weftspun-studio`                                      |
+| `apps/character_taxonomy/`           | `weftspun/weftspun-character-taxonomy`                          |
+| `apps/usd_viewer_app/`               | `weftspun/weftspun-usd-viewer`                                  |
+| `thirdparty/3d_studio/`              | `weftspun-3d-studio`'s own repo root, `3d_studio/`              |
 | `thirdparty/android-xr-face-bridge/` | `weftspun-3d-studio`'s own repo root, `android-xr-face-bridge/` |
 
 `git subtree split --prefix=apps/<app>` only carries history for

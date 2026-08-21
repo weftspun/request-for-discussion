@@ -3,7 +3,7 @@
 ## The identifiers
 
 | Model id                       | Task                         |
-| ------------------------------ | ----------------------------- |
+| ------------------------------ | ---------------------------- |
 | trellis_text_to_textured_mesh  | Text to 3D                   |
 | trellis_image_to_textured_mesh | Image to 3D (legacy)         |
 | trellis_image_mesh_painting    | Image mesh painting (legacy) |

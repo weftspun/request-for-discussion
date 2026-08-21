@@ -15,7 +15,7 @@ design, and the domain is that source.
 ## The model
 
 | Property   | Value                             |
-| ---------- | ---------------------------------- |
+| ---------- | --------------------------------- |
 | Parameters | 0. It shares the RFD 1026 weights |
 | bf16       | 8.0 GB, the RFD 1026 cost         |
 | License    | MIT                               |

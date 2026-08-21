@@ -56,23 +56,23 @@ outside this RFD's own work: `E2E_DGX_DEVTOOLS.md`,
 Six more are deleted now, each superseded rather than rewritten, and
 none linked from any `README.md`:
 
-| File | Why deletion, not a rewrite |
-| ---- | ---------------------------- |
-| `WALLET_OWNED_ASSETS_AVATAR_APPROACH.md` | Wallet, minting, and Thirdweb; RFD 100c abandons this line of work |
-| `THIRDWEB_BENEFITS_AND_UI.md` | Same abandoned line, RFD 100c |
-| `QUICK_RECONNECT_STEPS.md` | Manual ADB reconnect steps; `scripts/reconnect-galaxy-xr-debug.ps1` automates this now, per RFD 1063 |
-| `SIMPLE_ADB_CONNECT_GUIDE.md` | Same script supersedes this Cursor-IDE clickthrough |
-| `WIRELESS_ADB_SETUP.md` | Same script supersedes this guide |
-| `SceneControlsIntegration.md` | Documents merging `SceneControlsBackup.jsx`, a file that no longer exists; the merge already completed |
+| File                                     | Why deletion, not a rewrite                                                                            |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `WALLET_OWNED_ASSETS_AVATAR_APPROACH.md` | Wallet, minting, and Thirdweb; RFD 100c abandons this line of work                                     |
+| `THIRDWEB_BENEFITS_AND_UI.md`            | Same abandoned line, RFD 100c                                                                          |
+| `QUICK_RECONNECT_STEPS.md`               | Manual ADB reconnect steps; `scripts/reconnect-galaxy-xr-debug.ps1` automates this now, per RFD 1063   |
+| `SIMPLE_ADB_CONNECT_GUIDE.md`            | Same script supersedes this Cursor-IDE clickthrough                                                    |
+| `WIRELESS_ADB_SETUP.md`                  | Same script supersedes this guide                                                                      |
+| `SceneControlsIntegration.md`            | Documents merging `SceneControlsBackup.jsx`, a file that no longer exists; the merge already completed |
 
 The remaining four are resolved too, none rewritten:
 
-| File | Disposition |
-| ---- | ----------- |
-| `THREEJS_QUICK_START.md` | Deleted. `getRendererInfo()`, `setupPostProcessing()`, and `createPositionalAudio()` do not exist in `sceneManager.js`; a build that never shipped, or shipped then shrank |
-| `THREEJS_WEBGPU_WEBXR_MIGRATION.md` | Deleted. Same drift; RFD 1009 dropped its own reference to this file and gained a `DETAILS.md` with the real renderer fallback chain instead |
+| File                                  | Disposition                                                                                                                                                                                                            |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `THREEJS_QUICK_START.md`              | Deleted. `getRendererInfo()`, `setupPostProcessing()`, and `createPositionalAudio()` do not exist in `sceneManager.js`; a build that never shipped, or shipped then shrank                                             |
+| `THREEJS_WEBGPU_WEBXR_MIGRATION.md`   | Deleted. Same drift; RFD 1009 dropped its own reference to this file and gained a `DETAILS.md` with the real renderer fallback chain instead                                                                           |
 | `FACE_EXPRESSION_TUNING_REFERENCE.md` | Deleted from this repo only. The live copy is the app's own `docs/FACE_EXPRESSION_TUNING_REFERENCE.md`, named directly in `xrExpressionTrackingDriver.js`'s header; a copy here would drift. RFD 1060 points to it now |
-| `model-format-specification.md` | Deleted. Confused "Open3DStudio (Weftspun3DStudio)" bridge framing for what RFD 1066 shows is one codebase under its old and new name; the real, current export fields moved into RFD 1005's `DETAILS.md` |
+| `model-format-specification.md`       | Deleted. Confused "Open3DStudio (Weftspun3DStudio)" bridge framing for what RFD 1066 shows is one codebase under its old and new name; the real, current export fields moved into RFD 1005's `DETAILS.md`              |
 
 ## history.md's dropped Roadmap section
 

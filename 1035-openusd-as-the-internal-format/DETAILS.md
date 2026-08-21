@@ -5,26 +5,26 @@
 USD composes. A stage adds a sublayer with its own opinion, and the
 layer below stays intact and readable.
 
-| Stage        | Writes                                  |
-| ------------- | ----------------------------------------|
-| image to 3D  | the base mesh layer                     |
-| retopology   | a layer that overrides the mesh         |
-| UV unwrap    | a layer that adds the primvar           |
-| segmentation | a layer of part scopes                  |
-| rig          | a layer of skeleton and skin bindings   |
-| texture      | a layer of material bindings            |
+| Stage        | Writes                                |
+| ------------ | ------------------------------------- |
+| image to 3D  | the base mesh layer                   |
+| retopology   | a layer that overrides the mesh       |
+| UV unwrap    | a layer that adds the primvar         |
+| segmentation | a layer of part scopes                |
+| rig          | a layer of skeleton and skin bindings |
+| texture      | a layer of material bindings          |
 
 A caller may then mute the retopology layer and see the original. That
 is not possible in a flat file.
 
 ## The boundary
 
-| Direction | Format                       |
-| --------- | ----------------------------- |
-| Internal  | `.usdc`, and `.usda` to read |
-| Avatar out| VRM, or KHR avatar           |
-| Asset out | glTF binary                  |
-| Archive   | `.usdz`                      |
+| Direction  | Format                       |
+| ---------- | ---------------------------- |
+| Internal   | `.usdc`, and `.usda` to read |
+| Avatar out | VRM, or KHR avatar           |
+| Asset out  | glTF binary                  |
+| Archive    | `.usdz`                      |
 
 Convert at the boundary only. A stage that converts in the middle
 throws away the composition this RFD exists to keep.

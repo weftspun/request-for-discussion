@@ -7,21 +7,21 @@ Ranges come from `anny/data/mpfb2/mesh_metadata/hm08_config.json` and
 
 **That is not the whole mesh. The mesh has 19,158 vertices.** See the correction below.
 
-| group | range | vertices | verdict |
-| --- | --- | --- | --- |
-| `body` | 0 to 13379 | 13,380 | one block, no sub-parts |
-| `helper-tongue` | 13380 to 13605 | 226 | renderable |
-| (unnamed helper block) | 13606 to 14597 | 992 | 124 joint cubes, not renderable |
-| `helper-l-eye` | 14598 to 14669 | 72 | renderable |
-| `helper-r-eye` | 14670 to 14741 | 72 | renderable |
-| `helper-l-eyelashes` | 14742 to 14866 | 125 | renderable |
-| `helper-r-eyelashes` | 14867 to 14991 | 125 | renderable |
-| `helper-lower-teeth` | 14992 to 15059 | 68 | renderable |
-| `helper-upper-teeth` | 15060 to 15127 | 68 | renderable |
-| `helper-genital` | 15128 to 15327 | 200 | renderable |
-| `helper-tights` | 15328 to 18001 | 2,674 | proxy volume |
-| `helper-skirt` | 18002 to 18721 | 720 | proxy volume |
-| `helper-hair` | 18722 to 19149 | 428 | proxy volume |
+| group                  | range          | vertices | verdict                         |
+| ---------------------- | -------------- | -------- | ------------------------------- |
+| `body`                 | 0 to 13379     | 13,380   | one block, no sub-parts         |
+| `helper-tongue`        | 13380 to 13605 | 226      | renderable                      |
+| (unnamed helper block) | 13606 to 14597 | 992      | 124 joint cubes, not renderable |
+| `helper-l-eye`         | 14598 to 14669 | 72       | renderable                      |
+| `helper-r-eye`         | 14670 to 14741 | 72       | renderable                      |
+| `helper-l-eyelashes`   | 14742 to 14866 | 125      | renderable                      |
+| `helper-r-eyelashes`   | 14867 to 14991 | 125      | renderable                      |
+| `helper-lower-teeth`   | 14992 to 15059 | 68       | renderable                      |
+| `helper-upper-teeth`   | 15060 to 15127 | 68       | renderable                      |
+| `helper-genital`       | 15128 to 15327 | 200      | renderable                      |
+| `helper-tights`        | 15328 to 18001 | 2,674    | proxy volume                    |
+| `helper-skirt`         | 18002 to 18721 | 720      | proxy volume                    |
+| `helper-hair`          | 18722 to 19149 | 428      | proxy volume                    |
 
 `select_groups` names the 992-vertex block `HELPERS`. `groups_by_range` gives it no range.
 A caller who counts ranges misses it. `hm08-partition` proves this and names the block.
@@ -71,12 +71,12 @@ excludes the joint cubes exactly. `select_groups` never mentions `JointCubes`.
 **And the original sentence is true.** Three top-level groups in `basemesh_vertex_groups.json`
 partition the mesh with nothing left over.
 
-| group | vertices |
-| --- | --- |
-| `body` | 13,380 |
-| `HelperGeometry` | 4,778 |
-| `JointCubes` | 1,000 |
-| total | 19,158 |
+| group            | vertices |
+| ---------------- | -------- |
+| `body`           | 13,380   |
+| `HelperGeometry` | 4,778    |
+| `JointCubes`     | 1,000    |
+| total            | 19,158   |
 
 No overlap and no gap. So "hm08 partitions the mesh, so layer masks have no gaps by
 construction" holds through these three. It fails through `groups_by_range`'s twelve. A mask
@@ -106,19 +106,19 @@ created.
 The 24 tags are the 13 body tags plus the 11 head tags. `head` expands into the head tags.
 Both lists live in `common/utils/inference_utils.py`.
 
-| tag | source | verdict |
-| --- | --- | --- |
-| `head`, `neck`, `face`, `ears`, `nose` | inside `body` | geometry exists, no split |
-| `mouth` | `body` lips, plus teeth and tongue helpers | partial, needs a split |
-| `eyes` | `helper-l-eye`, `helper-r-eye` | separated |
-| `irides`, `eyewhite` | inside the eye helpers | not separated |
-| `eyelash` | eyelash helpers | separated |
-| `front hair`, `back hair` | `helper-hair` | proxy only, and no front and back split |
-| `topwear`, `bottomwear`, `legwear` | `helper-tights`, `helper-skirt` | proxy only |
-| `eyebrow` | none, painted into the skin texture | absent, attached like a garment |
-| `headwear`, `eyewear`, `earwear` | none | absent |
-| `neckwear`, `handwear`, `footwear` | none | absent |
-| `tail`, `wings`, `objects` | none | absent |
+| tag                                    | source                                     | verdict                                 |
+| -------------------------------------- | ------------------------------------------ | --------------------------------------- |
+| `head`, `neck`, `face`, `ears`, `nose` | inside `body`                              | geometry exists, no split               |
+| `mouth`                                | `body` lips, plus teeth and tongue helpers | partial, needs a split                  |
+| `eyes`                                 | `helper-l-eye`, `helper-r-eye`             | separated                               |
+| `irides`, `eyewhite`                   | inside the eye helpers                     | not separated                           |
+| `eyelash`                              | eyelash helpers                            | separated                               |
+| `front hair`, `back hair`              | `helper-hair`                              | proxy only, and no front and back split |
+| `topwear`, `bottomwear`, `legwear`     | `helper-tights`, `helper-skirt`            | proxy only                              |
+| `eyebrow`                              | none, painted into the skin texture        | absent, attached like a garment         |
+| `headwear`, `eyewear`, `earwear`       | none                                       | absent                                  |
+| `neckwear`, `handwear`, `footwear`     | none                                       | absent                                  |
+| `tail`, `wings`, `objects`             | none                                       | absent                                  |
 
 Ten tags are absent. Five have a proxy volume and no appearance. Nine need a partition of
 geometry that already exists.
@@ -202,6 +202,7 @@ Bugs live at interfaces. Each stage names its interface and the check that guard
    Depth and the group index are intermediates. Depth feeds the control at stage 2. The group
    index feeds the cross-check at stage 5. Neither one lands beside the image in the corpus.
    The section below states what the corpus render writes, and that list is shorter.
+
 2. **Stylize under depth control.** Qwen-Image plus its Apache-2.0 depth ControlNet turns each
    view into an illustration with hair and garments. Interface: the depth image. Check that
    the control reached the model, because a dropped control looks like a bad seed.
@@ -227,11 +228,11 @@ the four conditions.
 The rebuild above is pipeline. The corpus render is the thing two models train on, and its
 output list is short and closed.
 
-| output | consumer | why it cannot be recomputed |
-| --- | --- | --- |
-| the image | both | it is the input |
+| output             | consumer              | why it cannot be recomputed                                           |
+| ------------------ | --------------------- | --------------------------------------------------------------------- |
+| the image          | both                  | it is the input                                                       |
 | keypoint positions | the keypoint detector | the pose is authored, so the position is not inferable from the image |
-| the 3D shape | Pixal3D | the same, in three dimensions |
+| the 3D shape       | Pixal3D               | the same, in three dimensions                                         |
 
 Nothing else is written. Depth, the hm08 group index, the camera matrix and the material
 identifier are intermediates of the render. No second annotator runs. No derived column is
@@ -276,18 +277,18 @@ frame. A silent shape mismatch here would produce keypoints for a different body
 A check that passes on known-broken input certifies the defect. Each gate ships with an input
 that must fail.
 
-| gate | passes on | must fail on |
-| --- | --- | --- |
-| coverage | every mesh vertex in a group or the named helper block | a mesh with one unnamed vertex |
-| depth order | layers composite back to the source render | a layer pair swapped in z |
-| pose fidelity | referee residual under the stature bar | the impossible pose control |
-| finger chain | flat residual from MCP to DIP | the compounding chain control |
-| control reached | depth control present in the call record | a run with the control dropped |
-| provenance | checkpoint and prompt recorded per Half B row | a row with the checkpoint missing |
-| vertex count | the posed mesh has 19,158 vertices | a run on the 13,718 default |
-| vertex order | the face-index hash matches | the mesh permuted, count unchanged |
-| basemesh untouched | every added part is its own mesh | any part merged into the basemesh |
-| output set | the corpus row holds image, keypoints and shape | a row with a fourth output |
+| gate               | passes on                                              | must fail on                       |
+| ------------------ | ------------------------------------------------------ | ---------------------------------- |
+| coverage           | every mesh vertex in a group or the named helper block | a mesh with one unnamed vertex     |
+| depth order        | layers composite back to the source render             | a layer pair swapped in z          |
+| pose fidelity      | referee residual under the stature bar                 | the impossible pose control        |
+| finger chain       | flat residual from MCP to DIP                          | the compounding chain control      |
+| control reached    | depth control present in the call record               | a run with the control dropped     |
+| provenance         | checkpoint and prompt recorded per Half B row          | a row with the checkpoint missing  |
+| vertex count       | the posed mesh has 19,158 vertices                     | a run on the 13,718 default        |
+| vertex order       | the face-index hash matches                            | the mesh permuted, count unchanged |
+| basemesh untouched | every added part is its own mesh                       | any part merged into the basemesh  |
+| output set         | the corpus row holds image, keypoints and shape        | a row with a fourth output         |
 
 Report the floor beside each number. A residual with no baseline is not a measurement.
 
@@ -306,10 +307,10 @@ exist to stop.
 
 ### The files
 
-| file | role |
-| --- | --- |
-| `HANDOFF.md` | live state, rewritten in full each session, no history |
-| `ledger.jsonl` | append only, one row per event |
+| file           | role                                                   |
+| -------------- | ------------------------------------------------------ |
+| `HANDOFF.md`   | live state, rewritten in full each session, no history |
+| `ledger.jsonl` | append only, one row per event                         |
 
 Current tag ownership is a fold over `ledger.jsonl`. It is not a mutable field. A fold cannot
 disagree with its own history.
@@ -325,13 +326,13 @@ because `-1` is a value and a NULL is not.
 
 ### The five kinds
 
-| kind | means | required |
-| --- | --- | --- |
-| `LEASE` | I take these tags until the expiry | `tag`, `expires` |
-| `RELEASE` | I am done, here is the artifact | `tag`, `artifact` |
-| `CLAIM` | I measured this | measurement, floor, apparatus |
-| `RETRACT` | row `retracts` is withdrawn, with a reason | `retracts` |
-| `BLOCK` | I cannot proceed, the named precondition is unmet | the precondition |
+| kind      | means                                             | required                      |
+| --------- | ------------------------------------------------- | ----------------------------- |
+| `LEASE`   | I take these tags until the expiry                | `tag`, `expires`              |
+| `RELEASE` | I am done, here is the artifact                   | `tag`, `artifact`             |
+| `CLAIM`   | I measured this                                   | measurement, floor, apparatus |
+| `RETRACT` | row `retracts` is withdrawn, with a reason        | `retracts`                    |
+| `BLOCK`   | I cannot proceed, the named precondition is unmet | the precondition              |
 
 ### The rules a linter enforces
 
@@ -358,12 +359,12 @@ timed poll is a liveness check. It is not the protocol.
 
 ### The five negative controls
 
-| input | must be | because |
-| --- | --- | --- |
-| two `LEASE` rows on `front hair` | REJECT | one holder per tag |
-| a `CLAIM` with no floor | REJECT | a number with no baseline |
-| a `RETRACT` that deletes the target row | REJECT | the parent hash breaks |
-| a row that widens `settings.json` | REJECT | permission cannot go sideways |
-| a push from a stale head | REJECT | the fast-forward rule |
+| input                                   | must be | because                       |
+| --------------------------------------- | ------- | ----------------------------- |
+| two `LEASE` rows on `front hair`        | REJECT  | one holder per tag            |
+| a `CLAIM` with no floor                 | REJECT  | a number with no baseline     |
+| a `RETRACT` that deletes the target row | REJECT  | the parent hash breaks        |
+| a row that widens `settings.json`       | REJECT  | permission cannot go sideways |
+| a push from a stale head                | REJECT  | the fast-forward rule         |
 
 A positive control alone proves only that the linter is not uniformly hostile.

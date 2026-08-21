@@ -29,14 +29,14 @@ cd ../Weftspun3DStudio && npm install
 
 ## Packages this project wires in
 
-| Package | Role |
-| --- | --- |
-| `@iwsdk/core` | World, ECS, grab, locomotion |
-| `@iwsdk/locomotor` | `EnvironmentType`, locomotion |
-| `@iwsdk/xr-input` | Galaxy XR controllers and hands |
-| `@iwsdk/vite-plugin-dev` | XR emulation inside Vite |
-| `@iwsdk/cli` | `dev:iwsdk`, adapter sync |
-| `@iwsdk/reference` | Reference assets for the CLI |
+| Package                  | Role                            |
+| ------------------------ | ------------------------------- |
+| `@iwsdk/core`            | World, ECS, grab, locomotion    |
+| `@iwsdk/locomotor`       | `EnvironmentType`, locomotion   |
+| `@iwsdk/xr-input`        | Galaxy XR controllers and hands |
+| `@iwsdk/vite-plugin-dev` | XR emulation inside Vite        |
+| `@iwsdk/cli`             | `dev:iwsdk`, adapter sync       |
+| `@iwsdk/reference`       | Reference assets for the CLI    |
 
 ## Reverting to the npm release
 

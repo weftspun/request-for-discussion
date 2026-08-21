@@ -2,11 +2,11 @@
 
 ## Machines and roles
 
-| Role | Hardware | Typical access | Client IP in `remote-log` |
-| --- | --- | --- | --- |
-| Dev workstation | Windows Surface Laptop Studio 2 | Local editor, Chrome/Edge, `npm run dev`, webcam tests | `10.0.0.32` (example LAN IP, where Vite binds on the Surface) |
-| Remote Linux | NVIDIA DGX Spark | Mostly headless; NVIDIA Sync (Tailscale) for SSH/remote editing as user `sifr`; occasional HDMI monitor | Not the browser that posts most `webcamDebug` or desktop `remote-log` lines |
-| XR headset | Galaxy XR (Chrome WebXR) | Opens `https://<dev-workstation-LAN-IP>:3000/...` on the LAN | `10.0.0.224` (example) |
+| Role            | Hardware                        | Typical access                                                                                          | Client IP in `remote-log`                                                   |
+| --------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Dev workstation | Windows Surface Laptop Studio 2 | Local editor, Chrome/Edge, `npm run dev`, webcam tests                                                  | `10.0.0.32` (example LAN IP, where Vite binds on the Surface)               |
+| Remote Linux    | NVIDIA DGX Spark                | Mostly headless; NVIDIA Sync (Tailscale) for SSH/remote editing as user `sifr`; occasional HDMI monitor | Not the browser that posts most `webcamDebug` or desktop `remote-log` lines |
+| XR headset      | Galaxy XR (Chrome WebXR)        | Opens `https://<dev-workstation-LAN-IP>:3000/...` on the LAN                                            | `10.0.0.224` (example)                                                      |
 
 Do not conflate the DGX Spark with "the PC" when reading a log. The
 Surface runs the Vite dev server and most desktop browser sessions;
@@ -37,10 +37,10 @@ Each line includes the HTTP client that forwarded it:
 [REMOTE_LOG][::ffff:10.0.0.224][session=…][info] … (https://10.0.0.32:3000/?…)
 ```
 
-| Field | Meaning |
-| --- | --- |
-| `[::ffff:10.0.0.224]` | Who sent the log (for example, Galaxy XR Chrome) |
-| `(https://10.0.0.32:3000/…)` | The dev-server origin the tab loaded from (Surface Vite) |
+| Field                        | Meaning                                                                                                         |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `[::ffff:10.0.0.224]`        | Who sent the log (for example, Galaxy XR Chrome)                                                                |
+| `(https://10.0.0.32:3000/…)` | The dev-server origin the tab loaded from (Surface Vite)                                                        |
 | The query string on that URL | Which test mode was active (`nativeFaceRelay`, `nativeFacePlayback`, `webcamDebug`, `xrDebugInputs`, and so on) |
 
 Vite rotates the log at roughly 5 MB, to
@@ -49,12 +49,12 @@ lives in an archive, not the current file.
 
 ### Query flags, by typical device
 
-| Flag | Usually exercised on |
-| --- | --- |
-| `webcamDebug=1` | The Surface browser (`10.0.0.32`) |
-| `nativeFaceRelay=1` | The headset's Chrome (`10.0.0.224`); ingest handled by the Surface's Vite |
-| `nativeFacePlayback=…` | The headset, and sometimes the Surface, for AR replay |
-| `xrDebugInputs=1` | The headset, during a WebXR session |
+| Flag                   | Usually exercised on                                                      |
+| ---------------------- | ------------------------------------------------------------------------- |
+| `webcamDebug=1`        | The Surface browser (`10.0.0.32`)                                         |
+| `nativeFaceRelay=1`    | The headset's Chrome (`10.0.0.224`); ingest handled by the Surface's Vite |
+| `nativeFacePlayback=…` | The headset, and sometimes the Surface, for AR replay                     |
+| `xrDebugInputs=1`      | The headset, during a WebXR session                                       |
 
 ## DGX Spark access
 
@@ -67,16 +67,16 @@ rule.
 
 ## Two editor entry points, one repository
 
-| Workspace | Typical path | Editor connection |
-| --- | --- | --- |
-| Surface (local dev, Galaxy XR) | `C:\Users\alfao\Documents\GitHub\Weftspun3DStudio` | Local folder |
-| DGX Spark (SSH agent) | `/home/sifr/Weftspun3DStudio` | `DGX-Local` or `DGX-Remote` |
+| Workspace                      | Typical path                                       | Editor connection           |
+| ------------------------------ | -------------------------------------------------- | --------------------------- |
+| Surface (local dev, Galaxy XR) | `C:\Users\alfao\Documents\GitHub\Weftspun3DStudio` | Local folder                |
+| DGX Spark (SSH agent)          | `/home/sifr/Weftspun3DStudio`                      | `DGX-Local` or `DGX-Remote` |
 
-| Role | Machine | Typical commands |
-| --- | --- | --- |
-| Web UI, WebXR, headset tests | Surface | `npm run dev`, serving `https://<Surface-LAN-IP>:3000/` |
-| `3DAIGC-API` inference | DGX Spark (`:7842`) | Via `VITE_API_ENDPOINT` or the dev proxy |
-| Code edits | Surface | Pushed to DGX with `sync-changes-to-dgx.ps1` (preferred) or the full `sync-to-dgx.ps1` |
+| Role                         | Machine             | Typical commands                                                                       |
+| ---------------------------- | ------------------- | -------------------------------------------------------------------------------------- |
+| Web UI, WebXR, headset tests | Surface             | `npm run dev`, serving `https://<Surface-LAN-IP>:3000/`                                |
+| `3DAIGC-API` inference       | DGX Spark (`:7842`) | Via `VITE_API_ENDPOINT` or the dev proxy                                               |
+| Code edits                   | Surface             | Pushed to DGX with `sync-changes-to-dgx.ps1` (preferred) or the full `sync-to-dgx.ps1` |
 
 Avoiding a mixed-content block, HTTPS dev on the Surface plus Galaxy XR:
 
@@ -105,9 +105,9 @@ on the DGX backend.
 No cloud repository is required. Changed files copy over LAN or
 Tailscale only, `scp`-based, last write wins:
 
-| Route | SSH host | When |
-| --- | --- | --- |
-| Same Wi-Fi | `DGX-Local` | The Spark at `10.0.0.158` |
+| Route             | SSH host     | When                       |
+| ----------------- | ------------ | -------------------------- |
+| Same Wi-Fi        | `DGX-Local`  | The Spark at `10.0.0.158`  |
 | Away from the LAN | `DGX-Remote` | NVIDIA Sync plus Tailscale |
 
 ## Surface/DGX sync cheat sheet
@@ -118,10 +118,10 @@ overwritten by the other's `scp` push.
 
 The golden rule: one machine owns `src/` at a time.
 
-| Situation | `src/` owner | What to run |
-| --- | --- | --- |
-| Normal development plus Galaxy XR, on the Surface | Surface | Push after edits (below); the DGX never uses `--include-src`. |
-| Explicitly coding on DGX Remote | DGX | Lock, edit, `sync-changes-to-pc.sh --include-src --retry-until-complete`, then release the lock. The Surface does not push until that finishes. |
+| Situation                                         | `src/` owner | What to run                                                                                                                                     |
+| ------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Normal development plus Galaxy XR, on the Surface | Surface      | Push after edits (below); the DGX never uses `--include-src`.                                                                                   |
+| Explicitly coding on DGX Remote                   | DGX          | Lock, edit, `sync-changes-to-pc.sh --include-src --retry-until-complete`, then release the lock. The Surface does not push until that finishes. |
 
 ### Quick commands, Surface (PowerShell, repository root)
 
@@ -181,12 +181,12 @@ of the sync scripts is needed.
 
 ## Who owns what
 
-| File or folder | Source of truth | Direction |
-| --- | --- | --- |
-| `MONETIZATION_ROADMAP.md` | Surface | PC to DGX only, never pulled back |
-| `src/`, this project's own `scripts/` (not `sync-*.ps1`) | Surface | PC to DGX only |
-| `Pitch Deck/`, `README.md`, `package.json`, branding doc pages | DGX (edited there) | DGX to PC only |
-| `vite.config.js`, `index.html`, `public/`, `.env` | Surface (runs `npm run dev`) | Manual, stays on the PC |
+| File or folder                                                 | Source of truth              | Direction                         |
+| -------------------------------------------------------------- | ---------------------------- | --------------------------------- |
+| `MONETIZATION_ROADMAP.md`                                      | Surface                      | PC to DGX only, never pulled back |
+| `src/`, this project's own `scripts/` (not `sync-*.ps1`)       | Surface                      | PC to DGX only                    |
+| `Pitch Deck/`, `README.md`, `package.json`, branding doc pages | DGX (edited there)           | DGX to PC only                    |
+| `vite.config.js`, `index.html`, `public/`, `.env`              | Surface (runs `npm run dev`) | Manual, stays on the PC           |
 
 One canonical roadmap file only: `MONETIZATION_ROADMAP.md`. No
 `MONETIZATION_ROADMAP_BACKUP.md`, no dated variants, no HTML export,

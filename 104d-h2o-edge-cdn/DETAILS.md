@@ -48,7 +48,7 @@ at runtime.
 `Cache-Control`, at the existing origin, no new service:
 
 - `usd_viewer_app/server.js` sets `Cache-Control: public,
-  max-age=31536000, immutable` on every path under `dist/assets/`
+max-age=31536000, immutable` on every path under `dist/assets/`
   (Vite's own content-hashed filenames, such as
   `index-797Eygc6.js` — the hash changes only when the content
   does, so an immutable, year-long cache is correct, not stale) and

@@ -68,7 +68,12 @@ An implementation might look like this:
         {
           "image": 0,
           "name": "Sprite Animations",
-          "dimensions": { "width": 1024, "height": 1024, "framesH": 4, "framesV": 4 },
+          "dimensions": {
+            "width": 1024,
+            "height": 1024,
+            "framesH": 4,
+            "framesV": 4
+          },
           "frameRate": 12,
           "animations": [
             { "name": "walking", "startFrame": 0, "endFrame": 3, "loop": true },

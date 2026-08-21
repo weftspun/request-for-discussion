@@ -31,7 +31,7 @@ this repository's browser compression lacks.
    through the ports it already exposes
    (`flow/ports/include/idtx_core/`), built against the OpenUSD
    `fabric-stage-runtime` already ships as `{:stage_runtime, "~>
-   0.1.0-dev"}`. RFD 1035 already commits `weftspun_studio` to
+0.1.0-dev"}`. RFD 1035 already commits `weftspun_studio` to
    linking that build.
 2. A `weftspun_studio` API route the browser uploads to, instead of
    whatever `image_to_textured_mesh`-style route it POSTs a GLB to
@@ -54,7 +54,7 @@ Two functions now exist, so the test the gap left red passes and
 `TaskManager.jsx`'s import resolves.
 
 `computeApiUploadSimplifyRatio(sourceVerts, sourceFaces, maxVertices, maxFaces, headroom = 0.85)`
-gives the fraction of the *current* mesh to keep, driven by whichever
+gives the fraction of the _current_ mesh to keep, driven by whichever
 cap (verts or faces) needs the deeper cut. It returns `1` when both
 are already under cap.
 

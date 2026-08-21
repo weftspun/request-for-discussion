@@ -2,12 +2,12 @@
 
 ## What forking the repository does not grant
 
-| Area | Why it stays proprietary |
-| --- | --- |
-| Trademark | "Weftspun", the Weftspun3DStudio branding, the logo, apparel designs. See this project's own `README.md`, Legal & Trademark section. |
-| Hosted AI | The commercial `3DAIGC-API` queue, model-matrix tuning, and quality gates, running on operator hardware. |
-| Marketplace graph | Curated mint paths, soulbound identity and equippable assets, official secondary listings. |
-| Personalization service | Optional, user-approved profile context for generation. A compute product, not a sale of raw user data. |
+| Area                    | Why it stays proprietary                                                                                                             |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Trademark               | "Weftspun", the Weftspun3DStudio branding, the logo, apparel designs. See this project's own `README.md`, Legal & Trademark section. |
+| Hosted AI               | The commercial `3DAIGC-API` queue, model-matrix tuning, and quality gates, running on operator hardware.                             |
+| Marketplace graph       | Curated mint paths, soulbound identity and equippable assets, official secondary listings.                                           |
+| Personalization service | Optional, user-approved profile context for generation. A compute product, not a sale of raw user data.                              |
 
 Two areas this page's own source document once listed here, payment
 rails (x402/wallet) and a phygital passport registry, are gone from

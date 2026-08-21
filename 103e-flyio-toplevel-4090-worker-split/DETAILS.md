@@ -2,10 +2,10 @@
 
 ## The split, node by node
 
-| Node | Runs | Reachable by |
-| --- | --- | --- |
-| **Toplevel** (Fly.io) | `weftspun_studio` (router, planner, catalog), CockroachDB, the built browser client | the public internet |
-| **Worker** (this 4090 box, localhost) | the model images, dispatched jobs | the toplevel node only, over Tailscale |
+| Node                                  | Runs                                                                                | Reachable by                           |
+| ------------------------------------- | ----------------------------------------------------------------------------------- | -------------------------------------- |
+| **Toplevel** (Fly.io)                 | `weftspun_studio` (router, planner, catalog), CockroachDB, the built browser client | the public internet                    |
+| **Worker** (this 4090 box, localhost) | the model images, dispatched jobs                                                   | the toplevel node only, over Tailscale |
 
 ## Why Fly for the toplevel, and not the worker
 
@@ -61,6 +61,7 @@ work. See RFD 1039.
 ## What ships where
 
 **Toplevel, on Fly.io:**
+
 - `Dockerfile` at the repo root (RFD 103c moved it there, and RFD
   0058 already proved it builds a working release image) and a
   `fly.toml` this RFD does not yet write.
@@ -72,6 +73,7 @@ work. See RFD 1039.
   talks to.
 
 **Worker, staying local:**
+
 - `weftspun.network`, and the quadlet isolation pattern RFD 103a
   wrote. Not `weftspun-crdb.build`/`.container`/`.volume`
   themselves, though. CockroachDB is the toplevel's persistence, not

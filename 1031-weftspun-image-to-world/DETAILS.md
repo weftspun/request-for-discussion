@@ -2,10 +2,10 @@
 
 ## The model
 
-| Part       | Source   | bf16    |
+| Part       | Source   |    bf16 |
 | ---------- | -------- | ------: |
-| TripoSplat | RFD 1034 | 2.2 GB  |
-| TRELLIS.2  | RFD 1026 | 8.0 GB  |
+| TripoSplat | RFD 1034 |  2.2 GB |
+| TRELLIS.2  | RFD 1026 |  8.0 GB |
 | **total**  |          | 10.2 GB |
 
 The two never need to be resident together. The domain carries
@@ -13,12 +13,12 @@ The two never need to be resident together. The domain carries
 
 ## The interface
 
-| Input          | Type | Default |
-| -------------- | ---- | ------- |
-| image          | Path | none    |
-| prop_count     | int  | 0       |
-| prop_prompts   | str  | ""      |
-| seed           | int  | -1      |
+| Input        | Type | Default |
+| ------------ | ---- | ------- |
+| image        | Path | none    |
+| prop_count   | int  | 0       |
+| prop_prompts | str  | ""      |
+| seed         | int  | -1      |
 
 `prop_count` of 0 gives the environment only. That is the common case,
 and it must not pay for the TRELLIS.2 load.

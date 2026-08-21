@@ -2,10 +2,10 @@
 
 ## The two phases
 
-| Phase | Does                                   |
-| ----- | ----------------------------------------|
-| A     | Tracks the camera through the walk     |
-| B     | Reconstructs the surfaces              |
+| Phase | Does                               |
+| ----- | ---------------------------------- |
+| A     | Tracks the camera through the walk |
+| B     | Reconstructs the surfaces          |
 
 Phase B needs the poses from Phase A. The guard states that, thus no
 plan may reverse them.
@@ -30,8 +30,8 @@ scan that fails the gate produces no stage at all.
 
 ## What blocks the packaging
 
-| Question         | Why it blocks                    |
-| ----------------- | --------------------------------- |
-| Parameter count  | RFD 101a and RFD 101b need it    |
-| License          | RFD 101c gates the ship          |
-| Door metric source | The gate needs a known width   |
+| Question           | Why it blocks                 |
+| ------------------ | ----------------------------- |
+| Parameter count    | RFD 101a and RFD 101b need it |
+| License            | RFD 101c gates the ship       |
+| Door metric source | The gate needs a known width  |

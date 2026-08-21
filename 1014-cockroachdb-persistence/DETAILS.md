@@ -43,16 +43,16 @@ key, so this costs nothing.
 JSON, and it round-trips and queries through `json_each`, which was measured rather than
 assumed.
 
-| Column | Type | Holds |
-| --- | --- | --- |
-| `fact_id` | `string` | The model id. Primary key. |
-| `content` | `text` | The label or the task text. |
-| `category` | `string` | The client feature, such as `image_to_raw_mesh`. |
-| `tags` | `string[]` | Type, host, and status. |
-| `trust_score` | `float` | Zero to one. Feedback moves it. |
-| `hrr_vector` | `bytea` | The packed float64 phase vector. |
-| `inserted_at` | `timestamptz` | Row creation time. |
-| `updated_at` | `timestamptz` | Last change time. |
+| Column        | Type          | Holds                                            |
+| ------------- | ------------- | ------------------------------------------------ |
+| `fact_id`     | `string`      | The model id. Primary key.                       |
+| `content`     | `text`        | The label or the task text.                      |
+| `category`    | `string`      | The client feature, such as `image_to_raw_mesh`. |
+| `tags`        | `string[]`    | Type, host, and status.                          |
+| `trust_score` | `float`       | Zero to one. Feedback moves it.                  |
+| `hrr_vector`  | `bytea`       | The packed float64 phase vector.                 |
+| `inserted_at` | `timestamptz` | Row creation time.                               |
+| `updated_at`  | `timestamptz` | Last change time.                                |
 
 The shape follows the hermes-agent holographic memory store, as RFD
 0019 records.
@@ -82,12 +82,12 @@ later changes for a fact it does not name.
 
 ## Modules
 
-| Module | Role |
-| --- | --- |
-| `WeftspunStudio.Repo` | The connection pool. |
-| `WeftspunStudio.Facts.Fact` | The schema and the changeset. |
-| `WeftspunStudio.Adapters.EctoFactStore` | A `Ports.FactSink` adapter. |
-| `WeftspunStudio.Release` | Migration and seed for a packaged binary. |
+| Module                                  | Role                                      |
+| --------------------------------------- | ----------------------------------------- |
+| `WeftspunStudio.Repo`                   | The connection pool.                      |
+| `WeftspunStudio.Facts.Fact`             | The schema and the changeset.             |
+| `WeftspunStudio.Adapters.EctoFactStore` | A `Ports.FactSink` adapter.               |
+| `WeftspunStudio.Release`                | Migration and seed for a packaged binary. |
 
 `EctoFactStore` is the durable twin of `FactStore`. Both implement
 `WeftspunStudio.Ports.FactSink`, so a caller can take either one. The
@@ -132,15 +132,15 @@ certificates.
 
 ## Settings
 
-| Variable | Default | Holds |
-| --- | --- | --- |
-| `WEFTSPUN_DB` | `1` | Set to `0` to start with no connection pool. |
-| `WEFTSPUN_DB_HOST` | `127.0.0.1` | Host name. |
-| `WEFTSPUN_DB_PORT` | `26257` | Port. |
-| `WEFTSPUN_DB_NAME` | per environment | Database name. |
-| `WEFTSPUN_DB_USER` | `root` | User name. |
-| `WEFTSPUN_DB_PASSWORD` | empty | Password. |
-| `WEFTSPUN_DB_POOL` | `10` | Pool size in a release. |
+| Variable               | Default         | Holds                                        |
+| ---------------------- | --------------- | -------------------------------------------- |
+| `WEFTSPUN_DB`          | `1`             | Set to `0` to start with no connection pool. |
+| `WEFTSPUN_DB_HOST`     | `127.0.0.1`     | Host name.                                   |
+| `WEFTSPUN_DB_PORT`     | `26257`         | Port.                                        |
+| `WEFTSPUN_DB_NAME`     | per environment | Database name.                               |
+| `WEFTSPUN_DB_USER`     | `root`          | User name.                                   |
+| `WEFTSPUN_DB_PASSWORD` | empty           | Password.                                    |
+| `WEFTSPUN_DB_POOL`     | `10`            | Pool size in a release.                      |
 
 The inventory commands need no database. `WEFTSPUN_DB=0` therefore
 lets `weftspun models list` run on a host with no cluster.

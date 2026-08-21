@@ -7,11 +7,11 @@ applies here first: rent a card only after the owned one is the
 bottleneck. The table below prices the rented tier, for the day this
 box stops being enough, not for today.
 
-| Provider  | Model      | RTX 4090 | Against it             |
-| --------- | ---------- | -------: | ------------------------ |
-| vast.ai   | P2P market |   ~$0.35 | Host quality varies    |
-| RunPod    | Datacenter |    $0.69 | Twice the price        |
-| Google    | TPU spot   |    $0.60 | Needs XLA, breaks CUDA |
+| Provider  | Model      | RTX 4090 | Against it                       |
+| --------- | ---------- | -------: | -------------------------------- |
+| vast.ai   | P2P market |   ~$0.35 | Host quality varies              |
+| RunPod    | Datacenter |    $0.69 | Twice the price                  |
+| Google    | TPU spot   |    $0.60 | Needs XLA, breaks CUDA           |
 | Replicate | Serverless |     high | Hostile to the BEAM, blocklisted |
 
 The TPU row also disagrees with RFD 1013 now. That RFD first selected

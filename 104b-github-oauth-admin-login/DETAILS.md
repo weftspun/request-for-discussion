@@ -55,7 +55,7 @@ member" response, not a silent failure.
 ## The real DevOps steps, as run
 
 1. `flyctl secrets set GITHUB_OAUTH_CLIENT_ID=... GITHUB_OAUTH_CLIENT_SECRET=...
-   --app weftspun-studio`, values from the hand-done registration
+--app weftspun-studio`, values from the hand-done registration
    above, run by the user directly rather than pasted into any
    chat transcript.
 2. A signed-cookie session needs its own signing key, separate from

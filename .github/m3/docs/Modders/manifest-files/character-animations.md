@@ -1,4 +1,5 @@
 # Character animations
+
 Two ways add animations to a character.
 
 ## Default animations
@@ -65,6 +66,7 @@ files. This example comes from the
   ],
 ...
 ```
+
 The first animation file in the list matters most. Batch processing
 of many `manifest.json` files depends on it, when you assemble many
 VRM files at once.
@@ -73,10 +75,8 @@ VRM files at once.
    screenshot previews the collection. An export of the real files
    takes much longer.
 
-
 Here an `a-pose.fbx` animation overrides the avatars, for previews:
 ![](/img/5erJutX.gif)
-
 
 2. The animations also help during batch processing. Load many
    `manifest.json` files, then scroll through them while the default
@@ -84,7 +84,6 @@ Here an `a-pose.fbx` animation overrides the avatars, for previews:
    quickly.
 
 ![](/img/LbTte4L.gif)
-
 
 The project retargets VRM avatars with mixamo rigged animations
 **without skin**. Always select the `In place` box. If you do not,

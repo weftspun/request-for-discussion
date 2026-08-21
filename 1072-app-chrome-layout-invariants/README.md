@@ -27,8 +27,7 @@ padding, defined once on `.app`. Neither rail takes a per-side
 override.
 
 Three z-index layers stack in one order: side panels at 998
-(`--z-side-panel`), the header at 1001, the scene controls row at
-1002. A side panel overlapping the header gets a `top` fix, never a
+(`--z-side-panel`), the header at 1001, the scene controls row at 1002. A side panel overlapping the header gets a `top` fix, never a
 z-index raise past 998.
 
 See `DETAILS.md` for the full token table, the forbidden-change

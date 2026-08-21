@@ -5,14 +5,14 @@ grows a history section.
 
 ## Verified, and running
 
-| What | Evidence |
-| ---- | -------- |
-| The planner composes three documents | `pipeline_test.exs`, all 105 pass on this box now that `taskweft_nif` is rebuilt for x86_64 |
-| The model image serves HTTP | RFD 1028, run in Docker on this machine |
-| CockroachDB provisions and runs | RFD 1014, 92 tests with the node up |
-| taskweft composition | PRs 207, 208, 209, merged upstream |
-| Both Quadlets run end to end | RFD 103a, `weftspun.service` and `weftspun-crdb.service` both `active (running)`, `/api/v1/health` and `/api/v1/models` answered over `weftspun.network` |
-| `taskweft_nif` runs on x86_64 | `make clean && mix deps.compile taskweft_nif --force` from `deps/taskweft_nif/`. `mix test` then runs 105/105 with no arch-mismatch failure |
+| What                                 | Evidence                                                                                                                                                 |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| The planner composes three documents | `pipeline_test.exs`, all 105 pass on this box now that `taskweft_nif` is rebuilt for x86_64                                                              |
+| The model image serves HTTP          | RFD 1028, run in Docker on this machine                                                                                                                  |
+| CockroachDB provisions and runs      | RFD 1014, 92 tests with the node up                                                                                                                      |
+| taskweft composition                 | PRs 207, 208, 209, merged upstream                                                                                                                       |
+| Both Quadlets run end to end         | RFD 103a, `weftspun.service` and `weftspun-crdb.service` both `active (running)`, `/api/v1/health` and `/api/v1/models` answered over `weftspun.network` |
+| `taskweft_nif` runs on x86_64        | `make clean && mix deps.compile taskweft_nif --force` from `deps/taskweft_nif/`. `mix test` then runs 105/105 with no arch-mismatch failure              |
 
 ## Written, and never run
 

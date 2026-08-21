@@ -11,10 +11,10 @@ src/core/
 
 The rule for each directory is short:
 
-  * `domain/` may import from `domain/` only.
-  * `ports/` declare shape and behavior. They hold no logic.
-  * `adapters/` may import ports and domain. Nothing imports an
-    adapter except the composition step.
+- `domain/` may import from `domain/` only.
+- `ports/` declare shape and behavior. They hold no logic.
+- `adapters/` may import ports and domain. Nothing imports an
+  adapter except the composition step.
 
 ### The port is a test, not an interface
 
@@ -36,20 +36,20 @@ contract test before either adapter.
 Start with the model catalog. It is the smallest part that can move,
 for four reasons:
 
-  * The Elixir core already serves it, at `GET /api/v1/models`.
-  * A parity test already guards the two lists.
-  * It needs no three.js and no React.
-  * 13 modules read it, so the port earns its keep at once.
+- The Elixir core already serves it, at `GET /api/v1/models`.
+- A parity test already guards the two lists.
+- It needs no three.js and no React.
+- 13 modules read it, so the port earns its keep at once.
 
 Gall's law: a working simple system first.
 
 `CatalogSource` answers three questions:
 
-| Function | Returns |
-| --- | --- |
-| `listModels()` | Every model, as `{ value, label, feature }`. |
-| `listFeatures()` | Every feature name. |
-| `listModelsForFeature(feature)` | The models that serve one feature. |
+| Function                        | Returns                                      |
+| ------------------------------- | -------------------------------------------- |
+| `listModels()`                  | Every model, as `{ value, label, feature }`. |
+| `listFeatures()`                | Every feature name.                          |
+| `listModelsForFeature(feature)` | The models that serve one feature.           |
 
 The names follow `WeftspunStudio.Ports.CatalogSource`, so a reader of
 one side can read the other.

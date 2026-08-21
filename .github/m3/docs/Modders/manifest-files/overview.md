@@ -6,7 +6,6 @@ sidebar_position: 1
 
 The manifest files are essential if you want to mod Weftspun3DStudio with your own assets and selection screens. They sit in several parts of the project. Apart from the art assets, they are the main files you change to build an avatar builder. For more info go to the full documentation page for any manifest in the sidebar.
 
-
 ## [Character Selection](./character-select.md)
 
 The first `manifest.json` file drives the select screen. That screen loads the profiles for the character base models and their assets. Each entry is a character template. It works like a class in an MMO, or a fighter in a video game. They point to the manifest.json files for each character profile's traits.
@@ -44,7 +43,6 @@ This screen can also load characters and traits that a user owns, after that use
 
 The next section describes those `manifest.json` files.
 
-
 ---
 
 ## [Character Traits](./character-traits.md)
@@ -57,7 +55,6 @@ Setting up this manifest will populate the asset trait section with your own tra
 
 - https://github.com/memelotsqui/character-assets/blob/main/neurohacker/manifest.json
 - https://github.com/M3-org/loot-assets/blob/main/loot/models/manifest.json
-
 
 <details>
 
@@ -265,7 +262,6 @@ Setting up this manifest will populate the asset trait section with your own tra
 
 </details>
 
-
 ---
 
 ## [VRM to LoRAs Training Data](./vrm-to-lora.md)
@@ -309,11 +305,9 @@ For more information do not forget to check out this guide: https://hackmd.io/@r
 
 ---
 
-
 This is an experimental feature for prepopulating and customizing personalities for VRM avatars for AI chatbot application use cases. There is also an ongoing effort to standardize this type of metadata as a [gltf extension](https://github.com/omigroup/gltf-extensions/tree/main/extensions/2.0/OMI_personality) if interested.
 
 ![Screenshot from 2024-02-19 13-46-05](/img/B11GGmZnT.jpg)
-
 
 <details>
 
@@ -350,9 +344,7 @@ This is an experimental feature for prepopulating and customizing personalities 
 
 </details>
 
-
 ---
-
 
 Some useful scripts for generating manifest files for use in https://github.com/M3-org/chagithub.com/M3-org/characterstudio## Adding Your Own Traits
 
@@ -369,7 +361,6 @@ You will need to modify the paths for the templates, it is currently configured 
 ![image](/img/HyonISbnT.png)
 
 This is the script I am using for generating a manifest for https://github.com/m3-org/loot-assets
-
 
 ```python!
 import os
@@ -482,7 +473,6 @@ Feminine,Brace,BRACE,Arrow Brace Holy,Arrow_Brace_Holy
 We include the body and category because we needed to rename the `trait_type` values too since some contained special characters and also because there were occasions where the same trait value showed up in different categories. We save this file as master_renamed_f
 
 Then with this script we generate a manifest file per NFT ID, using the JSON of the original metadata + the CSV file containing original and renamed values as arguments like so:
-
 
 ```python!
 import argparse

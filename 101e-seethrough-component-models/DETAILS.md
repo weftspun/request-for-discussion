@@ -2,7 +2,7 @@
 
 ## The components
 
-| Component      | Base model          | Role                 | Parameters | bf16    |
+| Component      | Base model          | Role                 | Parameters |    bf16 |
 | -------------- | ------------------- | -------------------- | ---------: | ------: |
 | layerdiff-unet | SDXL UNet           | Generates layers     |    2.567 B | 5.13 GB |
 | marigold-unet  | Marigold            | Depth estimate       |    0.865 B | 1.73 GB |

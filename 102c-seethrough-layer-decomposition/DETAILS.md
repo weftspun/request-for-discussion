@@ -12,7 +12,7 @@ original image, thus the planner may order it before or after
 ## The nine, and their guards
 
 | Action           | Needs                        |
-| ---------------- | ----------------------------- |
+| ---------------- | ---------------------------- |
 | a_inpaint        | lama, the image              |
 | a_encode_prompt  | layerdiff_te1, layerdiff_te2 |
 | a_diffuse_layers | the embeds, the inpaint      |

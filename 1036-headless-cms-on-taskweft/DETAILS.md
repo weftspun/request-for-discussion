@@ -11,11 +11,11 @@ application duplicated every one of those.
 
 Three parts were new, and only those moved:
 
-| Part                | Where it lives now                        |
-| -------------------- | ------------------------------------------ |
-| Planning documents  | `priv/domains`, `priv/problems`           |
-| `Ports.Planner`     | Beside the other ports                    |
-| `TaskweftPlanner`   | Beside the other adapters                 |
+| Part               | Where it lives now              |
+| ------------------ | ------------------------------- |
+| Planning documents | `priv/domains`, `priv/problems` |
+| `Ports.Planner`    | Beside the other ports          |
+| `TaskweftPlanner`  | Beside the other adapters       |
 
 `cms/` is deleted. That also settles the overlap with RFD 1017, which
 this RFD carried while it described a parallel application.
@@ -32,11 +32,11 @@ the real documents.
 
 ## The measured plans
 
-| Pipeline     | Steps | Composes                                  |
-| ------------- | ----: | ------------------------------------------ |
-| content_only |     3 | the base alone                            |
-| mesh         |     7 | base and stage_mesh                       |
-| avatar       |    10 | base, stage_mesh, stage_rig, and a problem|
+| Pipeline     | Steps | Composes                                   |
+| ------------ | ----: | ------------------------------------------ |
+| content_only |     3 | the base alone                             |
+| mesh         |     7 | base and stage_mesh                        |
+| avatar       |    10 | base, stage_mesh, stage_rig, and a problem |
 
 The avatar plan is the evidence. `stage_rig` calls `a_generate_mesh`,
 which `stage_mesh` defines, and that resolves only because the merge

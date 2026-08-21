@@ -11,13 +11,13 @@
 
 ## The interface
 
-| Input          | Type  | Default |
-| -------------- | ----- | ------- |
-| prompt         | str   | none    |
-| duration_seconds | float | 4.0   |
-| fps            | int   | 30      |
-| target_rig     | Path  | none    |
-| seed           | int   | -1      |
+| Input            | Type  | Default |
+| ---------------- | ----- | ------- |
+| prompt           | str   | none    |
+| duration_seconds | float | 4.0     |
+| fps              | int   | 30      |
+| target_rig       | Path  | none    |
+| seed             | int   | -1      |
 
 `target_rig` is optional. Without it the model image returns SOMA
 only, and it runs no retarget.

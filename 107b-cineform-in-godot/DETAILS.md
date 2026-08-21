@@ -4,12 +4,12 @@
 
 Four projects matter here. Three were checked against the GitHub API rather than recalled.
 
-| project | licence | role |
-| --- | --- | --- |
-| `gopro/cineform-sdk` | Apache-2.0 OR MIT | the codec we propose to vendor |
-| `godotengine/godot` | MIT | the engine |
-| `EIRTeam/EIRTeam.FFmpeg` | MIT | an existing Godot video plugin |
-| FFmpeg | LGPL-2.1 or later, GPL in some builds | what that plugin links |
+| project                  | licence                               | role                           |
+| ------------------------ | ------------------------------------- | ------------------------------ |
+| `gopro/cineform-sdk`     | Apache-2.0 OR MIT                     | the codec we propose to vendor |
+| `godotengine/godot`      | MIT                                   | the engine                     |
+| `EIRTeam/EIRTeam.FFmpeg` | MIT                                   | an existing Godot video plugin |
+| FFmpeg                   | LGPL-2.1 or later, GPL in some builds | what that plugin links         |
 
 The SDK entry is better than the GitHub API reports. The API returns Apache-2.0, because it
 names one licence. The repository holds both `LICENSE-APACHE` and `LICENSE-MIT`, so the SDK is

@@ -2,10 +2,10 @@
 
 ## The two modes
 
-| Mode | Where | AI backend | Secrets |
-| --- | --- | --- | --- |
-| Local dev | `npm run dev`, on a PC or DGX | `VITE_API_ENDPOINT`, `DEV_API_PROXY_TARGET` | `.env`, gitignored |
-| Public demo | Vercel (`vercel.json`) | None: viewport, VRM upload, traits UI only | No client secret |
+| Mode        | Where                         | AI backend                                  | Secrets            |
+| ----------- | ----------------------------- | ------------------------------------------- | ------------------ |
+| Local dev   | `npm run dev`, on a PC or DGX | `VITE_API_ENDPOINT`, `DEV_API_PROXY_TARGET` | `.env`, gitignored |
+| Public demo | Vercel (`vercel.json`)        | None: viewport, VRM upload, traits UI only  | No client secret   |
 
 ## Setting up the Vercel demo
 
@@ -29,29 +29,29 @@
 
 Every `VITE_*` variable inlines into the browser bundle:
 
-| Variable | Why |
-| --- | --- |
-| `VITE_3DAIGC_API_KEY` | API bearer token |
-| `VITE_AVATARSDK_CLIENT_SECRET` | OAuth secret |
-| `VITE_THIRDWEB_SECRET_KEY` | Wallet secret |
-| `VITE_PINATA_*`, `VITE_ALCHEMY_*`, `VITE_BASE_X402_*`, `VITE_VANA_*` | Service secrets |
-| `VITE_HELIUS_KEY`, `VITE_OPENSEA_KEY` | Paid API keys |
-| `VITE_API_ENDPOINT` pointing at a LAN/DGX/Tailscale address | Private infrastructure leak |
+| Variable                                                              | Why                                                                                 |
+| --------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `VITE_3DAIGC_API_KEY`                                                 | API bearer token                                                                    |
+| `VITE_AVATARSDK_CLIENT_SECRET`                                        | OAuth secret                                                                        |
+| `VITE_THIRDWEB_SECRET_KEY`                                            | Wallet secret                                                                       |
+| `VITE_PINATA_*`, `VITE_ALCHEMY_*`, `VITE_BASE_X402_*`, `VITE_VANA_*`  | Service secrets                                                                     |
+| `VITE_HELIUS_KEY`, `VITE_OPENSEA_KEY`                                 | Paid API keys                                                                       |
+| `VITE_API_ENDPOINT` pointing at a LAN/DGX/Tailscale address           | Private infrastructure leak                                                         |
 | `VITE_XR_HUB_URL` / `VITE_MSF_PUBLIC_URL` with `10.0.0.*` or a LAN IP | Private infrastructure leak; use a Tailscale Funnel HTTPS address on Vercel instead |
-| `MSF_EDIT_KEY`, `MSF_DB_PASSWORD`, `VITE_3DAIGC_API_KEY` | Server or edit secrets; never a `VITE_*` name |
-| `DEV_API_PROXY_TARGET` | Development-only; unused in a production build |
+| `MSF_EDIT_KEY`, `MSF_DB_PASSWORD`, `VITE_3DAIGC_API_KEY`              | Server or edit secrets; never a `VITE_*` name                                       |
+| `DEV_API_PROXY_TARGET`                                                | Development-only; unused in a production build                                      |
 
 `npm run build` fails on Vercel or CI outright if any of these are
 present (`scripts/verify-public-build-env.mjs`).
 
 ## Optional on Vercel, public client IDs only
 
-| Variable | Purpose |
-| --- | --- |
-| `VITE_THIRDWEB_CLIENT_ID` | Public wallet client id |
-| `VITE_AVATARSDK_CLIENT_ID` | Public AvatarSDK client id, no secret |
-| `VITE_JOB_STATUS_PATH` | Only if a real public API URL is exposed |
-| `VITE_XR_HUB_URL` | Local development or self-hosted only; unused on the Vercel public demo |
+| Variable                   | Purpose                                                                 |
+| -------------------------- | ----------------------------------------------------------------------- |
+| `VITE_THIRDWEB_CLIENT_ID`  | Public wallet client id                                                 |
+| `VITE_AVATARSDK_CLIENT_ID` | Public AvatarSDK client id, no secret                                   |
+| `VITE_JOB_STATUS_PATH`     | Only if a real public API URL is exposed                                |
+| `VITE_XR_HUB_URL`          | Local development or self-hosted only; unused on the Vercel public demo |
 
 ## Local development, unchanged
 

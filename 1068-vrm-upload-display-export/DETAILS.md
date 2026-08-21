@@ -2,12 +2,12 @@
 
 ## The problem, in one table
 
-| Wrong, breaks eyes or fingers | Right |
-| --- | --- |
-| Rotate the hips or armature only | Rotate `vrm.scene`, the root, only |
-| Run AIGC rig repair (`alignSkinnedMeshToRig`, skeleton display offsets) | Skip repair when `userData.vrmNormalized` is set |
-| Build skeleton visualization from humanoid `Normalized_*` nodes | Build it from the primary skinned mesh (`AvatarBody` skeleton) |
-| Always export with `rotateY(π)` | Yaw only when `getWorldDirection().z > 0.5` |
+| Wrong, breaks eyes or fingers                                           | Right                                                          |
+| ----------------------------------------------------------------------- | -------------------------------------------------------------- |
+| Rotate the hips or armature only                                        | Rotate `vrm.scene`, the root, only                             |
+| Run AIGC rig repair (`alignSkinnedMeshToRig`, skeleton display offsets) | Skip repair when `userData.vrmNormalized` is set               |
+| Build skeleton visualization from humanoid `Normalized_*` nodes         | Build it from the primary skinned mesh (`AvatarBody` skeleton) |
+| Always export with `rotateY(π)`                                         | Yaw only when `getWorldDirection().z > 0.5`                    |
 
 Reference pattern this project follows (this project's own earlier
 code, and `@pixiv/three-vrm`): `VRMUtils.rotateVRM0` adds
@@ -54,13 +54,13 @@ Processing bone … Normalized_Hips
 
 ## Display path
 
-| Concern | Rule |
-| --- | --- |
-| Skeleton overlay | `getPrimarySkeletonBones(modelRoot)`, from the primary skinned mesh |
-| Joint gizmos | A fixed, uniform `SKELETON_JOINT_SPHERE_RADIUS` (0.012), `depthTest: false` overlay |
-| Bone gizmo position | `getBoneDisplayWorldPosition`; no AIGC display offset when `userData.vrm` or `vrmNormalized` |
-| `updateSkeletonDisplayCorrection` | Skipped for an uploaded VRM |
-| Trait or loot load | `characterManager`, `vrmManager`, `load-utils`: the same scene-root forward fix and rebind, never a hips-only rotation |
+| Concern                           | Rule                                                                                                                   |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Skeleton overlay                  | `getPrimarySkeletonBones(modelRoot)`, from the primary skinned mesh                                                    |
+| Joint gizmos                      | A fixed, uniform `SKELETON_JOINT_SPHERE_RADIUS` (0.012), `depthTest: false` overlay                                    |
+| Bone gizmo position               | `getBoneDisplayWorldPosition`; no AIGC display offset when `userData.vrm` or `vrmNormalized`                           |
+| `updateSkeletonDisplayCorrection` | Skipped for an uploaded VRM                                                                                            |
+| Trait or loot load                | `characterManager`, `vrmManager`, `load-utils`: the same scene-root forward fix and rebind, never a hips-only rotation |
 
 ## Export path
 
@@ -77,16 +77,16 @@ and confirm the eyes and finger bones still align in skeleton mode.
 
 ## Implementation map
 
-| Area | File |
-| --- | --- |
-| Upload normalize | `src/library/vrmLoader.js`, `processVRM` with `passthrough: true` |
-| Forward fix | `src/library/modelOrientationUtils.js`, `applyVrm0SceneForwardFix` |
-| Rebind and skeleton visualization | `src/library/rigBoneUtils.js` |
-| Skip AIGC `processModel` | `src/library/sceneManager.js`, `processModel` |
-| Trait or loot load | `src/library/characterManager.js`, `vrmManager.js`, `load-utils.js` |
-| Export | `src/library/VRMExporter.js`, `glbExportUtils.js` |
-| The VRM-versus-AIGC contract | RFD 1053 |
-| Tests | `src/__tests__/rigBoneUtils.test.js` |
+| Area                              | File                                                                |
+| --------------------------------- | ------------------------------------------------------------------- |
+| Upload normalize                  | `src/library/vrmLoader.js`, `processVRM` with `passthrough: true`   |
+| Forward fix                       | `src/library/modelOrientationUtils.js`, `applyVrm0SceneForwardFix`  |
+| Rebind and skeleton visualization | `src/library/rigBoneUtils.js`                                       |
+| Skip AIGC `processModel`          | `src/library/sceneManager.js`, `processModel`                       |
+| Trait or loot load                | `src/library/characterManager.js`, `vrmManager.js`, `load-utils.js` |
+| Export                            | `src/library/VRMExporter.js`, `glbExportUtils.js`                   |
+| The VRM-versus-AIGC contract      | RFD 1053                                                            |
+| Tests                             | `src/__tests__/rigBoneUtils.test.js`                                |
 
 ## Retest checklist
 

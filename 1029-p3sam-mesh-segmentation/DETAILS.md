@@ -2,22 +2,22 @@
 
 ## The model
 
-| Property   | Value             |
-| ---------- | ----------------- |
-| Parameters | 0.4 B, estimated  |
-| bf16       | 0.8 GB            |
-| Q4_K_M     | 0.22 GB           |
-| License    | MIT               |
-| Format     | bf16              |
+| Property   | Value            |
+| ---------- | ---------------- |
+| Parameters | 0.4 B, estimated |
+| bf16       | 0.8 GB           |
+| Q4_K_M     | 0.22 GB          |
+| License    | MIT              |
+| Format     | bf16             |
 
 ## The interface
 
-| Input          | Type  | Default |
-| -------------- | ----- | ------- |
-| mesh           | Path  | none    |
-| segment_every_part | bool | false |
-| max_parts      | int   | 32      |
-| seed           | int   | -1      |
+| Input              | Type | Default |
+| ------------------ | ---- | ------- |
+| mesh               | Path | none    |
+| segment_every_part | bool | false   |
+| max_parts          | int  | 32      |
+| seed               | int  | -1      |
 
 `segment_every_part` is the mode PartSAM and P3-SAM share. It returns
 every part it finds, and it ignores `max_parts`.

@@ -11,11 +11,11 @@
 
 ## The interface
 
-| Input       | Type | Default |
-| ----------- | ---- | ------- |
-| image       | Path | none    |
-| max_splats  | int  | 500000  |
-| seed        | int  | -1      |
+| Input      | Type | Default |
+| ---------- | ---- | ------- |
+| image      | Path | none    |
+| max_splats | int  | 500000  |
+| seed       | int  | -1      |
 
 ## The X-flip belongs here, and only here
 

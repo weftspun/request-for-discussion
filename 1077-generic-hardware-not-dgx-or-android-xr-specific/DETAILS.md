@@ -8,12 +8,12 @@ one of three groups.
 Rewriting these replaces the specific name with the general
 requirement, keeping the specific name as one example.
 
-| RFD | What it assumes | Status |
-| --- | --- | --- |
-| 0086 | Dev machine topology names the DGX Spark and a Surface PC as the two machines | Generalized this session |
-| 0095 | "A voice XR path... on the DGX Spark" | Generalized this session |
-| 0099 | Scripts cheatsheet, 77 DGX-path references, a real runbook for one deployment | Pointer note added; full rewrite still open |
-| 0090 | Galaxy XR named in the title; state is abandoned | Deferred; abandoned RFDs are not this decision's priority |
+| RFD  | What it assumes                                                               | Status                                                    |
+| ---- | ----------------------------------------------------------------------------- | --------------------------------------------------------- |
+| 0086 | Dev machine topology names the DGX Spark and a Surface PC as the two machines | Generalized this session                                  |
+| 0095 | "A voice XR path... on the DGX Spark"                                         | Generalized this session                                  |
+| 0099 | Scripts cheatsheet, 77 DGX-path references, a real runbook for one deployment | Pointer note added; full rewrite still open               |
+| 0090 | Galaxy XR named in the title; state is abandoned                              | Deferred; abandoned RFDs are not this decision's priority |
 
 ## Group B: Android-specific by real technical necessity, not choice
 
@@ -21,12 +21,12 @@ These do not generalize away. The feature itself is an Android-only
 OS or OpenXR extension. The fix is to state that boundary clearly,
 not to pretend the feature runs elsewhere.
 
-| RFD | The real boundary | Status |
-| --- | --- | --- |
-| 0082 | The companion APK is an Android app; native face relay needs Android | Clarified this session |
-| 0096 | `XR_ANDROID_face_tracking` is an Android OpenXR extension by name | Clarified this session |
-| 0108 | Floor-anchor code path is headset-agnostic already; `Galaxy XR AR` in one heading names the test device, not a requirement | Open |
-| 0105 | Webcam driver defers to the Android native bridge only when present | Open |
+| RFD  | The real boundary                                                                                                          | Status                 |
+| ---- | -------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
+| 0082 | The companion APK is an Android app; native face relay needs Android                                                       | Clarified this session |
+| 0096 | `XR_ANDROID_face_tracking` is an Android OpenXR extension by name                                                          | Clarified this session |
+| 0108 | Floor-anchor code path is headset-agnostic already; `Galaxy XR AR` in one heading names the test device, not a requirement | Open                   |
+| 0105 | Webcam driver defers to the Android native bridge only when present                                                        | Open                   |
 
 ## Group C: one incidental mention
 

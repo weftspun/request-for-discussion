@@ -9,13 +9,13 @@ runs them one operation at a time.
 
 ## What the container carries
 
-| Part          | Why                                          |
-| ------------- | ----------------------------------------------|
-| Elixir 1.17.3 | On Erlang 27, on Debian bookworm.            |
-| cmake and g++ | EXLA compiles a NIF.                         |
-| python3       | The model image check runs it.               |
-| Docker in Docker | The model images build here.              |
-| CockroachDB   | `mix weftspun.crdb install` fetches it.      |
+| Part             | Why                                     |
+| ---------------- | --------------------------------------- |
+| Elixir 1.17.3    | On Erlang 27, on Debian bookworm.       |
+| cmake and g++    | EXLA compiles a NIF.                    |
+| python3          | The model image check runs it.          |
+| Docker in Docker | The model images build here.            |
+| CockroachDB      | `mix weftspun.crdb install` fetches it. |
 
 Debian, and not Alpine. The XLA archive links against shared libraries
 that a musl base does not carry.

@@ -2,22 +2,22 @@
 
 ## Task types, New Task panel
 
-| Task | API feature | Example models (DGX, June 2026) |
-| --- | --- | --- |
-| Text to 3D | `text_to_textured_mesh` | TRELLIS |
-| Image to 3D | `image_to_textured_mesh` | TRELLIS.2 (recommended), Pixal3D (PBR), Hunyuan3D-2.1 |
-| Image to Raw Mesh | `image_to_raw_mesh` | Hunyuan3D-2.1, UltraShape |
-| Mesh painting (text or image) | `text_mesh_painting` / `image_mesh_painting` | TRELLIS.2, Hunyuan |
-| Mesh segmentation | `mesh_segmentation` | P3-SAM |
-| Mesh retopology | `mesh_retopology` | AutoRemesher (default), Instant Meshes, Trimesh Decimate |
-| Mesh UV unwrapping | `uv_unwrapping` | xatlas |
-| Mesh editing (text or image) | `text_mesh_editing` / `image_mesh_editing` | VoxHammer |
-| Auto rigging | `auto_rig` | SkinTokens (full GLB, recommended), UniRig (template VRM) |
-| Text to Motion (Kimodo) | `text_to_motion` | Kimodo SOMA-RP-v1.1, into studio motion JSON, into VRM/rigged-GLB playback |
-| Image to Gaussian Splat | `image_to_splat` | TripoSplat (1 photo), WorldMirror 2.0 (2+), COLMAP (3+) |
-| Image to World | `image_to_world` | `weftspun_image_to_world` (a splat environment, plus optional TRELLIS.2 props) |
-| Avatar from Image | a client pipeline | TRELLIS.2 mesh, into a UniRig template rig, into a GLB |
-| Avatar From Photo | client only | AvatarSDK, not `3DAIGC-API` |
+| Task                          | API feature                                  | Example models (DGX, June 2026)                                                |
+| ----------------------------- | -------------------------------------------- | ------------------------------------------------------------------------------ |
+| Text to 3D                    | `text_to_textured_mesh`                      | TRELLIS                                                                        |
+| Image to 3D                   | `image_to_textured_mesh`                     | TRELLIS.2 (recommended), Pixal3D (PBR), Hunyuan3D-2.1                          |
+| Image to Raw Mesh             | `image_to_raw_mesh`                          | Hunyuan3D-2.1, UltraShape                                                      |
+| Mesh painting (text or image) | `text_mesh_painting` / `image_mesh_painting` | TRELLIS.2, Hunyuan                                                             |
+| Mesh segmentation             | `mesh_segmentation`                          | P3-SAM                                                                         |
+| Mesh retopology               | `mesh_retopology`                            | AutoRemesher (default), Instant Meshes, Trimesh Decimate                       |
+| Mesh UV unwrapping            | `uv_unwrapping`                              | xatlas                                                                         |
+| Mesh editing (text or image)  | `text_mesh_editing` / `image_mesh_editing`   | VoxHammer                                                                      |
+| Auto rigging                  | `auto_rig`                                   | SkinTokens (full GLB, recommended), UniRig (template VRM)                      |
+| Text to Motion (Kimodo)       | `text_to_motion`                             | Kimodo SOMA-RP-v1.1, into studio motion JSON, into VRM/rigged-GLB playback     |
+| Image to Gaussian Splat       | `image_to_splat`                             | TripoSplat (1 photo), WorldMirror 2.0 (2+), COLMAP (3+)                        |
+| Image to World                | `image_to_world`                             | `weftspun_image_to_world` (a splat environment, plus optional TRELLIS.2 props) |
+| Avatar from Image             | a client pipeline                            | TRELLIS.2 mesh, into a UniRig template rig, into a GLB                         |
+| Avatar From Photo             | client only                                  | AvatarSDK, not `3DAIGC-API`                                                    |
 
 Also shipped, client plus API: multi-image input, a primary photo
 plus up to seven references, on splat, world, and avatar tasks (RFD
@@ -41,17 +41,17 @@ scene.
 
 ### Shipped today
 
-| Capability | Client | API (DGX) |
-| --- | --- | --- |
-| Splat preview in the viewport | A `SplatMesh`, alongside VRM and meshes | `POST /api/v1/splat-generation/image-to-splat` |
-| One photo to a splat | Task Manager's multi-select, one primary photo | TripoSplat |
-| Two or more photos to a splat | The same UI; mark the best front view as primary | WorldMirror 2.0 (COLMAP as the fallback, at three or more) |
-| World package load | World Library, plus `worldSceneLoader.js` | `POST /api/v1/world-generation/image-to-world` (`weftspun_image_to_world`) |
-| A walked, XR environment scan | Task Manager's "Environment Scan" | `POST /api/v1/world-generation/environment-scan` (LingBot-Map) |
-| Env-scan Phase A, into Spark | Automatic, when `refine_to_3dgs` is set | Isotropic Gaussians, from a point cloud |
-| Env-scan Phase B train | Separate, or `train_3dgs: true` | `POST /train-3dgs` / `env_scan_gsplat_train`, 7 or 10,000 steps |
-| Avatar plus optional splat | "Avatar from Image," plus a "Gaussian splat preview" checkbox | TRELLIS.2 mesh, plus a UniRig template rig, plus an optional TripoSplat |
-| Multi-image uploads | `multiImageInput.js`, on splat, world, and avatar tasks | `image_file_id` plus `reference_image_file_ids`, up to eight images total |
+| Capability                    | Client                                                        | API (DGX)                                                                  |
+| ----------------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Splat preview in the viewport | A `SplatMesh`, alongside VRM and meshes                       | `POST /api/v1/splat-generation/image-to-splat`                             |
+| One photo to a splat          | Task Manager's multi-select, one primary photo                | TripoSplat                                                                 |
+| Two or more photos to a splat | The same UI; mark the best front view as primary              | WorldMirror 2.0 (COLMAP as the fallback, at three or more)                 |
+| World package load            | World Library, plus `worldSceneLoader.js`                     | `POST /api/v1/world-generation/image-to-world` (`weftspun_image_to_world`) |
+| A walked, XR environment scan | Task Manager's "Environment Scan"                             | `POST /api/v1/world-generation/environment-scan` (LingBot-Map)             |
+| Env-scan Phase A, into Spark  | Automatic, when `refine_to_3dgs` is set                       | Isotropic Gaussians, from a point cloud                                    |
+| Env-scan Phase B train        | Separate, or `train_3dgs: true`                               | `POST /train-3dgs` / `env_scan_gsplat_train`, 7 or 10,000 steps            |
+| Avatar plus optional splat    | "Avatar from Image," plus a "Gaussian splat preview" checkbox | TRELLIS.2 mesh, plus a UniRig template rig, plus an optional TripoSplat    |
+| Multi-image uploads           | `multiImageInput.js`, on splat, world, and avatar tasks       | `image_file_id` plus `reference_image_file_ids`, up to eight images total  |
 
 Task types in the New Task panel: "Image to Gaussian Splat," "Image
 to World (splat + props)," "Environment Scan."
