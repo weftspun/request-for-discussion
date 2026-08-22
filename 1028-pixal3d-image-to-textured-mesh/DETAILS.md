@@ -71,6 +71,53 @@ Keep `low_vram` on. An RTX 4090 holds 24 GB, thus a 6.5 GB peak leaves
 room for the activations. That card costs about 0.35 to 0.37 US
 dollars per hour on demand, and 0.13 interruptible.
 
+## Measured: the image does not build, and did not run
+
+`SKILL.md` beside this file carries what to do about it: the order the
+steps go in, and the errors that name the wrong cause. This section is
+the measurement, and that one is the procedure.
+
+Recorded on 2026-08-22, from four attempts on a desktop RTX 3090 with
+Docker 29.7.2 and the NVIDIA container toolkit. Every claim below is
+what a command returned, not a reading of the file.
+
+**The pins conflict, so `docker build` stops at the pip step.**
+`transformers==4.57.3` requires `huggingface-hub<1.0,>=0.34.0`, and the
+same line pins `huggingface_hub==0.26.2`. pip reports
+`ResolutionImpossible`. Upstream's `requirements.txt` does not pin
+`huggingface_hub` at all, so that pin is this file's own, added for
+`snapshot_download`, and the comment above it saying the block mirrors
+upstream is wrong about that line. Built here with `0.35.3`.
+
+**The base environment is absent.** Upstream's README has four
+installation steps and this Dockerfile implements one and a half.
+
+| upstream step        | here                                          |
+| -------------------- | --------------------------------------------- |
+| TRELLIS.2 base       | absent                                        |
+| `requirements.txt`   | inlined as pins                               |
+| natten               | no `NATTEN_CUDA_ARCH`, no build isolation off |
+| `utils3d` wheel      | absent                                        |
+
+Step 1 is where `cumesh`, `flex_gemm` and `o_voxel` come from: three
+CUDA extensions built from source, none on PyPI. With the pin fixed,
+the image builds and then fails at `import cumesh`.
+
+**So the 6.5 GB peak below is upstream's number, not ours.** It cannot
+be a local measurement, because nothing has run here. The same holds
+for anything else in this file that reads as observed behaviour of the
+container. What is measured is the image size: 74.5 GB on disk,
+32.9 GB of content, built with `PIXAL3D_REF=cdbb2bb`.
+
+**`ARG PIXAL3D_REF=master` contradicts its own comment**, which says
+"Pin the commit: master moves, and a moved master changes the mesh
+with no build change to show for it". A default of `master` is exactly
+the thing that comment forbids.
+
+**`ATTN_BACKEND` defaults to `flash_attn`** in upstream's
+`inference.py`, and flash-attn is never installed. The run needs
+`ATTN_BACKEND=sdpa` in the environment.
+
 ## The interface
 
 | Input      | Type  | Default |
