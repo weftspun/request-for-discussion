@@ -52,6 +52,32 @@ numbers do not change.
     32473.2    v-sekai-fabric
     32473.3    v-sekai
 
+## A third sibling: SKILL.md
+
+The README states the problem and the decision. DETAILS.md holds the
+measurement. Neither says what to do, in what order, and both are the
+wrong shape for it: a procedure is not a decision, and it is not a
+result either.
+
+So an RFD may carry a `SKILL.md`, in the same folder, with the
+frontmatter a skill takes:
+
+    ---
+    name: <kebab-case, matching the RFD folder's subject>
+    description: <when to reach for it, not what it contains>
+    ---
+
+It holds the order to do things in and the errors that name the wrong
+cause. RFD 1028 is the first: eighteen packaging gaps, each found by
+running the thing rather than by reading the file, and every one of
+them reporting either success or a cause that is not the cause. That
+knowledge fits nowhere in a README bounded at 40 lines, and putting it
+in DETAILS.md would mix a procedure into a measurement.
+
+The test for whether something belongs here: a reader following it in
+order should not need to have read either sibling. A skill that only
+makes sense after the DETAILS is a section of the DETAILS.
+
 ## What this rule does not repair
 
 Git history and pull request titles hold the old numbers. 66 commit subjects
