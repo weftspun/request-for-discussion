@@ -254,6 +254,40 @@ def check_citations(name, tokens, nums):
     return problems
 
 
+SKILL_NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
+
+
+def check_skill(name, source):
+    """RFD 1000: a SKILL.md carries frontmatter with a name and a description.
+
+    The name is what somebody types and the description is when to reach for it, so an
+    empty description is the failure that matters here: a skill nobody can tell apart
+    from another skill is a skill nobody invokes on purpose.
+
+    Read line by line rather than with a regex over the whole file, because the fence is
+    a line and treating it as a substring finds the "---" inside a table's rule row.
+    """
+    problems = []
+    lines = source.splitlines()
+    if not lines or lines[0].strip() != "---":
+        return [f"{name}: no frontmatter, and RFD 1000 asks for a name and a description"]
+    closing = next((i for i, line in enumerate(lines[1:], 1) if line.strip() == "---"), None)
+    if closing is None:
+        return [f"{name}: the frontmatter is never closed"]
+
+    fields = {}
+    for line in lines[1:closing]:
+        if ":" in line:
+            key, value = line.split(":", 1)
+            fields[key.strip()] = value.strip()
+    for key in ("name", "description"):
+        if not fields.get(key):
+            problems.append(f"{name}: the frontmatter states no {key}")
+    if fields.get("name") and not SKILL_NAME_RE.match(fields["name"]):
+        problems.append(f"{name}: name {fields['name']!r} is not kebab-case")
+    return problems
+
+
 def check(root):
     problems = []
     dirs = sorted(
@@ -292,6 +326,11 @@ def check(root):
         problems += pre
         problems += check_sections(name, toks, state)
         problems += check_citations(name, toks, nums)
+
+        skill = os.path.join(root, d, "SKILL.md")
+        if os.path.exists(skill):
+            with open(skill, encoding="utf-8") as fh:
+                problems += check_skill(f"{d}/SKILL.md", fh.read())
 
         details = os.path.join(root, d, "DETAILS.md")
         if os.path.exists(details):
@@ -345,7 +384,7 @@ def self_test():
     import shutil
     import tempfile
 
-    def build(tmp, readme=GOOD_README, details=GOOD_DETAILS, aliases=None):
+    def build(tmp, readme=GOOD_README, details=GOOD_DETAILS, aliases=None, skill=None):
         for n, body in (("1000-conventions", GOOD_CONVENTIONS), ("1001-a-slug", readme)):
             os.makedirs(os.path.join(tmp, n))
             with open(os.path.join(tmp, n, "README.md"), "w", encoding="utf-8") as fh:
@@ -353,6 +392,9 @@ def self_test():
         if details is not None:
             with open(os.path.join(tmp, "1001-a-slug", "DETAILS.md"), "w", encoding="utf-8") as fh:
                 fh.write(details)
+        if skill is not None:
+            with open(os.path.join(tmp, "1001-a-slug", "SKILL.md"), "w", encoding="utf-8") as fh:
+                fh.write(skill)
         with open(os.path.join(tmp, "ALIASES.md"), "w", encoding="utf-8") as fh:
             fh.write(aliases if aliases is not None else "| RFD 0001 | RFD 1002 | x |\n")
 
@@ -384,6 +426,12 @@ def self_test():
          {"readme": GOOD_README.replace("See `DETAILS.md` for the rest.", "Nothing here.")}, True),
         ("a DETAILS.md titled for another RFD",
          {"details": "# RFD 1009 details: the rest\n"}, True),
+        ("a SKILL.md with no frontmatter", {"skill": '# just a heading\n'}, True),
+        ("a SKILL.md with an empty description",
+         {"skill": '---\nname: a-skill\ndescription:\n---\n\nBody.\n'}, True),
+        ("a SKILL.md whose name is not kebab-case",
+         {"skill": '---\nname: A Skill\ndescription: when to reach for it\n---\n\nBody.\n'}, True),
+        ("a well-formed SKILL.md is accepted", {"skill": '---\nname: a-skill\ndescription: when to reach for it\n---\n\nBody.\n'}, False),
         ("a README past the line limit RFD 1000 gives",
          {"readme": GOOD_README + "\nfiller\n" * 40}, True),
     ]
