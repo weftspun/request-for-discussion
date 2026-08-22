@@ -405,6 +405,22 @@ The estimator panel never had that property, because its members were all COCO-t
 their errors correlated. Every fit here is descent through a forward we own. Where the forward
 is differentiable there is no inverse model to license, train or trust.
 
+**Qualified, not retracted, and the qualification stays here beside the sentence.** An
+earlier version of this note said RFD 107e retracted half of it, because that RFD replaced
+the fit with a learned student and a student is an inverse model. RFD 107e now unrolls the
+descent instead, so the sentence largely stands and the earlier retraction is withdrawn.
+
+What changes is smaller. An unrolled fit is still descent through a forward we own, with the
+iteration count frozen rather than decided at run time, so nothing is licensed and nothing
+replaces the parametric model. Two things do become measurements. The step sizes are learned,
+so they are trained. And a fixed step count stops short of convergence by construction, so
+"trust" becomes the residual that K steps actually reach, reported as a percentage of stature.
+
+The reason the wording matters is in the row above about correlated members. A regressor would
+have put a discriminative estimator back where the parametric model was, and lost the property
+that a parametric model cannot represent an impossible skeleton. Unrolling with a per-step
+joint-limit clamp keeps that property in a graph an accelerator will take.
+
 The last row is what RFD 1079 answers.
 
 ## The corrected hm08 claim
