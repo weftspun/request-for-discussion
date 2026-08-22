@@ -23,9 +23,9 @@ a regressor's architecture forbids one.
 
 Unroll the descent into a fixed number of steps, keeping the forward we own.
 
-**Clamp every step to the Kusudama cone.** `swing-twist-kusudama` gives joint
-limits checked in Lean 4 against Godot, and a clamp is `Clip`, which compiles.
-The unrolled graph therefore still cannot emit an unreachable pose.
+**Clamp every step, with pairwise kusudamas concatenated.** No kusudama carries
+two or more cones: three equidistant cones sum to zero. A clamp is `Clip`, so
+the unrolled graph still cannot emit an unreachable pose.
 
 **Warm-start from the previous frame**, so the step count stays small.
 

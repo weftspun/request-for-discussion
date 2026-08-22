@@ -29,6 +29,20 @@ output, and clamping swing and twist at every unrolled step is a `Clip`, which
 compiles. So the guarantee holds in a feed-forward graph, which is the thing a
 regressor cannot offer at any accuracy.
 
+**How the clamp is built is decided, and it is not the obvious reading.** No
+kusudama carries two or more cones. A joint limit that a multi-cone kusudama
+was being asked to express is built as a concatenation of pairwise ones. The
+measurement behind that is in `humanoid-rom/FINDINGS.md`: three equidistant
+cones, 120 degrees apart, sum to `4.003e-16`, so the pole derived by summing
+cone centres and normalising is degenerate, and one unit in the last place
+moves it by 45 degrees.
+
+That helps the graph rather than costing it. A pairwise kusudama is small and
+fixed, a concatenation of them is a fixed-length chain, and the whole
+constraint stays feed-forward with no data-dependent count. Deriving a pole
+would have needed a normalise whose input can be zero, and an INT8 pipeline has
+no good answer for that division.
+
 ## What actually blocked the accelerator
 
 <!-- gate: ste100 -->
