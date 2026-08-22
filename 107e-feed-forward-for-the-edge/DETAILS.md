@@ -1,153 +1,136 @@
-# RFD 107e details: the stage classification, the part, and what the student costs
+# RFD 107e details: the rig budget, the unrolled cost, and what is unmeasured
 
 Every section names its gate in an HTML comment under its heading, per RFD 107d.
 
-## The six stages, by kind
-
-<!-- gate: ste100 -->
-
-RFD 107a's `DETAILS.md` lists what each stage recovers. This table adds what
-each stage *is*, which is the property the hardware question turns on.
-
-| stage                     | kind                            | runs on an NPU |
-| ------------------------- | ------------------------------- | -------------- |
-| RF-DETR wholebody, 104 kp | feed-forward graph              | yes, see below |
-| `AnnyInverter` and LBFGS  | `float64` descent loop          | no             |
-| silhouette fit            | differentiable raster, descent  | no             |
-| depth fit and Marigold    | one model, then a descent fit   | model only     |
-| MediaPipe, 51 ARKit       | feed-forward graph              | yes            |
-| hm08 groups on the fit    | mesh set operations             | no, host CPU   |
-
-`4-entities/anny-pose-retarget-work/lbfgs_polish.py` line 16 builds the model
-`.to(dtype=torch.float64)`, and the comment states "float64 for tighter
-numerical convergence". The accelerator carries INT8 activations. The mismatch
-is one of kind, and more devices do not reduce it.
-
-## What the part is
-
-<!-- gate: ste100 -->
-
-The ASUS UGen300 carries a Hailo-10H: 20 TOPS INT8, 40 TOPS INT4, 8 GB
-LPDDR4-4266, over USB 3.1 Gen2 Type-C at 10 Gbps.
-
-Five properties decide this RFD. Each is sourced, not assumed.
-
-1. **Inference only.** The flow is a pretrained model, then the Dataflow
-   Compiler, then a HAR file, then a HEF for HailoRT. No training path exists.
-2. **No model parallelism across chips.** HailoRT's VDevice schedules whole
-   network groups over several devices. The documented way to split one network
-   puts one part on the device and the rest on the host CPU.
-3. **The generative envelope is near 1.5B.** Hailo's own engineering note runs
-   Qwen2-1.5B-Instruct in 1.2 GB with a 2K KV-cache. Marketing cites
-   Llama2-7B at 10 tokens per second.
-4. **"4-bit" describes the weights only.** The scheme is INT4 group-wise
-   weights, INT8 per-tensor activations, and an INT8 KV-cache. Read the compile
-   report for the per-layer assignment; do not infer it from the headline.
-5. **`grid_sample` blocks the DETR family.** RT-DETRv2 added a
-   `discrete_sample` operator because `grid_sample` limits deployment. The
-   Hailo Model Zoo carries DETR with a ResNet-50 backbone, which uses dense
-   attention. That is not evidence about deformable attention.
-
-## Two things the port does not have
-
-<!-- gate: ste100 -->
-
-`3-interactor/rf-detr-cpp` holds no ONNX export. The port is GGUF and ggml from
-end to end, and `src/ops.cpp` line 94 selects between `GGML_TYPE_F16` and
-`GGML_TYPE_F32` and nothing else. Phase 2 training is ggml autodiff.
-
-`src/deform_attn.cpp` is a core component, not an option. Its bilinear gather at
-learned offsets is the operation item 5 above names.
-
-So the go/no-go test costs one device: export the existing COCO-17 keypoint head
-to ONNX, gate it against `gen_reference/` at the tolerances `test_keypoints`
-already holds, and compile it. The Dataflow Compiler fails at compile time
-rather than falling back for each operation, so the answer is unambiguous.
-
-## The fitter licence survey
-
-<!-- gate: ste100 -->
-
-`3-interactor/pose-consensus/python/backend_licenses.py` gives the shape. Every
-off-the-shelf fitter fails it.
-
-| candidate    | licence               | verdict                                      |
-| ------------ | --------------------- | -------------------------------------------- |
-| Multi-HMR    | CC-BY-NC-SA-4.0       | denied twice: NC is the Sapiens class, and SA is blocklisted |
-| Sapiens      | CC-BY-NC-4.0          | denied already, and recorded in the roster   |
-| SAM 3D Body  | "SAM License"         | field-of-use restrictions, which propagate like OpenRAIL. Its DINOv3 backbone carries separate terms |
-
-Read the SAM License and the DINOv3 terms from the LICENSE file before any use.
-A model card is not a licence, and this roster admits nothing on a card alone.
-
-## What ten devices buy
-
-<!-- gate: ste100 -->
-
-Once the chain is feed-forward it holds four models: the keypoint head, the ANNY
-student, MediaPipe, and Marigold if it survives. Together they stay well below
-8 GB, so one device holds them.
-
-Ten devices give ten independent streams, or four models resident at once with
-no reconfiguration between frames. They do not pool into 80 GB, and they do not
-split one model. Buy one for the go/no-go test above.
-
-## Why the student is affordable
+## Why unrolling and not a student
 
 <!-- gate: tropes -->
 
-The substitution looks expensive and is not, because the corpus RFD 107a already
-builds is the corpus a regressor needs.
+The first draft of this RFD reached for a learned regressor, and the reasoning
+looked sound: the head is being retrained anyway for 104 points, so make the
+replacement one an accelerator can run. What that misses is which property was
+being spent.
 
-Look at what the schema holds. `identities` carries 11 phenotype values, 256
-local changes and 52 facial actions. `pose_rotations` carries a 3x2 rotation per
-bone. Both are authored relations, reached by foreign key from `renders`. Every
-frame therefore arrives with its pose and its identity attached, true by
-construction rather than annotated. A regressor wants exactly this supervision,
-and the renderer already produces it for a different reason.
+`soma_referee.py` is explicit about it. A parametric model cannot represent an
+impossible skeleton, and a discriminative estimator can: a heatmap peak lands
+where it lands, and nothing in the architecture forbids an elbow bending
+backwards or a limb changing length between frames. The referee was built around
+that asymmetry. Replacing the fit with a regressor puts the estimator back where
+the parametric model was, and calls it progress.
 
-RFD 107a's own flowchart branches a second student off the verified frames to
-fine-tune Pixal3D. This is a third student at the same branch point, and the
-marginal cost is one training run rather than a new corpus.
+Unrolling keeps it. A fixed number of descent steps through the ANNY forward is
+still descent through a forward we own, with the iteration count frozen instead
+of decided at run time. The pose it emits is reachable because the
+parameterisation says so, not because training made it likely.
 
-One simplification follows and is worth naming, because it removes a model
-rather than adding one. `depth_map` is an emitted relation, so depth can
-supervise the student during training instead of being computed at inference.
-If that holds, Marigold leaves the deployed chain entirely. It also removes a
-signal, which is a change to measure rather than a saving to assume.
+The clamp is what makes that claim survive compilation. `swing-twist-kusudama`
+already has joint limits stated in Lean 4 and checked against Godot's own
+output, and clamping swing and twist at every unrolled step is a `Clip`, which
+compiles. So the guarantee holds in a feed-forward graph, which is the thing a
+regressor cannot offer at any accuracy.
 
-## What this decision costs
-
-<!-- gate: tropes -->
-
-Two costs, and neither is hypothetical.
-
-RFD 107a states that "every fit here is descent through a forward we own", and
-that "where the forward is differentiable there is no inverse model to license,
-train or trust". After this decision the first clause still holds and the second
-does not. There is an inverse model now. It is ours, so nothing is licensed, but
-it has to be trained and it has to be trusted, and trust here means measured.
-That retraction belongs in RFD 107a beside the sentence it corrects, which is
-where RFD 1000 says a retraction goes.
-
-The second cost is subtler and more dangerous. The student and the keypoint head
-would learn from the same renders, so their errors can agree. A chain whose
-stages fail together looks like agreement and is not. This is the failure that
-ended the estimator panel, where three COCO-trained members looked like three
-opinions and were one lineage. It returns here through a different door, and the
-answer is the same: report the joint failure rate against the product of the
-marginals, and treat a correlated pair as one member rather than two.
-
-## What is not decided here
+## What actually blocked the accelerator
 
 <!-- gate: ste100 -->
 
-Whether `grid_sample` compiles. That is a measurement, it costs one device, and
-this RFD states the test rather than predicting the result.
+Three obstacles, in order of severity. Precision is the third.
 
-If it does not compile, cut the graph at the backbone and decoder seam. The
-DINOv2 backbone and the multi-scale projector go to the device, and the
-deformable decoder stays on the host. Both seams have passing tests already:
-`test_backbone` at 2.5e-4 or better, and `test_projector` at 1.0e-5. Report
-device time, host time and bus time as three numbers, because one end-to-end
-figure hides which side carries the cost.
+| obstacle | why it blocks | remedy |
+| ------------------------------- | ---------------------------------------- | -------------------- |
+| `line_search_fn="strong_wolfe"` | data-dependent loop; `Loop` and `If` fail | unroll to fixed steps |
+| `max_iter=300`, `history_size=50` | 50 stored gradient pairs, deep unroll    | warm-start           |
+| `float64`                        | INT8 activations are the widest available | measure the residual |
+
+The `float64` in `lbfgs_polish.py` follows from `tolerance_grad=1e-10` and
+`tolerance_change=1e-12` in the same call. Float32 carries about 1e-7 relative
+precision, so those tolerances are unmeasurable in it. They are offline
+convergence targets for producing retarget data. At 120 fps the solver starts
+from the previous frame and applies a correction.
+
+Compensated arithmetic, which represents one high-precision value as a sum of
+two low-precision ones, is available if the residual proves insufficient. Reach
+for it after measuring rather than before. It costs 2x to 4x the operations, and
+it means carrying residual channels through a quantizer that will try to rescale
+them.
+
+## The unrolled solver is free
+
+<!-- gate: ste100 -->
+
+Fitting to keypoints needs the kinematic chain, not the mesh. Composing a 3x2
+rotation for each of 104 bones and projecting into four views is about 8,500
+multiply-accumulates. One descent step is roughly three times that, for the
+forward and its gradient.
+
+| stage                              | cost per frame |
+| ---------------------------------- | -------------- |
+| 25 unrolled descent steps          | 0.64 MMAC      |
+| 4-view backbone, 3 at 288 + 1 at 432 | 102.1 GMAC   |
+| solver as a share of the rig       | 0.0006%        |
+
+Posing all 13,718 vertices, which the silhouette and depth fits need, is 0.7
+MMAC per evaluation. Even 25 steps carrying the full mesh is 0.05 GMAC.
+
+The solver was never a compute problem. It was a control-flow problem wearing a
+precision problem's clothes.
+
+## The rig on one device
+
+<!-- gate: ste100 -->
+
+Three body cameras and one face camera, one architecture on all four, on a
+single 40 TOPS INT4 accelerator. Backbone measured at `num_windows=1`, decoder
+included.
+
+Utilisation needed for four cameras at one resolution:
+
+| resolution | GMAC  | at 120 fps | at 90 fps | at 60 fps |
+| ---------- | ----- | ---------- | --------- | --------- |
+| 288        | 17.8  | 43%        | 32%       | 21%       |
+| 336        | 25.8  | 62%        | 46%       | 31%       |
+| 384        | 35.9  | 86%        | 65%       | 43%       |
+| 432        | 48.7  | over 100%  | 88%       | 58%       |
+| 576        | 107.9 | over 100%  | over 100% | over 100% |
+
+Four cameras at 432 and 120 fps is not available on one device. It needs 117% of
+the part at perfect utilisation, before any overhead.
+
+**So the cameras must differ.** Precision is wanted on the face and not on the
+body, because a face camera frames a 200 mm face and a body camera frames a
+1.7 m person.
+
+| rig                          | fps | utilisation | body stride         | face stride     |
+| ---------------------------- | --- | ----------- | ------------------- | --------------- |
+| 3 at 288 plus 1 at 432       | 120 | 61%         | 71 mm, a soda can   | 5.6 mm, a pencil |
+| 3 at 288 plus 1 at 384       | 120 | 54%         | 71 mm, a soda can   | 6.2 mm, a pencil |
+| 3 at 336 plus 1 at 432       | 120 | 76%         | 61 mm, a soda can   | 5.6 mm, a pencil |
+| 3 at 336 plus 1 at 432       | 90  | 57%         | 61 mm, a soda can   | 5.6 mm, a pencil |
+
+Three views at 71 mm triangulating is a different measurement from one view
+guessing, which is why the body cameras can be starved. The z-test that computes
+`visibility` in RFD 107a's schema is the same idea applied to labels.
+
+## What is unmeasured, and matters
+
+<!-- gate: ste100 -->
+
+**Utilisation.** Every percentage above divides by 40 TOPS as though the part
+reaches peak. It does not. If the true figure is 50%, the 61% rig becomes 122%
+and nothing in that table fits. The Dataflow Compiler has a profiler and it has
+not been run. Treat the table as a ranking, not a budget.
+
+**Two resolutions is two compiled graphs.** Switching context per frame on one
+device has a cost that is not counted here, and it may erase the saving. A
+uniform rig at 288 and 43% may beat the asymmetric rig at 61%.
+
+**Ingest.** Four synchronised 120 fps streams is 480 frames per second to move
+and time-align before any of this arithmetic applies.
+
+**Calibration.** The rig needs extrinsics. No code in the workspace solves them.
+
+**Temporal coherence.** Per-frame fits at 120 fps will jitter. Warm-starting
+helps the step count and does not by itself make the output smooth.
+
+**The residual itself.** How close an unrolled fit with K steps gets, as a
+percentage of stature, at the precision the part offers, is the number this
+decision rests on and nobody has taken it.

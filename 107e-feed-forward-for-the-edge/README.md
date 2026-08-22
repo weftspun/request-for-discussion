@@ -1,4 +1,4 @@
-# RFD 107e: The descent stages are what block the edge
+# RFD 107e: Unroll the descent, do not replace it
 
 **State:** discussion
 **Feature:** edge deployment of the wholebody chain
@@ -6,35 +6,35 @@
 
 ## Problem
 
-RFD 107a's chain recovers a body from a picture in six stages, and the question
-was whether it fits into 8 GB chunks across USB accelerators, ten available.
-It does not, and memory is not the reason. The chain partitions by kind rather
-than by size. Three stages are feed-forward graphs an inference part runs, and
-three are descent loops and mesh operations it cannot run at any size.
-`lbfgs_polish.py` solves in `float64`, and the part carries INT8.
+RFD 107a's chain has six stages: three feed-forward graphs, and three descent
+loops that an inference accelerator cannot compile.
+
+The obstacle is control flow rather than precision. `lbfgs_polish.py` uses a
+strong-Wolfe line search, a loop whose trip count depends on values, and `Loop`
+and `If` are what an edge compiler refuses. Its `float64` follows from that same
+file's `tolerance_grad=1e-10`, an offline target rather than an inference one.
+
+An earlier draft answered by replacing the fit with a learned student, which
+gives up the property the parametric model exists for: `soma_referee.py` states
+that a parametric model cannot represent an impossible skeleton, and nothing in
+a regressor's architecture forbids one.
 
 ## Decision
 
-Replace the descent stages with a student trained on our own renders.
+Unroll the descent into a fixed number of steps, keeping the forward we own.
 
-**Buy no inverse model.** Multi-HMR is CC-BY-NC-SA and fails twice. Sapiens is
-denied already. SAM 3D Body restricts fields of use.
+**Clamp every step to the Kusudama cone.** `swing-twist-kusudama` gives joint
+limits checked in Lean 4 against Godot, and a clamp is `Clip`, which compiles.
+The unrolled graph therefore still cannot emit an unreachable pose.
 
-**Supervise from the corpus that exists.** `identities` and `pose_rotations`
-are authored relations keyed to `renders`, so a regressor needs no new labels.
+**Warm-start from the previous frame**, so the step count stays small.
 
-**Keep the 3x2 rotation.** A quaternion double-covers, a 3x3 carries a
-derivable column, and both objections hold for a network output.
+**Compile the backbone with `num_windows=1`.** Measured: it parses and
+`num_windows=2` does not. It costs 1.35x wall-clock and needs retraining.
 
-**Measure the cost against LBFGS.** What removing descent costs decides whether
-to deploy, and a number without a baseline decides nothing.
+**Give the face camera the resolution and starve the body cameras.** One device
+holds four streams at 120 fps only if they differ.
 
-**Measure the error correlation with the keypoint head.** One corpus trains
-both, so their errors can agree, which is what ended the estimator panel.
+**Report the residual as a percentage of stature**, as `soma_referee` does.
 
-## Related
-
-RFD 107a gives the renderer this depends on, and carries the retraction this
-decision forces. RFD 101c gives the licence gate that denied the three above.
-
-See `DETAILS.md` for the stage table, the part, and what the student costs.
+See `DETAILS.md` for the rig budget, the unrolled cost, and what is unmeasured.
