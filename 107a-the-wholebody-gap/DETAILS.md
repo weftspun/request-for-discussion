@@ -405,18 +405,21 @@ The estimator panel never had that property, because its members were all COCO-t
 their errors correlated. Every fit here is descent through a forward we own. Where the forward
 is differentiable there is no inverse model to license, train or trust.
 
-**Half of that last sentence is retracted by RFD 107e, and the retraction stays here beside
-it.** Descent is what makes the chain unrunnable on an inference accelerator:
-`lbfgs_polish.py` solves in `float64` and the part carries INT8, so three of the six stages
-above cannot deploy at any memory size. RFD 107e replaces them with a regressor trained on
-this corpus, which reintroduces the inverse model this sentence claims not to need.
+**Qualified, not retracted, and the qualification stays here beside the sentence.** An
+earlier version of this note said RFD 107e retracted half of it, because that RFD replaced
+the fit with a learned student and a student is an inverse model. RFD 107e now unrolls the
+descent instead, so the sentence largely stands and the earlier retraction is withdrawn.
 
-"To license" survives, because the student is ours. "Train or trust" does not. There is a
-model now, it has to be trained, and trust becomes a measurement rather than a property of
-the architecture. Two numbers carry it: the accuracy cost against LBFGS as a baseline, and
-the error correlation between the student and the keypoint head. Both learn from these same
-renders, so the sentence above about correlated members applies to them as directly as it
-applied to the panel it was written about.
+What changes is smaller. An unrolled fit is still descent through a forward we own, with the
+iteration count frozen rather than decided at run time, so nothing is licensed and nothing
+replaces the parametric model. Two things do become measurements. The step sizes are learned,
+so they are trained. And a fixed step count stops short of convergence by construction, so
+"trust" becomes the residual that K steps actually reach, reported as a percentage of stature.
+
+The reason the wording matters is in the row above about correlated members. A regressor would
+have put a discriminative estimator back where the parametric model was, and lost the property
+that a parametric model cannot represent an impossible skeleton. Unrolling with a per-step
+joint-limit clamp keeps that property in a graph an accelerator will take.
 
 The last row is what RFD 1079 answers.
 
