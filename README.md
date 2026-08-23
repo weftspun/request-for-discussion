@@ -38,6 +38,23 @@ Every rule the structure gate holds was measured against all RFDs first.
 RFD 107c gives each rule, its count, and the conventions that were
 measured and deliberately left ungated.
 
+## The logbook
+
+This repository also holds the engineering record. `weftspun/logbook` is archived
+and its contents moved here: the working agreements in CLAUDE.md, the recurring
+failure modes in PITFALLS.md, the narrative entries whose names begin
+`logbook-`, and the apparatus and gates under `scripts/`.
+
+An RFD and an entry are a matched pair. The RFD records the decision. The entry
+records the measurement that justified it, or the measurement that retracted it.
+They cited each other across a repository boundary that no gate could check, and
+now they do not. CLAUDE.md gives the move and what it cost, under "Why the
+logbook moved here".
+
+An entry records what was measured, not what was intended, and it clips the
+apparatus so a number can be re-run rather than believed. Retractions stay in
+place beside what they retract.
+
 ## STE policy
 
 Each RFD uses ASD-STE100 Simplified Technical English. The rules:

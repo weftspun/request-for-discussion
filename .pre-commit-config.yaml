@@ -55,6 +55,71 @@ repos:
         language: system
         files: '^[0-9a-f]{4}-.*/(Dockerfile|server\.py|test_input\.json)$'
 
+      # --- migrated from weftspun/logbook -------------------------------------
+      #
+      # RFD 1035 makes OpenUSD the internal format, so a layer that other tools reject is a
+      # layer that is not written yet. `rfd107a-plan.usda` opened in Python, composed without
+      # error and read back its ten tasks while still failing usdchecker's rules for want of
+      # an `upAxis` -- "it opens" is not "it is valid", and only a gate tells them apart.
+      #
+      # `usd-core` is pinned rather than floated: the validator set is what decides pass or
+      # fail here, and a version bump that adds a rule should arrive as a diff somebody
+      # approves rather than as a red run on an unrelated pull request.
+      - id: usd-valid
+        name: USD layers parse, validate and round-trip through crate
+        entry: python scripts/check_usd_valid.py
+        language: python
+        additional_dependencies: ["usd-core==26.8"]
+        files: \.usd[acz]?$
+        pass_filenames: true
+
+      # A hand-written index of the files beside it is a second copy of `ls`, and the two
+      # disagree the first time somebody adds a file and forgets the table. Nothing reports
+      # that, which is the same shape as every other second-place-a-fact-lives rule here.
+      # The provocation was an agent adding two rows for files it had just written: accurate
+      # that afternoon, unpoliced afterwards. This gate would have rejected them.
+      - id: readme-no-index
+        name: README.md indexes no files -- the directory is the index
+        entry: python scripts/check_readme_no_index.py
+        language: python
+        files: ^README\.md$
+        pass_filenames: true
+
+      # The plan's numbering must agree with its own graph, and its counts with the
+      # documents they came from -- RFD 107a and CLAUDE.md.
+      #
+      # THIS RAN AS `stages: [manual]` UNTIL THE LOGBOOK MOVED HERE, and the reason it no
+      # longer does is the measurement behind that move. RFD 107a lived in this repository
+      # and the plan lived in `weftspun/logbook`; CI checks a repository out on its own, so
+      # one half of the pair was always absent and the hook could not run. A manual stage is
+      # the honest form of a check that cannot run, and it is still a check nobody runs.
+      #
+      # One repository, one ordinary hook. It now fires on a change to either side: the plan,
+      # the script, CLAUDE.md, or RFD 107a's own README and DETAILS.
+      - id: rfd107a-plan
+        name: RFD 107a's plan agrees with its graph and with the RFD
+        entry: python scripts/check_rfd107a_plan.py
+        language: python
+        additional_dependencies: ["usd-core==26.8"]
+        files: ^(rfd107a-plan\.usda|scripts/check_rfd107a_plan\.py|CLAUDE\.md|107a-the-wholebody-gap/(README|DETAILS)\.md)$
+        pass_filenames: false
+
+  # Prose formatting for the migrated logbook documents, and for those only.
+  #
+  # The logbook ran prettier over every markdown file it held. Here that would reformat
+  # 130-odd RFDs in one diff, and RFD 103f is explicit that prose enforcement belongs to
+  # the simplified-technical-english plugin rather than to a repository hook -- the
+  # markdown hooks below are structural on purpose.
+  #
+  # So the pattern names the migrated documents rather than the extension. The cost is
+  # that a new logbook document under a name this pattern does not match is silently
+  # unformatted; CLAUDE.md records that under "Why the logbook moved here".
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.1.0
+    hooks:
+      - id: prettier
+        files: '^(CLAUDE|PITFALLS|KEYPOINTS|logbook-.*|scripts/README)\.md$'
+
   # Markdown hygiene. Structural only, deliberately.
   #
   # RFD 103f moves ASD-STE100 enforcement to the simplified-technical-english
