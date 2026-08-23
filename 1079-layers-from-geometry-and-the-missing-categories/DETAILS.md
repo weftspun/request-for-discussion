@@ -368,3 +368,78 @@ timed poll is a liveness check. It is not the protocol.
 | a push from a stale head                | REJECT  | the fast-forward rule         |
 
 A positive control alone proves only that the linter is not uniformly hostile.
+
+## Garments come from geometry too, and cloth-fit is how they get there
+
+Half A said "render hm08 groups as depth-ordered layers" and stopped at the body. Clothing was
+left to Half B, the generated half, which is the expensive one. It does not have to be.
+
+**hm08 already ships three garment proxies.** `helper-tights` is 2,674 vertices, `helper-skirt`
+is 720 and `helper-hair` is 428, all in the base mesh and all posed by the same rig as the body.
+They carry no appearance, which is why the coverage table above marks `topwear`, `bottomwear`,
+`legwear`, `front hair` and `back hair` as "proxy only". A proxy with no appearance is still a
+volume with a correct silhouette and a correct depth, and those are the two things a layer needs.
+
+**cloth-fit puts a real garment on that volume.** `Huangzizhou/cloth-fit` implements
+*Intersection-free Garment Retargeting*, Huang, Araújo, Kunz, Zorin, Panozzo and Zordan,
+SIGGRAPH Conference Papers 2025. It is **MIT**, which clears the licence bar outright, and it is
+CPU-only over PolyFEM, so it needs no GPU and no quantisation and therefore raises none of the
+generated-synthetic conditions. It is not a generator: it deforms a garment somebody authored
+onto a body somebody authored, which is constructed rather than sampled.
+
+**CORRECTION, BECAUSE THE PREMISE FOR READING IT WAS WRONG.** It was reached for on the
+understanding that it fits garments to *volumes*. Its README says the opposite in one line: "For
+avatars and garments, only `.obj` triangular mesh is supported." The inputs are four surfaces --
+target avatar, source garment, source skeleton and target skeleton, the last two as edge meshes
+-- plus an optional skinning-weight matrix of skeleton nodes by vertices, and vertices project to
+the nearest bone by distance when it is absent. Whether PolyFEM tetrahedralises internally is
+unverified here: the paper PDF exceeds the fetch limit and was not read, so this records what the
+interface takes and makes no claim about the solver.
+
+The correction does not cost the plan anything, and it is worth saying why rather than leaving it
+to be re-derived. What the method needs is an avatar surface, a skeleton and skinning weights.
+ANNY supplies all three from one call. The hm08 proxies remain the right target because they are
+already the garment-shaped surface at the garment's place on the body; they are simply surfaces
+rather than solids, which is what the tool wanted anyway.
+
+**Adding proxies is the extension point.** Five of the ten absent tags are garments or worn
+objects -- `headwear`, `eyewear`, `earwear`, `neckwear`, `footwear` -- and each one wants the
+same treatment `helper-tights` already has: a proxy group in the mesh, posed by the rig, then a
+retarget onto it. That is an edit to the partition rather than to the basemesh, so the frozen
+vertex order above is not disturbed and its hash gate still holds.
+
+**And the layer falls out of a subtraction.** Render the body without the garment, render it
+with, and difference the two. The garment layer's alpha is where they differ and its depth order
+is the depth buffer's, both exact, neither inferred. That is the same construction the keypoints
+use and it inherits the same property: there is no annotator and no model in the label. It also
+supplies the negative control this section would otherwise lack -- a retarget that intersects the
+body produces a garment layer with body pixels inside it, so the subtraction detects the failure
+the tool's own guarantee is supposed to prevent.
+
+Two limits, stated rather than discovered.
+
+**A 2D garment layer composites only in the pose it was drawn in.** The kimono art that prompted
+this is A-pose, and it lands on an A-pose body and nowhere else. Carrying it to another pose
+needs a dense correspondence over the body, which is what RFD 107a's 104 points are for. The two
+RFDs meet here rather than merely citing each other.
+
+**Reproducibility has a floor on the GPU.** `cuda_ad_rgb` is byte-identical at 16 samples per
+pixel and stops being so above it, with the disagreement growing as samples rise -- 5.8e-11 mean
+at 64, 1.9e-08 at 1024, worst case 3.6e-07 against one 8-bit level at 3.9e-03, so roughly one
+eleven-thousandth of one level. Far below anything visible, and fatal to a hash. A render whose
+evidence is a digest is produced on `llvm_ad_rgb`, which held byte-identical at every count
+tested and did so without being pinned to one thread.
+
+### The tag count in this document does not match the code
+
+Stated as a defect rather than fixed silently, because the fix is a decision about which list is
+authoritative and that has not been taken.
+
+This document says "the 24 tags are the 13 body tags plus the 11 head tags" and sources both to
+`common/utils/inference_utils.py`. That file holds one list, `VALID_BODY_PARTS_V2`, with **19**
+entries. The current vocabulary is a third file the document does not name,
+`common/assets/bodytags_v3.json`, with **23** keys: it splits `hair` into front and back and
+`eyes` into `irides`, `eyewhite` and `eyelash`, and carries the danbooru synonyms for each.
+
+So 24 matches neither artefact. The coverage table above is still right about which tags have
+geometry, which is what it is for; the count in the prose is not.
