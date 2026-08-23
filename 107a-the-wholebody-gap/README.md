@@ -15,7 +15,8 @@ A renderer makes pictures with the answers already on them.
 
 ## Decision
 
-Build the renderer. It serves two consumers and nothing else, under five rules.
+Check the pose library first: it starts the critical path and is cheap enough to redirect the
+plan before anything is built on it. Then build the renderer, under five rules.
 
 1. **Render the labels rather than annotate them.** Pose the ANNY body and photograph it. The
    104 joints come out of the camera arithmetic, the 52 expression numbers are whatever we set,
@@ -31,7 +32,7 @@ Build the renderer. It serves two consumers and nothing else, under five rules.
    scoring the 14 shared points apart from the 90 render-only ones.
 
 See `DETAILS.md` for the corpus schema, the two costs, the checkpoint hash the packaged server
-still owes, the corrected hm08 counts, the topology retraction, and the one check to run first.
+still owes, the corrected hm08 counts, the topology retraction, and the critical path.
 
 ## Related
 
