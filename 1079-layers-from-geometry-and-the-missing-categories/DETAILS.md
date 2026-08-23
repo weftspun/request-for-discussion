@@ -572,3 +572,107 @@ meets one body once and the result is baked, is cloth-fit's, and ONNX is irrelev
 garment that must be differentiable inside a training loop, or draped across many bodies in a GPU
 batch, is MJX's, and is the only case where the export question has a point. AVBD is neither as
 it stands.
+
+#### CORRECTION: cloth lives in MuJoCo's Warp backend, not its JAX one
+
+The section above recommended MJX on the grounds that JAX compiles to a static graph, which is
+what made the ONNX question answerable at all. That reasoning is right about MuJoCo generally and
+wrong about the case this document needs.
+
+MuJoCo has two GPU backends and only one of them simulates cloth. Counted in the vendored copy at
+`3-interactor/mujoco-riscv64/thirdparty/mujoco`:
+
+| backend                              | flex collision file  | `flex` in its collision driver |
+| ------------------------------------ | -------------------- | ------------------------------ |
+| MJX / JAX, `mjx/_src/`               | none                 | 0                              |
+| MJX / Warp, `third_party/mujoco_warp` | `collision_flex.py`  | 720                            |
+
+So the backend that would have exported has no deformables, and the backend with deformables is
+not the one that compiles to a graph. The ONNX framing does not survive the correction.
+
+**What replaces it is better, and it was already here.** ANNY runs on NVIDIA Warp -- every run in
+this workspace announces `Warp 1.16.0` -- and MuJoCo's flex backend is `mujoco_warp`, pinned at
+`warp-lang==1.14.0`. Warp differentiates through `wp.Tape`. A differentiable garment-on-body loop
+is therefore one runtime with no bridge and no export, and the concrete task is reconciling
+1.14.0 against 1.16.0 rather than writing a converter.
+
+MuJoCo is also already vendored rather than newly adopted, in `thirdparty/` where a diff can see
+it, so the submodule rule is satisfied without further work. Recommending it as a new dependency,
+as the previous section did, was a failure to look.
+
+#### Inflating the collision geometry, and what it costs
+
+CPU-bound authoring is too slow for volume, so the question is whether the GPU path can be made
+safe enough. MuJoCo's own words for `margin` are "the geometric inflation of the geom surfaces":
+contacts are detected below `margin + gap`, forces are generated below `margin`, and the two
+geoms' margins are summed.
+
+The Warp flex kernel implements it -- 109 references in `collision_flex.py`, with the arithmetic
+explicit at lines 141, 167 and 199 -- and it resolves the objection that would otherwise sink the
+idea. Flex `radius` is documented as affecting "both collision detection and rendering", so
+inflating it would thicken the visible cloth. `flex_margin` is a separate array from
+`flex_radius` in the kernel, so margin inflates collision alone. Separation at rest is then
+
+    geom_margin (body) + flex_margin (garment) + flex_radius (true half-thickness) - penetration
+
+with `radius` left at the real cloth thickness so the render stays honest. Nothing here depends
+on MuJoCo's renderer, since the frames come from Mitsuba over the simulated vertex positions.
+
+**The cost is stated rather than buried: margin is not free and it is not a trick.** Forces begin
+at `margin`, so the cloth is held off the skin at that distance. For clothing that is arguably
+the right model rather than an artefact -- garments have **ease**, and fabric does not lie on
+skin -- so the offset is a physical parameter that has to be chosen anyway. Six millimetres of
+ease, four stacked pennies, is a shirt and not an error. What it is not is a guarantee: without
+CCD filtering the step, a fast or tightly constrained region can cross the margin inside one
+timestep.
+
+So the bound is measured, in five steps, the last of which is the one that makes the rest mean
+anything.
+
+1. Drape across the body-by-garment matrix on the GPU.
+2. Record the minimum signed distance from garment surface to body surface, per frame, over the
+   whole run.
+3. Set `geom_margin` above the worst observed penetration and re-run.
+4. Pass condition: zero frames at negative separation.
+5. **Negative control:** run once at `margin = 0` and confirm the check fails. A penetration check
+   that passes on a known-penetrating configuration certifies the defect.
+
+Step 2's worst case decides the approach. A penny or two can be offset past while the garment
+still reads correctly. A soda can would hold the clothing visibly off the body, and authoring
+would go back to cloth-fit -- on the CPU path this was trying to leave.
+
+**Not yet run.** The vendored MJX pins `warp-lang==1.14.0` against ANNY's 1.16.0, so an
+environment is the blocker rather than any question about the design.
+
+#### CCD is declined, and the discard rate is what would overturn it
+
+Continuous collision detection guarantees a property of the trajectory, and only the endpoint is
+observed here: the settled drape is rendered and the path is not. A garment that tunnels briefly
+and settles correctly yields a perfect layer, and one that never penetrates but settles wrong is
+useless either way.
+
+The exception is genuine but narrow. Tunnelling that ends on the wrong side -- a sleeve through
+an arm, staying there -- is a final-state failure and CCD does prevent it. That failure is far
+cheaper to detect than to prevent, and the detector already exists for another reason: body
+pixels inside the garment layer, at render time, free. Rule 4 of RFD 107a already sets the
+policy, that a failure is discarded rather than fixed, and a corpus can afford to drop frames.
+
+Two things worth knowing before treating this as settled. IPC's guarantee is conditional on an
+intersection-free initial state, so CCD preserves an invariant rather than establishing one, and
+a sleeve initialised inside an arm is not rescued by any solver. And CCD-filtered line search is
+much of why IPC is CPU-bound, so adding it to the Warp path reintroduces the cost this section
+exists to escape -- "add CCD" and "leave CPU-only" are close to one decision taken twice.
+
+**The discard rate decides it.** Drape the corpus, run the render-time penetration check, count
+rejected frames. A few percent and discarding is plainly right. A third and most of the GPU time
+is being wasted, at which point CCD or a better initialisation earns its cost. One run answers
+it, and declining CCD now keeps the decision reversible in a way adopting it would not.
+
+#### The CC0 form libraries are already staged
+
+The proxy policy above asks for forms that are CC0 and untraced, and three projects already
+supply them, converted to OpenUSD rather than left in their upstream formats:
+`6-datasource/thebasemesh-stage` carries thebasemesh.com's public-domain base meshes at
+real-world scale with UVs, and `kenney-stage` and `quaternius-stage` carry Kenney's and
+Quaternius' CC0 packs. A proxy form authored against those inherits CC0 and answers the
+provenance question in its `CITATION.cff` rather than by assertion.
