@@ -508,3 +508,29 @@ travels as a placement spec -- this class of garment sits here on this body, at 
 the recipient supplies their own asset for cloth-fit to retarget onto it. That is also the honest
 statement of what a proxy is worth: a stand-in that is worse than the real garment wherever the
 real garment exists, and better than nothing everywhere else.
+
+#### The policy is narrower than the law, and that is deliberate
+
+The retraction above stands: a form is free, and nothing here is required to treat a silhouette
+as encumbered. What follows is chosen anyway, and it is a **decision rather than a derivation**.
+Saying so is the honest form, because a rule presented as a legal conclusion invites the next
+reader to check the conclusion, find it too strict, and drop the rule.
+
+Three clauses.
+
+**A proxy form is CC0.** Not permissively licensed, not licence-clean with attribution -- CC0.
+A proxy travels further than the corpus it was built for and is the sort of asset that ends up in
+somebody's deliverable with no manifest behind it, so the terms have to survive being separated
+from their provenance.
+
+**A proxy is not traced from another thing.** Tracing our own work is fine, and the distinction
+is authorship rather than method: a form derived from an asset we made carries our provenance
+forward, and one traced from somebody else's makes a `CITATION.cff` that cannot answer where the
+shape came from. The objection is to the unanswerable record, not to the tracing.
+
+**When an exact garment is needed, it is fitted rather than approximated.** This is the clause
+that makes the other two cheap. Tracing exists to get exactness quickly, and cloth-fit gets
+exactness properly -- an authored garment retargeted onto the body, intersection-free, from
+inputs whose licences are each answerable. So the policy forbids nothing it does not already
+replace, which is the test a self-imposed restriction has to pass to survive contact with a
+deadline.
