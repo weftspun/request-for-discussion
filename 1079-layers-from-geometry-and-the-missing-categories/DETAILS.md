@@ -443,3 +443,68 @@ entries. The current vocabulary is a third file the document does not name,
 
 So 24 matches neither artefact. The coverage table above is still right about which tags have
 geometry, which is what it is for; the count in the prose is not.
+
+### The quads exist, and they are discarded at ANNY's Python boundary
+
+The basemesh is not quad-dominant, it is **pure quad**: `mpfb2/3dobjs/base.obj` has 18,486 faces
+and every one of them is a quad, over 19,158 vertices. `Anny(...).faces` returns 36,108
+triangles, which is exactly twice 18,054, so the pairing is thrown away at the API rather than
+absent from the data.
+
+That matters because the two consumers want different things. cloth-fit takes `.obj` triangles
+and nothing else, by its own README. Catmull-Clark subdivision wants quads and degrades on
+triangles. OpenUSD stores either, since `faceVertexCounts` is per-face, so the corpus can hold
+the quads and hand triangles only to the solver.
+
+**Triangulation adds faces and never vertices**, which is why this is safe here. The frozen
+vertex order above is untouched by it and its hash gate still holds, and a deterministic split
+restores the quads exactly.
+
+One trap, of the same kind the `Hips`-to-`root` mapping already produced. `base.obj` carries
+19,158 vertices and ANNY reports 18,056, because the joint cubes are pruned. The quad table
+indexes the un-pruned mesh, so the index mapping is recorded with it or the restore writes onto
+the wrong vertices, silently and plausibly.
+
+### PolyFEM does not export to ONNX, and the corpus path does not want it to
+
+Asked and answered rather than assumed. PolyFEM is C++ under MIT with no PyTorch, TensorFlow or
+ONNX component anywhere in it. ONNX encodes a static tensor dataflow graph; a barrier-method
+Newton solve has an active contact set that changes each iteration, with dynamic sparsity, a line
+search and collision queries. There is no fixed graph to export, so this is a shape mismatch and
+not a missing feature.
+
+It also buys nothing. The fit is an offline authoring step: one garment against one body is
+solved once and the result is baked geometry, and nothing in the inference path calls the solver.
+
+What is exportable is a surrogate trained on the solver's outputs, and its classification is
+worth stating before somebody assumes the cautious answer. A deterministic FEM solve over assets
+we hold is **constructed** synthetic, not generated -- the same inputs reproduce it and the
+labels are true by construction -- so the four generated-synthetic conditions do not apply to it.
+
+**A gate before adoption, from the project's own README.** It says the code is MIT and then warns
+to "be mindful of third-party libraries which are used by PolyFEM and may be available under a
+different license". MIT on the code is not MIT on the build, and the dependency licences are read
+before this becomes a `<project>` in a manifest, not after.
+
+### A proxy is a form, and a form is free
+
+**RETRACTED: proxies do not inherit a garment's licence, and the first version of this section
+said they did.** It read that a proxy derived from an encumbered garment is a derivative of it
+because "shape is usually the protected part". That is wrong about the thing it was most
+confident about. A garment is a useful article, so its cut and shape are largely outside
+copyright and only separable pictorial elements -- a print, an applique, a logo -- carry it. That
+is what *Star Athletica v. Varsity Brands* turned on. A weapon form is functional shape for the
+same reason. People are free to make body forms and weapon forms, and the retracted paragraph
+would have blocked a legitimate route on a misreading.
+
+The line that actually holds is narrower. **Copying the file is the problem; re-expressing the
+form is not.** An authored mesh is somebody's creative work and a silhouette is not, so
+decimating their mesh into a proxy copies the asset, while authoring a proxy to the same form
+does not. Looking at the garment is not what makes the difference, and the earlier framing put
+the boundary there.
+
+So a proxy is a good way to distribute the shape of clothing that cannot itself be shared. It
+travels as a placement spec -- this class of garment sits here on this body, at this ease -- and
+the recipient supplies their own asset for cloth-fit to retarget onto it. That is also the honest
+statement of what a proxy is worth: a stand-in that is worse than the real garment wherever the
+real garment exists, and better than nothing everywhere else.
