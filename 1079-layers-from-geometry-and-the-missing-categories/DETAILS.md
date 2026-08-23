@@ -534,3 +534,41 @@ exactness properly -- an authored garment retargeted onto the body, intersection
 inputs whose licences are each answerable. So the policy forbids nothing it does not already
 replace, which is the test a self-imposed restriction has to pass to survive contact with a
 deadline.
+
+#### Two alternatives were asked about, and one of them is real
+
+The ONNX question above was answered for PolyFEM alone, which left it open whether a different
+solver would answer it better. Two were named.
+
+**AVBD is MIT and is a teaching demo, by its authors' own words.** `savant117/avbd-demo3d`
+implements Augmented Vertex Block Descent out of Utah, and its README says the repository "is not
+intended to be a super optimized implementation, but an easy to understand demonstration of how
+to implement the technique". That is a statement not to depend on it, made by the people who
+would know. It also carries git submodules, which are blocklisted here, so adopting it would mean
+vendoring first. On the ONNX question it fails identically to PolyFEM: an iterative solver has no
+static graph to export.
+
+**MuJoCo is the one that reaches ONNX, and two properties are why.** It is Apache-2.0, with
+documentation under CC BY 4.0 -- worth naming, because the blocklist excludes CC-BY-SA and this
+is not that. MJX is MuJoCo in JAX, so it compiles to a static graph and is differentiable and
+GPU-resident, which is exactly the thing PolyFEM cannot offer. And MuJoCo's flexes are 1, 2 or 3
+dimensional, with capsule, triangle or **tetrahedral** elements, so the volumetric representation
+this document first assumed cloth-fit had does genuinely exist here.
+
+**The category still decides it, and the category is not the licence.** cloth-fit solves a static
+fitting problem and its barrier makes intersection-free a guarantee. MuJoCo simulates dynamics
+under soft constraints, which penalise penetration rather than forbidding it. For the layer
+subtraction that difference is the whole thing: penetration is what puts body pixels inside the
+garment layer, which is the negative control this section already names. One tool is correct by
+construction and the other needs the control run every time.
+
+**Unverified, and flagged rather than assumed.** JAX requires static shapes to compile, so
+anything exportable has a fixed iteration count and fixed-size contact buffers. MJX's specific
+limits were not read here, so the export path is recorded as existing rather than as measured,
+and a number would have to come from a run.
+
+So the split is by stage rather than by preference. Offline corpus authoring, where one garment
+meets one body once and the result is baked, is cloth-fit's, and ONNX is irrelevant to it. A
+garment that must be differentiable inside a training loop, or draped across many bodies in a GPU
+batch, is MJX's, and is the only case where the export question has a point. AVBD is neither as
+it stands.
