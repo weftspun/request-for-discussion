@@ -452,6 +452,45 @@ it.
 `check_hm08_claims.py` now re-derives every constant from the installed ANNY package, with six
 negative controls that each must fail. RFD 1079 records the full measurement.
 
+## The order, by critical path
+
+The ten tasks and their edges are the USD stage in the logbook, not this list -- the list is
+read off the graph so the two cannot disagree. What the graph does not carry is durations, so
+the path below is computed on unit durations, one step per task.
+
+State that assumption plainly, because it decides the answer. On unit durations the project is
+six layers deep and **nine of the ten tasks are critical**: three chains tie for longest and
+only one task has any slack. That is not a finding about this plan, it is what equal durations
+always produce, and it is the reason the list below is more useful read as layers than as a
+ranking.
+
+The critical chain, in the order it has to happen:
+
+1. Check the pose library is worth rendering. It starts at zero, everything else waits on it,
+   and it is the one task flagged as able to redirect the plan. Cheapest thing here, and first.
+2. Render the labels rather than annotate them. The renderer is the RFD's subject and the only
+   step that supplies image, keypoints, masks, camera and depth from a posed body.
+3. Verify before training, not after. Three branches converge here, so it cannot start until
+   the slowest of them lands.
+4. One head on heterogeneous annotation.
+5. GGUF, and the head from 17 to 104.
+6. Score on real photographs, shared points apart from render-only.
+
+Two branches are co-critical and converge at step 3, so neither has slack either. The PBR bake
+over the hm08 UVs hangs off the pose gate; recording the Qwen checkpoint hash starts at zero
+alongside the gate, and the strength window follows it.
+
+One task has slack, and it is the schema completion -- visibility as int8 with topology_id as a
+foreign key. It is reachable one layer after the pose gate and not needed until masked
+training, so it can float by a full layer without moving the finish.
+
+**What this ordering does not capture, and it is the thing most likely to bite.** The PBR bake
+is co-critical by structure and has no method at all: it was specified as a Blender bake, and
+Blender is blocklisted for reproducibility, so its duration is not one step but unknown. A
+critical path computed on unit durations reports the longest chain; the actual risk is the
+branch whose estimate does not exist. Costing a replacement renderer that a lockfile can pin is
+therefore the first thing that would change this table, ahead of any resequencing.
+
 ## The cheapest thing that could change the plan
 
 All 810 clips are locomotion. Walking, running, turning and standing still. Character drawings
