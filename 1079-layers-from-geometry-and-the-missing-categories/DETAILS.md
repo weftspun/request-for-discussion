@@ -443,3 +443,236 @@ entries. The current vocabulary is a third file the document does not name,
 
 So 24 matches neither artefact. The coverage table above is still right about which tags have
 geometry, which is what it is for; the count in the prose is not.
+
+### The quads exist, and they are discarded at ANNY's Python boundary
+
+The basemesh is not quad-dominant, it is **pure quad**: `mpfb2/3dobjs/base.obj` has 18,486 faces
+and every one of them is a quad, over 19,158 vertices. `Anny(...).faces` returns 36,108
+triangles, which is exactly twice 18,054, so the pairing is thrown away at the API rather than
+absent from the data.
+
+That matters because the two consumers want different things. cloth-fit takes `.obj` triangles
+and nothing else, by its own README. Catmull-Clark subdivision wants quads and degrades on
+triangles. OpenUSD stores either, since `faceVertexCounts` is per-face, so the corpus can hold
+the quads and hand triangles only to the solver.
+
+**Triangulation adds faces and never vertices**, which is why this is safe here. The frozen
+vertex order above is untouched by it and its hash gate still holds, and a deterministic split
+restores the quads exactly.
+
+One trap, of the same kind the `Hips`-to-`root` mapping already produced. `base.obj` carries
+19,158 vertices and ANNY reports 18,056, because the joint cubes are pruned. The quad table
+indexes the un-pruned mesh, so the index mapping is recorded with it or the restore writes onto
+the wrong vertices, silently and plausibly.
+
+### PolyFEM does not export to ONNX, and the corpus path does not want it to
+
+Asked and answered rather than assumed. PolyFEM is C++ under MIT with no PyTorch, TensorFlow or
+ONNX component anywhere in it. ONNX encodes a static tensor dataflow graph; a barrier-method
+Newton solve has an active contact set that changes each iteration, with dynamic sparsity, a line
+search and collision queries. There is no fixed graph to export, so this is a shape mismatch and
+not a missing feature.
+
+It also buys nothing. The fit is an offline authoring step: one garment against one body is
+solved once and the result is baked geometry, and nothing in the inference path calls the solver.
+
+What is exportable is a surrogate trained on the solver's outputs, and its classification is
+worth stating before somebody assumes the cautious answer. A deterministic FEM solve over assets
+we hold is **constructed** synthetic, not generated -- the same inputs reproduce it and the
+labels are true by construction -- so the four generated-synthetic conditions do not apply to it.
+
+**A gate before adoption, from the project's own README.** It says the code is MIT and then warns
+to "be mindful of third-party libraries which are used by PolyFEM and may be available under a
+different license". MIT on the code is not MIT on the build, and the dependency licences are read
+before this becomes a `<project>` in a manifest, not after.
+
+### A proxy is a form, and a form is free
+
+**RETRACTED: proxies do not inherit a garment's licence, and the first version of this section
+said they did.** It read that a proxy derived from an encumbered garment is a derivative of it
+because "shape is usually the protected part". That is wrong about the thing it was most
+confident about. A garment is a useful article, so its cut and shape are largely outside
+copyright and only separable pictorial elements -- a print, an applique, a logo -- carry it. That
+is what *Star Athletica v. Varsity Brands* turned on. A weapon form is functional shape for the
+same reason. People are free to make body forms and weapon forms, and the retracted paragraph
+would have blocked a legitimate route on a misreading.
+
+The line that actually holds is narrower. **Copying the file is the problem; re-expressing the
+form is not.** An authored mesh is somebody's creative work and a silhouette is not, so
+decimating their mesh into a proxy copies the asset, while authoring a proxy to the same form
+does not. Looking at the garment is not what makes the difference, and the earlier framing put
+the boundary there.
+
+So a proxy is a good way to distribute the shape of clothing that cannot itself be shared. It
+travels as a placement spec -- this class of garment sits here on this body, at this ease -- and
+the recipient supplies their own asset for cloth-fit to retarget onto it. That is also the honest
+statement of what a proxy is worth: a stand-in that is worse than the real garment wherever the
+real garment exists, and better than nothing everywhere else.
+
+#### The policy is narrower than the law, and that is deliberate
+
+The retraction above stands: a form is free, and nothing here is required to treat a silhouette
+as encumbered. What follows is chosen anyway, and it is a **decision rather than a derivation**.
+Saying so is the honest form, because a rule presented as a legal conclusion invites the next
+reader to check the conclusion, find it too strict, and drop the rule.
+
+Three clauses.
+
+**A proxy form is CC0.** Not permissively licensed, not licence-clean with attribution -- CC0.
+A proxy travels further than the corpus it was built for and is the sort of asset that ends up in
+somebody's deliverable with no manifest behind it, so the terms have to survive being separated
+from their provenance.
+
+**A proxy is not traced from another thing.** Tracing our own work is fine, and the distinction
+is authorship rather than method: a form derived from an asset we made carries our provenance
+forward, and one traced from somebody else's makes a `CITATION.cff` that cannot answer where the
+shape came from. The objection is to the unanswerable record, not to the tracing.
+
+**When an exact garment is needed, it is fitted rather than approximated.** This is the clause
+that makes the other two cheap. Tracing exists to get exactness quickly, and cloth-fit gets
+exactness properly -- an authored garment retargeted onto the body, intersection-free, from
+inputs whose licences are each answerable. So the policy forbids nothing it does not already
+replace, which is the test a self-imposed restriction has to pass to survive contact with a
+deadline.
+
+#### Two alternatives were asked about, and one of them is real
+
+The ONNX question above was answered for PolyFEM alone, which left it open whether a different
+solver would answer it better. Two were named.
+
+**AVBD is MIT and is a teaching demo, by its authors' own words.** `savant117/avbd-demo3d`
+implements Augmented Vertex Block Descent out of Utah, and its README says the repository "is not
+intended to be a super optimized implementation, but an easy to understand demonstration of how
+to implement the technique". That is a statement not to depend on it, made by the people who
+would know. It also carries git submodules, which are blocklisted here, so adopting it would mean
+vendoring first. On the ONNX question it fails identically to PolyFEM: an iterative solver has no
+static graph to export.
+
+**MuJoCo is the one that reaches ONNX, and two properties are why.** It is Apache-2.0, with
+documentation under CC BY 4.0 -- worth naming, because the blocklist excludes CC-BY-SA and this
+is not that. MJX is MuJoCo in JAX, so it compiles to a static graph and is differentiable and
+GPU-resident, which is exactly the thing PolyFEM cannot offer. And MuJoCo's flexes are 1, 2 or 3
+dimensional, with capsule, triangle or **tetrahedral** elements, so the volumetric representation
+this document first assumed cloth-fit had does genuinely exist here.
+
+**The category still decides it, and the category is not the licence.** cloth-fit solves a static
+fitting problem and its barrier makes intersection-free a guarantee. MuJoCo simulates dynamics
+under soft constraints, which penalise penetration rather than forbidding it. For the layer
+subtraction that difference is the whole thing: penetration is what puts body pixels inside the
+garment layer, which is the negative control this section already names. One tool is correct by
+construction and the other needs the control run every time.
+
+**Unverified, and flagged rather than assumed.** JAX requires static shapes to compile, so
+anything exportable has a fixed iteration count and fixed-size contact buffers. MJX's specific
+limits were not read here, so the export path is recorded as existing rather than as measured,
+and a number would have to come from a run.
+
+So the split is by stage rather than by preference. Offline corpus authoring, where one garment
+meets one body once and the result is baked, is cloth-fit's, and ONNX is irrelevant to it. A
+garment that must be differentiable inside a training loop, or draped across many bodies in a GPU
+batch, is MJX's, and is the only case where the export question has a point. AVBD is neither as
+it stands.
+
+#### CORRECTION: cloth lives in MuJoCo's Warp backend, not its JAX one
+
+The section above recommended MJX on the grounds that JAX compiles to a static graph, which is
+what made the ONNX question answerable at all. That reasoning is right about MuJoCo generally and
+wrong about the case this document needs.
+
+MuJoCo has two GPU backends and only one of them simulates cloth. Counted in the vendored copy at
+`3-interactor/mujoco-riscv64/thirdparty/mujoco`:
+
+| backend                              | flex collision file  | `flex` in its collision driver |
+| ------------------------------------ | -------------------- | ------------------------------ |
+| MJX / JAX, `mjx/_src/`               | none                 | 0                              |
+| MJX / Warp, `third_party/mujoco_warp` | `collision_flex.py`  | 720                            |
+
+So the backend that would have exported has no deformables, and the backend with deformables is
+not the one that compiles to a graph. The ONNX framing does not survive the correction.
+
+**What replaces it is better, and it was already here.** ANNY runs on NVIDIA Warp -- every run in
+this workspace announces `Warp 1.16.0` -- and MuJoCo's flex backend is `mujoco_warp`, pinned at
+`warp-lang==1.14.0`. Warp differentiates through `wp.Tape`. A differentiable garment-on-body loop
+is therefore one runtime with no bridge and no export, and the concrete task is reconciling
+1.14.0 against 1.16.0 rather than writing a converter.
+
+MuJoCo is also already vendored rather than newly adopted, in `thirdparty/` where a diff can see
+it, so the submodule rule is satisfied without further work. Recommending it as a new dependency,
+as the previous section did, was a failure to look.
+
+#### Inflating the collision geometry, and what it costs
+
+CPU-bound authoring is too slow for volume, so the question is whether the GPU path can be made
+safe enough. MuJoCo's own words for `margin` are "the geometric inflation of the geom surfaces":
+contacts are detected below `margin + gap`, forces are generated below `margin`, and the two
+geoms' margins are summed.
+
+The Warp flex kernel implements it -- 109 references in `collision_flex.py`, with the arithmetic
+explicit at lines 141, 167 and 199 -- and it resolves the objection that would otherwise sink the
+idea. Flex `radius` is documented as affecting "both collision detection and rendering", so
+inflating it would thicken the visible cloth. `flex_margin` is a separate array from
+`flex_radius` in the kernel, so margin inflates collision alone. Separation at rest is then
+
+    geom_margin (body) + flex_margin (garment) + flex_radius (true half-thickness) - penetration
+
+with `radius` left at the real cloth thickness so the render stays honest. Nothing here depends
+on MuJoCo's renderer, since the frames come from Mitsuba over the simulated vertex positions.
+
+**The cost is stated rather than buried: margin is not free and it is not a trick.** Forces begin
+at `margin`, so the cloth is held off the skin at that distance. For clothing that is arguably
+the right model rather than an artefact -- garments have **ease**, and fabric does not lie on
+skin -- so the offset is a physical parameter that has to be chosen anyway. Six millimetres of
+ease, four stacked pennies, is a shirt and not an error. What it is not is a guarantee: without
+CCD filtering the step, a fast or tightly constrained region can cross the margin inside one
+timestep.
+
+So the bound is measured, in five steps, the last of which is the one that makes the rest mean
+anything.
+
+1. Drape across the body-by-garment matrix on the GPU.
+2. Record the minimum signed distance from garment surface to body surface, per frame, over the
+   whole run.
+3. Set `geom_margin` above the worst observed penetration and re-run.
+4. Pass condition: zero frames at negative separation.
+5. **Negative control:** run once at `margin = 0` and confirm the check fails. A penetration check
+   that passes on a known-penetrating configuration certifies the defect.
+
+Step 2's worst case decides the approach. A penny or two can be offset past while the garment
+still reads correctly. A soda can would hold the clothing visibly off the body, and authoring
+would go back to cloth-fit -- on the CPU path this was trying to leave.
+
+**Not yet run.** The vendored MJX pins `warp-lang==1.14.0` against ANNY's 1.16.0, so an
+environment is the blocker rather than any question about the design.
+
+#### CCD is declined, and the discard rate is what would overturn it
+
+Continuous collision detection guarantees a property of the trajectory, and only the endpoint is
+observed here: the settled drape is rendered and the path is not. A garment that tunnels briefly
+and settles correctly yields a perfect layer, and one that never penetrates but settles wrong is
+useless either way.
+
+The exception is genuine but narrow. Tunnelling that ends on the wrong side -- a sleeve through
+an arm, staying there -- is a final-state failure and CCD does prevent it. That failure is far
+cheaper to detect than to prevent, and the detector already exists for another reason: body
+pixels inside the garment layer, at render time, free. Rule 4 of RFD 107a already sets the
+policy, that a failure is discarded rather than fixed, and a corpus can afford to drop frames.
+
+Two things worth knowing before treating this as settled. IPC's guarantee is conditional on an
+intersection-free initial state, so CCD preserves an invariant rather than establishing one, and
+a sleeve initialised inside an arm is not rescued by any solver. And CCD-filtered line search is
+much of why IPC is CPU-bound, so adding it to the Warp path reintroduces the cost this section
+exists to escape -- "add CCD" and "leave CPU-only" are close to one decision taken twice.
+
+**The discard rate decides it.** Drape the corpus, run the render-time penetration check, count
+rejected frames. A few percent and discarding is plainly right. A third and most of the GPU time
+is being wasted, at which point CCD or a better initialisation earns its cost. One run answers
+it, and declining CCD now keeps the decision reversible in a way adopting it would not.
+
+#### The CC0 form libraries are already staged
+
+The proxy policy above asks for forms that are CC0 and untraced, and three projects already
+supply them, converted to OpenUSD rather than left in their upstream formats:
+`6-datasource/thebasemesh-stage` carries thebasemesh.com's public-domain base meshes at
+real-world scale with UVs, and `kenney-stage` and `quaternius-stage` carry Kenney's and
+Quaternius' CC0 packs. A proxy form authored against those inherits CC0 and answers the
+provenance question in its `CITATION.cff` rather than by assertion.
