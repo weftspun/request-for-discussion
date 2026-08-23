@@ -491,6 +491,41 @@ critical path computed on unit durations reports the longest chain; the actual r
 branch whose estimate does not exist. Costing a replacement renderer that a lockfile can pin is
 therefore the first thing that would change this table, ahead of any resequencing.
 
+**RESOLVED, AND IT DID CHANGE THE TABLE — TWICE.** The paragraph above stands as written
+because it was correct and because knowing which risk was named is worth more than a tidy
+document. Two of its premises have since moved.
+
+The bake has a method: Mitsuba 3.9.1, pinned in `anny-render-corpus`'s `pixi.toml`, with the
+determinism measured rather than asserted — `llvm_ad_rgb` at one thread is byte-identical over
+two runs by sha256, while the default thread count drifts by up to 1/255 on a dozen pixels
+through film accumulation order. So the branch with no estimate has one, and it is one step
+like the others.
+
+And the pose gate has run. That is what actually resequences this, because the table above is
+computed as though nothing is done. **Recomputed with T01 complete, nine-of-ten-critical
+collapses to one chain of six**, and it is not the chain the list above names:
+
+    T04  record the checkpoint on the editor path   slack 0
+    T05  find the conditioning window               slack 0
+    T07  verify before training                     slack 0
+    T08  one head on heterogeneous annotation       slack 0
+    T09  GGUF, and the head from 17 to 104          slack 0
+    T10  score on real photographs                  slack 0
+
+    T02  render the labels                          slack 1
+    T03  bake albedo, roughness, normal             slack 1
+    T06  finish the corpus schema                   slack 2
+
+The renderer is the RFD's subject and it is no longer on the critical path. The reason is
+structural rather than surprising: `T04 → T05 → T07` is two layers where `T01 → T02 → T07` was
+two layers, so the two chains tied only while the gate was outstanding. Finishing the gate
+broke the tie in favour of the editor branch, and the subject of the document acquired a step
+of slack without anybody deciding it should.
+
+That is the argument for keeping durations out of the graph and the state of play out of the
+prose. Both readings are correct; they answer different questions, and only one of them moves
+when a task completes.
+
 ## The cheapest thing that could change the plan
 
 All 810 clips are locomotion. Walking, running, turning and standing still. Character drawings
