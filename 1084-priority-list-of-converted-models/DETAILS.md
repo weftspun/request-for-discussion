@@ -11,6 +11,7 @@ partly somewhere else.
     in RFD 1010 but pinned to the mesh-latents goal  5
     in RFD 1010 and in no manifest here             6
     on a manifest and absent from RFD 1010          8
+    in use with no repo and no catalog entry        2
 
 ## Ranked measured
 
@@ -18,33 +19,43 @@ partly somewhere else.
 the keypoint goal, the `mesh-latents` tag for the other. A dash means the
 catalog names it and no manifest here checks it out, so nobody can census it.
 
-| model id                        | goal         | status                       |
-| ------------------------------- | ------------ | ---------------------------- |
-| rfdetr keypoint                 | keypoint     | **rank 1, measured**         |
-| qwen35_defiant                  | mesh-latents | uncensused, absent from 1010 |
-| gemma4_composer                 | mesh-latents | uncensused, absent from 1010 |
-| seethrough_layer_decomposition  | keypoint     | uncensused                   |
-| skintokens_auto_rig             | keypoint     | uncensused                   |
-| cyclegan_style_transfer         | keypoint     | uncensused, absent from 1010 |
-| pose_consensus                  | keypoint     | uncensused, absent from 1010 |
-| trellis2_image_to_textured_mesh | mesh-latents | uncensused                   |
-| trellis2_image_mesh_painting    | mesh-latents | uncensused                   |
-| trellis2_ex                     | mesh-latents | uncensused, absent from 1010 |
-| pixal3d_image_to_textured_mesh  | mesh-latents | uncensused                   |
-| voxhammer_text_mesh_editing     | mesh-latents | uncensused                   |
-| voxhammer_image_mesh_editing    | mesh-latents | uncensused                   |
-| kimodo_text_to_motion           | keypoint     | uncensused                   |
-| tropes_removal_model            | keypoint     | uncensused, absent from 1010 |
-| multimodal_semantic_ids         | mesh-latents | **blocklisted**              |
-| residual_fsq_recommender        | mesh-latents | **blocklisted**              |
-| unified_modal_embedder          | mesh-latents | **blocklisted**              |
-| weftspun_image_to_world         | -            | **blocklisted**              |
-| lingbot_map_environment_scan    | -            | **blocklisted**              |
-| worldmirror2_reconstruct        | -            | **blocklisted**              |
-| triposplat_image_to_splat       | -            | **blocklisted**              |
-| qwen_q4_k_m_image_edit          | -            | **blocklisted**              |
-| p3sam_mesh_segmentation         | mesh-latents | **blocklisted**              |
-| krea2_turbo_text_to_image       | -            | **blocklisted**              |
+**Two models are in use with no repo of their own.** OmniGen2 and EditScore are
+pip dependencies inside `6-datasource/anny-render-corpus`, declared as the
+`omnigen2` and `editscore` pixi features, and neither appears in RFD 1010 nor as
+a `<project>` anywhere. They are not missing by oversight -- they are used by the
+corpus pipeline rather than served from the catalog, so nothing that enumerates
+model IMAGES would ever find them. That is the third way a model can be absent
+from a list of models, after "on the other goal" and "in no manifest at all".
+
+| model id                        | goal         | status                            |
+| ------------------------------- | ------------ | --------------------------------- |
+| rfdetr keypoint                 | keypoint     | **rank 1, measured**              |
+| omnigen2                        | keypoint     | in use, no repo, absent from 1010 |
+| editscore                       | keypoint     | in use, no repo, absent from 1010 |
+| qwen35_defiant                  | mesh-latents | uncensused, absent from 1010      |
+| gemma4_composer                 | mesh-latents | uncensused, absent from 1010      |
+| seethrough_layer_decomposition  | keypoint     | uncensused                        |
+| skintokens_auto_rig             | keypoint     | uncensused                        |
+| cyclegan_style_transfer         | keypoint     | uncensused, absent from 1010      |
+| pose_consensus                  | keypoint     | uncensused, absent from 1010      |
+| trellis2_image_to_textured_mesh | mesh-latents | uncensused                        |
+| trellis2_image_mesh_painting    | mesh-latents | uncensused                        |
+| trellis2_ex                     | mesh-latents | uncensused, absent from 1010      |
+| pixal3d_image_to_textured_mesh  | mesh-latents | uncensused                        |
+| voxhammer_text_mesh_editing     | mesh-latents | uncensused                        |
+| voxhammer_image_mesh_editing    | mesh-latents | uncensused                        |
+| kimodo_text_to_motion           | keypoint     | uncensused                        |
+| tropes_removal_model            | -            | uncensused, absent from 1010      |
+| multimodal_semantic_ids         | mesh-latents | **blocklisted**                   |
+| residual_fsq_recommender        | mesh-latents | **blocklisted**                   |
+| unified_modal_embedder          | mesh-latents | **blocklisted**                   |
+| weftspun_image_to_world         | -            | **blocklisted**                   |
+| lingbot_map_environment_scan    | -            | **blocklisted**                   |
+| worldmirror2_reconstruct        | -            | **blocklisted**                   |
+| triposplat_image_to_splat       | -            | **blocklisted**                   |
+| qwen_q4_k_m_image_edit          | -            | **blocklisted**                   |
+| p3sam_mesh_segmentation         | mesh-latents | **blocklisted**                   |
+| krea2_turbo_text_to_image       | -            | **blocklisted**                   |
 
 The device half at 576 with `num_windows=1` is **825 nodes over 22 distinct
 operators**, and every operator is inside `gate_onnx_device.py`'s allowlist. The
@@ -64,6 +75,21 @@ capacity is not what stops it. Every allocator error carried
 `NO_CONTEXT_ENABLED`, so multi-context compilation is the untried lever.
 
 A second model would inherit this obstacle without adding information about it.
+
+## The two with no repo
+
+OmniGen2 generates the posed corpus in `gen_posed_from_reference.py`, and
+BLOCKLIST.md names it as the replacement for Qwen-Image-Edit: 7.8B, Apache-2.0,
+clean output on the same input that the blocked model corrupted. EditScore grades
+those edits in `score_edits.py` -- a reward model rather than a generator, which
+is why the measured refusal count there was zero of twelve and the search for an
+uncensored base was unnecessary.
+
+Neither is a conversion candidate today. Both run in the corpus pipeline on the
+desk, not on the accelerator, and converting a 7.8B generator to a 24 GB-class
+edge device is a different question from converting a detector. They are in the
+table because a list of models that omits the two doing daily work is not a list
+of models.
 
 ## The three that are excluded
 
