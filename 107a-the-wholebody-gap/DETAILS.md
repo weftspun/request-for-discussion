@@ -491,6 +491,10 @@ critical path computed on unit durations reports the longest chain; the actual r
 branch whose estimate does not exist. Costing a replacement renderer that a lockfile can pin is
 therefore the first thing that would change this table, ahead of any resequencing.
 
+**SUPERSEDED 2026-08-24 by the reranked table below, which prices the tasks instead of
+counting them. Kept because knowing which reading was in force is worth more than a tidy
+document.**
+
 **RESOLVED, AND IT DID CHANGE THE TABLE — TWICE.** The paragraph above stands as written
 because it was correct and because knowing which risk was named is worth more than a tidy
 document. Two of its premises have since moved.
@@ -525,6 +529,114 @@ of slack without anybody deciding it should.
 That is the argument for keeping durations out of the graph and the state of play out of the
 prose. Both readings are correct; they answer different questions, and only one of them moves
 when a task completes.
+
+### Reranked on durations, Hailo-first, 2026-08-24
+
+The reading above counts tasks. This one prices them, and the two disagree about what the plan
+is mostly made of.
+
+**What forced it.** Every duration the plan inherited came from the 4090, and the 4090 is
+unplugged. The load-bearing figure is the soft renderer entry's Mitsuba throughput — 1.79
+ms/image, 0.4 GPU-hours over 800k — and it is doubly inapplicable: `mi_bench.py:19` and
+`mi_bench2.py:20` both open with `mi.set_variant('cuda_ad_rgb')`, which is neither the variant
+that ships nor one this fleet can run outside that card. **Retracted as a corpus-render
+estimate**; it remains correct about what it measured.
+
+`scripts/mi_bench_llvm.py` replaces it for the pair that ships, `llvm_ad_rgb` at one thread,
+which no benchmark here had ever timed. On the M2 Pro, at ANNY's face count, 1024², one sample:
+
+    BENCH film -- aov integrator, box filter, 1 sample. A DEPTH PASS.
+    llvm_ad_rgb, 1 thread             73.00 ms/img   800k = overnight
+    metal_ad_rgb, default threads      9.01 ms/img   800k = an afternoon
+    cuda_ad_rgb (4090, UNPLUGGED)      1.79 ms/img   800k = half an hour
+
+    SHIPPING film -- path integrator max_depth 6, gaussian filter, 128 samples.
+    THIS IS WHAT RENDERS THE CORPUS, and a second matte pass follows it.
+    llvm_ad_rgb, 1 thread          32,592.00 ms/img   800k = a month of wall-clock
+    llvm_ad_rgb, default threads    4,363.90 ms/img   differs run to run
+    metal_ad_rgb, default threads     545.00 ms/img   differs run to run
+
+ms/image is the record and keeps its decimals; the 800k column is a projection and gets a
+span. Two rows landing on the same span are not being claimed equal — they are
+indistinguishable at the resolution a plan can act on, and the ms/image column is where the
+difference lives.
+
+Determinism is **per-image**, so eight single-threaded processes reach 2.2 hours without
+touching the guarantee the one-thread rule buys. That is the whole corpus in an afternoon, on
+the weakest device in the fleet, and it settles the question the ordering turned on: the
+renderer is not the expensive thing.
+
+**A result that is deliberately not used.** Multithreaded `llvm_ad_rgb` and `metal_ad_rgb` both
+came back byte-identical across two processes, and `pixi.toml` records the multithreaded case
+drifting by up to 1/255 on a dozen pixels. The negative control went looking for that drift at
+1, 4, 16 and 64 samples per pixel and never reproduced it, so nothing has shown the check _can_
+fail — which makes its `identical` column decoration rather than evidence. The one-thread
+constraint therefore stands unchanged, and it costs nothing: the process-scaling row reaches
+the same throughput with every frame single-threaded.
+
+**Hailo-first reaches backwards into the training run.** RFD 107e already decided the backbone
+compiles at `num_windows=1` — 825 ONNX nodes parse, 868 are rejected — and that it "costs 1.35x
+wall-clock and **needs retraining**". T09 converts and ports, and it sits _after_ T08 trains. A
+plan followed in its own numbered order therefore trains at the wrong windowing, finds out at
+T09, and pays for the run twice. This is recorded as a standing constraint,
+`EdgeCompileGatesTraining`, rather than a new edge: an edge from T09 back into T08 is a cycle,
+and 107e's decision is already made, so what is owed is that T08 honours it. One quantization
+schedule comes out of DFC 5.3.0 and the rest of the fleet runs that same schedule, because a
+detector quantised three ways is three detectors and no measurement transfers between desks.
+
+Not to be confused with condition 5, which forbids a quantised **generator** from writing corpus
+data. The detector's quantization is deployment; only T05's generator path is bound by it.
+
+**The reranked path: 20.0 size points.** Computed by `check_rfd107a_plan.py` from the sizes in
+the stage and asserted against this paragraph so the two cannot drift. The formulas are the
+standard PERT pair, already in use in this workspace at
+`2-contract/multiplayer-fabric-manuals/rfd/204d-pert-critical-path-zonefabric` — cited by path
+rather than by number, because that document lives in another repository and the citation gate
+here correctly refuses a number it cannot resolve:
+
+    TE = (O + 4M + P) / 6        sigma^2 = ((P - O) / 6)^2
+
+**Sizes rather than days, and the swap is an admission.** An earlier revision of this section
+carried optimistic, likely and pessimistic figures in engineering days and printed a total of
+"38.8 engineering days". Not one of those numbers was measured — they were judgement, and the
+decimal point made them read as something else. A t-shirt size cannot be mistaken for a
+calendar. The spread is kept because it carried a real signal: T08's pessimistic sits four
+times its optimistic, which is a different fact from T08 merely being large. Points are
+Fibonacci and **relative**; they order tasks against each other and convert to no duration at
+all. Anything wanting a calendar has to go and measure one.
+
+| task                          | O   | M   | P   | TE  | slack |
+| ----------------------------- | --- | --- | --- | --- | ----- |
+| T07 verify before training    | S   | M   | L   | 3.2 | 0     |
+| **T02 render the labels**     | M   | L   | XL  | 5.2 | 0     |
+| **T08 masked training**       | L   | XL  | XL  | 7.5 | 0     |
+| T09 GGUF, and 17 to 104       | S   | M   | L   | 3.2 | 0     |
+| T10 score on real photographs | XS  | XS  | XS  | 1.0 | 0     |
+| T03 bake albedo and normal    | XS  | S   | M   | 2.0 | 3.2   |
+| T04 record the checkpoint     | XS  | XS  | S   | 1.2 | 1.7   |
+| T05 the conditioning window   | XS  | S   | L   | 2.3 | 1.7   |
+| T06 finish the corpus schema  | XS  | XS  | XS  | 1.0 | 7.3   |
+
+T01 is complete and carries no size. It is counted and named in the checker's output rather
+than folded in as a zero.
+
+**The chain is now five tasks, and it is not the one either earlier reading named.** Correcting
+the render measurement put **T02 back on the critical path** and took `T04 → T05` off it, which
+is the reversal the first rerank got wrong in the other direction: it demoted the renderer on
+the strength of a depth pass. T08 is still the single heaviest at 7.5 points, **38% of the
+path**, and no resequencing touches it. T06 gains slack rather than losing it — 7.3, over seven
+times its own size — and it is the one outstanding task that runs on any desk in the fleet.
+
+**The bottleneck is a device, not a task, and the graph cannot see it.** T05, T07 and T08 are
+all `gpuBound` and all want the one plugged-in bf16 card. Their TE sums to **13.0 of the 20.0
+points, 65% of the path, on a single RTX 3090** — a serial floor imposed by contention that no
+dependency edge expresses.
+
+**So the cheapest schedule compression is not a resequencing.** Plugging in the 4090 brings the
+path to **13.9 points, cutting 30% off it**, by scaling the `gpuBound` tasks on derived peak
+rate. That is a ranking and not a budget — it assumes those tasks are compute-bound and perfectly portable,
+and neither was measured. It is still the largest single lever in the table, and it costs a
+cable.
 
 ## The cheapest thing that could change the plan
 
