@@ -491,6 +491,10 @@ critical path computed on unit durations reports the longest chain; the actual r
 branch whose estimate does not exist. Costing a replacement renderer that a lockfile can pin is
 therefore the first thing that would change this table, ahead of any resequencing.
 
+**SUPERSEDED 2026-08-24 by the reranked table below, which prices the tasks instead of
+counting them. Kept because knowing which reading was in force is worth more than a tidy
+document.**
+
 **RESOLVED, AND IT DID CHANGE THE TABLE — TWICE.** The paragraph above stands as written
 because it was correct and because knowing which risk was named is worth more than a tidy
 document. Two of its premises have since moved.
@@ -525,6 +529,92 @@ of slack without anybody deciding it should.
 That is the argument for keeping durations out of the graph and the state of play out of the
 prose. Both readings are correct; they answer different questions, and only one of them moves
 when a task completes.
+
+### Reranked on durations, Hailo-first, 2026-08-24
+
+The reading above counts tasks. This one prices them, and the two disagree about what the plan
+is mostly made of.
+
+**What forced it.** Every duration the plan inherited came from the 4090, and the 4090 is
+unplugged. The load-bearing figure is the soft renderer entry's Mitsuba throughput — 1.79
+ms/image, 0.4 GPU-hours over 800k — and it is doubly inapplicable: `mi_bench.py:19` and
+`mi_bench2.py:20` both open with `mi.set_variant('cuda_ad_rgb')`, which is neither the variant
+that ships nor one this fleet can run outside that card. **Retracted as a corpus-render
+estimate**; it remains correct about what it measured.
+
+`scripts/mi_bench_llvm.py` replaces it for the pair that ships, `llvm_ad_rgb` at one thread,
+which no benchmark here had ever timed. On the M2 Pro, at ANNY's face count, 1024², one sample:
+
+    llvm_ad_rgb, 1 thread          73.00 ms/img     800k = 16.2 h     one process
+    llvm_ad_rgb, 1 thread          77.88 ms/img     800k =  2.2 h     eight processes
+    llvm_ad_rgb, default threads   11.79 ms/img     800k =  2.6 h
+    metal_ad_rgb, default threads   8.86 ms/img     800k =  2.0 h
+    cuda_ad_rgb (4090, UNPLUGGED)   1.79 ms/img     800k =  0.4 h
+
+Determinism is **per-image**, so eight single-threaded processes reach 2.2 hours without
+touching the guarantee the one-thread rule buys. That is the whole corpus in an afternoon, on
+the weakest device in the fleet, and it settles the question the ordering turned on: the
+renderer is not the expensive thing.
+
+**A result that is deliberately not used.** Multithreaded `llvm_ad_rgb` and `metal_ad_rgb` both
+came back byte-identical across two processes, and `pixi.toml` records the multithreaded case
+drifting by up to 1/255 on a dozen pixels. The negative control went looking for that drift at
+1, 4, 16 and 64 samples per pixel and never reproduced it, so nothing has shown the check *can*
+fail — which makes its `identical` column decoration rather than evidence. The one-thread
+constraint therefore stands unchanged, and it costs nothing: the process-scaling row reaches
+the same throughput with every frame single-threaded.
+
+**Hailo-first reaches backwards into the training run.** RFD 107e already decided the backbone
+compiles at `num_windows=1` — 825 ONNX nodes parse, 868 are rejected — and that it "costs 1.35x
+wall-clock and **needs retraining**". T09 converts and ports, and it sits *after* T08 trains. A
+plan followed in its own numbered order therefore trains at the wrong windowing, finds out at
+T09, and pays for the run twice. This is recorded as a standing constraint,
+`EdgeCompileGatesTraining`, rather than a new edge: an edge from T09 back into T08 is a cycle,
+and 107e's decision is already made, so what is owed is that T08 honours it. One quantization
+schedule comes out of DFC 5.3.0 and the rest of the fleet runs that same schedule, because a
+detector quantised three ways is three detectors and no measurement transfers between desks.
+
+Not to be confused with condition 5, which forbids a quantised **generator** from writing corpus
+data. The detector's quantization is deployment; only T05's generator path is bound by it.
+
+**The reranked path: 38.8 engineering days.** Computed by `check_rfd107a_plan.py` from the
+durations in the stage and asserted against this paragraph so the two cannot drift. The
+formulas are the standard PERT pair, already in use in this workspace at
+`2-contract/multiplayer-fabric-manuals/rfd/204d-pert-critical-path-zonefabric` — cited by path
+rather than by number, because that document lives in another repository and the citation gate
+here correctly refuses a number it cannot resolve:
+
+    TE = (O + 4M + P) / 6        sigma^2 = ((P - O) / 6)^2
+
+
+| task                          | O   | M   | P   | TE   | slack |
+| ----------------------------- | --- | --- | --- | ---- | ----- |
+| T04 record the checkpoint     | 1   | 2   | 4   | 2.2  | 0     |
+| T05 the conditioning window   | 2   | 4   | 9   | 4.5  | 0     |
+| T07 verify before training    | 3   | 6   | 12  | 6.5  | 0     |
+| **T08 masked training**       | 8   | 15  | 35  | 17.2 | 0     |
+| T09 GGUF, and 17 to 104       | 3   | 6   | 12  | 6.5  | 0     |
+| T10 score on real photographs | 1   | 2   | 3   | 2.0  | 0     |
+| T02 render the labels         | 3   | 6   | 12  | 6.5  | 0.2   |
+| T03 bake albedo and normal    | 2   | 4   | 8   | 4.3  | 2.3   |
+| T06 finish the corpus schema  | 1   | 2   | 3   | 2.0  | 11.2  |
+
+**The chain is the same six tasks the unit-duration reading named, and that is the least
+interesting thing about it.** What changes is where the weight sits. T08 alone is 17.2 days,
+**44% of the whole path** — one task is nearly half the project, and no amount of resequencing
+touches it. T02 keeps its place in the order but its slack collapses from a full layer to 0.2
+days, so the renderer is co-critical rather than comfortable. T06 gains slack rather than losing
+it: 11.2 days, and it is the one outstanding task that runs on any desk in the fleet.
+
+**The bottleneck is a device, not a task, and the graph cannot see it.** T05, T07 and T08 are
+all `gpuBound` and all want the one plugged-in bf16 card. Their TE sums to **28.2 days on a
+single RTX 3090** — a serial floor imposed by contention that no dependency edge expresses.
+
+**So the cheapest schedule compression is not a resequencing.** Plugging in the 4090 brings the
+path to **25.2 days, saving 13.6**, by scaling the `gpuBound` tasks on derived peak rate. That
+is a ranking and not a budget — it assumes those tasks are compute-bound and perfectly portable,
+and neither was measured. It is still the largest single lever in the table, and it costs a
+cable.
 
 ## The cheapest thing that could change the plan
 
