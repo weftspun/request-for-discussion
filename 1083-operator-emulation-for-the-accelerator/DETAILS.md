@@ -19,6 +19,19 @@ empty. That silently produced a systemd unit reading `-v /op_tests_deform:/w/def
 created four empty directories, and the emulation reported an empty table rather than an
 error. Export it once at the top of the command.
 
+It is not only paths, and the other two forms bit while this document was being moved
+into this RFD. `git show origin/main:file` becomes `origin\main;file` -- the colon is
+rewritten too, so a recovery command fails as though the revision were missing. And
+Python is a third case: it wants `C:\...` and does nothing useful with `/c/...`, which
+is how the write that should have created this file failed while the `rm` beside it
+succeeded.
+
+**Verify the destination before removing the source.** This document was nearly lost
+moving it here: the write went to a Python that had been handed `/c/...` instead of `C:\...`
+and failed, while the `rm` on the next line ran anyway. It survived only because the commit
+that added it had already merged, which is luck rather than procedure. A move is a write and
+then a delete, in that order, with something between them that reads the destination back.
+
 **Prefer a script file to inline quoting through `wsl`.** Even with path conversion off,
 nested quotes through `wsl -d X -- bash -lc '...'` are unreliable. Write the script to
 `/c/...`, then `wsl -- bash /mnt/c/...`.
