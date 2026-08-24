@@ -64,22 +64,28 @@ from a list of models, after "on the other goal" and "in no manifest at all".
 | skintokens_auto_rig            | keypoint     | uncensused                        |
 | cyclegan_style_transfer        | keypoint     | uncensused, absent from 1010      |
 | pose_consensus                 | keypoint     | uncensused, absent from 1010      |
+| anny                           | keypoint     | uncensused, absent from 1010      |
+| soma-x                         | keypoint     | uncensused, absent from 1010      |
+| mujoco                         | keypoint     | uncensused, absent from 1010      |
 | pixal3d_image_to_textured_mesh | mesh-latents | uncensused                        |
 | pixal3d_image_mesh_painting    | mesh-latents | derivable, no repo yet            |
 | voxhammer_text_mesh_editing    | mesh-latents | uncensused                        |
 | voxhammer_image_mesh_editing   | mesh-latents | uncensused                        |
 | kimodo_text_to_motion          | keypoint     | uncensused                        |
 | tropes_removal_model           | keypoint     | uncensused, absent from 1010      |
-| multimodal_semantic_ids        | mesh-latents | **blocklisted**                   |
-| residual_fsq_recommender       | mesh-latents | **blocklisted**                   |
-| unified_modal_embedder         | mesh-latents | **blocklisted**                   |
-| weftspun_image_to_world        | -            | **blocklisted**                   |
-| lingbot_map_environment_scan   | -            | **blocklisted**                   |
-| worldmirror2_reconstruct       | -            | **blocklisted**                   |
-| triposplat_image_to_splat      | -            | **blocklisted**                   |
-| qwen_q4_k_m_image_edit         | -            | **blocklisted**                   |
-| p3sam_mesh_segmentation        | mesh-latents | **blocklisted**                   |
-| krea2_turbo_text_to_image      | -            | **blocklisted**                   |
+
+| blocklisted model id         | goal         | status          |
+| ---------------------------- | ------------ | --------------- |
+| multimodal_semantic_ids      | mesh-latents | **blocklisted** |
+| residual_fsq_recommender     | mesh-latents | **blocklisted** |
+| unified_modal_embedder       | mesh-latents | **blocklisted** |
+| weftspun_image_to_world      | -            | **blocklisted** |
+| lingbot_map_environment_scan | -            | **blocklisted** |
+| worldmirror2_reconstruct     | -            | **blocklisted** |
+| triposplat_image_to_splat    | -            | **blocklisted** |
+| qwen_q4_k_m_image_edit       | -            | **blocklisted** |
+| p3sam_mesh_segmentation      | mesh-latents | **blocklisted** |
+| krea2_turbo_text_to_image    | -            | **blocklisted** |
 
 The device half at 576 with `num_windows=1` is **825 nodes over 22 distinct
 operators**, and every operator is inside `gate_onnx_device.py`'s allowlist. The
