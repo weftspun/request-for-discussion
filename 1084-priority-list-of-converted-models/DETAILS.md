@@ -54,32 +54,32 @@ corpus pipeline rather than served from the catalog, so nothing that enumerates
 model IMAGES would ever find them. That is the third way a model can be absent
 from a list of models, after "on the other goal" and "in no manifest at all".
 
-| model id                        | goal         | status                            |
-| ------------------------------- | ------------ | --------------------------------- |
-| rfdetr keypoint                 | keypoint     | **rank 1, measured**              |
-| omnigen2                        | keypoint     | in use, no repo, absent from 1010 |
-| editscore                       | keypoint     | in use, no repo, absent from 1010 |
-| gemma4_composer                 | mesh-latents | uncensused, absent from 1010      |
-| seethrough_layer_decomposition  | keypoint     | uncensused                        |
-| skintokens_auto_rig             | keypoint     | uncensused                        |
-| cyclegan_style_transfer         | keypoint     | uncensused, absent from 1010      |
-| pose_consensus                  | keypoint     | uncensused, absent from 1010      |
-| pixal3d_image_to_textured_mesh  | mesh-latents | uncensused                        |
-| pixal3d_image_mesh_painting     | mesh-latents | derivable, no repo yet            |
-| voxhammer_text_mesh_editing     | mesh-latents | uncensused                        |
-| voxhammer_image_mesh_editing    | mesh-latents | uncensused                        |
-| kimodo_text_to_motion           | keypoint     | uncensused                        |
-| tropes_removal_model            | keypoint     | uncensused, absent from 1010      |
-| multimodal_semantic_ids         | mesh-latents | uncensused, absent from 1010      |
-| residual_fsq_recommender        | mesh-latents | uncensused, absent from 1010      |
-| unified_modal_embedder          | mesh-latents | uncensused, absent from 1010      |
-| weftspun_image_to_world         | -            | uncensused, no checkout           |
-| lingbot_map_environment_scan    | -            | uncensused, no checkout           |
-| worldmirror2_reconstruct        | -            | uncensused, no checkout           |
-| triposplat_image_to_splat       | -            | uncensused, no checkout           |
-| qwen_q4_k_m_image_edit          | -            | **blocklisted**                   |
-| p3sam_mesh_segmentation         | mesh-latents | **blocklisted**                   |
-| krea2_turbo_text_to_image       | -            | **blocklisted**                   |
+| model id                       | goal         | status                            |
+| ------------------------------ | ------------ | --------------------------------- |
+| rfdetr keypoint                | keypoint     | **rank 1, measured**              |
+| omnigen2                       | keypoint     | in use, no repo, absent from 1010 |
+| editscore                      | keypoint     | in use, no repo, absent from 1010 |
+| gemma4_composer                | mesh-latents | uncensused, absent from 1010      |
+| seethrough_layer_decomposition | keypoint     | uncensused                        |
+| skintokens_auto_rig            | keypoint     | uncensused                        |
+| cyclegan_style_transfer        | keypoint     | uncensused, absent from 1010      |
+| pose_consensus                 | keypoint     | uncensused, absent from 1010      |
+| pixal3d_image_to_textured_mesh | mesh-latents | uncensused                        |
+| pixal3d_image_mesh_painting    | mesh-latents | derivable, no repo yet            |
+| voxhammer_text_mesh_editing    | mesh-latents | uncensused                        |
+| voxhammer_image_mesh_editing   | mesh-latents | uncensused                        |
+| kimodo_text_to_motion          | keypoint     | uncensused                        |
+| tropes_removal_model           | keypoint     | uncensused, absent from 1010      |
+| multimodal_semantic_ids        | mesh-latents | **blocklisted**                   |
+| residual_fsq_recommender       | mesh-latents | **blocklisted**                   |
+| unified_modal_embedder         | mesh-latents | **blocklisted**                   |
+| weftspun_image_to_world        | -            | **blocklisted**                   |
+| lingbot_map_environment_scan   | -            | **blocklisted**                   |
+| worldmirror2_reconstruct       | -            | **blocklisted**                   |
+| triposplat_image_to_splat      | -            | **blocklisted**                   |
+| qwen_q4_k_m_image_edit         | -            | **blocklisted**                   |
+| p3sam_mesh_segmentation        | mesh-latents | **blocklisted**                   |
+| krea2_turbo_text_to_image      | -            | **blocklisted**                   |
 
 The device half at 576 with `num_windows=1` is **825 nodes over 22 distinct
 operators**, and every operator is inside `gate_onnx_device.py`'s allowlist. The
