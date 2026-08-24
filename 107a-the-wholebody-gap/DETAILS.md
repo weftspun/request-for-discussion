@@ -545,11 +545,16 @@ estimate**; it remains correct about what it measured.
 `scripts/mi_bench_llvm.py` replaces it for the pair that ships, `llvm_ad_rgb` at one thread,
 which no benchmark here had ever timed. On the M2 Pro, at ANNY's face count, 1024², one sample:
 
-    llvm_ad_rgb, 1 thread          73.00 ms/img     800k = overnight       one process
-    llvm_ad_rgb, 1 thread          77.88 ms/img     800k = an afternoon    eight processes
-    llvm_ad_rgb, default threads   11.79 ms/img     800k = an afternoon
-    metal_ad_rgb, default threads   8.86 ms/img     800k = an afternoon
-    cuda_ad_rgb (4090, UNPLUGGED)   1.79 ms/img     800k = half an hour
+    BENCH film -- aov integrator, box filter, 1 sample. A DEPTH PASS.
+    llvm_ad_rgb, 1 thread             73.00 ms/img   800k = overnight
+    metal_ad_rgb, default threads      9.01 ms/img   800k = an afternoon
+    cuda_ad_rgb (4090, UNPLUGGED)      1.79 ms/img   800k = half an hour
+
+    SHIPPING film -- path integrator max_depth 6, gaussian filter, 128 samples.
+    THIS IS WHAT RENDERS THE CORPUS, and a second matte pass follows it.
+    llvm_ad_rgb, 1 thread          32,592.00 ms/img   800k = a month of wall-clock
+    llvm_ad_rgb, default threads    4,363.90 ms/img   differs run to run
+    metal_ad_rgb, default threads     545.00 ms/img   differs run to run
 
 ms/image is the record and keeps its decimals; the 800k column is a projection and gets a
 span. Two rows landing on the same span are not being claimed equal — they are
@@ -582,7 +587,7 @@ detector quantised three ways is three detectors and no measurement transfers be
 Not to be confused with condition 5, which forbids a quantised **generator** from writing corpus
 data. The detector's quantization is deployment; only T05's generator path is bound by it.
 
-**The reranked path: 18.3 size points.** Computed by `check_rfd107a_plan.py` from the sizes in
+**The reranked path: 20.0 size points.** Computed by `check_rfd107a_plan.py` from the sizes in
 the stage and asserted against this paragraph so the two cannot drift. The formulas are the
 standard PERT pair, already in use in this workspace at
 `2-contract/multiplayer-fabric-manuals/rfd/204d-pert-critical-path-zonefabric` — cited by path
@@ -602,34 +607,33 @@ all. Anything wanting a calendar has to go and measure one.
 
 | task                          | O   | M   | P   | TE  | slack |
 | ----------------------------- | --- | --- | --- | --- | ----- |
-| T04 record the checkpoint     | XS  | XS  | S   | 1.2 | 0     |
-| T05 the conditioning window   | XS  | S   | L   | 2.3 | 0     |
 | T07 verify before training    | S   | M   | L   | 3.2 | 0     |
+| **T02 render the labels**     | M   | L   | XL  | 5.2 | 0     |
 | **T08 masked training**       | L   | XL  | XL  | 7.5 | 0     |
 | T09 GGUF, and 17 to 104       | S   | M   | L   | 3.2 | 0     |
 | T10 score on real photographs | XS  | XS  | XS  | 1.0 | 0     |
-| T02 render the labels         | S   | M   | L   | 3.2 | 0.3   |
-| T03 bake albedo and normal    | XS  | S   | M   | 2.0 | 1.5   |
-| T06 finish the corpus schema  | XS  | XS  | XS  | 1.0 | 5.7   |
+| T03 bake albedo and normal    | XS  | S   | M   | 2.0 | 3.2   |
+| T04 record the checkpoint     | XS  | XS  | S   | 1.2 | 1.7   |
+| T05 the conditioning window   | XS  | S   | L   | 2.3 | 1.7   |
+| T06 finish the corpus schema  | XS  | XS  | XS  | 1.0 | 7.3   |
 
 T01 is complete and carries no size. It is counted and named in the checker's output rather
 than folded in as a zero.
 
-**The chain is the same six tasks the unit-duration reading named, and that is the least
-interesting thing about it.** What changes is where the weight sits. T08 alone is 7.5 points,
-**41% of the whole path** — one task is most of the project, and no amount of resequencing
-touches it. T02 keeps its place in the order but its slack collapses from a full layer to 0.3,
-so the renderer is co-critical rather than comfortable. T06 gains slack rather than losing it —
-5.7, more than five times its own size — and it is the one outstanding task that runs on any
-desk in the fleet.
+**The chain is now five tasks, and it is not the one either earlier reading named.** Correcting
+the render measurement put **T02 back on the critical path** and took `T04 → T05` off it, which
+is the reversal the first rerank got wrong in the other direction: it demoted the renderer on
+the strength of a depth pass. T08 is still the single heaviest at 7.5 points, **38% of the
+path**, and no resequencing touches it. T06 gains slack rather than losing it — 7.3, over seven
+times its own size — and it is the one outstanding task that runs on any desk in the fleet.
 
 **The bottleneck is a device, not a task, and the graph cannot see it.** T05, T07 and T08 are
-all `gpuBound` and all want the one plugged-in bf16 card. Their TE sums to **13.0 of the 18.3
-points, 71% of the path, on a single RTX 3090** — a serial floor imposed by contention that no
+all `gpuBound` and all want the one plugged-in bf16 card. Their TE sums to **13.0 of the 20.0
+points, 65% of the path, on a single RTX 3090** — a serial floor imposed by contention that no
 dependency edge expresses.
 
 **So the cheapest schedule compression is not a resequencing.** Plugging in the 4090 brings the
-path to **11.9 points, cutting 35% off it**, by scaling the `gpuBound` tasks on derived peak
+path to **13.9 points, cutting 30% off it**, by scaling the `gpuBound` tasks on derived peak
 rate. That is a ranking and not a budget — it assumes those tasks are compute-bound and perfectly portable,
 and neither was measured. It is still the largest single lever in the table, and it costs a
 cable.
