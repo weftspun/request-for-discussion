@@ -1,6 +1,6 @@
 # RFD 103e: A Fly.io toplevel, and the 4090 as a worker node
 
-**State:** discussion
+**State:** abandoned
 **Scope:** `weftspun_studio/`, `deploy/quadlet/`, the deploy target
 
 ## Problem
@@ -19,18 +19,18 @@ something else needs to be the thing a user reaches.
 
 ## Decision
 
-Split the deployment by role, not by RFD 103a's single-box shape.
-`weftspun_studio`, its planner, its catalog, and CockroachDB move to
-Fly.io, reachable by the public internet. The model images stay on
-this box, on RFD 103a's quadlets exactly as written, reachable by
-the Fly toplevel alone, over Tailscale.
+This design is abandoned. The split it proposes is not taken.
 
-taskweft's own MCP server already runs on Fly.io, cited in RFD 1025,
-so this is not a new tool for the project.
+It rests on this box having an RTX 4090 that no rented tier improves
+on. The box reports an RTX 3090. Nobody checked the premise, and RFD
+101b's sizing and RFD 1037's pricing both assumed the same card.
 
-`DETAILS.md` gives the full split, the reasoning behind each side,
-the existing port this reuses, what ships where, and what this RFD
-leaves undone.
+The problem it names does not go away: a stack bound to
+`127.0.0.1` reaches one operator, which is not a product. Whatever
+replaces this must answer that, and must name the GPU it measured.
+
+`DETAILS.md` stays unedited: the full split, the port it reused, and
+what it left undone.
 
 ## Related
 
