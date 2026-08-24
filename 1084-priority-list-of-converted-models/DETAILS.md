@@ -46,33 +46,42 @@ stage TRELLIS2 provided is derivable from it rather than lost. The three
 RFD records the supersession; this is the first place it is written down, which
 means RFD 1026 and RFD 1027 package models nothing now plans to convert.
 
-**Two models are in use with no repo of their own.** OmniGen2 and EditScore are
-pip dependencies inside `6-datasource/anny-render-corpus`, declared as the
-`omnigen2` and `editscore` pixi features, and neither appears in RFD 1010 nor as
-a `<project>` anywhere. They are not missing by oversight -- they are used by the
-corpus pipeline rather than served from the catalog, so nothing that enumerates
-model IMAGES would ever find them. That is the third way a model can be absent
-from a list of models, after "on the other goal" and "in no manifest at all".
+**Two models were in use with no repo of their own, and now have one.** OmniGen2
+and EditScore are pip dependencies inside `6-datasource/anny-render-corpus`,
+declared as the `omnigen2` and `editscore` pixi features. When this was written
+neither appeared in RFD 1010 nor as a `<project>` anywhere. They were not missing
+by oversight -- they were used by the corpus pipeline rather than served from the
+catalog, so nothing that enumerates model IMAGES would ever find them. That is
+the third way a model can be absent from a list of models, after "on the other
+goal" and "in no manifest at all".
+
+Both are now forked from VectorSpaceLab at Apache-2.0 and placed on 3-interactor
+in `weftspun-keypoint`. The observation stands even though its examples no longer
+do: being a dependency rather than an image is still a way to be invisible to a
+catalog, and the fix was to place them, not to argue they were findable.
 
 | model id                       | goal         | status                            |
 | ------------------------------ | ------------ | --------------------------------- |
 | rfdetr keypoint                | keypoint     | **rank 1, measured**              |
-| omnigen2                       | keypoint     | in use, no repo, absent from 1010 |
-| editscore                      | keypoint     | in use, no repo, absent from 1010 |
+| omnigen2                       | keypoint     | placed, uncensused, absent 1010   |
+| editscore                      | keypoint     | placed, uncensused, absent 1010   |
 | gemma4_composer                | mesh-latents | uncensused, absent from 1010      |
-| seethrough_layer_decomposition | keypoint     | uncensused                        |
+| seethrough_layerdiff           | keypoint     | placed, uncensused                |
+| seethrough_marigold_depth      | keypoint     | placed, uncensused                |
+| seethrough_vae                 | keypoint     | placed, uncensused                |
+| seethrough_partseg             | keypoint     | placed, uncensused                |
 | skintokens_auto_rig            | keypoint     | uncensused                        |
 | cyclegan_style_transfer        | keypoint     | uncensused, absent from 1010      |
 | pose_consensus                 | keypoint     | uncensused, absent from 1010      |
-| anny                           | keypoint     | uncensused, absent from 1010      |
-| soma-x                         | keypoint     | uncensused, absent from 1010      |
-| mujoco                         | keypoint     | uncensused, absent from 1010      |
+| anny                           | keypoint     | placed, uncensused, absent 1010   |
+| soma-x                         | keypoint     | placed, uncensused, absent 1010   |
+| mujoco                         | keypoint     | placed, uncensused, absent 1010   |
 | pixal3d_image_to_textured_mesh | mesh-latents | uncensused                        |
-| pixal3d_image_mesh_painting    | mesh-latents | derivable, no repo yet            |
+| pixal3d_image_mesh_painting    | mesh-latents | placed, uncensused                |
 | voxhammer_text_mesh_editing    | mesh-latents | uncensused                        |
 | voxhammer_image_mesh_editing   | mesh-latents | uncensused                        |
 | kimodo_text_to_motion          | keypoint     | uncensused                        |
-| tropes_removal_model           | keypoint     | uncensused, absent from 1010      |
+| tropes_removal_model           | keypoint     | placed 3-interactor, absent 1010  |
 
 | blocklisted model id         | goal         | status          |
 | ---------------------------- | ------------ | --------------- |
