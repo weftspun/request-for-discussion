@@ -19,6 +19,25 @@ partly somewhere else.
 the keypoint goal, the `mesh-latents` tag for the other. A dash means the
 catalog names it and no manifest here checks it out, so nobody can census it.
 
+**Qwen3.5-Defiant is not in the table, and Gemma 4 is chosen over it.** Both
+are RunPod serving interactors rather than accelerator candidates today, so the
+choice is which one to carry forward, and it turns on audio. Gemma 4's card
+supports text, image and video on every size and **audio on E2B, E4B and 12B** --
+the served build is the 12B. Qwen3.5-9B has vision, needing a separate `mmproj`,
+and no audio at all, so it is not a smaller version of the same thing.
+
+Architecture agrees with capability here, which is unusual enough to say. Gemma
+4 12B Unified is encoder-free and dense; Qwen3.5 is Gated Delta Networks over a
+sparse MoE, and MoE routing is data-dependent -- the one `Refused` category no
+rewrite reaches. The 9B is 0.87 GB smaller at Q4_K_M and that is the only axis
+it wins.
+
+**Unverified, and it is about the fine-tune rather than the architecture.** The
+served build calls itself specialized for coding and agentic work, and says its
+multimodal examples are inherited from base. Whether it keeps working audio and
+vision towers, and whether the GGUF ships their projectors, is settled by
+loading it and feeding it a clip. Nothing here has done that.
+
 **TRELLIS2 is superseded by Pixal3D and is not in the table.** Both draw their
 views from `sphere_hammersley_sequence` -- `render_view.py` names them together
 -- so Pixal3D inherits the structured-latent lineage, and the mesh-painting
@@ -40,7 +59,6 @@ from a list of models, after "on the other goal" and "in no manifest at all".
 | rfdetr keypoint                 | keypoint     | **rank 1, measured**              |
 | omnigen2                        | keypoint     | in use, no repo, absent from 1010 |
 | editscore                       | keypoint     | in use, no repo, absent from 1010 |
-| qwen35_defiant                  | mesh-latents | uncensused, absent from 1010      |
 | gemma4_composer                 | mesh-latents | uncensused, absent from 1010      |
 | seethrough_layer_decomposition  | keypoint     | uncensused                        |
 | skintokens_auto_rig             | keypoint     | uncensused                        |
