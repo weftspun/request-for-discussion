@@ -559,14 +559,14 @@ renderer is not the expensive thing.
 **A result that is deliberately not used.** Multithreaded `llvm_ad_rgb` and `metal_ad_rgb` both
 came back byte-identical across two processes, and `pixi.toml` records the multithreaded case
 drifting by up to 1/255 on a dozen pixels. The negative control went looking for that drift at
-1, 4, 16 and 64 samples per pixel and never reproduced it, so nothing has shown the check *can*
+1, 4, 16 and 64 samples per pixel and never reproduced it, so nothing has shown the check _can_
 fail — which makes its `identical` column decoration rather than evidence. The one-thread
 constraint therefore stands unchanged, and it costs nothing: the process-scaling row reaches
 the same throughput with every frame single-threaded.
 
 **Hailo-first reaches backwards into the training run.** RFD 107e already decided the backbone
 compiles at `num_windows=1` — 825 ONNX nodes parse, 868 are rejected — and that it "costs 1.35x
-wall-clock and **needs retraining**". T09 converts and ports, and it sits *after* T08 trains. A
+wall-clock and **needs retraining**". T09 converts and ports, and it sits _after_ T08 trains. A
 plan followed in its own numbered order therefore trains at the wrong windowing, finds out at
 T09, and pays for the run twice. This is recorded as a standing constraint,
 `EdgeCompileGatesTraining`, rather than a new edge: an edge from T09 back into T08 is a cycle,
@@ -585,7 +585,6 @@ rather than by number, because that document lives in another repository and the
 here correctly refuses a number it cannot resolve:
 
     TE = (O + 4M + P) / 6        sigma^2 = ((P - O) / 6)^2
-
 
 | task                          | O   | M   | P   | TE   | slack |
 | ----------------------------- | --- | --- | --- | ---- | ----- |
