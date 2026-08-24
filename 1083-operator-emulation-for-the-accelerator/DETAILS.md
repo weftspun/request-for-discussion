@@ -19,6 +19,13 @@ empty. That silently produced a systemd unit reading `-v /op_tests_deform:/w/def
 created four empty directories, and the emulation reported an empty table rather than an
 error. Export it once at the top of the command.
 
+It is not only paths, and the other two forms bit while this document was being moved
+into this RFD. `git show origin/main:file` becomes `origin\main;file` -- the colon is
+rewritten too, so a recovery command fails as though the revision were missing. And
+Python is a third case: it wants `C:\...` and does nothing useful with `/c/...`, which
+is how the write that should have created this file failed while the `rm` beside it
+succeeded.
+
 **Verify the destination before removing the source.** This document was nearly lost
 moving it here: the write went to a Python that had been handed `/c/...` instead of `C:\...`
 and failed, while the `rm` on the next line ran anyway. It survived only because the commit
