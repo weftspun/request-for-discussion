@@ -19,6 +19,14 @@ partly somewhere else.
 the keypoint goal, the `mesh-latents` tag for the other. A dash means the
 catalog names it and no manifest here checks it out, so nobody can census it.
 
+**TRELLIS2 is superseded by Pixal3D and is not in the table.** Both draw their
+views from `sphere_hammersley_sequence` -- `render_view.py` names them together
+-- so Pixal3D inherits the structured-latent lineage, and the mesh-painting
+stage TRELLIS2 provided is derivable from it rather than lost. The three
+`trellis2-*` repositories are still checked out on the mesh-latents tag and no
+RFD records the supersession; this is the first place it is written down, which
+means RFD 1026 and RFD 1027 package models nothing now plans to convert.
+
 **Two models are in use with no repo of their own.** OmniGen2 and EditScore are
 pip dependencies inside `6-datasource/anny-render-corpus`, declared as the
 `omnigen2` and `editscore` pixi features, and neither appears in RFD 1010 nor as
@@ -38,21 +46,19 @@ from a list of models, after "on the other goal" and "in no manifest at all".
 | skintokens_auto_rig             | keypoint     | uncensused                        |
 | cyclegan_style_transfer         | keypoint     | uncensused, absent from 1010      |
 | pose_consensus                  | keypoint     | uncensused, absent from 1010      |
-| trellis2_image_to_textured_mesh | mesh-latents | uncensused                        |
-| trellis2_image_mesh_painting    | mesh-latents | uncensused                        |
-| trellis2_ex                     | mesh-latents | uncensused, absent from 1010      |
 | pixal3d_image_to_textured_mesh  | mesh-latents | uncensused                        |
+| pixal3d_image_mesh_painting     | mesh-latents | derivable, no repo yet            |
 | voxhammer_text_mesh_editing     | mesh-latents | uncensused                        |
 | voxhammer_image_mesh_editing    | mesh-latents | uncensused                        |
 | kimodo_text_to_motion           | keypoint     | uncensused                        |
-| tropes_removal_model            | -            | uncensused, absent from 1010      |
-| multimodal_semantic_ids         | mesh-latents | **blocklisted**                   |
-| residual_fsq_recommender        | mesh-latents | **blocklisted**                   |
-| unified_modal_embedder          | mesh-latents | **blocklisted**                   |
-| weftspun_image_to_world         | -            | **blocklisted**                   |
-| lingbot_map_environment_scan    | -            | **blocklisted**                   |
-| worldmirror2_reconstruct        | -            | **blocklisted**                   |
-| triposplat_image_to_splat       | -            | **blocklisted**                   |
+| tropes_removal_model            | keypoint     | uncensused, absent from 1010      |
+| multimodal_semantic_ids         | mesh-latents | uncensused, absent from 1010      |
+| residual_fsq_recommender        | mesh-latents | uncensused, absent from 1010      |
+| unified_modal_embedder          | mesh-latents | uncensused, absent from 1010      |
+| weftspun_image_to_world         | -            | uncensused, no checkout           |
+| lingbot_map_environment_scan    | -            | uncensused, no checkout           |
+| worldmirror2_reconstruct        | -            | uncensused, no checkout           |
+| triposplat_image_to_splat       | -            | uncensused, no checkout           |
 | qwen_q4_k_m_image_edit          | -            | **blocklisted**                   |
 | p3sam_mesh_segmentation         | mesh-latents | **blocklisted**                   |
 | krea2_turbo_text_to_image       | -            | **blocklisted**                   |
