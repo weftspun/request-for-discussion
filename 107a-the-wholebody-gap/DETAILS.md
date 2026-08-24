@@ -605,20 +605,32 @@ times its optimistic, which is a different fact from T08 merely being large. Poi
 Fibonacci and **relative**; they order tasks against each other and convert to no duration at
 all. Anything wanting a calendar has to go and measure one.
 
-| task                          | O   | M   | P   | TE  | slack |
-| ----------------------------- | --- | --- | --- | --- | ----- |
-| T07 verify before training    | S   | M   | L   | 3.2 | 0     |
-| **T02 render the labels**     | M   | L   | XL  | 5.2 | 0     |
-| **T08 masked training**       | L   | XL  | XL  | 7.5 | 0     |
-| T09 GGUF, and 17 to 104       | S   | M   | L   | 3.2 | 0     |
-| T10 score on real photographs | XS  | XS  | XS  | 1.0 | 0     |
-| T03 bake albedo and normal    | XS  | S   | M   | 2.0 | 3.2   |
-| T04 record the checkpoint     | XS  | XS  | S   | 1.2 | 1.7   |
-| T05 the conditioning window   | XS  | S   | L   | 2.3 | 1.7   |
-| T06 finish the corpus schema  | XS  | XS  | XS  | 1.0 | 7.3   |
+| task                             | O   | M   | P   | TE  | slack |
+| -------------------------------- | --- | --- | --- | --- | ----- |
+| T07 verify before training       | S   | M   | L   | 3.2 | 0     |
+| **T02 render the labels**        | M   | L   | XL  | 5.2 | 0     |
+| **T08 masked training**          | L   | XL  | XL  | 7.5 | 0     |
+| T09 GGUF, and 17 to 104          | S   | M   | L   | 3.2 | 0     |
+| T10 score on real photographs    | XS  | XS  | XS  | 1.0 | 0     |
+| T03 bake albedo and normal       | XS  | S   | M   | 2.0 | 3.2   |
+| T04 record the checkpoint        | XS  | XS  | S   | 1.2 | 1.7   |
+| T05 the conditioning window      | XS  | S   | L   | 2.3 | 1.7   |
+| ~~T06 finish the corpus schema~~ | —   | —   | —   | —   | done  |
 
-T01 is complete and carries no size. It is counted and named in the checker's output rather
-than folded in as a zero.
+T01 and T06 are complete and carry no size. They are counted and named in the checker's output
+rather than folded in as a zero — it reports `2 complete` beside the path.
+
+**T06 closed on 2026-08-24** (`anny-render-corpus#6`), and it was larger than the two attributes
+it named. `KEYPOINTS_2D` keyed on `bone_id`, which asserts every keypoint follows a bone; the
+nose and both ears have none, so three of the 104 points were not merely unvalidated but
+**inexpressible**. Anchoring moved into satellite relations, `topologies` interns the vocabulary,
+and `topology_id` is a foreign key because ANNY's two topologies share zero vertices — 19,158
+basemesh against 13,718 body — so a `vertex_id` carrying the wrong one is wrong at an index where
+nothing notices.
+
+Completing it does not move the path: T06 held 7.3 slack and the total stays 20.0. And it does
+not mean the corpus can be written — the renderer emits npz, json and png rather than parquet,
+which is T02's output format. **The schema is finished and there is still nothing to put in it.**
 
 **The chain is now five tasks, and it is not the one either earlier reading named.** Correcting
 the render measurement put **T02 back on the critical path** and took `T04 → T05` off it, which
