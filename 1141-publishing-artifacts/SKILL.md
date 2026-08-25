@@ -22,7 +22,8 @@ Four things stop publication, and they are checked before anything is uploaded:
 - **Licence-dirty sources.** The bar is commercial use *and* derivatives. A set behind a
   registration form is not licence-clean, because terms that cannot be read without
   accepting them cannot be gated on.
-- **Someone else's weights wearing our name.** See the size check below.
+- **Someone else's weights wearing our name.** A checkpoint offered as a model repository.
+  Redistributing a base model *as a mirror* is a different thing and is fine; see below.
 
 ## Name it after the code, and name the side
 
@@ -57,12 +58,31 @@ Where a number appears in the card, it appears as measured. "Improves camera con
 claim; "azimuth 90 moved from 97.6 degrees wrong to 13.3" is a measurement, and the second
 one tells a reader whether to bother.
 
-## Weights: publish the adapter, not the checkpoint
+## Weights: publish the adapter, and mirror the base separately
 
 A trainer that saves under FSDP writes the **whole model** every time, base weights included.
 Measured here: a checkpoint is **14.8 GiB** and the tensors that were actually trained are
 **19.52 MiB**, 304 of 886. Publishing the checkpoint ships Apache-2.0 base weights as though
 they were ours, at 776 times the size, with no way to tell which tensors changed.
+
+**That is an objection to a checkpoint, not to base weights, and an earlier version of this
+file did not distinguish them.** It read as a blanket refusal, which was wrong twice over. The
+licence permits redistribution: OmniGen2 is Apache-2.0 in weights and code. And an adapter is
+deltas against a base it cannot function without, so a card citing a revision that upstream
+later moves describes a model nobody can assemble.
+
+So mirror the base **as its own repository**, unmodified, with the revision in its name --
+`omnigen2-base-df5dca8a` -- and link it from the adapter card. The card names upstream as the
+author, claims no authorship, and says to prefer upstream. A mirror is a fallback, not a front
+door. If a copy were modified it would need a different name, because a modified copy is a
+different artifact.
+
+Two things measured while doing it. **Mirroring 29.13 GiB moved 81.6 MB.** The hub's storage
+is content-addressed, so identical objects are not re-sent, and warning somebody off a mirror
+on bandwidth grounds is advice that does not survive contact with the number. And the local
+cache was **incomplete** -- six README images had never been fetched, because training only
+ever pulled weights. Complete the snapshot at the pinned revision before uploading and say
+that you did, or the result is a subset wearing the word mirror.
 
 So extract first. Two things break quietly and both are asserted rather than hoped for:
 
@@ -88,10 +108,29 @@ other by resampling.
 
 ## Publishing, and checking it landed
 
-Create the repository, upload, then **read it back**. A push that reported success and a
-repository that serves the files are different claims, and the second is the one that matters.
-Confirm the visibility is what was intended, that the `CITATION.cff` is present at the root,
-and that the size on the hub is the size that was uploaded.
+Create the repository, upload, then **read it back from the hub**, downloading rather than
+re-reading the local copies it was built from. A push that reported success and a repository
+that serves the files are different claims, and only the second is any use to a reader.
+
+Four checks, and the third is the one that earns its keep:
+
+- visibility is what was intended, and `CITATION.cff` is at the root;
+- the size the hub serves matches what was uploaded, within a percent or two;
+- **every path in the records resolves against the file list the hub actually serves.** This
+  is what catches an absolute path, a rename, or a file that never uploaded. A card review
+  cannot catch any of them, because cards do not resolve paths;
+- for a mirror, hashes against upstream. The hub exposes sha256 for LFS objects only, so the
+  small files -- `config.json`, tokenizer files -- come back as "present with the right name",
+  which is a weaker claim than "identical". They are a few hundred kilobytes: download both
+  copies and hash them. A mirror whose `config.json` drifted would load a different model
+  while every weight matched.
+
+**No published file may name a local filesystem.** An absolute path is two defects in one
+string: it discloses whose machine made the file, and it points somewhere the reader does not
+have. Rewrite paths relative to the repository root, then scan the staged tree and refuse to
+upload if one survives. Scan for paths *inside* strings and not only whole-string values --
+one hid in an error message, `"no person detected in C:\...z045_A.png"`, which is prose
+rather than a path field and disclosed a home directory just as effectively.
 
 Then link it from the source repository's README, so the two are reachable in both
 directions rather than one.

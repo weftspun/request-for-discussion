@@ -61,6 +61,52 @@ repositories, one dataset and one model, sharing the name and differing in type.
 repository holding a corpus is the mistake this rule prevents, and it is easy to make because
 the run that produced both is one run.
 
+## Mirroring the base, measured
+
+| | |
+| --- | ---: |
+| snapshot on disk | **29.13 GiB** across 42 files |
+| new data actually uploaded | **81.6 MB** |
+| observed rate | 382 MB/s |
+
+The hub stores content-addressed, so objects it already holds are not re-sent. Mirroring a
+public model therefore costs almost nothing in bandwidth, and an earlier draft of the skill
+warned against it on exactly that ground. The warning was wrong and is withdrawn.
+
+**The local cache was incomplete.** Six README images had never been fetched, because training
+pulls weights and nothing else wanted them. `snapshot_download(..., local_files_only=True)`
+raised `IncompleteSnapshotError` and named them. Uploading anyway would have produced 36 files
+under a name that promises 42. Complete the snapshot at the pinned revision, and print that it
+happened, so the record says whether the mirror came from the cache or from a fetch.
+
+## Verifying a mirror, and where the hub cannot help
+
+`repo_info(..., files_metadata=True)` exposes `sha256` for **LFS objects only**. On this
+mirror that is 15 of 41 files -- every weight, and none of the configs.
+
+So the first verification reported "15 compared by sha256, 0 differing" and left 26 files
+checked only for presence. Presence and identity are different claims, and the gap matters
+more than the count suggests: a mirror whose `config.json` had drifted would load a different
+model while every weight matched.
+
+The 26 are a few hundred kilobytes. Downloading both copies and hashing them locally took
+seconds and closed it: **26 small files hashed, 0 differing**.
+
+## Absolute paths, and the one that hid in prose
+
+Three staged files named a home directory after the first rewrite pass, and a fourth survived
+a second pass. The first three were path *fields* -- `source_frame` in the measurement JSONs.
+The fourth was inside a sentence:
+
+    "no person detected in C:\Users\...\az045_A.png at threshold 0.3"
+
+A check on whole-string values misses that entirely, and it discloses just as much. Substitute
+inside strings, then scan the staged tree and refuse to upload while one remains.
+
+One more, worth naming because it made a check pass while doing nothing: the scanning regex
+was written with a character class holding an escaped slash, which is just a slash. It matched
+no backslash at all, so a drive-letter path sailed through a check that reported success.
+
 ## What is not measured here
 
 Hugging Face upload throughput, LFS behaviour on files above 5 GB, and whether the hub's own
