@@ -77,7 +77,6 @@ defmodule Weftspun.CineformDelivery.Domain do
         %{pointer_set: "/facing_deg", value: %{pointer_get: "/facing_deg"}}
       ]
     },
-
     "render_frames" => %{
       params: ["subject"],
       bind: %{"subject" => "subject"},
@@ -104,7 +103,6 @@ defmodule Weftspun.CineformDelivery.Domain do
         %{pointer_set: "/stream", value: @stream_rgba}
       ]
     },
-
     "encode_clip" => %{
       params: [],
       bind: %{},
