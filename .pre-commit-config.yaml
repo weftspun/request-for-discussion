@@ -24,12 +24,22 @@ repos:
   # approves rather than as a red run on an unrelated pull request.
   - repo: local
     hooks:
+      # `pen-66606.usda` IS EXCLUDED, AND THE EXCLUSION IS NAMED RATHER THAN SILENT.
+      #
+      # It sublayers each manual site's own register, and the sites are separate
+      # repositories. A checkout of this repository alone cannot resolve
+      # `../multiplayer-fabric-manuals/SERIALS.usda`, so usdchecker reports an
+      # unresolvable external dependency for a layer that is correct in the workspace
+      # it was written for. Excluding it here would be a silent skip if nothing else
+      # read it, so `check_pen_66606.py` does, at the manual stage, where a `repo`
+      # workspace exists. That gate is stricter than this one about the same file.
       - id: usd-valid
         name: USD layers parse, validate and round-trip through crate
         entry: python scripts/check_usd_valid.py
         language: python
         additional_dependencies: ["usd-core==26.8"]
         files: \.usd[acz]?$
+        exclude: ^pen-66606\.usda$
         pass_filenames: true
 
       # A hand-written index of the files beside it is a second copy of `ls`, and the two
