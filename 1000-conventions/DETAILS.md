@@ -136,7 +136,7 @@ and a value with a space in it splits into two columns without saying so.
 
 It holds this site's serials and no other site's. A copy of another site's
 rows would be a second record of one fact, and the first copy edited would win
-by accident. `2-contract/logbook/pen-66606.usda` composes the sites with
+by accident. `pen-66606.usda` composes the sites with
 sublayers, so the whole PEN reads as one stage and no site restates another.
 
 A serial is appended once. It is never removed and never reused. A slug
