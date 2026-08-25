@@ -52,34 +52,37 @@ not go looking for that sentence.
 None of the four is licence-dirty, and none was measured and rejected. They are
 out of scope, which is the cheapest exclusion to reverse.
 
-## Named in RFD 1084 and nowhere else
+## Named in RFD 1084 and nowhere else, RETRACTED
 
-| model id                 | goal         | what was found |
-| ------------------------ | ------------ | -------------- |
-| multimodal_semantic_ids  | mesh-latents | nothing        |
-| residual_fsq_recommender | mesh-latents | nothing        |
-| unified_modal_embedder   | mesh-latents | nothing        |
+**The three are placed, and this section said they were not.** It is kept rather
+than rewritten, because the way it was wrong is the more useful half.
 
-Each was searched for across the RFD corpus: no directory, no README, no
-ALIASES.md row, and no citation. RFD 1084's own table is the only file in this
-repository that names any of the three.
+| model id                 | path                                | revision                              |
+| ------------------------ | ----------------------------------- | ------------------------------------- |
+| multimodal_semantic_ids  | 3-interactor/multimodal-semantic-ids | refs/tags/mesh-latents/v0.1.0-dev.1  |
+| residual_fsq_recommender | 3-interactor/residual-fsq-recommender | refs/tags/mesh-latents/v0.1.0-dev.1 |
+| unified_modal_embedder   | 3-interactor/unified-modal-embedder | refs/tags/mesh-latents/v0.1.0-dev.1   |
 
-The search is bounded and the bound is stated, because an absence measured over
-one tree is not an absence. It covers this repository. It does not cover
-`src/library/aiModelsCatalog.js`, which is the studio's catalog and the source
-RFD 1010 drew from, and it does not cover the mesh-latents checkouts pinned at
-`refs/tags/mesh-latents/v0.1.0-dev.1`. A grep across the whole workspace was
-started for this and did not finish inside two minutes, so it is not reported as
-a result. What is reported is the smaller claim the search supports.
+`default.xml` carries all three as `<project>` entries, pinned to the
+mesh-latents tag, and all three are checked out at 3-interactor. Placement is
+what a live goal manifest says, and it says these are placed.
 
-So these three are not excluded. Their status is unknown, and it was written
-down as an exclusion, which is the failure mode this RFD exists to separate. The
-three carry the `mesh-latents` goal in RFD 1084's table, and a goal comes from
-`default.xml`, so something placed them once.
+What the first version searched was the RFD corpus: no directory, no README, no
+ALIASES.md row, no citation. That search was accurate and its bound was stated.
+The bound was then read as a result anyway, which is the failure. An absence
+measured over one tree was written up under a heading that claimed the workspace,
+and the file that would have settled it in one grep is the same `default.xml`
+this document already cites for the `goal` column of RFD 1084's table.
 
-Two ways to close it, and either is cheap: read the catalog and confirm the ids
-are live entries, or delete the rows and record that RFD 1084 carried three ids
-nothing supports. Neither has been done.
+So the correct finding is smaller and worse. These three are not unfound, and
+they are not excluded either. They are placed projects on 3-interactor that RFD
+1084 listed as blocklisted, and nothing in this repository records a reason. The
+RFD corpus still has no entry for any of them, which is now a documentation gap
+rather than evidence of absence.
+
+Two ways to close it. Read the three checkouts and record what they are, or
+delete the rows from RFD 1084 and say the blocklisted mark was never supported.
+The first is the one that leaves a reader better off.
 
 ## What this leaves for RFD 1084
 

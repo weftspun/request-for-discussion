@@ -10,11 +10,10 @@ carried a second table beside the ranking: ten model ids marked
 blocklisted. One word covered three exclusions, and the word is
 wrong for seven of the ten.
 
-Three are blocklisted. CLAUDE.md excludes Qwen-Image-Edit, P3-SAM
-and Krea 2, for quantisation damage and for licence terms. Four are
-abandoned: RFD 1040 turned the roadmap toward character concepts,
-and RFD 1031, RFD 1032, RFD 1033 and RFD 1034 record the pivot. The
-last three name nothing this workspace holds.
+Three are blocklisted: CLAUDE.md excludes Qwen-Image-Edit, P3-SAM
+and Krea 2. Four are abandoned, and RFD 1040 turned the roadmap
+away from their scope. The last three are placed projects on
+3-interactor carrying no recorded reason at all.
 
 A reader who asks why a model is unranked gets one answer where
 there are three, and two of the three can reverse.
@@ -27,11 +26,12 @@ row is.
 Every excluded model carries the blocklist entry, the RFD, or the
 absence that excludes it. The kind decides what reopens the row. A
 blocklist row reopens when the agreements change. An abandoned RFD
-reopens when the roadmap returns to its scope. An unfound id reopens
-when somebody finds what it names, or deletes it.
+reopens when the roadmap returns to its scope. An unexplained mark
+reopens the moment somebody reads the checkout it names.
 
 `DETAILS.md` gives the three groups, the reason under each row, and
-what the seven mislabelled rows were checked against.
+a retraction: the last three were first published as unfound, and
+`default.xml` places all three.
 
 ## Related
 
