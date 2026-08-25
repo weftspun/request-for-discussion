@@ -12,7 +12,7 @@ type-checks the arrays on read, which a markdown table cannot do.
 
 This site's register holds this site's serials and no other site's. A site that
 copied another's rows would be a second record of the same fact, and the first
-one to be edited would win by accident. `2-contract/logbook/pen-66606.usda`
+one to be edited would win by accident. `pen-66606.usda`
 composes the sites into one view with sublayers, which is USD doing the join
 rather than a human doing the copy.
 
