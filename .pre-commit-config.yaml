@@ -119,23 +119,13 @@ repos:
       # A sublayer that does not resolve composes to nothing, and USD reports it as a
       # warning rather than an error. Two sites authoring one serial compose to one row,
       # which reads exactly like agreement. Both are invisible to the stage and both are
-      # what this gate exists for. The page is generated from the same composition, so
-      # --check fails when it goes stale rather than letting it disagree quietly.
+      # what this gate exists for.
       - id: pen-66606
         name: every site owns its own serials and no two sites author one
         entry: python scripts/check_pen_66606.py
         language: python
         additional_dependencies: ["usd-core==26.8"]
         files: ^(pen-66606\.usda|scripts/check_pen_66606\.py)$
-        pass_filenames: false
-        stages: [manual]
-
-      - id: serials-page
-        name: serials.qmd still matches the registers it is generated from
-        entry: python scripts/serials_to_qmd.py --check
-        language: python
-        additional_dependencies: ["usd-core==26.8"]
-        files: ^(pen-66606\.usda|SERIALS\.usda|scripts/serials_to_qmd\.py)$
         pass_filenames: false
         stages: [manual]
 

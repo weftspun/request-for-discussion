@@ -136,8 +136,18 @@ and a value with a space in it splits into two columns without saying so.
 
 It holds this site's serials and no other site's. A copy of another site's
 rows would be a second record of one fact, and the first copy edited would win
-by accident. `pen-66606.usda` composes the sites with
-sublayers, so the whole PEN reads as one stage and no site restates another.
+by accident. `pen-66606.usda` composes the sites with sublayers, so the whole
+PEN reads as one stage and no site restates another.
+
+The published page holds no copies either. `multiplayer-fabric-manuals`
+renders `pages/serials.qmd` from these registers at build time, reading each
+site's over HTTPS, so the identifiers exist once and a reader sees what the
+registers say rather than what a generator last wrote.
+
+There was a generator, and it wrote that page into the site. It needed a gate
+to catch the page drifting from the registers, and that gate went red twice in
+a week, correctly both times. The page reading the registers itself removes
+the copy rather than watching it, and the generator and its gate are deleted.
 
 A serial is appended once. It is never removed and never reused. A slug
 follows its directory, because a retitle renames a document and does not
