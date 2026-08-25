@@ -83,19 +83,6 @@ catalog, and the fix was to place them, not to argue they were findable.
 | kimodo_text_to_motion          | keypoint     | uncensused                        |
 | tropes_removal_model           | keypoint     | placed 3-interactor, absent 1010  |
 
-| blocklisted model id         | goal         | status          |
-| ---------------------------- | ------------ | --------------- |
-| multimodal_semantic_ids      | mesh-latents | **blocklisted** |
-| residual_fsq_recommender     | mesh-latents | **blocklisted** |
-| unified_modal_embedder       | mesh-latents | **blocklisted** |
-| weftspun_image_to_world      | -            | **blocklisted** |
-| lingbot_map_environment_scan | -            | **blocklisted** |
-| worldmirror2_reconstruct     | -            | **blocklisted** |
-| triposplat_image_to_splat    | -            | **blocklisted** |
-| qwen_q4_k_m_image_edit       | -            | **blocklisted** |
-| p3sam_mesh_segmentation      | mesh-latents | **blocklisted** |
-| krea2_turbo_text_to_image    | -            | **blocklisted** |
-
 The device half at 576 with `num_windows=1` is **825 nodes over 22 distinct
 operators**, and every operator is inside `gate_onnx_device.py`'s allowlist. The
 numeric check against PyTorch holds at 3.3e-6. Reproduce with
@@ -130,17 +117,13 @@ edge device is a different question from converting a detector. They are in the
 table because a list of models that omits the two doing daily work is not a list
 of models.
 
-## The three that are excluded
+## The ten that are excluded
 
-Qwen-Image-Edit is 20.4B and runs here only quantised, and quantised it corrupts.
-P3-SAM carries a territory-restricted licence excluding the EU, the UK and South
-Korea. Krea 2 is revenue-gated and the restriction propagates.
-
-The identifier `qwen_q4_k_m_image_edit` names the Q4_K_M build directly, which is
-the quantised path the entry excludes -- the catalog identifier and the reason
-for exclusion are the same fact. `BLOCKLIST.md` carries the argument for each.
-
-Ranking them would send somebody to work the agreements have already closed.
+RFD 1085 carries them, and this document does not restate the rows. It was split
+out of this one because the ten did not share a reason: three are blocklisted by
+the agreements, four are abandoned with the world-building scope, and three name
+nothing found in this repository. One table calling all ten `blocklisted` said
+the reversible and the closed were the same thing.
 
 ## What ordering the rest requires
 
