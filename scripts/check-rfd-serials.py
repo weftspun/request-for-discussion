@@ -1,0 +1,332 @@
+#!/usr/bin/env python3
+"""Check the serial register against the tree, and against its own last revision.
+
+RFD 1000 gives the rule. A serial is allocated once, and it names one document
+for as long as the arc under the PEN exists. This gate is what makes that
+enforceable rather than agreed.
+
+The register is `SERIALS.usda`, in Essential Tuple Normal Form: one typed array
+per column, parallel by index, no nulls and nothing derivable stored. A count
+is `len()` of a column rather than a number somebody maintains beside it. USD
+type-checks the arrays on read, which a markdown table cannot do.
+
+This site's register holds this site's serials and no other site's. A site that
+copied another's rows would be a second record of the same fact, and the first
+one to be edited would win by accident. `2-contract/logbook/pen-66606.usda`
+composes the sites into one view with sublayers, which is USD doing the join
+rather than a human doing the copy.
+
+The second check is the one that matters. A renumbering removes serials from
+the register and adds others in their place, so it fails on the removals. A
+retitle keeps the serial and changes the slug, so it passes. The difference
+between the two is the whole point of the register.
+
+Run --self-test to see each check reject a known-bad input, because a check
+that passes on broken input certifies the defect instead of catching it.
+"""
+import os
+import re
+import subprocess
+import sys
+
+from pxr import Sdf, Usd
+
+ORG = "1"
+REGISTER = "SERIALS.usda"
+DIR_RE = re.compile(r"^([0-9]{4})-([a-z0-9-]+)$")
+
+
+def read(text):
+    """(allocated, deleted) as serial -> value, read off the composed stage.
+
+    A relation is any prim declaring `columns`, and the scope above it says
+    which table it is. Reading the declaration rather than a fixed prim path
+    means a site can name its own scope after itself.
+    """
+    layer = Sdf.Layer.CreateAnonymous(".usda")
+    if not layer.ImportFromString(text):
+        raise ValueError(f"{REGISTER} does not parse as USD")
+    stage = Usd.Stage.Open(layer)
+    allocated, deleted = {}, {}
+    for prim in stage.Traverse():
+        cols = prim.GetAttribute("columns")
+        if not (cols and cols.HasAuthoredValue()):
+            continue
+        names = [str(c).split()[0] for c in cols.Get() if str(c).strip()]
+        arrays = {}
+        for name in names:
+            a = prim.GetAttribute(name)
+            arrays[name] = list(a.Get()) if a and a.HasAuthoredValue() else None
+        table = None
+        for ancestor in str(prim.GetPath()).split("/"):
+            if ancestor == "Allocated":
+                table = allocated
+            elif ancestor == "Deleted":
+                table = deleted
+        if table is None or arrays.get("serial") is None:
+            continue
+        other = "slug" if table is allocated else "recorded_in"
+        values = arrays.get(other)
+        if values is None:
+            continue
+        for serial, value in zip(arrays["serial"], values):
+            table[f"{serial}"] = str(value)
+    return allocated, deleted
+
+
+def columns_are_parallel(text):
+    """Every declared column carries an array, and the arrays are equal length.
+
+    This is the check a markdown table could not carry. A packed row splits on
+    whitespace and a value with a space in it silently becomes two columns.
+    """
+    problems = []
+    layer = Sdf.Layer.CreateAnonymous(".usda")
+    if not layer.ImportFromString(text):
+        return [f"{REGISTER} does not parse as USD"]
+    stage = Usd.Stage.Open(layer)
+    for prim in stage.Traverse():
+        cols = prim.GetAttribute("columns")
+        if not (cols and cols.HasAuthoredValue()):
+            continue
+        names = [str(c).split()[0] for c in cols.Get() if str(c).strip()]
+        lengths = {}
+        for name in names:
+            a = prim.GetAttribute(name)
+            if not (a and a.HasAuthoredValue()):
+                problems.append(f"{prim.GetPath()} declares column {name} and authors no array")
+                continue
+            lengths[name] = len(a.Get())
+        if len(set(lengths.values())) > 1:
+            shown = ", ".join(f"{n} {c}" for n, c in sorted(lengths.items()))
+            problems.append(f"{prim.GetPath()} column arrays are not parallel: {shown}")
+    return problems
+
+
+def rfd_dirs(root):
+    return sorted(
+        d for d in os.listdir(root)
+        if os.path.isdir(os.path.join(root, d)) and DIR_RE.match(d)
+    )
+
+
+def check_tree(root, text):
+    problems = columns_are_parallel(text)
+    allocated, deleted = read(text)
+    if not allocated:
+        # An empty register would make every check below vacuous, which reads
+        # exactly like a pass.
+        problems.append(f"{REGISTER} lists no allocated serial, which is never correct here")
+
+    for serial in sorted(set(allocated) & set(deleted)):
+        problems.append(f"serial {serial} is listed as allocated and as deleted")
+
+    for serial in sorted(set(allocated) | set(deleted)):
+        if serial[0] != ORG:
+            problems.append(f"serial {serial}: this site is {ORG}, and that serial is not its own")
+
+    on_disk = {}
+    for d in rfd_dirs(root):
+        m = DIR_RE.match(d)
+        on_disk[m.group(1)] = m.group(2)
+
+    for serial, slug in sorted(on_disk.items()):
+        if serial not in allocated:
+            problems.append(f"{serial}-{slug}: the directory has no row in {REGISTER}")
+        elif allocated[serial] != slug:
+            problems.append(
+                f"{serial}: {REGISTER} says {allocated[serial]}, the directory says {slug}"
+            )
+
+    for serial in sorted(allocated):
+        if serial not in on_disk:
+            problems.append(f"serial {serial} is allocated and has no directory")
+
+    for serial in sorted(deleted):
+        if serial in on_disk:
+            problems.append(f"serial {serial} is listed as deleted and has a directory")
+
+    return problems
+
+
+def check_against_base(base_text, text):
+    """A serial the previous revision recorded is still recorded, and unmoved.
+
+    Allocated to deleted is the one move a serial may make. The reverse would
+    hand a retired number to a new document, which is a renumbering wearing a
+    deletion for a hat.
+    """
+    problems = []
+    was_a, was_d = read(base_text)
+    now_a, now_d = read(text)
+    now = set(now_a) | set(now_d)
+
+    for serial in sorted(set(was_a) | set(was_d)):
+        if serial not in now:
+            problems.append(f"serial {serial} was in the register and is gone from it")
+    for serial in sorted(was_d):
+        if serial in now_a:
+            problems.append(f"serial {serial} was deleted and is allocated again")
+    return problems
+
+
+def base_register(root, base):
+    r = subprocess.run(
+        ["git", "show", f"{base}:{REGISTER}"],
+        cwd=root, capture_output=True, text=True,
+    )
+    return r.stdout if r.returncode == 0 else None
+
+
+def register_is_new(root, base):
+    """True when this change is the one that adds the register.
+
+    The change that introduces the register has no previous revision to be held
+    against, and it is the only change that may say so. Every later one has a
+    base register, and a missing base then means the file was deleted, which is
+    how a renumbering would get past this gate if it could.
+    """
+    r = subprocess.run(
+        ["git", "diff", "--name-status", f"{base}...HEAD", "--", REGISTER],
+        cwd=root, capture_output=True, text=True,
+    )
+    return r.returncode == 0 and r.stdout.strip().startswith("A")
+
+
+GOOD = """#usda 1.0
+(
+    defaultPrim = "Serials"
+)
+
+def Scope "Serials"
+{
+    def Scope "Weftspun"
+    {
+        def Scope "Allocated"
+        {
+            def "Rfd"
+            {
+                custom string[] columns = ["serial int16 PK", "slug string"]
+                custom int[] serial = [1000, 1001]
+                custom string[] slug = ["conventions", "a-slug"]
+            }
+        }
+
+        def Scope "Deleted"
+        {
+            def "Retired"
+            {
+                custom string[] columns = ["serial int16 PK", "recorded_in int16 FK"]
+                custom int[] serial = [1002]
+                custom int[] recorded_in = [1070]
+            }
+        }
+    }
+}
+"""
+
+
+def self_test():
+    import shutil
+    import tempfile
+
+    ragged = GOOD.replace('custom string[] slug = ["conventions", "a-slug"]',
+                          'custom string[] slug = ["conventions"]')
+    unauthored = GOOD.replace('custom string[] slug = ["conventions", "a-slug"]', "")
+    empty = GOOD.replace("custom int[] serial = [1000, 1001]", "custom int[] serial = []").replace(
+        'custom string[] slug = ["conventions", "a-slug"]', "custom string[] slug = []")
+    foreign = GOOD.replace("custom int[] serial = [1000, 1001]", "custom int[] serial = [1000, 2001]")
+    renumbered = GOOD.replace("custom int[] serial = [1000, 1001]", "custom int[] serial = [1000, 1003]").replace(
+        "1001-a-slug", "1003-a-slug")
+    revived = GOOD.replace("custom int[] serial = [1002]", "custom int[] serial = []").replace(
+        "custom int[] recorded_in = [1070]", "custom int[] recorded_in = []").replace(
+        "custom int[] serial = [1000, 1001]", "custom int[] serial = [1000, 1001, 1002]").replace(
+        'custom string[] slug = ["conventions", "a-slug"]',
+        'custom string[] slug = ["conventions", "a-slug", "a-new-thing"]')
+
+    def build(tmp, dirs, text):
+        for d in dirs:
+            os.makedirs(os.path.join(tmp, d))
+        with open(os.path.join(tmp, REGISTER), "w", encoding="utf-8") as fh:
+            fh.write(text)
+
+    both = ["1000-conventions", "1001-a-slug"]
+    tree_cases = [
+        ("a register that matches the tree", both, GOOD, False),
+        ("a directory with no row", both + ["1004-extra"], GOOD, True),
+        ("a row with no directory", ["1000-conventions"], GOOD, True),
+        ("a slug that disagrees with the directory",
+         ["1000-conventions", "1001-another-slug"], GOOD, True),
+        ("a deleted serial with a directory", both + ["1002-back-again"], GOOD, True),
+        ("column arrays that are not parallel", both, ragged, True),
+        ("a declared column with no array", both, unauthored, True),
+        ("an empty register", ["1000-conventions"], empty, True),
+        ("a serial belonging to another site", both, foreign, True),
+    ]
+    base_cases = [
+        ("an appended serial", GOOD, GOOD.replace(
+            "custom int[] serial = [1000, 1001]", "custom int[] serial = [1000, 1001, 1005]").replace(
+            'custom string[] slug = ["conventions", "a-slug"]',
+            'custom string[] slug = ["conventions", "a-slug", "a-later-one"]'), False),
+        ("a retitled slug", GOOD, GOOD.replace("a-slug", "a-better-slug"), False),
+        ("a renumbering", GOOD, renumbered, True),
+        ("a deleted serial handed to a new document", GOOD, revived, True),
+    ]
+
+    ok = True
+    print("self-test: each known-bad input must be rejected")
+    for label, dirs, text, should_fail in tree_cases:
+        tmp = tempfile.mkdtemp()
+        try:
+            build(tmp, dirs, text)
+            failed = bool(check_tree(tmp, text))
+        finally:
+            shutil.rmtree(tmp)
+        if failed != should_fail:
+            ok = False
+        print(f"  {'ok ' if failed == should_fail else 'BAD'} {label}: "
+              f"{'rejected' if failed else 'accepted'}")
+    for label, before, after, should_fail in base_cases:
+        failed = bool(check_against_base(before, after))
+        if failed != should_fail:
+            ok = False
+        print(f"  {'ok ' if failed == should_fail else 'BAD'} {label}: "
+              f"{'rejected' if failed else 'accepted'}")
+    return 0 if ok else 1
+
+
+def main(argv):
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    base = "HEAD"
+    if "--base" in argv:
+        base = argv[argv.index("--base") + 1]
+    with open(os.path.join(root, REGISTER), encoding="utf-8") as fh:
+        text = fh.read()
+
+    problems = check_tree(root, text)
+    base_text = base_register(root, base)
+    if base_text is None:
+        # An unmet precondition is a failure, not a skip. A skipped comparison
+        # reads exactly like a passing one, and this is the check that stops a
+        # renumbering. The one exception clears itself: after the change that
+        # adds the register lands, no later base lacks it.
+        if register_is_new(root, base):
+            print(f"{REGISTER} is added in this change, so {base} has none to hold it against")
+        elif "--allow-missing-base" in argv:
+            print(f"no register at {base}, and --allow-missing-base was given")
+        else:
+            problems.append(f"no {REGISTER} at {base}, so nothing held the register in place")
+    else:
+        problems += check_against_base(base_text, text)
+
+    for line in problems:
+        print(line)
+    allocated, deleted = read(text)
+    print(f"{len(allocated)} allocated, {len(deleted)} deleted, {len(problems)} problems")
+    return 1 if problems else 0
+
+
+if __name__ == "__main__":
+    if "--self-test" in sys.argv:
+        sys.exit(self_test())
+    sys.exit(main(sys.argv))

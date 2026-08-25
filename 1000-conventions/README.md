@@ -12,7 +12,7 @@ repository that now develops it.
 
 Technical writing follows ASD-STE100 Simplified Technical English.
 An essay follows the AI-trope gate, and a section names which one it
-takes. RFD 107d gives that rule. Code and identifiers follow neither.
+takes. RFD 1125 gives that rule. Code and identifiers follow neither.
 
 The repository keeps designs in one place. The decisions directory
 records durable decisions. The docs tree holds detailed designs.
@@ -29,10 +29,10 @@ retracts, which after the move is the detail it corrects.
 ## References
 
 - RFD style: `rfd-driven-architecture` skill
-- Numbering rule: `DETAILS.md`. Old numbers: `ALIASES.md`
+- Numbering rule and OID arc: `DETAILS.md`. Serials in use: `SERIALS.usda`
 - STE spec: https://www.asd-ste100.org/ Tropes: https://tropes.fyi
 - STE linter: the `simplified-technical-english` Claude Code plugin
-  (`fire/claude-ste-plugin`). RFD 103f records the move off a
+  (`fire/claude-ste-plugin`). RFD 1063 records the move off a
   repo-local script.
 
 ## Related

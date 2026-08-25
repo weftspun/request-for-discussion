@@ -30,5 +30,5 @@ runtime consumes the motion for talk to your VRM.
 
 ## Related
 
-RFD 1002 places the stage in the pipeline. RFD 100b records the
+RFD 1002 places the stage in the pipeline. RFD 1011 records the
 publish flow that this stage replaces.

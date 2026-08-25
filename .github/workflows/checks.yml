@@ -38,6 +38,22 @@ jobs:
       - run: python scripts/check-rfd-numbers.py --self-test
       - run: python scripts/check-rfd-numbers.py
 
+  rfd-serials:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The register is held against its own previous revision, so the
+          # base commit has to be in the checkout. A shallow clone has no
+          # previous revision and the comparison would silently do nothing.
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: pip install -r scripts/requirements.txt
+      - run: python scripts/check-rfd-serials.py --self-test
+      - run: python scripts/check-rfd-serials.py --base origin/${{ github.event.pull_request.base.ref || 'main' }}
+
   rfd-structure:
     runs-on: ubuntu-latest
     steps:
@@ -46,7 +62,7 @@ jobs:
         with:
           python-version: "3.x"
       # The CommonMark parser is the one dependency these gates take, and it
-      # is pinned. RFD 107c says why the AST is worth it.
+      # is pinned. RFD 1124 says why the AST is worth it.
       - run: pip install -r scripts/requirements.txt
       - run: python scripts/check-rfd-structure.py --self-test
       - run: python scripts/check-rfd-structure.py

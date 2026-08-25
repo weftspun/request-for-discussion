@@ -29,4 +29,4 @@ See `DETAILS.md` for the renderer fallback chain.
 
 ## Related
 
-RFD 100a defines the XR paths.
+RFD 1010 defines the XR paths.
