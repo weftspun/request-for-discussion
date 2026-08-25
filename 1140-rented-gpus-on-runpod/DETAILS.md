@@ -64,6 +64,28 @@ The last of those is the trap. The key was present in `~/.runpod/config.toml`, 5
 correct prefix, and the CLI could not see it because it was not under a `[default]` section.
 The message names a missing profile and reads as a missing credential.
 
+## The REST surface, read from its own spec
+
+`GET https://rest.runpod.io/v1/openapi.json` with a bearer token returns 23 paths. The ones
+that matter:
+
+    /pods            get, post          /endpoints                  get, post
+    /pods/{id}       get, patch, delete /endpoints/{id}             get, patch, delete
+    /pods/{id}/stop  post               /endpoints/{id}/update      post
+    /pods/{id}/start post               /billing/pods               get
+    /pods/{id}/reset post               /billing/endpoints          get
+
+Two things follow. There is **no `/gputypes`**: card selection is a field on `POST /pods`, so
+the CLI or the console is where you discover what is available, not the REST API. And
+`/endpoints` is the serverless surface, which is the batch path -- it answered 200 with **0
+items**, so nothing is configured here yet.
+
+`/billing/pods` and `/billing/endpoints` are how the tear-down check is done without trusting
+memory. A pod believed stopped shows up in the first of those.
+
+Measured 2026-08-25: key read from 1Password, `GET /pods` returned **200** with **0 running
+pods**, so nothing was billing.
+
 ## What is not measured here
 
 Batch API throughput and pricing, spot versus on-demand, and network volumes. The batch path
