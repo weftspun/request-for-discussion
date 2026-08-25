@@ -73,3 +73,44 @@ up and scale can be measured, so the run says which two did not run.
 how you know.** A front view places the camera in front of the chest
 and shows the face. If a sign were inverted the same frame would show
 the back.
+
+## An ordering is a convention, and two orderings will differ
+
+Rule 6 is usually read as up axis, units and rotation order. It also
+covers **the order of a labelled array**, and that one is quieter.
+
+ANNY's `coco.pth` stores its six foot points as
+
+    left_big_toe, right_big_toe, left_small_toe, right_small_toe,
+    left_heel, right_heel
+
+COCO-WholeBody's indices 17 to 22 are
+
+    left_big_toe, left_small_toe, left_heel,
+    right_big_toe, right_small_toe, right_heel
+
+Position 18 is `right_big_toe` in one and `left_small_toe` in the other.
+Copying that tensor by slice puts four of six feet on the wrong point
+and **nothing raises**: the shapes agree, the weights still sum to one,
+and the defect appears only as a body whose feet are crossed.
+
+So copy by name, and check the orders still differ. A check that only
+copies by name is silent if the orders ever converge, and a check that
+asserts they differ tells you when the workaround stopped being needed.
+The published order came from mmpose's own dataset config, not from
+memory, because a wire format recalled is a wire format guessed.
+
+## A vertex index means nothing without its mesh
+
+ANNY's two topologies share **zero** vertices: 19,158 for
+`base_mesh="makehuman"` against 13,718 for the body topology.
+`coco.pth`'s weight vectors are 19,158 wide, and
+`anny_rig.build_corpus_model()` returns 13,718 while
+`loop1_fit.build_model()` returns 19,158.
+
+Multiplying one by the other does not fail loudly. It fails at a vertex
+index, which is why the corpus schema carries `topology_id` as a foreign
+key rather than a label: a label can be forgotten and a foreign key
+fails the validator. Any file that stores vertex indices records the
+topology beside them, and any check on such a file asserts the widths
+match before it does anything else.

@@ -64,6 +64,86 @@ avoid it. A render's matte is exact, so no matting model belongs on that path at
 
 `ATTN_BACKEND=sdpa`, because flash-attn is not installed and upstream defaults to it.
 
+## It builds now, and it still does not finish
+
+Measured on the desk, 2026-08-25, RTX 3090 (Ampere sm_86). **Stage 1 of 3 succeeds** -- sparse
+structure, 12/12 steps, 22 s -- and stage 2 dies:
+
+    NATTEN failure: CUDA runtime error: no kernel image is available for execution on the device
+
+NATTEN appears nowhere in Pixal3D's own Python. It arrives through **NAF**, the upsampler used whenever `use_naf_upsample: True`, which
+is every stage except the one that worked. `flash_attn_3` has the same problem and can be routed
+around with `ATTN_BACKEND=sdpa`. NATTEN has no equivalent switch, and the missing kernel is for
+sm_86, so any other Ampere card fails the same way. The options are to build `natten` for sm_86 against a `-devel` base with Ampere support
+unverified, to disable NAF and label the output off-distribution, or to rent a Hopper card --
+RFD 1140 covers the last of those. The config is known-good up to this point.
+
+No GLB was produced. Vertex counts, extract VRAM and the mesh usability check **did not run and
+are counted as not-run, not as passes**.
+
+## Two failures that stopped it building at all
+
+Both are in the repository, and either one alone stops the build at step 4 of 7.
+
+**The Dockerfile pins a branch that does not exist.** `ARG PIXAL3D_REF=main`; upstream's default
+branch is **`master`**, HEAD `cdbb2bbf`. It fails 140 s in, at step 4 of 7, before any Python is
+installed:
+
+    error: pathspec 'main' did not match any file(s) known to git
+
+**Upstream's requirements file is no longer solvable.** `requirements-hfdemo.txt` carries an
+unpinned `git+https://github.com/microsoft/MoGe.git`, which now resolves to moge 3.0.0 and wants
+`flex-gemm 1.0.0`, while the same file pins the prebuilt `flex_gemm 0.0.1` wheel everything else
+is built against. The result is `ResolutionImpossible`. Install MoGe afterwards with `--no-deps`
+so the prebuilt wheel wins. This is the hazard CLAUDE.md's `uv` entry describes, arriving through
+someone else's repository: the file was reproducible when written and is not now.
+
+Three smaller ones follow those: `utils3d_moge`, `pipeline`, `scipy` and `matplotlib` go missing;
+the `-runtime` base has no C compiler and triton JIT-compiles at import (`Failed to find C
+compiler`); and `render_utils.py` imports `utils3d`, which is listed nowhere.
+
+## A native environment is impossible here, and that is settled
+
+Every heavy dependency publishes **linux_x86_64 wheels only** -- `natten`, `flash_attn_3`,
+`cumesh`, `flex_gemm`, `o_voxel`, `nvdiffrast`, `nvdiffrec_render` -- and three of those are the
+authors' own CUDA extensions with no source distribution on PyPI. Docker is the only path on
+Windows. A pixi environment for this cannot be built, so do not start one.
+
+## Cutting BRIA out, and proving it
+
+Cutting the construction site alone leaves the class reachable from a cached config. Three cuts:
+
+a. **delete** the `rembg_model` entry from a patched `pipeline.json`, bind-mounted over the
+   cached copy at run time, leaving the HF cache untouched;
+b. replace every `pipeline.rembg_model = getattr(rembg, ...)(...)` -- in `pixal3d_image_to_3d.py`,
+   `trellis2_image_to_3d.py` and `trellis2_texturing.py` -- with `None`, and **raise** if a config
+   still carries the key;
+c. make `BiRefNet.__init__` **raise** before its `from_pretrained`, so the class is unreachable
+   whatever any config says.
+
+Then prove it twice rather than assuming the edit worked. Grep the patched config for
+`bria|RMBG|briaai`: zero hits, and zero constructed components. Diff `~/.cache/huggingface/hub`
+before and after: no `briaai` or `RMBG` repository appears. Add a runtime gate that calls the
+constructor and **exits non-zero if it succeeds**.
+
+`preprocess_image`'s no-alpha branch should raise rather than substituting a different matting
+model, so a missing alpha channel stops the run instead of changing what it measures.
+
+## Two more things about the environment
+
+`worker_entry.py` sets **none** of the five environment variables upstream sets at the top of both
+`app.py` and `inference.py`: `ATTN_BACKEND`, `OPENCV_IO_ENABLE_OPENEXR`, `PYTORCH_CUDA_ALLOC_CONF`,
+`FLEX_GEMM_AUTOTUNE_CACHE_PATH`, `FLEX_GEMM_AUTOTUNER_VERBOSE`. `ATTN_BACKEND` is read at **module
+import time** by `pixal3d/modules/attention/config.py`, so it cannot be set after importing
+pixal3d.
+
+`DETAILS.md` omits a fourth runtime weight source: **`valeoai/NAF`**, fetched via torch.hub. Its
+checkpoint table is otherwise exact -- 24.045 GB, confirmed file by file.
+
+Last: `pixal3d-image-to-textured-mesh` and `pixal3d-image-mesh-painting` are **byte-identical**
+apart from `.git`, and the second one's README opens with the first one's name. Both are in
+`default.xml`. One is a copy that was never re-pointed.
+
 ## Checks that mean something
 
 Import checks belong at run time with `--gpus all`, never in a `RUN` layer. Verify the
