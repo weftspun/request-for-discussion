@@ -35,7 +35,7 @@ uses 131 of them.
 ## Where the organization digit comes from
 
 The digit is a short name for an arc under an IANA Private Enterprise Number.
-PEN 66606 is assigned to Kam Shing Ernest Lee (iFire). RFC 9371 gives the
+PEN 66606 is assigned to iFire. RFC 9371 gives the
 registration procedure, and the assignment is itself the delegation. No arc
 below 66606 is registered with anybody.
 
