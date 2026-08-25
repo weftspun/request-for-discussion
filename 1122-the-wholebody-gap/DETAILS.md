@@ -640,15 +640,29 @@ path**, and no resequencing touches it. T06 gains slack rather than losing it �
 times its own size — and it is the one outstanding task that runs on any desk in the fleet.
 
 **The bottleneck is a device, not a task, and the graph cannot see it.** T05, T07 and T08 are
-all `gpuBound` and all want the one plugged-in bf16 card. Their TE sums to **13.0 of the 20.0
-points, 65% of the path, on a single RTX 3090** — a serial floor imposed by contention that no
-dependency edge expresses.
+all `gpuBound` and all want the one desk with native bf16. Their TE sums to **13.0 of the 20.0
+points, 65% of the path, on the PC** — a serial floor imposed by contention that no dependency
+edge expresses.
 
-**So the cheapest schedule compression is not a resequencing.** Plugging in the 4090 brings the
-path to **13.9 points, cutting 30% off it**, by scaling the `gpuBound` tasks on derived peak
-rate. That is a ranking and not a budget — it assumes those tasks are compute-bound and perfectly portable,
-and neither was measured. It is still the largest single lever in the table, and it costs a
-cable.
+**Devices are machines now, not card models.** The plan named an `RTX3090` and an `RTX4090`
+until 2026-08-24. Which silicon sits in the PC changes without the plan changing, so pinning to
+a model made the schedule depend on an inventory fact. The desks are the Mac and the PC, and the
+PC's peak is recorded as **unmeasured** rather than derived from a model nobody committed to.
+
+What survives that is the constraint that actually binds: **the PC is the only desk with native
+bf16.** Condition 5 requires a generator to run at its published precision, and the Mac's bf16 is
+emulated — 2.96 TFLOP/s, 0.48x its own fp16 and below fp32. Whether emulated bf16 is numerically
+the same bf16 is unmeasured, and "probably" does not satisfy a condition about provenance. So
+corpus generation is pinned to the PC by **rule**, not by speed.
+
+**RETRACTED: "plugging in the 4090 is worth 30%".** That figure scaled the `gpuBound` tasks by
+the ratio of two card models' derived peaks, and both halves were derived rather than measured.
+It read as a schedule decision and was really an inventory one, so it goes with the card rows it
+came from.
+
+Nothing replaces it, deliberately. The contention is real and its relief is **unquantified**
+until somebody measures the desk that would relieve it. What is left is the shape: three tasks,
+one desk, 65% of the remaining work.
 
 ## The cheapest thing that could change the plan
 
