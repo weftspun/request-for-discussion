@@ -1,7 +1,15 @@
-# RFD Index
+# RFD Index and Logbook
 
-This repository holds Request-for-Discussion documents, across every
-weftspun project. It follows the Oxide RFD style.
+This repository holds two things that were two repositories until now.
+
+The Request-for-Discussion documents, across every weftspun project,
+following the Oxide RFD style. An RFD records a decision.
+
+The logbook: the cross-project engineering record of what was measured,
+what it cost, and which roads turned out to be dead ends. `CLAUDE.md`
+holds the working agreements, `PITFALLS.md` the recurring failure modes,
+`BLOCKLIST.md` the excluded sources. A `logbook-*.md` entry records a
+measurement. `weftspun/logbook` is archived, and its history is here.
 
 Each RFD number has four decimal digits. The first digit names the
 organization. This repository uses digit 1. The last three digits are

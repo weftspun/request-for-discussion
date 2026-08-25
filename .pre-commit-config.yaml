@@ -1,15 +1,226 @@
-# Runs with prek, which reads the pre-commit config format.
-#
-#   prek install
-#   prek run --all-files
-#
-# Moved here from weftspun-3d-studio's own .pre-commit-config.yaml
-# when decisions/ itself moved to this repository. The Elixir hooks
-# cover the RECTGTN HTN domains and problems that sit beside their
-# RFDs (RFD 1037 records why those files are Elixir DSL); the
-# dockerfile-and-server hook covers the model-image build sources
-# that sit beside theirs (RFD 1036 gives the rules).
 repos:
+  # PRETTIER OWNS THE LOGBOOK'S MARKDOWN AND NOT THE RFDS.
+  #
+  # It formatted every markdown file in `weftspun/logbook`, and `types:
+  # [markdown]` alone would now reach 250 RFD READMEs and DETAILS that were
+  # never prettier-formatted. RFD 1063 moved prose enforcement here to the STE
+  # plugin, so a reflow of all of them is a diff nobody asked for -- and a
+  # rewrapped README can cross RFD 1000's 40-line limit, which would fail a
+  # different gate for a reason that has nothing to do with what changed.
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.1.0
+    hooks:
+      - id: prettier
+        types: [markdown]
+        files: '^([^/]+\.md|scripts/README\.md)$'
+
+  # RFD 1035 makes OpenUSD the internal format, so a layer that other tools reject is a
+  # layer that is not written yet. `rfd107a-plan.usda` opened in Python, composed without
+  # error and read back its ten tasks while still failing usdchecker's rules for want of
+  # an `upAxis` -- "it opens" is not "it is valid", and only a gate tells them apart.
+  #
+  # `usd-core` is pinned rather than floated: the validator set is what decides pass or
+  # fail here, and a version bump that adds a rule should arrive as a diff somebody
+  # approves rather than as a red run on an unrelated pull request.
+  - repo: local
+    hooks:
+      - id: usd-valid
+        name: USD layers parse, validate and round-trip through crate
+        entry: python scripts/check_usd_valid.py
+        language: python
+        additional_dependencies: ["usd-core==26.8"]
+        files: \.usd[acz]?$
+        pass_filenames: true
+
+      # A hand-written index of the files beside it is a second copy of `ls`, and the two
+      # disagree the first time somebody adds a file and forgets the table. Nothing reports
+      # that, which is the same shape as every other second-place-a-fact-lives rule here.
+      # The provocation was an agent adding two rows for files it had just written: accurate
+      # that afternoon, unpoliced afterwards. This gate would have rejected them.
+      #
+      # `markdown-it-py` is declared because the gate parses the CommonMark token stream
+      # rather than matching pipes at the start of a line. The first version did the latter
+      # and read `foot.R`, an ANNY bone in a residual table, as a filename. A hook whose
+      # dependency is undeclared fails in CI with a ModuleNotFoundError, which is how this
+      # line came to be written.
+      - id: readme-no-index
+        name: README.md indexes no files -- the directory is the index
+        entry: python scripts/check_readme_no_index.py
+        language: python
+        additional_dependencies: ["markdown-it-py==3.0.0"]
+        files: ^README\.md$
+        pass_filenames: true
+
+      # The plan's numbering must agree with its own graph, and its counts with the
+      # documents they came from -- and one of those documents is RFD 107a, which lives in
+      # `request-for-discussion` rather than here. CI checks this repository out on its
+      # own, so the RFD is simply absent there and the check cannot run.
+      #
+      # `stages: [manual]` rather than a skip inside the script, because the two read
+      # differently. A script that notices a missing source and passes anyway reports a
+      # green run for a check it did not perform; a manual hook reports nothing and says
+      # where to run it. In a goal-manifest workspace:
+      #
+      #     prek run rfd107a-plan --hook-stage manual --all-files
+      - id: rfd107a-plan
+        name: RFD 107a's plan agrees with its graph and with the RFD
+        entry: python scripts/check_rfd107a_plan.py
+        language: python
+        additional_dependencies: ["usd-core==26.8"]
+        files: ^(rfd107a-plan\.usda|scripts/check_rfd107a_plan\.py|CLAUDE\.md)$
+        pass_filenames: false
+        stages: [manual]
+
+      # The four loops are described twice on purpose: `fourloops-plan.usda` is the task
+      # graph and `fourloops-etnf.usda` is the schema those tasks read and write. Two
+      # documents about one thing drift, and neither drift appears in a diff of the file
+      # being edited, because the other file is the one that changed.
+      #
+      # `stages: [manual]` for the same reason as `rfd107a-plan` above: both gates read the
+      # sources their layers name, and those sources sit in `6-datasource`, `3-interactor`
+      # and `7-service`. CI checks this repository out on its own, so the sources are simply
+      # absent there. A script that notices a missing source and passes anyway reports a
+      # green run for a check it did not perform. In a goal-manifest workspace:
+      #
+      #     prek run fourloops-plan --hook-stage manual --all-files
+      #     prek run fourloops-etnf --hook-stage manual --all-files
+      - id: fourloops-plan
+        name: the four-loop plan agrees with its graph, its sources and the schema layer
+        entry: python scripts/check_fourloops_plan.py
+        language: system
+        files: ^(fourloops-plan\.usda|fourloops-etnf\.usda|scripts/check_fourloops_plan\.py)$
+        pass_filenames: false
+        stages: [manual]
+
+      # A relationship target that names no prim composes without complaint, and neither
+      # `usdchecker` nor `check_usd_valid.py` reports it. That is the hole this gate covers,
+      # along with the ETNF rules the layer argues for and could violate itself: a derivable
+      # column stored anyway, and an emitted relation no stage writes. The second found
+      # `ArmUnavailable`, described in the layer and written by nothing.
+      - id: fourloops-etnf
+        name: the ETNF schema resolves, stores nothing derivable, and has a writer each
+        entry: python scripts/check_fourloops_etnf.py
+        language: python
+        additional_dependencies: ["usd-core==26.8"]
+        files: ^(fourloops-etnf\.usda|scripts/check_fourloops_etnf\.py)$
+        pass_filenames: false
+        stages: [manual]
+
+      # A sublayer that does not resolve composes to nothing, and USD reports it as a
+      # warning rather than an error. Two sites authoring one serial compose to one row,
+      # which reads exactly like agreement. Both are invisible to the stage and both are
+      # what this gate exists for. The page is generated from the same composition, so
+      # --check fails when it goes stale rather than letting it disagree quietly.
+      - id: pen-66606
+        name: every site owns its own serials and no two sites author one
+        entry: python scripts/check_pen_66606.py
+        language: python
+        additional_dependencies: ["usd-core==26.8"]
+        files: ^(pen-66606\.usda|scripts/check_pen_66606\.py)$
+        pass_filenames: false
+        stages: [manual]
+
+      - id: serials-page
+        name: serials.qmd still matches the registers it is generated from
+        entry: python scripts/serials_to_qmd.py --check
+        language: python
+        additional_dependencies: ["usd-core==26.8"]
+        files: ^(pen-66606\.usda|serials\.qmd|scripts/serials_to_qmd\.py)$
+        pass_filenames: false
+        stages: [manual]
+
+      # The controls for both, which need no workspace: each builds its own layer in a
+      # temporary directory. Half of them must FAIL on known-broken input, because a check
+      # that cannot fail certifies the defect. These run on every commit that touches a
+      # gate, which is what makes the manual hooks above worth having.
+      - id: fourloops-plan-self-test
+        name: the four-loop plan gate still fails on a plan that contradicts itself
+        entry: python scripts/check_fourloops_plan.py --self-test
+        language: system
+        files: ^scripts/check_fourloops_plan\.py$
+        pass_filenames: false
+
+      - id: fourloops-etnf-self-test
+        name: the ETNF gate still fails on a dangling target and a stored derivable column
+        entry: python scripts/check_fourloops_etnf.py --self-test
+        language: python
+        additional_dependencies: ["usd-core==26.8"]
+        files: ^scripts/check_fourloops_etnf\.py$
+        pass_filenames: false
+
+      - id: pen-66606-self-test
+        name: the PEN gate still fails on an unresolved sublayer and a shared serial
+        entry: python scripts/check_pen_66606.py --self-test
+        language: python
+        additional_dependencies: ["usd-core==26.8"]
+        files: ^scripts/check_pen_66606\.py$
+        pass_filenames: false
+
+      # A comparison joined twice -- "five soda cans along the axis and against three across it"
+      # -- reads past a first pass and shipped in `check_view_selection.py`. The two prose
+      # gates beside this one, `check_household_units.exs` and `check_prose_tropes.exs`, are
+      # not wired here and are run by hand; that is how the defect reached a committed file, so
+      # this one is wired.
+      #
+      # `language: system` because the gate is a script rather than a package: it needs elixir
+      # on PATH and nothing else, and the CI job installs it with `erlef/setup-beam`. A hook
+      # that silently passes where its interpreter is absent would certify every file it could
+      # not read, so the missing binary is left to fail loudly.
+      - id: double-join
+        name: no comparison is joined twice
+        entry: elixir scripts/check_double_join.exs --file
+        language: system
+        types_or: [markdown, python, text]
+        pass_filenames: true
+
+      # The gate's own controls, run whenever the gate changes. Half of them must FAIL on
+      # known-broken input, because a check that cannot fail certifies the defect.
+      - id: double-join-self-test
+        name: the double-join gate still fails on known-broken prose
+        entry: elixir scripts/check_double_join.exs --self-test
+        language: system
+        files: ^scripts/check_double_join\.exs$
+        pass_filenames: false
+
+      # CLAUDE.md was 972 lines, 592 of them the argument behind the blocklist table. The
+      # reasoning moved to BLOCKLIST.md so a reader looking up whether a source is permitted
+      # is not walking through the case against FLUX.1 to reach the next agreement.
+      #
+      # Splitting a document invents a way for it to go wrong: a row can promise "see below"
+      # with nothing below, or an argument can outlive the row it defends. Neither appears in
+      # a diff of the file being edited, because the other file is the one that changed.
+      - id: blocklist-detail
+        name: every blocklist row has its argument, and every argument its row
+        entry: python scripts/check_blocklist_detail.py
+        language: system
+        files: ^(CLAUDE\.md|BLOCKLIST\.md|scripts/check_blocklist_detail\.py)$
+        pass_filenames: false
+
+      - id: blocklist-detail-self-test
+        name: the blocklist-detail gate still fails on a row with no argument
+        entry: python scripts/check_blocklist_detail.py --self-test
+        language: system
+        files: ^scripts/check_blocklist_detail\.py$
+        pass_filenames: false
+
+  # THE RFD HOOKS, FROM THE OTHER HALF OF THIS REPOSITORY.
+  #
+  # `weftspun/logbook` and `weftspun/request-for-discussion` were two repositories and
+  # are one. Two configurations became this file, and the two `repo: local` blocks are
+  # kept apart rather than interleaved, because a hook's neighbours are how a reader
+  # finds the rest of the set it belongs to.
+  #
+  # Runs with prek, which reads the pre-commit config format.
+  #
+  #   prek install
+  #   prek run --all-files
+  #
+  # Moved here from weftspun-3d-studio's own .pre-commit-config.yaml
+  # when decisions/ itself moved to this repository. The Elixir hooks
+  # cover the RECTGTN HTN domains and problems that sit beside their
+  # RFDs (RFD 1037 records why those files are Elixir DSL); the
+  # dockerfile-and-server hook covers the model-image build sources
+  # that sit beside theirs (RFD 1036 gives the rules).
   - repo: local
     hooks:
       - id: mix-format
@@ -79,6 +290,7 @@ repos:
   # Scoped to markdown. The Elixir and model-image hooks above own their own
   # file types, and a hook that reformats somebody else's is a hook that
   # widens without being asked.
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
