@@ -44,6 +44,25 @@ Regenerate `plan.ex` when the domain changes, and never edit it by
 hand. A hand-edited plan can hold a step order the guards forbid,
 which is the failure this whole RFD exists to stop.
 
+**RETRACTED, 2026-08-25: a plan may be written by hand.** The paragraph
+above stays as written because it names a real hazard. The rule it drew
+from that hazard is withdrawn.
+
+What the rule cost was measured the first time it was applied. A domain
+for the CineForm delivery, RFD 1089, was written and checked with
+`Code.string_to_quoted/1`, and then no plan could be produced, because
+the planner serves over MCP at a host this desk was not going to reach
+mid-task. The domain sat unusable beside a skill that told a reader to
+run it. A rule that turns a reachable deliverable into an unreachable
+one costs more than the defect it prevents.
+
+So a hand-written `plan.ex` is permitted until a pattern appears across
+enough domains to encode generically. What does not change is the
+checking: the plan is real Elixir and must parse, the domain's guards
+still hold at run time, and a hand-written plan that violates one fails
+there rather than passing quietly. Say in the file which way it was
+made, and regenerate from the planner once it is reachable.
+
 ## Replanning is the payoff
 
 `plan` takes `plan_json` and `fail_step`. A caller that loses a stage
