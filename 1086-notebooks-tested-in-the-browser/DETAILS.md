@@ -362,3 +362,28 @@ So the rest pose is the right subject for a clip that explains the
 pipeline, and a rig-representable pose needs no defence when the corpus
 is for a decoder. Both were true at once and the earlier text implied
 only the first.
+
+## The two fitted subjects were deleted
+
+`grid96-anny` and `grid96-anny-hv2` are gone, deleted on 2026-08-25 as
+invalid poses. Between them they held 397 files and 115 MB: two posed
+meshes, 192 rendered frames with sidecars, two citations and one clip.
+
+The measurements they produced stay in this record because they are what
+the runs measured, and the reader should know the sets behind them no
+longer exist:
+
+| subject  | median      | of stature | chest facing | why it went                       |
+| -------- | ----------- | ---------- | ------------ | --------------------------------- |
+| hv_1 fit | 0.17 px     | 0.033%     | 345.9 deg    | `.L` joints at +0.009, limbs cross |
+| hv_2 fit | 0.14 px     | 0.022%     | 72.7 deg     | same class of fit                  |
+
+Both are what an unconstrained 17-point solve produces, and both report
+a residual small enough to look converged. The rest pose is the only
+corpus subject until a joint bound exists, which is the state RFD 1089's
+skill already describes and RFD 108a's question has to be answered
+before it changes.
+
+Nothing in the argument depends on the files. The conventions check
+still refuses that class of rig, and `check_conventions.py` carries the
+hv_1 numbers as the reason the feet are not the forward witness.

@@ -190,3 +190,16 @@ under one percent of the fast path and a rounding error on the slow one.
 So the container is free and the question the previous section raises is the
 only one that matters: what the frame hash means once the frames are
 visually lossless rather than identical.
+
+## The subjects behind these numbers
+
+Two of the three subjects rendered through this grid were deleted on
+2026-08-25 as invalid poses: the hv_1 fit at a chest facing of 345.9
+degrees and the hv_2 fit at 72.7. Both came from an unconstrained
+17-point solve, and both crossed limbs across the body while reporting a
+residual under 0.04% of stature.
+
+The ANNY rest pose at 270 degrees is the surviving subject and the one
+the grid's own citation names. The facings are kept here because they
+are what made the phrases correct, and because a reader who finds only
+the rest pose should know the other two existed and why they do not.

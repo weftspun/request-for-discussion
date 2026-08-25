@@ -50,9 +50,11 @@ A mirrored rig declared posed passed until signed volume and the basis
 determinants were added. Those two do not mirror away.
 
 **The feet are not the forward witness on a posed rig.** A stance can
-plant the feet away from the chest. The hv_1 fit has the chest and gaze
+plant the feet away from the chest. The hv_1 fit had the chest and gaze
 agreeing to 2.8 degrees and the feet 55.3 degrees off, and using the
-feet put every camera phrase 55 degrees wrong.
+feet put every camera phrase 55 degrees wrong. That subject and the
+hv_2 one were deleted on 2026-08-25 as invalid poses, so the numbers
+here are the record and the sets are not on disk.
 
 **A hip-width witness is degenerate here.** `pelvis.L` and `pelvis.R`
 both sit at the origin, separation 0.0, because the hips are the local
