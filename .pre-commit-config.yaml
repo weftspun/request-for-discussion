@@ -135,7 +135,7 @@ repos:
         entry: python scripts/serials_to_qmd.py --check
         language: python
         additional_dependencies: ["usd-core==26.8"]
-        files: ^(pen-66606\.usda|serials\.qmd|scripts/serials_to_qmd\.py)$
+        files: ^(pen-66606\.usda|SERIALS\.usda|scripts/serials_to_qmd\.py)$
         pass_filenames: false
         stages: [manual]
 
