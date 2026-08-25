@@ -104,7 +104,7 @@ that claim is wrong.
 The two faults compound rather than overlap. The licence-clean images are
 exactly the holdout, so there is no subset that is both trainable and clean. A
 keypoint training set has to be built rather than filtered out of this one,
-which is what the renderer in RFD 0122 is for.
+which is what the renderer in RFD 1122 is for.
 
 `rf-detr-detection-data` and `rf-detr-segmentation-data` are unaffected. Both
 come from a Roboflow clothing set rather than COCO, and neither contains a
@@ -248,7 +248,7 @@ conditioning signal for the generation path, not a by-product, so this is a hole
 in the pipeline and not a tidying-up. The file stays in the tree as the record
 of what the pass has to produce; it is not the way to produce it any more.
 
-RFD 107a's PBR bake said to do the bake in Blender because MPFB2 is a Blender
+RFD 1122's PBR bake said to do the bake in Blender because MPFB2 is a Blender
 addon and the material was authored there. That method is gone with this entry.
 The bake still has to happen -- albedo, roughness and normal over the hm08 UV
 layout, metallic a constant zero -- and it now needs a renderer that a
@@ -352,8 +352,8 @@ at bf16, clean output on the same input.
 ### P3-SAM's licence excludes territories, which is a different failure
 
 `Tencent-Hunyuan/Hunyuan3D-Part` ships under Tencent's own Community License
-Agreement, and it carves out the EU, the UK and South Korea. RFD 0041 records
-the model as MIT; that is wrong, and `logbook-rfd0016-model-repos.md` already
+Agreement, and it carves out the EU, the UK and South Korea. RFD 1041 records
+the model as MIT; that is wrong, and `logbook-rfd1016-model-repos.md` already
 corrected it by reading the real LICENSE file.
 
 The other entries here block on what the output may be used for. This one blocks
@@ -385,11 +385,11 @@ stating. Whether the licence is satisfied depends on _who deploys the trained
 model_, which is not a fact about our corpus and not one we can settle in
 advance. A term that clears today for a small deployer and fails for their
 customer is a term that cannot be gated on at corpus-build time.
-`logbook-rfd0016-model-repos.md` already flagged this as "clears the bar for a
+`logbook-rfd1016-model-repos.md` already flagged this as "clears the bar for a
 small deployer, not for every possible customer" — this entry is that flag
 resolved rather than carried.
 
-**The second reason is newer and independent.** RFD 0016's plan for it was the
+**The second reason is newer and independent.** RFD 1016's plan for it was the
 Q4_K_M GGUF set: 33.8 GB bf16 down to 9.30 GB quantised, because that is what
 fits. Generated-synthetic condition 5 now says quantised weights do not produce
 corpus data, so the deployment shape that made the model affordable is the one

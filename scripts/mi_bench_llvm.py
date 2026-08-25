@@ -1,7 +1,7 @@
 """Time the renderer's SHIPPING variant, which no benchmark here had ever timed.
 
 WHY THIS EXISTS. `logbook-soft-renderer-and-mitsuba.md` reports Mitsuba at 1.79 ms/image and
-projects 0.4 GPU-hours over an 800k-image corpus, and that table is what RFD 107a's ordering
+projects 0.4 GPU-hours over an 800k-image corpus, and that table is what RFD 1122's ordering
 rests on. Both benchmarks behind it -- `mi_bench.py:19` and `mi_bench2.py:20` -- open with
 `mi.set_variant('cuda_ad_rgb')`, on the local 4090.
 

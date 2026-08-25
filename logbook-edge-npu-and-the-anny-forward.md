@@ -14,7 +14,7 @@ retraction implies is owed. At 576 with `num_windows=1`:
 
 CoreML is nearly four times SLOWER and lands outside the port's own 4.2e-03 bound, so it fails
 on accuracy as well as losing on speed. The mechanism is likely partitioning -- CoreML hands
-unsupported nodes back to the CPU, and `logbook-rfd107a-hailo-first-rerank.md` measures why that
+unsupported nodes back to the CPU, and `logbook-rfd1122-hailo-first-rerank.md` measures why that
 cannot pay here: this GPU is worth only 2.6x its own CPU on dense GEMM, so the transfers cost
 more than the acceleration returns. The 15.8 TOPS Neural Engine is REACHABLE through that
 provider and is not useful for this model; reachable and unsuitable are different facts, and the
@@ -32,7 +32,7 @@ Question: can the wholebody chain deploy to an 8 GB, 20 TOPS INT8 / 40 INT4 USB 
 ## The chain partitions by kind, not by size
 
 `lbfgs_polish.py` line 16 builds the model `.to(dtype=torch.float64)`. The part carries INT8
-activations. Three of the six stages in RFD 107a are descent loops and mesh operations, and
+activations. Three of the six stages in RFD 1122 are descent loops and mesh operations, and
 no quantity of devices changes that.
 
 Measured shares at 1272, backbone against decoder:
@@ -123,7 +123,7 @@ dedicated camera gives 5.6 mm, about a pencil. 45x from framing alone.
 
 ## The ANNY forward does not export
 
-`anny` 0.6.0 confirms three claims in RFD 107a's DETAILS: `bone_count` is 104,
+`anny` 0.6.0 confirms three claims in RFD 1122's DETAILS: `bone_count` is 104,
 `data/keypoints/coco.pth` carries 23 keypoints rather than 17, and its weight vectors are
 19,158 wide while `topology="anny"` returns 13,718 vertices. The documented mismatch
 reproduces exactly.
@@ -182,7 +182,7 @@ by joint or by vertex has to say which skeleton it means.
     SOMA_V 18056    SOMA_J 78    SOMA_F 36108    SOMA_K 10
 
 78 joints and 10 influences against ANNY's 104 and 9. `soma_parents[78]` in the same header is
-the forward-kinematics tree. `topology_id` is a foreign key in RFD 107a's schema for this
+the forward-kinematics tree. `topology_id` is a foreign key in RFD 1122's schema for this
 reason, and the reason survives the withdrawal above: a `vertex_id` or a joint index means
 nothing without the skeleton it was taken under.
 
@@ -194,7 +194,7 @@ specification, the baked arrays and a reference to validate against, rather than
 
 ## The clamp is a concatenation of pairwise kusudamas
 
-RFD 107e's decision clamps every unrolled step to the Kusudama cone. How that clamp is
+RFD 1126's decision clamps every unrolled step to the Kusudama cone. How that clamp is
 BUILT was settled in a meeting, and it is not the obvious reading of the phrase.
 
 **No kusudama carries two or more cones. Constraints are pairwise, and concatenated.** A

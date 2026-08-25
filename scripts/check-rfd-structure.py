@@ -24,6 +24,7 @@ from markdown_it import MarkdownIt
 
 MD = MarkdownIt("commonmark")
 
+ORG = "1"
 DIR_RE = re.compile(r"^([0-9]{4})-[a-z0-9-]+$")
 TITLE_RE = re.compile(r"^RFD ([0-9]{4}): (\S.*)$")
 DETAILS_TITLE_RE = re.compile(r"^RFD ([0-9]{4}) details: (\S.*)$")
@@ -268,9 +269,15 @@ def check_citations(name, tokens, nums):
             n = m.group(1)
             if n.startswith("0"):
                 continue  # already reported above
+            if n[0] != ORG:
+                # Another site's number. This gate owns this site's serials, and
+                # the composed layer that holds every site's is workspace-scoped,
+                # so resolving it here is not possible from one checkout.
+                # `check_pen_66606.py` is where cross-site numbers are held.
+                continue
             if n not in nums:
                 problems.append(
-                    f"{name}: cites RFD {n}, which has no directory and RFD 1070 did not delete it"
+                    f"{name}: cites RFD {n}, which the register does not list"
                 )
     return problems
 
@@ -366,6 +373,31 @@ def check(root):
                 dname, num, dtoks, DETAILS_TITLE_RE, "RFD <num> details: <title>"
             )
             problems += check_citations(dname, dtoks, nums)
+
+    problems += check_loose_markdown(root, nums)
+    return problems
+
+
+def check_loose_markdown(root, nums):
+    """The repository's own markdown carries citations too, and nothing read it.
+
+    The RFD loop above walks `NNNN-slug/` and stops there. `CLAUDE.md`,
+    `PITFALLS.md`, `BLOCKLIST.md` and the `logbook-*.md` entries sit at the
+    root, they cite RFDs constantly, and the decimal renumbering left 25
+    citations in the first form across three of them. Nothing failed. They were
+    found by hand, which is the detection method this repository exists to
+    replace.
+
+    Only citations are checked. These files are not RFDs and have no title,
+    preamble or section spine to hold them to.
+    """
+    problems = []
+    for name in sorted(os.listdir(root)):
+        if not name.endswith(".md") or not os.path.isfile(os.path.join(root, name)):
+            continue
+        with open(os.path.join(root, name), encoding="utf-8") as fh:
+            toks = MD.parse(fh.read())
+        problems += check_citations(name, toks, nums)
     return problems
 
 

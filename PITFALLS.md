@@ -4,7 +4,7 @@ Each entry names a way this system goes wrong, what it costs, and the guard that
 Every one holds for real code in these repos rather than in general. Most recur at three or
 more sites, which is why they live here rather than in memory.
 
-Written in the present per RFD 0025: a mode that stops applying is a line to delete rather
+Written in the present per RFD 2025: a mode that stops applying is a line to delete rather
 than a line to date. Ordered by cost.
 
 ---

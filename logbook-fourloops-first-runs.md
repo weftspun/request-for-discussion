@@ -47,7 +47,7 @@ about what the narrower reads save on this card. The EditScore peak is the one n
 run confirmed rather than corrected -- the scoring script already cited 6.75 GiB, and
 6.7506 GiB is that number measured.
 
-`logbook-rfd0016-model-repos.md` carries the same NF4 pair against the ASUS UGen300's 8 GB
+`logbook-rfd1016-model-repos.md` carries the same NF4 pair against the ASUS UGen300's 8 GB
 and is not repeated here.
 
 ## The scale is 0 to 10, and the router assumed 0 to 1

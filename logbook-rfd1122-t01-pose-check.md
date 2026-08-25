@@ -1,4 +1,4 @@
-# Logbook: RFD 107a T01, the pose-library check
+# Logbook: RFD 1122 T01, the pose-library check
 
 T01 is the gate at the head of the critical path: project twenty poses, look at them, and ask
 whether a character artist would draw them. It needs no renderer, no GPU and no install. This
@@ -38,7 +38,7 @@ twenty clips, five frames, twenty-one bones.
 The middle frame of each clip was projected and drawn. All twenty are upright figures mid
 stride. The hundred styles vary the gait — Penguin, Monk, Tiptoe, DuckFoot, Depressed — and
 never the configuration of the body. Nothing sits, crouches, leans on anything or reaches. RFD
-107a predicted exactly this when it said the clips are locomotion, and the sheet turns the
+RFD 1122 predicted exactly this when it said the clips are locomotion, and the sheet turns the
 prediction into a picture. How many of the twenty an artist would draw is a human judgement and
 is deliberately not recorded here.
 
@@ -61,7 +61,7 @@ forward (0,0,1) with right (1,0,0) must give up (0,1,0).
 
 **The layout was the old one.** The twenty-one bones `extract_poses.py` returns are a
 BVH-flavoured skeleton with no fingers, no face and no toes, and drawing them directly produces
-the legacy stick figure. RFD 107a is about 104 wholebody points. The twenty-one are evidence,
+the legacy stick figure. RFD 1122 is about 104 wholebody points. The twenty-one are evidence,
 not the answer: ANNY's makehuman topology carries 104 bones, every one of the twenty-one target
 names is among them, so a fit that places the twenty-one leaves the other eighty-three
 determined by the rig. Knuckles follow the wrist, toes follow the foot.

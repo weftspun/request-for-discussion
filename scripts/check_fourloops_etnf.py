@@ -368,7 +368,7 @@ def check(layer_path=DEFAULT_LAYER, root=None):
 def workspace_root():
     """The `repo` client root: the first ancestor holding `.repo`.
 
-    A search rather than a parent count, for the reason `check_rfd107a_plan.py` records: a
+    A search rather than a parent count, for the reason `check_rfd1122_plan.py` records: a
     hard-coded depth encodes where a project happens to sit today, and the manifest moves
     projects.
     """

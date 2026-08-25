@@ -3,7 +3,7 @@
     defaultPrim = "T01"
     doc = """T01's run, as data rather than a paragraph: twenty poses projected and looked at.
 
-WHAT THE TASK ASKED. RFD 107a's first task is a gate -- of twenty projected poses, how many
+WHAT THE TASK ASKED. RFD 1122's first task is a gate -- of twenty projected poses, how many
 would a character artist draw -- and it is on the critical path because a no here redirects
 everything after it. It needs no renderer, no GPU and no install.
 
@@ -127,7 +127,7 @@ clipsSampled x framesPerClip x bones, and a stored product is a second place for
         def "F01_AllTwentyAreUprightGait" (
             doc = """Every one of the twenty is an upright figure mid-stride. The hundred styles
 vary the gait -- Penguin, Monk, Tiptoe, Depressed, DuckFoot -- and not the configuration of the
-body: nothing sits, crouches, leans on anything, or reaches. That is what RFD 107a predicted
+body: nothing sits, crouches, leans on anything, or reaches. That is what RFD 1122 predicted
 when it said the clips are locomotion, and it is now a picture rather than a claim.
 
 The count this task exists to produce -- how many of the twenty a character artist would draw
