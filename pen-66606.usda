@@ -1,0 +1,32 @@
+#usda 1.0
+(
+    defaultPrim = "Serials"
+    subLayers = [
+        @../request_for_discussion/SERIALS.usda@
+    ]
+    customLayerData = {
+        string pen = "1.3.6.1.4.1.66606"
+        string holder = "Kam Shing Ernest Lee (iFire)"
+        string category = "1"
+        string categoryName = "documents"
+        string rule = "../request_for_discussion/1000-conventions/DETAILS.md"
+        string[] sites = [
+            "1 weftspun request-for-discussion 1.3.6.1.4.1.66606.1.1",
+            "2 v-sekai-fabric multiplayer-fabric-manuals 1.3.6.1.4.1.66606.1.2",
+            "3 v-sekai manuals 1.3.6.1.4.1.66606.1.3",
+            "4 fire manuals 1.3.6.1.4.1.66606.1.4",
+        ]
+        string[] sitesWithoutRegister = [
+            "2 still numbers in hexadecimal and has not adopted a register",
+            "3 names a decision by its date and allocates no serial",
+            "4 names a decision by its date and allocates no serial",
+        ]
+    }
+)
+
+over "Serials"
+{
+    custom string thesis = "The composed view of every serial the PEN has issued under category 1. It stores none of them. Each site keeps its own register and this layer sublayers them, so a serial is authored once and read everywhere. A site that copied another's rows would be a second record of one fact, and the first copy edited would win by accident."
+
+    custom string howToAddASite = "Add the site's SERIALS.usda to subLayers above, and add its row to the sites list. The site keeps authoring its own serials. Nothing is copied here, and check_pen_66606.py fails if two sites author the same one."
+}

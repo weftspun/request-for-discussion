@@ -1,0 +1,169 @@
+"""Generate `serials.qmd` from `pen-66606.usda`.
+
+The page is a rendering, not a record. Every value on it comes from a site's own
+`SERIALS.usda` through the composed layer, so the page cannot disagree with the registers
+unless it is stale, and `--check` is what makes stale fail a command rather than sit there.
+
+WHY THE FULL OID IS ON THE PAGE AND NOT IN THE REGISTER. A row renders
+`urn:oid:1.3.6.1.4.1.66606.1.1.1015`. Eight characters of that are the URN scheme, which
+is what makes it a URI rather than something a reader has to be told is an OID. RFC 3061
+gives the form and requires it fully qualified, so the prefix cannot be shortened away.
+
+The register stores the arc once in layer metadata and the serial in a column. Storing the
+composed identifier per row would be a derivable column, which is the fourth ETNF rule and
+the one that rots quietly. It is composed here, at render time, from the two things that
+are stored.
+"""
+import pathlib
+import sys
+
+from pxr import Sdf, Usd
+
+HERE = pathlib.Path(__file__).resolve().parent
+DEFAULT_LAYER = HERE.parent / "pen-66606.usda"
+DEFAULT_PAGE = HERE.parent / "serials.qmd"
+
+
+def relations(layer):
+    """(prim spec path, {column: [values]}) for every relation a layer authors."""
+    found = []
+
+    def walk(spec):
+        cols = spec.attributes.get("columns")
+        if cols is not None and cols.default is not None:
+            names = [str(c).split()[0] for c in cols.default if str(c).strip()]
+            arrays = {}
+            for name in names:
+                a = spec.attributes.get(name)
+                arrays[name] = list(a.default) if a is not None and a.default is not None else None
+            found.append((str(spec.path), arrays))
+        for child in spec.nameChildren:
+            walk(child)
+
+    for prim in layer.rootPrims:
+        walk(prim)
+    return found
+
+
+def site_rows(root_layer):
+    """(digit, owner, repository, arc, allocated, deleted) for each declared site."""
+    sites = []
+    for row in root_layer.customLayerData.get("sites", []):
+        parts = str(row).split()
+        if len(parts) == 4:
+            sites.append(list(parts))
+    excused = {}
+    for row in root_layer.customLayerData.get("sitesWithoutRegister", []):
+        parts = str(row).split(None, 1)
+        if len(parts) == 2:
+            excused[parts[0]] = parts[1]
+
+    by_site = {}
+    for path in root_layer.subLayerPaths:
+        layer = Sdf.Layer.FindOrOpenRelativeToLayer(root_layer, str(path))
+        if layer is None:
+            continue
+        for spec_path, arrays in relations(layer):
+            names = spec_path.strip("/").split("/")
+            table = "allocated" if "Allocated" in names else "deleted" if "Deleted" in names else None
+            if table is None or arrays.get("serial") is None:
+                continue
+            for digit, owner, _repo, _arc in sites:
+                if owner.replace("-", "").lower() in [n.lower() for n in names]:
+                    by_site.setdefault(digit, {}).setdefault(table, []).append(arrays)
+
+    out = []
+    for digit, owner, repo, arc in sites:
+        tables = by_site.get(digit, {})
+        out.append((digit, owner, repo, arc, tables, excused.get(digit)))
+    return out
+
+
+def render(layer_path=DEFAULT_LAYER):
+    stage = Usd.Stage.Open(str(layer_path))
+    if stage is None:
+        raise SystemExit(f"{layer_path} does not open")
+    root_layer = stage.GetRootLayer()
+    meta = root_layer.customLayerData
+    pen = meta.get("pen", "")
+    holder = meta.get("holder", "")
+
+    lines = [
+        "---",
+        'title: "Serials"',
+        f'subtitle: "Every serial issued under {pen}"',
+        "---",
+        "",
+        "::: {.callout-note}",
+        f"PEN {pen.rsplit('.', 1)[-1]} is registered to {holder}. RFC 9371 gives the",
+        "registration procedure, and the assignment is itself the delegation, so no arc",
+        f"below `{pen}` is registered with anybody.",
+        ":::",
+        "",
+        "This page is generated from `pen-66606.usda`, which sublayers each site's own",
+        "`SERIALS.usda`. No site stores another site's serials, and this page stores none",
+        "at all. Run `scripts/serials_to_qmd.py` to rebuild it.",
+        "",
+        "A serial is allocated once. It is never removed and never reused, because it is",
+        "the last arc of an OID and an arc names one document for as long as it exists.",
+        "",
+    ]
+
+    for digit, owner, repo, arc, tables, excuse in site_rows(root_layer):
+        lines.append(f"## Site {digit}: {owner}")
+        lines.append("")
+        lines.append(f"`{repo}`, allocating under `{arc}`.")
+        lines.append("")
+        if excuse:
+            lines.append(f"No register: {excuse}.")
+            lines.append("")
+            continue
+
+        for arrays in tables.get("allocated", []):
+            serials, slugs = arrays.get("serial") or [], arrays.get("slug") or []
+            lines.append(f"{len(serials)} allocated.")
+            lines.append("")
+            lines.append("| identifier | serial | slug |")
+            lines.append("| ---------- | ------ | ---- |")
+            for serial, slug in zip(serials, slugs):
+                lines.append(f"| `urn:oid:{arc}.{serial}` | {serial} | {slug} |")
+            lines.append("")
+
+        for arrays in tables.get("deleted", []):
+            serials = arrays.get("serial") or []
+            recorded = arrays.get("recorded_in") or []
+            if not serials:
+                continue
+            lines.append(f"{len(serials)} deleted. A deleted serial keeps its row, because")
+            lines.append("deleting a document does not delete a citation to it.")
+            lines.append("")
+            lines.append("| identifier | serial | deletion recorded in |")
+            lines.append("| ---------- | ------ | -------------------- |")
+            for serial, where in zip(serials, recorded):
+                lines.append(f"| `urn:oid:{arc}.{serial}` | {serial} | RFD {where} |")
+            lines.append("")
+
+    return "\n".join(lines).rstrip("\n") + "\n"
+
+
+def main(argv):
+    page = DEFAULT_PAGE
+    text = render()
+    if "--check" in argv:
+        if not page.exists():
+            print(f"{page.name} does not exist, and the generator would write it")
+            return 1
+        current = page.read_text(encoding="utf-8")
+        if current != text:
+            print(f"{page.name} is stale: regenerate it with scripts/serials_to_qmd.py")
+            return 1
+        print(f"{page.name} matches the registers")
+        return 0
+    page.write_text(text, encoding="utf-8", newline="")
+    allocated = text.count("| `urn:oid:")
+    print(f"wrote {page.name}, {allocated} identifiers")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))

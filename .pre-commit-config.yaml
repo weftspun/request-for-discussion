@@ -97,6 +97,29 @@ repos:
         pass_filenames: false
         stages: [manual]
 
+      # A sublayer that does not resolve composes to nothing, and USD reports it as a
+      # warning rather than an error. Two sites authoring one serial compose to one row,
+      # which reads exactly like agreement. Both are invisible to the stage and both are
+      # what this gate exists for. The page is generated from the same composition, so
+      # --check fails when it goes stale rather than letting it disagree quietly.
+      - id: pen-66606
+        name: every site owns its own serials and no two sites author one
+        entry: python scripts/check_pen_66606.py
+        language: python
+        additional_dependencies: ["usd-core==26.8"]
+        files: ^(pen-66606\.usda|scripts/check_pen_66606\.py)$
+        pass_filenames: false
+        stages: [manual]
+
+      - id: serials-page
+        name: serials.qmd still matches the registers it is generated from
+        entry: python scripts/serials_to_qmd.py --check
+        language: python
+        additional_dependencies: ["usd-core==26.8"]
+        files: ^(pen-66606\.usda|serials\.qmd|scripts/serials_to_qmd\.py)$
+        pass_filenames: false
+        stages: [manual]
+
       # The controls for both, which need no workspace: each builds its own layer in a
       # temporary directory. Half of them must FAIL on known-broken input, because a check
       # that cannot fail certifies the defect. These run on every commit that touches a
@@ -114,6 +137,14 @@ repos:
         language: python
         additional_dependencies: ["usd-core==26.8"]
         files: ^scripts/check_fourloops_etnf\.py$
+        pass_filenames: false
+
+      - id: pen-66606-self-test
+        name: the PEN gate still fails on an unresolved sublayer and a shared serial
+        entry: python scripts/check_pen_66606.py --self-test
+        language: python
+        additional_dependencies: ["usd-core==26.8"]
+        files: ^scripts/check_pen_66606\.py$
         pass_filenames: false
 
       # A comparison joined twice -- "five soda cans along the axis and against three across it"
