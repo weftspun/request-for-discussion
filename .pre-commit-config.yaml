@@ -6,9 +6,9 @@
 # Moved here from weftspun-3d-studio's own .pre-commit-config.yaml
 # when decisions/ itself moved to this repository. The Elixir hooks
 # cover the RECTGTN HTN domains and problems that sit beside their
-# RFDs (0037 records why those files are Elixir DSL); the
+# RFDs (RFD 1037 records why those files are Elixir DSL); the
 # dockerfile-and-server hook covers the model-image build sources
-# that sit beside theirs (0036 gives the rules).
+# that sit beside theirs (RFD 1036 gives the rules).
 repos:
   - repo: local
     hooks:
@@ -19,7 +19,7 @@ repos:
           Elixir, thus the formatter is the first check it passes.
         entry: mix format --check-formatted
         language: system
-        files: '^[0-9a-f]{4}-.*\.exs?$'
+        files: '^[0-9]{4}-.*\.exs?$'
         pass_filenames: false
 
       - id: elixir-parses
@@ -29,7 +29,7 @@ repos:
           catches this as well, and this hook names the failure.
         entry: elixir scripts/check-elixir-parses.exs
         language: system
-        files: '^[0-9a-f]{4}-.*\.exs?$'
+        files: '^[0-9]{4}-.*\.exs?$'
 
       - id: rfd-structure
         name: rfd structure (commonmark)
@@ -38,26 +38,38 @@ repos:
           the title, the State/Feature/Scope preamble, the section
           spine, and every RFD citation. It reads a CommonMark AST,
           so a citation wrapped over two lines is one citation.
-          RFD 107c gives the rules and how each was measured.
+          RFD 1124 gives the rules and how each was measured.
         entry: python scripts/check-rfd-structure.py
         language: python
-        additional_dependencies: [markdown-it-py==3.0.0]
-        files: '^([0-9a-f]{4}-.*/(README|DETAILS)\.md|ALIASES\.md)$'
+        additional_dependencies: [markdown-it-py==3.0.0, usd-core==26.8]
+        files: '^([0-9]{4}-.*/(README|DETAILS)\.md)$'
+        pass_filenames: false
+
+      - id: rfd-serials
+        name: rfd serials (the register)
+        description: >-
+          Holds SERIALS.usda against the tree, and against its own
+          last revision. A renumbering removes serials, so it fails
+          there. RFD 1000 gives the rule.
+        entry: python scripts/check-rfd-serials.py
+        language: python
+        additional_dependencies: [usd-core==26.8]
+        files: '^([0-9]{4}-.*|SERIALS\.usda)$'
         pass_filenames: false
 
       - id: dockerfile-and-server
         name: model images parse
         description: >-
           Each model folder carries a Dockerfile and a server.py.
-          RFD 1024 gives the rules, and a broken server.py fails much
+          RFD 1036 gives the rules, and a broken server.py fails much
           later, on a rented GPU.
         entry: python scripts/check-model-images.py
         language: system
-        files: '^[0-9a-f]{4}-.*/(Dockerfile|server\.py|test_input\.json)$'
+        files: '^[0-9]{4}-.*/(Dockerfile|server\.py|test_input\.json)$'
 
   # Markdown hygiene. Structural only, deliberately.
   #
-  # RFD 103f moves ASD-STE100 enforcement to the simplified-technical-english
+  # RFD 1063 moves ASD-STE100 enforcement to the simplified-technical-english
   # plugin, and says why no repository-local script duplicates it. These hooks
   # therefore check nothing about the prose. They check the bytes: a trailing
   # space that a diff shows and a reader cannot see, a missing final newline

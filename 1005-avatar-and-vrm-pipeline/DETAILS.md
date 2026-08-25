@@ -14,4 +14,4 @@
   `forWeftspun3DStudio` flag; no such field exists in the exporter,
   and its "Open3DStudio (Weftspun3DStudio)" framing described the
   same codebase under its old and new name as if bridging two
-  systems. RFD 1066 gives the real Open3DStudio-to-Weftspun history.
+  systems. RFD 1102 gives the real Open3DStudio-to-Weftspun history.

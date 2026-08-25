@@ -31,4 +31,4 @@ Init errors do not block the viewport.
 
 ## Related
 
-RFD 1002 defines the Studio pipeline. RFD 100a defines the XR lab.
+RFD 1002 defines the Studio pipeline. RFD 1010 defines the XR lab.

@@ -1,25 +1,27 @@
 #!/usr/bin/env python3
-"""Check that every RFD number follows the org-qualified hex rule.
+"""Check that every RFD number follows the org-qualified decimal rule.
 
 RFD 1000 gives the rule. This script enforces it. Run --self-test to see each
 check reject a known-bad input, because a check that passes on broken input
 certifies the defect instead of catching it.
 
 This gate owns numbering: directory names, the organization digit, serial
-uniqueness, heading agreement, and ALIASES.md coverage. It used to also scan
+uniqueness, and heading agreement. It used to also check ALIASES.md coverage,
+and that table is deleted rather than extended, so the check went with it. RFD
+1000 records what the deletion costs. It used to also scan
 for unmigrated decimal citations, and no longer does. That scan read the raw
 bytes, so a citation an RFD wrapped over two lines never matched it: it found
 3 of the 37 in the tree. `check-rfd-structure.py` reads the same citations off
 a CommonMark AST and finds all of them, so the scan moved there rather than
-being kept in two places at two strengths. RFD 107c records the move.
+being kept in two places at two strengths. RFD 1124 records the move.
 """
 import os
 import re
 import sys
 
 ORG = "1"
-DIR_RE = re.compile(r"^([0-9a-f]{4})-[a-z0-9-]+$")
-HEAD_RE = re.compile(r"^# RFD ([0-9a-f]{4}):")
+DIR_RE = re.compile(r"^([0-9]{4})-[a-z0-9-]+$")
+HEAD_RE = re.compile(r"^# RFD ([0-9]{4}):")
 
 
 def rfd_dirs(root):
@@ -40,7 +42,7 @@ def check(root):
     for d in dirs:
         m = DIR_RE.match(d)
         if not m:
-            problems.append(f"{d}: name is not four lower-case hex digits and a slug")
+            problems.append(f"{d}: name is not four decimal digits and a slug")
             continue
         num = m.group(1)
         if num[0] != ORG:
@@ -61,28 +63,6 @@ def check(root):
         elif h.group(1) != num:
             problems.append(f"{d}: heading says {h.group(1)}, directory says {num}")
 
-    aliases = os.path.join(root, "ALIASES.md")
-    if not os.path.exists(aliases):
-        problems.append("ALIASES.md is missing, so old numbers do not resolve")
-    else:
-        with open(aliases, encoding="utf-8") as fh:
-            mapped = {m.group(1) for m in re.finditer(r"RFD ([0-9a-f]{4})", fh.read())}
-        # The migration was a closed set. It renumbered a contiguous range and
-        # ended, so only a number inside that range can have an old number to
-        # resolve. An RFD written afterwards has none, and demanding a row for
-        # it would put a lookup entry that maps from nothing into the table.
-        # The range is read from ALIASES.md rather than written here, because
-        # the table is the record of what the migration covered.
-        migrated = {n for n in mapped if n[0] == ORG}
-        if not migrated:
-            # An empty table would make the range empty and every check below
-            # vacuous, which reads exactly like a pass.
-            problems.append("ALIASES.md maps no RFD in this organization")
-        else:
-            last = max(migrated)
-            for num in sorted(seen):
-                if num <= last and num not in mapped:
-                    problems.append(f"ALIASES.md has no row for RFD {num}")
     return problems
 
 
@@ -99,23 +79,20 @@ def self_test():
         os.makedirs(d)
         with open(os.path.join(d, "README.md"), "w", encoding="utf-8") as fh:
             fh.write(kw.get("heading", "# RFD 1001: A slug\n"))
-        with open(os.path.join(tmp, "ALIASES.md"), "w", encoding="utf-8") as fh:
-            fh.write(kw.get("aliases", "| RFD 0001 | RFD 1001 | x |\n"))
 
     cases = [
         ("a clean tree passes", {}, False),
         ("wrong organization digit", {"dirname": "2001-a-slug"}, True),
-        ("decimal directory name", {"dirname": "0001-a-slug"}, True),
+        ("no organization digit", {"dirname": "0001-a-slug"}, True),
+        # The two below are the withdrawn hex rule. A serial with a letter is
+        # the form this repository carried for 131 RFDs, so the gate has to
+        # reject it by name rather than by the slug pattern happening to miss.
+        ("a hex directory name", {"dirname": "100a-a-slug"}, True),
+        ("a hex heading",
+         {"dirname": "1010-a-slug", "heading": "# RFD 100a: A slug\n"}, True),
         ("heading disagrees with directory", {"heading": "# RFD 1002: A slug\n"}, True),
-        ("ALIASES.md maps nothing in this organization",
-         {"aliases": "| RFD 0009 | RFD 9999 | x |\n"}, True),
-        # The pair below is the boundary. Inside the migrated range a missing
-        # row is a defect. Above it there is no old number to record.
-        ("a migrated number with no row",
-         {"aliases": "| RFD 0009 | RFD 1009 | x |\n"}, True),
-        ("a post-migration number needs no row",
-         {"extra_dirs": [("1002-a-slug", "# RFD 1002: A slug\n")],
-          "aliases": "| RFD 0001 | RFD 1001 | x |\n"}, False),
+        ("a second RFD needs no lookup table",
+         {"extra_dirs": [("1002-a-slug", "# RFD 1002: A slug\n")]}, False),
     ]
     ok = True
     for name, kw, should_fail in cases:

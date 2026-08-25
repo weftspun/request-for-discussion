@@ -4,7 +4,7 @@
 The rules here were measured, not recalled. Each one was run against all 116
 RFDs first, and only the rules that hold with no exception became checks. The
 counts behind each decision, including the two conventions that were measured
-and deliberately not gated, are in RFD 107c.
+and deliberately not gated, are in RFD 1124.
 
 Every check reads a CommonMark AST rather than the bytes. That is not
 decoration. The regex gate beside this one looks for `RFD 0123` in the raw
@@ -24,23 +24,36 @@ from markdown_it import MarkdownIt
 
 MD = MarkdownIt("commonmark")
 
-DIR_RE = re.compile(r"^([0-9a-f]{4})-[a-z0-9-]+$")
-TITLE_RE = re.compile(r"^RFD ([0-9a-f]{4}): (\S.*)$")
-DETAILS_TITLE_RE = re.compile(r"^RFD ([0-9a-f]{4}) details: (\S.*)$")
+DIR_RE = re.compile(r"^([0-9]{4})-[a-z0-9-]+$")
+TITLE_RE = re.compile(r"^RFD ([0-9]{4}): (\S.*)$")
+DETAILS_TITLE_RE = re.compile(r"^RFD ([0-9]{4}) details: (\S.*)$")
 # A state list in RFD 1000's own prose, so the gate and the document cannot
 # drift apart. "a state: a, b, or c" is the sentence it parses.
 STATE_LIST_RE = re.compile(r"has a state:\s*([a-z,\s]+?)\.", re.S)
 # The README length bound, also read out of RFD 1000 rather than held here.
 LIMIT_RE = re.compile(r"stays at (\d+) lines or fewer")
-# An old number always began with 0, and no organization digit is 0. The
-# whitespace class is what the byte-level scan could not spell.
+# Two numbering schemes have been withdrawn, so two citation forms are stale.
+# The first began with 0, and no organization digit is 0. The second was
+# hexadecimal, and only a hex serial carries a letter.
+# The whitespace class is what the byte-level scan could not spell.
 OLD_CITE_RE = re.compile(r"\bRFD\s+(0\d{3})\b")
-CITE_RE = re.compile(r"\bRFD\s+([0-9a-f]{4})\b")
+HEX_CITE_RE = re.compile(r"\bRFD\s+([1-9][0-9a-f]{0,2}[a-f][0-9a-f]*)\b")
+CITE_RE = re.compile(r"\bRFD\s+([0-9]{4})\b")
+# The register's own reader, so the two gates cannot disagree about which
+# serials exist. A deleted serial stays citable, so both tables count.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import importlib.util as _ilu
+
+_spec = _ilu.spec_from_file_location(
+    "rfd_serials", os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                "check-rfd-serials.py"))
+_serials = _ilu.module_from_spec(_spec)
+_spec.loader.exec_module(_serials)
 
 # The order these carry when present. Extra headings may sit between them.
 SPINE = ("Problem", "Decision", "References", "Related")
 # A retracted decision renames its own heading, so the match is a prefix.
-# RFD 1043's "Decision, as published and now retracted" is the case.
+# RFD 1067's "Decision, as published and now retracted" is the case.
 REQUIRED = "Decision"
 # A moved RFD develops elsewhere and states only where. Both of them carry no
 # Decision, which is the whole point of the state.
@@ -103,7 +116,7 @@ def parse_limit(root):
 
     The bound is 40 and the corpus lands 12 READMEs exactly on it, so it is
     inclusive. RFD 1000 said "under 40" until this gate measured that, and
-    RFD 107c records the correction rather than the gate carrying an
+    RFD 1124 records the correction rather than the gate carrying an
     off-by-one to match prose nobody had checked.
     """
     text = _conventions_text(root)
@@ -114,17 +127,23 @@ def parse_limit(root):
 
 
 def known_numbers(root, dirs):
-    """A citation resolves to a directory, or to an ALIASES.md row.
+    """A citation resolves to a serial the register lists.
 
-    The tombstone rows matter. RFD 1046 deleted three speculative RFDs and
-    still cites them by number, and ALIASES.md keeps a row for each. Requiring
-    a directory would reject the citation that records the deletion.
+    The deleted serials matter. RFD 1070 and RFD 1064 removed six speculative
+    RFDs and still cite them by number. Requiring a directory would reject the
+    citation that records the deletion.
+
+    SERIALS.usda is the one place those numbers live, and `check-rfd-serials.py`
+    holds it against the tree. This gate borrows that file's reader rather than
+    parsing the register a second way, so the two cannot disagree about which
+    numbers exist.
     """
     nums = {d[:4] for d in dirs}
-    p = os.path.join(root, "ALIASES.md")
+    p = os.path.join(root, "SERIALS.usda")
     if os.path.exists(p):
         with open(p, encoding="utf-8") as fh:
-            nums |= set(re.findall(r"RFD ([0-9a-f]{4})", fh.read()))
+            allocated, deleted = _serials.read(fh.read())
+        nums |= set(allocated) | set(deleted)
     return nums
 
 
@@ -242,14 +261,16 @@ def check_citations(name, tokens, nums):
     problems = []
     for line in inline_text(tokens):
         for m in OLD_CITE_RE.finditer(line):
-            problems.append(f"{name}: cites RFD {m.group(1)} in the old decimal form")
+            problems.append(f"{name}: cites RFD {m.group(1)} in the first decimal form")
+        for m in HEX_CITE_RE.finditer(line):
+            problems.append(f"{name}: cites RFD {m.group(1)} in the withdrawn hex form")
         for m in CITE_RE.finditer(line):
             n = m.group(1)
             if n.startswith("0"):
                 continue  # already reported above
             if n not in nums:
                 problems.append(
-                    f"{name}: cites RFD {n}, which has no directory and no ALIASES.md row"
+                    f"{name}: cites RFD {n}, which has no directory and RFD 1070 did not delete it"
                 )
     return problems
 
@@ -366,6 +387,9 @@ A decision.
 See `DETAILS.md` for the rest.
 """
 GOOD_DETAILS = "# RFD 1001 details: the rest\n\nProse.\n"
+# The gate reads the citable numbers out of the register, so the fixture tree
+# carries one. RFD 1002 is deleted here, and the good README cites it.
+REGISTER = _serials.GOOD
 GOOD_CONVENTIONS = """# RFD 1000: Conventions
 
 **State:** published
@@ -384,7 +408,7 @@ def self_test():
     import shutil
     import tempfile
 
-    def build(tmp, readme=GOOD_README, details=GOOD_DETAILS, aliases=None, skill=None):
+    def build(tmp, readme=GOOD_README, details=GOOD_DETAILS, deleted=None, skill=None):
         for n, body in (("1000-conventions", GOOD_CONVENTIONS), ("1001-a-slug", readme)):
             os.makedirs(os.path.join(tmp, n))
             with open(os.path.join(tmp, n, "README.md"), "w", encoding="utf-8") as fh:
@@ -395,8 +419,8 @@ def self_test():
         if skill is not None:
             with open(os.path.join(tmp, "1001-a-slug", "SKILL.md"), "w", encoding="utf-8") as fh:
                 fh.write(skill)
-        with open(os.path.join(tmp, "ALIASES.md"), "w", encoding="utf-8") as fh:
-            fh.write(aliases if aliases is not None else "| RFD 0001 | RFD 1002 | x |\n")
+        with open(os.path.join(tmp, "SERIALS.usda"), "w", encoding="utf-8") as fh:
+            fh.write(deleted if deleted is not None else REGISTER)
 
     wrapped = GOOD_README.replace("RFD 1002 is the neighbour.", "RFD\n0001 is the neighbour.")
     cases = [
@@ -421,7 +445,12 @@ def self_test():
          {"readme": GOOD_README.replace("## Problem", "## Zzz").replace("## Related", "## Problem")}, True),
         ("a decimal citation split across a line break", {"readme": wrapped}, True),
         ("a citation that resolves nowhere",
-         {"readme": GOOD_README.replace("RFD 1002", "RFD 1099")}, True),
+         {"readme": GOOD_README.replace("RFD 1002", "RFD 1153")}, True),
+        ("a hex citation, which is the withdrawn form",
+         {"readme": GOOD_README.replace("RFD 1002", "RFD 100a")}, True),
+        ("a number the register does not list",
+         {"deleted": REGISTER.replace("custom int[] serial = [1002]",
+                                      "custom int[] serial = [1003]")}, True),
         ("a DETAILS.md the README never names",
          {"readme": GOOD_README.replace("See `DETAILS.md` for the rest.", "Nothing here.")}, True),
         ("a DETAILS.md titled for another RFD",

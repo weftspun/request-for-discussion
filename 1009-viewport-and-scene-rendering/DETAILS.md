@@ -23,6 +23,6 @@ can read which tier is active.
 ## What the old migration doc got right
 
 The VR camera offset and the AR pass-through transparency it
-described are real, current behavior. RFD 106c gives the exact
+described are real, current behavior. RFD 1108 gives the exact
 wrapper math and the reference-space priority, more precisely than
 the old guide did.

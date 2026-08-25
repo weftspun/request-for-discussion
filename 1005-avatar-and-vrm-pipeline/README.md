@@ -28,5 +28,5 @@ See `DETAILS.md` for file references.
 ## Related
 
 RFD 1004 catalogs the avatar tasks. RFD 1008 defines trait remix.
-The wallet minting link (old RFD 100c) is abandoned. The project
+The wallet minting link (old RFD 1012) is abandoned. The project
 does not do NFTs.
