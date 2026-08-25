@@ -1,20 +1,20 @@
 #usda 1.0
 (
-    defaultPrim = "Rfd107a"
-    doc = """RFD 107a's work as a stage, so the plan is data rather than prose.
+    defaultPrim = "Rfd1122"
+    doc = """RFD 1122's work as a stage, so the plan is data rather than prose.
 
 WHY THIS EXISTS. The RFD states its order in sentences, and a sentence cannot be asked
 whether step 8 comes after the two steps it needs. Here the order is an `int order`, the
-dependencies are relationships, and `scripts/check_rfd107a_plan.py` fails when the two
+dependencies are relationships, and `scripts/check_rfd1122_plan.py` fails when the two
 disagree. RFD 1035 makes OpenUSD the internal format, and a plan is a graph, so it
 composes here for the same reason the topology does.
 
 WHAT IT IS NOT. It is not a second copy of the RFD. Every count under
-/Rfd107a/Quantities is searched for in the documents listed under `sources` below, so a
+/Rfd1122/Quantities is searched for in the documents listed under `sources` below, so a
 number that drifts fails a command rather than being discovered six months later. The
 prose stays in the RFD, where it is reviewed; what lives here is the ordering, the
 dependency edges, and the counts. CLAUDE.md is a source because the holdout is 523 images
-and RFD 107a relies on that count without restating it.
+and RFD 1122 relies on that count without restating it.
 
 RETRACTED: THERE IS AN UP AXIS AND A METERS PER UNIT. An earlier version of this file
 omitted both and said so on purpose, arguing that nothing here is geometry and that
@@ -30,14 +30,14 @@ explicit. The gate checks this, so the claim cannot rot."""
     metersPerUnit = 1
     upAxis = "Z"
     customLayerData = {
-        string rfd = "107a"
+        string rfd = "1122"
         string rfdState = "discussion"
         string[] sources = [
-            ".request_for_discussion/107a-the-wholebody-gap/README.md",
-            ".request_for_discussion/107a-the-wholebody-gap/DETAILS.md",
+            "2-contract/request_for_discussion/1122-the-wholebody-gap/README.md",
+            "2-contract/request_for_discussion/1122-the-wholebody-gap/DETAILS.md",
             "CLAUDE.md",
         ]
-        string checker = ".logbook/scripts/check_rfd107a_plan.py"
+        string checker = ".logbook/scripts/check_rfd1122_plan.py"
         string[] stateVocabulary = ["gate", "build", "measure", "exists"]
         # SIZES RATHER THAN DAYS, AND THE SWAP IS AN ADMISSION. An earlier revision carried
         # optimisticDays / mostLikelyDays / pessimisticDays, and printed a path total of "38.8
@@ -55,7 +55,7 @@ explicit. The gate checks this, so the claim cannot rot."""
     }
 )
 
-def Scope "Rfd107a" (
+def Scope "Rfd1122" (
     doc = "The wholebody gap: a 104-point head, and the renderer that supplies its labels."
 )
 {
@@ -93,7 +93,7 @@ def Scope "Rfd107a" (
     #
     # `scripts/mi_bench_llvm.py` replaces it for the shipping pair. Peak rates below are DERIVED
     # -- cores x lanes x 2 for the fused multiply-add x clock -- rather than quoted, and
-    # `check_rfd107a_plan.py` re-derives them, so a transcription error fails a command. Clocks
+    # `check_rfd1122_plan.py` re-derives them, so a transcription error fails a command. Clocks
     # are vendor boost figures and are marked `clockAssumed` where nothing on the desk confirmed
     # them.
     #
@@ -280,7 +280,7 @@ was -- the prohibition is on the round trip, not on the encoder.
 
 So the supervision target for a decode-only transformer is the latent of the
 TRUE geometry, encoded once from the asset. It is not recovered from a
-reconstruction, which is what /Rfd107a/Findings/F04 found no interface for.
+reconstruction, which is what /Rfd1122/Findings/F04 found no interface for.
 
 GROUND TRUTH IS PER-DIMENSION, NOT PER-FILE, AND THIS IS THE HALF THAT BITES. A
 GLB is ground truth in the dimensions that were CONSTRUCTED and not in the
@@ -325,7 +325,7 @@ of motion one and not a substitute for it."""
             doc = """THE HAILO PART IS BUILT FIRST, AND THAT REACHES BACKWARDS INTO THE
 TRAINING RUN.
 
-RFD 107e already decided it: "Compile the backbone with `num_windows=1`. Measured: it parses
+RFD 1126 already decided it: "Compile the backbone with `num_windows=1`. Measured: it parses
 and `num_windows=2` does not. It costs 1.35x wall-clock and NEEDS RETRAINING." The measurement
 is in `logbook-edge-npu-and-the-anny-forward.md` -- 868 nodes REJECTED at two windows, 825
 PARSE OK at one, same model and same resolution.
@@ -381,7 +381,7 @@ where two share a model overstates the spread."""
     # THE TRAINING SHAPE, AND THE BRAKE ON IT.
     #
     # This scope is CLOSED. Every component names the finding that motivated it through
-    # `justifiedBy`, and `check_rfd107a_plan.py` fails when a component points at a finding
+    # `justifiedBy`, and `check_rfd1122_plan.py` fails when a component points at a finding
     # that does not exist. So a new head, tier or loss cannot be added by agreeing to it in
     # conversation: it needs a Findings entry first, and the logbook rule is that a finding
     # records a MEASUREMENT rather than an intention.
@@ -422,7 +422,7 @@ Neither cites a frozen space.
 
 DIETED FROM FIVE TO THREE, THEN TO TWO. THE CUTS ARE KEPT HERE RATHER THAN DELETED QUIETLY.
 
-`L05_MaskedPerSource` said the loss is masked per source. That is rule 3 of RFD 107a,
+`L05_MaskedPerSource` said the loss is masked per source. That is rule 3 of RFD 1122,
 already stated in a reviewed document, so carrying it here made a second place for one fact
 to live and a second place for it to drift. The plan holds ordering, edges and counts; it
 does not restate the rules.
@@ -455,7 +455,7 @@ order for free-form geometry."""
         {
             custom uniform token kind = "space"
             custom int instanceQueryWidth = 256
-            rel justifiedBy = </Rfd107a/Findings/F10_BodyAndSceneAreTwoLatents>
+            rel justifiedBy = </Rfd1122/Findings/F10_BodyAndSceneAreTwoLatents>
         }
 
         def "L03_HeadsAreParallelOnOneQuery" (
@@ -469,7 +469,7 @@ correspondence to establish."""
         )
         {
             custom uniform token kind = "head"
-            rel justifiedBy = </Rfd107a/Findings/F11_KeypointChannelsAreCarriedNotDiagnosed>
+            rel justifiedBy = </Rfd1122/Findings/F11_KeypointChannelsAreCarriedNotDiagnosed>
         }
 
     }
@@ -563,7 +563,7 @@ RFD 1028's `server.py` shells out to upstream's own entry point,
 `inference.py --image <in> --output <glb>`, and `predict` returns `{glb, layer}`: a GLB and
 a USD layer written from it. The SLAT never leaves upstream's process.
 
-RFD 107a's layer-extraction design masks in the latent -- "tokens, not meshes", with
+RFD 1122's layer-extraction design masks in the latent -- "tokens, not meshes", with
 `a_splice` and VoxHammer operating there -- and it says Pixal3D "emits SLAT natively, so
 nothing is inverted". That is true of upstream and not of the packaged server. Reading the
 GLB back would be `encode(decode(z))`, which the latents rule blocklists by name.
@@ -588,7 +588,7 @@ beside the mesh. The pinned commit is `cdbb2bb` on `TencentARC/Pixal3D`."""
         }
 
         def "F05_Pixal3dIsUnplaced" (
-            doc = """RFD 107a's Scope names `3-interactor/pixal3d-image-to-textured-mesh`
+            doc = """RFD 1122's Scope names `3-interactor/pixal3d-image-to-textured-mesh`
 and no such project is in the goal manifest.
 
 `repo list` has no Pixal3D entry and `default.xml` has no matching `<project>`. What exists
@@ -596,7 +596,7 @@ is RFD 1028 -- a `Dockerfile`, a `server.py` and a `test_input.json` -- inside t
 request-for-discussion checkout. An RFD describing a service is not the service placed on a
 side, and the Sides rule says placement happens when a project is added rather than later.
 
-The same gap as the PBR bake's, which /Rfd107a/Plan/T03_PbrBake already records with
+The same gap as the PBR bake's, which /Rfd1122/Plan/T03_PbrBake already records with
 `repositoryPlacedInManifest = 0`."""
         )
         {
@@ -1076,7 +1076,7 @@ better reason than the precedent is.
 CONSEQUENCE FOR THE ENVIRONMENT RELATION, WHICH IS NOT WHAT IT LOOKS LIKE. Two
 latents does not remove the need for scene GEOMETRY. The environment still has to
 be a mesh rather than an HDRI, because occlusion truth depends on there being
-something to occlude with -- which is what /Rfd107a/Findings/F03 needs and cannot
+something to occlude with -- which is what /Rfd1122/Findings/F03 needs and cannot
 get from a painted backdrop. The body latent encodes the body; the scene mesh
 earns its place by casting shadows and hiding joints."""
         )
@@ -1154,7 +1154,7 @@ general form.
 WHAT IS NEW IS THE CONSEQUENCE FOR LATENTS. While a bad pose only produced a bad
 picture, it was caught downstream by the verification loop. Encoded into a latent
 it becomes a supervision TARGET, and a wrong target is not a frame anybody looks
-at -- it is a gradient. /Rfd107a/Constraints/EncodeOnlyGroundTruth is that
+at -- it is a gradient. /Rfd1122/Constraints/EncodeOnlyGroundTruth is that
 consequence written down.
 
 THE PLAN SAYS NOTHING ABOUT THIS, WHICH IS THE REPORTABLE PART. Searching all ten
@@ -1267,7 +1267,7 @@ stride: the hundred styles vary the gait -- Penguin, Monk, Tiptoe, DuckFoot -- a
 configuration of the body. Nothing sits, crouches, leans or reaches. How many an artist would
 draw is a human judgement and is not recorded here.
 
-TWO THINGS THE RUN GOT WRONG, both corrected in `logbook-rfd107a-t01-pose-check.md`. The camera
+TWO THINGS THE RUN GOT WRONG, both corrected in `logbook-rfd1122-t01-pose-check.md`. The camera
 was picked by hand before `sphere_hammersley_sequence` was used, and a front view flattens the
 stride, which runs about five stacked soda cans along the travel axis against three and a half
 across it. And the sheet drew the twenty-one source bones, which is the old layout: those are
@@ -1319,7 +1319,7 @@ is why `topology_id` is a foreign key rather than a label.
 
 THE STATE SAYS BUILD AND THE POINTERS BELOW DISAGREE. `render_corpus.py` is 370 lines
 already emitting image, keypoints and mesh from a posed ANNY, and `render_image.py` writes
-the depth pass from the same camera. RFD 107a's table says "Nothing turns a posed mesh into
+the depth pass from the same camera. RFD 1122's table says "Nothing turns a posed mesh into
 a labelled frame", which was true when it was written; the work landed since, under RFD
 0122's rung 1.
 
@@ -1370,7 +1370,7 @@ below. Reading the two against each other is the next thing to do here, and it i
   repository-code: https://github.com/weftspun/hm08-partition
   notes: 437 lines. The topology and its groups as a validated USD partition, which is where the renderer gets its part semantics.
 """
-            rel dependsOn = [</Rfd107a/Plan/T01_PoseLibraryPlausibility>]
+            rel dependsOn = [</Rfd1122/Plan/T01_PoseLibraryPlausibility>]
         }
 
         def "T03_PbrBake" (
@@ -1445,7 +1445,7 @@ This does not make the task done. What it removes is the reason it had no estima
 # node_trees/enhanced_skin.json with sss.png beside it, which is a
 # dependency rather than a repository on a side.
 """
-            rel dependsOn = [</Rfd107a/Plan/T01_PoseLibraryPlausibility>]
+            rel dependsOn = [</Rfd1122/Plan/T01_PoseLibraryPlausibility>]
         }
 
         def "T04_QwenCheckpointHash" (
@@ -1467,7 +1467,7 @@ THAT CLAIM WAS TOO STRONG, AND THE CODE SAYS SO. This paragraph read that the co
 "is met rather than owed" because `omnigen2_edit.py` writes a provenance file "carrying the
 model id, the resolved revision, the prompt, the negative prompt, the seed, the step count
 and both guidance scales". Two of those seven were never written: the record held no
-`revision` and no positive `prompt`. /Rfd107a/Findings/F06 has the reading. So condition 1
+`revision` and no positive `prompt`. /Rfd1122/Findings/F06 has the reading. So condition 1
 was unmet in the sidecar as well as in the rows, and the task was recorded as further along
 than it was.
 
@@ -1558,7 +1558,7 @@ moves every joint."""
 # (image, instruction, strength, steps, seed) belongs to a server that is
 # not a project in this goal manifest.
 """
-            rel dependsOn = [</Rfd107a/Plan/T04_QwenCheckpointHash>]
+            rel dependsOn = [</Rfd1122/Plan/T04_QwenCheckpointHash>]
 
             custom string amended = """AMENDED: `strength` IS NOT THE KNOB, AND THE KNOB WAS FOUND BY GETTING IT WRONG.
 
@@ -1635,7 +1635,7 @@ the file before treating this as more than that."""
   repository-code: https://github.com/weftspun/dataflow-coco-gemx
   notes: 178 lines. Real COCO into the same normal form, so the two sources meet as one schema.
 """
-            rel dependsOn = [</Rfd107a/Plan/T01_PoseLibraryPlausibility>]
+            rel dependsOn = [</Rfd1122/Plan/T01_PoseLibraryPlausibility>]
         }
 
         def "T07_VerificationLoop" (
@@ -1702,9 +1702,9 @@ That makes the discard rule this task states a floor rather than the only option
   notes: 179 lines. What a discard rate gets reported against.
 """
             rel dependsOn = [
-                </Rfd107a/Plan/T02_Renderer>,
-                </Rfd107a/Plan/T03_PbrBake>,
-                </Rfd107a/Plan/T05_StrengthWindow>,
+                </Rfd1122/Plan/T02_Renderer>,
+                </Rfd1122/Plan/T03_PbrBake>,
+                </Rfd1122/Plan/T05_StrengthWindow>,
             ]
         }
 
@@ -1748,8 +1748,8 @@ own train and test, and 78% of it is licence-dirty."""
   notes: 85 lines, gen_reference/. The reference loss a masked run has to reproduce before it is believed.
 """
             rel dependsOn = [
-                </Rfd107a/Plan/T06_SchemaCompletion>,
-                </Rfd107a/Plan/T07_VerificationLoop>,
+                </Rfd1122/Plan/T06_SchemaCompletion>,
+                </Rfd1122/Plan/T07_VerificationLoop>,
             ]
         }
 
@@ -1777,7 +1777,7 @@ own train and test, and 78% of it is licence-dirty."""
   repository-code: https://github.com/weftspun/rf-detr-cpp
   notes: 97 lines, scripts/. Written against a COCO-17 head, so the 104-point head is what it has to be re-pointed at.
 """
-            rel dependsOn = [</Rfd107a/Plan/T08_MaskedTraining>]
+            rel dependsOn = [</Rfd1122/Plan/T08_MaskedTraining>]
         }
 
         def "T10_Evaluate" (
@@ -1808,7 +1808,7 @@ illustrations and this set does not supply them."""
   repository-code: https://github.com/weftspun/dataflow-coco-gemx
   notes: 119 lines. The filter that defines the blinded holdout, so it decides which images this may be scored on.
 """
-            rel dependsOn = [</Rfd107a/Plan/T09_GgufAndHead>]
+            rel dependsOn = [</Rfd1122/Plan/T09_GgufAndHead>]
         }
     }
 }

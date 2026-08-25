@@ -157,9 +157,17 @@ decimal and deleted that table. The measurements stay as measured. Two of
 the rules they produced do not.
 
 The row reading "Every citation resolves to a directory or an ALIASES.md
-row" now reads "to a directory, or to a number RFD 1070 records as
-deleted". The gate parses the deleted numbers out of RFD 1070's own prose,
-which is the arrangement the state list and the line limit already use.
+row" now reads "to a serial `SERIALS.usda` lists", live or deleted. This
+gate borrows `check-rfd-serials.py`'s reader rather than parsing the
+register a second way, so the two cannot disagree about which numbers
+exist. That is the arrangement the state list and the line limit already
+use, one file further along.
+
+An earlier draft of this paragraph said the gate parses the deleted numbers
+out of RFD 1070's prose. It did, for one commit, and the register replaced
+it. The paragraph is corrected rather than deleted because a document that
+states a rule the code does not implement is the failure this whole RFD was
+written against, and it happened here.
 
 The row reading "No citation uses the old decimal form" now covers two
 withdrawn forms. A number beginning with 0 is the first. A serial carrying

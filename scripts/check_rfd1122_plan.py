@@ -1,4 +1,4 @@
-"""Check `rfd107a-plan.usda` against RFD 107a, and against itself.
+"""Check `rfd1122-plan.usda` against RFD 1122, and against itself.
 
 WHY THIS EXISTS. A plan written as prose can say step 8 depends on step 9 and nobody
 notices. A plan written as a graph can too, unless something reads the graph. This reads
@@ -6,7 +6,7 @@ it: every `dependsOn` target must resolve, must have a strictly lower `order`, a
 `order` values must be 1..N with no gaps and no repeats. It found one defect while being
 written -- the renderer sat at order 2 depending on the bake at order 3.
 
-AND AGAINST THE DOCUMENT. Every count under /Rfd107a/Quantities is searched for in the
+AND AGAINST THE DOCUMENT. Every count under /Rfd1122/Quantities is searched for in the
 source documents with commas stripped, as a whole token. The stage is not allowed to be the
 only place a number lives, because then the number is unreviewed and the RFD and the plan
 can drift apart silently. This is the pattern `check-rfd-structure.py` uses for RFD 1000's
@@ -16,7 +16,7 @@ WHAT IT DOES NOT CHECK. Whether the plan is a good plan, and whether the counts 
 -- only that the two artefacts agree. A wrong number stated identically in both passes.
 
 Usage:
-    python check_rfd107a_plan.py [stage.usda] [--self-test]
+    python check_rfd1122_plan.py [stage.usda] [--self-test]
 
 Exit code is non-zero on any failure, and on any negative control that fails to fail.
 """
@@ -26,7 +26,7 @@ import re
 import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
-DEFAULT_STAGE = HERE.parent / "rfd107a-plan.usda"
+DEFAULT_STAGE = HERE.parent / "rfd1122-plan.usda"
 REPO = HERE.parent
 
 
@@ -51,7 +51,7 @@ def workspace_root():
 
 
 def rfd_dir():
-    """Where RFD 107a is checked out, asked of the manifest rather than guessed.
+    """Where RFD 1122 is checked out, asked of the manifest rather than guessed.
 
     The RFD moved in the same sync this repository did -- `.request_for_discussion` at the
     workspace root became `2-contract/request_for_discussion` -- so a second hard-coded
@@ -68,19 +68,19 @@ def rfd_dir():
 
         for project in ET.parse(manifest).getroot().iter("project"):
             if project.get("name") == "request-for-discussion":
-                return root / project.get("path") / "107a-the-wholebody-gap"
+                return root / project.get("path") / "1122-the-wholebody-gap"
     # No manifest to read: one level of search rather than a walk of the whole tree.
     for name in ("request_for_discussion", "request-for-discussion"):
         for cand in (root / name, *root.glob(f"*/{name}")):
             if cand.is_dir():
-                return cand / "107a-the-wholebody-gap"
+                return cand / "1122-the-wholebody-gap"
     return None
 
 
 ROOT = workspace_root()
-RFD_DIR = rfd_dir() or (REPO / ".request_for_discussion" / "107a-the-wholebody-gap")
+RFD_DIR = rfd_dir() or (REPO / ".request_for_discussion" / "1122-the-wholebody-gap")
 # The working agreements are a source too, and not as a convenience. The holdout is 523
-# images, and that count is stated in CLAUDE.md rather than in RFD 107a -- the RFD relies
+# images, and that count is stated in CLAUDE.md rather than in RFD 1122 -- the RFD relies
 # on it without restating it. Searching only the RFD reported the count as drifted when
 # what had actually happened is that it lives one document over.
 #
@@ -88,11 +88,11 @@ RFD_DIR = rfd_dir() or (REPO / ".request_for_discussion" / "107a-the-wholebody-g
 # is a `linkfile` pointing back here, so the two are the same bytes when the workspace
 # exists, and only this one is there when the logbook is checked out on its own.
 SOURCES = (RFD_DIR / "README.md", RFD_DIR / "DETAILS.md", REPO / "CLAUDE.md")
-PLAN = "/Rfd107a/Plan"
-QUANTITIES = "/Rfd107a/Quantities"
+PLAN = "/Rfd1122/Plan"
+QUANTITIES = "/Rfd1122/Quantities"
 STATES = ("gate", "build", "measure", "exists")
-SHAPE = "/Rfd107a/TrainingShape"
-FINDINGS = "/Rfd107a/Findings"
+SHAPE = "/Rfd1122/TrainingShape"
+FINDINGS = "/Rfd1122/Findings"
 # The training shape's closed vocabulary. A sixth kind arrives the same way a fifth
 # state would -- unannounced -- so it is enumerated here rather than inferred.
 SHAPE_KINDS = ("space", "head", "loss")
@@ -113,7 +113,7 @@ def rfd_text():
 
 # --- the reranked path, and the devices it runs on ---------------------------------------
 #
-# WHY THIS IS HERE AT ALL, GIVEN THE FILE ARGUES AGAINST IT. RFD 107a's own ordering section
+# WHY THIS IS HERE AT ALL, GIVEN THE FILE ARGUES AGAINST IT. RFD 1122's own ordering section
 # concludes that durations belong out of the graph: "Both readings are correct; they answer
 # different questions, and only one of them moves when a task completes." That argument stands
 # and is not deleted. What overrides it is narrower than it looks -- durations were kept out
@@ -121,7 +121,7 @@ def rfd_text():
 # WITH a reader. The unit-duration path above is untouched and still checked; this is a second
 # reading beside it, not a replacement for it.
 
-DEVICES = "/Rfd107a/Devices"
+DEVICES = "/Rfd1122/Devices"
 
 
 def size_scale(stage):
@@ -194,7 +194,7 @@ def check_devices(stage, failures):
 
 
 def pert(stage, devices, failures, text):
-    """The duration-weighted path, by RFD 204d's formulas.
+    """The duration-weighted path, by RFD 2077's formulas.
 
         TE = (O + 4M + P) / 6        sigma^2 = ((P - O) / 6)^2
 

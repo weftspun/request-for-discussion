@@ -398,7 +398,7 @@ soda cans end to end -- at 0.012 mm a step, and thrown
 #
 # It is left as it is, and reported, because changing it would be picking a number to make an
 # output look right. Deciding it needs a definition of what a visible joint is -- surface
-# depth at the projected pixel, or the joint's own radius -- and that is RFD 107a's work, not
+# depth at the projected pixel, or the joint's own radius -- and that is RFD 1122's work, not
 # a constant to nudge here.
 TOL = 0.02
 manifest = {"seed": SEED, "space": "okhsl", "s": 0.95,

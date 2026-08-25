@@ -78,7 +78,7 @@ number to its arc is the identity, so a reader who can read one can read the
 other. That is what the decimal rule below was for.
 
 Two rules carry to whatever takes the next category. It keeps a register of
-what it allocates, in the way `SERIALS.md` does. A kind of thing gets an arc of
+what it allocates, in the way `SERIALS.usda` does. A kind of thing gets an arc of
 its own rather than a neighbouring parent number, because `<thing>.1.<id>` and
 `<thing>.2.<id>` say which kind they are and `<thing>` beside `<thing+1>` does
 not.

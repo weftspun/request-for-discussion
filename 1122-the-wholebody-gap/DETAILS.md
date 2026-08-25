@@ -587,7 +587,7 @@ detector quantised three ways is three detectors and no measurement transfers be
 Not to be confused with condition 5, which forbids a quantised **generator** from writing corpus
 data. The detector's quantization is deployment; only T05's generator path is bound by it.
 
-**The reranked path: 20.0 size points.** Computed by `check_rfd107a_plan.py` from the sizes in
+**The reranked path: 20.0 size points.** Computed by `check_rfd1122_plan.py` from the sizes in
 the stage and asserted against this paragraph so the two cannot drift. The formulas are the
 standard PERT pair, already in use in this workspace at
 `2-contract/multiplayer-fabric-manuals/rfd/204d-pert-critical-path-zonefabric` — cited by path

@@ -1,6 +1,6 @@
 """Gate: every USD layer we write is valid, and survives a round trip through crate.
 
-WHY THIS EXISTS. `rfd107a-plan.usda` opened in Python, composed without error, and read
+WHY THIS EXISTS. `rfd1122-plan.usda` opened in Python, composed without error, and read
 back the ten tasks it was supposed to carry -- and it still failed usdchecker's own rules,
 because it declared neither `upAxis` nor `metersPerUnit`. "It opens" is not "it is valid",
 and the gap between the two is exactly where a layer that other tools reject sits looking
@@ -185,7 +185,7 @@ def self_test():
     from pxr import Usd
 
     scratch, where = scratch_dir()
-    source = REPO / "rfd107a-plan.usda"
+    source = REPO / "rfd1122-plan.usda"
     if not source.exists():
         print(f"  FAIL self-test needs {source.name}, which is not here")
         return 1
@@ -255,7 +255,7 @@ def self_test():
     # it to 1 silently, and `= 10` mangled the same way also becomes 1. The layer then
     # parses, validates and round-trips perfectly while carrying two tasks numbered 1.
     # Value corruption is invisible at the USD level by construction, which is the division
-    # of labour with `check_rfd107a_plan.py` -- this gate says the layer is well formed, and
+    # of labour with `check_rfd1122_plan.py` -- this gate says the layer is well formed, and
     # that one says the content means what it claims. It catches the duplicate.
 
     # And one positive control: an untouched copy must still pass, or the controls above

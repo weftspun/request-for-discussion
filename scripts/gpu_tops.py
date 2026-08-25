@@ -1,8 +1,8 @@
-"""Measured throughput for the devices in RFD 107a's plan, against their derived peak rates.
+"""Measured throughput for the devices in RFD 1122's plan, against their derived peak rates.
 
-WHY THIS EXISTS. `rfd107a-plan.usda`'s Devices scope carries peak rates DERIVED from
+WHY THIS EXISTS. `rfd1122-plan.usda`'s Devices scope carries peak rates DERIVED from
 architecture -- units x lanes x 2 for the fused multiply-add x clock -- and every clock in it is
-a vendor boost figure marked ASSUMED. `check_rfd107a_plan.py` re-derives the arithmetic, which
+a vendor boost figure marked ASSUMED. `check_rfd1122_plan.py` re-derives the arithmetic, which
 catches a transcription error and nothing else: a derivation cannot tell you whether a device
 reaches its peak, and the plan currently scales GPU-bound work by ratios of numbers no one has
 observed.
@@ -34,10 +34,10 @@ import subprocess
 import sys
 import time
 
-# Derived peak, from `rfd107a-plan.usda`'s Devices scope. Restated here would be a second place
+# Derived peak, from `rfd1122-plan.usda`'s Devices scope. Restated here would be a second place
 # for the fact to live, so the arithmetic is repeated rather than the answer: 19 cores x 128
 # lanes x 2 x 1.398 GHz. If the stage changes, this line is what should be edited to match, and
-# `check_rfd107a_plan.py` is what checks the stage against itself.
+# `check_rfd1122_plan.py` is what checks the stage against itself.
 M2PRO_CORES, M2PRO_LANES, M2PRO_GHZ = 19, 128, 1.398
 DERIVED_TFLOPS = M2PRO_CORES * M2PRO_LANES * 2 * M2PRO_GHZ / 1000.0
 
