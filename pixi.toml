@@ -50,6 +50,14 @@ python = "3.11.*"
 [feature.ane.pypi-dependencies]
 numpy = ">=1.26,<3"
 coremltools = ">=8.0"
+# Comparing inference runtimes needs one graph all of them can take: onnx exports it,
+# onnxruntime runs it, and ai-edge-litert is the LiteRT rung. LiteRT's macOS wheel does
+# ship a Metal path -- `libLiteRtMetalAccelerator.dylib`, `HardwareAccelerator.GPU` and
+# `GpuOptions.enforce_f32` -- which is worth recording because the first guess here was
+# that it was CPU-only, and that guess was asserted rather than checked.
+onnx = "*"
+onnxruntime = "*"
+ai-edge-litert = "*"
 # scikit-learn is NOT optional here, and its absence does not look like an absence.
 # coremltools' k-means palettizer imports it lazily and only for some tensor shapes:
 # without it, a sweep at int4 SKIPPED width 128 and 256 and completed 512 and above,
