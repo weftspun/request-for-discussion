@@ -1,6 +1,6 @@
 # RFD 1145: The stylized-to-OmniGen2 loop
 
-**State:** discussion
+**State:** published
 **Feature:** loop 3 of the four-loop plan
 **Scope:** `2-contract/weftspun-manuals/fourloops-plan.usda`
 
