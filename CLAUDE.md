@@ -247,12 +247,29 @@ These recur often enough to state as rules:
 7. **Bugs live at interfaces**, not inside components. Name the interfaces and
    check each.
 
+## How Our Own Code Is Commented
+
+Use comments extremely sparingly. Most should be at the request of the user.
+When something warrants one, keep it to one or two lines: what the code does and
+why it is necessary. No background narrative, no replaying the investigation or
+the failure mode, nothing a test name or the commit message already says. If a
+comment needs a paragraph, make the code clearer instead.
+
+This covers code and the specifications that describe it. It does not cover the
+documents — an RFD, a logbook entry and this file carry the measurement and the
+retraction that produced them, and that is what they are for.
+
+Nothing measures it. `check_comment_density.py` holds a changed file against its
+peers, but it is aimed at other people's repositories and is wired into no hook
+here. So this is an agreement rather than a gate, and it stands the way the
+permission rule below does: on people keeping it, with no diff behind it.
+
 ## How Other People's Codebases Are Edited
 
-A weftspun file carries the measurement and the retraction that produced it, and
-it is commented accordingly. Another project did not ask for that. Pushing our
-density into theirs makes a diff that reads as noise to the people who maintain
-it.
+Where a weftspun file does carry the measurement and the retraction that
+produced it, it is commented accordingly. Another project did not ask for that.
+Pushing our density into theirs makes a diff that reads as noise to the people
+who maintain it.
 
 So a change matches the density of the code it edits.
 `check_comment_density.py` measures it and fails when a changed file
