@@ -53,9 +53,13 @@ def workspace_root():
 def rfd_dir():
     """Where RFD 1122 is checked out, asked of the manifest rather than guessed.
 
-    The RFD moved in the same sync this repository did -- `.request_for_discussion` at the
-    workspace root became `2-contract/request_for_discussion` -- so a second hard-coded
-    path would have broken for the second time on the same afternoon. `default.xml` is the
+    The RFD has moved twice. `.request_for_discussion` at the workspace root became
+    `2-contract/request_for_discussion`, and that became `2-contract/weftspun-manuals`
+    when the manifest hyphenated its checkout paths and put the project in the manuals
+    family beside `vsk-manuals` and `fire-manuals`. A hard-coded path would have broken
+    three times over, once for each move, so the manifest is asked instead. It keys on
+    the project NAME, which has stayed `request-for-discussion` throughout, because that
+    is the repository upstream rather than the folder it lands in. `default.xml` is the
     thing that knows: it is where the placement is decided, and the Sides rule says a
     project's side is whatever a live goal manifest says it is.
     """
@@ -70,7 +74,7 @@ def rfd_dir():
             if project.get("name") == "request-for-discussion":
                 return root / project.get("path") / "1122-the-wholebody-gap"
     # No manifest to read: one level of search rather than a walk of the whole tree.
-    for name in ("request_for_discussion", "request-for-discussion"):
+    for name in ("weftspun-manuals", "request-for-discussion", "request_for_discussion"):
         for cand in (root / name, *root.glob(f"*/{name}")):
             if cand.is_dir():
                 return cand / "1122-the-wholebody-gap"
