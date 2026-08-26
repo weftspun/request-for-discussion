@@ -38,6 +38,7 @@ import re
 import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
+PROJECT = HERE.parent
 DEFAULT_STAGE = HERE.parent / "fourloops-plan.usda"
 DEFAULT_CHART = HERE.parent / "fourloops-etnf.usda"
 
@@ -190,6 +191,34 @@ def quantities(text):
     return match.group(1) if match else ""
 
 
+def resolve_source(name, root):
+    """A source name, resolved against this project first and the workspace second.
+
+    TWO KINDS OF SOURCE, AND ONLY ONE OF THEM CAN BE PROJECT-RELATIVE. Most sources
+    live in sibling projects -- `6-datasource/anny-render-corpus/render_view.py` and its
+    neighbours -- and a workspace-relative path is the only thing that can name those.
+    A source that lives in THIS project is different: writing it as
+    `2-contract/weftspun-manuals/logbook-...` sends the path out of the project and back
+    into it, which is a longer way to say `logbook-...` and one that breaks whenever the
+    checkout moves.
+
+    It broke exactly that way. The manifest renamed this checkout from
+    `2-contract/request_for_discussion` to `2-contract/weftspun-manuals`, and every
+    self-referencing source stopped resolving; the gate reported each quantity as
+    appearing in no source, which reads as a drifted number rather than as a moved file.
+
+    So this tries the project first. A project-relative name resolves wherever the
+    checkout sits, and a workspace-relative one still resolves through the second
+    branch. `root` is None in a lone checkout, and then only the project branch runs.
+    """
+    local = PROJECT / name
+    if local.is_file():
+        return local
+    if root is not None:
+        return pathlib.Path(root) / name
+    return local
+
+
 def check_counts(text, root, problems):
     match = SOURCES_RE.search(text)
     if not match:
@@ -200,7 +229,7 @@ def check_counts(text, root, problems):
         name = line.strip().strip(",").strip('"')
         if not name:
             continue
-        path = pathlib.Path(root) / name
+        path = resolve_source(name, root)
         if not path.is_file():
             problems.append(f"source {name} does not exist, so nothing checks against it")
             continue
