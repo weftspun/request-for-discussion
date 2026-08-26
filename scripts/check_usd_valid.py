@@ -46,6 +46,14 @@ HERE = pathlib.Path(__file__).resolve().parent
 REPO = HERE.parent
 SUFFIXES = (".usda", ".usdc", ".usd", ".usdz")
 
+# Directories holding something other than this repository's layers. `.git` was always
+# here; `.pixi` arrived when this repository gained a declared environment, and it carries
+# OpenUSD's own schema templates -- `schemaUserDoc.usda` and its neighbours, which do not
+# resolve outside the package that ships them. Walking them made this gate exit non-zero
+# while its last printed line still read "ok", so a reader tailing the output saw a pass.
+# CI never hit it: prek passes this hook git-tracked files, and `.pixi` stays untracked.
+SKIP_DIRS = {".git", ".pixi"}
+
 
 def scratch_dir():
     """`.local` at the workspace root, or a temporary directory when there is no root."""
@@ -56,7 +64,11 @@ def scratch_dir():
 
 
 def discover():
-    return sorted(p for p in REPO.rglob("*") if p.suffix.lower() in SUFFIXES and ".git" not in p.parts)
+    return sorted(
+        p
+        for p in REPO.rglob("*")
+        if p.suffix.lower() in SUFFIXES and not (SKIP_DIRS & set(p.parts))
+    )
 
 
 def snapshot(stage):
@@ -203,7 +215,7 @@ def self_test():
 
     def _dangling_default_prim(dst):
         """Name a defaultPrim that is not in the layer."""
-        dst.write_text(text.replace('defaultPrim = "Rfd107a"', 'defaultPrim = "NotHere"'),
+        dst.write_text(text.replace('defaultPrim = "Rfd1122"', 'defaultPrim = "NotHere"'),
                        encoding="utf-8")
 
     controls = [
@@ -243,7 +255,7 @@ def self_test():
     # So the comparison is exercised directly: change one value and it must be reported.
     stage = Usd.Stage.Open(str(source))
     before = snapshot(stage)
-    stage.GetPrimAtPath("/Rfd107a/Plan/T01_PoseLibraryPlausibility").GetAttribute("order").Set(4)
+    stage.GetPrimAtPath("/Rfd1122/Plan/T01_PoseLibraryPlausibility").GetAttribute("order").Set(4)
     if differences(before, snapshot(stage)):
         print("  ok   round-trip comparison notices a changed value")
     else:

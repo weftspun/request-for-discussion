@@ -408,3 +408,8 @@ pennies" does.
 Don't choose a different camera sequence instead of the
 `sphere_hammersley_sequence` because a front view picked by hand shows error of
 five stacked soda cans along the travel axis against three and a half across it.
+
+## Crypto random chance anti-entrophy check
+
+> An anti-entropy check is a background process in distributed computer systems
+> that finds and fixes data differences between replica nodes to achieve eventual consistency.

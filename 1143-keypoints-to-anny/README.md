@@ -1,6 +1,6 @@
 # RFD 1143: The keypoints-to-ANNY loop
 
-**State:** discussion
+**State:** published
 **Feature:** loop 1 of the four-loop plan
 **Scope:** `2-contract/weftspun-manuals/fourloops-plan.usda`
 
@@ -11,8 +11,9 @@ stages, its artifact and one line of hazard. A prim holds the wiring
 and cannot hold the argument, so the reason a loop is shaped this way
 lived in a logbook entry that the plan named as a source.
 
-That put the decision one file away from the plan and gave four loops
-one document between them. This RFD is loop 1's own.
+All four loops are wanted. What was missing is a document per loop:
+the plan holds the wiring for four, and one logbook entry held the
+argument for all of them. This RFD is loop 1's own.
 
 ## Decision
 

@@ -15,6 +15,7 @@
             "3-interactor/voxhammer-image-mesh-editing/server.py",
             "CLAUDE.md",
             "1144-image-to-omnigen2/DETAILS.md",
+            "1147-what-editscore-costs-and-returns/DETAILS.md",
         ]
         string[] relationKindVocabulary = ["interned", "spine", "satellite", "measured"]
         string[] stateVocabulary = ["exists", "build", "measure", "stub", "blocked"]

@@ -31,30 +31,9 @@ to fit the loop on this desk, and never a way to make data with it. RFD 1128
 reaches the same place for a different model, and records that four bits bought
 no speed there either.
 
-## EditScore, and what it returns when the edit matched
+## What EditScore costs and returns
 
-| scale max | consistency | a second axis | overall |
-| --------: | ----------: | ------------: | ------: |
-|      10.0 |         9.2 |           2.0 |    4.29 |
-
-The instruction matched the edit, and the overall score is 4.29 out of 10.0. The
-spread between 9.2 and 2.0 is the whole reason the overall figure is worth
-carrying: a scorer that returned one number would report a middling result and
-say nothing about which half was middling.
-
-A nonsense instruction returns 0.0 overall, which is the negative control for
-this scorer and is what makes 4.29 a measurement rather than an impression. A
-scorer that never returns 0.0 for nonsense is not discriminating.
-
-## EditScore, and what it costs
-
-| configuration        | peak      | seconds  |
-| -------------------- | --------- | -------- |
-| NF4, 512 x 512       | 6.7506 GiB | 28 to 36 |
-
-6.7506 GiB is measured rather than derived, and the plan rounds it to 6.75 in
-`editscorePeakGib512`. At 1024 square the same scorer peaks at 8.6 GiB.
-
-The seconds are a range rather than a median because the run-to-run spread is
-wider than the difference between the two precisions above, and reporting a
-single figure would imply a precision the runs do not support.
+RFD 1147 holds it. Every loop scores with EditScore and only loops 2 and 3
+propose with OmniGen2, so the scorer's figures belong to the plan rather than to
+this loop. `editscoreMatchingOverall`, `editscoreNonsenseOverall`,
+`editscorePeakGib512` and `editscorePeakGib1024` all resolve there.

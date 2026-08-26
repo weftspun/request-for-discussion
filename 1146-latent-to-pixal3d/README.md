@@ -1,6 +1,6 @@
 # RFD 1146: The latent-to-Pixal3D loop
 
-**State:** discussion
+**State:** published
 **Feature:** loop 4 of the four-loop plan
 **Scope:** `2-contract/weftspun-manuals/fourloops-plan.usda`
 
