@@ -747,3 +747,54 @@ daemon restarting.
 three days of measurements ran through a daemon launched by `uv run --with
 tinygrad`, unpinned and undeclared, in a workspace whose blocklist has a row
 about exactly that.
+
+### onnxruntime's macOS GPU providers are blocked, and the measurements are why
+
+Two execution providers can reach this Mac's GPU from onnxruntime, and
+neither earns a place. Measured on one convolution stack, fp16, 541.6 GFLOP
+per inference, against Core ML driving the same GPU at 6.97 TFLOP/s:
+
+    provider                        TFLOP/s   of the same GPU
+    CoreML EP, MLComputeUnits=CPUAndGPU  7.01   1.006
+    WebGPU EP                            1.90   0.272
+
+**The CoreML provider only looks like a second backend.** Pinned to the GPU it lands
+within 0.6% of native Core ML, which is run-to-run spread. It is a front end
+onto the Metal path Core ML already provides, so it inherits every reason
+Core ML was dropped: the per-model porting cost, and a graph it cannot take
+whole gets partitioned back to the CPU. On the RF-DETR device half that
+partitioning measured 3758.9 ms against the CPU's 710.7.
+
+**The WebGPU provider is a genuine second path and is 3.7x slower.** It
+reaches Metal through Dawn without Core ML, which is the thing worth wanting,
+and it returns 0.27x of what the same silicon gives through Core ML.
+
+A note on how this entry came to exist, because the first reading was wrong.
+`get_available_providers()` on the stock wheel returns CoreML, Azure and CPU,
+and that was read as onnxruntime having no Metal path but Core ML's.
+`onnxruntime-webgpu` 1.27.0 does ship macOS arm64 wheels; they need
+`macos = "14.0"` in pixi's system requirements, because the wheel is tagged
+`macosx_14_0_arm64` and pixi targets 13.0 by default. One build's provider
+list describes that build.
+
+**Neither provider reaches past 2 GiB on the Neural Engine either.** That
+ceiling belongs to the ANE compiler rather than to any runtime, so no
+execution provider moves it.
+
+**THIS ROW IS ABOUT macOS AND NOTHING ELSE.** onnxruntime is the runtime that
+spans the fleet, and the other desks are well served by it:
+`DmlExecutionProvider` on Windows and `CUDAExecutionProvider` on Linux, both in
+the stock build alongside TensorRT, ROCm and OpenVINO. Blocking two providers on
+one platform says nothing about those.
+
+macOS was the hole. Its two providers reach the GPU through Core ML or through
+Dawn, and the measurements above are what each returns. `onnxruntime-mlx` is the
+third way in — an out-of-tree plugin EP over MLX, Apple's own Metal framework,
+which a stock `libonnxruntime.dylib` loads without a fork. It is placed and
+pinned in the goal manifest, and nothing about it is measured yet, so it is a
+candidate rather than an answer.
+
+onnxruntime keeps two more jobs here whichever provider wins. It is the
+interchange format the Hailo Dataflow Compiler reads, and its CPU provider is
+the numeric oracle every other row gets diffed against — `gate_onnx_device.py`
+measures 5.066e-06 against PyTorch there.
