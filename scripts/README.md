@@ -15,6 +15,7 @@ believed, which is the whole reason an entry clips its apparatus.
 | `mi_bench_llvm.py`   | rfd1122-hailo-first-rerank | the SHIPPING render variant, `llvm_ad_rgb` at one thread, never before timed |
 | `gpu_tops.py`        | rfd1122-hailo-first-rerank | measured GEMM throughput against the derived peak, fp32/fp16/bf16 and CPU    |
 | `keypoint_render.py` | soft-renderer-and-mitsuba  | 104 keypoints coloured by See-Through layer in OKHSL                         |
+| `ane_bench.py`       | rfd1142-neural-engine-against-the-ugen300 | Neural Engine placement, its per-tensor ceiling, and achieved throughput |
 
 These import from `3-interactor/pose-consensus/python` and expect `anny` installed.
 
