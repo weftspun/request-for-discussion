@@ -227,16 +227,18 @@ free reference and the chosen pairing is printed, so the assignment is auditable
 
 ## What this does NOT resolve
 
-`neuralEngineUsefulForBackbone = 0` **stands**. The synthetic result makes it
-surprising — a part reaching 86% of peak looks unlike something four times slower than
-its own CPU — but surprise falls short of evidence. The RF-DETR device half was never converted
-to Core ML and never placed here, so the flag is unexplained rather than retracted.
-Retracting a measured flag on the strength of a different model would be the same
-error the flag itself embodies.
+The UGen300 column stays derived. Its fp16 rate is halved from its 20 TOPS INT8 row
+rather than read from a datasheet, no such part is attached to this machine, and RFD 1130
+exists to replace those rows. The physical device is expected, and until it lands every
+Hailo figure here predicts rather than reports.
 
-The next measurement is that conversion: `pixi run device-gate` in `rf-detr-cpp`
-exports the half, and `ane_bench.py` already carries everything else needed to place
-and time it.
+Metal's own ceiling above 8176.2 MiB went unmeasured. The sweep stopped at the UGen300's
+8 GiB because that is the quantity being compared against, rather than because Metal
+refused.
+
+Power went unmeasured on both Mac engines. `powermetrics --samplers ane_power` needs sudo
+and stayed unrun, so the device's 2.5 W typical has no counterpart here. Named and counted
+rather than dropped to make the table symmetrical.
 
 ## Four bits, and why the column is absent
 

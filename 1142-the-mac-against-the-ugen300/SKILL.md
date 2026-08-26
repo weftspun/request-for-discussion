@@ -81,12 +81,16 @@ the fp16 one. On an M2 the arithmetic does not change — the int4 and
 int8-int8 fast paths arrived with A17 Pro and M4 — and the graph gains
 `ios18.constexpr_lut_to_dense` operations that carry no device.
 
-So four bits buys disk and adds decompression. Ask what the memory is
-for before reaching for it: with 32 GiB and no total-size ceiling, it
-buys real capacity once a ceiling is in view. Under a 2 GiB wall,
-quartering the weights moves a model from the GPU's rate back to the
-Neural Engine's, which on this part is a 1.95x difference. Ask what the
-ceiling is before deciding four bits buys only disk.
+So four bits buys disk and adds decompression on this part. Whether it
+buys anything else depends on which ceiling binds, and there are two.
+Under the Neural Engine's 2 GiB wall a quarter is meaningful: it moves a
+model back onto the engine that wins the synthetic stack by 1.95x.
+Against Metal's 8176.2 MiB it buys nothing, because nothing
+needed shrinking.
+
+Here the second ceiling is the live one, since the Neural Engine is
+blocklisted. Ask which engine you are fitting to before deciding what
+four bits is worth.
 
 Do not use `mode="kmeans"` on a large tensor to find this out. It
 clusters single-threaded and a sweep at 838M parameters does not finish.

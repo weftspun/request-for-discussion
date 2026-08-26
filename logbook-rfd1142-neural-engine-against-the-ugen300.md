@@ -85,7 +85,7 @@ Same boundary at a seventh of the total. The limit is a single weight tensor bet
 and 228.4 MiB. 224 MiB sits inside that bracket and is a guess at a round number, not a
 measurement: the sweep resolution is one width step.
 
-Bryngelson's *Apple Neural Engine* (arXiv 2606.22283) documents a per-axis extent cap of
+Bryngelson's _Apple Neural Engine_ (arXiv 2606.22283) documents a per-axis extent cap of
 16384; these weights are `[3648, 3648, 3, 3]` and are nowhere near it. Searching found the
 reason it goes undocumented — Apple does not publish the internal buffer limits.
 
@@ -118,43 +118,51 @@ moves to the GPU together.
 `gpu_tops.py`'s 6.20 fp16 from dense GEMM by a different route. The GPU ran the 3504.1 MiB
 stack the Neural Engine refused, so above 2 GiB this machine still executes at half rate.
 
-## The comparison, on the two axes that decide it
+## The comparison, at one precision
 
-| | M2 Pro ANE | Hailo-10H / UGen300 |
-| --- | --- | --- |
-| precision | fp16 | INT8 or INT4, `bf16Native = 0` |
-| peak | 15.8 TOPS | 20 INT8, 40 INT4 |
-| measured achieved | 13.58 TFLOP/s, 0.86 | not measured, no device |
-| utilisation | 0.86 measured | 0.3 assumed in the plan |
-| effective | 13.58 | 12.0 INT4 at that assumption |
-| memory | 32 GiB unified | 8 GiB |
-| host bandwidth | ~200 GB/s | USB 3.1 Gen2, ~1.2 GB/s |
-| per-tensor cap | ~224 MiB measured | unknown |
-| power | UNMEASURED, needs sudo | 2.5 W typical |
-| corpus data | permitted at fp16 | `producesCorpusData = 0` |
+RETRACTED, AND THE RETRACTION IS THE POINT. This section first tabled "memory: 32 GiB
+unified" against the device's 8 GiB and concluded the Mac had "four times the memory".
+That is backwards. The quantity that decides placement is what the ENGINE accepts, and
+the Neural Engine accepts 2 GiB. Against the UGen300's 8 GiB the Mac's Neural Engine has
+a QUARTER of the memory, not four times it. The error came from reading a machine's
+unified pool as an accelerator's working set, and it survived a full draft.
 
-At the plan's own assumed utilisation the parts land within 13% of each other, and the Mac
-gets there at four times the precision with four times the memory. The units are not the same
-work — 13.58 TFLOP/s fp16 against 12 TOPS INT4 assumes an INT4 operation is worth an fp16
-one, which is generous to the Hailo and is still won.
+Compared at one precision, fp16, because both parts choose their precision and a
+comparison across two of them measures the choice rather than the hardware.
 
-RFD 1128's premise makes the memory axis concrete: Pixal3D is 24.045 GB in bf16, three times
-the 8 GiB device, and about 6 GB at four bits. On 32 GiB it fits without quantising, so the
-question "does the cascade survive four bits" does not arise on this machine. Neither does
-CLAUDE.md's condition 5, which is why `producesCorpusData` differs between the two rows.
+|                    | M2 Pro ANE          | M2 Pro Metal          | Hailo-10H / UGen300     |
+| ------------------ | ------------------- | --------------------- | ----------------------- |
+| fp16 rate          | 13.58 TFLOP/s       | 6.98 TFLOP/s          | ~10 TOPS, halved        |
+| of cited peak      | 0.86 of 15.8        | 1.03 of the 6.8 fp32  | not measured, no device |
+| weights it holds   | 2 GiB, measured     | >= 8176.2 MiB         | 8 GiB nominal           |
+| per-tensor cap     | ~224 MiB measured   | none found            | unknown                 |
+| host bandwidth     | ~200 GB/s           | ~200 GB/s             | USB 3.1 Gen2, ~1.2 GB/s |
+| device half, 576   | 121.6 ms, FAILS     | 62.0 ms, inside bound | not measured            |
+| power              | UNMEASURED, sudo    | UNMEASURED            | 2.5 W typical           |
 
-## What is NOT resolved, and stays not resolved
+On the synthetic stack the Neural Engine is the faster engine, 13.58 against 6.98. On the
+graph we ship it loses at 121.6 ms against 62.0 and misses the port's bound by ten times.
+A benchmark shape chosen for an accelerator flatters it, and reporting only the synthetic
+row would have said something the measurement does not.
 
-`neuralEngineUsefulForBackbone = 0` STANDS. A part reaching 86% of peak looks unlike something
-four times slower than its own CPU, so the flag is now surprising, and surprise falls short of
-evidence.
-The RF-DETR device half was never converted to Core ML and never placed here. Partitioning is
-the likely mechanism and it is untested, so the flag is unexplained rather than retracted.
-Retracting a measured flag on the strength of a different model would repeat the error the
-flag itself embodies.
+RFD 1128's premise still makes the memory axis concrete, corrected: Pixal3D is 24.045 GB
+in bf16 and about 6 GB at four bits. Neither fits the Neural Engine's 2 GiB at any
+precision this part computes in. Metal holds 8176.2 MiB, so the fp16 route on this machine
+runs through the GPU, and CLAUDE.md now blocklists the Neural Engine as an execution
+target on that basis.
 
-The next measurement is that conversion. `pixi run device-gate` in `rf-detr-cpp` exports the
-half and `ane_bench.py` carries the rest.
+## What stays open, and waits on hardware
+
+The UGen300 side. Its fp16 rate is halved from the 20 TOPS INT8 row rather than measured,
+the part is not attached to this machine, and RFD 1130 exists to replace those rows once it
+arrives. Every Hailo figure above predicts rather than reports.
+
+Metal's ceiling above 8176.2 MiB. The sweep stopped at the device's 8 GiB because that is
+the quantity under comparison, not because Metal refused.
+
+Power on both Mac engines. `powermetrics --samplers ane_power` needs sudo and stayed unrun.
+
+An `int4-linear` row, which would close the four-bit question cheaply.
 
 ## Four bits, briefly, and why the ladder was dropped
 
@@ -164,10 +172,13 @@ device, and the sixteen arithmetic operations stay where they were. The int4 and
 fast paths arrived with A17 Pro and M4; this is an M2. Four bits buys disk and adds
 decompression.
 
-With 32 GiB and no total-size ceiling, four bits buys capacity that fp16 already has. It
-is the 8 GiB device that makes four bits compulsory. An `int4-linear` row would close the
-question cheaply and was not run; `int4` k-means clusters single-threaded and hung a sweep at
-838M parameters before it was killed.
+Whether it buys capacity depends on which engine is being fitted. Against the Neural
+Engine's 2 GiB a quarter is meaningful; against Metal's 8176.2 MiB nothing needed
+shrinking. The Neural Engine is blocklisted, so the route that remains fits at fp16
+without quantising, and it stays the 8 GiB device that makes four bits compulsory.
+
+An `int4-linear` row would close the question cheaply and was not run; `int4` k-means
+clusters single-threaded and hung a sweep at 838M parameters before it was killed.
 
 Two apparatus faults worth recording because both presented as agreement rather than as
 error. A console filter removed two FAILED int4 rows, leaving six that agreed with each
