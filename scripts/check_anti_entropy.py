@@ -101,13 +101,15 @@ check(f"every README <= {limit} lines", not over, f"{len(dirs)} READMEs, over: {
 # costing nearly as much.
 EXPENSIVE = ["check_fourloops_plan", "check_fourloops_etnf", "check_rfd1122_plan",
              "check_usd_valid", "check_pen_66606", "check_blocklist_detail",
-             "check_goal_manifests", "check-rfd-structure"]
+             "check_goal_manifests", "check-rfd-structure",
+             ("check_comment_ladder", ("--self-test",))]
 order = list(EXPENSIVE)
 secrets.SystemRandom().shuffle(order)
 out.append("")
 out.append(f"  shuffled full pass, {len(order)} of {len(EXPENSIVE)} (every item, random order):")
-for name in order:
-    r = subprocess.run([sys.executable, str(RFD/"scripts"/f"{name}.py")],
+for item in order:
+    name, extra = item if isinstance(item, tuple) else (item, ())
+    r = subprocess.run([sys.executable, str(RFD/"scripts"/f"{name}.py"), *extra],
                        capture_output=True, text=True, cwd=RFD)
     tail = (r.stdout.strip().splitlines() or [""])[-1][:58]
     check(f"  {name}", r.returncode == 0, tail)

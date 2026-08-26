@@ -101,3 +101,24 @@ jobs:
       - run: pip install -r scripts/requirements.txt
       - run: python scripts/check-rfd-structure.py --self-test
       - run: python scripts/check-rfd-structure.py
+
+  # THE COMMENT LADDER, A JOB RATHER THAN A prek HOOK ALONE, AND THE REASON IS THE BASE.
+  #
+  # The gate is diff-based. `prek run --all-files` stages nothing, so the hook above sees
+  # an empty change set in CI and reports a green run for a check it did not perform --
+  # the silent skip CLAUDE.md rule 3 calls a FAIL. This job names the base explicitly.
+  #
+  # fetch-depth 0 for the same reason `rfd-serials` needs it: the gate reads each changed
+  # file at the base revision, and a shallow clone has no base revision to read.
+  comment-ladder:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      # Controls first: three of the five must reject known-broken input.
+      - run: python scripts/check_comment_ladder.py --self-test
+      - run: python scripts/check_comment_ladder.py --base origin/${{ github.event.pull_request.base.ref || 'main' }}

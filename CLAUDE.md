@@ -259,10 +259,31 @@ This covers code and the specifications that describe it. It does not cover the
 documents — an RFD, a logbook entry and this file carry the measurement and the
 retraction that produced them, and that is what they are for.
 
-Nothing measures it. `check_comment_density.py` holds a changed file against its
-peers, but it is aimed at other people's repositories and is wired into no hook
-here. So this is an agreement rather than a gate, and it stands the way the
-permission rule below does: on people keeping it, with no diff behind it.
+`check_comment_ladder.py` measures it. The rungs are 5, 10, 15, 20, 25, 30, 35
+and 40 per cent, and a changed file may not leave the rung it sits on.
+
+**Add a comment line and the density you already had is the ceiling.** A file at
+30.2% sits on the 30% rung, and the gap up to 35% is where that rung ends rather
+than room to grow into. Density holds or falls.
+
+The rung covers the case where the ratio rose without a comment being added.
+Density is comments over non-blank lines, so deleting code raises it: 40 comment
+lines over 180 code lines is 18.2%, and deleting 60 lines of code makes the same
+file 25.0%. Failing that commit would teach people to pass the gate with
+`--no-verify`, so the rung leaves room for it, and the control `deleting code
+past the rung is rejected` bounds how much.
+
+A new file enters at 10 per cent, the rung `scripts/mi_bench.py` already
+occupies.
+
+**Docstrings count.** Across this repository's 31 Python and Elixir files over
+100 lines, counting `#` alone puts the median at 7.4%; counting docstrings puts
+it at 25.1%. That is rule 1 above: the easy proxy understated by more than three
+times, and a gate counting `#` alone is satisfied by moving the paragraph into a
+docstring.
+
+    python scripts/check_comment_ladder.py --baseline
+    python scripts/check_comment_ladder.py --self-test
 
 ## How Other People's Codebases Are Edited
 
