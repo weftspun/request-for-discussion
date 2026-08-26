@@ -5,7 +5,7 @@
     defaultPrim = "Serials"
     subLayers = [
         @./SERIALS.usda@,
-        @../multiplayer-fabric-manuals/SERIALS.usda@
+        @../manuals-multiplayer-fabric/SERIALS.usda@
     ]
     customLayerData = {
         string pen = "1.3.6.1.4.1.66606"
