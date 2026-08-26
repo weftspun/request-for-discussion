@@ -761,7 +761,6 @@ records a measurement taken before the move and its instructions did not follow.
             custom int rewritesExecutedBySpecGate = 12
             custom bool deviceOpsGatePassesHere = 0
             custom bool gatesWiredToCi = 0
-            custom bool wasRetracted = 1
         }
 
         def "F15_AllFourIndexingBlockersHaveCompilerAcceptedRewrites" (
@@ -871,7 +870,6 @@ of this one -- it produces no dynamic index at all."""
             custom bool costMeasuredInLayers = 1
             custom bool costMeasuredInCycles = 0
             custom int rewriteLayersTotal = 1549
-            custom bool wasRetracted = 1
         }
 
         def "F14_TheKeypointModelClearsTheAcceleratorAtOneWindow" (
@@ -1038,7 +1036,6 @@ them true by construction, which is F08's shape on the face."""
             custom string evidence = "anny 0.6.0 Anny(facial_actions='all'): 52 labels, set-difference against ARFaceAnchor.BlendShapeLocation is 0 both ways"
             custom int annyFacialActions = 52
             custom int sharedNames = 52
-            custom bool wasRetracted = 1
             custom bool semanticsVerified = 0
         }
 
@@ -1254,6 +1251,53 @@ README, and that is a separate piece of work from this one."""
             custom int readmeClaimedRelations = 19
             custom int actualRelationsBefore = 20
             custom int claimsStillUnverifiable = 9
+        }
+    }
+
+    def Scope "Vocabularies"
+    {
+        def "RetractionCause"
+        {
+            custom uniform token[] allowed = ["proxyRead", "prediction", "staleSource", "upstreamGap"]
+        }
+    }
+
+    def Scope "Retractions"
+    {
+        def "R01_OperatorTableReadFromTwoLists"
+        {
+            rel retracts = </Rfd1122/Findings/F16_TheOperatorTableAndItsGatesDisagreeAboutTwoOperators>
+            custom uniform token cause = "proxyRead"
+            custom string claim = "the documented operator set is 57, the prose saying 58 is off by one, and Erf is unfiled"
+            custom string supersededBy = "the set is three relations wide; reading Layers and Activations alone is wrong by six operators"
+            custom string date = "2026-08-23"
+        }
+
+        def "R02_ScatterNdWouldFoldLikeTile"
+        {
+            rel retracts = </Rfd1122/Findings/F15_AllFourIndexingBlockersHaveCompilerAcceptedRewrites>
+            custom uniform token cause = "prediction"
+            custom string claim = "ScatterND is the constant class-padding of the keypoint schema, so the Tile constant fold clears it"
+            custom string supersededBy = "ScatterND indexes DATA in all 85 occurrences; the fold applies to none of the first three blockers"
+            custom string date = "2026-08-23"
+        }
+
+        def "R03_AnnyShipsNoFacialActions"
+        {
+            rel retracts = </Rfd1122/Findings/F12_AnnysFacialActionsAreArkits52Exactly>
+            custom uniform token cause = "upstreamGap"
+            custom string claim = "facial_action_labels has length 0, so the model carries no expression and F02's missing 52 are an upstream gap"
+            custom string supersededBy = "Anny(facial_actions='all') returns 52 labels, set-difference against ARFaceAnchor.BlendShapeLocation is 0 both ways"
+            custom string date = "2026-08-23"
+        }
+
+        def "R04_PbrBakeBlockedOnMissingUvs"
+        {
+            rel retracts = </Rfd1122/Plan/T03_PbrBake>
+            custom uniform token cause = "staleSource"
+            custom string claim = "the bake is blocked because the mesh carries no UVs"
+            custom string supersededBy = "texture_coordinates is (21334, 2) under topology=anny"
+            custom string date = "2026-08-23"
         }
     }
 
@@ -1481,7 +1525,6 @@ This does not make the task done. What it removes is the reason it had no estima
             custom uniform token state = "build"
             custom string title = "Bake albedo, roughness and normal over the hm08 UVs"
             custom string measurement = "one texture set, reused across every render"
-            custom bool wasRetracted = 1
             custom string repositoryOrg = "https://github.com/chibifire-stages"
             custom uniform token repositoryVisibility = "public"
             custom bool repositoryPlacedInManifest = 0
