@@ -130,15 +130,15 @@ unified pool as an accelerator's working set, and it survived a full draft.
 Compared at one precision, fp16, because both parts choose their precision and a
 comparison across two of them measures the choice rather than the hardware.
 
-|                    | M2 Pro ANE          | M2 Pro Metal          | Hailo-10H / UGen300     |
-| ------------------ | ------------------- | --------------------- | ----------------------- |
-| fp16 rate          | 13.58 TFLOP/s       | 6.98 TFLOP/s          | ~10 TOPS, halved        |
-| of cited peak      | 0.86 of 15.8        | 1.03 of the 6.8 fp32  | not measured, no device |
-| weights it holds   | 2 GiB, measured     | >= 8176.2 MiB         | 8 GiB nominal           |
-| per-tensor cap     | ~224 MiB measured   | none found            | unknown                 |
-| host bandwidth     | ~200 GB/s           | ~200 GB/s             | USB 3.1 Gen2, ~1.2 GB/s |
-| device half, 576   | 121.6 ms, FAILS     | 62.0 ms, inside bound | not measured            |
-| power              | UNMEASURED, sudo    | UNMEASURED            | 2.5 W typical           |
+|                  | M2 Pro ANE        | M2 Pro Metal          | Hailo-10H / UGen300     |
+| ---------------- | ----------------- | --------------------- | ----------------------- |
+| fp16 rate        | 13.58 TFLOP/s     | 6.98 TFLOP/s          | ~10 TOPS, halved        |
+| of cited peak    | 0.86 of 15.8      | 1.03 of the 6.8 fp32  | not measured, no device |
+| weights it holds | 2 GiB, measured   | >= 8176.2 MiB         | 8 GiB nominal           |
+| per-tensor cap   | ~224 MiB measured | none found            | unknown                 |
+| host bandwidth   | ~200 GB/s         | ~200 GB/s             | USB 3.1 Gen2, ~1.2 GB/s |
+| device half, 576 | 121.6 ms, FAILS   | 62.0 ms, inside bound | not measured            |
+| power            | UNMEASURED, sudo  | UNMEASURED            | 2.5 W typical           |
 
 On the synthetic stack the Neural Engine is the faster engine, 13.58 against 6.98. On the
 graph we ship it loses at 121.6 ms against 62.0 and misses the port's bound by ten times.
