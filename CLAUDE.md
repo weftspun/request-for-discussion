@@ -325,6 +325,9 @@ Sources excluded from corpora, with the reason:
 | **onnxruntime GPU providers on macOS**             | CoreML EP is the same Metal path Core ML gives; WebGPU EP measured 0.27x of it — see below                                                       |
 | **Apple Neural Engine** as an execution target     | 2 GiB weight ceiling at 2^31 bytes, against Metal's 8 GiB+ on the same part — see below                                                          |
 | `weftspun/rf-detr-keypoint-data`                   | **val2017-derived** — carries the whole blinded holdout, and 78% of it is licence-dirty. Validation only, never training. See below              |
+| **ggml** and GGUF as a model format                | reaches neither Hailo nor the datacenter TPU, and GGUF carries no graph to convert — see below                                                   |
+| **ONNX** as our interchange and runtime            | superseded by TFLite, which Hailo's own compiler is consolidating on — **a vendor's internal use is exempt**, see below                          |
+| **IREE** as a build target                         | a compiler rather than an execution provider, and it is not XLA — see below                                                                      |
 
 The cosplay photo library may be used for **validation only**, never training.
 
