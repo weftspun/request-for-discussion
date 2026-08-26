@@ -86,6 +86,37 @@ memory. A pod believed stopped shows up in the first of those.
 Measured 2026-08-25: key read from 1Password, `GET /pods` returned **200** with **0 running
 pods**, so nothing was billing.
 
+## `desiredStatus` states an intention, and `runtime` reports a fact
+
+Measured 2026-08-26, renting twice. `GET /pods/{id}` returned `desiredStatus: RUNNING`
+throughout, on a pod whose container never started. The field that answers whether anything
+is running lives in GraphQL:
+
+    query { pod(input:{podId:"..."}) { runtime { uptimeInSeconds ports { ... } } } }
+
+`runtime: null` means no container, and a pod bills in that state exactly as it bills in any
+other. The REST view looked healthy for the six minutes it took to notice.
+
+The cause was the image. `nvidia/cuda:12.5.1-devel-ubuntu24.04` carries no RunPod agent, so
+their SSH proxy answered `container not found` and nothing ever populated `runtime`. An
+official image — `runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404`, 10.6 GB compressed —
+started normally. A custom `dockerStartCmd` that installs `sshd` does not substitute for the
+agent.
+
+    pod              image                    outcome        billed
+    nbqs85lbqfjupb   nvidia/cuda:12.5.1       never started  ~$0.03
+    rdhfp7fycqbvsd   runpod/pytorch:1.0.2     started        ~$0.05
+
+Two smaller facts from the same session. The proxy rejects a session without a PTY, so
+`ssh -tt` is mandatory and its absence reads as `Your SSH client doesn't support PTY`.
+And `POST /pods` answers **500 "There are no instances currently available"** when a
+GPU list, a cloud type and a volume cannot be satisfied together; widening the GPU list and
+dropping to `COMMUNITY` placed it.
+
+Teardown was verified through both surfaces rather than one: `DELETE /pods/{id}` returned
+204, then REST `GET /pods` and GraphQL `myself { pods networkVolumes clientBalance }` each
+reported zero. Total for the session was **$0.079**, read as a balance difference.
+
 ## What is not measured here
 
 Batch API throughput and pricing, spot versus on-demand, and network volumes. The batch path
