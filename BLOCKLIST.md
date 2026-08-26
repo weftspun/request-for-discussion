@@ -798,3 +798,99 @@ onnxruntime keeps two more jobs here whichever provider wins. It is the
 interchange format the Hailo Dataflow Compiler reads, and its CPU provider is
 the numeric oracle every other row gets diffed against — `gate_onnx_device.py`
 measures 5.066e-06 against PyTorch there.
+
+### ggml and GGUF are blocklisted, and the missing graph is why
+
+ggml is quick on this desk. This entry turns on a different question — where a
+model in GGUF can go — and the answer is: this GPU and other desktop GPUs, and
+neither of the devices this work is aimed at.
+
+Hailo's Dataflow Compiler parses a TensorFlow checkpoint, a TensorFlow frozen
+graph, a TFLite file or an ONNX file. GGUF is on none of those lists. Cloud TPU
+runs PJRT, which consumes StableHLO, and ggml does not emit it. So ggml's
+target set is a strict subset of LiteRT's, and a format that cannot reach the
+deliverable hardware cannot be the single format however fast it is locally.
+
+**No exporter can close this, which is the part worth writing down.** GGUF
+carries no graph at all. `convert_ss_dec_to_gguf.py` in
+`3-interactor/trellis2cpp` writes key-value metadata -- `kv_u32`, `kv_f32`,
+`kv_bool`, `kv_str` -- and tensor bytes, and nothing else. The graph is 3420
+lines of hand-written C++ in `trellis2.cpp`: 79 distinct `ggml_*` ops across 7
+`ggml_build_forward_expand` sites, for one model. A ggml-to-anything converter
+would have to lift imperative C++ back into an IR, so the gap is structural
+rather than a missing tool somebody could write.
+
+That answers a question that was asked directly and is worth closing: **ggml
+cannot be converted to LiteRT.** The two share an ancestor -- the torch model
+both descend from -- not an edge between them.
+
+**This entry does not say ggml is slow, and must not be edited to say so.** No
+Metal figure belongs here, and neither does the 0.27x measured against
+onnxruntime's WebGPU EP. ggml was excluded on where it can go, not on how fast
+it gets there. An entry that overstates its case invites the next reader to
+re-derive it, find ggml quick, and quietly drop the whole row.
+
+**What it costs, stated rather than discovered.** ggml was the only candidate
+that produced a single static executable for macOS, Windows and Linux, with
+native Metal, CUDA, HIP, Vulkan, SYCL, OpenCL and BLAS backends in `ggml/src`
+and `GGML_METAL_EMBED_LIBRARY ON` compiling the shader source into the binary.
+Nothing in the replacement restores that: the single-binary deliverable now has
+no provider at all.
+
+**The checkouts stay.** `3-interactor/trellis2cpp` and the `weftspun/ggml` fork
+pinned at `331b9cba` remain in the live manifest. This entry governs new work; it
+does not delete the only existing TRELLIS.2 port, nor its published f16 figures
+-- rel L2 2e-5 on the SS decoder, under 1e-3 on the SS-flow DiT -- which are the
+nearest correctness reference for whatever replaces them. A blocklisted backend
+with live checkouts is exactly the shape that rots quietly, so the reason is
+written here rather than left to inference.
+
+### ONNX is blocklisted as our interchange, and a vendor's internal use is exempt
+
+The runtimes went first and separately: `onnxruntime GPU providers on macOS` has
+its own entry above, on measurement. This entry retires the **format**.
+
+ONNX had one job left after the runtimes went, which was carrying models into
+Hailo's Dataflow Compiler. TFLite does that job better, and by Hailo's own
+direction rather than by our preference. The DFC 5.3.0 guide mentions TFLite 57
+times, shows `runner.translate_tf_model(tflite_path, name)` as the interface, and
+**deprecates parsing TensorFlow 1.x and 2.x `.ckpt`/`.pb` models "using all
+parsing APIs"** with guidelines for moving to TensorFlow Lite. Picking TFLite
+lands on the input the vendor is consolidating on; picking ONNX keeps a second
+format alive for nothing.
+
+**The exemption carries real weight, and a reader who skips it will conclude the
+toolchain cannot be installed.** The Dataflow Compiler wheel itself pins
+`onnx==1.17.0`, `onnxruntime==1.18.0`, `onnx-tf` and `onnxscript~=0.5.0` among
+its 61 dependencies. That is a vendor's private business. What is blocklisted is
+ONNX as **our** interchange format and **our** runtime -- a file we produce, hand
+between stages, or execute. A dependency resolved inside somebody else's package
+falls outside that, so installing the DFC breaks no rule here.
+
+**What it costs.** `gate_onnx_device.py`'s numeric oracle, 5.066e-06 against
+PyTorch, is what every other backend row was diffed against, and it goes with the
+format. The replacement is torch on CPU, which is already a dependency; until
+that is in place there is no cross-backend numeric reference, and any new
+accelerator row should say so rather than quietly compare against nothing.
+
+### IREE is blocklisted as a build target, and it differs from XLA
+
+IREE is a compiler, not an execution provider. It lowers a model ahead of time
+and hands back an artifact for its own runtime, so adopting it means adopting a
+second toolchain beside the one that already reaches the hardware, and owning the
+lowering for every target rather than calling a vendor's.
+
+**The second clause of that title carries the weight.** An earlier draft of
+the plan behind this entry treated IREE and XLA as one family and concluded from
+this row that the datacenter TPU was out of reach. That was wrong, and the error
+is recorded because the two are easy to conflate:
+
+|          | what it is                                                                                    |
+| -------- | --------------------------------------------------------------------------------------------- |
+| **XLA**  | Google's compiler, with **PJRT** under it. What Cloud TPU runs, driven by JAX or PyTorch/XLA. |
+| **IREE** | a separate MLIR compiler that _ingests_ StableHLO, an XLA dialect.                            |
+
+They are neighbours in input format and nothing else. **This entry constrains XLA
+not at all**, and the Cloud TPU route -- tapping the StableHLO that `litert-torch`
+already builds, one stage upstream of the flatbuffer -- is unaffected by it. Any
+future reader who reaches for that route should not be stopped by this row.
