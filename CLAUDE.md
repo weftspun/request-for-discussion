@@ -409,7 +409,39 @@ Don't choose a different camera sequence instead of the
 `sphere_hammersley_sequence` because a front view picked by hand shows error of
 five stacked soda cans along the travel axis against three and a half across it.
 
-## Crypto random chance anti-entropy check
+## The anti-entropy check
 
 > An anti-entropy check is a background process in distributed computer systems
 > that finds and fixes data differences between replica nodes to achieve eventual consistency.
+
+The replicas here are documents and the things they describe: a serial register
+against the directories on disk, a blocklist table against the sections arguing
+its rows, a manifest against the checkouts it places. Each pair can drift, and
+neither half reports it.
+
+`scripts/check_anti_entropy.py` walks those pairs. Run it after anything that
+moves files, and read what it says rather than the last line of it.
+
+**It enumerates.** Rule 5 settles that: a fixed population is enumerated rather
+than sampled, because a sample sees only defects larger than about 3/n and costs
+nearly as much. Manifest projects, serials, blocklist rows and READMEs are all
+countable, so all of them are read.
+
+**It shuffles the order, and only the order.** The first version drew three
+checks with `secrets.randbelow`, which samples WITH REPLACEMENT: one run returned
+two distinct checks from three draws, and nothing bounds how long an item goes
+unvisited. A shuffled full pass visits every item once and still surfaces
+anything order-dependent. The pass asserts its own coverage.
+
+**Every counter carries a control.** The first run reported 14 blocklist rows
+against 15 sections, and the register was right: the counter matched `see below`
+case-sensitively and missed a row reading `See below`. A counter that has never
+found a planted row has yet to show it can find a real one.
+
+WHAT IT FOUND ON ITS FIRST REAL PASS, both green in every earlier report.
+`check_usd_valid.py` had been exiting non-zero since this repository gained a
+declared environment, walking `.pixi` and choking on OpenUSD's own schema
+templates, under a last printed line that still read `ok`. Its self-test had been
+dead since the hex-to-decimal renumbering: two references still named the
+`Rfd107a` scope, so one control raised and the other did a string replace that
+matched nothing, leaving it to pass on unbroken input.
