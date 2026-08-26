@@ -33,8 +33,8 @@ explicit. The gate checks this, so the claim cannot rot."""
         string rfd = "1122"
         string rfdState = "discussion"
         string[] sources = [
-            "2-contract/weftspun-manuals/1122-the-wholebody-gap/README.md",
-            "2-contract/weftspun-manuals/1122-the-wholebody-gap/DETAILS.md",
+            "1122-the-wholebody-gap/README.md",
+            "1122-the-wholebody-gap/DETAILS.md",
             "CLAUDE.md",
         ]
         string checker = ".logbook/scripts/check_rfd1122_plan.py"

@@ -2,7 +2,7 @@
 
 **State:** discussion
 **Feature:** accelerator comparison for edge deployment
-**Scope:** `2-contract/weftspun-manuals/scripts/ane_bench.py`
+**Scope:** `scripts/ane_bench.py`
 
 ## Problem
 

@@ -2,7 +2,7 @@
 
 **State:** published
 **Feature:** the scorer shared by all four loops
-**Scope:** `2-contract/weftspun-manuals/fourloops-plan.usda`
+**Scope:** `fourloops-plan.usda`
 
 ## Problem
 

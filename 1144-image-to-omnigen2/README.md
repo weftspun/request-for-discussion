@@ -2,7 +2,7 @@
 
 **State:** published
 **Feature:** loop 2 of the four-loop plan
-**Scope:** `2-contract/weftspun-manuals/fourloops-plan.usda`
+**Scope:** `fourloops-plan.usda`
 
 ## Problem
 
