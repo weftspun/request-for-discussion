@@ -867,6 +867,30 @@ ONNX as **our** interchange format and **our** runtime -- a file we produce, han
 between stages, or execute. A dependency resolved inside somebody else's package
 falls outside that, so installing the DFC breaks no rule here.
 
+**A gate's own scratch file is exempt, and the boundary is where it is written.**
+`gate_onnx_device.py` exports the device half, runs it, and diffs it against PyTorch to
+decide whether the graph stays inside the operator set the compiler takes. That produces
+an ONNX file, which reads like the thing this row forbids until you ask where the file
+goes: `--out` defaults under `tempfile.gettempdir()`, no `.onnx` path is tracked in any
+repository here, and `.gitignore` already carries the compiler's `.sim.onnx` and `.har`.
+Nothing is handed to a later stage and nothing is deployed.
+
+This is the split CLAUDE.md already draws for pose sources -- a **control**, transient and
+verified back, against something **targeted** into an asset we ship. ONNX as a check
+vehicle is the first. ONNX as the format a model travels in is the second, and that is
+what this row blocks.
+
+The exemption is bounded by three conditions, and a gate that breaks any of them has
+stopped being a control: the artifact is written outside the working tree, no `.onnx` file
+is committed, and no later stage reads one. `scripts/check_no_committed_onnx.py` in
+`rf-detr-cpp` holds the middle condition, which is the one a careless `--out` would break.
+
+**The allowlist cannot simply be renamed.** `DEVICE_OPS` is 40 operators under ONNX names
+and `KNOWN_BLOCKERS` is 9 more; TFLite names its operators differently, so moving this gate
+to TFLite means re-deriving the set against the Dataflow Compiler rather than translating a
+list. That needs the DFC, which needs the Linux box, so the gate stays ONNX-shaped until
+there is a measurement to replace it with.
+
 **What it costs.** `gate_onnx_device.py`'s numeric oracle, 5.066e-06 against
 PyTorch, is what every other backend row was diffed against, and it goes with the
 format. The replacement is torch on CPU, which is already a dependency; until
