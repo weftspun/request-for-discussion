@@ -321,6 +321,8 @@ Sources excluded from corpora, with the reason:
 | `alfredplpl/anime-with-caption-cc0`                | hand quality — **images** blocked, captions permitted                                                                                            |
 | **git submodules**                                 | a second dependency mechanism `repo status` cannot see — use `default.xml`, see below                                                            |
 | **`uv` for project environments**                  | an environment nothing declares and nobody can rebuild — use `pixi`; **an embedded interpreter pinning its deps in source is exempt**, see below |
+| **tinygrad NVIDIA eGPU** (TinyGPU dext) as compute            | one device init per power cycle, and no software recovery — see below                                                            |
+| **Apple Neural Engine** as an execution target      | 2 GiB weight ceiling at 2^31 bytes, against Metal's 8 GiB+ on the same part — see below                                          |
 | `weftspun/rf-detr-keypoint-data`                   | **val2017-derived** — carries the whole blinded holdout, and 78% of it is licence-dirty. Validation only, never training. See below              |
 
 The cosplay photo library may be used for **validation only**, never training.
