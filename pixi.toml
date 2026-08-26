@@ -1,0 +1,68 @@
+# The RFD gates' environment and RFD 1142's apparatus, declared, because until
+# now the gates had a `requirements.txt` and no environment to install it into.
+
+[workspace]
+name = "request-for-discussion"
+version = "0.1.0"
+description = "The RFDs, their gates, and the apparatus behind their numbers"
+channels = ["conda-forge"]
+# osx-arm64 alone, and that is the subject rather than an oversight. The ANE
+# feature below measures a Neural Engine, which exists on no other platform.
+# The gate feature would run anywhere; it is not offered elsewhere yet because
+# nothing has asked, and a platform nobody runs is a platform nobody tests.
+platforms = ["osx-arm64"]
+
+# THE GATES, PINNED THE WAY `scripts/requirements.txt` ALREADY PINS THEM.
+# That file stays: it is what CI reads and it carries the reasoning for each
+# pin. This restates the two versions so a desk can run the gates through pixi.
+# If the two ever disagree, requirements.txt wins and this is the copy that is
+# wrong.
+[feature.gate.dependencies]
+python = "3.11.*"
+
+[feature.gate.pypi-dependencies]
+markdown-it-py = "==3.0.0"
+usd-core = "==26.8"
+
+# THE ANE FEATURE, SEPARATE FROM THE GATES ON PURPOSE.
+#
+# RFD 1142 measures what the Neural Engine can address. That needs coremltools
+# and a torch to build a graph with, and neither belongs in an environment whose
+# job is to parse CommonMark. The gates are a measuring instrument for the
+# documents and should not move because a converter did.
+#
+# torch is CPU-only. Nothing here trains: torch builds the synthetic graph,
+# coremltools converts it, and the accelerator under test is reached through
+# Core ML rather than through torch. An MPS build would invite somebody to
+# benchmark the wrong device.
+#
+# NUMPY COMES FROM PyPI, NOT conda-forge, AND THE REASON IS A CORRECTNESS ONE.
+# conda-forge numpy links llvm-openmp while the PyPI torch wheel bundles its
+# own libomp.dylib. Both in one process raises OMP Error #15, whose own text
+# says it "can degrade performance or cause incorrect results". Measured here:
+# `import coremltools, torch, numpy` aborted with that error under a conda
+# numpy. An environment that may silently return wrong numbers is not a rig
+# for an RFD about numbers, and KMP_DUPLICATE_LIB_OK would hide it rather than
+# fix it. One index, one OpenMP.
+[feature.ane.dependencies]
+python = "3.11.*"
+
+[feature.ane.pypi-dependencies]
+numpy = ">=1.26,<3"
+coremltools = ">=8.0"
+# scikit-learn is NOT optional here, and its absence does not look like an absence.
+# coremltools' k-means palettizer imports it lazily and only for some tensor shapes:
+# without it, a sweep at int4 SKIPPED width 128 and 256 and completed 512 and above,
+# so the failure presented as six rows that agreed with each other rather than as an
+# error. An undeclared dependency that changes which rows exist is worse than one that
+# crashes.
+# UPPER bound too, and it is not cosmetic. coremltools 9.0 refuses sklearn above 1.5.1
+# with "Disabling scikit-learn conversion API" -- a WARNING, not an error, after which
+# k-means palettization fails exactly as if the package were absent. A floor-only pin
+# installed 1.9.0 here and bought nothing.
+scikit-learn = ">=1.4,<=1.5.1"
+torch = { version = ">=2.6", index = "https://download.pytorch.org/whl/cpu" }
+
+[environments]
+gate = { features = ["gate"], no-default-feature = true }
+ane = { features = ["ane"], no-default-feature = true }
