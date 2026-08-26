@@ -6,7 +6,6 @@
     customLayerData = {
         string plan = "fourloops-etnf"
         string state = "build"
-        string graph = "2-contract/weftspun-manuals/fourloops-plan.usda"
         string[] sources = [
             "6-datasource/anny-render-corpus/score_edits.py",
             "6-datasource/anny-render-corpus/render_view.py",
@@ -15,7 +14,7 @@
             "1-transport/rf-detr-mcp/server.py",
             "3-interactor/voxhammer-image-mesh-editing/server.py",
             "CLAUDE.md",
-            "2-contract/weftspun-manuals/logbook-fourloops-first-runs.md",
+            "1144-image-to-omnigen2/DETAILS.md",
         ]
         string[] relationKindVocabulary = ["interned", "spine", "satellite", "measured"]
         string[] stateVocabulary = ["exists", "build", "measure", "stub", "blocked"]
