@@ -1,2 +1,5 @@
 __pycache__/
 *.pyc
+
+# The BEAM writes this where it dies; the trope gate runs elixir.
+erl_crash.dump

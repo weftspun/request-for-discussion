@@ -36,6 +36,49 @@ REGISTER = "SERIALS.usda"
 DIR_RE = re.compile(r"^([0-9]{4})-([a-z0-9-]+)$")
 
 
+ROW_RE = re.compile(r"^S(\d+)$")
+
+
+def table_rows(prim, names):
+    """Rows of one relation, in whichever of the two shapes the layer uses.
+
+    ROW FORM is one prim per tuple, the primary key in the prim name. USD refuses
+    two siblings with one name, so a duplicate key cannot be authored and there is
+    no second array to fall out of step with the first.
+
+    ARRAY FORM is parallel `int[]`/`string[]`, which is what this register held
+    until the row form replaced it and what other sites still author. It is read
+    because `pen-66606.usda` sublayers those registers, and a reader that
+    understood only the new shape would compose them to nothing -- which reads
+    exactly like a site with no serials.
+    """
+    children = [(m.group(1), c) for c in prim.GetChildren()
+                if (m := ROW_RE.match(c.GetName()))]
+    if children:
+        other = [n for n in names if n != "serial"]
+        rows = []
+        for key, child in children:
+            value = key
+            for name in other:
+                a = child.GetAttribute(name)
+                if a and a.HasAuthoredValue():
+                    value = a.Get()
+            rows.append((int(key), value))
+        return rows
+
+    arrays = {}
+    for name in names:
+        a = prim.GetAttribute(name)
+        arrays[name] = list(a.Get()) if a and a.HasAuthoredValue() else None
+    if arrays.get("serial") is None:
+        return []
+    other = "slug" if "slug" in names else "recorded_in"
+    values = arrays.get(other)
+    if values is None or len(values) != len(arrays["serial"]):
+        return []
+    return list(zip(arrays["serial"], values))
+
+
 def read(text):
     """(allocated, deleted) as serial -> value, read off the composed stage.
 
@@ -53,32 +96,32 @@ def read(text):
         if not (cols and cols.HasAuthoredValue()):
             continue
         names = [str(c).split()[0] for c in cols.Get() if str(c).strip()]
-        arrays = {}
-        for name in names:
-            a = prim.GetAttribute(name)
-            arrays[name] = list(a.Get()) if a and a.HasAuthoredValue() else None
         table = None
         for ancestor in str(prim.GetPath()).split("/"):
             if ancestor == "Allocated":
                 table = allocated
             elif ancestor == "Deleted":
                 table = deleted
-        if table is None or arrays.get("serial") is None:
+        if table is None:
             continue
-        other = "slug" if table is allocated else "recorded_in"
-        values = arrays.get(other)
-        if values is None:
-            continue
-        for serial, value in zip(arrays["serial"], values):
+        for serial, value in table_rows(prim, names):
             table[f"{serial}"] = str(value)
     return allocated, deleted
 
 
-def columns_are_parallel(text):
-    """Every declared column carries an array, and the arrays are equal length.
+def rows_are_well_formed(text):
+    """Every declared column is carried, in whichever shape the relation uses.
 
-    This is the check a markdown table could not carry. A packed row splits on
-    whitespace and a value with a space in it silently becomes two columns.
+    ROW FORM: each `S<serial>` prim authors every declared column except the
+    primary key, which is its name. A missing value is named rather than skipped.
+
+    ARRAY FORM: every column authors an array and the arrays are equal length.
+    THAT CHECK IS THE REASON THIS FUNCTION EXISTS. `read()` used to `zip()` the
+    columns, and `zip` stops at the shorter one, so a register that lost a slug
+    would report one fewer serial and no error at all -- a silent truncation that
+    reads exactly like a smaller register. The row form cannot fail that way,
+    which is why this register moved to it; the check stays for the sites that
+    have not.
     """
     problems = []
     layer = Sdf.Layer.CreateAnonymous(".usda")
@@ -90,6 +133,18 @@ def columns_are_parallel(text):
         if not (cols and cols.HasAuthoredValue()):
             continue
         names = [str(c).split()[0] for c in cols.Get() if str(c).strip()]
+        other = [n for n in names if n != "serial"]
+        children = [c for c in prim.GetChildren() if ROW_RE.match(c.GetName())]
+
+        if children:
+            for child in children:
+                for name in other:
+                    a = child.GetAttribute(name)
+                    if not (a and a.HasAuthoredValue()):
+                        problems.append(
+                            f"{child.GetPath()} declares column {name} and authors no value")
+            continue
+
         lengths = {}
         for name in names:
             a = prim.GetAttribute(name)
@@ -111,7 +166,7 @@ def rfd_dirs(root):
 
 
 def check_tree(root, text):
-    problems = columns_are_parallel(text)
+    problems = rows_are_well_formed(text)
     allocated, deleted = read(text)
     if not allocated:
         # An empty register would make every check below vacuous, which reads

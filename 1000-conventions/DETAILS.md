@@ -129,10 +129,24 @@ makes sense after the DETAILS is a section of the DETAILS.
 `SERIALS.usda` lists every serial this site has allocated. It carries the live
 ones and the deleted ones, because a deleted number stays cited.
 
-It is USD rather than a table, and in Essential Tuple Normal Form: one typed
-array for each column, parallel by index. A row count is the length of a
-column rather than a number kept beside it. A packed row was the alternative,
-and a value with a space in it splits into two columns without saying so.
+It is USD rather than a table, and in Essential Tuple Normal Form: one prim
+per tuple, the primary key in the prim name, the remaining columns as typed
+attributes on that prim. A row count is the number of children. A packed row
+was rejected early, because a value with a space in it splits into two columns
+without saying so.
+
+**It held parallel arrays until this revision, one per column, indexed
+together.** Two arrays that correspond by position can stop corresponding, and
+nothing in the layer says so: `[1, 1, 2]` is a legal `int[]` carrying a
+duplicate key, and a reader that walks the columns with `zip` stops at the
+shorter one, so a register missing a slug reports one fewer serial and no
+error. That failure was gated rather than prevented. Under the row form USD
+refuses two siblings of one name, so a duplicate key cannot be authored, and
+a missing value belongs to one row rather than shifting every row after it.
+
+Other sites still author the array form, and the readers take both. A reader
+that understood only the new shape would compose their registers to nothing,
+which reads exactly like a site with no serials.
 
 It holds this site's serials and no other site's. A copy of another site's
 rows would be a second record of one fact, and the first copy edited would win
