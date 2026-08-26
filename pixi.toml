@@ -74,6 +74,36 @@ onnxruntime = "*"
 scikit-learn = ">=1.4,<=1.5.1"
 torch = { version = ">=2.6", index = "https://download.pytorch.org/whl/cpu" }
 
+# THE LITERT FEATURE. RFD 1142 measured Core ML's Metal path at 6.97 TFLOP/s fp16;
+# this measures LiteRT's against it, on the same ConvStack and the same MACs
+# convention, so the two rows compose.
+#
+# THE ACCELERATOR IS A BINARY WE RECEIVE, NOT CODE WE BUILD, and that was checked
+# rather than assumed. `litert/runtime/accelerators/gpu/BUILD` declares a
+# `macos_dylib` target for the WebGPU accelerator, which reads like macOS support
+# withheld from the release. It is not: bazel 7.7.1 analysis of that target fails
+# fetching `@ml_drift`, whose `http_archive` in WORKSPACE:390 carries no `url` at
+# all, and ml-drift is not a public repository. The Metal target fails separately
+# on an internal `//tools/build_defs/swift`. So the only GPU accelerator reachable
+# here is the prebuilt `libLiteRtMetalAccelerator.dylib` inside the wheel, and
+# there is no macOS WebGPU binary to compare it against.
+#
+# torch is CPU-only for the same reason the ane feature gives: torch builds the
+# graph, litert-torch converts it, and the accelerator under test is reached
+# through LiteRT. An MPS build would invite benchmarking the wrong device.
+#
+# NUMPY FROM PyPI, NOT conda-forge -- the OMP Error #15 the ane feature documents
+# is a property of mixing conda numpy with a PyPI torch, not of coremltools.
+[feature.litert.dependencies]
+python = "3.12.*"
+
+[feature.litert.pypi-dependencies]
+numpy = ">=1.26,<3"
+ai-edge-litert = ">=2.2"
+litert-torch = ">=0.9"
+torch = { version = ">=2.6,<2.14", index = "https://download.pytorch.org/whl/cpu" }
+
 [environments]
 gate = { features = ["gate"], no-default-feature = true }
 ane = { features = ["ane"], no-default-feature = true }
+litert = { features = ["litert"], no-default-feature = true }
