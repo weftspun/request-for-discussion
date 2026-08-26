@@ -247,7 +247,25 @@ about somebody else's frame and nothing it produces enters a corpus.
 
 Throughput divides by 40 TOPS INT4 at an ASSUMED 30% utilisation, which is the convention
 `logbook-edge-npu-and-the-anny-forward.md` set and which it also flags: the DFC profiler was
-never run, so those figures rank and do not budget."""
+never run, so those figures rank and do not budget.
+
+THE PART TAKES 16 BITS AND THEY ARE INTEGER. The datasheet's NN core line reads "Precision
+configurability, support 4/8/16-bit precision for weights and activations", and the Dataflow
+Compiler spells the same widths as quantization modes -- `a8_w4`, `a16_w8`, `a16_w16` -- set
+with `quantization_param(layer, precision_mode=...)` and described there as "16-bit
+activations and weights to improve accuracy results".
+
+`fp16Native` is 0, and the reason is written here so the next reader does not re-derive it
+wrongly. The datasheet holds no occurrence of fp16 across 83 pages, and the Dataflow Compiler
+user guide v5.3.0 holds none of fp16, float16 or bfloat16 across 187. The only floating point
+the datasheet names belongs to the Arm AP subsystem's SIMD and floating-point extension, which
+sits beside the NN core rather than in it. Secondary write-ups do say this part supports fp16;
+one was believed here until these two documents were opened. A quantised 16-bit mode and a
+16-bit float are different things, and the difference decides whether an fp16 graph crosses to
+this device unchanged. It does not.
+
+`topsInt16` is absent rather than zero because Hailo publishes no rate for it. The 20 and 40
+above are the two the datasheet gives."""
         )
         {
             custom uniform token kind = "npu"
@@ -256,6 +274,8 @@ never run, so those figures rank and do not budget."""
             custom float memoryGib = 8
             custom float assumedUtilisation = 0.3
             custom bool bf16Native = 0
+            custom bool fp16Native = 0
+            custom bool int16Native = 1
             custom bool pluggedIn = 1
             custom bool producesCorpusData = 0
         }
