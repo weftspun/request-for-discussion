@@ -203,6 +203,29 @@ repos:
         files: ^scripts/check_blocklist_detail\.py$
         pass_filenames: false
 
+      # CLAUDE.md's comment rule, gated. It held nothing for as long as it took to
+      # write it down, and `check_comment_density.py` beside it is aimed at other
+      # people's repositories: C and C++ only, peers drawn from the repo being edited.
+      #
+      # STAGED CHANGES ARE WHAT THIS SEES. The gate diffs against HEAD, so a local
+      # commit is judged and `prek run --all-files` in CI is not -- nothing is staged
+      # there and the gate would report a green run for a check it did not perform.
+      # The `comment-ladder` job in checks.yml passes `--base origin/<base>` for that
+      # reason, the way `rfd-serials` already does.
+      - id: comment-ladder
+        name: no changed source file climbs the comment-density ladder
+        entry: python scripts/check_comment_ladder.py
+        language: system
+        files: \.(py|ex|exs)$
+        pass_filenames: false
+
+      - id: comment-ladder-self-test
+        name: the ladder still rejects padding, a deletion past the rung, and a new file above entry
+        entry: python scripts/check_comment_ladder.py --self-test
+        language: system
+        files: ^scripts/(check_comment_ladder|comment_density)\.py$
+        pass_filenames: false
+
   # THE RFD HOOKS, FROM THE OTHER HALF OF THIS REPOSITORY.
   #
   # `weftspun/logbook` and `weftspun/request-for-discussion` were two repositories and
