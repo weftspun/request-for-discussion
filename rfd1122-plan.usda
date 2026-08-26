@@ -205,8 +205,34 @@ graph handed back and forth loses. The Neural Engine claim below is corrected on
             # is NOT unreachable outside PyTorch as an earlier revision of this scope claimed.
             # It was reachable and untried. Tried now: slower than the CPU on this model, and
             # outside the numeric bound. Reachable and unsuitable are different facts.
+            #
+            # RETRACTED, RFD 1142: THE 1685.1 ms WAS A PARTITIONER, NOT THIS DEVICE.
+            # onnxruntime's CoreML provider hands unsupported nodes back to the CPU, and that
+            # run recorded no placement, so its figure could not tell "ran on the Neural
+            # Engine slowly" from "barely reached it". Converted natively instead, the same
+            # device half places 373 of 373 operations on the Neural Engine and runs in
+            # 121.6 ms -- the ONNX figure was 31x pessimistic. The prose above reproduces at
+            # 3758.9 ms with --num-windows 1 and is retained because it is what that route
+            # measures.
+            #
+            # THE VERDICT SURVIVES ITS EVIDENCE. `neuralEngineUsefulForBackbone` stays 0, on
+            # PRECISION rather than on speed: at fp16 the native conversion agrees with
+            # PyTorch to 4.311e-02, ten times the port's own 4.2e-03 bound. Metal on the same
+            # machine runs the same graph in 62.0 ms at 3.524e-03 and passes. A right answer
+            # held for a wrong reason is corrected here because the wrong reason predicts
+            # wrongly elsewhere.
             custom bool neuralEngineReachableViaOnnx = 1
             custom bool neuralEngineUsefulForBackbone = 0
+            # Blocklisted as an execution target in CLAUDE.md: a 2 GiB weight ceiling at
+            # 2^31 bytes, against Metal holding 8176.2 MiB of the same graph. Scheduling
+            # against this part is what the row exists to stop.
+            custom bool neuralEngineBlocklisted = 1
+            # Measured by `request-for-discussion/scripts/gate_coreml_device.py`, native
+            # Core ML conversion of the RF-DETR device half at 576, num_windows 1, fp16.
+            custom float deviceHalfAneMs = 121.6
+            custom float deviceHalfGpuMs = 62.0
+            custom float deviceHalfGpuMaxAbsDiff = 0.003524
+            custom float aneWeightCeilingMib = 2048
         }
 
         def "Hailo10H" (
