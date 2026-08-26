@@ -590,7 +590,7 @@ data. The detector's quantization is deployment; only T05's generator path is bo
 **The reranked path: 20.0 size points.** Computed by `check_rfd1122_plan.py` from the sizes in
 the stage and asserted against this paragraph so the two cannot drift. The formulas are the
 standard PERT pair, already in use in this workspace at
-`2-contract/multiplayer-fabric-manuals/rfd/204d-pert-critical-path-zonefabric` — cited by path
+`2-contract/manuals-multiplayer-fabric/rfd/204d-pert-critical-path-zonefabric` — cited by path
 rather than by number, because that document lives in another repository and the citation gate
 here correctly refuses a number it cannot resolve:
 

@@ -311,12 +311,12 @@ def resolve_source(name, root):
     live in sibling projects -- `6-datasource/anny-render-corpus/render_view.py` and its
     neighbours -- and a workspace-relative path is the only thing that can name those.
     A source that lives in THIS project is different: writing it as
-    `2-contract/weftspun-manuals/logbook-...` sends the path out of the project and back
+    `2-contract/manuals-weftspun/logbook-...` sends the path out of the project and back
     into it, which is a longer way to say `logbook-...` and one that breaks whenever the
     checkout moves.
 
     It broke exactly that way. The manifest renamed this checkout from
-    `2-contract/request_for_discussion` to `2-contract/weftspun-manuals`, and every
+    `2-contract/request_for_discussion` to `2-contract/manuals-weftspun`, and every
     self-referencing source stopped resolving; the gate reported each quantity as
     appearing in no source, which reads as a drifted number rather than as a moved file.
 

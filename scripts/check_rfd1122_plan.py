@@ -54,7 +54,7 @@ def rfd_dir():
     """Where RFD 1122 is checked out, asked of the manifest rather than guessed.
 
     The RFD has moved twice. `.request_for_discussion` at the workspace root became
-    `2-contract/request_for_discussion`, and that became `2-contract/weftspun-manuals`
+    `2-contract/request_for_discussion`, and that became `2-contract/manuals-weftspun`
     when the manifest hyphenated its checkout paths and put the project in the manuals
     family beside `vsk-manuals` and `fire-manuals`. A hard-coded path would have broken
     three times over, once for each move, so the manifest is asked instead. It keys on
@@ -74,7 +74,8 @@ def rfd_dir():
             if project.get("name") == "request-for-discussion":
                 return root / project.get("path") / "1122-the-wholebody-gap"
     # No manifest to read: one level of search rather than a walk of the whole tree.
-    for name in ("weftspun-manuals", "request-for-discussion", "request_for_discussion"):
+    for name in ("manuals-weftspun", "weftspun-manuals", "request-for-discussion",
+                 "request_for_discussion"):
         for cand in (root / name, *root.glob(f"*/{name}")):
             if cand.is_dir():
                 return cand / "1122-the-wholebody-gap"
