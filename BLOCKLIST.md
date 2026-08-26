@@ -635,3 +635,115 @@ the optimization ladder. Those measurements stay valid — a benchmark input nee
 to be fixed and representative, not defect-free, and re-basing them would
 discard the comparability that makes them a ladder. The exclusion is on
 _training_, not on that one image's continued use as a stopwatch.
+
+### The Neural Engine is blocked as an execution target, and 2 GiB is why
+
+Measured on the M2 Pro in RFD 1142, with `scripts/ane_bench.py`. The part is
+fast. It is also too small, and the second fact decides.
+
+**The ceiling is 2 GiB of weights, at exactly 2^31 bytes.** A model at 2002.4
+MiB places entirely on the device; one at 2058.0 MiB places entirely on the
+GPU. It fails wholesale rather than splitting, so a model that crosses the line
+does not degrade, it relocates.
+
+    weights MiB   ops   on ANE
+    1946.8         72   1.000
+    2002.4         74   1.000
+    2058.0         76   0.000
+    8176.2        296   0.000, and Metal takes all 296
+
+A second cap sits on any single weight tensor near 224 MiB: 220.5 MiB places,
+228.4 MiB does not. The two are independent, and a sweep that grows only width
+finds the second and reports it as the first. Neither is documented; Apple does
+not publish the internal buffer limits, and the per-axis extent cap that IS
+documented is orders of magnitude away from where these fail.
+
+**Metal on the same machine holds 8176.2 MiB at full placement**, which is the
+UGen300's whole 8 GiB working set. So the alternative is not a compromise: it
+is the same silicon package, four times the capacity, and no wall in sight
+where the search stopped.
+
+**And on the real model Metal is also faster.** The RF-DETR device half at 576,
+converted natively, places 373 of 373 operations on either engine:
+
+    ane    119.7 ms
+    gpu     62.7 ms
+
+The Neural Engine wins on a synthetic 3x3 stride-1 convolution stack, 13.58
+TFLOP/s against 6.98, and loses by 1.9x on the graph we actually ship. A
+benchmark shape chosen for the accelerator flatters it, which is the reason
+that row exists here rather than a claim that the part is slow.
+
+**What this entry does not say.** It does not say the Neural Engine is unusable,
+and it does not retire `ane_bench.py` — a part reaching 86% of its cited peak is
+worth re-testing when a model fits under 2 GiB, and the apparatus is kept so
+that re-test costs a command. The blocklist is about what may be planned
+around, and an undocumented 2 GiB ceiling fails that test.
+
+**The third ground is numeric, and it is the one that decides.** At fp16 the
+device half converted natively agrees with PyTorch to:
+
+    units   ms med   max|diff|   the port's 4.2e-03 bound
+    ane      121.6   4.311e-02   FAIL, ten times over
+    gpu       62.0   3.524e-03   ok
+    cpu      133.0   2.425e-01   FAIL
+
+Metal is the only configuration that both passes and is fastest. The Neural
+Engine runs every one of the 373 operations and still misses the bound the port
+already holds, so its speed comes only at an accuracy we cannot ship.
+
+This also settles `neuralEngineUsefulForBackbone = 0` in `rfd1122-plan.usda`,
+which was measured through onnxruntime's CoreML provider at 1685.1 ms and
+reproduced here at 3758.9. Natively the same graph runs at 121.6 ms, so that
+figure was 31x pessimistic and was measuring a partitioner. The flag's VERDICT
+survives its evidence being wrong: the Neural Engine is unsuitable for this
+backbone, on precision rather than on speed. A right answer for a wrong reason
+is still worth correcting, because the wrong reason predicts wrongly elsewhere.
+
+These figures come from an explicit pairing matrix. An earlier version of
+`gate_coreml_device.py` matched outputs by shape, and the device half returns
+two tensors of identical (1, 256, 48, 48) shape, so it compared one reference
+against the other output and reported 2.5e+00 on every row. The CPU row is what
+exposed it: Core ML's own CPU cannot disagree with PyTorch by 2.5.
+
+### The tinygrad NVIDIA eGPU is dropped, and one init per power cycle is why
+
+An RTX 3090 in a Sonnet eGFX Breakaway Box reaches this Mac mini over
+Thunderbolt, driven by `org.tinygrad.tinygpu.driver2`, a DriverKit extension.
+It enumerates, it is `arch=sm_86`, and it works. It is dropped anyway.
+
+**The device takes one initialisation per power cycle.** `nvd.py`, the resident
+daemon written to hold that one init, states the consequence in its own
+docstring: a second init fails, BAR0 returns all-ones, and no reset recovers
+it. Recovery is a reboot or a dock power cycle. So the process holding the
+device cannot be restarted to pick up a change — editing it spends a reboot —
+and any crash spends one too.
+
+That cost was paid during RFD 1142. The daemon had held the device for three
+days and served 9,645 requests when the `TinyGPU` userspace server restarted
+underneath it. `nvd` captured its socket at init and cannot reconnect, so every
+compute request now returns `BrokenPipeError` while `ping` and `info` keep
+answering. A liveness check that passes while the device is unusable is the
+shape of failure this workspace names in rule 3.
+
+**Its guard against the second init fails open.** `boot_id()` compares the whole
+of `kern.boottime`, including a `usec` field that moved during this boot:
+
+    guard:   { sec = 1787432316, usec = 580657 }
+    current: { sec = 1787432316, usec = 809637 }
+
+The strings differ, the guard concludes a different boot, and a restart would
+attempt exactly the second init it exists to prevent. Comparing `sec` alone
+repairs it, and the repair is not attempted here because the entry is a
+decision to stop rather than a bug report.
+
+**What replaces it is already measured.** RFD 1142 puts Metal at 8176.2 MiB of
+weights at full placement and 62.0 ms on the RF-DETR device half, inside the
+port's numeric bound. The eGPU's advantage was capacity, and a 24 GiB card
+still has more; what it does not have is a compute path that survives its own
+daemon restarting.
+
+`~/.local/nvd` stays on disk and outside any manifest, which is its own finding:
+three days of measurements ran through a daemon launched by `uv run --with
+tinygrad`, unpinned and undeclared, in a workspace whose blocklist has a row
+about exactly that.
