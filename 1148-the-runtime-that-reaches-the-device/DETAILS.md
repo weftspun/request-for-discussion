@@ -81,6 +81,43 @@ conversion. It stays deferred: no TPU is attached, and RunPod rents NVIDIA.
 pinning `jaxlib>=0.4.34` against a current 0.11.1, and it remains the only PJRT
 Metal plugin in existence.
 
+## What Metal reaches, measured
+
+`scripts/litert_bench.py`, `ConvStack(width=64, depth=4, size=64)`, 460.1 M MACs, on an
+Apple M2 Pro. The oracle is torch on CPU, which replaces the ONNX diff that retired with
+the format. Rate counts a fused multiply-add as two operations, `gpu_tops.py`'s
+convention, so these compose with RFD 1142's rows.
+
+    backend      accel   best ms  spread   TFLOP/s   max|diff|
+    cpu          True      12.24      0%      0.08   2.384e-07
+    metal fp16   True       0.59      3%      1.56   1.687e-03
+    metal f32    True       0.39     90%      2.33   2.682e-07
+    coreml       -             -       -      6.97           -    RFD 1142, fp16
+
+**Metal takes the whole graph** — `is_fully_accelerated()` answers true on every row, so
+none of this is a partitioned graph with a fast fragment. It reaches **0.33x** the figure
+Core ML's Metal path gave on the same part, and roughly thirty times CPU.
+
+**The accelerator computes in fp16 unless told otherwise**, and the evidence is numeric
+rather than a timing. The default carries `max|diff|` 1.687e-03 against torch; the same
+model under `GpuOptions(enforce_f32=True)` carries 2.682e-07. Four orders of magnitude is
+not a rounding difference, and it means the earlier reading of the default row as f32 was
+wrong: the comparison against Core ML's fp16 figure is like for like.
+
+**This harness declines to rank fp16 against f32, and the reason is an artefact worth
+recording.** With
+a fixed measurement order, whichever GPU configuration ran first won:
+
+    order        fp16 best   f32 best   winner
+    fp16 first      0.38        0.40     fp16
+    f32 first       0.48        0.45     f32
+
+The ranking followed the order rather than the arithmetic, so the gap between the two is
+smaller than the artefact. A first version of this harness took one median of fifty
+repetitions and reported 0.21x; the median moved 74% between rounds on identical input.
+The harness now alternates the order every round, takes the fastest round rather than the
+average because contention only subtracts, and prints the spread beside the rate.
+
 ## Hailo takes TFLite by its own direction
 
 The Dataflow Compiler 5.3.0 guide names its inputs as "a Tensorflow checkpoint, a
