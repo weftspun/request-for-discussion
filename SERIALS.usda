@@ -28,8 +28,567 @@ def Scope "Serials"
                 custom string[] columns = ["serial int16 PK", "slug string"]
                 custom uniform token kind = "spine"
                 custom string primaryKey = "serial"
-                custom int[] serial = [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1040, 1041, 1042, 1043, 1044, 1045, 1046, 1047, 1048, 1049, 1050, 1051, 1052, 1053, 1054, 1055, 1056, 1057, 1058, 1059, 1060, 1061, 1062, 1063, 1064, 1065, 1066, 1067, 1070, 1073, 1074, 1075, 1076, 1077, 1078, 1079, 1080, 1082, 1083, 1084, 1085, 1086, 1087, 1088, 1089, 1090, 1091, 1092, 1093, 1094, 1095, 1096, 1098, 1099, 1100, 1101, 1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109, 1110, 1111, 1112, 1113, 1114, 1115, 1116, 1117, 1118, 1119, 1120, 1121, 1122, 1123, 1124, 1125, 1126, 1128, 1129, 1130, 1131, 1132, 1133, 1134, 1135, 1136, 1137, 1138, 1139, 1140, 1141, 1142, 1143, 1144, 1145, 1146, 1147, 1148]
-                custom string[] slug = ["conventions", "app-shell-and-routing", "studio-pipeline-graph", "task-manager-job-lifecycle", "aigc-task-catalog", "avatar-and-vrm-pipeline", "layer-decomposition-see-through", "motion-validation-kimodo", "appearance-trait-extraction-and-remix", "viewport-and-scene-rendering", "webxr-and-iwsdk-lab", "spatial-fabric-publish", "wallet-minting-and-x402", "public-demo-deploy", "batch-processing", "phygital-passport", "deep-learning-model-inventory", "fork-rebrand-to-weftspun", "m3-documentation-removal", "strangler-fig-studio-core", "cockroachdb-persistence", "shared-hrr-library", "hexagonal-client", "ports-and-adapters-with-headless-cms-style", "model-memory-arithmetic", "bf16-memory-per-model", "gpu-residency-budget", "model-license-gate", "foss-model-replacements", "seethrough-component-models", "geometry-refinement-and-alpha-wrap", "geometric-algorithms", "krea-memory-cross-check", "legacy-model-identifiers", "packaging-convention", "composite-models-as-taskweft-domains", "trellis2-image-to-textured-mesh", "trellis2-image-mesh-painting", "pixal3d-image-to-textured-mesh", "p3sam-mesh-segmentation", "krea2-turbo-text-to-image", "qwen-image-edit", "seethrough-layer-decomposition", "kimodo-text-to-motion", "skintokens-auto-rig", "voxhammer-text-mesh-editing", "voxhammer-image-mesh-editing", "weftspun-image-to-world", "lingbot-map-environment-scan", "worldmirror2-reconstruct", "triposplat-image-to-splat", "openusd-as-the-internal-format", "headless-cms-on-taskweft", "beam-workers-local-first", "develop-in-a-dev-container", "open-work", "zero-trust-networking", "continuous-integration", "thirdparty-reset", "glb-upload-prep-via-idtx-core", "flyio-toplevel-4090-worker-split", "ste-enforcement-moves-to-the-plugin", "character-concept-generator", "taskweft-domain-schema-in-etnf", "differential-mamba-for-caption-encoding", "cockroachdb-reranked-against-foundationdb", "keep-options-open", "dataset-billboard-gallery", "3d-billboard-labels", "github-oauth-admin-login", "usd-viewer-app-build-integration", "h2o-edge-cdn", "h2o-fdb-game-state-server", "appsignal-observability", "fly-deploy-cost", "android-studio-ai-brief", "api-avatar-rig-contract", "avatar-pipeline", "code-map", "dev-machine-topology", "gemini", "https-setup", "hyworld-image-to-world-scope", "iwsdk-integration", "iwsdk-local-fork", "kimodo-backend-integration", "loot-assets-setup", "multi-image-splat-roadmap", "nvidia-xr-ai-integration", "openxr-face-tracking-android-xr", "public-deploy", "scripts-cheatsheet", "spatial-fabric-integration", "ssh-host-names", "supported-3daigc-modules", "vercel-loot-assets", "vrm-upload-display-export", "webcam-avatar-control", "weftspun-moat-overview", "world-package", "xr-mode-floor-anchoring-and-backgrounds", "moat-payment-rails-and-phygital-registry", "reporesident-agent-harness", "3daigc-api-reference-not-restated", "cursor-rules-kept-in-the-open", "image-preview-vs-expand-sizing", "app-chrome-layout-invariants", "vrm-animation-playback-invariants", "tasks-panel-clear-and-collapse", "text-to-image-to-3d-chain", "xr-embody-locomotion-and-menu", "generic-hardware-not-dgx-or-android-xr-specific", "split-apps-into-own-repos", "layers-from-geometry-and-the-missing-categories", "the-wholebody-gap", "cineform-in-godot", "rfd-structure-gate", "two-prose-gates", "feed-forward-for-the-edge", "four-bit-tolerance", "hailo-operator-coverage", "ugen300-throughput", "operator-emulation-for-the-accelerator", "priority-list-of-converted-models", "models-excluded-from-conversion", "notebooks-tested-in-the-browser", "one-environment-per-elixir-app", "camera-vocabulary-and-the-96-pose-grid", "encoding-a-frame-set", "where-range-of-motion-comes-from", "conventions-are-measured", "rented-gpus-on-runpod", "publishing-artifacts", "the-mac-against-the-ugen300", "keypoints-to-anny", "image-to-omnigen2", "stylized-to-omnigen2", "latent-to-pixal3d", "what-editscore-costs-and-returns", "the-runtime-that-reaches-the-device"]
+
+                def "S1000"
+                {
+                    custom string slug = "conventions"
+                }
+                def "S1001"
+                {
+                    custom string slug = "app-shell-and-routing"
+                }
+                def "S1002"
+                {
+                    custom string slug = "studio-pipeline-graph"
+                }
+                def "S1003"
+                {
+                    custom string slug = "task-manager-job-lifecycle"
+                }
+                def "S1004"
+                {
+                    custom string slug = "aigc-task-catalog"
+                }
+                def "S1005"
+                {
+                    custom string slug = "avatar-and-vrm-pipeline"
+                }
+                def "S1006"
+                {
+                    custom string slug = "layer-decomposition-see-through"
+                }
+                def "S1007"
+                {
+                    custom string slug = "motion-validation-kimodo"
+                }
+                def "S1008"
+                {
+                    custom string slug = "appearance-trait-extraction-and-remix"
+                }
+                def "S1009"
+                {
+                    custom string slug = "viewport-and-scene-rendering"
+                }
+                def "S1010"
+                {
+                    custom string slug = "webxr-and-iwsdk-lab"
+                }
+                def "S1011"
+                {
+                    custom string slug = "spatial-fabric-publish"
+                }
+                def "S1012"
+                {
+                    custom string slug = "wallet-minting-and-x402"
+                }
+                def "S1013"
+                {
+                    custom string slug = "public-demo-deploy"
+                }
+                def "S1014"
+                {
+                    custom string slug = "batch-processing"
+                }
+                def "S1015"
+                {
+                    custom string slug = "phygital-passport"
+                }
+                def "S1016"
+                {
+                    custom string slug = "deep-learning-model-inventory"
+                }
+                def "S1017"
+                {
+                    custom string slug = "fork-rebrand-to-weftspun"
+                }
+                def "S1018"
+                {
+                    custom string slug = "m3-documentation-removal"
+                }
+                def "S1019"
+                {
+                    custom string slug = "strangler-fig-studio-core"
+                }
+                def "S1020"
+                {
+                    custom string slug = "cockroachdb-persistence"
+                }
+                def "S1021"
+                {
+                    custom string slug = "shared-hrr-library"
+                }
+                def "S1022"
+                {
+                    custom string slug = "hexagonal-client"
+                }
+                def "S1023"
+                {
+                    custom string slug = "ports-and-adapters-with-headless-cms-style"
+                }
+                def "S1025"
+                {
+                    custom string slug = "model-memory-arithmetic"
+                }
+                def "S1026"
+                {
+                    custom string slug = "bf16-memory-per-model"
+                }
+                def "S1027"
+                {
+                    custom string slug = "gpu-residency-budget"
+                }
+                def "S1028"
+                {
+                    custom string slug = "model-license-gate"
+                }
+                def "S1029"
+                {
+                    custom string slug = "foss-model-replacements"
+                }
+                def "S1030"
+                {
+                    custom string slug = "seethrough-component-models"
+                }
+                def "S1031"
+                {
+                    custom string slug = "geometry-refinement-and-alpha-wrap"
+                }
+                def "S1033"
+                {
+                    custom string slug = "geometric-algorithms"
+                }
+                def "S1034"
+                {
+                    custom string slug = "krea-memory-cross-check"
+                }
+                def "S1035"
+                {
+                    custom string slug = "legacy-model-identifiers"
+                }
+                def "S1036"
+                {
+                    custom string slug = "packaging-convention"
+                }
+                def "S1037"
+                {
+                    custom string slug = "composite-models-as-taskweft-domains"
+                }
+                def "S1038"
+                {
+                    custom string slug = "trellis2-image-to-textured-mesh"
+                }
+                def "S1039"
+                {
+                    custom string slug = "trellis2-image-mesh-painting"
+                }
+                def "S1040"
+                {
+                    custom string slug = "pixal3d-image-to-textured-mesh"
+                }
+                def "S1041"
+                {
+                    custom string slug = "p3sam-mesh-segmentation"
+                }
+                def "S1042"
+                {
+                    custom string slug = "krea2-turbo-text-to-image"
+                }
+                def "S1043"
+                {
+                    custom string slug = "qwen-image-edit"
+                }
+                def "S1044"
+                {
+                    custom string slug = "seethrough-layer-decomposition"
+                }
+                def "S1045"
+                {
+                    custom string slug = "kimodo-text-to-motion"
+                }
+                def "S1046"
+                {
+                    custom string slug = "skintokens-auto-rig"
+                }
+                def "S1047"
+                {
+                    custom string slug = "voxhammer-text-mesh-editing"
+                }
+                def "S1048"
+                {
+                    custom string slug = "voxhammer-image-mesh-editing"
+                }
+                def "S1049"
+                {
+                    custom string slug = "weftspun-image-to-world"
+                }
+                def "S1050"
+                {
+                    custom string slug = "lingbot-map-environment-scan"
+                }
+                def "S1051"
+                {
+                    custom string slug = "worldmirror2-reconstruct"
+                }
+                def "S1052"
+                {
+                    custom string slug = "triposplat-image-to-splat"
+                }
+                def "S1053"
+                {
+                    custom string slug = "openusd-as-the-internal-format"
+                }
+                def "S1054"
+                {
+                    custom string slug = "headless-cms-on-taskweft"
+                }
+                def "S1055"
+                {
+                    custom string slug = "beam-workers-local-first"
+                }
+                def "S1056"
+                {
+                    custom string slug = "develop-in-a-dev-container"
+                }
+                def "S1057"
+                {
+                    custom string slug = "open-work"
+                }
+                def "S1058"
+                {
+                    custom string slug = "zero-trust-networking"
+                }
+                def "S1059"
+                {
+                    custom string slug = "continuous-integration"
+                }
+                def "S1060"
+                {
+                    custom string slug = "thirdparty-reset"
+                }
+                def "S1061"
+                {
+                    custom string slug = "glb-upload-prep-via-idtx-core"
+                }
+                def "S1062"
+                {
+                    custom string slug = "flyio-toplevel-4090-worker-split"
+                }
+                def "S1063"
+                {
+                    custom string slug = "ste-enforcement-moves-to-the-plugin"
+                }
+                def "S1064"
+                {
+                    custom string slug = "character-concept-generator"
+                }
+                def "S1065"
+                {
+                    custom string slug = "taskweft-domain-schema-in-etnf"
+                }
+                def "S1066"
+                {
+                    custom string slug = "differential-mamba-for-caption-encoding"
+                }
+                def "S1067"
+                {
+                    custom string slug = "cockroachdb-reranked-against-foundationdb"
+                }
+                def "S1070"
+                {
+                    custom string slug = "keep-options-open"
+                }
+                def "S1073"
+                {
+                    custom string slug = "dataset-billboard-gallery"
+                }
+                def "S1074"
+                {
+                    custom string slug = "3d-billboard-labels"
+                }
+                def "S1075"
+                {
+                    custom string slug = "github-oauth-admin-login"
+                }
+                def "S1076"
+                {
+                    custom string slug = "usd-viewer-app-build-integration"
+                }
+                def "S1077"
+                {
+                    custom string slug = "h2o-edge-cdn"
+                }
+                def "S1078"
+                {
+                    custom string slug = "h2o-fdb-game-state-server"
+                }
+                def "S1079"
+                {
+                    custom string slug = "appsignal-observability"
+                }
+                def "S1080"
+                {
+                    custom string slug = "fly-deploy-cost"
+                }
+                def "S1082"
+                {
+                    custom string slug = "android-studio-ai-brief"
+                }
+                def "S1083"
+                {
+                    custom string slug = "api-avatar-rig-contract"
+                }
+                def "S1084"
+                {
+                    custom string slug = "avatar-pipeline"
+                }
+                def "S1085"
+                {
+                    custom string slug = "code-map"
+                }
+                def "S1086"
+                {
+                    custom string slug = "dev-machine-topology"
+                }
+                def "S1087"
+                {
+                    custom string slug = "gemini"
+                }
+                def "S1088"
+                {
+                    custom string slug = "https-setup"
+                }
+                def "S1089"
+                {
+                    custom string slug = "hyworld-image-to-world-scope"
+                }
+                def "S1090"
+                {
+                    custom string slug = "iwsdk-integration"
+                }
+                def "S1091"
+                {
+                    custom string slug = "iwsdk-local-fork"
+                }
+                def "S1092"
+                {
+                    custom string slug = "kimodo-backend-integration"
+                }
+                def "S1093"
+                {
+                    custom string slug = "loot-assets-setup"
+                }
+                def "S1094"
+                {
+                    custom string slug = "multi-image-splat-roadmap"
+                }
+                def "S1095"
+                {
+                    custom string slug = "nvidia-xr-ai-integration"
+                }
+                def "S1096"
+                {
+                    custom string slug = "openxr-face-tracking-android-xr"
+                }
+                def "S1098"
+                {
+                    custom string slug = "public-deploy"
+                }
+                def "S1099"
+                {
+                    custom string slug = "scripts-cheatsheet"
+                }
+                def "S1100"
+                {
+                    custom string slug = "spatial-fabric-integration"
+                }
+                def "S1101"
+                {
+                    custom string slug = "ssh-host-names"
+                }
+                def "S1102"
+                {
+                    custom string slug = "supported-3daigc-modules"
+                }
+                def "S1103"
+                {
+                    custom string slug = "vercel-loot-assets"
+                }
+                def "S1104"
+                {
+                    custom string slug = "vrm-upload-display-export"
+                }
+                def "S1105"
+                {
+                    custom string slug = "webcam-avatar-control"
+                }
+                def "S1106"
+                {
+                    custom string slug = "weftspun-moat-overview"
+                }
+                def "S1107"
+                {
+                    custom string slug = "world-package"
+                }
+                def "S1108"
+                {
+                    custom string slug = "xr-mode-floor-anchoring-and-backgrounds"
+                }
+                def "S1109"
+                {
+                    custom string slug = "moat-payment-rails-and-phygital-registry"
+                }
+                def "S1110"
+                {
+                    custom string slug = "reporesident-agent-harness"
+                }
+                def "S1111"
+                {
+                    custom string slug = "3daigc-api-reference-not-restated"
+                }
+                def "S1112"
+                {
+                    custom string slug = "cursor-rules-kept-in-the-open"
+                }
+                def "S1113"
+                {
+                    custom string slug = "image-preview-vs-expand-sizing"
+                }
+                def "S1114"
+                {
+                    custom string slug = "app-chrome-layout-invariants"
+                }
+                def "S1115"
+                {
+                    custom string slug = "vrm-animation-playback-invariants"
+                }
+                def "S1116"
+                {
+                    custom string slug = "tasks-panel-clear-and-collapse"
+                }
+                def "S1117"
+                {
+                    custom string slug = "text-to-image-to-3d-chain"
+                }
+                def "S1118"
+                {
+                    custom string slug = "xr-embody-locomotion-and-menu"
+                }
+                def "S1119"
+                {
+                    custom string slug = "generic-hardware-not-dgx-or-android-xr-specific"
+                }
+                def "S1120"
+                {
+                    custom string slug = "split-apps-into-own-repos"
+                }
+                def "S1121"
+                {
+                    custom string slug = "layers-from-geometry-and-the-missing-categories"
+                }
+                def "S1122"
+                {
+                    custom string slug = "the-wholebody-gap"
+                }
+                def "S1123"
+                {
+                    custom string slug = "cineform-in-godot"
+                }
+                def "S1124"
+                {
+                    custom string slug = "rfd-structure-gate"
+                }
+                def "S1125"
+                {
+                    custom string slug = "two-prose-gates"
+                }
+                def "S1126"
+                {
+                    custom string slug = "feed-forward-for-the-edge"
+                }
+                def "S1128"
+                {
+                    custom string slug = "four-bit-tolerance"
+                }
+                def "S1129"
+                {
+                    custom string slug = "hailo-operator-coverage"
+                }
+                def "S1130"
+                {
+                    custom string slug = "ugen300-throughput"
+                }
+                def "S1131"
+                {
+                    custom string slug = "operator-emulation-for-the-accelerator"
+                }
+                def "S1132"
+                {
+                    custom string slug = "priority-list-of-converted-models"
+                }
+                def "S1133"
+                {
+                    custom string slug = "models-excluded-from-conversion"
+                }
+                def "S1134"
+                {
+                    custom string slug = "notebooks-tested-in-the-browser"
+                }
+                def "S1135"
+                {
+                    custom string slug = "one-environment-per-elixir-app"
+                }
+                def "S1136"
+                {
+                    custom string slug = "camera-vocabulary-and-the-96-pose-grid"
+                }
+                def "S1137"
+                {
+                    custom string slug = "encoding-a-frame-set"
+                }
+                def "S1138"
+                {
+                    custom string slug = "where-range-of-motion-comes-from"
+                }
+                def "S1139"
+                {
+                    custom string slug = "conventions-are-measured"
+                }
+                def "S1140"
+                {
+                    custom string slug = "rented-gpus-on-runpod"
+                }
+                def "S1141"
+                {
+                    custom string slug = "publishing-artifacts"
+                }
+                def "S1142"
+                {
+                    custom string slug = "the-mac-against-the-ugen300"
+                }
+                def "S1143"
+                {
+                    custom string slug = "keypoints-to-anny"
+                }
+                def "S1144"
+                {
+                    custom string slug = "image-to-omnigen2"
+                }
+                def "S1145"
+                {
+                    custom string slug = "stylized-to-omnigen2"
+                }
+                def "S1146"
+                {
+                    custom string slug = "latent-to-pixal3d"
+                }
+                def "S1147"
+                {
+                    custom string slug = "what-editscore-costs-and-returns"
+                }
+                def "S1148"
+                {
+                    custom string slug = "the-runtime-that-reaches-the-device"
+                }
             }
         }
 
@@ -42,7 +601,16 @@ def Scope "Serials"
                 custom string[] columns = ["serial int16 PK"]
                 custom uniform token kind = "satellite"
                 custom string primaryKey = "serial"
-                custom int[] serial = [1081, 1097, 1127]
+
+                def "S1081"
+                {
+                }
+                def "S1097"
+                {
+                }
+                def "S1127"
+                {
+                }
             }
         }
 
@@ -55,8 +623,31 @@ def Scope "Serials"
                 custom string[] columns = ["serial int16 PK", "recorded_in int16 FK"]
                 custom uniform token kind = "satellite"
                 custom string primaryKey = "serial"
-                custom int[] recorded_in = [1070, 1070, 1070, 1064, 1064, 1064]
-                custom int[] serial = [1024, 1032, 1068, 1069, 1071, 1072]
+
+                def "S1024"
+                {
+                    custom int recorded_in = 1070
+                }
+                def "S1032"
+                {
+                    custom int recorded_in = 1070
+                }
+                def "S1068"
+                {
+                    custom int recorded_in = 1070
+                }
+                def "S1069"
+                {
+                    custom int recorded_in = 1064
+                }
+                def "S1071"
+                {
+                    custom int recorded_in = 1064
+                }
+                def "S1072"
+                {
+                    custom int recorded_in = 1064
+                }
             }
         }
     }

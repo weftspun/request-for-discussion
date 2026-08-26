@@ -32,14 +32,36 @@ bad = [p for _, p in projects if "_" in p or " " in p]
 check("every path hyphen-only", not bad, f"offenders: {bad or 'none'}")
 
 # --- B. serials, enumerated both directions -------------------------------------------
+# PARSED INDEPENDENTLY, ON PURPOSE. check-rfd-serials.py reads this register through the
+# USD API; this reads the text. Two implementations that disagree is the finding, and
+# sharing one reader would retire the check while appearing to keep it.
+#
+# ROW FORM. The register was parallel `int[] serial` and `string[] slug`, and is now one
+# prim per row with the serial in the prim name. The old shape could hold a duplicate key
+# -- `[1, 1, 2]` parses -- and could lose a slug without the count changing anywhere a
+# reader looked. USD refuses two siblings of one name, so the first is now impossible to
+# author rather than merely checked for.
 s = (RFD/"SERIALS.usda").read_text()
-blocks = re.findall(r'custom int\[\] serial = \[(.*?)\]', s, re.S)
-live = [int(x) for x in blocks[0].replace(" ","").replace("\n","").split(",")]
-dead = [int(x) for x in blocks[1].replace(" ","").replace("\n","").split(",")]
-slugs = re.findall(r'"([^"]*)"', re.search(r'custom string\[\] slug = \[(.*?)\]', s, re.S).group(1))
+
+def _section(name):
+    i = s.find(f'def Scope "{name}"')
+    if i < 0:
+        return ""
+    j = min([x for x in (s.find('def Scope "Unused"', i + 1),
+                         s.find('def Scope "Deleted"', i + 1),
+                         len(s)) if x > i] or [len(s)])
+    return s[i:j]
+
+_alloc = _section("Allocated")
+live = [int(x) for x in re.findall(r'def "S(\d+)"', _alloc)]
+slugs = re.findall(r'custom string slug = "([^"]*)"', _alloc)
+dead = [int(x) for x in re.findall(r'def "S(\d+)"', _section("Deleted"))]
 dirs = sorted(d for d in os.listdir(RFD) if re.match(r"^1\d{3}-", d))
-check("serial/slug arrays parallel", len(live)==len(slugs), f"{len(live)} / {len(slugs)}")
-check("no duplicate serials", len(live)==len(set(live)))
+
+check("every allocated row carries a slug", len(live)==len(slugs), f"{len(live)} rows / {len(slugs)} slugs")
+check("no duplicate serials", len(live)==len(set(live)), f"{len(live)} rows, {len(set(live))} distinct")
+check("  control: a planted duplicate row is seen",
+      len([int(x) for x in re.findall(r'def "S(\d+)"', _alloc + '\n                def "S1000"\n')]) == len(live)+1)
 check("no retired serial reused", not (set(live)&set(dead)), f"retired: {dead}")
 check("every directory registered", all(int(d[:4]) in live for d in dirs), f"{len(dirs)} dirs")
 check("every serial has a directory", all(any(d.startswith(f"{n}-") for d in dirs) for n in live))

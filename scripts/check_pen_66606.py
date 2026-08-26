@@ -80,11 +80,21 @@ def sublayer_paths(layer):
     return [str(p) for p in layer.subLayerPaths]
 
 
+ROW_RE = re.compile(r"^S(\d+)$")
+
+
 def relations(layer):
     """(prim spec path, {column: [values]}) for every relation a layer authors itself.
 
     Read off the Sdf layer rather than a composed stage, because the question here is
     which site authored a serial, and composition is what erases that.
+
+    TWO SHAPES, AND BOTH ARE READ. A relation is either one prim per tuple with the
+    primary key in the prim name, or parallel arrays under the relation prim. This
+    site moved to the first because parallel arrays can fall out of step; other sites
+    still author the second, and a reader that understood only one shape would compose
+    their registers to nothing, which reads exactly like a site with no serials.
+    Whichever shape a layer uses, the columns come back as parallel lists here.
     """
     found = []
 
@@ -92,10 +102,22 @@ def relations(layer):
         cols = spec.attributes.get("columns")
         if cols is not None and cols.default is not None:
             names = [str(c).split()[0] for c in cols.default if str(c).strip()]
-            arrays = {}
-            for name in names:
-                a = spec.attributes.get(name)
-                arrays[name] = list(a.default) if a is not None and a.default is not None else None
+            rows = [(m.group(1), c) for c in spec.nameChildren
+                    if (m := ROW_RE.match(c.name))]
+            if rows:
+                arrays = {n: [] for n in names}
+                for key, child in rows:
+                    arrays["serial"].append(int(key))
+                    for name in names:
+                        if name == "serial":
+                            continue
+                        a = child.attributes.get(name)
+                        arrays[name].append(a.default if a is not None else None)
+            else:
+                arrays = {}
+                for name in names:
+                    a = spec.attributes.get(name)
+                    arrays[name] = list(a.default) if a is not None and a.default is not None else None
             found.append((str(spec.path), arrays))
         for child in spec.nameChildren:
             walk(child)
