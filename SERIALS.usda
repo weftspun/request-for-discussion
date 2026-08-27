@@ -589,6 +589,18 @@ def Scope "Serials"
                 {
                     custom string slug = "the-runtime-that-reaches-the-device"
                 }
+                def "S1149"
+                {
+                    custom string slug = "mtoon-shades-against-the-key-light"
+                }
+                def "S1150"
+                {
+                    custom string slug = "shade-colour-solved-per-tone"
+                }
+                def "S1151"
+                {
+                    custom string slug = "which-axes-the-survey-weights"
+                }
             }
         }
 
