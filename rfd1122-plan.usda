@@ -69,7 +69,7 @@ def Scope "Rfd1122" (
         custom int cocoKeypoints = 17
         custom int sharedKeypoints = 14
         custom int renderOnlyKeypoints = 90
-        custom int arkitCoefficients = 52
+        custom int blendshapeCoefficients = 52
         custom int keypointAssetPoints = 23
         custom int mocapClips = 810
         custom int basemeshVertices = 19158
@@ -552,11 +552,11 @@ So the 370 lines are correct as far as they reach, and they reach 23 of the 104.
             custom int keypointsEmitted = 23
         }
 
-        def "F02_NoArkitCoefficientsAndNoMasks" (
+        def "F02_NoBlendshapeCoefficientsAndNoMasks" (
             doc = """Two of the renderer's four required outputs are absent, not partial.
 
-The plan's row asks for 104 joints, 52 ARKit coefficients, masks from hm08 groups, cameras,
-mesh and PBR. Searching `render_corpus.py` for `arkit`, `facial_action`, `segmentation`,
+The plan's row asks for 104 joints, 52 blendshape coefficients, masks from hm08 groups, cameras,
+mesh and PBR. Searching `render_corpus.py` for `blendshape`, `facial_action`, `segmentation`,
 `hm08` and `group_id` returns one hit, and it is a comment about vertex order. No expression
 coefficient and no part mask is written by any path in the file.
 
@@ -566,8 +566,8 @@ different claims, and the first was about to be read as the second."""
         {
             custom uniform token subject = "T02_Renderer"
             custom string date = "2026-08-22"
-            custom string evidence = "grep -in 'arkit|facial_action|segmentation|hm08|group_id' render_corpus.py -> 1 hit, a comment"
-            custom string[] absent = ["52 ARKit coefficients", "hm08 segmentation masks"]
+            custom string evidence = "grep -in 'blendshape|facial_action|segmentation|hm08|group_id' render_corpus.py -> 1 hit, a comment"
+            custom string[] absent = ["52 blendshape coefficients", "hm08 segmentation masks"]
         }
 
         def "F03_VisibilityIsAnInteriorZTest" (
@@ -979,20 +979,20 @@ CUDA stack to answer is a gate that does not run in CI."""
             custom bool identitiesRequireResampling = 1
         }
 
-        def "F12_AnnysFacialActionsAreArkits52Exactly" (
-            doc = """ANNY's facial actions ARE ARKit's 52, matched by name with nothing left
+        def "F12_AnnysFacialActionsAreThe52Exactly" (
+            doc = """ANNY's facial actions ARE the standard 52, matched by name with nothing left
 over on either side.
 
     shared names   52 of 52
-    ARKit-only      0
+    standard-only   0
     ANNY-only       0
 
 Read from `anny` 0.6.0 under a newly declared pixi environment, comparing
 `facial_action_labels` against Apple's ARFaceAnchor.BlendShapeLocation, normalised to
 lowercase alphanumerics so a cosmetic spelling difference would not be reported as a
-semantic one. The labels are ARKit's own camelCase strings -- jawOpen, mouthShrugUpper,
+semantic one. The labels are the standard's own camelCase strings -- jawOpen, mouthShrugUpper,
 mouthUpperUpLeft, noseSneerLeft, tongueOut -- and `tongueOut` is present, which is the one
-Ozel's ARKit-to-FACS sheet omits and which DETAILS.md records MediaPipe lacking.
+the published blendshape-to-FACS sheet omits and which DETAILS.md records MediaPipe lacking.
 
 RETRACTED: THIS ENTRY FIRST SAID ANNY SHIPS NO FACIAL ACTIONS AT ALL. It reported
 `facial_action_labels` of length 0 and concluded the model does not carry expression, that
@@ -1024,7 +1024,7 @@ semantic caution stands untouched: a shared name is not a shared meaning. ICT-Fa
 exactly this set. What is established here is name-level identity, which is strictly more
 than was known and strictly less than agreement.
 
-THE INDEPENDENCE HAZARD IS UNAFFECTED, because it is a property of ARKit's basis rather
+THE INDEPENDENCE HAZARD IS UNAFFECTED, because it is a property of the blendshape basis rather
 than of ANNY's adoption of it. mouthShrugUpper is contingent on mouthShrugLower and applies
 only when the lips touch or are about to; a single gaze coefficient is not a gaze direction.
 A renderer sampling 52 coefficients independently emits faces that cannot occur and labels
@@ -1284,7 +1284,7 @@ README, and that is a separate piece of work from this one."""
 
         def "R03_AnnyShipsNoFacialActions"
         {
-            rel retracts = </Rfd1122/Findings/F12_AnnysFacialActionsAreArkits52Exactly>
+            rel retracts = </Rfd1122/Findings/F12_AnnysFacialActionsAreThe52Exactly>
             custom uniform token cause = "upstreamGap"
             custom string claim = "facial_action_labels has length 0, so the model carries no expression and F02's missing 52 are an upstream gap"
             custom string supersededBy = "Anny(facial_actions='all') returns 52 labels, set-difference against ARFaceAnchor.BlendShapeLocation is 0 both ways"
@@ -1415,13 +1415,13 @@ a labelled frame", which was true when it was written; the work landed since, un
 
 The state stays `build` rather than being flipped on the strength of a file existing. What
 nobody has checked is whether that renderer emits everything this corpus needs -- the 52
-ARKit coefficients, the hm08 masks and the camera parameters, per frame, in the schema
+blendshape coefficients, the hm08 masks and the camera parameters, per frame, in the schema
 below. Reading the two against each other is the next thing to do here, and it is cheap."""
         )
         {
             # RESIZED FROM S/M/L, AND THE REASON IS A RETRACTED MEASUREMENT. This note read
             # "engineering, not compute -- the render itself is measured at 2.2 hours over 800k
-            # across eight processes, so the outstanding work is the ARKit coefficients, the hm08
+            # across eight processes, so the outstanding work is the blendshape coefficients, the hm08
             # masks and the parquet writer rather than throughput." That was the DEPTH PASS. On
             # `render_view.py`'s actual film the same variant is 32,592 ms/image, 447x more, and
             # 800k frames is roughly a month of wall-clock with every core busy. Throughput is
