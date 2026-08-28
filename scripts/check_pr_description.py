@@ -120,8 +120,44 @@ def check_reason_precedes_mechanism(body):
                    % (heads[0] if heads else "(none)"))
 
 
+CHANGE_TALK = re.compile(
+    r"""\b(th(is|e)\s+(change|pr|patch|commit|diff)
+        |we\s+(now|have|added|changed)
+        |now\s+\w+s\b
+        |updat|refactor|implement|introduc|switch|migrat
+        |\badds?\b|\bremoves?\b|\brenames?\b|\bmoves?\b)""",
+    re.X | re.I)
+
+
+def reason_section(body):
+    """The why-section if there is one, else the prose before the first heading."""
+    lines = strip_code(body).splitlines()
+    for i, ln in enumerate(lines):
+        if WHY_HEADING.match(ln):
+            rest = []
+            for nxt in lines[i + 1:]:
+                if HEADING.match(nxt):
+                    break
+                rest.append(nxt)
+            return "\n".join(rest)
+    return strip_code(body).split("\n#", 1)[0]
+
+
+def check_reason_describes_a_situation(body):
+    """A reason is a state of the world. A section that only says what the patch does
+    restates the diff, which the reader can already see."""
+    said = sentences(reason_section(body))
+    if not said:
+        return False, "no reason section"
+    clean = [s for s in said if not CHANGE_TALK.search(s)]
+    if clean:
+        return True, "%d of %d sentences describe a situation" % (len(clean), len(said))
+    return False, "every sentence describes the patch, not the problem"
+
+
 CHECKS = (
     ("the opening says something beyond its references", check_opening),
+    ("the reason describes a situation, not the patch", check_reason_describes_a_situation),
     ("no reference stands alone as a sentence", check_no_lone_citations),
     ("every document cited is given a subject", check_documents_have_subjects),
     ("a reason comes before the mechanism", check_reason_precedes_mechanism),
@@ -163,6 +199,35 @@ a second time.
 """
 
 
+# Well-formed and empty; the first version of this gate passed all three.
+FLUENT_BUT_EMPTY = (
+    ("a why-section that only restates the patch", """## Why
+
+This change updates the renderer to use the new API surface.
+
+## What changed
+
+The call sites now pass a context object instead of the previous arguments.
+"""),
+    ("a citation padded out to look explained", """## Why
+
+RFD 1137 steps 9 and 10 are implemented by this change in the manner described.
+
+## What changed
+
+The clip now opens and closes with a citation card as specified in that document.
+"""),
+    ("fluent jargon with no problem in it", """Refactor the frame pipeline to align
+the encoder boundary with the downstream consumer contract, ensuring the latent
+handoff remains consistent across stages.
+
+## Implementation
+
+The sequencer now emits normalized descriptors and the adapter reconciles them.
+"""),
+)
+
+
 def run(body, verbose=True):
     bad = 0
     for name, fn in CHECKS:
@@ -184,14 +249,18 @@ def self_test():
     r.append(("an empty description is rejected", run("", verbose=False) > 0))
     r.append(("a description of only references is rejected",
               run("RFD 1137 steps 9 and 10. See rule 3.", verbose=False) > 0))
+    for label, body in FLUENT_BUT_EMPTY:
+        r.append(("%s is rejected" % label, run(body, verbose=False) > 0))
 
     print()
     for name, ok in r:
         print("  %-4s control: %s" % ("ok" if ok else "FAIL", name))
     bad = sum(1 for _, ok in r if not ok)
     print("  %d of %d controls fired." % (len(r) - bad, len(r)))
-    print("\n  Detection floor: structure only. Whether the reason is true, sufficient")
-    print("  or the real one is not checked, and cannot be.")
+    print("\n  Detection floor. Structure, plus one keyword heuristic separating a")
+    print("  description of a situation from a description of the patch. Whether the")
+    print("  situation is real, relevant, or the actual reason is not checked and")
+    print("  cannot be: a plausible false problem statement passes every check here.")
     return 1 if bad else 0
 
 
