@@ -7,12 +7,10 @@
 
 Background removal produced three candidate mattes per image and no way to say
 which was broken. The available proxy -- soft-alpha pixels per silhouette
-perimeter -- ranks model families but cannot judge one matte.
-
-Two attempts with EditScore failed. Whole images flattened onto grey scored
-near-constant within each image and varied between images: the judge read the
-photograph, not the cutout. A twin panel of cutout beside alpha was worse,
-returning exactly 8.00 for all eighteen while dropping consistency by 2.6 points.
+perimeter -- ranks model families but cannot judge one matte. Two attempts with
+EditScore failed: whole images flattened onto grey scored near-constant within
+each image, so the judge was reading the photograph rather than the cutout, and a
+twin panel of cutout beside alpha returned exactly 8.00 for all eighteen.
 
 ## Decision
 
@@ -22,17 +20,18 @@ functions from a 17-participant user study because SAD and MSE do not track huma
 judgement. Three of their decisions are adopted, each explaining one failure:
 
 1. The judged artefact is a **composite onto a flat backing**, never raw alpha.
-   Humans in the study were never shown alpha, which is why the twin panel did
-   worse rather than better.
+   Humans were never shown alpha, which is why the twin panel did worse.
 2. Crops of **100x100 pixels at native resolution**, where alpha is uncertain.
-   Whole downscaled photographs resolved nothing: a few pixels of edge error are
-   invisible at 448px.
+   Whole downscaled photographs resolved nothing: edge error is invisible at
+   448px.
 3. Two categories scored separately: **connectivity** (detached fragments, holes)
    and **gradient** (oversmoothing, or false hard edges).
 
-EditScore is built to rank. Configured as published -- SC rubric, source and
-candidate as the pair, self-ensembling on -- it reproduces the ground-truth
-ordering; misconfigured it inverts it. Both runs are in `DETAILS.md`.
+EditScore, configured as published, reproduces the ground-truth ordering of the
+three backends; misconfigured it inverts it. It cannot pick between them on one
+image, because it scores *edits* and three mattes of a photograph are
+near-identical as edits. Use it where candidates differ semantically, and alpha
+error where they differ by pixels of silhouette. `DETAILS.md` derives this.
 
 ## Related
 
