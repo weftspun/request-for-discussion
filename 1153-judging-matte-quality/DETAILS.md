@@ -52,17 +52,27 @@ ground-truth ordering on the alphamatting.com set:
 
 | backend | overall | following | true SAD |
 |---|---:|---:|---:|
-| birefnet-hr-matting | 4.93 | 6.45 | 3.82 |
-| birefnet-matting | 4.45 | 5.97 | 4.89 |
-| birefnet | 3.83 | 5.09 | 7.54 |
+| birefnet-hr-matting | 4.07 | 5.39 | 4.00 |
+| birefnet-matting | 3.81 | 4.97 | 4.90 |
+| birefnet | 3.44 | 4.78 | 8.15 |
 
-Both score columns descend monotonically as true error rises. The misconfigured
-run had ranked the segmenter *best* on gradient, which ground truth inverts.
+48 judgements over 8 images. Both score columns descend monotonically as true
+error rises, and the ordering held when the sample was tripled from an earlier
+15-judgement run. The misconfigured run had ranked the segmenter *best* on
+gradient, which ground truth inverts.
 
-Not yet established: per-sample reliability. Spearman against true SAD is -0.139
--- the right sign, weak -- and best-of-N picked the true best on 3 of 5 crops
-against a 33% chance rate, at n=15. Aggregate model ranking is supported; a
-per-sample DPO reward is not, on this evidence.
+**Aggregate ranking works; per-sample selection does not.** Spearman against true
+SAD is -0.237 -- right sign, strengthening with sample size (-0.139 at n=15),
+still weak. Best-of-N picked the true best on 6 of 16 crops, 37.5% against a 33%
+chance rate: at n=15 it read 3 of 5 and that was noise.
+
+Individual judgements are noisy and the noise averages out over sixteen per
+backend, which leaves the true ordering standing. That is what self-ensembling
+buys, and why `num_pass=1` inverted the ranking.
+
+The consequence for anything built on this: EditScore can referee a comparison
+between models, so it is usable for evaluating a trained keyer. It is not shown
+to be a per-sample reward, which is the mode a DPO loop would need.
 
 ## What this does not establish
 
