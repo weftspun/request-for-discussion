@@ -367,7 +367,7 @@ above turns out to matter, and picking one then is cheaper than regretting it la
 ```mermaid
 flowchart LR
   P["ANNY pose<br/>authored or licence-clean mocap"] --> R
-  R["RENDER<br/>104 joints, 52 ARKit<br/>masks, cameras, mesh and PBR"] --> A
+  R["RENDER<br/>104 joints, 52 blendshapes<br/>masks, cameras, mesh and PBR"] --> A
   A["4 appearances<br/>Qwen-Image-Edit, CycleGAN<br/>algorithmic corruption"] --> V
   V["verify<br/>drift, hands, reachability<br/>only verified frames pass"] --> T
   T["MASKED TRAIN<br/>104 out, COCO masks 90<br/>plus licence-filtered COCO"] --> G
@@ -398,7 +398,7 @@ The head recovers a body from a picture. Each stage is blind to something anothe
 | `AnnyInverter` and LBFGS | the pose that puts those joints there               | whether its correspondence is right          |
 | silhouette fit           | the 11 phenotypes no keypoint constrains            | depth, and the interior                      |
 | depth fit and Marigold   | interior surface, limb ordering                     | absolute scale                               |
-| MediaPipe                | 51 of 52 ARKit coefficients                         | the tongue, verified absent from the model   |
+| MediaPipe                | 51 of 52 blendshape coefficients                         | the tongue, verified absent from the model   |
 | hm08 groups on the fit   | body layers in 3D, depth-ordered, nothing inpainted | hair and garments, which ANNY does not model |
 
 The estimator panel never had that property, because its members were all COCO-trained and

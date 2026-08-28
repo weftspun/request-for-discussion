@@ -55,7 +55,7 @@ client-side rig hack.
 
 | Source              | Expressions                                                   |
 | ------------------- | ------------------------------------------------------------- |
-| `template.vrm`      | 124+ morphs, ARKit/Vive-style, on the template's own topology |
+| `template.vrm`      | 124+ morphs, standard blendshape style, on the template's own topology |
 | A rigged AIGC mesh  | Skeleton only, until a wrap step runs                         |
 | Arc2Avatar (future) | FLAME, on head splats                                         |
 | TripoSplat          | Preview only, not a rigged VRM                                |
