@@ -1,4 +1,4 @@
-# RFD 1152 details
+# RFD 1152 details: the garment the union deleted
 
 ## Why a matting model rather than a segmenter
 

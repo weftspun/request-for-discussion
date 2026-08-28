@@ -601,6 +601,14 @@ def Scope "Serials"
                 {
                     custom string slug = "which-axes-the-survey-weights"
                 }
+                def "S1152"
+                {
+                    custom string slug = "background-removal-photographic-corpora"
+                }
+                def "S1153"
+                {
+                    custom string slug = "judging-matte-quality"
+                }
             }
         }
 

@@ -32,6 +32,8 @@ See-Through is retained for what transfers -- geometry -- and not for what does
 not -- semantics. Its part masks may be used as regions, never as labels for what
 covers what.
 
+`DETAILS.md` carries the measured comparison, the cost, and what is not settled.
+
 ## Related
 
 RFD 1006 covers layer decomposition. RFD 1153 covers how the resulting mattes are

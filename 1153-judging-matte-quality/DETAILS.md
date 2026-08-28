@@ -1,4 +1,4 @@
-# RFD 1153 details
+# RFD 1153 details: what the crops found, and what they did not
 
 ## Result
 
@@ -30,18 +30,32 @@ Measured concentration on a wispy-hair source: whole-image soft alpha 3.97%,
 selected crops 35-75%. A 9 to 19 times enrichment, which is the mechanism that
 puts artefacts inside the judge's input budget.
 
+## It failed at what it is built for
+
+EditScore's stated applications are best-of-N reranking and supplying a reward
+signal for RL fine-tuning. Both were tested on this task and both failed.
+
+*Ranking.* Mean gradient came out 4.50 for the plain segmenter, 4.23 for
+HR-matting and 2.65 for the 1024px matting model -- an ordering that is
+suspicious on its face, since a dichotomous segmenter should score *worse* on a
+rule whose stated fault includes false hard edges. A later ground-truth run on
+the alphamatting.com training set confirmed the inversion: the segmenter is
+roughly 3x worse on gradient error, not better. The likely cause is that the
+judge rewards crisp edges as "detail preserved" and reads a correctly soft matte
+as blur, which the rubric wording asks it not to do and cannot enforce.
+
+*Pairwise reranking.* Judged on matched crops in both orders, 37 of 52 pairings
+were position-driven -- the same answer whichever image came first -- against 15
+content-consistent. A reranker that reads slot rather than content cannot select
+best-of-N.
+
+Both were scored without ground truth, so the judge could not know what fine
+structure ought to be present.
+
 ## What this does not establish
 
-**The between-backend ordering.** Mean gradient came out 4.50 for the plain
-segmenter, 4.23 for HR-matting and 2.65 for the 1024px matting model. That
-ordering is suspicious on its face: a dichotomous segmenter should score *worse*
-on a rule whose stated fault includes false hard edges, not better. The likely
-explanation is that the judge rewards crisp edges as "detail preserved" and reads
-a correctly soft matte as blur, which the rubric wording asks it not to do and
-cannot enforce. It is also scoring without ground truth, so it cannot know what
-fine structure ought to be present.
-
-Ranking was not the task, and these numbers must not be used for it.
+**The between-backend ordering**, for the reasons above. Model selection was
+settled separately, against ground truth: see RFD 1152.
 
 ## No rationales
 
