@@ -20,9 +20,12 @@ project serving one goal and not the other was the exception.
 
 **That manifest was archived on 2026-08-22, and the overlap is why the archiving cost little.**
 Because the corpus was shared rather than copied, absorbing the image-to-geometry projects into
-this manifest was a matter of listing them, not of moving anything: they sit here now pinned at
-`refs/tags/mesh-latents/v0.1.0-dev.1`, a tag that says which goal they came from. So there is
-one live goal manifest and still two goals.
+this manifest was a matter of listing them, not of moving anything. So there is one live goal
+manifest and still two goals.
+
+They were to sit under `refs/tags/mesh-latents/v0.1.0-dev.1`, a tag saying which goal they came
+from. That tag was never cut, and this paragraph asserted it for four days. They are pinned at
+bare commit SHAs instead, which name a revision and not a goal.
 
 ## Three things carry this name and are not each other
 

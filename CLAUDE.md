@@ -7,15 +7,22 @@ The file lives in `weftspun/request-for-discussion` and reaches the workspace
 root through `default.xml`:
 
     <linkfile src="CLAUDE.md" dest="CLAUDE.md" />
-    <linkfile src="CLAUDE.md" dest="AGENTS.md" />
+    <linkfile src="CITATION.cff" dest="CITATION.cff" />
 
-Two links to one file, because two tools look for two names and neither reads
-the other's. A second copy would answer the second name and then drift from the
-first; a link cannot.
+Two links to two files, each reaching the root under its own name.
 
-It had a repository of its own until now — `weftspun/dot-claude`, checked out at
-`.claude` — and that repository is archived. What that arrangement bought, and
-what dropping it costs, is at the end under "Why a link after all".
+This block used to read `CLAUDE.md` twice, the second landing as `AGENTS.md`, on
+the reasoning that two tools look for two names and neither reads the other's. A
+second copy would answer the second name and then drift from the first; a link
+cannot. The reasoning is sound and the link was never declared — the manifest
+links the citation instead. So an agent that reads `AGENTS.md` finds nothing at
+this root, and whoever wants that fixed should add the link rather than a copy.
+
+It has a repository of its own — `weftspun/dot-claude`, checked out at `.claude`
+— and **that repository is live.** This paragraph called it archived from
+2026-08-20 until 2026-08-28, and it was never archived: it was updated twice on
+2026-08-25 to sit alongside these links. What the arrangement buys is at the end
+under "Why a link after all".
 
 It has now moved a second time. `weftspun/logbook` is archived and its 145
 commits are here, alongside the RFDs. Two repositories held one workspace's
@@ -25,7 +32,7 @@ entries kept their names, so an entry is still findable by the thing it
 measured rather than by where it used to live.
 
 Standing constraints follow. Each carries a cost behind it; the incident sits
-alongside this file (`todo.md` for the narrative, `PITFALLS.md` for the
+alongside this file (`KEYPOINTS.md` for the narrative, `PITFALLS.md` for the
 recurring failure modes and the guards that catch them).
 
 ## Hard Constraints
@@ -202,10 +209,16 @@ it, and the paragraph below it failed that test — which is the reason both are
 kept rather than tidied into one.
 
 The split did not survive, then. The image-to-geometry projects were not
-stranded: they are `<project>` entries in `weftspun-keypoint` pinned at
-`refs/tags/mesh-latents/v0.1.0-dev.1`, so the goal's work is placed and reachable
-under a tag that names where it came from. What ended is the second manifest, not
-the second goal.
+stranded: they are `<project>` entries in `weftspun-keypoint`, so the goal's work
+is placed and reachable. What ended is the second manifest, not the second goal.
+
+**They are not pinned under a tag naming where they came from.** This paragraph
+put them at `refs/tags/mesh-latents/v0.1.0-dev.1` from 2026-08-24 until
+2026-08-28. That tag is in no repository — `TRELLIS.2`, `Pixal3D`, `VoxHammer`
+and `MoGe` are pinned at bare commit SHAs, which carry no provenance at all, and
+provenance is exactly what the tag was described as supplying. Placement is
+satisfied, because placement is appearing in the live manifest. Provenance is
+not, and the tag is still worth cutting.
 
 So the rule is now cheaper to check than to argue about: **one live manifest, and
 a repository is placed when it appears in that one.** `repo list` and the org's
@@ -377,18 +390,24 @@ says "see below". `scripts/check_blocklist_detail.py` keeps the two in agreement
 
 - `CLAUDE.md` — this file: the working agreements, and the rule below.
 
-That is the whole list, and the subtraction is the point. `settings.json` and
-the `prose-detrope` subagent were tracked in `weftspun/dot-claude` and went
-read-only when it was archived. Neither was carried across, so the workspace has
-no shared, reviewed permission set any more: what an agent may do without asking
-is decided per desk, in `settings.local.json`, which is gitignored everywhere
-and seen by nobody else.
+`settings.json` and the `prose-detrope` subagent are tracked in
+`weftspun/dot-claude`, checked out at `.claude`. `settings.json` is the
+workspace's reviewed permission set; `settings.local.json` beside it is per-desk
+and gitignored, and Claude Code merges the two with local winning. The split is
+the tool's; only the tracking decision is ours.
 
-That is a real loss and is stated rather than left to be discovered. A
-permission added on one desk is now invisible to the next, and the rule below
-has no diff behind it to enforce it. It stands as an agreement instead of a
-gate, which is weaker, and whoever wants the gate back should restore a tracked
-settings file rather than assume one is still there.
+**This section used to say the opposite, and it was wrong for eight days.** It
+said the two files went read-only when `dot-claude` was archived, that neither
+was carried across, and that the workspace therefore had no shared permission
+set and the rule below had no diff behind it. `dot-claude` was never archived.
+The loss it grieved never happened and the gate it asked someone to restore was
+never gone — the section stood next to the thing it said was missing.
+
+It is kept because the failure is the interesting part. Every other archival
+claim here is checked against the organisation's archived set;
+`check_goal_manifests.py` does exactly that, and by its own docstring it answers
+one direction only — an archived repository named as live. A live repository
+named as archived is the case it does not cover, and this was that case.
 
 ## The Rule for Adding a Permission
 
@@ -418,18 +437,17 @@ behind each permission, a diff to approve, and `repo status` reporting it like
 anything else.
 
 What changed is the cargo, not the reasoning. The objection was about
-_permissions_ travelling without review, and permissions no longer travel this
-way at all — `settings.json` is gone with the archived repository, and the
-section above says what that costs. What is left is one document, and `repo
-status` does see drift in it: it is tracked in
+_permissions_ travelling without review, and permissions do not travel this way:
+`settings.json` is a tracked file in `dot-claude`, reviewed as a diff like
+anything else, and no link carries it. What travels here is one document, and
+`repo status` does see drift in it: it is tracked in
 `weftspun/request-for-discussion`, which is a managed project, and the link at
 the root is a second name for that file rather than a place edits can hide.
 
-So the reversal is narrower than it looks. A repository for a document nobody
-could edit unreviewed was a repository earning nothing, and the two links
-replace it. The original objection is still correct about the thing it was
-written for, and if a tracked permission set comes back it should come back as a
-checkout, not as a third link.
+So the reversal is narrower than it looks. The links carry a document; the
+checkout carries the permissions. The original objection is still correct about
+the thing it was written for, which is why the permission set is a checkout and
+not a third link.
 
 ## Claude does not write attribution
 
