@@ -32,8 +32,7 @@ See-Through is retained for what transfers -- geometry -- and not for what does
 not -- semantics. Its part masks may be used as regions, never as labels for what
 covers what.
 
-`DETAILS.md` carries the measured comparison, the ground-truth ranking that
-settles it, and the dtype that decides whether the model is usable at all.
+`DETAILS.md` carries the ground-truth ranking and the dtype it depends on.
 
 ## Related
 
