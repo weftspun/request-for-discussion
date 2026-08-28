@@ -30,9 +30,9 @@ judgement. Three of their decisions are adopted, each explaining one failure:
 3. Two categories scored separately: **connectivity** (detached fragments, holes)
    and **gradient** (oversmoothing, or false hard edges).
 
-EditScore is built to rank: best-of-N reranking and RL reward are its stated
-applications. Both were tested and both failed, so it is given absolute per-crop
-scores and the weaker task it manages, locating faults. See `DETAILS.md`.
+EditScore is built to rank. Configured as published -- SC rubric, source and
+candidate as the pair, self-ensembling on -- it reproduces the ground-truth
+ordering; misconfigured it inverts it. Both runs are in `DETAILS.md`.
 
 ## Related
 
