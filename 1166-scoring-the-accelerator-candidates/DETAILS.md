@@ -1,62 +1,69 @@
 # RFD 1166 details: the table, the runoff, and what each row rests on
 
-## Scores
+## The STAR rank
 
-Six dimensions, 0 to 100 each. Sorted by sum, which is the STAR score
-round and not the result.
+STAR applied repeatedly: take the two highest sums, let the six
+dimensions vote between them, seat the winner, remove it, repeat.
+`runoff` reads wins-losses-ties against the runner-up it beat.
+`loops` is which of RFD 1143 to RFD 1146 the model appears in.
 
-    model                    fit shape  ref clear value adapt   sum
-    rf-detr keypoint         100   100  100    80   100    95   575
-    cyclegan_style_transfer   95    95   60    50    70    95   465
-    MoGe                      85    90   55    50    60    60   400
-    unified-modal-embedder    90    85   15    50    50    75   365
-    Kimodo                    95    40   10    55    70    85   355
-    EditScore, Qwen3-VL-8B    40    45   90    55    30    70   330
-    OmniGen2                  50    50   15    50    85    75   325
-    See-Through               75    60   10    55    75    45   320
-    SkinTokens                95    15   10    45    55    80   300
-    TRELLIS.2                 70    30   10    40    75    50   275
-    residual-fsq-recommender  90    30   10    40    35    70   275
-    MuJoCo MJX                95    30    5    15    25    90   260
-    Mitsuba 3 shading         95    75    5    10    20    15   220
-    Pixal3D                   30    35    5    20    95    20   205
-    qwen35-defiant            45     5    0     5    25    15    95
-    VoxHammer                 30     0    0    15    35    10    90
-    Gemma 4                   30     5    0     5    35    15    90
+     #  model                     fit shp ref clr val adp  sum  runoff  loops
+     1  rf-detr keypoint         100 100 100  80 100  95  575  5-0-1  1
+     2  cyclegan_style_transfer   95  95  60  50  45  95  440  5-0-1  3
+     3  EditScore, Qwen3-VL-8B    40  45  90  55  60  70  360  4-2-0  1,2,3,4
+     4  MoGe                      85  90  55  50  40  60  380  3-2-1  -
+     5  unified-modal-embedder    90  85  15  50  25  75  340  2-1-3  -
+     6  OmniGen2                  50  50  15  50  95  75  335  3-3-0  2,3,4
+     7  Kimodo                    95  40  10  55  40  85  325  2-2-2  -
+     8  See-Through               75  60  10  55  50  45  295  3-2-1  -
+     9  SkinTokens                95  15  10  45  35  80  280  4-1-1  -
+    10  residual-fsq-recommender  90  30  10  40  20  70  260  2-2-2  -
+    11  TRELLIS.2                 70  30  10  40  45  50  245  3-2-1  -
+    12  MuJoCo MJX                95  30   5  15  20  90  255  2-2-2  -
+    13  Pixal3D                   30  35   5  20  70  20  180  3-2-1  4
+    14  Mitsuba 3 shading         95  75   5  10  30  15  230  5-0-1  -
+    15  qwen35-defiant            45   5   0   5  15  15   85  3-2-1  -
+    16  VoxHammer                 30   0   0  15  25  10   80  2-2-2  4
+    17  Gemma 4                   30   5   0   5  20  15   75  last   -
 
-## The runoff
+The sum is not the order. MoGe outscores EditScore by 20 and sits
+below it; Mitsuba outscores Pixal3D by 50 and sits below it. Both lost
+the runoff that decided the seat.
 
-Finalists are rf-detr at 575 and `cyclegan_style_transfer` at 465.
-Six dimensions, one vote each:
+## The critical path, which an earlier revision missed
 
-    dimension     rf-detr  cyclegan   prefers
-    fit               100        95   rf-detr
-    shape             100        95   rf-detr
-    reference         100        60   rf-detr
-    clear              80        50   rf-detr
-    value             100        70   rf-detr
-    adapt              95        95   tied
+`value` was first scored per invocation, and that was wrong. The four
+loops share their models, and grepping the notebooks says how:
 
-**rf-detr wins five to nil with one tie.** The margin matters less
-than the unanimity: it is not carried by one column, it leads or ties
-every one. No other candidate does that against any other.
+    loop 1  keypoints to ANNY      rf-detr, EditScore, soma_referee
+    loop 2  image to OmniGen2      OmniGen2, EditScore
+    loop 3  stylized to OmniGen2   CycleGAN, OmniGen2, EditScore
+    loop 4  latent to Pixal3D      Pixal3D, VoxHammer, OmniGen2, EditScore
 
-The runoff earns its place further down. `Pixal3D` scores 95 on
-`value`, the second highest in the table, and 205 overall. A sum
-weighted toward payoff would rank it well; it loses every other
-dimension, and STAR is what keeps one strong column from deciding.
+**EditScore is in all four and OmniGen2 in three.** A gain on the
+shared scorer lands four times, and one scored per round records a
+quarter of what it is worth. Correcting `value` from 30 to 60 moved
+EditScore from eighth to third, the largest move this document has
+recorded.
 
-Two pairs worth reading, because the sum alone hides them:
+The correction cuts the other way too. CycleGAN sits in one loop and
+falls from 70 to 45; See-Through, Kimodo, MoGe, SkinTokens, MJX and
+Mitsuba are in none, and their `value` now says so. Second place is
+still CycleGAN, on `fit`, `shape` and `adapt` rather than on reach.
 
-    EditScore vs See-Through   sum 330 to 320, runoff 3-2 to
-                               See-Through on fit, shape and value
-    CycleGAN vs MoGe           sum 465 to 400, runoff 5-0-1 to
-                               CycleGAN
+## What the runoff caught
 
-EditScore leads the sum and loses the runoff. Its 330 is carried by
-`reference` 90, the Hailo fork targeting Qwen3-VL exactly, against
-`fit` 40 and `value` 30. That is precisely the shape STAR exists to
-catch, and an earlier revision of this ranking put it second overall.
+**rf-detr takes first five to nil with one tie**, leading or tying
+every dimension. No other candidate manages that against anyone.
+
+**EditScore is third on reach and would be eighth without it.** Its
+`fit` is 40 and its `shape` 45; what carries it is `reference` 90, the
+Hailo fork targeting Qwen3-VL exactly, and now `value` 60 for being on
+every loop. It ties OmniGen2 three-all and is seated by score.
+
+**Pixal3D outranks Mitsuba while scoring 50 lower**, on `clear`,
+`value` and `adapt`. One strong column is what STAR is built to
+contain, and containing is not ignoring.
 
 ## Five models the earlier revision omitted
 

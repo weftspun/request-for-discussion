@@ -26,11 +26,11 @@ Six dimensions, each scored 0 to 100:
     value      what accelerating it buys
     adapt      can this desk train, tune or LoRA it
 
-Aggregate by **STAR**, score then automatic runoff, with the six
-dimensions as voters: sum to find two finalists, then decide between
-them by how many dimensions prefer each. A sum alone lets one column
-carry a candidate, and `value` is the softest, so the runoff stops it
-deciding alone. `DETAILS.md` carries every row.
+Rank by **STAR**, score then automatic runoff, with the six dimensions
+as voters: take the two highest sums, let the dimensions vote between
+them, seat the winner, remove it, repeat. The rank is the result and
+the sum only its first round; eight of seventeen seats differ. A sum
+alone lets one column carry a candidate. `DETAILS.md` has both.
 
 **The earlier 0 to 5 scale, summing to 25 because EditScore's
 `score_range` is 25, is retracted.** It was a borrowed number.
