@@ -9,20 +9,20 @@ dimensions vote between them, seat the winner, remove it, repeat.
 
      #  model                     fit shp ref clr val adp ask wnt  sum  runoff role
      1  rf-detr keypoint         100 100 100  80 100  95 100  85  760  7-0-1  fit
-     2  cyclegan_style_transfer   95  95  60  50  70  95  80  45  590  4-4-0  2D+3D style
+     2  cyclegan_style_transfer   95  95  60  50  70  95  80  45  590  4-4-0  style
      3  OmniGen2                  50  50  15  50  95  75 100  55  490  4-3-1  2D edit
      4  EditScore, Qwen3-VL-8B    40  45  90  55  60  70 100  70  530  6-2-0  all three
      5  Kimodo                    95  40  10  55  40  85  30  80  435  4-3-1  -
      6  MoGe                      85  90  55  50  40  60  40  50  470  4-4-0  -
      7  SkinTokens                95  15  10  45  35  80  30  85  395  4-3-1  -
-     8  MuJoCo MJX                95  30   5  15  20  90  85  70  410  4-4-0  -
-     9  unified-modal-embedder    90  85  15  50  25  75  30  20  390  4-4-0  -
-    10  See-Through               75  60  10  55  50  45  40  40  375  6-2-0  -
-    11  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  35  90  355  4-3-1  3D edit
-    12  Mitsuba 3 shading         95  75   5  10  30  15  95  25  350  4-4-0  -
-    13  residual-fsq-recommender  90  30  10  40  20  70  30  45  335  7-1-0  -
+     8  MuJoCo MJX                95  30   5  15  20  90  85  70  410  3-3-2  -
+     9  Mitsuba 3 shading         95  75   5  10  55  15  95  45  395  4-4-0  3D views
+    10  unified-modal-embedder    90  85  15  50  25  75  30  20  390  4-4-0  -
+    11  See-Through               75  60  10  55  50  45  40  40  375  6-2-0  -
+    12  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  35  90  355  4-4-0  3D backbone
+    13  residual-fsq-recommender  90  30  10  40  20  70  30  45  335  5-2-1  -
     14  qwen35-defiant            45   5   0   5  15  15  70  20  175  4-3-1  -
-    15  VoxHammer                 30   0   0  15  35  10   5  60  155  last   3D edit
+    15  VoxHammer                 30   0   0  15  60  10  30  80  225  last   3D ingest+edit
 
 The sum is not the order. MoGe outscores EditScore by 20 and sits
 below it, having lost the runoff that decided the seat.
@@ -84,38 +84,59 @@ and it is not what this product is.
 ## The critical path is a chain, not a set of loops
 
 `value` was first scored per invocation, which treated the models as
-independent candidates. They are stages of one shape, run twice:
+independent candidates. They are stages of one shape:
 
-    style change  ->  edit  ->  score
+    2D edit   CycleGAN  ->  OmniGen2                      ->  EditScore
+    3D edit   CycleGAN  ->  VoxHammer over TRELLIS.2/Pixal3D  ->  EditScore
+    fit       rf-detr   ->  ANNY fit                      ->  EditScore
+                                                              + soma_referee
 
-    2D edit loop   CycleGAN  ->  OmniGen2             ->  EditScore
-    3D edit loop   CycleGAN  ->  Pixal3D + VoxHammer  ->  EditScore
-    fit loop       rf-detr   ->  ANNY fit             ->  EditScore
-                                                          + soma_referee
+**The 3D chain does not go through the 2D one.** Pixal3D's `run()`
+takes a single `Image.Image`, so reading it as an image flow suggests
+2D must produce that image. It need not. `get_cond` one layer down
+takes `list[Image.Image]`, and VoxHammer already drives that path:
+`extract_feature.py` renders 150 views, runs DINOv2 over them,
+projects voxel centres into each view and averages the patch tokens,
+reproducing the encoder input for an asset that already exists.
+
+So the views come from rendering an asset rather than generating an
+image, which is also the cleaner side of CLAUDE.md's synthetic line:
+constructed rather than generated. `sphere_hammersley_sequence` is the
+mandated sequence and Mitsuba renders a view in 1.79 ms.
+
+**Go through VoxHammer rather than calling the multi-view path
+directly.** Both reach the same samplers, and only one of them is
+already written, tested against a real asset and handling the
+inversion the edit needs.
 
 Three consequences, and each moved a row.
 
 **EditScore terminates every chain.** Nothing reaches a wardrobe
-without passing it, so a gain there lands three times rather than
-once. Its `value` is 60 for that and its `wanted` 70 for being the
-dependency of the making it does not perform.
+without passing it, so a gain there lands three times. Its `wanted` is
+70 for being the dependency of making it does not itself perform.
 
-**CycleGAN is a shared first stage, not an input transform.** An
-earlier revision had it inside the 2D loop only and scored `value` 45.
-Both edit chains begin with a style change, so it is 70, and it holds
-second on a runoff it drew four-all -- seated by score, the narrowest
-result in the table.
+**CycleGAN is a shared first stage.** Both edit chains begin with a
+style change, so `value` 70, and it holds second on a runoff it drew
+four-all, seated by score and the narrowest result in the table.
 
-**Pixal3D and VoxHammer are one editor between them**, the 3D
-counterpart to OmniGen2 rather than two candidates. That is a second
-argument for the merged row, independent of Pixal3D being built on
-TRELLIS.2: they occupy one slot in one chain.
+**Mitsuba is the 3D chain's view source, not a bystander**, which
+takes `value` from 30 to 55 and `wanted` from 25 to 45.
 
-The loop count was also wrong before this. Loops 2 and 3 in the
-notebooks call the same proposer with the same control variable and
-the same scorer, differing only in whether the input has been through
-a style change, which is what identifies style as a stage rather than
-a loop.
+## VoxHammer, and where its low scores are ours
+
+`shape` 0 and `fit` 30 are the model's own. `ask` 30 is not: upstream
+runs, and it is the two weftspun wrappers that raise
+`NotImplementedError` outside stub mode. That is a wiring gap in this
+workspace rather than a capability the method lacks, and an earlier
+revision scored it 5 without making the distinction.
+
+`value` 60 and `wanted` 80 follow from the chain: it is two stages,
+ingestion and edit, and the 3D chain has no other route in.
+
+It still ranks last, because `shape` 0 stands. A compiled graph cannot
+be monkey-patched, and monkey-patching is how it works. Being
+load-bearing in the chain and unacceleratable are not in tension --
+they are the finding.
 
 ## Five models the earlier revision omitted
 
