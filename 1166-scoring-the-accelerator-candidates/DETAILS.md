@@ -9,7 +9,7 @@ dimensions vote between them, seat the winner, remove it, repeat.
 
      #  model                     fit shp ref clr val adp ask wnt  sum  runoff role
      1  rf-detr keypoint         100 100 100  80 100  95 100  85  760  7-0-1  fit
-     2  cyclegan_style_transfer   95  95  60  50  70  95  80  45  590  4-4-0  style
+     2  cyclegan_style_transfer   95  95  60  50  70  95  80  60  605  4-4-0  style, both
      3  OmniGen2                  50  50  15  50  95  75 100  55  490  4-3-1  2D edit
      4  EditScore, Qwen3-VL-8B    40  45  90  55  60  70 100  70  530  6-2-0  all three
      5  Kimodo                    95  40  10  55  40  85  30  80  435  4-3-1  -
@@ -115,9 +115,19 @@ Three consequences, and each moved a row.
 without passing it, so a gain there lands three times. Its `wanted` is
 70 for being the dependency of making it does not itself perform.
 
-**CycleGAN is a shared first stage.** Both edit chains begin with a
-style change, so `value` 70, and it holds second on a runoff it drew
-four-all, seated by score and the narrowest result in the table.
+**CycleGAN styles both chains, and style is not 2D-only.** A 3D asset
+is restyled through its views: render, restyle the views, ingest the
+styled views. It is the same stage doing the same work in both chains
+rather than a 2D step the 3D chain routes around, so `value` 70 and
+`wanted` 60. It holds second on a runoff it drew four-all, seated by
+score and the narrowest result in the table.
+
+The hazard in that is already guarded. `test_pose_survives_restyle.py`
+restyles and re-detects to measure joint drift, and
+`verify_restyle.py` scores silhouette against the render's own alpha
+with a shifted-reference control that must fail. A restyle that moves
+the body is the failure both exist to catch, and styling views before
+reconstruction is exactly where it would happen.
 
 **Mitsuba is the 3D chain's view source, not a bystander**, which
 takes `value` from 30 to 55 and `wanted` from 25 to 45.
