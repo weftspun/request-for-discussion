@@ -68,8 +68,11 @@ The character's worn layers are swapped.
 
     name the slots             VALID_BODY_PARTS_V3  in tree, licence
                                                     clean
-    find the boundary          rf-detr-seg          converter written,
-                                                    COCO-classed
+    the body boundary          ANNY mesh through    silhouette.py
+                               silhouette.py        exists
+    the person boundary        MoGe depth           rung 2, MIT
+    the camera both need       MoGe intrinsics      returned by infer
+    either, as a fixed ring    contour.py           WRITTEN, tested
     carry it into the latent   VoxHammer's          the call exists,
                                grid_sample          payload untested
     fill what the mask         LaMa,                MIT, does NOT
@@ -263,6 +266,35 @@ different use, and the caveat does not travel.
 MoGe is MIT and already at rung 2 here: 885 nodes, 26 operators, with
 `Mod x4` outside `DEVICE_OPS` and unexplained. Nothing in this section
 needs it compiled -- it runs on the host beside the fit.
+
+## `contour.py`, which is the first piece of this actually built
+
+`pose-consensus/python/contour.py` turns a mask into a fixed count of
+ordered points and back. Trace with Moore neighbours, keep the largest
+component, resample by arc length to N.
+
+    shape    round trip IoU at 128 points
+
+    disc     0.966
+    square   0.969
+    L        0.959
+
+**The round trip is the test.** Fill the contour back in and compare
+against the mask it came from; a contour that cannot rebuild its own
+mask is not describing it. The bound is 0.95.
+
+Two negative controls, and the second is the useful one:
+
+- shuffling the point order must break the round trip, or nothing has
+  tested that the ordering means anything.
+- **two separate blobs must FAIL.** One ring cannot hold two regions,
+  which this document states as a limit rather than a defect, so the
+  test asserts the limit still holds. If somebody later makes
+  multi-region contours work, that test fails and sends them here to
+  update the claim.
+
+numpy only, and nothing about it needs the accelerator. It is the
+smallest piece of the plan and it is done.
 
 ## The hazard in doing this, which is not small
 
