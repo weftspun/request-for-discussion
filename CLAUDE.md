@@ -379,9 +379,9 @@ Sources excluded from corpora, with the reason:
 | **ggml** and GGUF as a model format                | reaches neither Hailo nor the datacenter TPU, and GGUF carries no graph to convert — see below                                                   |
 | **ONNX** as our interchange and runtime            | superseded by TFLite, which Hailo's own compiler is consolidating on — **a vendor's internal use is exempt**, see below                          |
 | **IREE** as a build target                         | a compiler rather than an execution provider, and it is not XLA — see below                                                                      |
-| `24yearsold/metricdepth3d_tmp`                     | gated: HTTP 401, no readable licence and no model card — see below |                                                                              
-| **See-Through checkpoints**                        | every one states no licence, and the depth one derives from OpenRAIL++-M — see below |                                                            
-| **SMPL and every variant** as a body model         | non-commercial without an MPG licence; SOMA-X to ANNY is the sanctioned bypass — see below |                                                      
+| `24yearsold/metricdepth3d_tmp`                     | gated: HTTP 401, no readable licence and no model card — see below                                                                               |
+| **See-Through checkpoints**                        | every one states no licence, and the depth one derives from OpenRAIL++-M — see below                                                             |
+| **SMPL and every variant** as a body model         | non-commercial without an MPG licence; SOMA-X to ANNY is the sanctioned bypass — see below                                                       |
 
 The cosplay photo library may be used for **validation only**, never training.
 

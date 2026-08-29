@@ -982,12 +982,12 @@ conclusion and warned against swapping checkpoints without re-checking RFD 1028.
 The repository is Apache-2.0 and that covers its code. Every checkpoint its inference
 scripts actually load is hosted separately and carries no grant:
 
-| checkpoint                                    | state                          |
-| --------------------------------------------- | ------------------------------ |
-| `layerdifforg/seethroughv0.0.1_marigold`      | no licence stated              |
-| `24yearsold/l2d_sam_iter2`                    | no licence stated              |
-| `24yearsold/seethroughv0.0.2_layerdiff3d_nf4` | no licence stated              |
-| `24yearsold/metricdepth3d_tmp`                | HTTP 401, unreadable           |
+| checkpoint                                    | state                |
+| --------------------------------------------- | -------------------- |
+| `layerdifforg/seethroughv0.0.1_marigold`      | no licence stated    |
+| `24yearsold/l2d_sam_iter2`                    | no licence stated    |
+| `24yearsold/seethroughv0.0.2_layerdiff3d_nf4` | no licence stated    |
+| `24yearsold/metricdepth3d_tmp`                | HTTP 401, unreadable |
 
 **No stated licence is not a permissive licence.** Absent a grant the default is all
 rights reserved, so these fail RFD 1028's commercial bar on their own, before anything
