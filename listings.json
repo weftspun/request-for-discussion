@@ -18,6 +18,8 @@
   {
     "listing": "/pages/rfd.html",
     "items": [
+      "/1171-the-presence-loop-and-every-role-in-it/index.html",
+      "/1170-a-cleanroom-presence-loop/index.html",
       "/1169-the-audio-tower-for-qwen3-vl/index.html",
       "/1168-segmenting-the-3d-latent-with-rf-detr/index.html",
       "/1167-the-ladder-and-where-each-model-stands/index.html",
