@@ -10,7 +10,7 @@
 <atom:link href="https://weftspun.github.io/request-for-discussion/pages/rfd.xml" rel="self" type="application/rss+xml"/>
 <description>Request-for-Discussion documents, the serial register, and the logbook.</description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Sat, 29 Aug 2026 19:30:39 GMT</lastBuildDate>
+<lastBuildDate>Sat, 29 Aug 2026 19:51:27 GMT</lastBuildDate>
 <item>
   <title>RFD 1171: The presence loop, and every role in it</title>
   <link>https://weftspun.github.io/request-for-discussion/1171-the-presence-loop-and-every-role-in-it/</link>
@@ -50,7 +50,7 @@ be it   a person supplies motion  friend   a model supplies it</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1171-the-presence-loop-and-every-role-in-it/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1170: A cleanroom presence loop, and which components swap</title>
@@ -93,7 +93,7 @@ three.js           MIT          Godot, with Mitsuba as oracle</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1170-a-cleanroom-presence-loop/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1169: The audio tower for Qwen3-VL, and which half compiles</title>
@@ -129,7 +129,7 @@ three.js           MIT          Godot, with Mitsuba as oracle</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1169-the-audio-tower-for-qwen3-vl/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1168: Segment the 3D latent with rf-detr, and treat masking as corruption</title>
@@ -166,7 +166,7 @@ three.js           MIT          Godot, with Mitsuba as oracle</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1168-segmenting-the-3d-latent-with-rf-detr/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1167: The ladder, and which rung each model is on</title>
@@ -208,7 +208,7 @@ three.js           MIT          Godot, with Mitsuba as oracle</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1167-the-ladder-and-where-each-model-stands/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1166: How the accelerator candidates were scored</title>
@@ -252,7 +252,7 @@ wanted     does anyone want the thing it does</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1166-scoring-the-accelerator-candidates/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1165: Fine-tuning exhausts the desk card, and batch size is the lever</title>
@@ -291,7 +291,7 @@ try Quantization-Aware Fine-Tuning with lower batch size.</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1165-finetuning-exhausts-the-desk-card/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1164: A calibration set is training data</title>
@@ -326,7 +326,7 @@ Epoch 1/4</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1164-calibration-is-training-data/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1163: The flow rents a card, the accelerator stays on the desk</title>
@@ -362,7 +362,7 @@ Epoch 1/4</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1163-the-accelerator-in-the-loops/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1162: VoxHammer holds no weights, so it inherits a placement</title>
@@ -396,7 +396,7 @@ Epoch 1/4</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1162-voxhammer-zero-weights/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1161: Kimodo is the smallest catalog model, and it is a decoder</title>
@@ -430,7 +430,7 @@ Epoch 1/4</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1161-kimodo-edge-fit/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1160: SkinTokens fits at every precision</title>
@@ -463,7 +463,7 @@ Epoch 1/4</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1160-skintokens-edge-fit/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1159: TRELLIS.2 sits exactly on the ceiling at bf16</title>
@@ -496,7 +496,7 @@ Epoch 1/4</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1159-trellis2-at-the-ceiling/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1158: See-Through is the largest model that fits at eight bits</title>
@@ -530,7 +530,7 @@ Epoch 1/4</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1158-seethrough-layer-decomposition-edge/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1157: EditScore needs its own encoder, not a stock one</title>
@@ -563,7 +563,7 @@ Epoch 1/4</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1157-editscore-merger-lora/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1156: OmniGen2 fits as stages, not as a pipeline</title>
@@ -596,7 +596,7 @@ Epoch 1/4</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1156-omnigen2-staged-residency/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1155: Gemma 4 reaches the device as towers, not as a decoder</title>
@@ -627,7 +627,7 @@ Epoch 1/4</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1155-gemma4-towers-not-decoder/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1154: Pixal3D fits only at four bits, as a whole</title>
@@ -663,7 +663,7 @@ Epoch 1/4</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1154-pixal3d-at-four-bits/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1153: Judging matte quality</title>
@@ -702,7 +702,7 @@ Epoch 1/4</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1153-judging-matte-quality/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1152: Background removal for photographic corpora</title>
@@ -739,7 +739,7 @@ Epoch 1/4</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/1152-background-removal-photographic-corpora/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:30:39 GMT</pubDate>
+  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
 </item>
 </channel>
 </rss>

@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>RFD 2124: Elixir error tuples in every reply – Taskweft — Manuals</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-3336bfa29d6298ea485ddf0d64c2ca2e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Taskweft — Manuals</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/rfd.html"> 
+<span class="menu-text">RFDs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/serials.html"> 
+<span class="menu-text">Serials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/logbook.html"> 
+<span class="menu-text">Logbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/agreements.html"> 
+<span class="menu-text">Working agreements</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#problem" id="toc-problem" class="nav-link active" data-scroll-target="#problem">Problem</a></li>
+  <li><a href="#decision" id="toc-decision" class="nav-link" data-scroll-target="#decision">Decision</a></li>
+  <li><a href="#what-this-does-not-decide" id="toc-what-this-does-not-decide" class="nav-link" data-scroll-target="#what-this-does-not-decide">What this does not decide</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <li><a href="#both-encodings-were-built-and-measured" id="toc-both-encodings-were-built-and-measured" class="nav-link" data-scroll-target="#both-encodings-were-built-and-measured">Both encodings were built and measured</a></li>
+  <li><a href="#the-etf-subset-that-was-written" id="toc-the-etf-subset-that-was-written" class="nav-link" data-scroll-target="#the-etf-subset-that-was-written">The ETF subset that was written</a></li>
+  <li><a href="#the-test-against-a-real-virtual-machine" id="toc-the-test-against-a-real-virtual-machine" class="nav-link" data-scroll-target="#the-test-against-a-real-virtual-machine">The test against a real virtual machine</a></li>
+  <li><a href="#what-safe-does-measured-rather-than-assumed" id="toc-what-safe-does-measured-rather-than-assumed" class="nav-link" data-scroll-target="#what-safe-does-measured-rather-than-assumed">What <code>[:safe]</code> does, measured rather than assumed</a></li>
+  <li><a href="#where-each-writer-applies" id="toc-where-each-writer-applies" class="nav-link" data-scroll-target="#where-each-writer-applies">Where each writer applies</a></li>
+  <li><a href="#the-gate-and-what-it-found" id="toc-the-gate-and-what-it-found" class="nav-link" data-scroll-target="#the-gate-and-what-it-found">The gate, and what it found</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2124-elixir-error-tuples-in-every-reply/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2124-elixir-error-tuples-in-every-reply/index.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">RFD 2124: Elixir error tuples in every reply</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="problem" class="level2">
+<h2 class="anchored" data-anchor-id="problem">Problem</h2>
+<p>An interactor replies with CBOR. <code>contract-command</code> chose that, and <code>weft/cbor.h</code> writes it. Today every failure is a CBOR map with one text value:</p>
+<pre><code>{"error": "--res 512 is below the production setting 1280; a smaller run is not evidence"}</code></pre>
+<p>A person can read that sentence. A program cannot act on it. To tell one failure from another, a caller must match the text, and the text changes when somebody improves the wording.</p>
+<p>This matters because the callers are Elixir. <code>interactor-weft</code>, <code>entities-assembly</code>, <code>fabric-platform-central</code> and <code>zone-backend</code> run on the BEAM. Elixir code selects a branch with a pattern, and the pattern it wants is <code>{:error, :some_reason}</code>. CBOR has no atom type and no tuple type, so a CBOR reply cannot be that pattern. It arrives as a map with binary keys, and the caller writes string comparisons instead of clauses.</p>
+</section>
+<section id="decision" class="level2">
+<h2 class="anchored" data-anchor-id="decision">Decision</h2>
+<p><strong>A reply is an Erlang term, encoded in the External Term Format.</strong> Three shapes only:</p>
+<ul>
+<li><code>:ok</code> when there is nothing to report.</li>
+<li><code>{:ok, value}</code> when there is.</li>
+<li><code>{:error, reason}</code> when the command failed.</li>
+</ul>
+<p>A <code>reason</code> is an atom, or a tuple of an atom and a map: <code>{:error, :no_engine}</code> or <code>{:error, {:res_below_minimum, %{got: 512, minimum: 1280}}}</code>. The atom says what went wrong and the map carries the numbers. Prose does not appear in the reason. Where a message helps a person, it goes in the map under <code>:detail</code>, and no program reads it.</p>
+<p><strong>The encoding is CBOR, and the mapping is closed.</strong> An atom is CBOR tag 39, which IANA registers as “identifier” and which Ruby symbols and Erlang atoms already travel under. A tuple is an array. A map is a map, a binary is a text string, an integer is an integer. A reply carries no lists, so an array is always a tuple and the mapping needs no second rule.</p>
+<p>The External Term Format was written first and measured against this. Both reach the identical term on the BEAM; <code>DETAILS.md</code> has both runs. ETF is exact and needs no adapter, which is a real advantage, and three things outweigh it:</p>
+<ul>
+<li>This stack already writes CBOR. <code>weft/cbor.h</code> exists, the fan-out path uses it, and <code>transport-bus-cli</code> reads it. Adding ETF puts two encodings in one tree, and the second copy of a decision is the one that drifts.</li>
+<li>Not every caller is a BEAM process. The command-line transport layer, the RunPod job output, and anything reading the volume decode CBOR with a library they already have. ETF would need an ETF reader written into each.</li>
+<li>The C++ interactor already has a CBOR writer. Under ETF it would have needed a hand-rolled term encoder; under CBOR it needs one tag.</li>
+</ul>
+<p><strong>The adapter is written once, in the contract.</strong> The objection to CBOR is that it needs a decoder that knows the mapping. It does, and there is one: <code>Weft.Reply.decode!/1</code>. The objection is to <em>every caller</em> writing one, and shipping it answers that rather than dismissing it.</p>
+<p><strong>An atom is decoded with <code>String.to_existing_atom/1</code>.</strong> That refuses an atom the virtual machine does not already have, so a reply cannot grow the atom table of the process that reads it. It is the same guarantee <code>:erlang.binary_to_term/2</code>’s <code>[:safe]</code> gives, written down instead of relied upon.</p>
+<p>The rule that makes it work is worth stating, because it looks like a problem and is not. An atom exists in the receiving virtual machine when some module names it. A caller that matches <code>{:error, :res_below_minimum}</code> has that atom compiled into it. So the set of reasons a caller can decode is exactly the set it has a clause for, and the guarantee is supplied by the caller’s own source. <code>DETAILS.md</code> records the test that established this, including the reading of <code>[:safe]</code> that was wrong.</p>
+<p><strong>The reason set is closed and shared.</strong> <code>contract-command</code> lists every atom an interactor may send. A new reason is a change to that list, in the same commit that first sends it. Three implementations already write replies: <code>interactor-see-through-cpp</code> in C, <code>interactor-see-through-python</code> in Python, and <code>transport-runpod</code> for its own transport failures. One list keeps them in agreement, and the A/B between the two interactors depends on it: two implementations that report different reasons for the same refusal are not answering the same question.</p>
+<p><strong>A transport layer’s own failures use the same shape.</strong> A worker that cannot reach the bus replies <code>{:error, :bus_unavailable}</code>, and one whose deadline passes replies <code>{:error, {:timeout, %{waited_ms: 900000}}}</code>. The caller cannot tell, and does not need to tell, whether the interactor or the transport layer produced a failure. Both are failures of the command it sent.</p>
+<p><strong>C++ that writes a term uses Fine.</strong> <a href="https://github.com/elixir-nx/fine">Fine</a> (Apache-2.0) is already the answer in this organisation: <code>taskweft/nif</code> vendors it, and <code>interactor-ward</code> and <code>datasource-queen</code> carry it as <code>thirdparty/taskweft/fine.hpp</code>. Erlang’s C API is large, and every project that touches it grows the same set of helpers copied from the last project. Fine is that set, written once.</p>
+<p>Two of its properties decide this rather than taste. It encodes and decodes from the function signature, so the shape of a reply is stated in the type and not in a sequence of <code>enif_make_*</code> calls that no compiler checks against each other. And it creates all static atoms at load time, which is the same closed set this decision needs: an atom that exists at load cannot be created later by a message, and a reason the module does not name is a reason it cannot emit.</p>
+<p>A gate holds this. A repository that handles Erlang terms in C++ and shows no Fine fails, and so does a first-party source that calls <code>enif_make_*</code> or <code>enif_get_*</code> directly. Vendored trees are skipped, or Fine itself would be reported as the defect. It is green today over 39 children, which is the reason to add it now: a convention is cheapest to hold before a second way of doing the same thing exists.</p>
+<p><strong>Fine does not reach a worker that is not a NIF.</strong> This is the limit worth stating. Fine operates on <code>ERL_NIF_TERM</code> inside an <code>ErlNifEnv</code>, and a standalone worker has neither: it is an operating-system process that writes bytes to shared memory, not a library the virtual machine loaded. So an interactor that answers over the bus writes the External Term Format itself, and Fine governs the NIF boundary where the BEAM calls into C++ directly. Both produce the same term. Only one of them has a virtual machine to produce it in.</p>
+</section>
+<section id="what-this-does-not-decide" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-does-not-decide">What this does not decide</h2>
+<p><strong>The bus payload stays bytes.</strong> <code>weft/command.hpp</code> sends a request id and a body. ETF is what the body holds, and the envelope does not change.</p>
+<p><strong>The entity path is untouched.</strong> <code>weft/cbor.h</code> still writes the fixed entity rows the fan-out path carries, where no BEAM process reads them and the receiver is C. This decides the reply to a command, which is the surface an Elixir caller touches. Both are CBOR, which is the point: one encoding.</p>
+<p><strong>A RunPod job result is still JSON.</strong> The queue carries JSON, so the reply bytes stay base64 in <code>{"output": {"cbor": "..."}}</code>. The field name does not change, because the encoding did not.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li><code>contract-command</code>, <code>weft/interactor.h</code>: a command in, reply bytes out</li>
+<li><code>weftspun/logbook</code> holds no entry for this yet</li>
+<li>Erlang External Term Format: https://www.erlang.org/doc/apps/erts/erl_ext_dist.html</li>
+<li><code>:erlang.binary_to_term/2</code>: https://www.erlang.org/doc/apps/erts/erlang#binary_to_term/2</li>
+<li><code>DETAILS.md</code> in this folder: the encoder subset, and the test against a real virtual machine</li>
+</ul>
+</section>
+<section id="both-encodings-were-built-and-measured" class="level2">
+<h2 class="anchored" data-anchor-id="both-encodings-were-built-and-measured">Both encodings were built and measured</h2>
+<p>ETF was written first. The decision moved to CBOR after both were shown to reach the same term, so this records what each cost rather than an argument from taste.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 29%">
+<col style="width: 43%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>ETF</th>
+<th>CBOR, tag 39</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>bytes for the same reply</td>
+<td>60</td>
+<td>53</td>
+</tr>
+<tr class="even">
+<td>decoder on the BEAM</td>
+<td><code>:erlang.binary_to_term/2</code></td>
+<td><code>Weft.Reply.decode!/1</code>, about 60 lines</td>
+</tr>
+<tr class="odd">
+<td>atom safety</td>
+<td><code>[:safe]</code></td>
+<td><code>String.to_existing_atom/1</code></td>
+</tr>
+<tr class="even">
+<td>writer in C++</td>
+<td>a hand-rolled term encoder</td>
+<td>the existing CBOR writer plus one tag</td>
+</tr>
+<tr class="odd">
+<td>readers off the BEAM</td>
+<td>an ETF reader in each</td>
+<td>the CBOR library each already has</td>
+</tr>
+<tr class="even">
+<td>encodings in the tree</td>
+<td>two</td>
+<td>one</td>
+</tr>
+</tbody>
+</table>
+<p>Both decoded to <code>{:error, {:res_below_minimum, %{got: 512, minimum: 1280}}}</code> on OTP 29. The term is identical; only the cost of getting there differs.</p>
+</section>
+<section id="the-etf-subset-that-was-written" class="level2">
+<h2 class="anchored" data-anchor-id="the-etf-subset-that-was-written">The ETF subset that was written</h2>
+<p>The writer emits eight tags. Nothing else is needed for <code>:ok</code>, <code>{:ok, map}</code> and <code>{:error, reason}</code>, and a smaller writer is a smaller thing to get wrong.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 8%">
+<col style="width: 61%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>tag</th>
+<th>number</th>
+<th>use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>VERSION_MAGIC</code></td>
+<td>131</td>
+<td>the first byte of every term</td>
+</tr>
+<tr class="even">
+<td><code>SMALL_ATOM_UTF8_EXT</code></td>
+<td>119</td>
+<td>an atom under 256 bytes</td>
+</tr>
+<tr class="odd">
+<td><code>ATOM_UTF8_EXT</code></td>
+<td>118</td>
+<td>a longer atom</td>
+</tr>
+<tr class="even">
+<td><code>SMALL_INTEGER_EXT</code></td>
+<td>97</td>
+<td>0 to 255</td>
+</tr>
+<tr class="odd">
+<td><code>INTEGER_EXT</code></td>
+<td>98</td>
+<td>a signed 32-bit integer</td>
+</tr>
+<tr class="even">
+<td><code>BINARY_EXT</code></td>
+<td>109</td>
+<td>an Elixir binary, which is what a string is</td>
+</tr>
+<tr class="odd">
+<td><code>SMALL_TUPLE_EXT</code></td>
+<td>104</td>
+<td>a tuple with fewer than 256 elements</td>
+</tr>
+<tr class="even">
+<td><code>MAP_EXT</code></td>
+<td>116</td>
+<td>a map</td>
+</tr>
+</tbody>
+</table>
+<p>A reply that needs a larger integer, a float, a list or a reference is refused by the writer rather than encoded. The refusal is the check: a reply shape nobody agreed on does not reach a caller in a form that decodes.</p>
+</section>
+<section id="the-test-against-a-real-virtual-machine" class="level2">
+<h2 class="anchored" data-anchor-id="the-test-against-a-real-virtual-machine">The test against a real virtual machine</h2>
+<p>Run on Erlang/OTP 29, 2026-08-17. The bytes came from the Python writer and went to <code>elixir</code> with no intermediate step.</p>
+<pre><code>decoded: {:error, {:res_below_minimum, %{got: 512, minimum: 1280}}}
+MATCHED {:error, {:res_below_minimum, %{got: 512, minimum: 1280}}}
+is_tuple: true  elem0_is_atom: true</code></pre>
+<p>The term is a tuple, its first element is an atom, and it matches the clause a caller writes.</p>
+</section>
+<section id="what-safe-does-measured-rather-than-assumed" class="level2">
+<h2 class="anchored" data-anchor-id="what-safe-does-measured-rather-than-assumed">What <code>[:safe]</code> does, measured rather than assumed</h2>
+<p>The first run above decoded under <code>[:safe]</code> although <code>:res_below_minimum</code> is not an atom any release ships. That looked like evidence that <code>[:safe]</code> permits new atoms. It is not. The test script names the atom in its own <code>case</code> clause, so compiling the script created the atom before the decode ran.</p>
+<p>A second test used an atom that no module names:</p>
+<pre><code>safe REFUSED it (ArgumentError) =&gt; :safe blocks novel atoms
+atom_count before=18541 after=18914
+without :safe: {:error, :zz_never_seen_atom_9f3a2b}</code></pre>
+<p>So <code>[:safe]</code> refuses an atom the virtual machine does not have, and a decode without it creates one. Both halves are necessary to the decision: <code>[:safe]</code> is what stops a reply from growing the atom table, and the caller’s own clauses are what make the reasons it expects decodable.</p>
+<p>This is recorded because the first reading was wrong and the wrong reading was the comfortable one. A claim about a safety option that nobody runs is a claim that stays wrong.</p>
+</section>
+<section id="where-each-writer-applies" class="level2">
+<h2 class="anchored" data-anchor-id="where-each-writer-applies">Where each writer applies</h2>
+<p>Two boundaries, and they are not the same boundary. Confusing them is how a project ends up with an ETF writer inside a NIF, or Fine linked into a process with no virtual machine.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 23%">
+<col style="width: 49%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>boundary</th>
+<th>who writes the term</th>
+<th>why</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>the BEAM calls into C++</td>
+<td>Fine</td>
+<td>there is an <code>ErlNifEnv</code>, and the term never becomes bytes</td>
+</tr>
+<tr class="even">
+<td>a worker replies over the bus</td>
+<td>the ETF writer</td>
+<td>there is no virtual machine in the process</td>
+</tr>
+<tr class="odd">
+<td>a worker replies to a RunPod job</td>
+<td>the ETF writer, then base64</td>
+<td>the queue carries JSON</td>
+</tr>
+</tbody>
+</table>
+<p>The ETF writer’s subset is above. It is small because the second and third rows carry replies and nothing else; a NIF that passes a resource, a reference or a port is the first row, and that is Fine’s.</p>
+</section>
+<section id="the-gate-and-what-it-found" class="level2">
+<h2 class="anchored" data-anchor-id="the-gate-and-what-it-found">The gate, and what it found</h2>
+<p><code>mix check nifs</code>, over 39 children: green. <code>interactor-ward</code> and <code>datasource-queen</code> carry <code>thirdparty/taskweft/fine.hpp</code>, and no first-party source calls <code>enif_make_*</code> or <code>enif_get_*</code>.</p>
+<p>The controls inject a finding, which proves the report and not the scan. The scan was proved separately by writing a real NIF file into a real project in the manifest:</p>
+<pre><code>FAIL  interactor-see-through-cpp handles Erlang terms in src/nif_probe.cpp and shows no Fine
+FAIL  interactor-see-through-cpp/src/nif_probe.cpp calls enif_make_/enif_get_ directly</code></pre>
+<p>The file was then removed and the gate went green again.</p>
+<p>One defect was found in the harness while registering it. A concern named in <code>@concerns</code> but absent from <code>@order</code> is filtered out of every run, so <code>mix check nifs</code> executed no checks and printed <code>0 failing check(s)</code>. A pass over an empty set reads exactly like a pass, which is the failure <code>check.ex</code>’s own documentation warns about.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/weftspun\.github\.io\/request-for-discussion");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Serials are OID arcs under the 66606 PEN and are never reused.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2124-elixir-error-tuples-in-every-reply/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2124-elixir-error-tuples-in-every-reply/index.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/weftspun/request-for-discussion">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

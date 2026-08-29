@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>deck-log – Taskweft — Manuals</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-3336bfa29d6298ea485ddf0d64c2ca2e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Taskweft — Manuals</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/rfd.html"> 
+<span class="menu-text">RFDs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/serials.html"> 
+<span class="menu-text">Serials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/logbook.html"> 
+<span class="menu-text">Logbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/agreements.html"> 
+<span class="menu-text">Working agreements</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#v-sekai-multiplayer-fabric-deck-log-2026-08-07-friday" id="toc-v-sekai-multiplayer-fabric-deck-log-2026-08-07-friday" class="nav-link active" data-scroll-target="#v-sekai-multiplayer-fabric-deck-log-2026-08-07-friday">V-Sekai Multiplayer Fabric Deck Log — 2026-08-07 (Friday)</a>
+  <ul class="collapse">
+  <li><a href="#added" id="toc-added" class="nav-link" data-scroll-target="#added">Added</a></li>
+  <li><a href="#changed" id="toc-changed" class="nav-link" data-scroll-target="#changed">Changed</a></li>
+  <li><a href="#removed" id="toc-removed" class="nav-link" data-scroll-target="#removed">Removed</a></li>
+  <li><a href="#split-the-archive-out" id="toc-split-the-archive-out" class="nav-link" data-scroll-target="#split-the-archive-out">Split the archive out</a></li>
+  <li><a href="#fixed" id="toc-fixed" class="nav-link" data-scroll-target="#fixed">Fixed</a></li>
+  <li><a href="#the-zone-tier-recorded" id="toc-the-zone-tier-recorded" class="nav-link" data-scroll-target="#the-zone-tier-recorded">The zone tier, recorded</a></li>
+  <li><a href="#the-guest-boundary-recorded" id="toc-the-guest-boundary-recorded" class="nav-link" data-scroll-target="#the-guest-boundary-recorded">The guest boundary, recorded</a></li>
+  <li><a href="#two-tiers-with-foundationdb-as-the-store" id="toc-two-tiers-with-foundationdb-as-the-store" class="nav-link" data-scroll-target="#two-tiers-with-foundationdb-as-the-store">Two tiers, with FoundationDB as the store</a></li>
+  <li><a href="#the-zone-becomes-one-pinned-godot-build-hosted-as-a-rivet-actor" id="toc-the-zone-becomes-one-pinned-godot-build-hosted-as-a-rivet-actor" class="nav-link" data-scroll-target="#the-zone-becomes-one-pinned-godot-build-hosted-as-a-rivet-actor">The zone becomes one pinned Godot build, hosted as a Rivet actor</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/changelog/2026/20260807-deck-log.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/changelog/2026/20260807-deck-log.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+
+<section id="v-sekai-multiplayer-fabric-deck-log-2026-08-07-friday" class="level1">
+<h1>V-Sekai Multiplayer Fabric Deck Log — 2026-08-07 (Friday)</h1>
+<p>Date: 2026-08-07</p>
+<p>Archived six repositories that the Fly.io move of <code>rfd/0089</code> left without a consumer, and resynchronized the organization inventory in <code>rfd/0062</code> to the real organization. The inventory had drifted far enough to name ten repositories by names they no longer carry, to list five repositories that left the organization, and to omit about thirty that exist.</p>
+<p>The sweep also surfaced one inconsistency that no record explains: <code>zone-server-h2o</code> is archived on GitHub while <code>rfd/0094</code> names it the host of the minimum user-generated-content game loop.</p>
+<section id="added" class="level2">
+<h2 class="anchored" data-anchor-id="added">Added</h2>
+<ul>
+<li><a href="https://v-sekai-multiplayer-fabric.github.io/multiplayer-fabric-manuals/rfd/2105-archive-self-host-era-support-repos/">RFD 2105</a>, which archives the self-host-era support repositories and the empty stubs: <a href="https://github.com/v-sekai-multiplayer-fabric/fabric-container-verify">fabric-container-verify</a>, the <code>rfd/0056</code> quadlet verification queue, whose every target <code>rfd/0089</code> already archived; <a href="https://github.com/v-sekai-multiplayer-fabric/fabric-casync-central">fabric-casync-central</a>, which never carried content; <a href="https://github.com/v-sekai-multiplayer-fabric/fabric-scoop-central">fabric-scoop-central</a>, the scoop bucket for the Windows demo of the parked <code>godot-loop-slice</code>; <a href="https://github.com/v-sekai-multiplayer-fabric/fabric-platform-central">fabric-platform-central</a>, the <code>rfd/0065</code> Burrito and casync packaging path; and the two empty placeholders <a href="https://github.com/v-sekai-multiplayer-fabric/vulkan-video-godot">vulkan-video-godot</a> and <a href="https://github.com/v-sekai-multiplayer-fabric/steamdeck">steamdeck</a>. Each one is tombstoned rather than deleted, so its history stays reachable.</li>
+<li>A record of the <code>fabric-platform-central</code> risk in that RFD’s <code>DETAILS.md</code>. <code>rfd/0090</code> describes a live Burrito release of <code>uro</code> on Fly.io, and <code>rfd/0065</code> puts that packaging in the archived repository. One API call reverses the archive if the deploy still reads from it.</li>
+<li>A <code>Moved to V-Sekai-archive</code> section in the <code>rfd/0062</code> inventory, for the three repositories that left this organization: <code>lean-predictive-bvh</code>, <code>viser</code>, and <code>usd-converter-for-vrchat</code>.</li>
+<li>Counts in the inventory: 72 repositories, 48 active and 24 archived.</li>
+</ul>
+</section>
+<section id="changed" class="level2">
+<h2 class="anchored" data-anchor-id="changed">Changed</h2>
+<ul>
+<li>The <code>rfd/0062</code> inventory now uses current repository names, per <code>rfd/0064</code>. GitHub keeps a redirect after a rename, so every old name still resolved and hid the drift. <code>godot</code> is <code>fabric-godot-core</code>, <code>merge</code> is <code>fabric-godot-assembly</code>, <code>observability</code> is <code>fabric-game-observability</code>, <code>manuals</code> is <code>multiplayer-fabric-manuals</code>, and the five <code>*-image</code> repositories are the <code>*-quadlet</code> repositories. <code>rfd/0105</code>’s <code>DETAILS.md</code> carries the full mapping.</li>
+<li>The inventory’s repository sections follow the current stack: an engine and client area, a zone host and guests area for <code>rfd/0094</code>’s composition, a backend and data area for the FoundationDB work of <code>rfd/0103</code>, one hexagon-cores area holding both the canonical hexagons and the standalone Lean workspaces, and a content flow and authoring area.</li>
+<li>The archived table now carries a Basis column naming the decision that retired each repository, and lists all 24 rather than 3.</li>
+</ul>
+</section>
+<section id="removed" class="level2">
+<h2 class="anchored" data-anchor-id="removed">Removed</h2>
+<ul>
+<li>The inventory’s service-images section. Every repository it listed is archived by <code>rfd/0089</code>, which supersedes <code>rfd/0061</code>’s quadlet deployment target.</li>
+</ul>
+</section>
+<section id="split-the-archive-out" class="level2">
+<h2 class="anchored" data-anchor-id="split-the-archive-out">Split the archive out</h2>
+<p>Created <a href="https://github.com/v-sekai-multiplayer-fabric/multiplayer-fabric-archive">multiplayer-fabric-archive</a> and moved every retired record there, per <a href="https://v-sekai-multiplayer-fabric.github.io/multiplayer-fabric-manuals/rfd/2106-split-the-archive-into-its-own-repo/">RFD 2106</a>: the 26 rejected and superseded MADR records under <code>_archive/decisions/</code>, the image they cite, and the two superseded RFDs, <code>rfd/0011</code> on the observability stack and <code>rfd/0061</code> on the deployment target. The new repository carries the manuals history up to the split, so each moved file keeps every commit that touched it at its original path. It holds plain Markdown, with no site and no checks.</p>
+<p>Both superseded RFDs used to render as current. A reader who opened either one read a dead design with no marking on the page.</p>
+<p>Repairing the inbound links was the work a move forces, because a deleted file with no stub leaves a 404 on the site. Four relative links in the 2026-06-06 deck log, two pointers in <code>rfd/0071</code>, and one reference each in <code>rfd/0089</code>, <code>rfd/0060</code>, <code>rfd/0070</code>, and the <code>rfd/0062</code> inventory now point at the archive repository. <code>_quarto.yml</code> drops the <code>decisions/attachments</code> resource.</p>
+<p>The move also exposed a link that never resolved. Two archived records cite the debug-orb image relative to <code>_archive/decisions/</code>, and the image sat two directories away in <code>decisions/attachments/</code>. Quarto skips <code>_archive</code>, so no rendered page ever exercised it. The archive repository puts the image where the existing links expect it.</p>
+</section>
+<section id="fixed" class="level2">
+<h2 class="anchored" data-anchor-id="fixed">Fixed</h2>
+<ul>
+<li>The asset-citation guidance named <code>references.bib</code>, a file the repository no longer carries. The bibliography converted to CFF, and <code>pages/references.qmd</code> renders the 94 entries under <code>references:</code> in <code>CITATION.cff</code> through <code>cffconvert</code>. <code>AGENTS.md</code> and <code>rfd/0013</code> now name <code>CITATION.cff</code>. The changelog entries that describe <code>references.bib</code> stay as they are, because they record what was true on their own date.</li>
+<li>The site config pointed at the pre-rename repository. <code>site-url</code> read <code>.../github.io/manuals</code> and <code>repo-url</code> read <code>.../v-sekai-multiplayer-fabric/manuals</code>, while the site publishes at <code>.../multiplayer-fabric-manuals/</code>, so every edit-this-page link and the feed URL resolved to the wrong place. Both now name the current repository, as do the three <code>gh api .../rulesets</code> commands in <code>rfd/0021</code>.</li>
+</ul>
+</section>
+<section id="the-zone-tier-recorded" class="level2">
+<h2 class="anchored" data-anchor-id="the-zone-tier-recorded">The zone tier, recorded</h2>
+<p><code>zone-server-h2o</code> was archived and is unarchived again. It is the host repository, and <a href="https://v-sekai-multiplayer-fabric.github.io/multiplayer-fabric-manuals/rfd/2107-janet-scripting-over-a-c-taskweft-core/">RFD 2107</a> records the tier around it: h2o as HTTP ingress and reverse proxy, Janet as the dynamic layer for routing glue and configuration, <code>libtaskweft</code> as a C library holding HTN search and game state, and Godot as the client over GDExtension. Janet loads the C core as a native module. Rust is out, so the core is C.</p>
+<p>FoundationDB stays the store, through <code>libfdb_c</code>. <code>rfd/0075</code> stands and <code>rfd/0006</code>’s CockroachDB does not describe this tier, so the FDB record set stays in force: <code>rfd/0002</code>, <code>rfd/0073</code>, <code>rfd/0074</code>, <code>rfd/0084</code>, <code>rfd/0097</code>, and <code>rfd/0103</code>. <code>ecto_foundationdb</code> and <code>ecto-bench-tpcc</code> keep a live consumer.</p>
+<p>The record states its own gaps rather than guessing past them. The startup, memory and speed claims for this tier are not measured, and <code>data/measurements/</code> holds nothing for Janet or a C taskweft core. Four questions stay open: which part drives the <code>libfdb_c</code> callbacks, where Elixir and <code>zone-backend</code> sit, whether Janet replaces the libriscv guest runtime, and which part terminates a WebTransport session.</p>
+</section>
+<section id="the-guest-boundary-recorded" class="level2">
+<h2 class="anchored" data-anchor-id="the-guest-boundary-recorded">The guest boundary, recorded</h2>
+<p><a href="https://v-sekai-multiplayer-fabric.github.io/multiplayer-fabric-manuals/rfd/2108-local-cabi-guests-and-in-tick-fanout/">RFD 2108</a> makes a simulation guest a local shared object loaded over the plain C ABI, and h2o routes to it with no network hop. The CDN keeps one job, which is bulk asset delivery, and it no longer delivers guest programs for simulation.</p>
+<p>Fan-out runs inside the tick. One publish ring per zone, one writer, and many readers holding cursors. The 100-byte packet of <code>rfd/0053</code> is serialized once and fanned out as a pointer and a refcount, so N subscribers cost one serialization rather than N. A cross-loop delivery takes one batched wakeup per tick, which caps a loop near 64 wakeups per second at 64 Hz.</p>
+<p>FoundationDB stays off that path. <code>rfd/0097</code> measured a watch fire at 12115.1 us, which is most of a 15.6 ms tick, against 8.9 us for an <code>AF_UNIX</code> round trip. The watch probe also failed at exactly 10000 watches with error 1032, and a watch is edge-triggered, so it loses values between the fire and the re-read. The tick owns the <code>libfdb_c</code> callback chain of <code>rfd/0073</code> and appends the durable log off-tick.</p>
+<p>The record states the cost of local mode rather than hiding it. A local <code>.so</code> shares the zone’s address space, so a guest fault takes the zone down. <code>rfd/0083</code> chose Fil-C for memory safety and <code>rfd/0095</code> built two guest classes for the same reason, and local mode has neither property. That suits first-party simulation code and does not suit user-generated code, so <code>rfd/0094</code>’s UGC loop needs its own record.</p>
+<p>RFD 2108 closes two of RFD 2107’s four open questions, which are the database path owner and the guest boundary. Two stay open and one arrives: where Elixir and <code>zone-backend</code> sit, which part terminates a WebTransport session, and how a UGC guest runs.</p>
+</section>
+<section id="two-tiers-with-foundationdb-as-the-store" class="level2">
+<h2 class="anchored" data-anchor-id="two-tiers-with-foundationdb-as-the-store">Two tiers, with FoundationDB as the store</h2>
+<p><a href="https://v-sekai-multiplayer-fabric.github.io/multiplayer-fabric-manuals/rfd/2109-two-tiers-with-foundationdb-as-the-store/">RFD 2109</a> names egress as the cost that binds, and the store as the cost that does not. Bandwidth per client sets the bill, and one node serves the database load. No deployment runs, so the record carries no cost figure.</p>
+<p>The tier count drops to two. Godot is the client, holding rendering, XR, IK, and local physics. Elixir and Phoenix form the server, holding identity, the room directory, and the presence relay. The server relays presence rather than simulating it, so Phoenix supplies the identity and sessions that a Godot server would need written in GDScript.</p>
+<p>The store stays FoundationDB, through <code>ecto_foundationdb</code>, so <code>rfd/0075</code> stands. The record accepts <code>rfd/0103</code>’s limits rather than working around them: no joins, no <code>or</code>, no aggregates in the database, and one Between clause per query. That trade holds because the relational need is analytical, and the analytical half runs on zstd Parquet and DuckDB as <code>data/measurements/</code> already does. OLTP access is point lookups by player and room identity.</p>
+<p>Twelve stores are recorded with their outcome. TiDB, YDB, and Apache Ignite are viable and not chosen, and the record says why for each. TiDB is the one that keeps relational form with no adapter work, at the cost of more processes and MySQL’s weaker constraint set. Rust was banned and then unbanned during the search, which returned TiDB to the list. Rivet 2.0 is Apache 2.0 and ships a TypeScript SDK, with no Elixir or Godot client.</p>
+<p><code>taskweft</code> stays an Elixir NIF, which <code>V-Sekai-fire/multiplayer-fabric-taskweft</code> already is, so Janet and the C <code>libtaskweft</code> are dropped.</p>
+<p><code>rfd/0107</code> and <code>rfd/0108</code> are marked abandoned and carry a pointer to this record. Their measurements stay valid, and the back-pressure rule of <code>rfd/0108</code> still applies to any relay.</p>
+<p>Five questions stay open on record: player-hosted zones against server-hosted, interest management as the only lever on the 256 kbps figure, server authority that a relay cannot give, whether the Godot WebTransport client speaks to a Phoenix endpoint, and how many FoundationDB processes run and where.</p>
+</section>
+<section id="the-zone-becomes-one-pinned-godot-build-hosted-as-a-rivet-actor" class="level2">
+<h2 class="anchored" data-anchor-id="the-zone-becomes-one-pinned-godot-build-hosted-as-a-rivet-actor">The zone becomes one pinned Godot build, hosted as a Rivet actor</h2>
+<p><a href="https://v-sekai-multiplayer-fabric.github.io/multiplayer-fabric-manuals/rfd/2110-h2o-libriscv-as-a-rivet-actor/">RFD 2110</a> makes a zone a child process under Rivet’s <code>container-runner</code>, one process per room. The child is the engine at tag <code>v2026.06.27.1907-multiplayer-fabric</code>, which resolves to commit <code>2cecde75</code> and reports Godot 4.7.0 beta. That tag’s <code>modules/</code> already carries <code>sandbox</code> for libriscv guests, <code>http3</code> for WebTransport, <code>multiplayer_fabric</code> and <code>multiplayer_fabric_asset</code> for the zone, <code>xr_grid</code> for presence, and <code>openxr</code> with <code>webxr</code> for XR. So one build is the client, the zone server, and the guest host.</p>
+<p>A C child of h2o plus libriscv stays possible and is not built. Its only advantage is memory per process, and that figure is unmeasured. No <code>resonance</code> module appears at the tag, so <code>rfd/0022</code>’s spatial audio needs checking before anyone relies on it.</p>
+<p>One process per room deletes work rather than adding it. <code>rfd/0072</code>, <code>rfd/0082</code>, and <code>rfd/0086</code> become unnecessary, because each exists only to hold many zones in one process. <code>rfd/0080</code> narrows to one room’s entities. A guest fault kills one room rather than every room, which is what <code>rfd/0095</code> wanted from Bubblewrap.</p>
+<p>The actor input is four optional CBOR fields, read from <code>container-runner/src/input.rs</code>: <code>command</code>, <code>args</code>, <code>env</code>, and <code>port</code>. The decoded input is also the actor’s persisted state, so a woken actor restores the same launch spec, and unknown fields are ignored rather than rejected. A room’s scene and its tuning therefore travel in the actor input, and no zone-side registry is needed.</p>
+<p>The transport is settled by the runner’s source rather than by its documentation. <code>container-runner</code> is TCP-only. <code>src/proxy.rs</code> forwards to <code>http://127.0.0.1:{child_port}</code> and the <code>ws://</code> form, <code>src/child.rs</code> checks readiness with <code>TcpStream::connect((Ipv4Addr::LOCALHOST, child_port))</code>, and no <code>udp</code>, <code>quic</code>, <code>http3</code>, or <code>h2</code> appears in the runner source. <code>TCP_NODELAY</code> does not appear either, so Nagle is unmitigated there.</p>
+<p>The answer is two sockets in one child. A TCP port satisfies Rivet’s contract and carries the control plane. A UDP port carries game traffic outside Rivet’s tunnel, with the engine’s <code>http3</code> picoquic module on it. Rivet never touches the pose stream, so <code>rfd/0008</code>, <code>rfd/0023</code>, <code>rfd/0049</code>, <code>rfd/0058</code>, and <code>rfd/0088</code> all stand. The cost is that Rivet’s gateway does not route the UDP port, so a zone directory must publish the host and port, which makes the Uro role required rather than optional.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/weftspun\.github\.io\/request-for-discussion");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Serials are OID arcs under the 66606 PEN and are never reused.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/changelog/2026/20260807-deck-log.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/changelog/2026/20260807-deck-log.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/weftspun/request-for-discussion">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

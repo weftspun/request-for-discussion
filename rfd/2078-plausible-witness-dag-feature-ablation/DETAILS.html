@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>details – Taskweft — Manuals</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-3336bfa29d6298ea485ddf0d64c2ca2e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Taskweft — Manuals</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/rfd.html"> 
+<span class="menu-text">RFDs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/serials.html"> 
+<span class="menu-text">Serials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/logbook.html"> 
+<span class="menu-text">Logbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/agreements.html"> 
+<span class="menu-text">Working agreements</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#problem" id="toc-problem" class="nav-link active" data-scroll-target="#problem">Problem</a></li>
+  <li><a href="#approach" id="toc-approach" class="nav-link" data-scroll-target="#approach">Approach</a>
+  <ul class="collapse">
+  <li><a href="#step-1-model-features-as-invariant-sets" id="toc-step-1-model-features-as-invariant-sets" class="nav-link" data-scroll-target="#step-1-model-features-as-invariant-sets">Step 1: Model features as invariant sets</a></li>
+  <li><a href="#step-2-ablation-matrix" id="toc-step-2-ablation-matrix" class="nav-link" data-scroll-target="#step-2-ablation-matrix">Step 2: Ablation matrix</a></li>
+  <li><a href="#step-3-dependency-ordering" id="toc-step-3-dependency-ordering" class="nav-link" data-scroll-target="#step-3-dependency-ordering">Step 3: Dependency ordering</a></li>
+  <li><a href="#step-4-cost-weighted-ablation" id="toc-step-4-cost-weighted-ablation" class="nav-link" data-scroll-target="#step-4-cost-weighted-ablation">Step 4: Cost-weighted ablation</a></li>
+  </ul></li>
+  <li><a href="#plausible-witness-dag-integration" id="toc-plausible-witness-dag-integration" class="nav-link" data-scroll-target="#plausible-witness-dag-integration">plausible-witness-dag integration</a>
+  <ul class="collapse">
+  <li><a href="#predicate-language" id="toc-predicate-language" class="nav-link" data-scroll-target="#predicate-language">Predicate language</a></li>
+  <li><a href="#witness-search" id="toc-witness-search" class="nav-link" data-scroll-target="#witness-search">Witness search</a></li>
+  <li><a href="#ablation-run" id="toc-ablation-run" class="nav-link" data-scroll-target="#ablation-run">Ablation run</a></li>
+  </ul></li>
+  <li><a href="#what-this-prevents" id="toc-what-this-prevents" class="nav-link" data-scroll-target="#what-this-prevents">What this prevents</a>
+  <ul class="collapse">
+  <li><a href="#speculator-debt-examples" id="toc-speculator-debt-examples" class="nav-link" data-scroll-target="#speculator-debt-examples">Speculator debt examples</a></li>
+  </ul></li>
+  <li><a href="#relationship-to-other-rfds" id="toc-relationship-to-other-rfds" class="nav-link" data-scroll-target="#relationship-to-other-rfds">Relationship to other RFDs</a></li>
+  <li><a href="#economics" id="toc-economics" class="nav-link" data-scroll-target="#economics">Economics</a></li>
+  <li><a href="#what-this-rfd-does-not-cover" id="toc-what-this-rfd-does-not-cover" class="nav-link" data-scroll-target="#what-this-rfd-does-not-cover">What this RFD does NOT cover</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2078-plausible-witness-dag-feature-ablation/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2078-plausible-witness-dag-feature-ablation/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+
+<section id="problem" class="level2">
+<h2 class="anchored" data-anchor-id="problem">Problem</h2>
+<p>Building an MMO is expensive. Every feature is a bet:</p>
+<ul>
+<li><p><strong>Feature built that wasn’t needed</strong> = wasted engineering dollars. The code exists, must be maintained, adds complexity, slows down the hot path, and provides zero player value.</p></li>
+<li><p><strong>Feature built wrong, then rebuilt</strong> = speculator debt. You ship a feature based on assumption, discover the assumption was wrong in production, then pay to tear it out and rebuild it properly. You pay twice: once to build it wrong, once to build it right.</p></li>
+<li><p><strong>Feature not built that was needed</strong> = opportunity cost, but recoverable. You can always add it later if the architecture accommodates it. The dangerous case is building a <em>replacement</em> that conflicts with the missing feature’s invariants.</p></li>
+</ul>
+<p>Traditional game development resolves this with playtesting and prototyping, which are expensive, slow, and subjective. plausible-witness-dag resolves it with formal invariant search, which is fast, deterministic, and exhaustive within the modeled state space.</p>
+</section>
+<section id="approach" class="level2">
+<h2 class="anchored" data-anchor-id="approach">Approach</h2>
+<section id="step-1-model-features-as-invariant-sets" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-model-features-as-invariant-sets">Step 1: Model features as invariant sets</h3>
+<p>Each zonefabric feature is modeled as a set of predicates over the game state. A feature is “present” when its invariants are enforced; “ablated” when they are removed.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 42%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Invariants when present</th>
+<th>What breaks when ablated</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ZoneTick</td>
+<td><code>∀ entity: pos' = pos + vel × dt</code></td>
+<td>Entities freeze; positions never update</td>
+</tr>
+<tr class="even">
+<td>CastSpell</td>
+<td><code>effect → fanout ⊆ entities_in_ghost_range</code></td>
+<td>Effects hit entities outside range; teleporting damage</td>
+</tr>
+<tr class="odd">
+<td>GhostRelevance</td>
+<td><code>ghost ⊆ entities_within_ghost_range(zone_boundary)</code></td>
+<td>Players see entities they shouldn’t; information leak</td>
+</tr>
+<tr class="even">
+<td>ZoneSplit</td>
+<td><code>population² &gt; threshold ⟹ split</code></td>
+<td>Hot zones never split; performance cliff</td>
+</tr>
+<tr class="odd">
+<td>EntityMigration</td>
+<td><code>entity leaves zone A ⟹ entity enters zone B</code></td>
+<td>Entities vanish or duplicate; state corruption</td>
+</tr>
+<tr class="even">
+<td>SlotmapGenIDs</td>
+<td><code>handle.gen == slot.gen ⟹ entity is live</code></td>
+<td>Dangling references; fireball hits wrong player</td>
+</tr>
+<tr class="odd">
+<td>SessionExpiry</td>
+<td><code>now &gt; expiry ⟹ XDP drops packets</code></td>
+<td>Expired sessions still route; security hole</td>
+</tr>
+<tr class="even">
+<td>RateLimit</td>
+<td><code>packets_per_sec ≤ rate_limit</code></td>
+<td>No flood protection; DDoS amplification</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="step-2-ablation-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-ablation-matrix">Step 2: Ablation matrix</h3>
+<p>For each feature F, run plausible-witness-dag with F’s invariants removed and all other features’ invariants present. The witness search either:</p>
+<ul>
+<li><p><strong>Finds a witness</strong> (a state trace that violates a remaining invariant when F is absent) → F is load-bearing. Building it wrong or omitting it causes a cascade of invariant violations. This is speculator debt — build it correctly or pay twice.</p></li>
+<li><p><strong>Finds no witness</strong> → F’s invariants are independent of the rest. The feature can be safely deferred (unspent dollars preserved) or built in any order without risking the core system.</p></li>
+</ul>
+</section>
+<section id="step-3-dependency-ordering" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-dependency-ordering">Step 3: Dependency ordering</h3>
+<p>The ablation matrix produces a dependency graph. If removing feature A breaks feature B’s invariants, then A must be built before B. This gives a build order that minimizes speculator debt: no feature is built on top of an unverified foundation.</p>
+<pre><code>SlotmapGenIDs ──────► CastSpell (needs valid entity handles)
+       │
+       ├────────────► GhostRelevance (needs valid ghost handles)
+       │
+       └────────────► EntityMigration (needs generational safety)
+
+SessionExpiry ──────► RateLimit (expired sessions shouldn't rate-limit)
+
+ZoneTick ───────────► ZoneSplit (split needs current population)
+       │
+       └────────────► CastSpell (spell needs current positions)
+
+GhostRelevance ─────► CastSpell (fanout scoped by ghost range)</code></pre>
+</section>
+<section id="step-4-cost-weighted-ablation" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-cost-weighted-ablation">Step 4: Cost-weighted ablation</h3>
+<p>Each feature has an implementation cost (engineering hours) and a speculator-debt risk (probability × cost-of-rework). The ablation matrix tells us which features are safe to defer (low risk) and which must be built first (high risk if wrong).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 12%">
+<col style="width: 37%">
+<col style="width: 5%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Impl cost</th>
+<th>Load-bearing?</th>
+<th>Defer?</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SlotmapGenIDs</td>
+<td>Low (~100 LoC)</td>
+<td>Yes — breaks CastSpell, Ghost, Migration</td>
+<td>No</td>
+<td>Cheap, foundational, do first</td>
+</tr>
+<tr class="even">
+<td>ZoneTick</td>
+<td>Medium</td>
+<td>Yes — breaks ZoneSplit, CastSpell</td>
+<td>No</td>
+<td>Core loop, can’t defer</td>
+</tr>
+<tr class="odd">
+<td>SessionExpiry</td>
+<td>Low</td>
+<td>Yes — breaks RateLimit, security</td>
+<td>No</td>
+<td>Cheap, security-critical</td>
+</tr>
+<tr class="even">
+<td>CastSpell</td>
+<td>High</td>
+<td>No — independent of ZoneSplit</td>
+<td>Yes</td>
+<td>Complex, defer until tick works</td>
+</tr>
+<tr class="odd">
+<td>GhostRelevance</td>
+<td>Medium</td>
+<td>No — independent of ZoneSplit</td>
+<td>Yes</td>
+<td>Can stub with full-mesh initially</td>
+</tr>
+<tr class="even">
+<td>ZoneSplit</td>
+<td>Medium</td>
+<td>No — independent of CastSpell</td>
+<td>Yes</td>
+<td>Only needed at scale</td>
+</tr>
+<tr class="odd">
+<td>EntityMigration</td>
+<td>Medium</td>
+<td>Yes — breaks on slotmap absence</td>
+<td>No</td>
+<td>Needed for correctness at scale</td>
+</tr>
+<tr class="even">
+<td>RateLimit</td>
+<td>Low</td>
+<td>No — independent of game logic</td>
+<td>Yes</td>
+<td>Can add after launch</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="plausible-witness-dag-integration" class="level2">
+<h2 class="anchored" data-anchor-id="plausible-witness-dag-integration">plausible-witness-dag integration</h2>
+<section id="predicate-language" class="level3">
+<h3 class="anchored" data-anchor-id="predicate-language">Predicate language</h3>
+<p>Each invariant is expressed as a Lean 4 predicate over the game state:</p>
+<pre class="lean"><code>-- ZoneTick invariant: position updates correctly
+def zone_tick_invariant (s : GameState) : Prop :=
+  ∀ e : Entity, e ∈ s.zone.entities →
+    e.position' = e.position + e.velocity * s.dt
+
+-- CastSpell invariant: fanout is scoped to ghost range
+def cast_spell_invariant (s : GameState) : Prop :=
+  ∀ eff : EffectEntity, eff ∈ s.effects →
+    ∀ target : Entity, target ∈ eff.fanout →
+      dist(eff.position, target.position) ≤ GHOST_RANGE
+
+-- Slotmap generational ID invariant
+def slotmap_gen_invariant (s : GameState) : Prop :=
+  ∀ h : EntityHandle, h ∈ s.pending_effects →
+    s.slotmap.lookup(h).isSome →
+      s.slotmap.lookup(h).gen = h.gen</code></pre>
+</section>
+<section id="witness-search" class="level3">
+<h3 class="anchored" data-anchor-id="witness-search">Witness search</h3>
+<p>plausible-witness-dag’s <code>resolve</code> function takes a candidate predicate and a deterministic readback, escalating through L0/L1/L2:</p>
+<ul>
+<li><strong>L0</strong> (10 transactions, 1 zone): Quick smoke test. Catches gross invariant violations in seconds.</li>
+<li><strong>L1</strong> (100 transactions, 5 zones): Medium scale. Catches interaction bugs between features (e.g., CastSpell + EntityMigration).</li>
+<li><strong>L2</strong> (1000 transactions, 20 zones): Large scale. Catches performance-adjacent invariants (ZoneSplit threshold, rate limiting).</li>
+</ul>
+</section>
+<section id="ablation-run" class="level3">
+<h3 class="anchored" data-anchor-id="ablation-run">Ablation run</h3>
+<p>For feature F being ablated:</p>
+<ol type="1">
+<li>Remove F’s invariants from the predicate set</li>
+<li>Keep all other features’ invariants</li>
+<li>Run <code>resolve</code> at L0, then L1, then L2</li>
+<li>If a witness is found at any level → F is load-bearing</li>
+<li>If no witness at L2 → F is deferrable</li>
+</ol>
+<p>The escalation ladder ensures we don’t waste compute: L0 runs in seconds, L2 in minutes. Most ablation results are determined at L0.</p>
+</section>
+</section>
+<section id="what-this-prevents" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-prevents">What this prevents</h2>
+<section id="speculator-debt-examples" class="level3">
+<h3 class="anchored" data-anchor-id="speculator-debt-examples">Speculator debt examples</h3>
+<ol type="1">
+<li><p>Building CastSpell before SlotmapGenIDs. Without generational handles, CastSpell’s fanout targets can dangle. The ablation matrix shows removing SlotmapGenIDs breaks CastSpell’s invariant. Build slotmap first, or pay to refactor CastSpell later.</p></li>
+<li><p>Building GhostRelevance with full-mesh fallback. If we stub ghost relevance with full-mesh broadcast initially, the ablation shows full-mesh doesn’t violate any invariant (it’s a superset of AOI). The stub is safe: we can ship with full-mesh and add AOI later without rework. This is unspent dollars preserved.</p></li>
+<li><p>Omitting EntityMigration. The ablation shows that without migration, entities that cross zone boundaries vanish (ZoneTick invariant broken). Migration is load-bearing and can’t be deferred.</p></li>
+<li><p>Building ZoneSplit before ZoneTick. The ablation shows ZoneSplit depends on ZoneTick’s population count. Building split first means building a mock population tracker, then replacing it with the real tick. That’s speculator debt: pay once for the mock, once for the real thing. Build tick first.</p></li>
+</ol>
+</section>
+</section>
+<section id="relationship-to-other-rfds" class="level2">
+<h2 class="anchored" data-anchor-id="relationship-to-other-rfds">Relationship to other RFDs</h2>
+<ul>
+<li><p><strong>RFD 2008</strong> (verification strategy): plausible-witness-dag is already the L2 runtime verification layer. This RFD extends its use from post-implementation verification to pre-implementation design validation.</p></li>
+<li><p><strong>RFD 2002</strong> (zonefabric): The feature set being ablated is the zonefabric runtime operations (ZoneTick, CastSpell, GhostRelevance, ZoneSplit, EntityMigration).</p></li>
+<li><p><strong>RFD 2017</strong> (slotmap): SlotmapGenIDs is the first feature to verify — it’s foundational and cheap. The ablation matrix confirms it must be built before CastSpell and GhostRelevance.</p></li>
+<li><p><strong>RFD 2018</strong> (security): SessionExpiry and RateLimit are security features that can be ablated independently of game logic. The matrix shows they’re load-bearing for security invariants but not for game logic invariants — so they can be built in parallel with game logic.</p></li>
+</ul>
+</section>
+<section id="economics" class="level2">
+<h2 class="anchored" data-anchor-id="economics">Economics</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 27%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Outcome</th>
+<th>Cost without ablation</th>
+<th>Cost with ablation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Feature built that wasn’t needed</td>
+<td>$10K-50K engineering</td>
+<td>$0 (deferred, unspent dollars preserved)</td>
+</tr>
+<tr class="even">
+<td>Feature built wrong, then rebuilt</td>
+<td>$20K-100K (build + rework)</td>
+<td>$5K-25K (build right first time)</td>
+</tr>
+<tr class="odd">
+<td>Feature built in wrong order</td>
+<td>$10K-30K (mock + replace)</td>
+<td>$0 (correct order from dependency graph)</td>
+</tr>
+<tr class="even">
+<td>Feature correctly deferred</td>
+<td>$0 (but risk of building it)</td>
+<td>$0 (confirmed safe to defer)</td>
+</tr>
+</tbody>
+</table>
+<p>For a 20-feature MMO backend, ablation testing costs ~1 week of engineering time (writing predicates + running the search). The expected savings from avoiding one speculator-debt cycle: $20K-100K. ROI: 10-50x.</p>
+</section>
+<section id="what-this-rfd-does-not-cover" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-rfd-does-not-cover">What this RFD does NOT cover</h2>
+<ul>
+<li><p>Player-facing feature decisions: this ablation covers backend system features (tick, spell, ghost, migration). Deciding whether players want fireballs vs.&nbsp;ice storms is a game design question, not an invariant question.</p></li>
+<li><p>Performance ablation: this RFD covers correctness invariants. Performance ablation (does feature X slow down the hot path?) is measured by the benchmark harness (RFD 2013), not by plausible-witness-dag.</p></li>
+<li><p>UI/UX features: not modeled. These are subjective and must be playtested, not formally verified.</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/weftspun\.github\.io\/request-for-discussion");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Serials are OID arcs under the 66606 PEN and are never reused.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2078-plausible-witness-dag-feature-ablation/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2078-plausible-witness-dag-feature-ablation/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/weftspun/request-for-discussion">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

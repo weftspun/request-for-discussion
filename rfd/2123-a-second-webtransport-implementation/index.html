@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>RFD 2123: A second WebTransport implementation, and the names that make room for it – Taskweft — Manuals</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-3336bfa29d6298ea485ddf0d64c2ca2e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Taskweft — Manuals</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/rfd.html"> 
+<span class="menu-text">RFDs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/serials.html"> 
+<span class="menu-text">Serials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/logbook.html"> 
+<span class="menu-text">Logbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/agreements.html"> 
+<span class="menu-text">Working agreements</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#problem" id="toc-problem" class="nav-link active" data-scroll-target="#problem">Problem</a></li>
+  <li><a href="#decision" id="toc-decision" class="nav-link" data-scroll-target="#decision">Decision</a></li>
+  <li><a href="#consequences" id="toc-consequences" class="nav-link" data-scroll-target="#consequences">Consequences</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <li><a href="#detail" id="toc-detail" class="nav-link" data-scroll-target="#detail">Detail</a></li>
+  <li><a href="#what-the-second-implementation-found" id="toc-what-the-second-implementation-found" class="nav-link" data-scroll-target="#what-the-second-implementation-found">What the second implementation found</a>
+  <ul class="collapse">
+  <li><a href="#a-64-entity-slice-does-not-fit-in-one-datagram" id="toc-a-64-entity-slice-does-not-fit-in-one-datagram" class="nav-link" data-scroll-target="#a-64-entity-slice-does-not-fit-in-one-datagram">A 64-entity slice does not fit in one datagram</a></li>
+  <li><a href="#a-library-defect-one-oversized-datagram-jams-every-datagram-after-it" id="toc-a-library-defect-one-oversized-datagram-jams-every-datagram-after-it" class="nav-link" data-scroll-target="#a-library-defect-one-oversized-datagram-jams-every-datagram-after-it">A library defect: one oversized datagram jams every datagram after it</a></li>
+  <li><a href="#a-library-limit-pywebtransport-rejects-ec-server-keys-and-that-decided-the-stack" id="toc-a-library-limit-pywebtransport-rejects-ec-server-keys-and-that-decided-the-stack" class="nav-link" data-scroll-target="#a-library-limit-pywebtransport-rejects-ec-server-keys-and-that-decided-the-stack">A library limit: pywebtransport rejects EC server keys, and that decided the stack</a></li>
+  <li><a href="#a-configuration-defect-a-default-iceoryx2-subscriber-drops-the-oldest-of-three-sends" id="toc-a-configuration-defect-a-default-iceoryx2-subscriber-drops-the-oldest-of-three-sends" class="nav-link" data-scroll-target="#a-configuration-defect-a-default-iceoryx2-subscriber-drops-the-oldest-of-three-sends">A configuration defect: a default iceoryx2 subscriber drops the oldest of three sends</a></li>
+  </ul></li>
+  <li><a href="#the-renames" id="toc-the-renames" class="nav-link" data-scroll-target="#the-renames">The renames</a></li>
+  <li><a href="#why-the-language-and-not-the-library" id="toc-why-the-language-and-not-the-library" class="nav-link" data-scroll-target="#why-the-language-and-not-the-library">Why the language and not the library</a></li>
+  <li><a href="#what-is-built" id="toc-what-is-built" class="nav-link" data-scroll-target="#what-is-built">What is built</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2123-a-second-webtransport-implementation/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2123-a-second-webtransport-implementation/index.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">RFD 2123: A second WebTransport implementation, and the names that make room for it</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="problem" class="level2">
+<h2 class="anchored" data-anchor-id="problem">Problem</h2>
+<p>The fabric states its wire in <code>contract-wt</code>, <code>contract-entity-packet</code>, <code>contract-connection-fsm</code> and <code>contract-http3-queue</code>, and implements it once. RFD 2088 chose that: “Client and server share one proven QUIC stack instead of two different, independently verified ones.” <code>transport-gateway</code>, <code>transport-ingest</code> and the engine’s <code>modules/http3</code> all vendor picoquic and picotls, so both ends of every session run the same code.</p>
+<p>That buys interoperability by construction and gives up the check. A wire implemented once describes the program that implements it, and nothing establishes that the specification is implementable from the specification. Every assumption both ends share passes every test the pair can run. <code>contract-wt</code> already makes this argument for the engine’s H3 stack and acts on it in aioquic; nothing makes it for the transport layer.</p>
+</section>
+<section id="decision" class="level2">
+<h2 class="anchored" data-anchor-id="decision">Decision</h2>
+<p><strong>A second implementation, on a stack that shares no code with the first.</strong> <code>transport-gateway-python</code> and <code>transport-ingest-python</code> terminate the same contract on <code>aioquic</code>, which implements QUIC and TLS 1.3 in Python from the RFCs, and hand off over the iceoryx2 ring. Khronos ratifies against two independent implementations for this reason.</p>
+<p>Three stacks were considered and the choice turns on what each shares with the first. Binding picoquic from Python was rejected because both ends would then run the same QUIC and the same TLS, so the second implementation would test the binding rather than the contract. h2o was rejected because its WebTransport is an unmerged pull request stacked on another unmerged pull request, with tests unchecked, against an HTTP/3 stack h2o calls experimental; its QUIC is quicly and would have qualified otherwise. <code>pywebtransport</code> shipped first here and was replaced: it refuses an EC private key, and <code>contract-wt</code> records the Godot demo server generating a fresh P-256 certificate on every run. <code>DETAILS.md</code> has the measurements.</p>
+<p><strong>It carries no player traffic.</strong> <code>transport-gateway-c</code>’s <code>PACKET_PATH.md</code> measures a scripting runtime at 5.70 M/s against a 15 M/s bar, and 117.8 ns per runtime crossing against a 66.7 ns per-packet budget. Those numbers stand and they are why policy lives in an interactor rather than in the packet path. The Python pair produces agreement or disagreement, and no throughput claim goes in a record without a measurement in <code>data/measurements/</code>.</p>
+<p><strong>The language is what tells the four repositories apart.</strong> <code>transport-gateway</code> becomes <code>transport-gateway-c</code> and <code>transport-ingest</code> becomes <code>transport-ingest-c</code>. Two implementations of one contract are distinguished only by how they are built, so RFD 2111’s preference for names that say what a thing does cannot separate them, and <code>transport-picoquic</code> is the precedent for naming a transport repository after its stack. Naming the language rather than the library also survives a change of library, which this record has already exercised: the Python pair moved from <code>pywebtransport</code> to <code>aioquic</code> before it merged and neither name moved. Neither pair keeps the unqualified name, because the unqualified name implies the other is a variant.</p>
+<p><strong>The codec is emitted, never retyped.</strong> <code>contract-entity-packet</code> gains a Python emitter beside <code>EntityPacket/EmitC.lean</code>, so <code>lake exe packet_emit</code> writes the C header, the Python module and the 64 golden vectors from one run. A second implementation that reads the layout off the first tests whether two people can copy a table.</p>
+<p><strong>The ring is reached through the <code>iceoryx2</code> wheel.</strong> The C repositories dlopen iceoryx2 through a dispatch table generated from <code>iceoryx2.sigs</code>, so that “the harness builds on a machine that has never seen iceoryx2” and because “iceoryx2 is Rust, and weft writes no Rust.” A prebuilt wheel is a runtime artifact rather than a build-graph edge and adds no second <code>.sigs</code> file. Bus access stays behind one module in each repository so the choice is reversible.</p>
+<p><strong><code>contract-wt</code> stays where it is.</strong> It runs the same <code>aioquic</code> this pair now runs, and it checks a different subject: the engine’s <code>modules/http3</code> as a client, where these check the transport layer as a server. One Python stack in two places is less to keep current than two, and its roster client is what caught <code>WebTransportPeer</code> tracking clients in one bool. What it does not give is a third opinion, so a fault inside <code>aioquic</code> itself would go unseen by both.</p>
+</section>
+<section id="consequences" class="level2">
+<h2 class="anchored" data-anchor-id="consequences">Consequences</h2>
+<p>The implementation contradicted one claim the fabric makes about its own wire before it carried a byte of real traffic, which is the argument for it stated as evidence rather than as principle. <code>transport-fanout</code> caps a slice at 64 records and calls 6400 bytes “comfortably inside one message”; two stacks sharing no code put the limit at 11 records, and <code>datasource-queen</code>’s own <code>WT_MTU_MAX</code> agrees with them rather than with the comment.</p>
+<p>That is one finding, not a pile of them, and the count is worth keeping honest. Building the pair also surfaced three defects in the libraries it uses — an EC key a stack would not load, a subscriber buffer that drops the oldest of three sends, a datagram queue that wedges on an oversized send. Those are real and cost real time, and a third implementation on a fourth stack would not have found any of them. <code>DETAILS.md</code> keeps them apart for that reason.</p>
+<p>The cost is a fourth transport repository and a second wire reader to keep in step. RFD 2122 named that cost exactly — “every wire change is now two changes that must agree, and nothing checks that they do” — and rejected a second implementation carrying player traffic for it. Checking that they agree is what these two produce, so the cost lands where the benefit is.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li>RFD 2088 chose one QUIC stack on both ends; RFD 2122 rejected a second implementation on the player path and is not contradicted; RFD 2047 abandoned <code>webtransportd</code> and still governs the production path; RFD 2111 sets the name shape this amends for four repositories</li>
+<li>RFD 2049 for the reliability classes the two repositories split on, RFD 2096 for the measurement discipline, RFD 2108 for the rule that a lagging reader never stalls the writer</li>
+<li><code>contract-entity-packet</code> for the layout, the emitter and the golden vectors; <code>contract-wt</code> for the same argument one stack earlier</li>
+<li>The measurements, the method, and the rename list: <code>DETAILS.md</code></li>
+</ul>
+</section>
+<section id="detail" class="level2">
+<h2 class="anchored" data-anchor-id="detail">Detail</h2>
+</section>
+<section id="what-the-second-implementation-found" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-second-implementation-found">What the second implementation found</h2>
+<p>One disagreement about the contract, and three integration defects found while building. The distinction matters, because only the first is the thing a second implementation exists to produce: it is a claim the fabric makes about its own wire, contradicted by two stacks that share no code. The other three are properties of the libraries this pair happens to use, and a third implementation on a fourth stack would not have found them.</p>
+<p>All measured on 2026-08-17, macOS arm64, over a loopback session. Each is recorded in the <code>OPEN_GAPS.md</code> of the repository that found it.</p>
+<section id="a-64-entity-slice-does-not-fit-in-one-datagram" class="level3">
+<h3 class="anchored" data-anchor-id="a-64-entity-slice-does-not-fit-in-one-datagram">A 64-entity slice does not fit in one datagram</h3>
+<p><code>transport-fanout/src/fanout.h:39</code> caps a subscriber’s slice and states the reason: “Cap one subscriber’s slice so a single write stays inside a datagram-sized batch. 64 entities * 100 bytes = 6400 bytes, comfortably inside one message.”</p>
+<p>Two implementations sharing no code disagree with that comment and agree with each other, one fresh connection per size:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 20%">
+<col style="width: 16%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>stack</th>
+<th>largest datagram</th>
+<th>whole records</th>
+<th>failure above the limit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>aioquic</code> 1.3.0</td>
+<td>1169 bytes</td>
+<td>11</td>
+<td>queues the frame and jams</td>
+</tr>
+<tr class="even">
+<td><code>pywebtransport</code> 0.20.1</td>
+<td>1161 bytes</td>
+<td>11</td>
+<td>refuses at the API</td>
+</tr>
+</tbody>
+</table>
+<p>The eight-byte difference is header overhead and both land on 11 records. The cause is structural rather than a library limit: a DATAGRAM frame has to fit inside one QUIC packet, and <code>aioquic</code> reports <code>_max_datagram_size = 1200</code> against a negotiated <code>_remote_max_datagram_frame_size = 65536</code>, so the packet size binds and the frame limit never does. 6400 bytes is five QUIC packets.</p>
+<p><code>datasource-queen/src/wt.c:32</code> sets <code>WT_MTU_MAX</code> to 1300, which is 13 records, so the C side’s configuration contradicts the C side’s comment before either Python implementation is considered. <code>transport-fanout</code> has never run and <code>transport-ingest-c</code> has no <code>main</code>, so nothing had exercised the claim.</p>
+<p><code>transport-ingest-python</code> splits a slice at 11 records so it runs. What stays open is whether <code>MAX_SLICE_ENTITIES</code> is wrong, whether slices belong on streams, or whether <code>fanout_one</code>’s silent truncation at 64 was always the real cap.</p>
+</section>
+<section id="a-library-defect-one-oversized-datagram-jams-every-datagram-after-it" class="level3">
+<h3 class="anchored" data-anchor-id="a-library-defect-one-oversized-datagram-jams-every-datagram-after-it">A library defect: one oversized datagram jams every datagram after it</h3>
+<p><code>aioquic</code>’s <code>_write_datagram_frame</code> asks the packet builder for room, and when the frame cannot fit, the caller breaks out of the send loop without popping the queue, so the oversized datagram stays at the head forever.</p>
+<p>Measured: after one 6400-byte send, three subsequent 100-byte datagrams never arrived and the pending queue grew from one entry to three. One bad send does not lose one message, it ends that session’s datagram path.</p>
+<p><code>transport-ingest-python</code> fragments against the connection and refuses anything over the cap, so it cannot trigger this. Reporting it upstream was considered and dropped: the trigger is an application sending a datagram larger than a packet, which RFC 9221 already forbids, so it is misuse handling rather than a protocol defect and it is not reachable from peer input. quiche exposes <code>dgram_max_writable_len</code> and quic-go returns a too-large error carrying the size, while aioquic documents no size contract and exposes no way to query one, which is why <code>datagram_capacity</code> reads private attributes.</p>
+<p>This also contaminated a measurement. A binary search over delivery first returned 1050 bytes, because one oversized probe jammed the connection and every later size read as lost. Datagrams are unreliable, so a threshold cannot be probed on one connection at all, which is why the table above uses a fresh connection per size.</p>
+</section>
+<section id="a-library-limit-pywebtransport-rejects-ec-server-keys-and-that-decided-the-stack" class="level3">
+<h3 class="anchored" data-anchor-id="a-library-limit-pywebtransport-rejects-ec-server-keys-and-that-decided-the-stack">A library limit: pywebtransport rejects EC server keys, and that decided the stack</h3>
+<p><code>contract-wt/README.md</code> records the Godot demo server building “a fresh self-signed P-256 certificate on every run”. <code>pywebtransport</code> refuses to open a listener with one, failing with “failed to parse private key as RSA, ECDSA, or EdDSA”. PKCS#8 keys from LibreSSL 3.3.6:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>key</th>
+<th><code>pywebtransport</code> 0.20.1</th>
+<th><code>aioquic</code> 1.3.0</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>EC prime256v1 (P-256)</td>
+<td>rejected</td>
+<td>accepted</td>
+</tr>
+<tr class="even">
+<td>EC secp384r1 (P-384)</td>
+<td>rejected</td>
+<td>accepted</td>
+</tr>
+<tr class="odd">
+<td>RSA 2048</td>
+<td>accepted</td>
+<td>accepted</td>
+</tr>
+<tr class="even">
+<td>Ed25519</td>
+<td>untested</td>
+<td>untested</td>
+</tr>
+</tbody>
+</table>
+<p>Ed25519 is untested on both because LibreSSL 3.3.6 answers <code>Unknown algorithm ed25519</code> and no key was produced to try.</p>
+<p>Each end’s key is its own, so this never stopped the two talking. It stopped the Python pair serving a role the Godot side serves today, which is why the pair moved to <code>aioquic</code>. A live session with a P-256 server key answers CONNECT with <code>:status 200</code>.</p>
+</section>
+<section id="a-configuration-defect-a-default-iceoryx2-subscriber-drops-the-oldest-of-three-sends" class="level3">
+<h3 class="anchored" data-anchor-id="a-configuration-defect-a-default-iceoryx2-subscriber-drops-the-oldest-of-three-sends">A configuration defect: a default iceoryx2 subscriber drops the oldest of three sends</h3>
+<p><code>iceoryx2</code> defaults a subscriber’s buffer to <strong>2</strong> samples with safe overflow on. Three records published in a burst arrived as two, and the missing one was the oldest, before any reader was slow. Both repositories now set the buffer explicitly and keep safe overflow, because RFD 2108 requires that a lagging reader never stall the writer.</p>
+<p>The drop stays undetectable. <code>HeaderPublishSubscribe</code> carries a node id, a publisher id and an element count, and no sequence number, so nothing distinguishes a dropped sample from one never sent. RFD 2108 says a subscriber whose cursor falls out of the ring “receives a resync signal rather than a gap”; no such signal exists, and defining one is a wire decision.</p>
+</section>
+</section>
+<section id="the-renames" class="level2">
+<h2 class="anchored" data-anchor-id="the-renames">The renames</h2>
+<p>Two repositories renamed, two created. GitHub redirects the old names.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 35%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>before</th>
+<th>after</th>
+<th>path</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>transport-gateway</code></td>
+<td><code>transport-gateway-c</code></td>
+<td><code>1-transport/gateway-c</code></td>
+</tr>
+<tr class="even">
+<td><code>transport-ingest</code></td>
+<td><code>transport-ingest-c</code></td>
+<td><code>1-transport/ingest-c</code></td>
+</tr>
+<tr class="odd">
+<td>—</td>
+<td><code>transport-gateway-python</code></td>
+<td><code>1-transport/gateway-python</code></td>
+</tr>
+<tr class="even">
+<td>—</td>
+<td><code>transport-ingest-python</code></td>
+<td><code>1-transport/ingest-python</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>check_path_recomposes</code> in <code>check_docs.py</code> requires the directory and its child to rebuild the repository name, and all four do. The manifest count moves from 45 to 47.</p>
+<p>Both C repositories carried a description using a word RFD 2111 retired — “hands the result to a <strong>plane</strong> over iceoryx2” — because the READMEs were converted and the GitHub descriptions were missed. Both now say interactor.</p>
+<p><code>check_docs.py</code>’s moved-repository check found eight stale references in six files across five repositories, each fixed in its own pull request: <code>transport-fanout</code>, <code>transport-gateway-c</code>, <code>transport-ingest-c</code>, <code>interactor-ward</code>, <code>entities-gyre</code> and <code>datasource-queen</code>.</p>
+</section>
+<section id="why-the-language-and-not-the-library" class="level2">
+<h2 class="anchored" data-anchor-id="why-the-language-and-not-the-library">Why the language and not the library</h2>
+<p>RFD 2111 retires names that say how a thing was built, and <code>-c</code> and <code>-python</code> are exactly that. The rule targets directories that collect whatever nobody classified: <code>service/</code>, <code>lean/</code>, <code>engine/</code>, <code>vendor/</code>. Two repositories implementing one contract are a different case, because the build is the only thing that separates them and the role word is already taken by both.</p>
+<p><code>transport-picoquic</code>, which RFD 2111 renamed from <code>fabric-edge</code>, is the precedent for naming a transport repository after its stack, taken for the same reason: “Bare <code>transport</code> would read as a name that went missing.”</p>
+<p>The language outlives the library. Swapping picoquic for another C QUIC stack, or <code>pywebtransport</code> for aioquic, leaves both names true, where <code>-picoquic</code> and <code>-pywebtransport</code> would strand.</p>
+</section>
+<section id="what-is-built" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-built">What is built</h2>
+<p>Both repositories carry the conformance gate and the terminator, on <code>aioquic</code> 1.3.0 and <code>iceoryx2</code> 0.9.3, and neither carries a cross-test.</p>
+<p><code>conformance.py</code> decodes all 64 golden vectors, checks the fields the CSV names, and re-encodes to compare byte for byte. <code>--self-test</code> corrupts one vector and the gate is wrong if that passes. CI runs both, on every pull request and in the merge group.</p>
+<p><code>transport-ingest-python</code> was driven end to end on a live session with an EC P-256 server key: CONNECT answered <code>:status 200</code>, three records in one datagram reached the ring byte-identical to the wire, and a 250-byte datagram was dropped whole rather than trimmed to two records.</p>
+<p>The live cross-test against the C pair is not written, and there is nothing yet to write it against. <code>transport-gateway-c</code> and <code>transport-ingest-c</code> have no <code>main</code> and no <code>CMakeLists.txt</code>, and both READMEs say “State: not started”. <code>transport-ingest-c</code>’s copy of the transport code is a stale fork of <code>transport-gateway-c</code>’s: it passes an <code>h3zero_callback_ctx_t</code> where <code>h3zero_callback</code> casts to <code>picohttp_server_parameters_t</code>, and it lacks the <code>h3zero_declare_stream_prefix</code> call. That divergence is the reason both Python repositories consume one emitted codec rather than two copies.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/weftspun\.github\.io\/request-for-discussion");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Serials are OID arcs under the 66606 PEN and are never reused.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2123-a-second-webtransport-implementation/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2123-a-second-webtransport-implementation/index.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/weftspun/request-for-discussion">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
