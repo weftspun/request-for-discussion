@@ -24,6 +24,14 @@ scope.
 See `DETAILS.md` for the two phases, the gravity-alignment rule, and
 the metric gate this RFD sketched before the pivot.
 
+**THE LICENCE BLOCKER IS ANSWERED, AND WAS NEVER LOOKED AT.** This RFD
+listed it open and abandoned the work before asking.
+`Robbyant/lingbot-map` is Apache-2.0, weights included.
+
+The scope inverted too: RFD 1171's presence loop makes the scan a
+character tool, because the static room is what a moving person is
+separated from. RFD 1171 takes it and the manifest places it.
+
 ## Related
 
 RFD 1064 records the pivot this RFD yields to. RFD 1053 gives the

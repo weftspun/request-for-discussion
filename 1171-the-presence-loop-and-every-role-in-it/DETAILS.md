@@ -345,9 +345,13 @@ ten thousand frames.
     scale                      affine          METRIC
     views                      one             many, which is preferred
 
-It answers the mapping role better than MoGe and better than Metric3D,
-which needed the camera it was supposed to supply. MoGe stays useful
-for the single-image case, where no sequence exists.
+**Taken, and placed.** It answers the mapping role better than MoGe and
+better than Metric3D, which needed the camera it was supposed to
+supply. Forked to `weftspun/lingbot-map` and pinned at `1740f18` in the
+manifest at `3-interactor/lingbot-map-upstream`.
+
+MoGe is not displaced. It keeps the single-image case, where no sequence
+exists and no map can be built -- which is every illustration.
 
 ## The walk video can be rendered, which makes the error measurable
 
