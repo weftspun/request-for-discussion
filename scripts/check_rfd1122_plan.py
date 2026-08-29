@@ -26,7 +26,7 @@ import re
 import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
-DEFAULT_STAGE = HERE.parent / "rfd1122-plan.usda"
+DEFAULT_STAGE = HERE.parent / "rfd" / "1122-the-wholebody-gap" / "rfd1122-plan.usda"
 REPO = HERE.parent
 
 
