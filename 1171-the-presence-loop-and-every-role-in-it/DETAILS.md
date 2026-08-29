@@ -226,6 +226,44 @@ That inverts the `dress` movement. It does not need a segmenter that
 knows `topwear`; it needs a body it already has and the difference
 between that body and the picture.
 
+## MoGe supplies both halves, and the second is the one nobody asked for
+
+The body contour comes from the mesh. The person's outer edge has to
+come from the image, and **MoGe answers that without a segmenter and
+without a taxonomy** -- a depth step separates a person from the wall
+behind them, and no labelled corpus is involved. That is the blocker
+RFD 1168 could not get past, sidestepped rather than solved.
+
+**And it also hands over the camera.** `silhouette.py` projects through
+a pinhole `Camera(width, height, fx, fy, cx, cy)`, and those numbers
+have to come from somewhere. MoGe v2's `infer` returns `intrinsics` as
+a 3x3 alongside the point map, recovered from the picture by
+`recover_focal_shift`.
+
+    what the loop needs        where it comes from
+
+    body outline               ANNY mesh, posed, through silhouette.py
+    person outline             MoGe depth, thresholded
+    the camera both project    MoGe intrinsics
+    through
+
+**Without that third row the first is guesswork.** A projected
+silhouette is only as good as the camera it is projected through, and a
+wrong focal length yields a body outline of the wrong size in the right
+place -- which subtracts into a garment boundary that is wrong
+everywhere and looks plausible. One model closing both gaps is worth
+more than the depth alone.
+
+**The domain risk that applied elsewhere does not apply here.** RFD
+1166 records MoGe as unproven on illustration, which is why it was not
+a drop-in for See-Through's depth stage. A webcam pointed at a person is
+photographs, which is exactly what MoGe was trained on. Same model,
+different use, and the caveat does not travel.
+
+MoGe is MIT and already at rung 2 here: 885 nodes, 26 operators, with
+`Mod x4` outside `DEVICE_OPS` and unexplained. Nothing in this section
+needs it compiled -- it runs on the host beside the fit.
+
 ## The hazard in doing this, which is not small
 
 **Spending the silhouette as an output spends it as a check.**
