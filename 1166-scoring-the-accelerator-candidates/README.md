@@ -26,9 +26,9 @@ Eight dimensions, each scored 0 to 100:
 
 `adapt` and `ask` are duals: one changes the model, the other queries
 it, and `weft_ask` is already the workspace's verb for the second.
-`wanted` scores against a twelve-person survey of what a massive
-multiplayer game should have. Every other dimension asks whether a
-model is tractable; only this asks whether anybody asked for it.
+`wanted` asks what the product is for: a social world with avatars
+people make and wear. Every other dimension asks whether a model is
+tractable; only this asks whether the thing it does is the point.
 
 Rank by **STAR**, score then automatic runoff, the eight dimensions
 voting: take the two highest sums, let them vote, seat the winner,

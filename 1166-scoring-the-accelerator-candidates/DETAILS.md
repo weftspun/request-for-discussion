@@ -44,32 +44,36 @@ informing it. `qwen35-defiant` is the same case and is kept at
 fifteenth as the one worked example of it, so the table still shows
 what that failure looks like.
 
-## `wanted`, scored against the survey
+## `wanted`, and what the product is for
 
 The other seven dimensions all ask whether a model is tractable. None
-asks whether anyone wants what it does, and a twelve-person survey of
-wanted features in a massive multiplayer game answers that. Two
-clusters take five respondents each:
+asks whether the thing it does is wanted, and a model can be easy to
+accelerate and serve nothing anybody needs.
 
-    creation and UGC   a meshing pen to build everything in world,
-                       moddable, user generated content, user created
-                       content unlocking most things, save and share
-    social presence    a social setting to be with people, experiencing
-                       something with them, voice, dancing or emotes,
-                       small groups, squad cooperation
+What the product is for answers it, and the manifest already says: a
+social world with avatars people wear. `v-sekai` and
+`v-sekai-fabric` carry the client and the fabric, ANNY is the body,
+and RFD 1122 is the chain that puts a person into it. Two things
+follow from that and nothing else does.
 
-`TRELLIS.2 / Pixal3D` takes 90 as the closest thing here to a meshing
-pen; `SkinTokens` 85 because a user-made mesh that cannot be rigged
-cannot be worn; `rf-detr` 85 and `Kimodo` 80 on the social cluster,
-where dancing and emotes were asked for by name. `MuJoCo MJX` takes 70
-on "absolute interactability with world and mechanics".
+**People make things and wear them.** A mesh someone made is worth
+nothing until it is rigged, textured and in the world, so
+`TRELLIS.2 / Pixal3D` takes 90 as the shortest path from an image to a
+wearable asset and `SkinTokens` 85, because an unrigged mesh cannot be
+worn at all. `VoxHammer` takes 60 for editing what exists.
 
-**EditScore takes 10, the lowest in the table.** It is a scorer: no
-player ever sees it, and nothing in twenty-four answers asks for
-better scoring. It remains fourth overall, which is the point of
-having eight dimensions rather than one.
+**People are present to each other.** Embodiment is the product, so
+`rf-detr` takes 85 for putting a body in the world from a camera and
+`Kimodo` 80 for moving it. `MuJoCo MJX` takes 70: a world that
+responds is the difference between a room and a backdrop.
 
-Nobody asked for an LLM. `qwen35-defiant` takes 20 on that basis.
+**EditScore takes 10, the lowest here.** It is a scorer. It makes the
+loops converge and nobody wears it, sees it or asks for it. It stays
+fourth overall, which is the argument for eight dimensions rather than
+one: a thing can be worth building and never be the point.
+
+`qwen35-defiant` takes 20 for the same reason in reverse. A language
+model is a fine thing to have and it is not what this product is.
 
 ## The critical path, and there are three loops rather than four
 
