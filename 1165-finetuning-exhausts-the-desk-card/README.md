@@ -25,16 +25,16 @@ clearing the RAM ceiling only bought the right to meet this one.
 ## Decision
 
 **RETRACTED 2026-08-29: this said batch size was the lever, and it is
-not.** A probe at `batch_size=1, epochs=1` on 64 frames, the directive
-verified in the loaded model script, raised the same
+not.** A probe at `batch_size=1, epochs=1` on 64 frames raised the same
 `AccelerasResourceError` after 44 minutes.
 
-The lever does not exist at the bottom of its range. This desk cannot
-fine-tune a 25 M device half in 24 GiB. What remains is a card with
-more of it, or optimization level 1, which skips fine-tuning and
-yields a different artifact rather than the same one slowly.
+**The requirement is measured: QAFT needs 32.5 GiB, on an A40.** The
+desk 3090 holds 24, so the shortfall is 8.5 GiB and no batch size
+closes it. Separately, `a16_w16` is refused by this part outright --
+twelve `precision_change` layers the target will not take -- so
+`a8_w8` is the precision ceiling. `DETAILS.md` carries both.
 
 ## Related
 
 RFD 1140 rents the card. RFD 1163 divides the work. RFD 1164 says
-what the calibration set becomes.
+what the calibration set becomes. RFD 1167 places the rung.
