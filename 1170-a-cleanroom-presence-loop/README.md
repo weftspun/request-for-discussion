@@ -23,7 +23,7 @@ glue is unlicensed.**
     gemma-4-31B, API   Apache-2.0   Qwen3-VL-8B, local
     Qwen3-TTS 12Hz     Apache-2.0   already ours
     TalkingHead        MIT          keep, or ANNY through Godot
-    three.js           MIT          Godot
+    three.js           MIT          Godot, with Mitsuba as oracle
 
 **Their TTS choice is ours, independently** — the same
 `Qwen3-TTS-12Hz-1.7B-CustomVoice` RFD 1166 seated at 4 the same day.

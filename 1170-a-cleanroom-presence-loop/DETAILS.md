@@ -199,7 +199,54 @@ square row drops to about 14 fps. **Nobody should plan a frame budget
 on this table until that is settled**, and settling it is a matter of
 reading the benchmark rather than running anything.
 
-## But the frame rate is not the reason to choose
+## Decided: Mitsuba is the reference renderer, Godot is the runtime
+
+Real-time Mitsuba is too expensive, and the useful consequence is that
+**the number flagged above stops mattering.** A reference renderer has
+no frame budget, so whether intersection sits inside the 48.1 ns figure
+is no longer load-bearing on anything. It is still worth reading, and
+nothing now waits on it.
+
+**This workspace already runs exactly this pattern.**
+`rf-detr-cpp/gen_reference/` holds six generators whose own comment
+reads *"The oracles. Each writes a `.bin` that a `tests/test_*.cpp`
+reads back and diffs."* PyTorch is slow and correct; the C++ is fast and
+has to prove it agrees. Mitsuba against Godot is the same relationship
+one level up:
+
+    slow and correct        fast and shipped     the check
+
+    PyTorch reference       rf-detr C++          .bin diff, per tensor
+    Mitsuba 3              Godot                 per-pixel, per view
+
+**And it answers rule 4 for the renderer.** A number without a baseline
+is not a measurement, and until now the realtime renderer had none --
+"it looks right" is the proxy, and rule 1 says the proxy is always the
+one that is easy to read. A physically-based render of the same scene
+from the same camera is the physical quantity.
+
+**The camera sequence is already settled**, which is what makes the
+comparison cheap. CLAUDE.md requires views from
+`sphere_hammersley_sequence` and gives the reason -- a hand-picked front
+view showed error of five stacked soda cans along the travel axis
+against three and a half across it. So the oracle renders that sequence,
+Godot renders the same sequence, and the diff is per-pixel per view with
+no new convention to agree.
+
+**The tolerance is the open question and it is not a small one.** Godot
+will not match Mitsuba: MToon is a stylised shading model and the
+runtime is rasterised, so the two disagree by construction and the
+useful bound is not zero. What the oracle catches is a *change* --
+a rig edit, a material change or an export regression that moves the
+runtime away from where it was -- rather than absolute physical
+agreement. Stating that first avoids the trap of building a gate whose
+only possible verdict is failure.
+
+That also makes it a negative control: perturb a material and the diff
+must move. A renderer comparison that has never rejected anything has
+not shown it can.
+
+## But the frame rate is not the reason to choose## But the frame rate is not the reason to choose
 
 Even at 245 fps, Mitsuba is the wrong instrument for this loop, and
 saying so matters more than the arithmetic above.
