@@ -1,15 +1,46 @@
 # RFD Index and Logbook
 
-This repository holds two things that were two repositories until now.
+Taskweft builds a loop where a person makes a character, dresses it, and
+then either wears it or talks to it. This repository is that project's
+design record.
+
+## Start here
+
+Read these three in order. Together they take about fifteen minutes.
+
+1. **RFD 1171** names what the project is building and which part every
+   model plays.
+2. **RFD 1000** says how to read any document here. States, numbering,
+   section order.
+3. **`CLAUDE.md`** holds the standing constraints. What may enter a
+   training corpus, and what may not.
+
+The rendered site is at
+<https://weftspun.github.io/request-for-discussion>.
+
+## Two things that confuse new readers
+
+**Documents contradict themselves on purpose.** When a number turns out
+to be wrong, the correction goes next to the original instead of
+replacing it. A document can state a thing and withdraw it a paragraph
+later. This is deliberate. A reader who knows which roads are dead ends
+is better off than one who knows only where the road ends today. A
+paragraph in bold capitals is usually a retraction.
+
+**A number is an identity, not a date.** RFD 1171 is not newer than RFD
+1170 in any useful sense, and a low number is not obsolete. A serial is
+allocated once and never reused, because it is the last arc of an OID.
+
+## What is in here
 
 The Request-for-Discussion documents, across every weftspun project,
 following the Oxide RFD style. An RFD records a decision.
 
 The logbook: the cross-project engineering record of what was measured,
-what it cost, and which roads turned out to be dead ends. `CLAUDE.md`
-holds the working agreements, `PITFALLS.md` the recurring failure modes,
-`BLOCKLIST.md` the excluded sources. A `logbook-*.md` entry records a
-measurement. `weftspun/logbook` is archived, and its history is here.
+what it cost, and which roads turned out to be dead ends. `PITFALLS.md`
+holds the recurring failure modes and `BLOCKLIST.md` the excluded
+sources. A `logbook-*.md` entry records a measurement.
+`weftspun/logbook` is archived, and its history is here.
 
 Each RFD number has four decimal digits. The first digit names the
 organization. This repository uses digit 1. The last three digits are
@@ -17,8 +48,7 @@ the serial. RFD 1000 gives the rule and the OID arc it comes from.
 
 Each RFD is a reference design. It records a decision and points to
 the canonical documentation, in whichever project's own repository
-holds the code. It does not restate the documentation. See the STE
-policy below for the writing rules.
+holds the code. It does not restate the documentation.
 
 ## DRY policy
 
