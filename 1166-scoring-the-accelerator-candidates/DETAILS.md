@@ -7,22 +7,22 @@ dimensions vote between them, seat the winner, remove it, repeat.
 `runoff` reads wins-losses-ties against the runner-up it beat.
 `loops` is which of RFD 1143 to RFD 1146 the model appears in.
 
-     #  model                     fit shp ref clr val adp  sum  runoff  loops
-     1  rf-detr keypoint         100 100 100  80 100  95  575  5-0-1  1
-     2  cyclegan_style_transfer   95  95  60  50  45  95  440  5-0-1  3
-     3  EditScore, Qwen3-VL-8B    40  45  90  55  60  70  360  4-2-0  1,2,3,4
-     4  MoGe                      85  90  55  50  40  60  380  3-2-1  -
-     5  unified-modal-embedder    90  85  15  50  25  75  340  2-1-3  -
-     6  OmniGen2                  50  50  15  50  95  75  335  3-3-0  2,3,4
-     7  Kimodo                    95  40  10  55  40  85  325  2-2-2  -
-     8  See-Through               75  60  10  55  50  45  295  3-2-1  -
-     9  SkinTokens                95  15  10  45  35  80  280  4-1-1  -
-    10  residual-fsq-recommender  90  30  10  40  20  70  260  2-2-2  -
-    11  MuJoCo MJX                95  30   5  15  20  90  255  2-2-2  -
-    12  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  230  3-2-1  4
-    13  Mitsuba 3 shading         95  75   5  10  30  15  230  5-0-1  -
-    14  qwen35-defiant            45   5   0   5  15  15   85  3-2-1  -
-    15  VoxHammer                 30   0   0  15  25  10   80  last   4
+     #  model                     fit shp ref clr val adp ask  sum  runoff  loops
+     1  rf-detr keypoint         100 100 100  80 100  95 100  675  6-0-1  1
+     2  EditScore, Qwen3-VL-8B    40  45  90  55  60  70 100  460  4-3-0  1,2,4
+     3  cyclegan_style_transfer   95  95  60  50  45  95  80  520  4-2-1  2 in
+     4  OmniGen2                  50  50  15  50  95  75 100  435  3-3-1  2
+     5  MoGe                      85  90  55  50  40  60  40  420  4-2-1  -
+     6  Kimodo                    95  40  10  55  40  85  30  355  4-2-1  -
+     7  unified-modal-embedder    90  85  15  50  25  75  30  370  4-3-0  -
+     8  See-Through               75  60  10  55  50  45  40  335  4-3-0  -
+     9  Mitsuba 3 shading         95  75   5  10  30  15  95  325  3-2-2  -
+    10  MuJoCo MJX                95  30   5  15  20  90  85  340  3-3-1  -
+    11  SkinTokens                95  15  10  45  35  80  30  310  4-1-2  -
+    12  residual-fsq-recommender  90  30  10  40  20  70  30  290  4-3-0  -
+    13  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  35  265  6-1-0  4
+    14  qwen35-defiant            45   5   0   5  15  15  70  155  4-2-1  -
+    15  VoxHammer                 30   0   0  15  25  10   5   85  last   4
 
 The sum is not the order. MoGe outscores EditScore by 20 and sits
 below it, having lost the runoff that decided the seat.
@@ -44,26 +44,35 @@ informing it. `qwen35-defiant` is the same case and is kept at
 fifteenth as the one worked example of it, so the table still shows
 what that failure looks like.
 
-## The critical path, which an earlier revision missed
+## The critical path, and there are three loops rather than four
 
-`value` was first scored per invocation, and that was wrong. The four
-loops share their models, and grepping the notebooks says how:
+`value` was first scored per invocation, which ignored that the loops
+share their models. It also over-counted the loops.
 
-    loop 1  keypoints to ANNY      rf-detr, EditScore, soma_referee
-    loop 2  image to OmniGen2      OmniGen2, EditScore
-    loop 3  stylized to OmniGen2   CycleGAN, OmniGen2, EditScore
-    loop 4  latent to Pixal3D      Pixal3D, VoxHammer, OmniGen2, EditScore
+**Loops 2 and 3 are one loop.** Their proposers are the same call:
 
-**EditScore is in all four and OmniGen2 in three.** A gain on the
-shared scorer lands four times, and one scored per round records a
-quarter of what it is worth. Correcting `value` from 30 to 60 moved
-EditScore from eighth to third, the largest move this document has
-recorded.
+    loop 2   omnigen2_edit.py --image SOURCE   --steps STEPS[i-1] --precision bf16
+    loop 3   omnigen2_edit.py --image STYLIZED --steps STEPS[i-1] --precision bf16
 
-The correction cuts the other way too. CycleGAN sits in one loop and
-falls from 70 to 45; See-Through, Kimodo, MoGe, SkinTokens, MJX and
-Mitsuba are in none, and their `value` now says so. Second place is
-still CycleGAN, on `fit`, `shape` and `adapt` rather than on reach.
+Same script, same control variable, same precision, same scorer. The
+only difference is `STYLIZED`, which is `SOURCE` after a CycleGAN
+pass, so CycleGAN is an input transform inside loop 2 rather than a
+loop of its own. Loop 4 does differ: it defines `score_view` and
+`score_all` and reduces over a set of views where the others score one
+image.
+
+    loop 1  keypoints to ANNY   rf-detr, EditScore, soma_referee
+    loop 2  image to OmniGen2   OmniGen2, EditScore, CycleGAN on input
+    loop 4  latent to Pixal3D   Pixal3D, VoxHammer, EditScore over views
+
+**EditScore is in all three.** A gain on the shared scorer lands three
+times, and scoring it per round recorded a third of its worth.
+Correcting `value` from 30 to 60 moved it from eighth to second, the
+largest move this document has recorded.
+
+The correction cuts the other way. CycleGAN is not a loop and falls to
+45; See-Through, Kimodo, MoGe, SkinTokens, MJX and Mitsuba are in
+none, and their `value` says so.
 
 ## What the runoff caught
 
