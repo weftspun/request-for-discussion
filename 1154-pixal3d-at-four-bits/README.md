@@ -1,4 +1,4 @@
-# RFD 1154: Pixal3D fits only at four bits
+# RFD 1154: Pixal3D fits only at four bits, as a whole
 
 **State:** abandoned
 **Feature:** edge acceleration candidate
@@ -6,33 +6,35 @@
 
 ## Problem
 
-Pixal3D is 12.02 B parameters, the largest candidate that fits the
-UGen300 at all. At bf16 it is 24.05 GB and at eight bits 12.02 GB,
-against 8 GB of device memory. At four bits it is 6.61 GB and fits.
+Pixal3D is 12.02 B parameters: 24.05 GB at bf16 and 12.02 GB at eight
+bits against 8 GB of device memory, fitting only at four bits and
+6.61 GB. One precision reaches it, so RFD 1128 was a precondition.
 
-One precision reaches it and no other does. That makes RFD 1128 a
-precondition rather than a refinement: if four bits do not hold for
-this cascade, the model has no place on this device.
-
-Nothing has compiled it. The operator question is unasked, and
-Pixal3D is 480 times the size of the one graph this workspace has
-put through the Dataflow Compiler.
+**THAT IS THE WRONG UNIT, AND THE ABANDONMENT WAS DECIDED ON IT.**
+Pixal3D is four stages. The sparse structure stage is
+`ss_flow_img_dit_1_3B_*` at **1.3 B**: 2.6 GB at bf16, 0.72 GB at
+four, fitting at every precision and never meeting RFD 1128. It is
+also the only stage that runs here, its two configs being the only
+ones without `use_naf_upsample`, so they never reach NATTEN.
 
 ## Decision
 
-Abandoned on 2026-08-28. The accelerator work is scoped to
-rf-detr keypoint and RFD 1157, and this scored 10 of 25 against RFD 1157's 18.
+**THE PREDICTION THAT REPLACED IT WAS ALSO WRONG.** This RFD said
+sparse convolution would supply RFD 1131's gather and scatter.
+`sparse_structure_flow.py` imports nothing from `modules.sparse`: it
+is a dense DiT, named for what it emits, not how it computes.
 
-Rank Pixal3D behind RFD 1128. Ask no operator question until four
-bits have an answer, because a compile that succeeds at eight bits
-answers nothing about the only configuration that fits.
+Abandoned at 10 of 25 and it stays abandoned, and the reason is now
+measured. Complex RoPE blocked the export, an encoding rather than
+arithmetic: rewritten in reals it is bit-identical and the graph
+exports at 544 nodes, carrying none of the refused operators.
 
-If it is revived, take it up RFD 1129's ladder in order and stop at
-translate. The 4-bit figure is derived from RFD 1026 at the 0.55
-bytes per parameter its own Q4_K_M column implies, not measured, and
-no Pixal3D artifact has been built.
+The compiler refuses it anyway, and not for arithmetic. Every attempt
+dies in `_add_input_layers`: the parser wants each input image-shaped,
+and this stage takes a voxel grid, a timestep and two conditioning
+tensors. `Cos`, `Sin` and `ReduceL2` stay unjudged; `DETAILS.md` has
+the ladder.
 
 ## Related
 
-RFD 1128 decides four bits. RFD 1129 asks whether operators compile.
-RFD 1130 measures the device. RFD 1026 gives the memory.
+RFD 1131 names the refused operators; RFD 1140, the kernel wall.

@@ -649,6 +649,14 @@ def Scope "Serials"
                 {
                     custom string slug = "the-accelerator-in-the-loops"
                 }
+                def "S1164"
+                {
+                    custom string slug = "calibration-is-training-data"
+                }
+                def "S1165"
+                {
+                    custom string slug = "finetuning-exhausts-the-desk-card"
+                }
             }
         }
 
