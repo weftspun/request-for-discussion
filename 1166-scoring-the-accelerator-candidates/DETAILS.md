@@ -94,6 +94,37 @@ independent candidates. They are stages of one shape:
 OmniGen2 appears in one chain and not the other, which is a decision
 rather than an omission. See below.
 
+**The two are siblings here and the corpus already orders them.**
+`pose-consensus/README.md` records the inversion: instead of
+estimating poses from images, ANNY originates the pose, renders it,
+and a diffusion model stylizes the render with the geometry pinned,
+so the label is true by construction. That inversion ended the
+consensus panel outright -- you do not convene three estimators to
+adjudicate a pose you authored.
+
+Run that way the chain is one, not two:
+
+    originate 3D  ->  render views  ->  style views  ->  edit  ->  score
+
+and 2D is an operation on views rather than a stage before 3D. Three
+things follow.
+
+**The camera question disappears.** OmniGen2's 0.04 obedience slope
+only matters if the camera is asked for. Rendering from
+`sphere_hammersley_sequence` gives it exactly, and the measurement
+below stops being a problem to work around.
+
+**The labels land on the right side of CLAUDE.md's synthetic rule.**
+A render is constructed, deterministic from assets held here, with
+labels true by construction. An image generated first and reconstructed
+after is generated, and carries all five conditions.
+
+**rf-detr changes job without changing score.** Estimating an unknown
+pose and confirming an authored one survived a restyle are different
+questions, and `test_pose_survives_restyle.py` asks the second. Its
+`wanted` 85 covers the live case, a person in front of a camera, which
+the inversion does not touch.
+
 **The 3D chain does not go through the 2D one.** Pixal3D's `run()`
 takes a single `Image.Image`, so reading it as an image flow suggests
 2D must produce that image. It need not. `get_cond` one layer down
