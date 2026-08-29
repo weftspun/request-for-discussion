@@ -18,9 +18,11 @@ references:
     authors:
       - name: "NVlabs"
     repository-code: "https://github.com/NVlabs/SOMA-X"
-notes: "THE APACHE-2.0 BADGE COVERS THE CODE AND NOT THE WEIGHTS. Every released
-  checkpoint is under the NVIDIA Open Model License, and Kimodo-SMPLX-RP-v1 is under
-  the NVIDIA Internal Scientific Research and Development Model License, which is not
-  a commercial licence. One row, three licences.
+notes: "THE APACHE-2.0 BADGE COVERS THE CODE AND NOT THE WEIGHTS. Kimodo-SOMA-* and
+  Kimodo-G1-* are under the NVIDIA Open Model License, which permits commercial use and
+  is the shippable variant. Kimodo-SMPLX-RP-v1 carries the more restrictive NVIDIA
+  Internal Scientific Research and Development License, and it is also a SMPL-X
+  checkpoint, which is blocklisted here -- motion travels SOMA-X to ANNY, so that
+  variant is off the route twice over and is not a constraint on this row.
   weftspun/interactor-kimodo-text-to-motion is an HTTP wrapper that raises
   NotImplementedError outside stub mode and holds no model."

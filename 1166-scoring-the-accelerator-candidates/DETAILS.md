@@ -222,12 +222,19 @@ registers at 518 square, EditScore the ViT inside Qwen3-VL. One HEF does
 not serve them, and the tempting conclusion that it might is the reason
 to write the sub-model down rather than the row.
 
-**Kimodo's Apache-2.0 badge covers the code and not the weights.** Every
-released checkpoint is under the NVIDIA Open Model License, and
-`Kimodo-SMPLX-RP-v1` is under NVIDIA's Internal Scientific Research and
-Development licence, which is not commercial. Reading the repository
-badge and stopping there gets the answer exactly backwards for the part
-that would actually be shipped.
+**Kimodo's Apache-2.0 badge covers the code and not the weights.**
+`Kimodo-SOMA-*` and `Kimodo-G1-*` are under the NVIDIA Open Model
+Licence, which permits commercial use; `Kimodo-SMPLX-RP-v1` is under
+NVIDIA's Internal Scientific Research and Development licence, which
+does not. Reading the badge and stopping there answers for neither.
+
+The restrictive variant turns out not to constrain this row, and the
+reason is the rig rather than the licence. Motion travels SOMA-X to ANNY
+to Godot Humanoid to VRM, so no SMPL-X checkpoint is on the route --
+and SMPL-X is blocklisted besides. `Kimodo-SOMA-*` matches the rig and
+is the shippable variant, which is the same conclusion
+`logbook-rfd1016-model-repos.md` reached when it warned against swapping
+checkpoints without re-checking RFD 1028.
 
 **See-Through is the sharpest case, and it reaches the blocklist.** The
 repository is Apache-2.0 and pulls two checkpoints that are not:
