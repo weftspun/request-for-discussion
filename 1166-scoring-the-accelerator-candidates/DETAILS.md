@@ -11,8 +11,8 @@
     TRELLIS.2                   4    2    0     2     4    12   4.8
     SkinTokens                  5    1    0     3     3    12   4.8
     Pixal3D                     2    2    0     1     5    10   4.0
+    VoxHammer                   2    0    0     1     2     5   2.0
     Gemma 4                     2    0    0     0     2     4   1.6
-    VoxHammer                   -    -    -     -     -   n/a     -
 
 The `/10` column is `score_range / 10`, the reduction EditScore applies
 to its own scores, kept so the two scales cannot drift apart.
@@ -55,28 +55,40 @@ edited after the fact stops being a record of what was decided.
 the 8B at 6.75 GiB NF4, which meets RFD 1128's four-bit question that
 the 4B avoided. `fit` would fall.
 
-## VoxHammer, and why the rubric cannot hold it
+## VoxHammer, scored on what it costs rather than what it weighs
 
-It is training-free. No `nn.Module`, no `nn.Parameter` and no
-checkpoint exists in `3-interactor/voxhammer-upstream`; the only
-modules in the repo are a vendored I3D used by the benchmark. Its one
-class is a sampler with no parameters, and everything else is free
-functions bound onto TRELLIS objects with `types.MethodType`.
+It holds no weights. No `nn.Module`, no `nn.Parameter` and no
+checkpoint exists in `3-interactor/voxhammer-upstream`; its one class
+is a sampler with no parameters, and everything else is free functions
+bound onto TRELLIS objects with `types.MethodType`.
 
-So `fit` has no answer: the memory belongs to TRELLIS. Neither does
-`shape`, `reference` or `clear`. Scoring it zero would say it fails
-every test, when the truth is that it has nothing to test, and those
-are different facts.
+**AN EARLIER REVISION SCORED IT n/a ON THAT BASIS, AND THAT WAS THE
+WRONG QUESTION.** Weighing nothing does not make it absent from the
+ranking. It has a cost, and the cost is the edit it forces on the base
+model: `run_edit` replaces `ss_flow`'s and `slat_flow_model`'s forwards
+with `MethodType`, threading `kv`, `kv_mask`, `t_latent`, `order`,
+`pos` and `layer` through TRELLIS's own attention. Using it with
+Pixal3D means writing those patches against Pixal3D.
 
-**The n/a must not read as neutral.** On this device VoxHammer is
-worse than whatever it wraps. `edit_pipeline.py` matches sparse
-coordinates by building an N x M boolean matrix,
+That is what `shape` 0 records, and it is worse than a low score.
+**A compiled graph cannot be monkey-patched.** A HEF is a fixed
+artifact and `MethodType` is a Python-time substitution, so a base
+model on the accelerator is a base model VoxHammer cannot reach. Its
+presence subtracts from the accelerability of whatever it wraps rather
+than being neutral to it.
+
+`fit` 2 inherits Pixal3D's four-bit-only band. `clear` 1 is the
+TRELLIS 1 to TRELLIS.2 port plus the Pixal3D edits, against wrappers
+that are still stubs. `value` 2 is mesh editing being a real catalog
+task whose acceleration would have to happen in the base anyway.
+
+The arithmetic it adds is refused independently. `edit_pipeline.py`
+matches sparse coordinates by building an N x M boolean matrix,
 `(k.coords.unsqueeze(1) == kv_mask.unsqueeze(0)).all(dim=-1)`, then
 `.float().argmax(0)`, then scatters -- once per layer, per timestep,
-per CFG branch. It also carries an attention key-value cache from the
+per CFG branch -- and carries an attention key-value cache from the
 inversion pass into the editing pass. Data-dependent indexing and
-state held across invocations are both what RFD 1131 says a dataflow
-part refuses.
+state held across invocations are both what RFD 1131 refuses.
 
 Its base is also not the base the workspace claims. Upstream loads
 `microsoft/TRELLIS-image-large`, TRELLIS 1, while RFD 1047 and the

@@ -29,11 +29,11 @@ Five criteria, 0 to 5 each, summing to 25:
 
 Twenty-five because EditScore's own `score_range` is 25 and it
 normalises by `score_range / 10`. `value` is the softest column and
-is named so rather than defended: for RFD 1157 one encode-against-
-decode timing would replace it.
+named so rather than defended.
 
-VoxHammer takes no score: it is training-free, so every criterion
-belongs to the generator it edits. `DETAILS.md` says what that costs.
+VoxHammer is scored on the edit it forces on its base, not the
+weights it lacks: it patches the backbone's forwards at runtime and a
+compiled graph cannot be patched. `DETAILS.md` carries every row.
 
 ## Related
 
