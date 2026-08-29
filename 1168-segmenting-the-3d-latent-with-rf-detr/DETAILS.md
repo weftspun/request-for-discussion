@@ -160,39 +160,59 @@ segmenter's 2D confidence rather than anything the latent holds.
 scores well on nine coarse parts and badly on four fine ones will look
 like a model problem and is a resolution problem.
 
-## Laddering, and why the order is the decision
+## Laddering, and what the Embedder's Dilemma actually says
 
-`The Embedder's Dilemma: LLMs Are Better, but at What Cost?` is the
-framing offered for this, and it is applied here as a rule about
-ordering rather than as a cited result -- nobody here has read it, and
-the RFD should not lean on claims it has not checked. The rule it names
-is the one RFD 1167 already runs on: **climb only as far as the answer
-requires, and find out at each rung whether the next one is needed.**
+El Assadi, Muennighoff and Lee, *The Embedder's Dilemma: LLMs Are
+Better, but at What Cost?*, arXiv:2608.12875, COLM 2026. **An earlier
+revision of this section applied the title and admitted to not having
+read the paper. The paper is stronger than the title, and the numbers
+are the argument:**
 
-Every choice in this document has that shape, and each ladder has a
-cheap bottom that can refute the whole thing:
+    best LLM (Gemini 3.1 Pro)      77.6
+    best embedding model           77.2      0.4 points apart
 
-    question            bottom rung                    top rung
+    cost per benchmark pass        USD 154 against USD 0.11    1431x
+    tokens on the same GPU         2.5x to 736x slower
 
-    does the lift work  a one-hot constant through     a retrained
-                        `grid_sample`, no model        segmenter
-    does the segmenter  stock COCO `person`, a         23-part
-    reach the latent    checkpoint already held        `VALID_BODY_PARTS_V3`
-    which parts are     the nine coarse ones           the eye and mouth
-    reachable                                          parts
-    where does the      LaMa on the host, MIT and      CycleGAN compiled,
-    inpainter run       already domain-tuned           trained for this
+Its recommendation is not "prefer the small model". It is **stratified
+by task class**: embedding models for similarity, classification and
+clustering; LLMs reserved for reasoning-intensive retrieval, which is
+where they actually lead rather than tie.
 
-**The inpainter row is the one where the dilemma bites.** LaMa is better
-and does not compile; CycleGAN compiles and is not trained for the job.
-The laddered answer is not to pick now: run LaMa on the host until
-something measured says the stage must be on the device, and only then
-pay for the training that CycleGAN would need. Choosing early costs
-either quality or a corpus, and nothing yet demands either.
+That distinction is the useful import here, and it is sharper than the
+laddering this document was already doing. A ladder asks how far up to
+climb. Stratification asks whether the expensive rung is better *at this
+task* or only in aggregate -- and a 0.4-point aggregate gap at 1431x the
+cost means the aggregate was hiding the answer.
 
-**The rungs below are ordered by what they cost, not by what they
-prove.** That is deliberate: a step that costs an afternoon and can
-refute the proposal outranks one that costs a corpus and can confirm it.
+Applied to each choice below:
+
+    stage        task class         what it implies
+
+    segment      classification     rf-detr, and the paper says a small
+                 per voxel          model ties here rather than losing
+    inpaint      generation         the expensive model plausibly does
+                                    win, so measure before economising
+    score a      judgement, and     REACHES RFD 1166 -- see below
+    proposal     possibly retrieval
+
+**The scoring row is where this reaches beyond this RFD.** RFD 1166
+ranks EditScore, a LoRA over Qwen3-VL-8B at 6.75 GiB, as the gate that
+accepts or rejects a proposal. If that gate is doing classification --
+is this edit good -- the paper's finding is that an embedding model ties
+an LLM at a fraction of the cost, and 6.75 GiB is most of the device's
+8 GB. If it is doing reasoning-intensive judgement, the LLM earns its
+place. **Nobody here has established which**, and the two answers differ
+by roughly three orders of magnitude in cost.
+
+That is a question for RFD 1166 rather than this document, and it is
+recorded here because this is where the paper was raised.
+
+**The inpainter choice is not an instance of the dilemma**, and saying
+so keeps the analogy honest. LaMa against CycleGAN is quality against
+*accelerability*, not quality against cost -- LaMa is small and cheap
+and simply contains an operator the compiler refuses. A framework about
+paying more for better does not decide it.
 
 ## What would settle it, in the order it should be tried
 
