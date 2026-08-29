@@ -1,0 +1,13 @@
+# The repository stores LF and every desk checks out LF, so nothing converts and
+# nothing warns. `core.autocrlf=true` on a Windows desk rewrote all 294 text files
+# on checkout and back on commit, which `git diff` normalised to nothing while
+# `git status` still called them modified.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.zst binary
+*.usdc binary
