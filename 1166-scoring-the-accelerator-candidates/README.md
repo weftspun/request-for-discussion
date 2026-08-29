@@ -1,15 +1,14 @@
 # RFD 1166: How the accelerator candidates were scored
 
-**State:** discussion
-**Feature:** the method behind RFD 1154 to RFD 1162
+**State:** abandoned
+**Feature:** the method behind RFD 1154 to 1162
 **Scope:** `2-contract/manuals-weftspun`
 
 ## Problem
 
 Eight RFDs cite a score out of 25 and no document says what the 25
-measures. A reader sees the ranking and cannot reproduce it or tell
-which scores rest on measurement and which on a published name. It was
-also applied before it was written, and was too coarse.
+measures, so a reader cannot reproduce it or tell which scores rest on
+measurement. It was also applied before it was written.
 
 ## Decision
 
@@ -21,19 +20,20 @@ Eight dimensions, each scored 0 to 100:
     clear      is anything else blocking it
     value      what accelerating it buys
     adapt      can this desk train, tune or LoRA it
-    ask        can we get an answer out of it at all
+    ask        can we get an answer out of it
     wanted     does anyone want the thing it does
 
-`adapt` and `ask` are duals: one changes the model, the other queries
-it. `wanted` asks what the product is for, where the rest ask only
-about tractability.
+`adapt` and `ask` are duals. Rank by **STAR**, the eight dimensions voting; `scripts/check_rfd1166_rank.py` recomputes it with `starvote`.
 
-Rank by **STAR**, score then automatic runoff, the eight dimensions
-voting: take the two highest sums, let them vote, seat the winner,
-remove it, repeat. `scripts/check_rfd1166_rank.py` recomputes that
-with `starvote` and fails if `DETAILS.md` disagrees. **It ranks units
-of work, not capabilities**: a chain delivers when every stage is
-placed, and rows interact.
+**ABANDONED 2026-08-29, and RFD 1171 replaces it.** The ranking asked
+which candidate is most worth accelerating, and that was the wrong
+question: these are not competitors for one device but stages of one
+loop, and a stage does not outrank the stage it feeds. `Qwen3-ASR`
+entering at seat 2 made it plain — it beat every 3D row while doing
+something none of them do.
+
+`DETAILS.md` keeps the table and the measurements, which RFD 1171
+cites; what is withdrawn is the ordering itself.
 
 ## Related
 
