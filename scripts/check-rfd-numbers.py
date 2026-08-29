@@ -26,9 +26,9 @@ HEAD_RE = re.compile(r"^# RFD ([0-9]{4}):")
 
 def rfd_dirs(root):
     return sorted(
-        d for d in os.listdir(root)
-        if os.path.isdir(os.path.join(root, d)) and not d.startswith(".")
-        and re.match(r"^[0-9a-zA-Z]{4}-", d)
+        d for d in os.listdir(os.path.join(root, "rfd"))
+        if os.path.isdir(os.path.join(root, "rfd", d)) and not d.startswith(".")
+        and re.match(r"^1[0-9a-zA-Z]{3}-", d)
     )
 
 
@@ -51,7 +51,7 @@ def check(root):
             problems.append(f"{d}: serial {num} is already used by {seen[num]}")
         seen[num] = d
 
-        readme = os.path.join(root, d, "README.md")
+        readme = os.path.join(root, "rfd", d, "README.md")
         if not os.path.exists(readme):
             problems.append(f"{d}: has no README.md")
             continue
@@ -72,10 +72,10 @@ def self_test():
 
     def build(tmp, **kw):
         for name, head in kw.get("extra_dirs", []):
-            os.makedirs(os.path.join(tmp, name))
-            with open(os.path.join(tmp, name, "README.md"), "w", encoding="utf-8") as fh:
+            os.makedirs(os.path.join(tmp, "rfd", name))
+            with open(os.path.join(tmp, "rfd", name, "README.md"), "w", encoding="utf-8") as fh:
                 fh.write(head)
-        d = os.path.join(tmp, kw.get("dirname", "1001-a-slug"))
+        d = os.path.join(tmp, "rfd", kw.get("dirname", "1001-a-slug"))
         os.makedirs(d)
         with open(os.path.join(d, "README.md"), "w", encoding="utf-8") as fh:
             fh.write(kw.get("heading", "# RFD 1001: A slug\n"))

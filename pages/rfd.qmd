@@ -6,7 +6,7 @@ listing:
   sort-ui: true
   type: table
   contents:
-    - "../[0-9]*/index.md"
+    - "../rfd/1[0-9]*/index.md"
   sort:
     - "rfd desc"
   fields: [rfd, title, state, scope]

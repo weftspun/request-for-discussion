@@ -25,7 +25,8 @@ from markdown_it import MarkdownIt
 MD = MarkdownIt("commonmark")
 
 ORG = "1"
-DIR_RE = re.compile(r"^([0-9]{4})-[a-z0-9-]+$")
+DIR_RE = re.compile(r"^(1[0-9]{3})-[a-z0-9-]+$")
+RFD_ROOT = "rfd"
 TITLE_RE = re.compile(r"^RFD ([0-9]{4}): (\S.*)$")
 DETAILS_TITLE_RE = re.compile(r"^RFD ([0-9]{4}) details: (\S.*)$")
 # A state list in RFD 1000's own prose, so the gate and the document cannot
@@ -91,7 +92,7 @@ def inline_text(tokens):
 
 
 def _conventions_text(root):
-    p = os.path.join(root, "1000-conventions", "README.md")
+    p = os.path.join(root, "rfd", "1000-conventions", "README.md")
     if not os.path.exists(p):
         return None
     with open(p, encoding="utf-8") as fh:
@@ -319,8 +320,8 @@ def check_skill(name, source):
 def check(root):
     problems = []
     dirs = sorted(
-        d for d in os.listdir(root)
-        if DIR_RE.match(d) and os.path.isdir(os.path.join(root, d))
+        d for d in os.listdir(os.path.join(root, "rfd"))
+        if DIR_RE.match(d) and os.path.isdir(os.path.join(root, "rfd", d))
     )
     if not dirs:
         problems.append("no RFD directories found, which is never correct here")
@@ -340,7 +341,7 @@ def check(root):
 
     for d in dirs:
         num = DIR_RE.match(d).group(1)
-        readme = os.path.join(root, d, "README.md")
+        readme = os.path.join(root, "rfd", d, "README.md")
         if not os.path.exists(readme):
             problems.append(f"{d}/README.md: missing")
             continue
@@ -355,12 +356,12 @@ def check(root):
         problems += check_sections(name, toks, state)
         problems += check_citations(name, toks, nums)
 
-        skill = os.path.join(root, d, "SKILL.md")
+        skill = os.path.join(root, "rfd", d, "SKILL.md")
         if os.path.exists(skill):
             with open(skill, encoding="utf-8") as fh:
                 problems += check_skill(f"{d}/SKILL.md", fh.read())
 
-        details = os.path.join(root, d, "DETAILS.md")
+        details = os.path.join(root, "rfd", d, "DETAILS.md")
         if os.path.exists(details):
             # RFD 1000: a README moves the long material out and names where
             # it went. A sibling nothing points at is a file nobody opens.
@@ -392,10 +393,14 @@ def check_loose_markdown(root, nums):
     preamble or section spine to hold them to.
     """
     problems = []
-    for name in sorted(os.listdir(root)):
-        if not name.endswith(".md") or not os.path.isfile(os.path.join(root, name)):
+    loose = [(root, n) for n in os.listdir(root)]
+    lb = os.path.join(root, "logbook")
+    if os.path.isdir(lb):
+        loose += [(lb, n) for n in os.listdir(lb)]
+    for base, name in sorted(loose, key=lambda t: t[1]):
+        if not name.endswith(".md") or not os.path.isfile(os.path.join(base, name)):
             continue
-        with open(os.path.join(root, name), encoding="utf-8") as fh:
+        with open(os.path.join(base, name), encoding="utf-8") as fh:
             toks = MD.parse(fh.read())
         problems += check_citations(name, toks, nums)
     return problems
@@ -442,14 +447,14 @@ def self_test():
 
     def build(tmp, readme=GOOD_README, details=GOOD_DETAILS, deleted=None, skill=None):
         for n, body in (("1000-conventions", GOOD_CONVENTIONS), ("1001-a-slug", readme)):
-            os.makedirs(os.path.join(tmp, n))
-            with open(os.path.join(tmp, n, "README.md"), "w", encoding="utf-8") as fh:
+            os.makedirs(os.path.join(tmp, "rfd", n))
+            with open(os.path.join(tmp, "rfd", n, "README.md"), "w", encoding="utf-8") as fh:
                 fh.write(body)
         if details is not None:
-            with open(os.path.join(tmp, "1001-a-slug", "DETAILS.md"), "w", encoding="utf-8") as fh:
+            with open(os.path.join(tmp, "rfd", "1001-a-slug", "DETAILS.md"), "w", encoding="utf-8") as fh:
                 fh.write(details)
         if skill is not None:
-            with open(os.path.join(tmp, "1001-a-slug", "SKILL.md"), "w", encoding="utf-8") as fh:
+            with open(os.path.join(tmp, "rfd", "1001-a-slug", "SKILL.md"), "w", encoding="utf-8") as fh:
                 fh.write(skill)
         with open(os.path.join(tmp, "SERIALS.usda"), "w", encoding="utf-8") as fh:
             fh.write(deleted if deleted is not None else REGISTER)

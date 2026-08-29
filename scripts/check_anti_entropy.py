@@ -56,7 +56,7 @@ _alloc = _section("Allocated")
 live = [int(x) for x in re.findall(r'def "S(\d+)"', _alloc)]
 slugs = re.findall(r'custom string slug = "([^"]*)"', _alloc)
 dead = [int(x) for x in re.findall(r'def "S(\d+)"', _section("Deleted"))]
-dirs = sorted(d for d in os.listdir(RFD) if re.match(r"^1\d{3}-", d))
+dirs = sorted(d for d in os.listdir(RFD / "rfd") if re.match(r"^1\d{3}-", d))
 
 check("every allocated row carries a slug", len(live)==len(slugs), f"{len(live)} rows / {len(slugs)} slugs")
 check("no duplicate serials", len(live)==len(set(live)), f"{len(live)} rows, {len(set(live))} distinct")
@@ -85,8 +85,8 @@ check("every linkfile resolves", not broken, f"{len(links)} links, broken: {brok
 
 # --- E. README line bound, enumerated over all RFDs ------------------------------------
 limit = 40
-over = [d for d in dirs if (RFD/d/"README.md").is_file()
-        and len((RFD/d/"README.md").read_text().splitlines()) > limit]
+over = [d for d in dirs if (RFD/"rfd"/d/"README.md").is_file()
+        and len((RFD/"rfd"/d/"README.md").read_text().splitlines()) > limit]
 check(f"every README <= {limit} lines", not over, f"{len(dirs)} READMEs, over: {over or 'none'}")
 
 # --- F. shuffled full pass over the expensive checks -----------------------------------

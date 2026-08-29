@@ -8,7 +8,7 @@
         string categoryName = "documents"
         string pen = "1.3.6.1.4.1.66606"
         string[] relationKindVocabulary = ["spine", "satellite"]
-        string rule = "1000-conventions/DETAILS.md"
+        string rule = "rfd/1000-conventions/DETAILS.md"
         string site = "1"
         string siteName = "weftspun"
     }

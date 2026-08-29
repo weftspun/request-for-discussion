@@ -33,7 +33,8 @@ from pxr import Sdf, Usd
 
 ORG = "1"
 REGISTER = "SERIALS.usda"
-DIR_RE = re.compile(r"^([0-9]{4})-([a-z0-9-]+)$")
+DIR_RE = re.compile(r"^(1[0-9]{3})-([a-z0-9-]+)$")
+RFD_ROOT = "rfd"
 
 
 ROW_RE = re.compile(r"^S(\d+)$")
@@ -160,8 +161,8 @@ def rows_are_well_formed(text):
 
 def rfd_dirs(root):
     return sorted(
-        d for d in os.listdir(root)
-        if os.path.isdir(os.path.join(root, d)) and DIR_RE.match(d)
+        d for d in os.listdir(os.path.join(root, "rfd"))
+        if os.path.isdir(os.path.join(root, "rfd", d)) and DIR_RE.match(d)
     )
 
 
@@ -301,7 +302,7 @@ def self_test():
 
     def build(tmp, dirs, text):
         for d in dirs:
-            os.makedirs(os.path.join(tmp, d))
+            os.makedirs(os.path.join(tmp, "rfd", d))
         with open(os.path.join(tmp, REGISTER), "w", encoding="utf-8") as fh:
             fh.write(text)
 
