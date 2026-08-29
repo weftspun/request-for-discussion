@@ -609,6 +609,42 @@ def Scope "Serials"
                 {
                     custom string slug = "judging-matte-quality"
                 }
+                def "S1154"
+                {
+                    custom string slug = "pixal3d-at-four-bits"
+                }
+                def "S1155"
+                {
+                    custom string slug = "gemma4-towers-not-decoder"
+                }
+                def "S1156"
+                {
+                    custom string slug = "omnigen2-staged-residency"
+                }
+                def "S1157"
+                {
+                    custom string slug = "editscore-merger-lora"
+                }
+                def "S1158"
+                {
+                    custom string slug = "seethrough-layer-decomposition-edge"
+                }
+                def "S1159"
+                {
+                    custom string slug = "trellis2-at-the-ceiling"
+                }
+                def "S1160"
+                {
+                    custom string slug = "skintokens-edge-fit"
+                }
+                def "S1161"
+                {
+                    custom string slug = "kimodo-edge-fit"
+                }
+                def "S1162"
+                {
+                    custom string slug = "voxhammer-zero-weights"
+                }
             }
         }
 
