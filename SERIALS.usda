@@ -673,6 +673,10 @@ def Scope "Serials"
                 {
                     custom string slug = "the-audio-tower-for-qwen3-vl"
                 }
+                def "S1170"
+                {
+                    custom string slug = "a-cleanroom-presence-loop"
+                }
             }
         }
 
