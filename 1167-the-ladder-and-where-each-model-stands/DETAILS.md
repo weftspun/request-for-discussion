@@ -22,20 +22,26 @@ climbs, so the document is read in the order the work happens.
     Mitsuba 3 shading           [9]  measured at runtime: 14.1 ns a
                                      pixel shading, 48.1 G-buffer
     See-Through                [10]  RFD 1026 estimate
-    VoxHammer                  [12]  read only, and its DINOv2 stage is
-                                     rung-1-ready: stock
-                                     `dinov2_vitl14_reg` at 518 square,
-                                     150 passes an asset
 
-Eleven of twelve. Four carry runtime measurements, which is not
+Ten of twelve. Four carry runtime measurements, which is not
 nothing, but a model that runs on a 3090 has said nothing about
 whether it compiles for a dataflow part.
 
 ## Rung 1 -- exports to ONNX
 
-    model    evidence
+    model                  [1166]  evidence
 
-**THAT IS NOT WHY IT IS EMPTY, AND THE EARLIER WORDING FLATTERED
+    VoxHammer, DINOv2 stage  [12]  1343 nodes, 22 operators, at
+                                   [1,3,518,518] fixed. onnxruntime
+                                   against torch: max|diff| 6.027e-04
+                                   over max|ref| 120.355, 5.008e-06
+                                   relative.
+
+It went straight to rung 2 in the same run, so it is listed there
+rather than resting here. It is the first model other than rf-detr to
+earn a rung instead of being estimated onto one.
+
+**THE EARLIER WORDING OF THIS SECTION FLATTERED US, AND THE EARLIER WORDING FLATTERED
 US.** It said everything reaching rung 1 went further in the same
 sitting, which reads as though the rung were merely a place nobody
 lingers. Enumerating the checkouts says otherwise: across the whole
@@ -51,6 +57,14 @@ about work not yet started rather than work that left no trace.
 ## Rung 2 -- the operator set is known
 
     model                  [1166]  evidence
+
+    VoxHammer, DINOv2 stage  [12]  22 operators, every one inside
+                                   `DEVICE_OPS` -- the same allowlist
+                                   rf-detr's device half carried
+                                   through DFC 5.3.0 at 825 nodes.
+                                   Nothing refused, so rung 3 is the
+                                   next thing to run rather than the
+                                   next thing to argue about.
 
     TRELLIS.2 / Pixal3D      [11]  the SS stage exports at 544 nodes
                                    with RoPE rewritten in reals,
@@ -133,8 +147,15 @@ been further up the ladder than any of them. That is not a fault in
 the ranking -- RFD 1166 asks what is worth doing -- but it is why the
 two tables are separate documents.
 
-The cheapest thing that would change this picture is rung 1 on
-anything: an export costs no weights, no device and no rented card,
-and `gate_onnx_device.py` already does it for one model. VoxHammer's
-DINOv2 stage is the shortest of those, being a stock checkpoint at a
-fixed resolution that the same family already cleared at rung 3.
+That was written with rung 1 empty, and the cheapest thing that would
+change the picture was said to be an export of anything -- VoxHammer's
+DINOv2 stage being the shortest, a stock checkpoint at a fixed
+resolution in a family already cleared at rung 3.
+
+**It was, and it cost one script.** 1343 nodes, no refused operator,
+and two rungs in a single run. The prediction is kept because it was
+made before the measurement rather than after it, which is the only
+condition under which a prediction is worth anything.
+
+Six of the eight measurable rows have still never been exported, and
+the same argument applies to each of them unchanged.
