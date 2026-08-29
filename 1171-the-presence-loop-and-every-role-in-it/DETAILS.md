@@ -419,6 +419,65 @@ single-view slot exists to produce. It belongs downstream of
 LingBot-Map, which emits exactly those inputs, and nowhere near the
 start of a chain.
 
+## `depth_term.py` is written against Marigold, which is now blocked
+
+`pose-consensus/python/depth_term.py` is the forward that pairs with a
+learned depth inverse, and it names Marigold in its docstring, its
+pipeline table and its affine-alignment rationale. RFD 1166 blocklisted
+See-Through's checkpoints, and the depth one is a Marigold derivative.
+
+**The code does not break.** `depth_loss` takes `target_depth` as a
+tensor and nothing imports Marigold, so the source is swappable. What is
+stale is the reasoning around it.
+
+**Why depth is the right third opinion is measured, not asserted**, and
+that part survives any swap. The silhouette scores 0.849 on a
+depth-plus-scale change, which is exactly its own self-IoU floor --
+perfectly blind:
+
+    LBFGS vertex   sees 3D with correspondence  blind to whether the
+                                                correspondence is right
+    silhouette     sees the outline             blind to depth, interior
+    depth          sees the interior            blind to absolute scale
+
+## Taking MoGe for that slot spends the independence, knowingly
+
+Marigold is Stable-Diffusion-derived. rf-detr's backbone and MoGe are
+both DINOv2 descendants. **A second opinion is worth having only if it
+fails differently** -- `silhouette.py`'s own stated test -- and two
+models from one lineage can fail together where an SD model and a DETR
+could not.
+
+So the depth signal is kept and the independence is spent. Recorded as a
+cost rather than overlooked. What would restore it, all off the DINOv2
+lineage and all licence-clean:
+
+    ZoeDepth           MIT, metric, BEiT
+    DPT-BEiT-Large     MIT, relative, BEiT
+    DPT-hybrid-MiDaS   Apache-2.0, ViT and ResNet
+    lingbot-map        Apache-2.0, needs a sequence
+    classical MVS      OpenCV Apache-2.0, no learned prior at all
+
+None is chosen. The single-view decision was about the primary, not
+about the check.
+
+**Two things the metric switch breaks that nobody has fixed.** The table
+above lists depth as blind to absolute scale, which held for Marigold
+and MoGe-1 and does not hold for MoGe-2 or MoGe-3. The trio may still
+cover and nobody has re-derived it. And `align_affine` solves an
+`(a, b)` alignment inside the objective because Marigold was
+affine-invariant -- against a metric source that is optional, and
+leaving it on absorbs genuine scale error instead of reporting it,
+blinding the term to the axis metric depth was bought for.
+
+## LingBot-Depth was checked and is not a candidate
+
+Same family, Apache-2.0, ViT-L/14. It takes RGB **and** a sparse or
+noisy depth map **and** intrinsics, returning refined depth. Completion
+rather than estimation, so it presupposes both things the single-view
+slot exists to produce. It belongs downstream of LingBot-Map, which
+emits exactly those inputs.
+
 ## Single view: MoGe-3 is taken, and MoGe-2 stays for Pixal3D
 
     checkpoint          licence   gives                        kept for
