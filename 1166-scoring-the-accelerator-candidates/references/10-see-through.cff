@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "See-Through is upstream's. Cite it as below."
+title: "See-Through: layered decomposition of illustration"
+type: software
+authors:
+  - name: "Shitagaki Lab"
+repository-code: "https://github.com/shitagaki-lab/see-through"
+license: Apache-2.0
+notes: "weftspun/interactor-seethrough-layerdiff is a fork of shitagaki-lab/see-through."

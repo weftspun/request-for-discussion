@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "The wrapper is this workspace's. The model is upstream and its record is not yet verified here."
+title: "Kimodo: text-to-motion generation (weftspun service wrapper)"
+type: software
+authors:
+  - name: "Weftspun"
+repository-code: "https://github.com/weftspun/interactor-kimodo-text-to-motion"
+notes: "server.py raises NotImplementedError outside stub mode: no model or checkpoint is
+  held here. Upstream is recorded as Kimodo-SOMA under the NVIDIA Open Model License and
+  that record is UNVERIFIED. Do not cite this file as the model."

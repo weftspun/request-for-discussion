@@ -112,6 +112,85 @@ a scorer the loops do not converge, so what people make is not made
 well. It is invisible and load-bearing at once, and 10 recorded only
 the first half.
 
+## What each row is for, and what its score rests on
+
+The table above ranks. This says what each row would actually do in a
+chain and where its numbers came from, because a rank read without
+either invites the reader to supply their own.
+
+    model                    role in a chain                     basis
+
+    rf-detr keypoint         live markerless pose, the           measured,
+                             capture end of every making flow    40.85 M params
+    cyclegan_style_transfer  style transfer, 2D and 3D views     read only
+    OmniGen2                 text-guided 2D edit and corpus      measured,
+                             restyle                             7.81 B params
+    EditScore, Qwen3-VL-8B   the gate: scores a proposal         inferred from
+                             before it is accepted               code, 6.75 GiB
+    Kimodo                   pose without a camera               RFD 1026 estimate
+    MoGe                     depth and intrinsics from one       read only, a
+                             photograph, the ingest bootstrap    Pixal3D dependency
+    SkinTokens               rigging and skinning, mesh to       RFD 1026 estimate
+                             wearable asset
+    MuJoCo MJX               body dynamics and collision,        runtime only,
+                             the presence goal                   not a network
+    Mitsuba 3 shading        forward shading, G-buffer and       measured, 14.1 ns
+                             MToon per pixel                     a pixel
+    See-Through              layer decomposition, front hair     RFD 1026 estimate
+                             from back
+    TRELLIS.2 / Pixal3D      image to sparse 3D structure,       measured,
+                             the 3D backbone                     24.04 GB weights
+    VoxHammer                edit an existing asset in latent    read only, then
+                             space                               its ViT measured
+
+**Two rows are not networks and the basis column says so.** MuJoCo MJX
+is a physics engine and Mitsuba 3 is a renderer. Both were measured at
+runtime and neither has weights or a graph, so their `shape` and
+`reference` scores answer a question the models were asked and these two
+cannot be. RFD 1167 puts them off the ladder for the same reason.
+
+**Mitsuba's 14.1 ns is the forward shading pass alone** -- fixed-dimension
+per-pixel G-buffer and MToon arithmetic. Backward ray tracing and BVH
+traversal are excluded, and that exclusion is the whole reason the row
+scores 75 on `shape`: what remains is dense arithmetic at a fixed size,
+and pointer-chasing traversal is not.
+
+## The citations, and the eight this workspace had to correct
+
+`references/` holds a `CITATION.cff` for each row. They exist because a
+candidate table that names twelve projects and credits none of them is a
+provenance failure of the kind the blocklist exists to catch.
+
+A first draft of these files was supplied and **eight of the twelve
+attributed work to the wrong party**, so every entry was checked against
+the manifest's pinned parents and the LICENSE in each checkout rather
+than accepted:
+
+    row                  claimed                    actually
+    rf-detr keypoint     Weftspun Team              Roboflow
+    OmniGen2             VectorSpaceLab/OmniGen     .../OmniGen2
+    EditScore            QwenLM/Qwen-VL             VectorSpaceLab/EditScore,
+                                                    a LoRA over Qwen3-VL
+    Kimodo               Weftspun Team              a weftspun wrapper only;
+                                                    upstream unverified
+    MoGe                 RuidaZhang/MoGe            microsoft/MoGe
+    SkinTokens           Weftspun Team              a weftspun wrapper only
+    See-Through          Weftspun Team              shitagaki-lab/see-through
+    TRELLIS.2 / Pixal3D  microsoft/TRELLIS          microsoft/TRELLIS.2 and
+                                                    TencentARC/Pixal3D, two
+                                                    upstreams in one row
+    VoxHammer            Weftspun Team              Nelipot-Lee/VoxHammer
+
+Five of those credited someone else's model to this workspace, which is
+the direction of error that matters. Licenses are read from the LICENSE
+file in each checkout and not inferred: MIT for MoGe, TRELLIS.2, Pixal3D
+and VoxHammer; Apache-2.0 for OmniGen2, EditScore, See-Through and
+MuJoCo. Kimodo, SkinTokens and `rf-detr-cpp` carry no LICENSE file, so
+none is claimed for them.
+
+Where a row is a weftspun HTTP wrapper around a model held elsewhere,
+the file says so and tells the reader not to cite it as the model.
+
 ## What this ranking does not tell you
 
 It ranks **units of work**, not deliverable capabilities, and two

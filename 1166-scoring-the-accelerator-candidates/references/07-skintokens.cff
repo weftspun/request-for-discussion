@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "The wrapper is this workspace's. The model is upstream and unverified here."
+title: "SkinTokens: automatic rigging and skin weighting (weftspun service wrapper)"
+type: software
+authors:
+  - name: "Weftspun"
+repository-code: "https://github.com/weftspun/interactor-skintokens-auto-rig"
+notes: "server.py raises NotImplementedError outside stub mode and its own comment records
+  the checkpoint as not yet verified against the upstream repository."

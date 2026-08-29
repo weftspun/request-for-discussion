@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "Two distinct upstreams sit behind this row; cite whichever is used."
+title: "TRELLIS.2 and Pixal3D: structured 3D latents for image-to-3D"
+type: software
+authors:
+  - name: "Microsoft Research"
+repository-code: "https://github.com/microsoft/TRELLIS.2"
+license: MIT
+references:
+  - type: software
+    title: "Pixal3D"
+    authors:
+      - name: "TencentARC"
+    repository-code: "https://github.com/TencentARC/Pixal3D"
+    license: MIT
+notes: "Pixal3D is TencentARC, not Microsoft. The two are scored as one row because they
+  share a backbone, and a citation of one is not a citation of the other."
