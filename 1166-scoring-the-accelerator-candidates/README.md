@@ -37,4 +37,4 @@ placed, and rows interact.
 
 ## Related
 
-RFD 1154 to RFD 1162 hold the candidates.
+RFD 1154 to 1162 hold the candidates; RFD 1167 says where each is.

@@ -661,6 +661,10 @@ def Scope "Serials"
                 {
                     custom string slug = "scoring-the-accelerator-candidates"
                 }
+                def "S1167"
+                {
+                    custom string slug = "the-ladder-and-where-each-model-stands"
+                }
             }
         }
 
