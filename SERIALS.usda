@@ -657,6 +657,10 @@ def Scope "Serials"
                 {
                     custom string slug = "finetuning-exhausts-the-desk-card"
                 }
+                def "S1166"
+                {
+                    custom string slug = "scoring-the-accelerator-candidates"
+                }
             }
         }
 

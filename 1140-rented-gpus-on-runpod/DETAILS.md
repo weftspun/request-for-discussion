@@ -48,7 +48,20 @@ structure, 12/12 steps, 22 s. Stage 2 dies:
 NATTEN appears nowhere in Pixal3D's own Python. It arrives through **NAF**, the upsampler used
 whenever `use_naf_upsample: True`, which is every stage except the one that worked.
 `flash_attn_3` has the same problem and was routed around with `ATTN_BACKEND=sdpa`; NATTEN has
-no such switch. This is not a configuration slip and a larger Ampere card does not fix it.
+no such switch.
+
+**RETRACTED, 2026-08-29: the next sentence used to read "This is not a configuration slip and a
+larger Ampere card does not fix it." It is a configuration slip.** The run that failed installed
+the prebuilt wheel `requirements-hfdemo.txt` pins,
+`natten-0.21.0+torch2.6cu124-cp310-cp310-linux_x86_64.whl`, which carries whatever architectures
+its builder chose. Pixal3D's README step 3 says to build it instead:
+
+    NATTEN_CUDA_ARCH="xx" NATTEN_N_WORKERS=xx pip install natten==0.21.0 --no-build-isolation
+
+with "xx" the architecture of your own machine. `no kernel image is available for execution on
+the device` is the signature of a wheel missing an arch, not of an unsupported one, and reading
+it as the latter is what produced the retracted sentence. Whether sm_86 carries every kernel NAF
+reaches is unmeasured; what is measured is that nobody tried building it.
 
 RFD 1040 holds the packaging detail.
 

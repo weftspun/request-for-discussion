@@ -24,6 +24,13 @@ Its two configs are the only ones in `configs/gen` that do not set
 RFD 1140 measured the consequence: stage 1 succeeds in 22 s, stage 2
 dies on a missing sm_86 kernel.
 
+That is a packaging failure rather than a hardware one, and RFD 1140
+now says so. The failing run used the prebuilt NATTEN wheel from
+`requirements-hfdemo.txt`; the README's own step 3 builds it with
+`NATTEN_CUDA_ARCH` set for the machine. Nobody has tried that here, so
+the later stages are untested on this desk rather than excluded from
+it.
+
 ## The export, measured
 
 A 2-block, 384-channel instance with random weights. Operator coverage
