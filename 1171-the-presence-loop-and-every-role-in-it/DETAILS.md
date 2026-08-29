@@ -296,6 +296,45 @@ Two negative controls, and the second is the useful one:
 numpy only, and nothing about it needs the accelerator. It is the
 smallest piece of the plan and it is done.
 
+## Metric3D v2 was assessed as a fallback, and it is not one
+
+Proposed as a substitute for MoGe. It is not a substitute, and the
+reason is the half that was not being thought about.
+
+    MoGe                          Metric3D v2
+
+    affine-invariant depth        METRIC depth, which is better
+    RECOVERS intrinsics           CONSUMES intrinsics
+    MIT, weights and code         code BSD-2, weights unstated
+    exported here, 885 nodes      ONNX published, CC0 claimed
+
+**It needs the camera it was meant to replace.** `hubconf.py` takes
+`intrinsic = [fx, fy, cx, cy]` and line 197 computes
+`canonical_to_real_scale = intrinsic[0] / 1000.0`, dividing by the
+canonical camera's focal length. The depth is only metric because the
+focal length was supplied. Swap MoGe out for it and the loop loses the
+camera `silhouette.py` projects the body mesh through, which is the gap
+MoGe was closing that nobody had asked it to.
+
+**So they chain rather than compete.** MoGe recovers the intrinsics,
+Metric3D turns them into metric depth. That is a better arrangement
+than either alone and it is two models rather than one, which is a cost
+to weigh rather than a free upgrade.
+
+**The licence needs care, and in an unusual direction.** The code is BSD
+2-Clause, which is clean. The weights on `JUGGHM/Metric3D` state no
+licence at all. The ONNX re-exports at `onnx-community/metric3d-vit-*`
+declare **CC0-1.0** -- a third party dedicating to the public domain
+weights whose author granted nothing. That is the See-Through problem
+inverted: there a downstream party could not relicense restrictions
+away, and here a downstream party cannot grant rights it was never
+given. A CC0 label over unlicensed weights is not a licence.
+
+**What is genuinely attractive is the export.** `onnx/model.onnx` and
+`model_fp16.onnx` are published for three sizes, so rung 1 costs a
+download rather than a script. If the licence were resolved this would
+be the cheapest operator census in the field.
+
 ## The hazard in doing this, which is not small
 
 **Spending the silhouette as an output spends it as a check.**
