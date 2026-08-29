@@ -14,6 +14,8 @@ import tempfile
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comment_density import density, is_source  # noqa: E402
 
+FROZEN = ("rfd/", "changelog/", "data/")
+
 RUNGS = (0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40)
 ENTRY = 0.10
 MIN_LINES = 100
@@ -42,11 +44,12 @@ def changed(repo, base):
                  ("diff", "--name-only", "--cached"),
                  ("ls-files", "--others", "--exclude-standard")):
         names.update((git(repo, *args) or "").split())
-    return sorted(f for f in names if is_source(f))
+    return sorted(f for f in names if is_source(f) and not f.startswith(FROZEN))
 
 
 def tracked(repo):
-    return [f for f in (git(repo, "ls-files") or "").split() if is_source(f)]
+    return [f for f in (git(repo, "ls-files") or "").split()
+            if is_source(f) and not f.startswith(FROZEN)]
 
 
 def read(repo, path):
