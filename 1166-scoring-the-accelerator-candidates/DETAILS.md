@@ -10,7 +10,7 @@ dimensions vote between them, seat the winner, remove it, repeat.
      #  model                     fit shp ref clr val adp ask wnt  sum  runoff role
      1  rf-detr keypoint         100 100 100  80 100  95 100  85  760  7-0-1  fit
      2  cyclegan_style_transfer   95  95  60  50  70  95  80  60  605  4-4-0  style, both
-     3  OmniGen2                  50  50  15  50  95  75 100  55  490  4-3-1  2D edit
+     3  OmniGen2                  50  50  15  50  95  75 100  55  490  4-3-1  2D edit only
      4  EditScore, Qwen3-VL-8B    40  45  90  55  60  70 100  70  530  6-2-0  all three
      5  Kimodo                    95  40  10  55  40  85  30  80  435  4-3-1  -
      6  MoGe                      85  90  55  50  40  60  40  50  470  4-4-0  -
@@ -86,10 +86,13 @@ and it is not what this product is.
 `value` was first scored per invocation, which treated the models as
 independent candidates. They are stages of one shape:
 
-    2D edit   CycleGAN  ->  OmniGen2                      ->  EditScore
+    2D edit   CycleGAN  ->  OmniGen2                          ->  EditScore
     3D edit   CycleGAN  ->  VoxHammer over TRELLIS.2/Pixal3D  ->  EditScore
-    fit       rf-detr   ->  ANNY fit                      ->  EditScore
-                                                              + soma_referee
+    fit       rf-detr   ->  ANNY fit                          ->  EditScore
+                                                                  + soma_referee
+
+OmniGen2 appears in one chain and not the other, which is a decision
+rather than an omission. See below.
 
 **The 3D chain does not go through the 2D one.** Pixal3D's `run()`
 takes a single `Image.Image`, so reading it as an image flow suggests
@@ -131,6 +134,33 @@ reconstruction is exactly where it would happen.
 
 **Mitsuba is the 3D chain's view source, not a bystander**, which
 takes `value` from 30 to 55 and `wanted` from 25 to 45.
+
+## OmniGen2 is 2D only, and the measurement is why
+
+The 3D chain could route through it and does not. Camera control is
+what it would be for, and `write_omnigen2_jsonl.py` records what that
+costs: asked for eight azimuths in plain language, the recovered
+azimuth tracked the request with **a slope of 0.04**, where 1.00 is
+obedience and 0.00 is a body that never turned. Six of eight views
+came back between -1 and -11 degrees whatever was asked. The trained
+adapter reached 0.099.
+
+The 3D chain does not ask. It renders the view it wants from
+`sphere_hammersley_sequence`, exactly, in 1.79 ms. Paying 133 s for a
+slope of 0.04 when a camera transform is exact and free is the trade
+this records, and it is why the 3D chain takes rendered views instead.
+
+**What OmniGen2 keeps is the 2D chain, and nothing else here can do
+it.** CycleGAN is style transfer, one learned mapping. OmniGen2 is
+instructed editing: change this specific thing, in words. Those are
+different capabilities and the second is what "moddable" means. It is
+also `anny-camera-lora`'s base, so dropping it orphans RFD 1141's
+published adapter, and it generates the corpus restyles.
+
+Its `value` of 95 is the highest here because it is 133 s of a 163 s
+round, so removing it takes out the largest cost in the loop. `value`
+measures what accelerating a stage buys, not whether the stage should
+exist, and on OmniGen2 those two point in opposite directions.
 
 ## VoxHammer, and where its low scores are ours
 
