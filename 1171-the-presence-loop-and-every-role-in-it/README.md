@@ -12,16 +12,16 @@ Ranking stages of one pipeline against each other was the error.
 
 ## Decision
 
-One loop, four movements:
+One loop, four movements, and each runs both ways:
 
-    make      language and an image become a persona
-    dress     its worn layers are swapped and tried on
-    be it     a person wears it, live, through a camera
-    a friend  it wears itself, and has presence to someone
+    forward                     inverse
 
-**`be it` and `make a friend` are the same avatar and opposite loops.**
-In the first a person supplies motion and voice; in the second nobody
-does. That is why Kimodo sits beside rf-detr rather than behind it.
+    make    a description -> a body   fit      a picture -> the body
+    dress   a layer onto the body     recover  the body out from under
+    be it   a person supplies motion  friend   a model supplies it
+
+**Each inverse is under-determined, which is why every one has a
+checker** and why Kimodo sits beside rf-detr rather than behind it.
 
 **The See-Through taxonomy is the vocabulary.** `VALID_BODY_PARTS_V3`
 names 23 parts, nine worn and the rest body, and **that line is the
