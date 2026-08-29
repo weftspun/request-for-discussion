@@ -9,19 +9,16 @@ dimensions vote between them, seat the winner, remove it, repeat.
 
      #  model                     fit shp ref clr val adp ask wnt  sum  runoff role
      1  rf-detr keypoint         100 100 100  80 100  95 100  85  760  7-0-1  fit
-     2  cyclegan_style_transfer   95  95  60  50  70  95  80  60  605  4-4-0  style, both
+     2  cyclegan_style_transfer   95  95  60  50  70  95  80  60  605  5-2-1  style, both
      3  OmniGen2                  50  50  15  50  95  75 100  55  490  4-3-1  2D edit only
-     4  EditScore, Qwen3-VL-8B    40  45  90  55  60  70 100  70  530  6-2-0  all three
-     5  Kimodo                    95  40  10  55  40  85  30  80  435  4-3-1  -
-     6  MoGe                      85  90  55  50  40  60  40  50  470  4-4-0  -
-     7  SkinTokens                95  15  10  45  35  80  30  85  395  4-3-1  -
-     8  MuJoCo MJX                95  30   5  15  20  90  85  70  410  3-3-2  -
-     9  Mitsuba 3 shading         95  75   5  10  55  15  95  45  395  4-4-0  3D views
-    10  unified-modal-embedder    90  85  15  50  25  75  30  20  390  4-4-0  -
-    11  See-Through               75  60  10  55  50  45  40  40  375  6-2-0  -
-    12  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  35  90  355  4-4-0  3D backbone
-    13  residual-fsq-recommender  90  30  10  40  20  70  30  45  335  5-2-1  -
-    14  VoxHammer                 30   0   0  15  60  10  30  80  225  last   3D ingest+edit
+     4  EditScore, Qwen3-VL-8B    40  45  90  55  60  70 100  70  530  4-3-1  all three
+     5  Kimodo                    95  40  10  55  40  85  30  80  435  4-1-3  -
+     6  SkinTokens                95  15  10  45  35  80  30  85  395  4-3-1  -
+     7  MuJoCo MJX                95  30   5  15  20  90  85  80  420  3-3-2  presence
+     8  Mitsuba 3 shading         95  75   5  10  55  15  95  45  395  5-3-0  3D views
+     9  See-Through               75  60  10  55  50  45  40  40  375  6-2-0  -
+    10  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  35  90  355  8-0-0  3D backbone
+    11  VoxHammer                 30   0   0  15  60  10  30  80  225  last   3D ingest+edit
 
 The sum is not the order. MoGe outscores EditScore by 20 and sits
 below it, having lost the runoff that decided the seat.
@@ -46,6 +43,31 @@ informing it, and keeping one as a worked example only made the table
 look like it had considered language models on their merits. It had
 not: it had rediscovered the blocklist. BLOCKLIST.md is where that
 argument lives.
+
+**`unified-modal-embedder` and `residual-fsq-recommender` are struck
+for a different reason: they are not what this product is.** One
+embeds content for search and the other recommends a next item. Both
+are infrastructure for finding things, and the two wants this ranking
+serves are making and being present. Neither is in a chain, neither
+has run here, and the embedder held the lowest `wanted` of any
+surviving row at 20.
+
+Nothing is wrong with either. A ranking of accelerator candidates is
+not a list of the workspace's models, and the checkouts stay in the
+manifest where they are placed.
+
+**MoGe is struck because the inversion deletes its input.** It is not
+an independent candidate: it is in Pixal3D's core `requirements.txt`
+and `app.py` calls it from `get_camera_params_wild_moge`, which takes
+a photograph somebody else shot and estimates the camera that shot it
+-- intrinsics, then `camera_angle_x` and `distance`, which is exactly
+the `camera_params` dict `run()` demands.
+
+*Wild* is the operative word. Render the view yourself and there is no
+wild image and no camera to recover: the angle, the distance and the
+mesh scale are yours by construction. So the inverted chain does not
+make MoGe redundant, it removes the case MoGe exists for, which is the
+same thing that happened to the consensus panel.
 
 ## `wanted`, and what the product is for
 
@@ -222,10 +244,13 @@ image-to-image convolution, no autoregression, no sparse indexing.
 image, and depth estimation is a category the Hailo zoo already ships
 for HAILO10H, which is what its `reference` 55 records.
 
-`unified-modal-embedder` and `residual-fsq-recommender` are small
-models on Nx and EXLA, neither examined.
+**MuJoCo MJX serves presence, and was twice mis-filed.** First as
+tooling, then as interactability at the edge of the product. Physics
+is embodiment: a body that collides, stands on ground and responds is
+present, and one that floats and clips is not. Its `wanted` is 80,
+with `rf-detr` and `Kimodo`.
 
-**MuJoCo MJX was dismissed as tooling and is not.** `mjx/mujoco/mjx`
+ `mjx/mujoco/mjx`
 is MuJoCo reimplemented in JAX: a differentiable physics graph, made
 fixed-shape on purpose through fixed-size contact buffers, which is
 why `adapt` is 90 -- gradients run through the simulator itself.
@@ -282,8 +307,8 @@ an engine port; `anny` and `soma-x` are parametric bodies;
     EditScore         INFERRED, and the inference was wrong once:
                       scoring assumed Qwen3-VL-4B and `weft_score.py`
                       loads the 8B.
-    CycleGAN, MoGe,   UNEXAMINED. Scored from what they are, not from
-    embedder, fsq     anything run. `clear` near 50 says so.
+    CycleGAN          UNEXAMINED. Scored from what it is, not from
+                      anything run. `clear` 50 says so.
 
 ## The `adapt` column, and the one number that bounds it
 
