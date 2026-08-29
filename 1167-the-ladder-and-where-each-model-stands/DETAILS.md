@@ -35,9 +35,18 @@ whether it compiles for a dataflow part.
 
     model    evidence
 
-Empty as a resting place. Everything that reached it went further in
-the same sitting, which is what makes rung 1 the cheap one: it costs
-no weights, no device and no rented card.
+**THAT IS NOT WHY IT IS EMPTY, AND THE EARLIER WORDING FLATTERED
+US.** It said everything reaching rung 1 went further in the same
+sitting, which reads as though the rung were merely a place nobody
+lingers. Enumerating the checkouts says otherwise: across the whole
+workspace, `torch.onnx.export` appears in `rf-detr-cpp` and in two
+projects that are not candidates at all. Ten of the eleven others
+have no export site of any kind.
+
+Rung 1 is empty because nobody has written the export, not because
+everybody sprinted past it. The rung is still the cheap one -- no
+weights, no device, no rented card -- and that is now an argument
+about work not yet started rather than work that left no trace.
 
 ## Rung 2 -- the operator set is known
 
@@ -51,6 +60,14 @@ no weights, no device and no rented card.
                                    DEVICE_OPS. Rung 3 refused it in
                                    `_add_input_layers`, four times, on
                                    input rank rather than arithmetic.
+
+**No script in this workspace reproduces that row.** `pixal3d-upstream`
+has no export site, and the RoPE rewrite that produced 544 nodes lived
+in a scratch file that is gone. The measurement is recorded and the
+apparatus is not, which is the half CLAUDE.md asks for by name. Rung 2
+therefore rests on a number nobody here can re-derive, and re-earning
+it means writing the export that should have been committed the first
+time.
 
 ## Rung 3 -- the Dataflow Compiler accepts the graph
 
@@ -81,6 +98,33 @@ Empty. No HEF has executed on `usb/004:013` from this workspace. The
 device itself is measured -- HAILO10H, firmware 5.3.2, 2.27 ms
 hardware latency on a zoo classifier -- but nothing of ours has
 reached it.
+
+## What rung 0 does not distinguish, and should
+
+Rung 0 reads `blocklist clear, checkout present`, and eleven rows
+satisfy it. They do not satisfy it in the same way, and the single
+label hides two kinds of row that can never climb as written.
+
+**Three rows have no model on disk.** Kimodo and SkinTokens are
+`server.py` and nothing else: every path outside `WEFTSPUN_STUB=1`
+raises `NotImplementedError`, so what is checked out is an HTTP
+contract, not a network. `cyclegan_style_transfer` is the same shape
+with a checkpoint path in it -- one file, no `nn.Module` anywhere.
+For these three, rung 1 is not the next step; acquiring the model is.
+
+**Two rows are not neural networks at all.** MuJoCo MJX is a physics
+engine and Mitsuba 3 is a renderer. Neither has weights, neither has
+a graph to export, and the ladder from ONNX through the Dataflow
+Compiler is the wrong instrument for both. They sit at rung 0 the way
+a boat sits at the bottom of a staircase. Accelerating them is a real
+question and it is a different one, so the honest entry is `not on
+this ladder` rather than a rung.
+
+That leaves **eight rows the ladder actually measures**: rf-detr,
+OmniGen2, EditScore, MoGe, Pixal3D/TRELLIS.2, VoxHammer, See-Through
+and -- once it has a model -- CycleGAN. Seven of the eight hold real
+module and checkpoint code, so for them rung 1 is genuinely the next
+thing rather than a placeholder.
 
 ## What the shape of this says
 
