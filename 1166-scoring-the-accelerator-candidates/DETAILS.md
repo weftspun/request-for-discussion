@@ -236,6 +236,40 @@ is the shippable variant, which is the same conclusion
 `logbook-rfd1016-model-repos.md` reached when it warned against swapping
 checkpoints without re-checking RFD 1028.
 
+**Retraining Kimodo to get an Apache-2.0 or MIT artifact was considered
+and is not available, and the reason is the data rather than the model.**
+
+The NVIDIA Open Model Licence does not force it. It permits commercial
+use, permits derivative models, and states that the derivative is
+owned by whoever made it -- it is not share-alike, so nothing propagates
+the way OpenRAIL-M's restrictions do. What it does attach is
+attribution, a guardrail-circumvention clause that terminates the
+grant, a patent-litigation trigger, and NVIDIA's Trustworthy AI terms.
+Those are conditions on use, not a bar to shipping, and
+`logbook-rfd1016-model-repos.md` already recorded `Kimodo-SOMA` as the
+shippable variant on that basis.
+
+Retraining would buy an artifact with no third-party terms at all. It
+cannot be done on Kimodo's own corpus. **BONES-SEED sits behind an
+acceptance gate** -- 288 hours, 142,220 annotated animations, 522
+performers, under a custom `bones-seed-license` whose terms are not
+readable without accepting them first. That is the condition CLAUDE.md
+names in as many words: a set behind a registration form is not
+licence-clean, because terms that cannot be read cannot be gated on. It
+is the same test that blocklists `24yearsold/metricdepth3d_tmp` two
+sections above.
+
+So the licence-clean motion pool is what remains after the blocklist
+takes CMU on provenance, Mixamo on licensing and posemaniacs on
+scraping: ANNY/SOMA's own pose library, constructed synthetic rendered
+from assets held here, or a CC-BY-4.0 capture set with citation
+metadata. A retrain is a data programme before it is a training run,
+and pretending otherwise would put the effort in the wrong place.
+
+**The recommendation is therefore to ship `Kimodo-SOMA-*` under its
+licence and treat the retrain as a separate decision about corpus
+independence, not about whether this row can be used.**
+
 **See-Through is the sharpest case, and it reaches the blocklist.** The
 repository is Apache-2.0 and pulls two checkpoints that are not:
 
