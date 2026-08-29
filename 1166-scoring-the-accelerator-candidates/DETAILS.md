@@ -7,22 +7,22 @@ dimensions vote between them, seat the winner, remove it, repeat.
 `runoff` reads wins-losses-ties against the runner-up it beat.
 `loops` is which of RFD 1143 to RFD 1146 the model appears in.
 
-     #  model                     fit shp ref clr val adp ask  sum  runoff  loops
-     1  rf-detr keypoint         100 100 100  80 100  95 100  675  6-0-1  1
-     2  EditScore, Qwen3-VL-8B    40  45  90  55  60  70 100  460  4-3-0  1,2,4
-     3  cyclegan_style_transfer   95  95  60  50  45  95  80  520  4-2-1  2 in
-     4  OmniGen2                  50  50  15  50  95  75 100  435  3-3-1  2
-     5  MoGe                      85  90  55  50  40  60  40  420  4-2-1  -
-     6  Kimodo                    95  40  10  55  40  85  30  355  4-2-1  -
-     7  unified-modal-embedder    90  85  15  50  25  75  30  370  4-3-0  -
-     8  See-Through               75  60  10  55  50  45  40  335  4-3-0  -
-     9  Mitsuba 3 shading         95  75   5  10  30  15  95  325  3-2-2  -
-    10  MuJoCo MJX                95  30   5  15  20  90  85  340  3-3-1  -
-    11  SkinTokens                95  15  10  45  35  80  30  310  4-1-2  -
-    12  residual-fsq-recommender  90  30  10  40  20  70  30  290  4-3-0  -
-    13  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  35  265  6-1-0  4
-    14  qwen35-defiant            45   5   0   5  15  15  70  155  4-2-1  -
-    15  VoxHammer                 30   0   0  15  25  10   5   85  last   4
+     #  model                     fit shp ref clr val adp ask wnt  sum  runoff loops
+     1  rf-detr keypoint         100 100 100  80 100  95 100  85  760  7-0-1  1
+     2  cyclegan_style_transfer   95  95  60  50  45  95  80  35  555  4-3-1  2 in
+     3  OmniGen2                  50  50  15  50  95  75 100  55  490  5-2-1  2
+     4  EditScore, Qwen3-VL-8B    40  45  90  55  60  70 100  10  470  5-3-0  1,2,4
+     5  Kimodo                    95  40  10  55  40  85  30  80  435  4-3-1  -
+     6  MoGe                      85  90  55  50  40  60  40  50  470  4-4-0  -
+     7  SkinTokens                95  15  10  45  35  80  30  85  395  4-3-1  -
+     8  MuJoCo MJX                95  30   5  15  20  90  85  70  410  4-4-0  -
+     9  unified-modal-embedder    90  85  15  50  25  75  30  20  390  4-4-0  -
+    10  See-Through               75  60  10  55  50  45  40  40  375  6-2-0  -
+    11  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  35  90  355  4-3-1  4
+    12  Mitsuba 3 shading         95  75   5  10  30  15  95  25  350  4-4-0  -
+    13  residual-fsq-recommender  90  30  10  40  20  70  30  45  335  7-1-0  -
+    14  qwen35-defiant            45   5   0   5  15  15  70  20  175  4-3-1  -
+    15  VoxHammer                 30   0   0  15  25  10   5  60  145  last   4
 
 The sum is not the order. MoGe outscores EditScore by 20 and sits
 below it, having lost the runoff that decided the seat.
@@ -43,6 +43,33 @@ Ranking a candidate with no path flatters the ranking rather than
 informing it. `qwen35-defiant` is the same case and is kept at
 fifteenth as the one worked example of it, so the table still shows
 what that failure looks like.
+
+## `wanted`, scored against the survey
+
+The other seven dimensions all ask whether a model is tractable. None
+asks whether anyone wants what it does, and a twelve-person survey of
+wanted features in a massive multiplayer game answers that. Two
+clusters take five respondents each:
+
+    creation and UGC   a meshing pen to build everything in world,
+                       moddable, user generated content, user created
+                       content unlocking most things, save and share
+    social presence    a social setting to be with people, experiencing
+                       something with them, voice, dancing or emotes,
+                       small groups, squad cooperation
+
+`TRELLIS.2 / Pixal3D` takes 90 as the closest thing here to a meshing
+pen; `SkinTokens` 85 because a user-made mesh that cannot be rigged
+cannot be worn; `rf-detr` 85 and `Kimodo` 80 on the social cluster,
+where dancing and emotes were asked for by name. `MuJoCo MJX` takes 70
+on "absolute interactability with world and mechanics".
+
+**EditScore takes 10, the lowest in the table.** It is a scorer: no
+player ever sees it, and nothing in twenty-four answers asks for
+better scoring. It remains fourth overall, which is the point of
+having eight dimensions rather than one.
+
+Nobody asked for an LLM. `qwen35-defiant` takes 20 on that basis.
 
 ## The critical path, and there are three loops rather than four
 
