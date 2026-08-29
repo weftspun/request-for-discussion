@@ -1,10 +1,26 @@
 cff-version: 1.2.0
-message: "The wrapper is this workspace's. The model is upstream and its record is not yet verified here."
-title: "Kimodo: text-to-motion generation (weftspun service wrapper)"
+message: "Kimodo is NVIDIA's. The code and the weights are licensed separately -- cite both."
+title: "Kimodo: a kinematic motion diffusion model for humanoid motion generation"
 type: software
 authors:
-  - name: "Weftspun"
-repository-code: "https://github.com/weftspun/interactor-kimodo-text-to-motion"
-notes: "server.py raises NotImplementedError outside stub mode: no model or checkpoint is
-  held here. Upstream is recorded as Kimodo-SOMA under the NVIDIA Open Model License and
-  that record is UNVERIFIED. Do not cite this file as the model."
+  - name: "NVIDIA Toronto AI Lab"
+repository-code: "https://github.com/nv-tlabs/kimodo"
+license: Apache-2.0
+references:
+  - type: software
+    title: "Kimodo-SOMA-SEED-v1.1 and Kimodo-SOMA-RP-v1.1 checkpoints"
+    authors:
+      - name: "NVIDIA"
+    url: "https://huggingface.co/nvidia/Kimodo-SOMA-SEED-v1.1"
+    notes: "NVIDIA Open Model License, not Apache-2.0."
+  - type: software
+    title: "SOMA-X skeleton"
+    authors:
+      - name: "NVlabs"
+    repository-code: "https://github.com/NVlabs/SOMA-X"
+notes: "THE APACHE-2.0 BADGE COVERS THE CODE AND NOT THE WEIGHTS. Every released
+  checkpoint is under the NVIDIA Open Model License, and Kimodo-SMPLX-RP-v1 is under
+  the NVIDIA Internal Scientific Research and Development Model License, which is not
+  a commercial licence. One row, three licences.
+  weftspun/interactor-kimodo-text-to-motion is an HTTP wrapper that raises
+  NotImplementedError outside stub mode and holds no model."

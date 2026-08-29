@@ -191,6 +191,67 @@ none is claimed for them.
 Where a row is a weftspun HTTP wrapper around a model held elsewhere,
 the file says so and tells the reader not to cite it as the model.
 
+## A row is not a model, and that is systemic
+
+Every row here names a project. Not one of them is a single network, and
+the composite is where both the licence and the accelerable part live.
+Scoring and citing at row granularity hides both.
+
+    row                  the part that would compile   the part that binds the licence
+
+    rf-detr keypoint     a patch-12 DINOv2 backbone    Roboflow, Apache-2.0
+    EditScore            Qwen3-VL's stock ViT          a LoRA over someone else's
+                                                       base model
+    MoGe                 DINOv2 ViT-B/14, four         microsoft/MoGe, MIT
+                         intermediate layers
+    VoxHammer            stock dinov2_vitl14_reg       Nelipot-Lee, MIT, over a
+                         at 518 square                  TRELLIS backbone
+    Kimodo               not examined                  code Apache-2.0, weights
+                                                       NVIDIA Open Model, one
+                                                       variant NVIDIA R&D
+    See-Through          not examined                  code Apache-2.0, depth
+                                                       OpenRAIL++-M, one checkpoint
+                                                       unreadable
+    TRELLIS.2 / Pixal3D  the SS stage alone            two upstreams, Microsoft
+                                                       and TencentARC
+
+**Four of the twelve rows compile because of DINOv2, and none of them
+compile the same DINOv2.** rf-detr runs a custom patch-12 variant, MoGe a
+ViT-B/14 taking intermediate layers, VoxHammer a stock ViT-L/14 with
+registers at 518 square, EditScore the ViT inside Qwen3-VL. One HEF does
+not serve them, and the tempting conclusion that it might is the reason
+to write the sub-model down rather than the row.
+
+**Kimodo's Apache-2.0 badge covers the code and not the weights.** Every
+released checkpoint is under the NVIDIA Open Model License, and
+`Kimodo-SMPLX-RP-v1` is under NVIDIA's Internal Scientific Research and
+Development licence, which is not commercial. Reading the repository
+badge and stopping there gets the answer exactly backwards for the part
+that would actually be shipped.
+
+**See-Through is the sharpest case, and it reaches the blocklist.** The
+repository is Apache-2.0 and pulls two checkpoints that are not:
+
+- `prs-eth/marigold-depth-v1-1` is **CreativeML Open RAIL++-M**,
+  fine-tuned from `stable-diffusion-2`. CLAUDE.md blocklists OpenRAIL-M
+  as a generator because its use-restrictions propagate into anything
+  trained on the output, and exempts passthrough use. Which of the two
+  this is depends on whether See-Through's output enters a corpus --
+  and `seethrough PSDs` is already a blocklist row for secondary
+  generation. Those are the same fact reached from two directions.
+- `24yearsold/metricdepth3d_tmp` returns **HTTP 401**. No readable
+  licence, no model card, and a name ending `_tmp`. CLAUDE.md is
+  explicit that terms which cannot be read without accepting them
+  cannot be gated on, so this is not licence-clean.
+
+Neither was visible from the row. Both were found by reading what the
+code loads, which is the only method that works here.
+
+**So the rule this section exists to state:** a candidate is cleared, or
+scored, or cited, at the granularity of the checkpoints it loads. The
+row is a name for a bundle, and a bundle has no licence and no operator
+census of its own.
+
 ## What this ranking does not tell you
 
 It ranks **units of work**, not deliverable capabilities, and two
