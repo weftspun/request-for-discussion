@@ -113,6 +113,30 @@ device itself is measured -- HAILO10H, firmware 5.3.2, 2.27 ms
 hardware latency on a zoo classifier -- but nothing of ours has
 reached it.
 
+## `torch.onnx.export` was the convenient proxy, and it understated
+
+The audit above counted export CALL SITES, found them in `rf-detr-cpp`
+and nowhere else among the candidates, and concluded the other ten
+would each need an export written from scratch. The count is right and
+the conclusion it invited is too pessimistic.
+
+MoGe v2 has no export call and is nevertheless the readiest of them.
+`DINOv2Encoder` carries an `onnx_compatible_mode` setter that upstream
+wrote for this purpose, and it switches off precisely the two things
+that break a fixed-shape export: the positional-embedding fast path
+that branches on `npatch == N and w == h`, and `antialias=True` in the
+`F.interpolate` that resizes to a patch multiple.
+
+That second one is the same obstacle rf-detr's gate meets and answers
+differently. `gate_onnx_device.py` constant-folds the antialiased
+resize, which is exact and asserts the fold fired; MoGe turns antialias
+off, which changes the numbers. Two models, one obstacle, and the
+choice between them is exactness against convenience.
+
+So the readiness signal is not whether a repository calls the exporter.
+It is whether the graph has a fixed-shape mode at all, and asking the
+easy question gave the gloomier answer. Rule 1, on our own audit.
+
 ## What rung 0 does not distinguish, and should
 
 Rung 0 reads `blocklist clear, checkout present`, and eleven rows
