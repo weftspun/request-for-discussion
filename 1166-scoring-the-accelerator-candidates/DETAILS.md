@@ -9,9 +9,9 @@ dimensions vote between them, seat the winner, remove it, repeat.
 
      #  model                     fit shp ref clr val adp ask wnt  sum  runoff loops
      1  rf-detr keypoint         100 100 100  80 100  95 100  85  760  7-0-1  1
-     2  cyclegan_style_transfer   95  95  60  50  45  95  80  35  555  4-3-1  2 in
-     3  OmniGen2                  50  50  15  50  95  75 100  55  490  5-2-1  2
-     4  EditScore, Qwen3-VL-8B    40  45  90  55  60  70 100  10  470  5-3-0  1,2,4
+     2  EditScore, Qwen3-VL-8B    40  45  90  55  60  70 100  70  530  5-3-0  1,2,4
+     3  cyclegan_style_transfer   95  95  60  50  45  95  80  35  555  4-3-1  2 in
+     4  OmniGen2                  50  50  15  50  95  75 100  55  490  4-3-1  2
      5  Kimodo                    95  40  10  55  40  85  30  80  435  4-3-1  -
      6  MoGe                      85  90  55  50  40  60  40  50  470  4-4-0  -
      7  SkinTokens                95  15  10  45  35  80  30  85  395  4-3-1  -
@@ -50,11 +50,10 @@ The other seven dimensions all ask whether a model is tractable. None
 asks whether the thing it does is wanted, and a model can be easy to
 accelerate and serve nothing anybody needs.
 
-What the product is for answers it, and the manifest already says: a
-social world with avatars people wear. `v-sekai` and
-`v-sekai-fabric` carry the client and the fabric, ANNY is the body,
-and RFD 1122 is the chain that puts a person into it. Two things
-follow from that and nothing else does.
+What the product is for answers it, and the manifest says: a social
+world with avatars people wear. `v-sekai` and `v-sekai-fabric` carry
+the client and the fabric, ANNY is the body, and RFD 1122 is the chain
+that puts a person into it. Two things follow and nothing else does.
 
 **People make things and wear them.** A mesh someone made is worth
 nothing until it is rigged, textured and in the world, so
@@ -62,18 +61,25 @@ nothing until it is rigged, textured and in the world, so
 wearable asset and `SkinTokens` 85, because an unrigged mesh cannot be
 worn at all. `VoxHammer` takes 60 for editing what exists.
 
-**People are present to each other.** Embodiment is the product, so
-`rf-detr` takes 85 for putting a body in the world from a camera and
-`Kimodo` 80 for moving it. `MuJoCo MJX` takes 70: a world that
-responds is the difference between a room and a backdrop.
+**People are present to each other, and keypoints are how.** rf-detr
+is markerless motion capture: a camera, a body, and the pose that
+carries one person's movement onto another's avatar. That is
+embodiment rather than a step toward it, so it takes 85, and `Kimodo`
+80 for moving a body without a camera in front of it. `MuJoCo MJX`
+takes 70, because a world that responds is the difference between a
+room and a backdrop.
 
-**EditScore takes 10, the lowest here.** It is a scorer. It makes the
-loops converge and nobody wears it, sees it or asks for it. It stays
-fourth overall, which is the argument for eight dimensions rather than
-one: a thing can be worth building and never be the point.
+**EditScore takes 70, and an earlier revision had it at 10.** That
+scored it as a thing nobody wears or sees, which is true and beside
+the point: **it is a dependency of every making flow above it.** A
+mesh generated, edited or restyled is a proposal, and something has to
+say whether the proposal is good before it reaches a wardrobe. Without
+a scorer the loops do not converge, so what people make is not made
+well. It is invisible and load-bearing at once, and 10 recorded only
+the first half.
 
-`qwen35-defiant` takes 20 for the same reason in reverse. A language
-model is a fine thing to have and it is not what this product is.
+`qwen35-defiant` takes 20. A language model is a fine thing to have
+and it is not what this product is.
 
 ## The critical path, and there are three loops rather than four
 
