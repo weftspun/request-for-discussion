@@ -1,4 +1,4 @@
-# RFD 1169: The audio tower for Qwen3-VL, and what it cannot carry
+# RFD 1169: The audio tower for Qwen3-VL, and which half compiles
 
 **State:** ideation
 **Feature:** sound, without returning to Gemma 4
@@ -7,34 +7,34 @@
 ## Problem
 
 RFD 1155 abandoned Gemma 4 and left one thing open: what Qwen3-VL does
-not carry is sound, and no Hailo audio reference was known here.
-
-A 300M AuT encoder with an MLP projector, taking 128-bin log-mel
-spectrograms into the same 4096 sequence space, closes that. RFD 1157
-established the pattern: a compiled tower replaces the projector and
-decode stays on the host.
+not carry is sound. An AuT encoder with an MLP projector, taking
+128-bin log-mel into the decoder's 4096 space, closes that — the
+pattern RFD 1157 established for vision.
 
 ## Decision
 
-**The tower is a plausible device half and the operators say so.** A
-Whisper-shaped encoder is Conv, MatMul, Softmax, LayerNormalization and
-gelu's Erf — every one inside `DEVICE_OPS`. A log-mel is 128 bins by a
-fixed frame count, so it presents as a single-channel image and does
-not meet the input-rank refusal that stopped Pixal3D four times.
+**The tower is a plausible device half.** A Whisper-shaped encoder is
+Conv, MatMul, Softmax, LayerNormalization and gelu's Erf, all inside
+`DEVICE_OPS`, and `PROJECTOR_TYPE_QWEN3A`'s `conv2d` front end shows
+the log-mel is a single-channel image — escaping the input-rank
+refusal that stopped Pixal3D.
 
-**The blocker is our own fork, not the hardware.** `clip_init_hailo`
-hardcodes `CLIP_MODALITY_VISION` and takes only image-shaped
-parameters, while upstream `mtmd` already carries
-`CLIP_MODALITY_AUDIO`, `clip_graph_whisper_enc` and `n_mel_bins`.
+**The blocker is our own fork.** `clip_init_hailo` hardcodes
+`CLIP_MODALITY_VISION`; the `mtmd` around it already carries
+`CLIP_MODALITY_AUDIO` and `PROJECTOR_TYPE_QWEN3A`.
 
-**ASR is in reach, voice cloning is not, and the split is the finding.**
-Understanding audio is an encoder, which compiles. Producing audio is
-autoregressive decode into a vocoder, which is RFD 1126's obstacle
-unchanged. This buys ears, not a voice.
+**No projector transfers, and the AuT source is old.** Qwen3-Omni is
+1280 wide over a 2048 decoder, has no standalone checkpoint, and
+predates Qwen3-VL-8B. Qwen3.5-Omni has no official release. **Take
+`Qwen3-ASR-1.7B`** instead — Apache-2.0, ungated, 128-bin, newer than
+our base, 2.04 GB at eight bits.
 
-`DETAILS.md` carries the fixed-window question and what to measure.
+**A voice is available; it is the acceleration that is not.**
+`Qwen3-TTS-12Hz-1.7B-CustomVoice` is Apache-2.0 and clones. Its
+autoregressive stage is RFD 1126's obstacle and runs on the host — at
+12 Hz, 120 steps for ten seconds of speech. `DETAILS.md` has the
+widths, the dates and the fixed window.
 
 ## Related
 
 RFD 1155 left this open. RFD 1157 holds the vision tower.
-RFD 1126 names the decode obstacle.
