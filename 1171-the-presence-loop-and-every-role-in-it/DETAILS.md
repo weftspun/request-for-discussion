@@ -318,6 +318,67 @@ rule CLAUDE.md states for poses.
 **That is the real split in this pipeline**, and it is not depth
 against mapping. It is whether a second view exists.
 
+## LingBot-Map is the one that is licence-clean, and it was never checked
+
+RFD 1050 abandoned it on scope and left two blockers open rather than
+answered: the parameter count, and **"License | RFD 1028 gates the
+ship"**. Nobody had looked. Looking resolves it in the good direction.
+
+    Robbyant/lingbot-map      Apache-2.0, code
+    robbyant/lingbot-map      Apache-2.0, WEIGHTS, stated on the card
+    Robbyant/lingbot-depth    Apache-2.0
+    Robbyant/lingbot-world    Apache-2.0
+
+That is the pattern from Kimodo and See-Through inverted. There the code
+was permissive and the weights were not; here the card says the weights
+are Apache-2.0 in as many words.
+
+**And it is the right shape.** Streaming feed-forward reconstruction
+from video or an image sequence, emitting camera poses, metric scale and
+dense point clouds -- roughly 20 fps at 518 by 378, over sequences past
+ten thousand frames.
+
+    what the loop needs        MoGe            LingBot-Map
+
+    person against scene       depth step      the static map itself
+    camera                     intrinsics      full poses
+    scale                      affine          METRIC
+    views                      one             many, which is preferred
+
+It answers the mapping role better than MoGe and better than Metric3D,
+which needed the camera it was supposed to supply. MoGe stays useful
+for the single-image case, where no sequence exists.
+
+## The walk video can be rendered, which makes the error measurable
+
+A walk video is a camera path, and this workspace already renders camera
+paths deterministically. **Mitsuba 3 can produce the input LingBot-Map
+consumes**, from geometry already held.
+
+That is worth more than convenience, because it turns an unmeasurable
+stage into a measured one:
+
+    render a walk of KNOWN geometry, with a KNOWN camera path
+    reconstruct it with LingBot-Map
+    the difference is the reconstruction error, exactly
+
+Ground truth is not estimated here, it is the input. RFD 1170 already
+makes Mitsuba the reference renderer against Godot; this is the same
+instrument pointed at a different consumer, and CLAUDE.md already fixes
+the camera sequence, so `sphere_hammersley_sequence` is the path unless
+somebody argues otherwise.
+
+**It is also constructed synthetic by CLAUDE.md's definition** --
+rendered deterministically from assets held here, labels true by
+construction, the same seed reproducing the corpus. Not generated data,
+so none of the four conditions apply.
+
+**The domain gap is the honest caveat.** LingBot-Map is trained on real
+rooms walked through by real cameras. A Mitsuba walk around one
+character is neither, and a model measured only on renders has been
+measured on renders. Use it to bound the error and to catch regressions,
+not to claim the number transfers to a webcam in a room.
+
 ## Mapping models were reconsidered, and the field is licence-hostile
 
 RFDs 1051 and 1052 abandoned WorldMirror 2.0 and TripoSplat when RFD
