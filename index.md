@@ -3,40 +3,53 @@ title: "Taskweft — Manuals"
 toc: false
 ---
 
-The design record for the Taskweft workspace: what was decided, what was
-measured, and what has since been withdrawn.
+Taskweft builds a loop where a person makes a character, dresses it,
+and then either wears it or talks to it. This site is that project's
+design record. It holds what was decided, what was measured, and what
+has since been withdrawn.
 
-## What is here
+## Start here
 
-[**RFDs**](pages/rfd.qmd) — 159 Request-for-Discussion documents,
-numbered rather than dated, each carrying a state it declares for
-itself. RFD 1000 holds the format.
+**New to this?** Read these three, in order. They take about fifteen
+minutes together.
 
-[**Serials**](pages/serials.md) — the register. Every serial this site
-has allocated and every one it has retired, generated from
-`SERIALS.usda` rather than maintained beside it.
+1. [**RFD 1171**](../1171-the-presence-loop-and-every-role-in-it/) —
+   what the project is building, and which part every model plays.
+2. [**RFD 1000**](../1000-conventions/) — how to read any document
+   here. The states, the numbering, the section order.
+3. [**Working agreements**](pages/agreements.qmd) — the standing
+   constraints. What may enter a training corpus, and what may not.
 
-[**Logbook**](pages/logbook.qmd) — entries recording what was measured,
-with enough apparatus clipped to re-run the test.
+## Everything else
 
-[**Working agreements**](pages/agreements.qmd) — the standing
-constraints, which live in the repository rather than in this site, and
-why.
+[**RFDs**](pages/rfd.qmd) — the design records. Sort by state to see
+what is settled and what is still open.
 
-## How to read a document here
+[**Serials**](pages/serials.md) — the register. Every number this site
+has allocated and every one it has retired.
 
-A number is an identity, not a date. A serial is appended once, never
-removed and never reused, because it is the last arc of an OID under the
-66606 Private Enterprise Number, and an arc names one document for as
-long as that document exists. A retitle renames a document; it does not
-renumber it.
+[**Logbook**](pages/logbook.qmd) — what was measured, with enough
+apparatus to run the test again.
 
-Retractions stay next to what they retract. Where a document states a
-number that later turned out to be wrong, the withdrawal sits beside the
-original rather than replacing it, because a reader who knows which
-roads are dead ends is better off than one who only knows where the road
-ends today.
+## Two things that will confuse you first
 
-Where a document states a measurement or a rule, that statement should
-be machine-checked against live code, so drift fails a command rather
-than being discovered six months later.
+**Documents here contradict themselves on purpose.** When a number
+turns out to be wrong, the correction goes _next to_ the original
+rather than replacing it. So a document may say a thing and then
+withdraw it a paragraph later. That is not an editing failure. A reader
+who knows which roads are dead ends is better off than one who only
+knows where the road ends today. Look for the paragraph in bold capitals
+— that is usually a retraction.
+
+**A number is an identity, not a date.** RFD 1171 is not newer than RFD
+1170 in any meaningful sense, and a low number is not obsolete. Serials
+are allocated once and never reused, because each one is the last arc of
+an OID under the 66606 Private Enterprise Number. Renaming a document
+does not renumber it.
+
+## What holds it together
+
+Where a document states a measurement or a rule, a script checks that
+statement against live code. Drift fails a command instead of being
+found six months later. `check_anti_entropy.py` walks those pairs and
+reads every one of them rather than sampling.

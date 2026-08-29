@@ -106,7 +106,7 @@ A person wears the character, live, and supplies its motion.
 
 ## Movement four: make a friend
 
-Nobody wears it. It is present to someone, and supplies its own motion
+Nobody wears it. It has presence to someone, and supplies its own motion
 and its own voice.
 
     role                       filled by            state

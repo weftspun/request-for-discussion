@@ -17,7 +17,7 @@ One loop, four movements:
     make      language and an image become a persona
     dress     its worn layers are swapped and tried on
     be it     a person wears it, live, through a camera
-    a friend  it wears itself, and is present to someone
+    a friend  it wears itself, and has presence to someone
 
 **`be it` and `make a friend` are the same avatar and opposite loops.**
 In the first a person supplies the motion and voice; in the second
