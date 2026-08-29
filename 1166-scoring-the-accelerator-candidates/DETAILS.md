@@ -7,22 +7,22 @@ dimensions vote between them, seat the winner, remove it, repeat.
 `runoff` reads wins-losses-ties against the runner-up it beat.
 `loops` is which of RFD 1143 to RFD 1146 the model appears in.
 
-     #  model                     fit shp ref clr val adp ask wnt  sum  runoff loops
-     1  rf-detr keypoint         100 100 100  80 100  95 100  85  760  7-0-1  1
-     2  EditScore, Qwen3-VL-8B    40  45  90  55  60  70 100  70  530  5-3-0  1,2,4
-     3  cyclegan_style_transfer   95  95  60  50  45  95  80  35  555  4-3-1  2 in
-     4  OmniGen2                  50  50  15  50  95  75 100  55  490  4-3-1  2
+     #  model                     fit shp ref clr val adp ask wnt  sum  runoff role
+     1  rf-detr keypoint         100 100 100  80 100  95 100  85  760  7-0-1  fit
+     2  cyclegan_style_transfer   95  95  60  50  70  95  80  45  590  4-4-0  2D+3D style
+     3  OmniGen2                  50  50  15  50  95  75 100  55  490  4-3-1  2D edit
+     4  EditScore, Qwen3-VL-8B    40  45  90  55  60  70 100  70  530  6-2-0  all three
      5  Kimodo                    95  40  10  55  40  85  30  80  435  4-3-1  -
      6  MoGe                      85  90  55  50  40  60  40  50  470  4-4-0  -
      7  SkinTokens                95  15  10  45  35  80  30  85  395  4-3-1  -
      8  MuJoCo MJX                95  30   5  15  20  90  85  70  410  4-4-0  -
      9  unified-modal-embedder    90  85  15  50  25  75  30  20  390  4-4-0  -
     10  See-Through               75  60  10  55  50  45  40  40  375  6-2-0  -
-    11  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  35  90  355  4-3-1  4
+    11  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  35  90  355  4-3-1  3D edit
     12  Mitsuba 3 shading         95  75   5  10  30  15  95  25  350  4-4-0  -
     13  residual-fsq-recommender  90  30  10  40  20  70  30  45  335  7-1-0  -
     14  qwen35-defiant            45   5   0   5  15  15  70  20  175  4-3-1  -
-    15  VoxHammer                 30   0   0  15  25  10   5  60  145  last   4
+    15  VoxHammer                 30   0   0  15  35  10   5  60  155  last   3D edit
 
 The sum is not the order. MoGe outscores EditScore by 20 and sits
 below it, having lost the runoff that decided the seat.
@@ -81,49 +81,41 @@ the first half.
 `qwen35-defiant` takes 20. A language model is a fine thing to have
 and it is not what this product is.
 
-## The critical path, and there are three loops rather than four
+## The critical path is a chain, not a set of loops
 
-`value` was first scored per invocation, which ignored that the loops
-share their models. It also over-counted the loops.
+`value` was first scored per invocation, which treated the models as
+independent candidates. They are stages of one shape, run twice:
 
-**Loops 2 and 3 are one loop.** Their proposers are the same call:
+    style change  ->  edit  ->  score
 
-    loop 2   omnigen2_edit.py --image SOURCE   --steps STEPS[i-1] --precision bf16
-    loop 3   omnigen2_edit.py --image STYLIZED --steps STEPS[i-1] --precision bf16
+    2D edit loop   CycleGAN  ->  OmniGen2             ->  EditScore
+    3D edit loop   CycleGAN  ->  Pixal3D + VoxHammer  ->  EditScore
+    fit loop       rf-detr   ->  ANNY fit             ->  EditScore
+                                                          + soma_referee
 
-Same script, same control variable, same precision, same scorer. The
-only difference is `STYLIZED`, which is `SOURCE` after a CycleGAN
-pass, so CycleGAN is an input transform inside loop 2 rather than a
-loop of its own. Loop 4 does differ: it defines `score_view` and
-`score_all` and reduces over a set of views where the others score one
-image.
+Three consequences, and each moved a row.
 
-    loop 1  keypoints to ANNY   rf-detr, EditScore, soma_referee
-    loop 2  image to OmniGen2   OmniGen2, EditScore, CycleGAN on input
-    loop 4  latent to Pixal3D   Pixal3D, VoxHammer, EditScore over views
+**EditScore terminates every chain.** Nothing reaches a wardrobe
+without passing it, so a gain there lands three times rather than
+once. Its `value` is 60 for that and its `wanted` 70 for being the
+dependency of the making it does not perform.
 
-**EditScore is in all three.** A gain on the shared scorer lands three
-times, and scoring it per round recorded a third of its worth.
-Correcting `value` from 30 to 60 moved it from eighth to second, the
-largest move this document has recorded.
+**CycleGAN is a shared first stage, not an input transform.** An
+earlier revision had it inside the 2D loop only and scored `value` 45.
+Both edit chains begin with a style change, so it is 70, and it holds
+second on a runoff it drew four-all -- seated by score, the narrowest
+result in the table.
 
-The correction cuts the other way. CycleGAN is not a loop and falls to
-45; See-Through, Kimodo, MoGe, SkinTokens, MJX and Mitsuba are in
-none, and their `value` says so.
+**Pixal3D and VoxHammer are one editor between them**, the 3D
+counterpart to OmniGen2 rather than two candidates. That is a second
+argument for the merged row, independent of Pixal3D being built on
+TRELLIS.2: they occupy one slot in one chain.
 
-## What the runoff caught
-
-**rf-detr takes first five to nil with one tie**, leading or tying
-every dimension. No other candidate manages that against anyone.
-
-**EditScore is third on reach and would be eighth without it.** Its
-`fit` is 40 and its `shape` 45; what carries it is `reference` 90, the
-Hailo fork targeting Qwen3-VL exactly, and now `value` 60 for being on
-every loop. It ties OmniGen2 three-all and is seated by score.
-
-**TRELLIS.2 / Pixal3D and Mitsuba tie on 230 and the runoff splits
-them**, three to two on `clear`, `value` and `adapt`. A sum alone
-would have left the order to chance; the runoff is what decides it.
+The loop count was also wrong before this. Loops 2 and 3 in the
+notebooks call the same proposer with the same control variable and
+the same scorer, differing only in whether the input has been through
+a style change, which is what identifies style as a stage rather than
+a loop.
 
 ## Five models the earlier revision omitted
 
