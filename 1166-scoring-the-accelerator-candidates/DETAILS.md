@@ -395,4 +395,3 @@ column that scored both would rate every row zero and say nothing.
 The distinction matters because RFD 1128's four-bit question wants
 QAT: compression without fine-tuning is what optimization level 1
 gives, and that is a different artifact rather than a slower one.
-
