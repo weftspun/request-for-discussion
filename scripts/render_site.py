@@ -150,7 +150,7 @@ def main():
     open(sp, "w", encoding="utf8", newline="\n").write(serials_page(ROOT))
 
     if a.check:
-        missing = [d for d in made if not os.path.isfile(os.path.join(ROOT, d, "index.md"))]
+        missing = [d for d in made if not os.path.isfile(os.path.join(ROOT, "rfd", d, "index.md"))]
         if missing or not os.path.isfile(sp):
             print("FAIL  %d RFD page(s) absent after a render: %s"
                   % (len(missing), ", ".join(missing[:5])))
