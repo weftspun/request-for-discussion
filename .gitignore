@@ -12,3 +12,8 @@ _site/
 .quarto/
 rfd/1[0-9]*-*/index.md
 pages/serials.md
+
+# The fourloops layers live in rfd/ and default.xml links them back to this root,
+# so the scripts and every RFD that scopes them keep the path they were written to.
+/fourloops-plan.usda
+/fourloops-etnf.usda

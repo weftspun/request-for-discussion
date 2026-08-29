@@ -39,8 +39,8 @@ import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
 PROJECT = HERE.parent
-DEFAULT_STAGE = HERE.parent / "fourloops-plan.usda"
-DEFAULT_CHART = HERE.parent / "fourloops-etnf.usda"
+DEFAULT_STAGE = HERE.parent / "rfd" / "fourloops-plan.usda"
+DEFAULT_CHART = HERE.parent / "rfd" / "fourloops-etnf.usda"
 
 PRIM_RE = re.compile(r'^\s*def\s+(?:\w+\s+)?"([A-Za-z0-9_]+)"', re.M)
 # A TYPELESS `def "Name"`, which is what a task is. Allowing `def Scope "Name"` here swept
