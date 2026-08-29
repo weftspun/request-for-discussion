@@ -135,31 +135,37 @@ providing has to come from a model instead.
     speech, a microphone       Qwen3-VL and Qwen3-TTS
     intent                     the persona's manner
 
-## The webcam is not only a motion source, and one HEF covers all of it
+## The webcam is not only a motion source, and each head is its own compile
 
-The table above says "body motion, a webcam" and that undersells it.
-rf-detr carries three heads -- **keypoints, segmentation and object
-detection** -- and they sit on one backbone.
+rf-detr covers three camera tasks -- **keypoints, segmentation and
+object detection** -- so the camera is an input to every movement and
+not just to `be it`.
 
-**That backbone is the device half.** `gate_onnx_device.py` builds it
-from `model.model.model.backbone[0]` under a docstring reading *"The
-backbone and projector, which is exactly what would be compiled"*, and
-`rf-detr-cpp/scripts/` holds separate GGUF converters for the decoder,
-the keypoint head and the segmentation head. So the arrangement is one
-compiled graph and three small heads on the host:
+**AN EARLIER REVISION SAID ONE HEF SERVES ALL THREE. THAT WAS WRONG.**
+It reasoned from `gate_onnx_device.py` compiling "the backbone and
+projector" and from `rf-detr-cpp/scripts/` holding separate GGUF
+converters per head, and concluded one graph carried three tasks. The
+checkpoints say otherwise:
 
-    on the device     the backbone and projector, 825 nodes, rung 3
+    checkpoint                patch   resolution   windows
 
-    on the host       keypoint head    -> a pose
-                      segmentation head -> a mask per part
-                      decoder          -> boxes
+    keypoint-preview-xlarge     12       576          1
+    seg-nano                    12       312          1
+    seg-small                   12       384          2
+    large, detection            16       704          2
 
-**One HEF therefore serves every camera task in the loop**, and the
-825-node translation already measured is most of the work for all three
-rather than for pose alone. That is a better position than RFD 1166
-described, where rf-detr was scored as though it did one thing.
+**Different resolutions and different patch sizes are different
+graphs.** A HEF is compiled for one fixed input shape, which is the
+whole premise of the device, so a 576-square keypoint HEF does not
+serve a 312-square segmenter. Each checkpoint is its own translate,
+its own calibration set and its own quantisation.
 
-## So the camera feeds all four movements, not just `be it`
+That matters because rung 4 is the expensive step. RFD 1165 measures
+QAFT at 32.5 GiB, which the desk's 24 GiB cannot reach at any batch
+size, so every additional compiled model is another rented card rather
+than another afternoon.
+
+## So the camera feeds all four movements, not just `be it`## So the camera feeds all four movements, not just `be it`
 
     movement        what the camera gives          through
 
@@ -183,11 +189,115 @@ flagged above as unmodelled. Detection does not say what to do with a
 held prop, but it does say one is there, which is more than the
 taxonomy manages.
 
-## Express everything as keypoints, because keypoints are fixed-shape
+## Everything is a contour, and one of them is a projection not an inference
 
-The three heads can be collapsed into one, and the reason is not
-economy. **A keypoint head has a fixed-shape output by construction,
-and fixed shape is the single thing the compiler demands.**
+A SOMA-X or ANNY body is vertices. What every stage above actually wants
+is an **outline**, and an outline is one representation:
+
+    task            as a contour
+
+    pose            landmarks, a sparse contour
+    segmentation    a closed ordered ring
+    detection       that ring's extent
+    the body        the posed mesh, projected
+
+**The last row is not a model.** Once a pose is fitted, the body outline
+is a render of geometry already held -- deterministic, exact, no
+checkpoint, no calibration set and no rung to climb. Everything above it
+is an inference and that one is arithmetic.
+
+**And it already exists.** `pose-consensus/python/silhouette.py` is a
+differentiable soft silhouette, written under a docstring calling it
+"the route from pose to SHAPE" because keypoints give pose and not
+build: ANNY carries 11 phenotype parameters and 256 local changes, and
+no keypoint constrains any of them. CLAUDE.md already reports
+"photographic silhouette agreement" as a measured quantity, 0.776
+against 0.825 in the precision table, so a silhouette is already this
+workspace's currency for asking whether a body matches a pose.
+
+**The garment is then the difference, and that is the useful part.** The
+mesh silhouette is the body. What lies outside it and still belongs to
+the person is worn. A skirt, a coat and a hat all extend past the body
+outline, and that overhang is the garment boundary -- derived from
+geometry rather than learned from labels, which is the corpus problem
+RFD 1168 could not solve any other way.
+
+That inverts the `dress` movement. It does not need a segmenter that
+knows `topwear`; it needs a body it already has and the difference
+between that body and the picture.
+
+## The hazard in doing this, which is not small
+
+**Spending the silhouette as an output spends it as a check.**
+`silhouette.py` is valuable precisely because it has NO correspondence:
+its own docstring says a vertex mislabelled as its neighbour does not
+move the outline, so it fails differently from the LBFGS vertex fit and
+catches the candy-wrapper failure that fit cannot see.
+
+If the projected contour becomes the segmentation, that independence is
+gone. The outline stops being a second opinion about whether the pose is
+right and becomes an assumption that it is. **A wrong pose then produces
+a confidently wrong garment boundary with nothing left to notice**, and
+the failure looks like a clothing bug rather than a fitting one.
+
+So the two uses have to stay separated: fit the pose, check it against
+the image silhouette, and only then use the mesh contour as geometry.
+Using one silhouette for both is the thing to avoid.
+
+## What the mesh contour does not give
+
+**Hair is not body.** `front hair` and `back hair` are two of the
+taxonomy's 23 parts and neither is in a body mesh, so the outline
+excludes exactly the parts RFD 1168 spends its argument on.
+
+**A single ring cannot hold a hole or a split**, which is the bound
+already stated for contour segmentation and applies here unchanged.
+
+**Scene objects are not in the mesh.** The taxonomy's `objects` bucket
+is outside this entirely, and detection-as-contour would be answering
+about things no rig knows about.
+
+## Decided: keep keypoints and segmentation, drop detection
+
+Two compiles, not three. The reason is not that keypoints can kludge a
+box, though they can.
+
+**RF-DETR-Seg is a DETR, and a DETR's queries carry a class and a box
+alongside the mask.** Instance segmentation is not a mask floating free
+-- each query emits `pred_logits`, `pred_boxes` and its mask together,
+because that is how the architecture separates instances at all. So the
+segmentation checkpoint already answers "what is there and where",
+which is the whole of what a detection checkpoint would add.
+
+    task            served by                    costs
+
+    pose            keypoint-preview-xlarge      its own HEF
+    segmentation    a seg checkpoint             its own HEF
+    detection       the seg checkpoint's boxes   nothing
+
+**Dropping detection therefore costs nothing rather than costing
+accuracy**, which is a better position than the kludge argument
+reached. The kludge -- deriving a coarse box from joints -- stays
+available for the case where only the keypoint model is compiled, and
+it is a fallback rather than the plan.
+
+**Keypoints cannot be dropped and segmentation should not be.**
+Keypoints are `be it`, they are the only model at rung 3, and nothing
+else tracks a body every frame. Segmentation is `dress`: RFD 1168 needs
+a boundary before it needs anything else, and a garment held up to a
+webcam is a boundary from the real world.
+
+**The order is settled by what is already measured.** The keypoint
+model is at rung 3 and a seg checkpoint has never been exported here,
+so the second compile waits on the first reaching rung 5 -- and on a
+card that can run QAFT.
+
+## Express the surviving two as keypoints, because keypoints are fixed-shape
+
+Having dropped detection, the remaining question is what shape the
+segmentation output takes. **A keypoint head has a fixed-shape output
+by construction, and fixed shape is the single thing the compiler
+demands.**
 
     task            as its own head              as keypoints
 
