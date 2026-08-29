@@ -19,7 +19,7 @@ dimensions vote between them, seat the winner, remove it, repeat.
      9  Mitsuba 3 shading         95  75   5  10  55  15  95  45  395  5-3-0  3D views
     10  See-Through               75  60  10  55  50  45  40  40  375  6-2-0  -
     11  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  35  90  355  8-0-0  3D backbone
-    12  VoxHammer                 30   0   0  15  60  10  30  80  225  last   3D ingest+edit
+    12  VoxHammer                 30  50  55  15  60  10  30  80  330  last   3D ingest+edit
 
 The sum is not the order. MoGe outscores EditScore by 20 and sits
 below it, having lost the runoff that decided the seat.
@@ -261,21 +261,40 @@ round, so removing it takes out the largest cost in the loop. `value`
 measures what accelerating a stage buys, not whether the stage should
 exist, and on OmniGen2 those two point in opposite directions.
 
-## VoxHammer, and where its low scores are ours
+## VoxHammer has a device half, and it took three tries to see it
 
-`shape` 0 and `fit` 30 are the model's own. `ask` 30 is not: upstream
-runs, and it is the two weftspun wrappers that raise
-`NotImplementedError` outside stub mode. That is a wiring gap in this
-workspace rather than a capability the method lacks, and an earlier
-revision scored it 5 without making the distinction.
+It holds no weights: no `nn.Module`, no `nn.Parameter` and no
+checkpoint in `3-interactor/voxhammer-upstream`. An early revision
+scored it n/a on that basis, which answered the wrong question --
+weighing nothing does not put it outside a ranking of work.
 
-`value` 60 and `wanted` 80 follow from the chain: it is two stages,
-ingestion and edit, and the 3D chain has no other route in.
+**`shape` was then 0, on the reasoning that VoxHammer replaces
+forwards at runtime and a compiled graph has none to replace. That was
+wrong, and defended twice before anybody read the stage it describes.**
 
-It still ranks last, because `shape` 0 stands. A compiled graph cannot
-be monkey-patched, and monkey-patching is how it works. Being
-load-bearing in the chain and unacceleratable are not in tension --
-they are the finding.
+`extract_feature.py` loads `dinov2_vitl14_reg` and runs it at 518
+square, `n_patch = 518 // 14`, under the same ImageNet constants
+`compile_hef.py` folds into an input layer, **150 times per asset**. A
+stock ViT at fixed resolution is the same family as rf-detr's device
+half, which translated at 825 nodes with the allowlist holding.
+`reference` is 55 for that precedent rather than 0.
+
+What does not compile is separable and was never the whole model:
+`F.grid_sample` projecting voxel centres into views, and the N x M
+coordinate match with its `argmax` and scatter. Both are RFD 1131's
+refused family and both sit either side of the encoder, which is the
+cut rf-detr already uses. So `shape` is 50.
+
+`fit` 30 and `clear` 15 are the model's own. `ask` 30 is not: upstream
+runs, and the two weftspun wrappers raise `NotImplementedError`
+outside stub mode, a wiring gap here. `value` 60 and `wanted` 80
+follow from the chain, where it is two stages and the 3D route has no
+other way in.
+
+It still ranks last, now for an honest reason: four columns are low,
+and one strong column does not carry a row through a runoff. RFD 1167
+puts it on rung 0 with a rung-1 stage waiting -- the shortest export
+left in the field.
 
 ## Five models the earlier revision omitted
 
@@ -377,32 +396,3 @@ The distinction matters because RFD 1128's four-bit question wants
 QAT: compression without fine-tuning is what optimization level 1
 gives, and that is a different artifact rather than a slower one.
 
-## VoxHammer, scored on what it costs rather than what it weighs
-
-It holds no weights. No `nn.Module`, no `nn.Parameter` and no
-checkpoint exists in `3-interactor/voxhammer-upstream`; its one class
-is a sampler with no parameters, and everything else is free functions
-bound onto TRELLIS objects with `types.MethodType`.
-
-**AN EARLIER REVISION SCORED IT n/a ON THAT BASIS, AND THAT WAS THE
-WRONG QUESTION.** Weighing nothing does not put it outside the
-ranking. Its cost is the edit it forces on the base: `run_edit`
-replaces `ss_flow`'s and `slat_flow_model`'s forwards, so using it
-with Pixal3D means writing those patches against Pixal3D.
-
-That is what `shape` 0 records, and it is worse than a low score. **A
-compiled graph cannot be monkey-patched.** A HEF is fixed and
-`MethodType` is a Python-time substitution, so a base model on the
-accelerator is a base model VoxHammer cannot reach. It subtracts from
-the accelerability of what it wraps.
-
-The arithmetic it adds is refused independently: an N x M boolean
-coordinate match per layer, per timestep, per CFG branch, then
-`.float().argmax(0)`, then a scatter, plus an attention key-value
-cache carried from inversion into editing. Data-dependent indexing
-and state across invocations are both what RFD 1131 refuses.
-
-Its base is also not the base the workspace claims. Upstream loads
-`microsoft/TRELLIS-image-large`, TRELLIS 1, while RFD 1047 and the
-image-editing Dockerfile name TRELLIS.2, and both weftspun wrappers
-raise `NotImplementedError` outside stub mode.
