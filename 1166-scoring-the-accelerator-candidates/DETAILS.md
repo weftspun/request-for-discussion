@@ -140,10 +140,26 @@ an engine port; `anny` and `soma-x` are parametric bodies;
     embedder, fsq,    anything run. `clear` near 50 says so.
     qwen35-defiant
 
-`adapt` leans on RFD 1140: the desk trains an OmniGen2 LoRA at 256
-square in 22 minutes and does not finish one step in twelve minutes
-at 512. Pixal3D's 20 and Gemma 4's 15 come from that, and from GGUF
-carrying no graph to train against.
+## The `adapt` column, and the one number that bounds it
+
+It leans on RFD 1140: the desk trains an OmniGen2 LoRA at 256 square
+in 22 minutes and does not finish one step in twelve at 512.
+Pixal3D's 20 and Gemma 4's 15 come from that, and from GGUF carrying
+no graph to train against.
+
+**One kind of adaptation is out of reach entirely, at any size in this
+table.** Quantization-aware fine-tuning exhausts the desk's 24 GiB on
+rf-detr's own device half -- 25.245 M parameters, the smallest graph
+here -- at the default batch and again at `batch_size=1, epochs=1`
+over 64 frames, the directive verified in the loaded model script.
+RFD 1165 carries the retraction that batch size was ever the lever.
+
+So `adapt` scores ordinary training and LoRA, which the desk does. It
+does not score QAT, which the desk does not do for anything, and a
+column that scored both would rate every row zero and say nothing.
+The distinction matters because RFD 1128's four-bit question wants
+QAT: compression without fine-tuning is what optimization level 1
+gives, and that is a different artifact rather than a slower one.
 
 ## VoxHammer, scored on what it costs rather than what it weighs
 
