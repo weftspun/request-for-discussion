@@ -26,6 +26,14 @@ Image to 3D prefers the composite image as its input.
 - Executor: `src/library/taskManager.js`
 - URLs: `src/library/taskModelUrl.js`
 
+**WITHDRAWN 2026-08-29: See-Through is a reference, not a model here.**
+RFD 1166 dropped it from the candidate ranking because every checkpoint
+its inference scripts load states no licence, and the depth one is a
+fine-tune of an OpenRAIL++-M model whose restrictions travel into
+derivatives. What is kept is the layer taxonomy in
+`common/live2d/scrap_model.py`. The approach below still describes the
+task; it no longer describes a model this workspace can run.
+
 ## Related
 
 RFD 1002 places the stage in the pipeline. RFD 1008 remixes the

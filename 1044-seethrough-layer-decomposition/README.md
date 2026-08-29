@@ -26,6 +26,11 @@ not Python.
 See `DETAILS.md` for why a planner earns its place here, the nine
 actions and their guards, and how one domain covers both runtimes.
 
+**WITHDRAWN 2026-08-29: the weights are not usable here.** RFD 1166
+dropped See-Through from the candidate ranking; its checkpoints state no
+licence and the depth one is an OpenRAIL++-M derivative. The layer
+taxonomy is what this workspace keeps.
+
 ## Related
 
 RFD 1037 gives the convention. RFD 1030 lists the components. RFD 1006
