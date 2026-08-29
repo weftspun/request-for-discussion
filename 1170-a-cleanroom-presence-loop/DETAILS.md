@@ -169,6 +169,58 @@ What it does not fix is that the weftspun wrapper raises
 service around it is not, which RFD 1167 records as rung 0 with a
 wrapper rather than a model.
 
+## Can Mitsuba 3 render this in real time, and the answer is at a head
+
+Proposed as the renderer instead of Godot. The arithmetic comes from
+figures this workspace already measured -- 48.1 ns a pixel for the
+G-buffer and 14.1 for MToon shading -- so the answer is a multiplication
+rather than an opinion:
+
+    target          pixels      ms a frame    fps
+
+    1080p          2 073 600       129.0       7.8
+    720p             921 600        57.3      17.4
+    512 square       262 144        16.3      61.3
+    256 square        65 536         4.1     245.3
+
+**At a full frame it is not close, and at a head it is comfortable.** A
+talking-head viewport is the 512 or 256 row, and a presence loop only
+ever renders a head and shoulders. So the honest answer is that Mitsuba
+is fast enough for exactly the thing being asked about, and nowhere near
+fast enough for a scene.
+
+**One number in that table should be distrusted, and it is stated
+because it changes the conclusion if it goes the wrong way.** The same
+corpus puts intersection at 77 per cent of the combined cost, and
+whether the 48.1 ns G-buffer figure already contains intersection or
+sits beside it is not resolved by the text recording it. If it sits
+beside it, every row above is roughly four times slower and the 512
+square row drops to about 14 fps. **Nobody should plan a frame budget
+on this table until that is settled**, and settling it is a matter of
+reading the benchmark rather than running anything.
+
+## But the frame rate is not the reason to choose
+
+Even at 245 fps, Mitsuba is the wrong instrument for this loop, and
+saying so matters more than the arithmetic above.
+
+**It renders where the compute is, and a presence loop renders where
+the viewer is.** Mitsuba is Python over Dr.Jit compiling to LLVM IR and
+PTX. TalkingHead runs in the browser on three.js; Godot has a native
+runtime and a web export. A loop whose whole purpose is two people
+seeing each other cannot round-trip every frame through a server.
+
+**Its strength is the job this workspace already gives it.** RFD 1166
+scores the Mitsuba row as `3D views`, and CLAUDE.md's rule that views
+come from the `sphere_hammersley_sequence` is exactly that: evaluation
+renders, and video-ready deliverables, where physical correctness and
+determinism are worth more than latency. That is a different job from
+being present, and it is not a lesser one.
+
+So: Godot or TalkingHead for the live loop, Mitsuba for the renders
+that get looked at afterwards. The measurement says the head would fit;
+the architecture says it should not have to.
+
 ## What to do, cheapest first
 
 1. **Check ANNY for viseme morph targets.** One file. If they are
