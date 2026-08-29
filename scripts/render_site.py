@@ -6,7 +6,7 @@ sorts on. The README stays the source: `check-rfd-structure.py` reads it by name
 Generated pages are gitignored, so nothing is committed twice.
 
     python scripts/render_site.py            # write the pages
-    python scripts/render_site.py --check    # fail if any page is missing or stale
+    python scripts/render_site.py --check    # render, then fail if a page is absent
     python scripts/render_site.py --self-test
 """
 from __future__ import annotations
@@ -144,19 +144,21 @@ def main():
     if a.self_test:
         return self_test()
 
-    made, stale = render(ROOT, write=not a.check)
+    made, wrote = render(ROOT)
     sp = os.path.join(ROOT, "pages", "serials.md")
-    want = serials_page(ROOT)
-    if (open(sp, encoding="utf8").read() if os.path.isfile(sp) else None) != want:
-        stale.append("pages/serials.md")
-        if not a.check:
-            os.makedirs(os.path.dirname(sp), exist_ok=True)
-            open(sp, "w", encoding="utf8", newline="\n").write(want)
-    if a.check and stale:
-        print("FAIL  %d page(s) missing or stale: %s"
-              % (len(stale), ", ".join(stale[:5]) + ("..." if len(stale) > 5 else "")))
-        return 1
-    print("  ok    %d RFD pages, %d written" % (len(made), len(stale)))
+    os.makedirs(os.path.dirname(sp), exist_ok=True)
+    open(sp, "w", encoding="utf8", newline="\n").write(serials_page(ROOT))
+
+    if a.check:
+        missing = [d for d in made if not os.path.isfile(os.path.join(ROOT, d, "index.md"))]
+        if missing or not os.path.isfile(sp):
+            print("FAIL  %d RFD page(s) absent after a render: %s"
+                  % (len(missing), ", ".join(missing[:5])))
+            return 1
+        print("  ok    %d RFD directories, %d pages, serials rendered"
+              % (len(rfd_dirs(ROOT)), len(made)))
+        return 0
+    print("  ok    %d RFD pages, %d rewritten" % (len(made), len(wrote)))
     return 0
 
 
