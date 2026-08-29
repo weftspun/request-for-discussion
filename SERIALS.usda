@@ -645,6 +645,10 @@ def Scope "Serials"
                 {
                     custom string slug = "voxhammer-zero-weights"
                 }
+                def "S1163"
+                {
+                    custom string slug = "the-accelerator-in-the-loops"
+                }
             }
         }
 
