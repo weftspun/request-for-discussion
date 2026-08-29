@@ -1,59 +1,149 @@
-# RFD 1166 details: the table, and what each row rests on
+# RFD 1166 details: the table, the runoff, and what each row rests on
 
-## The ranking
+## Scores
 
-    model                     fit shape ref clear value   /25   /10
-    rf-detr keypoint            5    5    5     4     5    24   9.6
-    EditScore, Qwen3-VL         5    3    5     3     2    18   7.2
-    See-Through                 5    3    0     3     4    15   6.0
-    Kimodo                      5    2    0     3     4    14   5.6
-    OmniGen2                    3    3    1     3     3    13   5.2
-    TRELLIS.2                   4    2    0     2     4    12   4.8
-    SkinTokens                  5    1    0     3     3    12   4.8
-    Pixal3D                     2    2    0     1     5    10   4.0
-    VoxHammer                   2    0    0     1     2     5   2.0
-    Gemma 4                     2    0    0     0     2     4   1.6
+Six dimensions, 0 to 100 each. Sorted by sum, which is the STAR score
+round and not the result.
 
-The `/10` column is `score_range / 10`, the reduction EditScore applies
-to its own scores, kept so the two scales cannot drift apart.
+    model                    fit shape  ref clear value adapt   sum
+    rf-detr keypoint         100   100  100    80   100    95   575
+    cyclegan_style_transfer   95    95   60    50    70    95   465
+    MoGe                      85    90   55    50    60    60   400
+    unified-modal-embedder    90    85   15    50    50    75   365
+    Kimodo                    95    40   10    55    70    85   355
+    EditScore, Qwen3-VL-8B    40    45   90    55    30    70   330
+    OmniGen2                  50    50   15    50    85    75   325
+    See-Through               75    60   10    55    75    45   320
+    SkinTokens                95    15   10    45    55    80   300
+    TRELLIS.2                 70    30   10    40    75    50   275
+    residual-fsq-recommender  90    30   10    40    35    70   275
+    MuJoCo MJX                95    30    5    15    25    90   260
+    Mitsuba 3 shading         95    75    5    10    20    15   220
+    Pixal3D                   30    35    5    20    95    20   205
+    qwen35-defiant            45     5    0     5    25    15    95
+    VoxHammer                 30     0    0    15    35    10    90
+    Gemma 4                   30     5    0     5    35    15    90
+
+## The runoff
+
+Finalists are rf-detr at 575 and `cyclegan_style_transfer` at 465.
+Six dimensions, one vote each:
+
+    dimension     rf-detr  cyclegan   prefers
+    fit               100        95   rf-detr
+    shape             100        95   rf-detr
+    reference         100        60   rf-detr
+    clear              80        50   rf-detr
+    value             100        70   rf-detr
+    adapt              95        95   tied
+
+**rf-detr wins five to nil with one tie.** The margin matters less
+than the unanimity: it is not carried by one column, it leads or ties
+every one. No other candidate does that against any other.
+
+The runoff earns its place further down. `Pixal3D` scores 95 on
+`value`, the second highest in the table, and 205 overall. A sum
+weighted toward payoff would rank it well; it loses every other
+dimension, and STAR is what keeps one strong column from deciding.
+
+Two pairs worth reading, because the sum alone hides them:
+
+    EditScore vs See-Through   sum 330 to 320, runoff 3-2 to
+                               See-Through on fit, shape and value
+    CycleGAN vs MoGe           sum 465 to 400, runoff 5-0-1 to
+                               CycleGAN
+
+EditScore leads the sum and loses the runoff. Its 330 is carried by
+`reference` 90, the Hailo fork targeting Qwen3-VL exactly, against
+`fit` 40 and `value` 30. That is precisely the shape STAR exists to
+catch, and an earlier revision of this ranking put it second overall.
+
+## Five models the earlier revision omitted
+
+`cyclegan_style_transfer` is the serious omission. It is **Loop 3**,
+called at `localhost:8000` by `3-stylized-to-omnigen2.livemd` before
+OmniGen2 runs, so the ranking claimed to cover the candidates while
+skipping a model already inside the pipeline the accelerator serves.
+It is also the accelerator's home ground: fixed-resolution
+image-to-image convolution, no autoregression, no sparse indexing.
+
+`MoGe` recovers point maps, depth, normals and camera FOV from one
+image, and depth estimation is a category the Hailo zoo already ships
+for HAILO10H, which is what its `reference` 55 records.
+
+`qwen35-defiant` is Qwen3.5-9B in GGUF, the same case as Gemma 4.
+Omitting it made the table imply one LLM had been considered when
+there were two.
+
+`unified-modal-embedder` and `residual-fsq-recommender` are small
+models on Nx and EXLA, neither examined.
+
+**MuJoCo MJX was dismissed as tooling and is not.** `mjx/mujoco/mjx`
+is MuJoCo reimplemented in JAX: a differentiable physics graph, made
+fixed-shape on purpose through fixed-size contact buffers, which is
+why `adapt` is 90 -- gradients run through the simulator itself.
+
+Its blocker is the interchange. JAX lowers to StableHLO through XLA
+and the Dataflow Compiler consumes TensorFlow, TFLite and ONNX, so
+there is no path today. That is a different failure from GGUF's: GGUF
+carries no graph at all and nothing can convert it, while StableHLO is
+a graph in the wrong dialect. Blocked on format, not structurally,
+and `clear` 15 says which.
+
+**Mitsuba 3 is scored as its shading pass, not as the renderer.** It
+is a pixi dependency of `anny-render-corpus` at 3.9.1 rather than a
+manifest project, and the row covers only the half that could go.
+
+Ray tracing cannot: BVH traversal is pointer chasing with
+data-dependent branch depth, which is what a dataflow part is least
+able to express. Shading over a G-buffer is the opposite -- per-pixel
+arithmetic at fixed dimensions -- and the corpus already separates
+them, at 48.1 ns a pixel for the G-buffer against 14.1 for MToon
+shading.
+
+Two things hold it at 220 anyway. Dr.Jit compiles to LLVM IR and PTX,
+which is machine code rather than a portable graph, so it is a level
+below even MJX's wrong-dialect problem, and whether the Slang shading
+path can be expressed as ONNX at all is unverified. And the ceiling is
+small: the same measurements put intersection at 77 per cent of the
+combined cost, so the whole prize is the other 23 of a pass already
+made 1,272 times faster.
+
+Not models, correctly absent: `tropes-removal-model` is `ste-enforcer`,
+a prose linter under a misleading directory name; `mujoco-riscv64` is
+an engine port; `anny` and `soma-x` are parametric bodies;
+`pose-consensus` is a solver; `bumblebee` is a framework.
 
 ## What each row rests on
 
-Provenance differs sharply and the ranking is only as good as the
-weakest row in it.
-
     row               basis
     rf-detr           MEASURED. 40.852 M parameters from the
-                      checkpoint, 25.245 M in the device half from the
-                      ONNX initializers. Exported and translated.
-    OmniGen2          MEASURED. 15.87 + 15.02 + 0.34 GB of safetensors
-                      on disk, fp32, so 7.81 B.
-    Pixal3D           MEASURED since scoring. The repo's safetensors
-                      total 24.04 GB against RFD 1026's estimated
-                      24.05, and the SS stage is 5.36 GB at 4 bytes a
-                      parameter.
+                      checkpoint, 25.245 M in the device half.
+                      Exported and translated.
+    OmniGen2          MEASURED. 15.87 + 15.02 + 0.34 GB on disk at
+                      fp32, so 7.81 B. Trained here: anny-camera-lora,
+                      200 steps at 256 square in 22 minutes.
+    Pixal3D           MEASURED. Repo safetensors total 24.04 GB
+                      against RFD 1026's estimated 24.05.
     See-Through       RFD 1026 ESTIMATE, and the four components it
-                      covers are not recorded.
+                      covers are not recorded. Only `layerdiff` is in
+                      this table; `marigold-depth`, `vae` and
+                      `partseg` are separate repos.
     TRELLIS.2         RFD 1026 estimate.
     SkinTokens        RFD 1026 estimate.
     Kimodo            RFD 1026 estimate.
-    EditScore         INFERRED from a published name, and the name was
-                      wrong: scoring assumed Qwen3-VL-4B and
-                      `weft_score.py` loads the 8B.
+    EditScore         INFERRED, and the inference was wrong once:
+                      scoring assumed Qwen3-VL-4B and `weft_score.py`
+                      loads the 8B.
     Gemma 4           INFERRED from a published name.
+    CycleGAN, MoGe,   UNEXAMINED. Scored from what they are, not from
+    embedder, fsq,    anything run. `clear` near 50 says so.
+    qwen35-defiant
 
-## Two rows that have moved since they were scored
-
-**Pixal3D's 10 was scored on the wrong unit.** It treats the model as
-one 12.02 B blob. RFD 1154 now records four stages, the sparse
-structure stage at 1.3 B fitting at every precision. Its `fit` of 2
-and `clear` of 1 belong to the whole model, not to the stage. The
-score is left as recorded rather than restated, because a ranking
-edited after the fact stops being a record of what was decided.
-
-**EditScore's 18 was scored against the 4B.** The deployed model is
-the 8B at 6.75 GiB NF4, which meets RFD 1128's four-bit question that
-the 4B avoided. `fit` would fall.
+`adapt` leans on RFD 1140: the desk trains an OmniGen2 LoRA at 256
+square in 22 minutes and does not finish one step in twelve minutes
+at 512. Pixal3D's 20 and Gemma 4's 15 come from that, and from GGUF
+carrying no graph to train against.
 
 ## VoxHammer, scored on what it costs rather than what it weighs
 
@@ -63,35 +153,24 @@ is a sampler with no parameters, and everything else is free functions
 bound onto TRELLIS objects with `types.MethodType`.
 
 **AN EARLIER REVISION SCORED IT n/a ON THAT BASIS, AND THAT WAS THE
-WRONG QUESTION.** Weighing nothing does not make it absent from the
-ranking. It has a cost, and the cost is the edit it forces on the base
-model: `run_edit` replaces `ss_flow`'s and `slat_flow_model`'s forwards
-with `MethodType`, threading `kv`, `kv_mask`, `t_latent`, `order`,
-`pos` and `layer` through TRELLIS's own attention. Using it with
-Pixal3D means writing those patches against Pixal3D.
+WRONG QUESTION.** Weighing nothing does not put it outside the
+ranking. Its cost is the edit it forces on the base: `run_edit`
+replaces `ss_flow`'s and `slat_flow_model`'s forwards, so using it
+with Pixal3D means writing those patches against Pixal3D.
 
-That is what `shape` 0 records, and it is worse than a low score.
-**A compiled graph cannot be monkey-patched.** A HEF is a fixed
-artifact and `MethodType` is a Python-time substitution, so a base
-model on the accelerator is a base model VoxHammer cannot reach. Its
-presence subtracts from the accelerability of whatever it wraps rather
-than being neutral to it.
+That is what `shape` 0 records, and it is worse than a low score. **A
+compiled graph cannot be monkey-patched.** A HEF is fixed and
+`MethodType` is a Python-time substitution, so a base model on the
+accelerator is a base model VoxHammer cannot reach. It subtracts from
+the accelerability of what it wraps.
 
-`fit` 2 inherits Pixal3D's four-bit-only band. `clear` 1 is the
-TRELLIS 1 to TRELLIS.2 port plus the Pixal3D edits, against wrappers
-that are still stubs. `value` 2 is mesh editing being a real catalog
-task whose acceleration would have to happen in the base anyway.
-
-The arithmetic it adds is refused independently. `edit_pipeline.py`
-matches sparse coordinates by building an N x M boolean matrix,
-`(k.coords.unsqueeze(1) == kv_mask.unsqueeze(0)).all(dim=-1)`, then
-`.float().argmax(0)`, then scatters -- once per layer, per timestep,
-per CFG branch -- and carries an attention key-value cache from the
-inversion pass into the editing pass. Data-dependent indexing and
-state held across invocations are both what RFD 1131 refuses.
+The arithmetic it adds is refused independently: an N x M boolean
+coordinate match per layer, per timestep, per CFG branch, then
+`.float().argmax(0)`, then a scatter, plus an attention key-value
+cache carried from inversion into editing. Data-dependent indexing
+and state across invocations are both what RFD 1131 refuses.
 
 Its base is also not the base the workspace claims. Upstream loads
 `microsoft/TRELLIS-image-large`, TRELLIS 1, while RFD 1047 and the
-image-editing Dockerfile name TRELLIS.2. Both weftspun wrappers raise
-`NotImplementedError` outside stub mode, so the re-basing is asserted
-and not implemented.
+image-editing Dockerfile name TRELLIS.2, and both weftspun wrappers
+raise `NotImplementedError` outside stub mode.
