@@ -10,6 +10,11 @@ channels = ["conda-forge"]
 # feature below measures a Neural Engine, which exists on no other platform.
 # The gate feature would run anywhere; it is not offered elsewhere yet because
 # nothing has asked, and a platform nobody runs is a platform nobody tests.
+#
+# win-64 was tried on 2026-08-29 and reverted the same hour: the litert feature
+# pins `ai-edge-litert` and `litert-torch` against each other and neither builds
+# for win-64, so declaring the platform makes every environment here
+# unsolvable rather than one of them portable.
 platforms = ["osx-arm64"]
 
 # THE GATES, PINNED THE WAY `scripts/requirements.txt` ALREADY PINS THEM.
@@ -23,6 +28,10 @@ python = "3.11.*"
 [feature.gate.pypi-dependencies]
 markdown-it-py = "==3.0.0"
 usd-core = "==26.8"
+# RFD 1166 ranks by STAR, and a hand-rolled runoff is a claim about STAR rather
+# than STAR. `check_rfd1166_rank.py` recomputes the table against the reference
+# implementation, so the document and the method cannot disagree.
+starvote = "*"
 
 # THE ANE FEATURE, SEPARATE FROM THE GATES ON PURPOSE.
 #

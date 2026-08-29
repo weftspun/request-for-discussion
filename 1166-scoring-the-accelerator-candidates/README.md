@@ -25,15 +25,14 @@ Eight dimensions, each scored 0 to 100:
     wanted     does anyone want the thing it does
 
 `adapt` and `ask` are duals: one changes the model, the other queries
-it, and `weft_ask` is already the workspace's verb for the second.
-`wanted` asks what the product is for: a social world with avatars
-people make and wear. Every other dimension asks whether a model is
-tractable; only this asks whether the thing it does is the point.
+it. `wanted` asks what the product is for, a social world with avatars
+people make and wear, where the rest ask only about tractability.
 
 Rank by **STAR**, score then automatic runoff, the eight dimensions
 voting: take the two highest sums, let them vote, seat the winner,
-remove it, repeat. **The earlier 0 to 5 scale summing to 25 is
-retracted** as a borrowed number. `DETAILS.md` has the rank and rows.
+remove it, repeat. `scripts/check_rfd1166_rank.py` recomputes that
+with `starvote` and fails if `DETAILS.md` disagrees. **The earlier
+0 to 5 scale summing to 25 is retracted** as a borrowed number.
 
 ## Related
 
