@@ -1,37 +1,10 @@
 # RFD 1052 details: the model, the interface, the X-flip, the viewport contract
 
-## The model
+**Compacted.** This RFD is abandoned, so its working-out was removed to keep the
+live corpus small. 204 words are in git history and nothing was lost.
 
-| Property   | Value            |
-| ---------- | ---------------- |
-| Parameters | 1.1 B, estimated |
-| bf16       | 2.2 GB           |
-| Q4_K_M     | 0.61 GB          |
-| Format     | bf16             |
+    git show ac8201e2df493305313466c3764ce2cc2d88bdec:rfd/1052-triposplat-image-to-splat/DETAILS.md
 
-## The interface
-
-| Input      | Type | Default |
-| ---------- | ---- | ------- |
-| image      | Path | none    |
-| max_splats | int  | 500000  |
-| seed       | int  | -1      |
-
-## The X-flip belongs here, and only here
-
-decisions/agent/DECISIONS.md records the rule from 2026-07-26. A
-TripoSplat cloud takes an X-flip. A LingBot cloud does not, and RFD
-1050 states that.
-
-Apply the flip inside this model image, and write the result already
-flipped. A caller must never decide, because the two clouds then look
-alike and the wrong one takes the flip.
-
-## The viewport contract
-
-RFD 1009 records the viewport. It loads splats through Spark, and it
-must not use the XYZRGB point stride. That stride scatters a Gaussian
-PLY.
-
-The output PLY must therefore carry the Gaussian attributes and not a
-bare point list. A point list would load, and it would look wrong.
+The README beside this file is whole. It carries the state, the
+decision and the retraction, which is what a reader needs to know a
+road is closed and why.

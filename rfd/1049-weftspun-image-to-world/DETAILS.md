@@ -1,32 +1,10 @@
 # RFD 1049 details: the model, the interface, why the planner earns its place
 
-## The model
+**Compacted.** This RFD is abandoned, so its working-out was removed to keep the
+live corpus small. 186 words are in git history and nothing was lost.
 
-| Part       | Source   |    bf16 |
-| ---------- | -------- | ------: |
-| TripoSplat | RFD 1052 |  2.2 GB |
-| TRELLIS.2  | RFD 1038 |  8.0 GB |
-| **total**  |          | 10.2 GB |
+    git show ac8201e2df493305313466c3764ce2cc2d88bdec:rfd/1049-weftspun-image-to-world/DETAILS.md
 
-The two never need to be resident together. The domain carries
-`a_load` and `a_unload`, thus the peak is 8.0 GB and not 10.2 GB.
-
-## The interface
-
-| Input        | Type | Default |
-| ------------ | ---- | ------- |
-| image        | Path | none    |
-| prop_count   | int  | 0       |
-| prop_prompts | str  | ""      |
-| seed         | int  | -1      |
-
-`prop_count` of 0 gives the environment only. That is the common case,
-and it must not pay for the TRELLIS.2 load.
-
-## Why the planner earns its place
-
-`prop_count` decides whether TRELLIS.2 runs at all. A method
-alternative checks it, thus the plan for an environment-only job never
-mentions the mesh model.
-
-A script would load it and then skip it.
+The README beside this file is whole. It carries the state, the
+decision and the retraction, which is what a reader needs to know a
+road is closed and why.
