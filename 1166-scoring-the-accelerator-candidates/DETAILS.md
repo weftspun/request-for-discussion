@@ -352,6 +352,55 @@ scored, or cited, at the granularity of the checkpoints it loads. The
 row is a name for a bundle, and a bundle has no licence and no operator
 census of its own.
 
+## How much of this needs original research, and the answer is almost none
+
+Worth asking before anyone's time is committed, because the eight
+dimensions do not separate *hard* from *unknown*. Sorting the field by
+what actually blocks each row:
+
+    blocker                                 rows
+
+    hardware, nothing else                  rf-detr
+    wiring or an export nobody has run      VoxHammer's DINOv2 stage,
+                                            MoGe, EditScore, OmniGen2,
+                                            CycleGAN, Kimodo, SkinTokens
+    a corpus                                RFD 1168's segmenter
+    a compiler refusal not yet understood   TRELLIS.2 / Pixal3D
+    off this ladder                         MuJoCo MJX, Mitsuba 3
+
+**Seven of the eleven are blocked on work, not on knowledge.** Nothing
+in them asks a question the field has not answered. VoxHammer's stage
+is a stock `dinov2_vitl14_reg` and MoGe's is a stock ViT-B/14 -- both
+exported today, both clean against `DEVICE_OPS`, both needing a DFC run
+that costs an afternoon. Kimodo and SkinTokens are `NotImplementedError`
+in a weftspun wrapper with a licence-clean upstream sitting behind it.
+EditScore needs an encoder built with its merger LoRA merged, which RFD
+1157 already specifies. CycleGAN needs its checkpoint fetched.
+
+**rf-detr is blocked on a card and nothing else.** 32.5 GiB against the
+desk's 24 is a purchase or a rental, and RFD 1165 carries the number.
+The model translates, the calibration set exists, the compile script
+exists. That is the whole gap between rung 3 and rung 5.
+
+**One row is genuinely open.** Pixal3D dies in `_add_input_layers` on
+input rank, four times, and whether that is a graph restructuring or a
+real limit of the parser has not been established. It is the only place
+in this table where somebody would have to find something out rather
+than build something.
+
+**One is a data programme wearing a model's clothes.** RFD 1168's
+segmenter needs `VALID_BODY_PARTS_V3` labels that do not exist here. The
+technique is ordinary supervised segmentation; the corpus is the work,
+and RFD 1168 records that corrupt-clean render pairs generate it from
+assets already held. Kimodo's retrain is the same shape and is worse
+off, because BONES-SEED is gated.
+
+**So the honest summary is that this workspace is short of compute and
+wiring, not of ideas.** That is the more actionable finding, and it is
+the opposite of what a ranking with a `reference` column tends to
+suggest -- low `reference` scores read as "nobody knows how", when for
+most of these rows they mean "nobody here has run it yet".
+
 ## What this ranking does not tell you
 
 It ranks **units of work**, not deliverable capabilities, and two
