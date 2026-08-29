@@ -23,12 +23,19 @@ dimensions vote between them, seat the winner, remove it, repeat.
     13  Pixal3D                   30  35   5  20  70  20  180  3-2-1  4
     14  Mitsuba 3 shading         95  75   5  10  30  15  230  5-0-1  -
     15  qwen35-defiant            45   5   0   5  15  15   85  3-2-1  -
-    16  VoxHammer                 30   0   0  15  25  10   80  2-2-2  4
-    17  Gemma 4                   30   5   0   5  20  15   75  last   -
+    16  VoxHammer                 30   0   0  15  25  10   80  last   4
 
 The sum is not the order. MoGe outscores EditScore by 20 and sits
 below it; Mitsuba outscores Pixal3D by 50 and sits below it. Both lost
 the runoff that decided the seat.
+
+**Gemma 4 is struck from the ranking.** It placed last at 75 and it is
+not a close call: GGUF carries no graph, so the format alone ends it
+before memory or operators are reached, and RFD 1155 abandoned it.
+Ranking a candidate with no path flatters the ranking rather than
+informing it. `qwen35-defiant` is the same case and is kept at
+fifteenth as the one worked example of it, so the table still shows
+what that failure looks like.
 
 ## The critical path, which an earlier revision missed
 
