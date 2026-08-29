@@ -18,16 +18,23 @@ dimensions vote between them, seat the winner, remove it, repeat.
      8  See-Through               75  60  10  55  50  45  295  3-2-1  -
      9  SkinTokens                95  15  10  45  35  80  280  4-1-1  -
     10  residual-fsq-recommender  90  30  10  40  20  70  260  2-2-2  -
-    11  TRELLIS.2                 70  30  10  40  45  50  245  3-2-1  -
-    12  MuJoCo MJX                95  30   5  15  20  90  255  2-2-2  -
-    13  Pixal3D                   30  35   5  20  70  20  180  3-2-1  4
-    14  Mitsuba 3 shading         95  75   5  10  30  15  230  5-0-1  -
-    15  qwen35-defiant            45   5   0   5  15  15   85  3-2-1  -
-    16  VoxHammer                 30   0   0  15  25  10   80  last   4
+    11  MuJoCo MJX                95  30   5  15  20  90  255  2-2-2  -
+    12  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  230  3-2-1  4
+    13  Mitsuba 3 shading         95  75   5  10  30  15  230  5-0-1  -
+    14  qwen35-defiant            45   5   0   5  15  15   85  3-2-1  -
+    15  VoxHammer                 30   0   0  15  25  10   80  last   4
 
 The sum is not the order. MoGe outscores EditScore by 20 and sits
-below it; Mitsuba outscores Pixal3D by 50 and sits below it. Both lost
-the runoff that decided the seat.
+below it, having lost the runoff that decided the seat.
+
+**TRELLIS.2 and Pixal3D are one row.** They were never independent
+candidates: Pixal3D's README says it is "heavily built upon Trellis.2
+... the foundation of our codebase and model architecture", and its
+install step begins by following TRELLIS.2's. Scoring them separately
+counted one backbone twice and let the derived model rank below the
+thing it is made of. The row takes the staged view RFD 1154 arrived
+at -- the 1.3 B sparse structure stage rather than the 12.02 B whole
+-- which is why `fit` is 60 rather than Pixal3D's old 30.
 
 **Gemma 4 is struck from the ranking.** It placed last at 75 and it is
 not a close call: GGUF carries no graph, so the format alone ends it
@@ -68,9 +75,9 @@ every dimension. No other candidate manages that against anyone.
 Hailo fork targeting Qwen3-VL exactly, and now `value` 60 for being on
 every loop. It ties OmniGen2 three-all and is seated by score.
 
-**Pixal3D outranks Mitsuba while scoring 50 lower**, on `clear`,
-`value` and `adapt`. One strong column is what STAR is built to
-contain, and containing is not ignoring.
+**TRELLIS.2 / Pixal3D and Mitsuba tie on 230 and the runoff splits
+them**, three to two on `clear`, `value` and `adapt`. A sum alone
+would have left the order to chance; the runoff is what decides it.
 
 ## Five models the earlier revision omitted
 
