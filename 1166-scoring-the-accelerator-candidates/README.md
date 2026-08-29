@@ -1,6 +1,6 @@
 # RFD 1166: How the accelerator candidates were scored
 
-**State:** ideation
+**State:** discussion
 **Feature:** the method behind RFD 1154 to RFD 1162
 **Scope:** `2-contract/manuals-weftspun`
 

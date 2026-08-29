@@ -21,8 +21,7 @@ dimensions vote between them, seat the winner, remove it, repeat.
     11  See-Through               75  60  10  55  50  45  40  40  375  6-2-0  -
     12  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  35  90  355  4-4-0  3D backbone
     13  residual-fsq-recommender  90  30  10  40  20  70  30  45  335  5-2-1  -
-    14  qwen35-defiant            45   5   0   5  15  15  70  20  175  4-3-1  -
-    15  VoxHammer                 30   0   0  15  60  10  30  80  225  last   3D ingest+edit
+    14  VoxHammer                 30   0   0  15  60  10  30  80  225  last   3D ingest+edit
 
 The sum is not the order. MoGe outscores EditScore by 20 and sits
 below it, having lost the runoff that decided the seat.
@@ -36,13 +35,17 @@ thing it is made of. The row takes the staged view RFD 1154 arrived
 at -- the 1.3 B sparse structure stage rather than the 12.02 B whole
 -- which is why `fit` is 60 rather than Pixal3D's old 30.
 
-**Gemma 4 is struck from the ranking.** It placed last at 75 and it is
-not a close call: GGUF carries no graph, so the format alone ends it
-before memory or operators are reached, and RFD 1155 abandoned it.
+**Gemma 4 and `qwen35-defiant` are both struck from the ranking.**
+Neither was a close call. Both are GGUF, so the format ends them
+before memory or operators are reached, and no exporter can close that
+gap because GGUF carries no graph at all. RFD 1155 abandoned Gemma 4
+on the same ground.
+
 Ranking a candidate with no path flatters the ranking rather than
-informing it. `qwen35-defiant` is the same case and is kept at
-fifteenth as the one worked example of it, so the table still shows
-what that failure looks like.
+informing it, and keeping one as a worked example only made the table
+look like it had considered language models on their merits. It had
+not: it had rediscovered the blocklist. BLOCKLIST.md is where that
+argument lives.
 
 ## `wanted`, and what the product is for
 
@@ -77,9 +80,6 @@ say whether the proposal is good before it reaches a wardrobe. Without
 a scorer the loops do not converge, so what people make is not made
 well. It is invisible and load-bearing at once, and 10 recorded only
 the first half.
-
-`qwen35-defiant` takes 20. A language model is a fine thing to have
-and it is not what this product is.
 
 ## The critical path is a chain, not a set of loops
 
@@ -191,10 +191,6 @@ image-to-image convolution, no autoregression, no sparse indexing.
 image, and depth estimation is a category the Hailo zoo already ships
 for HAILO10H, which is what its `reference` 55 records.
 
-`qwen35-defiant` is Qwen3.5-9B in GGUF, the same case as Gemma 4.
-Omitting it made the table imply one LLM had been considered when
-there were two.
-
 `unified-modal-embedder` and `residual-fsq-recommender` are small
 models on Nx and EXLA, neither examined.
 
@@ -255,10 +251,8 @@ an engine port; `anny` and `soma-x` are parametric bodies;
     EditScore         INFERRED, and the inference was wrong once:
                       scoring assumed Qwen3-VL-4B and `weft_score.py`
                       loads the 8B.
-    Gemma 4           INFERRED from a published name.
     CycleGAN, MoGe,   UNEXAMINED. Scored from what they are, not from
-    embedder, fsq,    anything run. `clear` near 50 says so.
-    qwen35-defiant
+    embedder, fsq     anything run. `clear` near 50 says so.
 
 ## The `adapt` column, and the one number that bounds it
 
