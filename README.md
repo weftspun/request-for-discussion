@@ -58,7 +58,9 @@ different shape -- `rfd/NNNN-slug/index.md` with YAML front matter,
 where this site writes `NNNN-slug/README.md` under 40 lines with a
 `DETAILS.md` beside it -- and 110 of them exceed that limit.
 `check-rfd-structure.py` reads root-level directories, so it does not
-see them. That is stated here because an unchecked thing that nobody
+see them, and `check_comment_ladder.py` names `rfd/`, `changelog/` and
+`data/` in its `FROZEN` tuple for the same reason -- migrated history
+is not new code entering at the 10 per cent rung. That is stated here because an unchecked thing that nobody
 names reads exactly like a checked one. They are a frozen record, not
 a corpus this site maintains.
 
