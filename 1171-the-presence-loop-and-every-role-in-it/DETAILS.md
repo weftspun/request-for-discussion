@@ -410,6 +410,71 @@ affine-invariant. Against a metric source that alignment is optional,
 and leaving it on will absorb genuine scale error instead of reporting
 it -- blinding the term to the axis metric depth was bought for.
 
+## The trio re-derived for metric depth
+
+The covering argument was written when depth was affine-invariant. It
+still holds, and it holds better. Restated with the blind spots as they
+now are:
+
+    term            correspondence   sees                      blind to
+
+    LBFGS vertex    REQUIRED         everything, precisely     whether the
+                                                               correspondence
+                                                               is right
+    silhouette      none             the outline, per view     depth, and the
+                                                               interior
+    metric depth    none             the visible surface in    whatever that
+                                     metres, scale included    surface occludes
+
+**What improved is not the depth term, it is where absolute scale comes
+from.** Under affine depth, scale was visible to exactly one term --
+the LBFGS vertex fit -- and only when its correspondence was right. The
+one quantity nothing else could see was sourced through the least
+trustworthy path in the system. Metric depth sees scale with no
+correspondence at all, so scale moves from single-sourced-through-the-
+weak-term to seen by two terms that fail differently.
+
+**No new gap opens.** Metric depth is blind to what the visible surface
+hides, which was equally true of the affine version, and multi-view
+covers it: `sphere_hammersley_sequence` is already mandated, and a
+silhouette from behind constrains the back that a front depth map
+cannot.
+
+**The overlap with the silhouette is not redundancy.** Both now
+constrain build, which is what the silhouette was introduced for -- ANNY
+carries 11 phenotype parameters and no keypoint touches them. They
+constrain it differently: a body correct in outline but too thick
+front-to-back moves the depth field and not the silhouette, and a body
+of right thickness and wrong width moves both.
+
+## `align_affine` must not stay as it is, and off is not the answer either
+
+    left on         the residual is scale-invariant, so the term cannot
+                    see the one thing metric depth was taken for
+    turned off      the term reports scale, and MoGe's own metric bias
+                    becomes a fitting force -- a five per cent under-read
+                    shrinks the body five per cent
+
+Both are wrong, and the reason they are both wrong is that **one scalar
+is being asked to carry two residuals.**
+
+**Separate them.** Keep the alignment, so the shape residual stays
+scale-invariant and robust, and **report `a` rather than discarding
+it**. A fitted `a` far from 1 is the scale disagreement, stated instead
+of absorbed. Scale can then be constrained by its own term with its own
+weight, or simply watched.
+
+Folding it into the returned scalar is a silent skip: the loss goes down
+because the alignment moved, and that reads exactly like a fit
+improving. `coverage_ok` exists in the same file for the same class of
+failure, which is the precedent for handling this one the same way.
+
+**What is still unmeasured, and the number that decides the weight**:
+nobody has measured MoGe-3's metric accuracy against a rendered depth
+buffer of known geometry. Until that exists, any weight on a scale term
+is a guess -- and RFD 1170's rendered walk is exactly the apparatus that
+would produce it, since a Mitsuba render has known depth by construction.
+
 ## LingBot-Depth was checked and is not a candidate
 
 Same family, Apache-2.0, ViT-L/14. It takes RGB **and** a sparse or
