@@ -976,3 +976,41 @@ it is not: it is a SMPL-X checkpoint, SMPL-X is blocklisted by this row, and the
 does not pass through it. `Kimodo-SOMA-*` is under the NVIDIA Open Model Licence, permits
 commercial use, and matches the rig. `logbook-rfd1016-model-repos.md` reached the same
 conclusion and warned against swapping checkpoints without re-checking RFD 1028.
+
+### See-Through's checkpoints are blocklisted, and the taxonomy is kept instead
+
+The repository is Apache-2.0 and that covers its code. Every checkpoint its inference
+scripts actually load is hosted separately and carries no grant:
+
+| checkpoint                                    | state                          |
+| --------------------------------------------- | ------------------------------ |
+| `layerdifforg/seethroughv0.0.1_marigold`      | no licence stated              |
+| `24yearsold/l2d_sam_iter2`                    | no licence stated              |
+| `24yearsold/seethroughv0.0.2_layerdiff3d_nf4` | no licence stated              |
+| `24yearsold/metricdepth3d_tmp`                | HTTP 401, unreadable           |
+
+**No stated licence is not a permissive licence.** Absent a grant the default is all
+rights reserved, so these fail RFD 1028's commercial bar on their own, before anything
+upstream is considered.
+
+**Shipping beside Apache-2.0 code does not extend it to weights.** That assumption was
+made and checked: the LICENSE is the stock Apache text with no weights clause and the
+README never mentions licensing. Projects that do intend it say so -- NVIDIA states the
+weights licence for every Kimodo checkpoint separately from the code's Apache-2.0.
+
+**A fine-tune does not reset an upstream licence.** The depth checkpoint is a fine-tune
+of `prs-eth/marigold-depth-v1-1`, which is CreativeML Open RAIL++-M over
+`stable-diffusion-2`. RAIL requires its use restrictions to travel into derivatives --
+the same propagation the OpenRAIL-M row above is written for -- and nobody downstream can
+relicense away restrictions they do not hold. An Apache-2.0 label on that checkpoint
+would be ineffective rather than merely missing.
+
+**What is kept needs no weights.** See-Through remains a reference for layer taxonomy.
+`common/live2d/scrap_model.py` carries `VALID_BODY_PARTS_V3`, 23 parts, and the
+V2-to-V3 change is the valuable one: hair splits into front and back, and the eye into
+irides, eyewhite, eyelash and eyebrow. That split is what CLAUDE.md points at when it
+says a photograph has no ground-truth front-hair/back-hair, and it is why the blinded
+COCO holdout cannot validate this task.
+
+RFD 1166 dropped See-Through from the candidate ranking on this basis, taking it from
+twelve rows to eleven.

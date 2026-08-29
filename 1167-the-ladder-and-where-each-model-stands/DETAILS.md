@@ -21,9 +21,8 @@ climbs, so the document is read in the order the work happens.
     MuJoCo MJX                  [8]  read only
     Mitsuba 3 shading           [9]  measured at runtime: 14.1 ns a
                                      pixel shading, 48.1 G-buffer
-    See-Through                [10]  RFD 1026 estimate
 
-Ten of twelve. Four carry runtime measurements, which is not
+Nine of eleven. Four carry runtime measurements, which is not
 nothing, but a model that runs on a 3090 has said nothing about
 whether it compiles for a dataflow part.
 
@@ -159,10 +158,16 @@ question and it is a different one, so the honest entry is `not on
 this ladder` rather than a rung.
 
 That leaves **eight rows the ladder actually measures**: rf-detr,
-OmniGen2, EditScore, MoGe, Pixal3D/TRELLIS.2, VoxHammer, See-Through
-and -- once it has a model -- CycleGAN. Seven of the eight hold real
-module and checkpoint code, so for them rung 1 is genuinely the next
-thing rather than a placeholder.
+OmniGen2, EditScore, MoGe, Pixal3D/TRELLIS.2, VoxHammer and -- once it
+has a model -- CycleGAN. Six of the seven hold real module and
+checkpoint code, so for them rung 1 is genuinely the next thing rather
+than a placeholder.
+
+**See-Through left the field entirely.** RFD 1166 dropped it: every
+checkpoint its inference scripts load states no licence, and the depth
+one is a fine-tune of an OpenRAIL++-M model whose restrictions travel
+into derivatives. It is kept as a reference for layer taxonomy, which
+needs no weights and so has no rung.
 
 ## What the shape of this says
 

@@ -9,17 +9,16 @@ dimensions vote between them, seat the winner, remove it, repeat.
 
      #  model                     fit shp ref clr val adp ask wnt  sum  runoff role
      1  rf-detr keypoint         100 100 100  80 100  95 100  85  760  7-0-1  fit
-     2  cyclegan_style_transfer   95  95  60  50  70  95  80  60  605  5-2-1  style, both
+     2  cyclegan_style_transfer   95  95  60  50  70  95  80  60  605  4-4-0  style, both
      3  OmniGen2                  50  50  15  50  95  75 100  55  490  4-3-1  2D edit only
-     4  EditScore, Qwen3-VL-8B    40  45  90  55  60  70 100  70  530  4-3-1  all three
+     4  EditScore, Qwen3-VL-8B    40  45  90  55  60  70 100  70  530  6-2-0  all three
      5  Kimodo                    95  40  10  55  40  85  30  80  435  5-3-0  -
      6  MoGe                      85  90  55  50  30  60  40  50  460  4-4-0  bootstrap only
      7  SkinTokens                95  15  10  45  35  80  30  85  395  4-3-1  -
      8  MuJoCo MJX                95  30   5  15  20  90  85  80  420  3-3-2  presence
-     9  Mitsuba 3 shading         95  75   5  10  55  15  95  45  395  5-3-0  3D views
-    10  See-Through               75  60  10  55  50  45  40  40  375  6-2-0  -
-    11  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  35  90  355  8-0-0  3D backbone
-    12  VoxHammer                 30  50  55  15  60  10  30  80  330  last   3D ingest+edit
+     9  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  35  90  355  4-3-1  3D backbone
+    10  Mitsuba 3 shading         95  75   5  10  55  15  95  45  395  4-4-0  3D views
+    11  VoxHammer                 30  50  55  15  60  10  30  80  330  last   3D ingest+edit
 
 The sum is not the order. MoGe outscores EditScore by 20 and sits
 below it, having lost the runoff that decided the seat.
@@ -136,8 +135,6 @@ either invites the reader to supply their own.
                              the presence goal                   not a network
     Mitsuba 3 shading        forward shading, G-buffer and       measured, 14.1 ns
                              MToon per pixel                     a pixel
-    See-Through              layer decomposition, front hair     RFD 1026 estimate
-                             from back
     TRELLIS.2 / Pixal3D      image to sparse 3D structure,       measured,
                              the 3D backbone                     24.04 GB weights
     VoxHammer                edit an existing asset in latent    read only, then
@@ -190,6 +187,68 @@ none is claimed for them.
 
 Where a row is a weftspun HTTP wrapper around a model held elsewhere,
 the file says so and tells the reader not to cite it as the model.
+
+## See-Through leaves the ranking and stays as a taxonomy
+
+**Decision: Marigold is dropped and See-Through is kept as a reference
+for layer taxonomy rather than as a model.** It is no longer an
+acceleration candidate, so it is no longer a row, and the table above
+holds eleven.
+
+The reason is that nothing in its weight set can be used. The
+repository is Apache-2.0 and that covers the code; every checkpoint the
+inference scripts actually load is hosted separately and **states no
+licence at all**, which is not permissive -- absent a grant the default
+is all rights reserved:
+
+    layerdifforg/seethroughv0.0.1_marigold     none stated (moved from 24yearsold/)
+    24yearsold/l2d_sam_iter2                   none stated
+    24yearsold/seethroughv0.0.2_layerdiff3d_nf4  none stated
+    24yearsold/metricdepth3d_tmp               HTTP 401, unreadable
+
+The depth checkpoint is additionally a fine-tune of
+`prs-eth/marigold-depth-v1-1`, which is CreativeML Open RAIL++-M over
+`stable-diffusion-2`. **A fine-tune does not reset that licence.** RAIL
+requires its use restrictions to travel into derivatives, which is the
+mechanism the OpenRAIL-M blocklist row already names, and nobody
+downstream can relicense away restrictions they do not hold. Shipping
+alongside Apache-2.0 code does not extend that licence to weights; a
+project meaning to do so says so, as NVIDIA does for Kimodo.
+
+Replacing the depth stage with MoGe was considered and is not a
+substitution. MoGe is MIT and already in the manifest, but Marigold here
+is a latent diffusion estimator -- VAE, UNet and CLIP, with
+`cvt_marigold2d_to_3d.py` around it -- while MoGe is a feed-forward ViT
+emitting point maps. That is a rewrite of the stage, and the fine-tune
+exists because See-Through works on illustration where MoGe is trained
+on photographs. Whether MoGe holds up there is unmeasured.
+
+**What is kept costs nothing and is the useful part.** The layer
+taxonomy is a vocabulary, and `common/live2d/scrap_model.py` carries
+three revisions of it:
+
+    V1  20 parts   hair, skin, beard, and single-part eyes
+    V2  20 parts   drops skin and beard, adds objects
+    V3  23 parts   front hair, back hair, headwear, face, irides,
+                   eyebrow, eyewhite, eyelash, eyewear, ears, earwear,
+                   nose, mouth, neck, neckwear, topwear, handwear,
+                   bottomwear, legwear, footwear, tail, wings, objects
+
+The V2-to-V3 change is the one worth having: hair splits into front and
+back, and the eye splits into irides, eyewhite, eyelash and eyebrow.
+That split is exactly what CLAUDE.md points at when it says a photograph
+has no ground-truth `front hair` / `back hair`, and it is why the
+blinded COCO holdout cannot validate this task whatever else it is good
+for.
+
+**Removing the row moved two others, and that is a property of the
+method rather than a mistake.** With See-Through present, Mitsuba 3 took
+seat 9 and TRELLIS.2 / Pixal3D seat 11; without it they swap to 9 and
+10. STAR's runoff is not independent of irrelevant alternatives, so
+dropping a candidate can reorder the ones that remain. The recorded
+order is the one the eleven-row election produces, and
+`check_rfd1166_rank.py` recomputes it against `starvote` rather than
+trusting the arithmetic above.
 
 ## A row is not a model, and that is systemic
 

@@ -1,25 +1,18 @@
 cff-version: 1.2.0
-message: "See-Through is upstream's, and it carries two checkpoints of its own -- cite all three."
+message: "Cited as a reference for layer taxonomy only. No weights from this project are used."
 title: "See-Through: layered decomposition of illustration"
 type: software
 authors:
   - name: "Shitagaki Lab"
 repository-code: "https://github.com/shitagaki-lab/see-through"
 license: Apache-2.0
-references:
-  - type: software
-    title: "Marigold depth v1-1"
-    authors:
-      - name: "ETH Zurich, Photogrammetry and Remote Sensing"
-    url: "https://huggingface.co/prs-eth/marigold-depth-v1-1"
-    notes: "CreativeML Open RAIL++-M, fine-tuned from stable-diffusion-2. The Apache-2.0
-      on the code does not reach it."
-  - type: software
-    title: "metricdepth3d_tmp"
-    authors:
-      - name: "unknown"
-    url: "https://huggingface.co/24yearsold/metricdepth3d_tmp"
-    notes: "RETURNS HTTP 401. No readable licence and no model card. CLAUDE.md: terms that
-      cannot be read without accepting them cannot be gated on."
-notes: "The Apache-2.0 above covers the repository's own code. Two of its dependencies are
-  neither Apache nor readable, and the row cannot be cleared by citing only the top of it."
+notes: "REFERENCE ONLY, and the distinction is the licence. The Apache-2.0 above covers
+  the repository's code, which is what the taxonomy is read from --
+  common/live2d/scrap_model.py, whose VALID_BODY_PARTS_V3 names 23 parts including the
+  front hair / back hair and irides / eyewhite / eyelash / eyebrow splits.
+  NO CHECKPOINT FROM THIS PROJECT IS USED. Every one the inference scripts load states no
+  licence (layerdifforg/seethroughv0.0.1_marigold, 24yearsold/l2d_sam_iter2,
+  24yearsold/seethroughv0.0.2_layerdiff3d_nf4) or is unreadable
+  (24yearsold/metricdepth3d_tmp, HTTP 401). The depth checkpoint is further a fine-tune of
+  prs-eth/marigold-depth-v1-1, CreativeML Open RAIL++-M over stable-diffusion-2, whose use
+  restrictions travel into derivatives."
