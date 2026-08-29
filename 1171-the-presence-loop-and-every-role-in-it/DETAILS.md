@@ -296,6 +296,163 @@ Two negative controls, and the second is the useful one:
 numpy only, and nothing about it needs the accelerator. It is the
 smallest piece of the plan and it is done.
 
+## Multi-view is preferred, and the input decides whether it exists
+
+**A webcam is multi-view by construction.** Frames over time are views
+of one scene from a moving relationship, so the presence loop gets
+multi-view for free and should use it: "a person is scenery if they do
+not move" is a temporal statement, and a single frame cannot make it.
+
+**An illustration has one view and there is no second one to take.** A
+drawing is not a scene anybody can walk around. For that input,
+multi-view has to be *generated* -- which is TRELLIS.2 or Pixal3D --
+and then verified back against what conditioned it, exactly the control
+rule CLAUDE.md states for poses.
+
+    input          views available     what supplies geometry
+
+    webcam         many, over time     multi-view over frames
+    photograph     one, or a few       depends how many were taken
+    illustration   exactly one         generated views, then verified
+
+**That is the real split in this pipeline**, and it is not depth
+against mapping. It is whether a second view exists.
+
+## LingBot-Map is the one that is licence-clean, and it was never checked
+
+RFD 1050 abandoned it on scope and left two blockers open rather than
+answered: the parameter count, and **"License | RFD 1028 gates the
+ship"**. Nobody had looked. Looking resolves it in the good direction.
+
+    Robbyant/lingbot-map      Apache-2.0, code
+    robbyant/lingbot-map      Apache-2.0, WEIGHTS, stated on the card
+    Robbyant/lingbot-depth    Apache-2.0
+    Robbyant/lingbot-world    Apache-2.0
+
+That is the pattern from Kimodo and See-Through inverted. There the code
+was permissive and the weights were not; here the card says the weights
+are Apache-2.0 in as many words.
+
+**And it is the right shape.** Streaming feed-forward reconstruction
+from video or an image sequence, emitting camera poses, metric scale and
+dense point clouds -- roughly 20 fps at 518 by 378, over sequences past
+ten thousand frames.
+
+    what the loop needs        MoGe            LingBot-Map
+
+    person against scene       depth step      the static map itself
+    camera                     intrinsics      full poses
+    scale                      affine          METRIC
+    views                      one             many, which is preferred
+
+**Taken, and placed.** It answers the mapping role better than MoGe and
+better than Metric3D, which needed the camera it was supposed to
+supply. Forked to `weftspun/lingbot-map` and pinned at `1740f18` in the
+manifest at `3-interactor/lingbot-map-upstream`.
+
+MoGe is not displaced. It keeps the single-image case, where no sequence
+exists and no map can be built -- which is every illustration.
+
+## The walk video can be rendered, which makes the error measurable
+
+A walk video is a camera path, and this workspace already renders camera
+paths deterministically. **Mitsuba 3 can produce the input LingBot-Map
+consumes**, from geometry already held.
+
+That is worth more than convenience, because it turns an unmeasurable
+stage into a measured one:
+
+    render a walk of KNOWN geometry, with a KNOWN camera path
+    reconstruct it with LingBot-Map
+    the difference is the reconstruction error, exactly
+
+Ground truth is not estimated here, it is the input. RFD 1170 already
+makes Mitsuba the reference renderer against Godot; this is the same
+instrument pointed at a different consumer, and CLAUDE.md already fixes
+the camera sequence, so `sphere_hammersley_sequence` is the path unless
+somebody argues otherwise.
+
+**It is also constructed synthetic by CLAUDE.md's definition** --
+rendered deterministically from assets held here, labels true by
+construction, the same seed reproducing the corpus. Not generated data,
+so none of the four conditions apply.
+
+**The domain gap is the honest caveat.** LingBot-Map is trained on real
+rooms walked through by real cameras. A Mitsuba walk around one
+character is neither, and a model measured only on renders has been
+measured on renders. Use it to bound the error and to catch regressions,
+not to claim the number transfers to a webcam in a room.
+
+## Mapping models were reconsidered, and the field is licence-hostile
+
+RFDs 1051 and 1052 abandoned WorldMirror 2.0 and TripoSplat when RFD
+1064 turned toward character concepts and away from scene
+reconstruction. **That reason has inverted** -- the presence loop makes
+scene reconstruction a character tool, because the static scene is what
+a moving person is separated from. So the abandonment was revisited.
+
+The models are not available:
+
+    tencent/HunyuanWorld-Mirror   tencent-hunyuanworld-mirror-community,
+                                  the same family as Hunyuan3D-Part,
+                                  blocklisted for excluding the EU, UK
+                                  and South Korea
+    facebook/VGGT-1B              CC-BY-NC-4.0, non-commercial
+    naver/dust3r                  CC-BY-NC-SA, non-commercial AND
+                                  share-alike, blocked twice over
+
+**Every learned multi-view reconstructor reachable from here is
+non-commercial or territory-restricted.** That is worth recording as a
+property of the field rather than as three separate disappointments,
+and it is probably why RFD 1064's pivot cost less than it looked like
+it would.
+
+**What is licence-clean is classical.** OpenCV is Apache-2.0 and COLMAP
+is new BSD, with the caveat COLMAP states itself: its dependencies are
+separately licensed and building against them can affect the result.
+For a fixed webcam the classical route is also the simpler one --
+accumulating a static scene over frames is arithmetic, not a model, and
+it needs no checkpoint, no corpus and no licence at all.
+
+## Metric3D v2 was assessed as a fallback, and it is not one
+
+Proposed as a substitute for MoGe. It is not a substitute, and the
+reason is the half that was not being thought about.
+
+    MoGe                          Metric3D v2
+
+    affine-invariant depth        METRIC depth, which is better
+    RECOVERS intrinsics           CONSUMES intrinsics
+    MIT, weights and code         code BSD-2, weights unstated
+    exported here, 885 nodes      ONNX published, CC0 claimed
+
+**It needs the camera it was meant to replace.** `hubconf.py` takes
+`intrinsic = [fx, fy, cx, cy]` and line 197 computes
+`canonical_to_real_scale = intrinsic[0] / 1000.0`, dividing by the
+canonical camera's focal length. The depth is only metric because the
+focal length was supplied. Swap MoGe out for it and the loop loses the
+camera `silhouette.py` projects the body mesh through, which is the gap
+MoGe was closing that nobody had asked it to.
+
+**So they chain rather than compete.** MoGe recovers the intrinsics,
+Metric3D turns them into metric depth. That is a better arrangement
+than either alone and it is two models rather than one, which is a cost
+to weigh rather than a free upgrade.
+
+**The licence needs care, and in an unusual direction.** The code is BSD
+2-Clause, which is clean. The weights on `JUGGHM/Metric3D` state no
+licence at all. The ONNX re-exports at `onnx-community/metric3d-vit-*`
+declare **CC0-1.0** -- a third party dedicating to the public domain
+weights whose author granted nothing. That is the See-Through problem
+inverted: there a downstream party could not relicense restrictions
+away, and here a downstream party cannot grant rights it was never
+given. A CC0 label over unlicensed weights is not a licence.
+
+**What is genuinely attractive is the export.** `onnx/model.onnx` and
+`model_fp16.onnx` are published for three sizes, so rung 1 costs a
+download rather than a script. If the licence were resolved this would
+be the cheapest operator census in the field.
+
 ## The hazard in doing this, which is not small
 
 **Spending the silhouette as an output spends it as a check.**
