@@ -18,9 +18,10 @@
             "1 weftspun request-for-discussion 1.3.6.1.4.1.66606.1.1",
             "2 v-sekai-fabric multiplayer-fabric-manuals 1.3.6.1.4.1.66606.1.2 decommissioned",
             "3 v-sekai manuals 1.3.6.1.4.1.66606.1.3",
-            "4 fire manuals 1.3.6.1.4.1.66606.1.4",
+            "4 fire manuals 1.3.6.1.4.1.66606.1.4 decommissioned",
         ]
         string[] sitesDecommissioned = [
+            "4 decommissioned 2026-08-29. It allocated no serial, naming a decision by its date instead, so nothing freezes and nothing moves. Its 21 dated decisions stay in the archived repository.",
             "2 decommissioned 2026-08-29. Its 129 documents and its register moved into site 1's repository, which is why this layer sublayers a local file for it. The arcs are kept and are never reused; no serial is allocated under 66606.1.2 again."
         ]
         string[] sitesWithoutRegister = [
