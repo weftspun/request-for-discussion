@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>details – Taskweft — Manuals</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-3336bfa29d6298ea485ddf0d64c2ca2e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Taskweft — Manuals</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../pages/rfd.html"> 
+<span class="menu-text">RFDs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pages/serials.html"> 
+<span class="menu-text">Serials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pages/logbook.html"> 
+<span class="menu-text">Logbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pages/agreements.html"> 
+<span class="menu-text">Working agreements</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#rfd-1167-details-one-table-per-rung-and-the-evidence-for-each-place" id="toc-rfd-1167-details-one-table-per-rung-and-the-evidence-for-each-place" class="nav-link active" data-scroll-target="#rfd-1167-details-one-table-per-rung-and-the-evidence-for-each-place">RFD 1167 details: one table per rung, and the evidence for each place</a>
+  <ul class="collapse">
+  <li><a href="#rung-0-assessed-never-exported" id="toc-rung-0-assessed-never-exported" class="nav-link" data-scroll-target="#rung-0-assessed-never-exported">Rung 0 – assessed, never exported</a></li>
+  <li><a href="#rung-1-exports-to-onnx" id="toc-rung-1-exports-to-onnx" class="nav-link" data-scroll-target="#rung-1-exports-to-onnx">Rung 1 – exports to ONNX</a></li>
+  <li><a href="#rung-2-the-operator-set-is-known" id="toc-rung-2-the-operator-set-is-known" class="nav-link" data-scroll-target="#rung-2-the-operator-set-is-known">Rung 2 – the operator set is known</a></li>
+  <li><a href="#rung-3-the-dataflow-compiler-accepts-the-graph" id="toc-rung-3-the-dataflow-compiler-accepts-the-graph" class="nav-link" data-scroll-target="#rung-3-the-dataflow-compiler-accepts-the-graph">Rung 3 – the Dataflow Compiler accepts the graph</a></li>
+  <li><a href="#rung-4-quantises" id="toc-rung-4-quantises" class="nav-link" data-scroll-target="#rung-4-quantises">Rung 4 – quantises</a></li>
+  <li><a href="#rung-5-runs-on-the-device" id="toc-rung-5-runs-on-the-device" class="nav-link" data-scroll-target="#rung-5-runs-on-the-device">Rung 5 – runs on the device</a></li>
+  <li><a href="#torch.onnx.export-was-the-convenient-proxy-and-it-understated" id="toc-torch.onnx.export-was-the-convenient-proxy-and-it-understated" class="nav-link" data-scroll-target="#torch.onnx.export-was-the-convenient-proxy-and-it-understated"><code>torch.onnx.export</code> was the convenient proxy, and it understated</a></li>
+  <li><a href="#what-rung-0-does-not-distinguish-and-should" id="toc-what-rung-0-does-not-distinguish-and-should" class="nav-link" data-scroll-target="#what-rung-0-does-not-distinguish-and-should">What rung 0 does not distinguish, and should</a></li>
+  <li><a href="#what-the-shape-of-this-says" id="toc-what-the-shape-of-this-says" class="nav-link" data-scroll-target="#what-the-shape-of-this-says">What the shape of this says</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/1167-the-ladder-and-where-each-model-stands/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/1167-the-ladder-and-where-each-model-stands/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+
+<section id="rfd-1167-details-one-table-per-rung-and-the-evidence-for-each-place" class="level1">
+<h1>RFD 1167 details: one table per rung, and the evidence for each place</h1>
+<p>Ranks in brackets are RFD 1166’s, carried so the two can be read together without being confused for each other.</p>
+<p>The rungs run low to high, which is also early to late: a model climbs, so the document is read in the order the work happens.</p>
+<section id="rung-0-assessed-never-exported" class="level2">
+<h2 class="anchored" data-anchor-id="rung-0-assessed-never-exported">Rung 0 – assessed, never exported</h2>
+<pre><code>model                    [1166]  what the score rests on
+
+cyclegan_style_transfer     [2]  read only
+OmniGen2                    [3]  measured at runtime, not exported:
+                                 131 s bf16, 133 s NF4, 14.75 GiB
+EditScore, Qwen3-VL-8B      [4]  measured at runtime: 6.75 GiB NF4,
+                                 28-36 s a score
+Kimodo                      [5]  RFD 1026 estimate
+MoGe                        [6]  read only; a Pixal3D dependency
+SkinTokens                  [7]  RFD 1026 estimate
+MuJoCo MJX                  [8]  read only
+Mitsuba 3 shading           [9]  measured at runtime: 14.1 ns a
+                                 pixel shading, 48.1 G-buffer</code></pre>
+<p>Nine of eleven. Four carry runtime measurements, which is not nothing, but a model that runs on a 3090 has said nothing about whether it compiles for a dataflow part.</p>
+</section>
+<section id="rung-1-exports-to-onnx" class="level2">
+<h2 class="anchored" data-anchor-id="rung-1-exports-to-onnx">Rung 1 – exports to ONNX</h2>
+<pre><code>model                  [1166]  evidence
+
+VoxHammer, DINOv2 stage  [12]  1343 nodes, 22 operators, at
+                               [1,3,518,518] fixed. onnxruntime
+                               against torch: max|diff| 6.027e-04
+                               over max|ref| 120.355, 5.008e-06
+                               relative.</code></pre>
+<p>It went straight to rung 2 in the same run, so it is listed there rather than resting here. It is the first model other than rf-detr to earn a rung instead of being estimated onto one.</p>
+<p><strong>THE EARLIER WORDING OF THIS SECTION FLATTERED US, AND THE EARLIER WORDING FLATTERED US.</strong> It said everything reaching rung 1 went further in the same sitting, which reads as though the rung were merely a place nobody lingers. Enumerating the checkouts says otherwise: across the whole workspace, <code>torch.onnx.export</code> appears in <code>rf-detr-cpp</code> and in two projects that are not candidates at all. Ten of the eleven others have no export site of any kind.</p>
+<p>Rung 1 is empty because nobody has written the export, not because everybody sprinted past it. The rung is still the cheap one – no weights, no device, no rented card – and that is now an argument about work not yet started rather than work that left no trace.</p>
+</section>
+<section id="rung-2-the-operator-set-is-known" class="level2">
+<h2 class="anchored" data-anchor-id="rung-2-the-operator-set-is-known">Rung 2 – the operator set is known</h2>
+<pre><code>model                  [1166]  evidence
+
+VoxHammer, DINOv2 stage  [12]  22 operators, every one inside
+                               `DEVICE_OPS` -- the same allowlist
+                               rf-detr's device half carried
+                               through DFC 5.3.0 at 825 nodes.
+                               Nothing refused, so rung 3 is the
+                               next thing to run rather than the
+                               next thing to argue about.
+
+TRELLIS.2 / Pixal3D      [11]  the SS stage exports at 544 nodes
+                               with RoPE rewritten in reals,
+                               bit-identical at max|diff| 0.000e+00.
+                               28 operators, of which `Cos`, `Sin`
+                               and `ReduceL2` sit outside
+                               DEVICE_OPS. Rung 3 refused it in
+                               `_add_input_layers`, four times, on
+                               input rank rather than arithmetic.</code></pre>
+<p><strong>No script in this workspace reproduces that row.</strong> <code>pixal3d-upstream</code> has no export site, and the RoPE rewrite that produced 544 nodes lived in a scratch file that is gone. The measurement is recorded and the apparatus is not, which is the half CLAUDE.md asks for by name. Rung 2 therefore rests on a number nobody here can re-derive, and re-earning it means writing the export that should have been committed the first time.</p>
+</section>
+<section id="rung-3-the-dataflow-compiler-accepts-the-graph" class="level2">
+<h2 class="anchored" data-anchor-id="rung-3-the-dataflow-compiler-accepts-the-graph">Rung 3 – the Dataflow Compiler accepts the graph</h2>
+<pre><code>model              [1166]  evidence
+
+rf-detr keypoint      [1]  825 nodes, 22 operators, parse OK on
+                           arch hailo10h, operators outside the
+                           allowlist: none. 61 s to translate.</code></pre>
+<p>One model. It is also the only row in RFD 1166 whose scores rest on something run rather than read.</p>
+</section>
+<section id="rung-4-quantises" class="level2">
+<h2 class="anchored" data-anchor-id="rung-4-quantises">Rung 4 – quantises</h2>
+<pre><code>model    evidence</code></pre>
+<p>Empty, and rf-detr has attempted it twice. Statistics Collector took SIGKILL at Docker’s 30.26 GiB, cleared by a 48 GB ceiling; then Quantization-Aware Fine-Tuning exhausted the 3090’s 24 GiB at the default batch and again at <code>batch_size=1, epochs=1</code> over 64 frames. RFD 1165 carries that retraction.</p>
+</section>
+<section id="rung-5-runs-on-the-device" class="level2">
+<h2 class="anchored" data-anchor-id="rung-5-runs-on-the-device">Rung 5 – runs on the device</h2>
+<pre><code>model    evidence</code></pre>
+<p>Empty. No HEF has executed on <code>usb/004:013</code> from this workspace. The device itself is measured – HAILO10H, firmware 5.3.2, 2.27 ms hardware latency on a zoo classifier – but nothing of ours has reached it.</p>
+</section>
+<section id="torch.onnx.export-was-the-convenient-proxy-and-it-understated" class="level2">
+<h2 class="anchored" data-anchor-id="torch.onnx.export-was-the-convenient-proxy-and-it-understated"><code>torch.onnx.export</code> was the convenient proxy, and it understated</h2>
+<p>The audit above counted export CALL SITES, found them in <code>rf-detr-cpp</code> and nowhere else among the candidates, and concluded the other ten would each need an export written from scratch. The count is right and the conclusion it invited is too pessimistic.</p>
+<p>MoGe v2 has no export call and is nevertheless the readiest of them. <code>DINOv2Encoder</code> carries an <code>onnx_compatible_mode</code> setter that upstream wrote for this purpose, and it switches off precisely the two things that break a fixed-shape export: the positional-embedding fast path that branches on <code>npatch == N and w == h</code>, and <code>antialias=True</code> in the <code>F.interpolate</code> that resizes to a patch multiple.</p>
+<p>That second one is the same obstacle rf-detr’s gate meets and answers differently. <code>gate_onnx_device.py</code> constant-folds the antialiased resize, which is exact and asserts the fold fired; MoGe turns antialias off, which changes the numbers. Two models, one obstacle, and the choice between them is exactness against convenience.</p>
+<p>So the readiness signal is not whether a repository calls the exporter. It is whether the graph has a fixed-shape mode at all, and asking the easy question gave the gloomier answer. Rule 1, on our own audit.</p>
+</section>
+<section id="what-rung-0-does-not-distinguish-and-should" class="level2">
+<h2 class="anchored" data-anchor-id="what-rung-0-does-not-distinguish-and-should">What rung 0 does not distinguish, and should</h2>
+<p>Rung 0 reads <code>blocklist clear, checkout present</code>, and eleven rows satisfy it. They do not satisfy it in the same way, and the single label hides two kinds of row that can never climb as written.</p>
+<p><strong>Three rows have no model on disk.</strong> Kimodo and SkinTokens are <code>server.py</code> and nothing else: every path outside <code>WEFTSPUN_STUB=1</code> raises <code>NotImplementedError</code>, so what is checked out is an HTTP contract, not a network. <code>cyclegan_style_transfer</code> is the same shape with a checkpoint path in it – one file, no <code>nn.Module</code> anywhere. For these three, rung 1 is not the next step; acquiring the model is.</p>
+<p><strong>Two rows are not neural networks at all.</strong> MuJoCo MJX is a physics engine and Mitsuba 3 is a renderer. Neither has weights, neither has a graph to export, and the ladder from ONNX through the Dataflow Compiler is the wrong instrument for both. They sit at rung 0 the way a boat sits at the bottom of a staircase. Accelerating them is a real question and it is a different one, so the honest entry is <code>not on this ladder</code> rather than a rung.</p>
+<p>That leaves <strong>eight rows the ladder actually measures</strong>: rf-detr, OmniGen2, EditScore, MoGe, Pixal3D/TRELLIS.2, VoxHammer and – once it has a model – CycleGAN. Six of the seven hold real module and checkpoint code, so for them rung 1 is genuinely the next thing rather than a placeholder.</p>
+<p><strong>See-Through left the field entirely.</strong> RFD 1166 dropped it: every checkpoint its inference scripts load states no licence, and the depth one is a fine-tune of an OpenRAIL++-M model whose restrictions travel into derivatives. It is kept as a reference for layer taxonomy, which needs no weights and so has no rung.</p>
+</section>
+<section id="what-the-shape-of-this-says" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-shape-of-this-says">What the shape of this says</h2>
+<p>The ranking’s top three have never been exported and its eleventh has been further up the ladder than any of them. That is not a fault in the ranking – RFD 1166 asks what is worth doing – but it is why the two tables are separate documents.</p>
+<p>That was written with rung 1 empty, and the cheapest thing that would change the picture was said to be an export of anything – VoxHammer’s DINOv2 stage being the shortest, a stock checkpoint at a fixed resolution in a family already cleared at rung 3.</p>
+<p><strong>It was, and it cost one script.</strong> 1343 nodes, no refused operator, and two rungs in a single run. The prediction is kept because it was made before the measurement rather than after it, which is the only condition under which a prediction is worth anything.</p>
+<p>Six of the eight measurable rows have still never been exported, and the same argument applies to each of them unchanged.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/weftspun\.github\.io\/request-for-discussion");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Serials are OID arcs under the 66606 PEN and are never reused.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/1167-the-ladder-and-where-each-model-stands/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/1167-the-ladder-and-where-each-model-stands/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/weftspun/request-for-discussion">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

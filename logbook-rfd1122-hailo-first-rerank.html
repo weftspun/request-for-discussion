@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>logbook-rfd1122-hailo-first-rerank – Taskweft — Manuals</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-3336bfa29d6298ea485ddf0d64c2ca2e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Taskweft — Manuals</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./pages/rfd.html"> 
+<span class="menu-text">RFDs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./pages/serials.html"> 
+<span class="menu-text">Serials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./pages/logbook.html"> 
+<span class="menu-text">Logbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./pages/agreements.html"> 
+<span class="menu-text">Working agreements</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#logbook-what-the-plan-costs-once-the-durations-are-real-and-the-card-is-a-3090" id="toc-logbook-what-the-plan-costs-once-the-durations-are-real-and-the-card-is-a-3090" class="nav-link active" data-scroll-target="#logbook-what-the-plan-costs-once-the-durations-are-real-and-the-card-is-a-3090">Logbook: what the plan costs once the durations are real, and the card is a 3090</a>
+  <ul class="collapse">
+  <li><a href="#the-figure-the-plan-rested-on-was-measured-on-a-card-that-is-unplugged" id="toc-the-figure-the-plan-rested-on-was-measured-on-a-card-that-is-unplugged" class="nav-link" data-scroll-target="#the-figure-the-plan-rested-on-was-measured-on-a-card-that-is-unplugged">The figure the plan rested on was measured on a card that is unplugged</a></li>
+  <li><a href="#retracted-2026-08-24-the-render-table-above-is-a-depth-pass-not-the-corpus-render" id="toc-retracted-2026-08-24-the-render-table-above-is-a-depth-pass-not-the-corpus-render" class="nav-link" data-scroll-target="#retracted-2026-08-24-the-render-table-above-is-a-depth-pass-not-the-corpus-render">RETRACTED 2026-08-24: the render table above is a depth pass, not the corpus render</a></li>
+  <li><a href="#and-every-macos-measurement-here-was-cpu-only-because-a-list-said-so" id="toc-and-every-macos-measurement-here-was-cpu-only-because-a-list-said-so" class="nav-link" data-scroll-target="#and-every-macos-measurement-here-was-cpu-only-because-a-list-said-so">And every macOS measurement here was CPU-only because a list said so</a></li>
+  <li><a href="#the-shipping-variant-timed" id="toc-the-shipping-variant-timed" class="nav-link" data-scroll-target="#the-shipping-variant-timed">The shipping variant, timed</a></li>
+  <li><a href="#a-faster-answer-that-is-deliberately-not-taken" id="toc-a-faster-answer-that-is-deliberately-not-taken" class="nav-link" data-scroll-target="#a-faster-answer-that-is-deliberately-not-taken">A faster answer that is deliberately not taken</a></li>
+  <li><a href="#the-environment-did-not-exist-on-this-platform" id="toc-the-environment-did-not-exist-on-this-platform" class="nav-link" data-scroll-target="#the-environment-did-not-exist-on-this-platform">The environment did not exist on this platform</a></li>
+  <li><a href="#hailo-first-reaches-backwards-into-the-training-run" id="toc-hailo-first-reaches-backwards-into-the-training-run" class="nav-link" data-scroll-target="#hailo-first-reaches-backwards-into-the-training-run">Hailo-first reaches backwards into the training run</a></li>
+  <li><a href="#the-rerank-20.0-size-points-and-38-of-it-is-one-task" id="toc-the-rerank-20.0-size-points-and-38-of-it-is-one-task" class="nav-link" data-scroll-target="#the-rerank-20.0-size-points-and-38-of-it-is-one-task">The rerank: 20.0 size points, and 38% of it is one task</a></li>
+  <li><a href="#peak-rates-derived-rather-than-quoted" id="toc-peak-rates-derived-rather-than-quoted" class="nav-link" data-scroll-target="#peak-rates-derived-rather-than-quoted">Peak rates, derived rather than quoted</a></li>
+  <li><a href="#still-open" id="toc-still-open" class="nav-link" data-scroll-target="#still-open">Still open</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/logbook-rfd1122-hailo-first-rerank.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/logbook-rfd1122-hailo-first-rerank.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+
+<section id="logbook-what-the-plan-costs-once-the-durations-are-real-and-the-card-is-a-3090" class="level1">
+<h1>Logbook: what the plan costs once the durations are real, and the card is a 3090</h1>
+<p>Apparatus: <code>scripts/mi_bench_llvm.py</code> for the render timings, <code>scripts/check_rfd1122_plan.py</code> for the reranked path, and <code>6-datasource/anny-render-corpus/pixi.toml</code> for the environment that had to exist first. Every render figure is the Mac mini — Apple M2 Pro, 12 cores, 32 GiB, macOS 26.5.2 build 25F84, read from osquery’s <code>system_info</code> rather than scraped from <code>sysctl</code>. Nothing here was measured on the 3090 or the 4090.</p>
+<p>Question: RFD 1122 ranks its ten tasks on unit durations and says that assumption decides the answer. What does the answer become when the durations are priced and the Hailo part goes first?</p>
+<section id="the-figure-the-plan-rested-on-was-measured-on-a-card-that-is-unplugged" class="level2">
+<h2 class="anchored" data-anchor-id="the-figure-the-plan-rested-on-was-measured-on-a-card-that-is-unplugged">The figure the plan rested on was measured on a card that is unplugged</h2>
+<p><code>logbook-soft-renderer-and-mitsuba.md</code> reports Mitsuba at 1.79 ms/image and projects 0.4 GPU-hours over 800k. Both benchmarks behind it open the same way:</p>
+<pre><code>mi_bench.py:19    mi.set_variant('cuda_ad_rgb')
+mi_bench2.py:20   mi.set_variant('cuda_ad_rgb')</code></pre>
+<p><code>render_view.py:237</code> defaults to <code>llvm_ad_rgb</code> at <code>--threads 1</code>, because that is the pair the determinism measurement pinned. So the corpus is costed by a variant that is not reproducible, on hardware no longer in the fleet, and rendered by a variant nobody had ever timed.</p>
+<p><strong>Retracted as a corpus-render estimate.</strong> It remains correct about what it measured.</p>
+</section>
+<section id="retracted-2026-08-24-the-render-table-above-is-a-depth-pass-not-the-corpus-render" class="level2">
+<h2 class="anchored" data-anchor-id="retracted-2026-08-24-the-render-table-above-is-a-depth-pass-not-the-corpus-render">RETRACTED 2026-08-24: the render table above is a depth pass, not the corpus render</h2>
+<p>The section below stands as written because knowing which road was taken is worth more than a tidy document. Two of its claims are withdrawn.</p>
+<p><strong>“The whole corpus renders in an afternoon” and “the renderer is not the expensive thing” are wrong by 447x.</strong> The film measured was <code>mi_bench2.py</code>’s: an <code>aov</code> integrator over position and depth, a box filter, one sample per pixel. <code>render_view.py:134-153</code> renders the corpus with a <code>path</code> integrator at max_depth 6, a <strong>gaussian</strong> filter and <strong>128</strong> samples, and then runs a second path-traced pass for the matte. Same variant, same geometry, the two films:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 18%">
+<col style="width: 10%">
+<col style="width: 3%">
+<col style="width: 28%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>film</th>
+<th>integrator</th>
+<th>filter</th>
+<th>spp</th>
+<th><code>llvm_ad_rgb</code> 1 thread</th>
+<th>800k</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>bench</td>
+<td>aov pos/depth</td>
+<td>box</td>
+<td>1</td>
+<td>73.00 ms</td>
+<td>overnight</td>
+</tr>
+<tr class="even">
+<td>shipping</td>
+<td>path max_dep 6</td>
+<td>gaussian</td>
+<td>128</td>
+<td><strong>32,592.00 ms</strong></td>
+<td>a month of wall-clock</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The determinism control was blind, and it was never about samples per pixel.</strong> It was the film. <code>bench</code> cannot drift for three independent reasons: an aov position/depth is deterministic geometry with no Monte Carlo noise, a box filter puts every sample in exactly one pixel so nothing splats across a thread’s block boundary, and one sample has no accumulation order to vary. The <code>identical</code> column was true and worthless — PITFALLS 4, the convenient proxy lies, and it is always the one that is easy to read. On the shipping film it fires:</p>
+<pre><code>llvm_ad_rgb, default threads, shipping    4,363.90 ms   DIFFERS
+metal_ad_rgb, default threads, shipping     545.00 ms   DIFFERS</code></pre>
+<p><strong>Metal is 60x and still not a corpus renderer.</strong> The obvious objection was that <code>mi.render()</code> was called without a seed while <code>render_view.py:155</code> passes <code>seed=0</code>. Pinned at 0, three runs produced <strong>three different sha256 digests</strong>, so the divergence is GPU accumulation order rather than a seed artefact. A renderer that cannot reproduce a frame is not a corpus renderer, whatever it costs.</p>
+</section>
+<section id="and-every-macos-measurement-here-was-cpu-only-because-a-list-said-so" class="level2">
+<h2 class="anchored" data-anchor-id="and-every-macos-measurement-here-was-cpu-only-because-a-list-said-so">And every macOS measurement here was CPU-only because a list said so</h2>
+<p>Two sites, found independently, the same shape:</p>
+<pre><code>render_view.py:110        ("llvm_ad_rgb", "cuda_ad_rgb", "scalar_rgb")   -- no metal_ad_rgb
+gate_onnx_device.py:156   providers=["CPUExecutionProvider"]             -- no CoreML</code></pre>
+<p><code>logbook-edge-npu-and-the-anny-forward.md</code> opens “macOS, no accelerator” and reports the backbone at 1399.3 ms. That is not a property of this machine; it is a property of line 156. <strong>A hardcoded backend list turns a capability question into a tautology.</strong></p>
+<p>Both lists now offer their Mac entries, and the answers are not the ones expected.</p>
+<p><strong>CoreML is slower and outside tolerance.</strong> At 576 with <code>num_windows=1</code>:</p>
+<pre><code>CPUExecutionProvider       476.4 ms    max|diff| 4.470e-06     1.00x
+CoreMLExecutionProvider   1685.1 ms    max|diff| 4.924e-03     0.28x</code></pre>
+<p>Nearly four times slower, and past the port’s own 4.2e-03 bound, so it fails the gate on accuracy as well as losing on speed. <code>get_providers()</code> reports what was registered rather than what ran — CoreML partitions a graph and hands unsupported nodes back to the CPU — which is the likely mechanism.</p>
+<p><strong>The reason is measurable and it unifies both results.</strong> <code>scripts/gpu_tops.py</code>, dense GEMM at 2n³ flops, synchronised, best-of-8:</p>
+<pre><code>mps fp32   5.71 TFLOP/s    84.0% of the 6.8 derived peak
+mps fp16   6.20 TFLOP/s    only 1.09x fp32, not the 2x a half pipeline implies
+mps bf16   2.96 TFLOP/s    0.48x fp16 and BELOW fp32
+cpu fp32   2.19 TFLOP/s</code></pre>
+<p>This GPU is worth <strong>2.6x its own CPU</strong> on the friendliest shape a device sees. With that little headroom, a partitioned graph shuttling tensors across the boundary loses, which is what CoreML did. The bf16 row confirms <code>bf16Native = 0</code> by measurement rather than assertion.</p>
+<p><strong>None of this makes the old hardcoded list correct.</strong> It made a capability claim nobody had tested and happened to pick the right backend for the wrong reason. The next model or the next runtime version moves that answer and nothing would have noticed.</p>
+<p>The derived peak survives its own test at 84%, so the Devices table’s ranking stands. GEMM is an upper bound, so read it as one.</p>
+</section>
+<section id="the-shipping-variant-timed" class="level2">
+<h2 class="anchored" data-anchor-id="the-shipping-variant-timed">The shipping variant, timed</h2>
+<p>ANNY’s face count, 1024², one sample per pixel — <code>mi_bench2.py</code>’s film, unchanged, because that entry’s own lesson is that all of its controls ran at one scale and were wrong elsewhere.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>configuration</th>
+<th>ms/image</th>
+<th>800k projection</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>llvm_ad_rgb</code>, 1 thread</td>
+<td>73.00</td>
+<td>overnight</td>
+</tr>
+<tr class="even">
+<td><code>llvm_ad_rgb</code>, 1 thread, 8 proc</td>
+<td>77.88</td>
+<td><strong>an afternoon</strong></td>
+</tr>
+<tr class="odd">
+<td><code>llvm_ad_rgb</code>, default threads</td>
+<td>11.79</td>
+<td>an afternoon</td>
+</tr>
+<tr class="even">
+<td><code>metal_ad_rgb</code>, default threads</td>
+<td>8.86</td>
+<td>an afternoon</td>
+</tr>
+<tr class="odd">
+<td><code>cuda_ad_rgb</code> (4090, UNPLUGGED)</td>
+<td>1.79</td>
+<td>half an hour</td>
+</tr>
+<tr class="even">
+<td>torch <code>soft_depth</code> (baseline)</td>
+<td>3451.00</td>
+<td>a month of wall-clock</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Two kinds of number, treated differently.</strong> ms/image is a record — an instrument reading — and keeps its decimals in SI. The 800k column is that reading multiplied by a corpus nobody has rendered yet, and a decimal there invites a confidence the multiplication does not carry, so it gets a span. This is CLAUDE.md’s household-object rule pointed the other way: a penny is attached to 4.3 mm because the millimetres alone do not say whether the error matters; a span replaces the hours because the hours alone say more than is known.</p>
+<p>Three rows land on “an afternoon” and are not thereby equal — they are indistinguishable at the resolution a plan can act on, and the ms/image column is where the difference lives.</p>
+<p>Determinism is <strong>per-image</strong>, not per-run. One thread makes one frame byte-identical and says nothing about how many frames are in flight, so eight single-threaded processes reach an afternoon without touching the guarantee. Twelve get no further span at 8.83x, which is where the four efficiency cores stop paying.</p>
+<p>The whole corpus renders in an afternoon on the weakest device in the fleet. That settles what the ordering turned on: the renderer is not the expensive thing, and never was.</p>
+</section>
+<section id="a-faster-answer-that-is-deliberately-not-taken" class="level2">
+<h2 class="anchored" data-anchor-id="a-faster-answer-that-is-deliberately-not-taken">A faster answer that is deliberately not taken</h2>
+<p>Multithreaded <code>llvm_ad_rgb</code> is 6.2x faster than the shipping pair, and <code>metal_ad_rgb</code> — a variant Mitsuba 3.9.1 enumerates on Apple silicon and which appears in no document here — is 8.2x. Both came back byte-identical across two fresh processes.</p>
+<p><code>pixi.toml</code> records the multithreaded case drifting by up to 1/255 on a dozen pixels of 1,048,576. Two readings of one configuration, so one is measuring the wrong thing.</p>
+<p>The named mechanism is film accumulation order, which needs more than one sample per pixel to have an order at all. So the control went looking at 1, 4, 16 and 64:</p>
+<pre><code>spp   1      11.80 ms/img   identical
+spp   4      25.03 ms/img   identical
+spp  16      79.38 ms/img   identical
+spp  64     294.10 ms/img   identical</code></pre>
+<p><strong>The control did not fire, and that is the result.</strong> Nothing has shown this check can fail, so its <code>identical</code> column is decoration rather than evidence — PITFALLS 2, a check that never fails certifies whatever it is pointed at. Two readings survive and this run does not separate them: the recorded drift may be win-64/linux-64 only and unmeasured on osx-arm64, or this instrument may be blind to it.</p>
+<p>So the one-thread rule stands, and it costs nothing. The process-scaling row reaches the same throughput with every frame single-threaded, which is the configuration the determinism measurement actually covers. A 6x speed-up declined on a check that cannot fail is cheaper than a corpus that has to be re-rendered.</p>
+</section>
+<section id="the-environment-did-not-exist-on-this-platform" class="level2">
+<h2 class="anchored" data-anchor-id="the-environment-did-not-exist-on-this-platform">The environment did not exist on this platform</h2>
+<p><code>pixi.toml</code> declared <code>platforms = ["win-64", "linux-64"]</code> and <code>pixi.lock</code> held <strong>zero</strong> <code>osx-arm64</code> entries, so no declared environment could be instantiated on the Mac at all. Two things were needed and both are now in the manifest rather than in somebody’s shell:</p>
+<ul>
+<li><p><code>osx-arm64</code> on the render and <code>corpus</code> features only. The three CUDA-wheel features restate <code>["win-64", "linux-64"]</code>, so the manifest says which desk holds which work and <code>pixi install</code> fails at the solver instead of after a model download.</p></li>
+<li><p><code>libllvm20</code>, and <code>DRJIT_LIBLLVM_PATH</code> through <code>[target.osx-arm64.activation.env]</code>. Dr.Jit finds its own LLVM on Windows and Linux and not here, and stock macOS ships no linkable <code>libLLVM.dylib</code> — Xcode has none at a usable path and Homebrew was absent. Without it the shipping variant does not load:</p>
+<pre><code>ImportError: jit_init_thread_state(): the LLVM backend is inactive because the LLVM
+shared library ("libLLVM.dylib") could not be found!</code></pre></li>
+</ul>
+</section>
+<section id="hailo-first-reaches-backwards-into-the-training-run" class="level2">
+<h2 class="anchored" data-anchor-id="hailo-first-reaches-backwards-into-the-training-run">Hailo-first reaches backwards into the training run</h2>
+<p>RFD 1126 already decided the backbone compiles at <code>num_windows=1</code> — 825 ONNX nodes parse against 868 rejected — and that it “costs 1.35x wall-clock and <strong>needs retraining</strong>”.</p>
+<p>T09 converts and ports, and it sits <em>after</em> T08 trains. A plan followed in its own numbered order therefore trains at the windowing the detector was written with, finds out at T09 that the compiler refuses it, and pays for the training run twice. Nothing in the graph says otherwise, because the constraint belongs to the compiler and the graph only knows tasks.</p>
+<p>Recorded as a standing constraint, <code>EdgeCompileGatesTraining</code>, rather than a new edge. An edge from T09 back into T08 is a cycle and is checked for; splitting a new task out ahead of T08 would say the schedule is waiting on work, and it is not — 107e’s decision is made and the compile is measured. What is owed is that T08 honours it.</p>
+<p>One quantization schedule comes out of DFC 5.3.0 and the rest of the fleet runs that same schedule. A detector quantised three ways is three detectors, and a number measured on one desk stops transferring to the next.</p>
+<p><strong>Not condition 5.</strong> That forbids a quantised <em>generator</em> from writing corpus data. The detector’s quantization is deployment — it reads frames somebody else rendered and emits keypoints, and nothing it produces enters a corpus. Only T05’s generator path is bound.</p>
+</section>
+<section id="the-rerank-20.0-size-points-and-38-of-it-is-one-task" class="level2">
+<h2 class="anchored" data-anchor-id="the-rerank-20.0-size-points-and-38-of-it-is-one-task">The rerank: 20.0 size points, and 38% of it is one task</h2>
+<p>Computed by <code>check_rfd1122_plan.py</code> from the sizes in the stage, by RFD 2077’s formulas, and asserted against RFD 1122’s own text so the two cannot drift.</p>
+<p><strong>Sizes rather than days, and the swap is an admission.</strong> The first pass at this entry carried optimistic, likely and pessimistic figures in engineering days and reported “38.8 engineering days”. Not one of those was measured — they were judgement, and a decimal point made them read as something else. A t-shirt size cannot be mistaken for a calendar, which is the whole reason to use one. The spread is kept, because it carried a real signal: T08’s pessimistic sits four times its optimistic, and that is a different fact from T08 merely being large. Points are Fibonacci and relative — they order tasks against each other and convert to no duration at all.</p>
+<p><strong>The chain is the same six tasks the unit-duration reading named.</strong> That is the least interesting thing about it. What moves is the weight:</p>
+<ul>
+<li><strong>T02 is back on the critical path</strong>, resized from <code>S/M/L</code> to <code>M/L/XL</code>. The first rerank demoted the renderer on the strength of a depth pass; correcting that promotes it and takes <code>T04 → T05</code> off the path, each gaining 1.7 slack.</li>
+<li><strong>T08 masked training is 7.5 points, 38% of the path.</strong> Still the single heaviest, and no resequencing touches it.</li>
+<li><strong>T06 gains slack rather than losing it</strong>: 7.3, over seven times its own size, and it is the one outstanding task that runs on any desk in the fleet.</li>
+</ul>
+<p><strong>The bottleneck is a device, and the graph cannot express it.</strong> T05, T07 and T08 are all <code>gpuBound</code> and all want the one plugged-in bf16 card, because condition 5 forbids the quantised alternative for anything writing corpus data. Their expected sizes sum to <strong>13.0 of the 18.3 points — 65% of the path — on a single RTX 3090</strong>, a serial floor that no dependency edge describes.</p>
+<p>So the largest lever is not a resequencing. Plugging in the 4090 brings the path to <strong>11.9 points, cutting 30% off it</strong>, by scaling the <code>gpuBound</code> tasks on derived peak rate. That is a ranking and not a budget, in the sense <code>logbook-edge-npu-and-the-anny-forward.md</code> set: it assumes those tasks are compute-bound and perfectly portable, and neither was measured. It still costs a cable.</p>
+</section>
+<section id="peak-rates-derived-rather-than-quoted" class="level2">
+<h2 class="anchored" data-anchor-id="peak-rates-derived-rather-than-quoted">Peak rates, derived rather than quoted</h2>
+<p><code>cores x lanes x 2 for the fused multiply-add x clock</code>, re-derived by the checker so a transcription error fails a command:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>device</th>
+<th>derivation</th>
+<th>FP32</th>
+<th>memory</th>
+<th>bf16</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>3090 (live)</td>
+<td>82 x 128 x 2 x 1.695 GHz</td>
+<td>35.6 TF</td>
+<td>24 GiB</td>
+<td>native</td>
+</tr>
+<tr class="even">
+<td>4090 (off)</td>
+<td>128 x 128 x 2 x 2.52 GHz</td>
+<td>82.6 TF</td>
+<td>24 GiB</td>
+<td>native</td>
+</tr>
+<tr class="odd">
+<td>M2 Pro</td>
+<td>19 x 128 x 2 x 1.398 GHz</td>
+<td>6.8 TF</td>
+<td>32 GiB</td>
+<td><strong>no</strong></td>
+</tr>
+<tr class="even">
+<td>Hailo-10H</td>
+<td>published, 40 TOPS INT4</td>
+<td>—</td>
+<td>8 GiB</td>
+<td>n/a</td>
+</tr>
+</tbody>
+</table>
+<p>All three clocks are vendor boost figures. <strong>None was read off a desk</strong>, and the checker counts them as ASSUMED rather than letting the table read as measured. The Hailo row divides by 40 TOPS INT4 at an ASSUMED 30% utilisation, which is the convention the edge-NPU entry set and also flagged: the DFC profiler was never run.</p>
+<p>The M2 Pro has the largest memory pool in the fleet and the smallest compute, and no native bf16 — so running a generator at published precision there is emulation, which is a correctness question before a speed one and is unmeasured either way.</p>
+</section>
+<section id="still-open" class="level2">
+<h2 class="anchored" data-anchor-id="still-open">Still open</h2>
+<ul>
+<li>Nothing was measured on the 3090. Every GPU duration above is an estimate scaled from a 4090 figure by derived peak rate, and the 2.3x that scaling rests on is arithmetic, not a run.</li>
+<li><code>metal_ad_rgb</code> is 8.2x the shipping variant and has no determinism evidence that survives its own control. A firing control would make it the corpus renderer.</li>
+<li><code>feature.anny</code> still has no osx-arm64 offering, because its torch comes from <code>whl/cpu</code>, an index with no Apple silicon wheels. So the render measurement used a face-matched lat-long proxy — 27,324 faces against ANNY’s 27,420 — rather than a real body. Mitsuba’s per-frame cost counts faces rather than which body they describe, but that is an argument and not a measurement, and a mac-scoped feature taking torch from PyPI would settle it.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/weftspun\.github\.io\/request-for-discussion");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Serials are OID arcs under the 66606 PEN and are never reused.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/logbook-rfd1122-hailo-first-rerank.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/logbook-rfd1122-hailo-first-rerank.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/weftspun/request-for-discussion">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

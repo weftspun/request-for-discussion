@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>logbook-edge-npu-and-the-anny-forward – Taskweft — Manuals</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-3336bfa29d6298ea485ddf0d64c2ca2e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Taskweft — Manuals</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./pages/rfd.html"> 
+<span class="menu-text">RFDs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./pages/serials.html"> 
+<span class="menu-text">Serials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./pages/logbook.html"> 
+<span class="menu-text">Logbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./pages/agreements.html"> 
+<span class="menu-text">Working agreements</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#logbook-what-an-edge-npu-takes-and-what-the-anny-forward-will-not-export" id="toc-logbook-what-an-edge-npu-takes-and-what-the-anny-forward-will-not-export" class="nav-link active" data-scroll-target="#logbook-what-an-edge-npu-takes-and-what-the-anny-forward-will-not-export">Logbook: what an edge NPU takes, and what the ANNY forward will not export</a>
+  <ul class="collapse">
+  <li><a href="#the-chain-partitions-by-kind-not-by-size" id="toc-the-chain-partitions-by-kind-not-by-size" class="nav-link" data-scroll-target="#the-chain-partitions-by-kind-not-by-size">The chain partitions by kind, not by size</a></li>
+  <li><a href="#two-documented-facts-turned-out-to-be-the-blockers" id="toc-two-documented-facts-turned-out-to-be-the-blockers" class="nav-link" data-scroll-target="#two-documented-facts-turned-out-to-be-the-blockers">Two documented facts turned out to be the blockers</a></li>
+  <li><a href="#retracted-0.83x-from-mac-counting" id="toc-retracted-0.83x-from-mac-counting" class="nav-link" data-scroll-target="#retracted-0.83x-from-mac-counting">Retracted: 0.83x, from MAC counting</a></li>
+  <li><a href="#retracted-three-theories-about-why-all-wrong" id="toc-retracted-three-theories-about-why-all-wrong" class="nav-link" data-scroll-target="#retracted-three-theories-about-why-all-wrong">Retracted: three theories about why, all wrong</a></li>
+  <li><a href="#the-compiled-graph" id="toc-the-compiled-graph" class="nav-link" data-scroll-target="#the-compiled-graph">The compiled graph</a></li>
+  <li><a href="#resolution-is-the-throughput-lever-measured" id="toc-resolution-is-the-throughput-lever-measured" class="nav-link" data-scroll-target="#resolution-is-the-throughput-lever-measured">Resolution is the throughput lever, measured</a></li>
+  <li><a href="#the-anny-forward-does-not-export" id="toc-the-anny-forward-does-not-export" class="nav-link" data-scroll-target="#the-anny-forward-does-not-export">The ANNY forward does not export</a></li>
+  <li><a href="#linear-blend-skinning-decomposes-exactly" id="toc-linear-blend-skinning-decomposes-exactly" class="nav-link" data-scroll-target="#linear-blend-skinning-decomposes-exactly">Linear blend skinning decomposes exactly</a></li>
+  <li><a href="#withdrawn-the-rig-was-not-wrong-and-the-numbers-still-differ" id="toc-withdrawn-the-rig-was-not-wrong-and-the-numbers-still-differ" class="nav-link" data-scroll-target="#withdrawn-the-rig-was-not-wrong-and-the-numbers-still-differ">Withdrawn: the rig was not wrong, and the numbers still differ</a></li>
+  <li><a href="#the-clamp-is-a-concatenation-of-pairwise-kusudamas" id="toc-the-clamp-is-a-concatenation-of-pairwise-kusudamas" class="nav-link" data-scroll-target="#the-clamp-is-a-concatenation-of-pairwise-kusudamas">The clamp is a concatenation of pairwise kusudamas</a></li>
+  <li><a href="#what-is-not-measured" id="toc-what-is-not-measured" class="nav-link" data-scroll-target="#what-is-not-measured">What is not measured</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/logbook-edge-npu-and-the-anny-forward.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/logbook-edge-npu-and-the-anny-forward.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+
+<section id="logbook-what-an-edge-npu-takes-and-what-the-anny-forward-will-not-export" class="level1">
+<h1>Logbook: what an edge NPU takes, and what the ANNY forward will not export</h1>
+<p>RETRACTED 2026-08-24: “MACOS, NO ACCELERATOR” WAS A PROPERTY OF LINE 156, NOT OF THE MACHINE. <code>gate_onnx_device.py</code> hardcoded <code>providers=["CPUExecutionProvider"]</code>, so every figure below that carries “on the Mac” is a CPU figure by construction rather than by measurement. The numbers stand for what they measured; what is withdrawn is reading them as what this machine can do. A hardcoded backend list turns a capability question into a tautology.</p>
+<p>The provider list now offers everything onnxruntime has, and the answer is not the one the retraction implies is owed. At 576 with <code>num_windows=1</code>:</p>
+<pre><code>CPUExecutionProvider       476.4 ms    max|diff| 4.470e-06     1.00x
+CoreMLExecutionProvider   1685.1 ms    max|diff| 4.924e-03     0.28x</code></pre>
+<p>CoreML is nearly four times SLOWER and lands outside the port’s own 4.2e-03 bound, so it fails on accuracy as well as losing on speed. The mechanism is likely partitioning – CoreML hands unsupported nodes back to the CPU, and <code>logbook-rfd1122-hailo-first-rerank.md</code> measures why that cannot pay here: this GPU is worth only 2.6x its own CPU on dense GEMM, so the transfers cost more than the acceleration returns. The 15.8 TOPS Neural Engine is REACHABLE through that provider and is not useful for this model; reachable and unsuitable are different facts, and the plan’s Devices scope previously asserted the first one wrongly.</p>
+<p>Apparatus: <code>rf-detr-cpp/scripts/gate_onnx_device.py</code> (macOS, all available ONNX providers), <code>rf-detr-cpp/scripts/gate_dfc_parse.py</code> and <code>deploy/hailo-dfc/</code> (Hailo Dataflow Compiler 5.3.0 on a Fly machine, since the wheel is <code>linux_x86_64</code> only), <code>rf-detr-cpp/scripts/fold_static_tile.py</code>. ANNY measurements use <code>anny</code> 0.6.0 from PyPI on the Mac. Every throughput figure divides by 40 TOPS INT4 at an ASSUMED 30% utilisation; the DFC profiler was not run, so treat those as a ranking and not a budget.</p>
+<p>Question: can the wholebody chain deploy to an 8 GB, 20 TOPS INT8 / 40 INT4 USB part.</p>
+<section id="the-chain-partitions-by-kind-not-by-size" class="level2">
+<h2 class="anchored" data-anchor-id="the-chain-partitions-by-kind-not-by-size">The chain partitions by kind, not by size</h2>
+<p><code>lbfgs_polish.py</code> line 16 builds the model <code>.to(dtype=torch.float64)</code>. The part carries INT8 activations. Three of the six stages in RFD 1122 are descent loops and mesh operations, and no quantity of devices changes that.</p>
+<p>Measured shares at 1272, backbone against decoder:</p>
+<pre><code>backbone      1399.3 ms   95.0% of wall
+transformer     68.6 ms    4.7%</code></pre>
+<p>Everything the compiler refuses sits in the 4.7%.</p>
+</section>
+<section id="two-documented-facts-turned-out-to-be-the-blockers" class="level2">
+<h2 class="anchored" data-anchor-id="two-documented-facts-turned-out-to-be-the-blockers">Two documented facts turned out to be the blockers</h2>
+<p>Neither was written with a compiler in mind. <code>rf-detr-cpp/docs/decisions/backbone-windowing.md</code> records that windowing happens once, at the embeddings stage, by expanding the batch dimension. <code>0002-position-embed-bicubic.md</code> records the antialias resize of the position embeddings. DFC 5.3.0 refuses both.</p>
+<pre><code>num_windows=2   868 nodes   REJECTED
+num_windows=1   825 nodes   PARSE OK</code></pre>
+<p>Same model, same resolution, same folds applied to both. <code>Tile</code> count falls to 0 and the embeddings concat is absent from the graph entirely.</p>
+<p>Cost of losing windowing, measured at 576: <strong>1.35x wall-clock</strong>, 238.4 ms against 175.9 ms.</p>
+</section>
+<section id="retracted-0.83x-from-mac-counting" class="level2">
+<h2 class="anchored" data-anchor-id="retracted-0.83x-from-mac-counting">Retracted: 0.83x, from MAC counting</h2>
+<p>A first pass counted MACs from the ONNX graph and reported <code>num_windows=1</code> as CHEAPER, at 0.83x. That number is wrong. Shape inference left 51 nodes of the <code>num_windows=1</code> graph unresolved and the counter skipped them silently. Simplifying at a fixed input shape first resolves them, and the corrected count is 107.9 GMAC against 76.5, a ratio of 1.37x that agrees with wall-clock. A MAC count that does not report its unresolved nodes is not a measurement.</p>
+</section>
+<section id="retracted-three-theories-about-why-all-wrong" class="level2">
+<h2 class="anchored" data-anchor-id="retracted-three-theories-about-why-all-wrong">Retracted: three theories about why, all wrong</h2>
+<p>The first error the DFC reports is <code>IndexError: list index out of range</code> inside LayerNorm axis mapping, from an empty <code>input_format</code>. Three explanations were proposed and each was tested with a minimal reproduction:</p>
+<pre><code>rank-3 LayerNorm alone            PARSE OK
+window reshape then LayerNorm     PARSE OK
+CLS concat producing 577 tokens   PARSE OK</code></pre>
+<p>All three pass in isolation and fail inside the real graph. Format inference is whole-graph, so a toy that parses proves nothing. The honest error appears only when <code>end_node_names</code> is passed, and it names <code>Tile</code>: unsupported concat over axis batch. The IndexError is a downstream symptom of the simplify-and-retry path.</p>
+<p>Hailo’s own Model Zoo settles the CLS question independently: it ships timm ViTs and parses them whole with no start or end node overrides, and ViT-Base is 197 tokens, which is prime.</p>
+</section>
+<section id="the-compiled-graph" class="level2">
+<h2 class="anchored" data-anchor-id="the-compiled-graph">The compiled graph</h2>
+<p>825 ONNX nodes become 336 Hailo layers. Clipped to <code>rf-detr-cpp/docs/measurements/hailo10h-backbone-576-nw1.hn.zst</code>, 6 KB.</p>
+<pre><code>130 normalization   65 conv   46 layer_normalization   25 ew_add
+ 24 matmul          14 feature_splitter   12 softmax    4 concat</code></pre>
+<p><code>layer_normalization</code> compiles 46 times and <code>concat</code> 4 times, so neither is unsupported. Only concat over the batch axis is, which is what windowing produces.</p>
+<p>The HAR itself is 102.5 MB and is not kept. 101.4 MB of it is <code>windows_1.npz</code>, weights that duplicate a checkpoint already held. zstd compresses the whole HAR by 8.5% and <code>-19</code> is no better than <code>-3</code>, because float32 weights are near entropy. The <code>.hn</code> compresses 41.8x.</p>
+</section>
+<section id="resolution-is-the-throughput-lever-measured" class="level2">
+<h2 class="anchored" data-anchor-id="resolution-is-the-throughput-lever-measured">Resolution is the throughput lever, measured</h2>
+<p>Whole model, <code>num_windows=1</code>, backbone plus a plain-DETR decoder, at 30% utilisation:</p>
+<pre><code>res    tokens    GMAC   INT8    INT4
+288       576    17.8   168f    337f
+336       784    25.8   139f    279f
+384      1024    35.9    84f    167f
+432      1296    48.7    62f    123f
+576      2304   107.9    28f     56f</code></pre>
+<p>1280 is not reachable: the keypoint variant is patch 12 with 2 windows, so resolution must divide by 24, and 1280 does not. <code>AssertionError: Backbone requires input shape to be divisible by 24</code>. The 12xx options are 1200, 1224, 1248, 1272, 1296.</p>
+<p>Four cameras at 432 and 120 fps needs 117% of one part at PERFECT utilisation. Asymmetric fits: three body cameras at 288 with one face camera at 432, 120 fps, is 61%.</p>
+<p>Framing sets precision, not resolution. Feature stride is 12 input pixels, so at 432 a 1.7 m subject filling the frame gives 47 mm, about a golf ball, while a 200 mm face filling a dedicated camera gives 5.6 mm, about a pencil. 45x from framing alone.</p>
+</section>
+<section id="the-anny-forward-does-not-export" class="level2">
+<h2 class="anchored" data-anchor-id="the-anny-forward-does-not-export">The ANNY forward does not export</h2>
+<p><code>anny</code> 0.6.0 confirms three claims in RFD 1122’s DETAILS: <code>bone_count</code> is 104, <code>data/keypoints/coco.pth</code> carries 23 keypoints rather than 17, and its weight vectors are 19,158 wide while <code>topology="anny"</code> returns 13,718 vertices. The documented mismatch reproduces exactly.</p>
+<p>The forward is differentiable, with <code>grad_fn: LinearBlendSkinningBackward</code>, and it does not export:</p>
+<pre><code>TypeError: The '_length_' attribute must be an integer</code></pre>
+<p>That is ctypes, inside Warp, refusing to be traced. Warp initialises on import.</p>
+</section>
+<section id="linear-blend-skinning-decomposes-exactly" class="level2">
+<h2 class="anchored" data-anchor-id="linear-blend-skinning-decomposes-exactly">Linear blend skinning decomposes exactly</h2>
+<pre><code>vertices = sum_k w[v,k] * (M[i[v,k]] @ inv(RB)[i[v,k]]) @ [rest[v], 1]</code></pre>
+<p>against <code>anny</code>’s own output, at float64:</p>
+<pre><code>bone_poses                            max|diff| 8.471e-01
+bone_poses @ inv(rest_bone_poses)     max|diff| 4.441e-16   MATCH
+inv(rest_bone_poses) @ bone_poses     max|diff| 1.024e+00</code></pre>
+<p>4.441e-16 is float64 epsilon, so this establishes the algebra and NOTHING about float32 or INT8. <code>inv(rest_bone_poses)</code> is constant and folds to an initializer.</p>
+<p><strong>The rest it skins is the CORRECTED rest, not the template.</strong> The match above uses <code>rest_vertices</code> from the forward’s own output rather than the <code>template_vertices</code> buffer, so the blendshape correctives are already in it. ANNY carries <code>blendshapes</code> at (624, 13718, 3) with <code>bone_heads_blendshapes</code> (624, 104, 3) and <code>bone_orientation_blendshapes</code> (624, 104, 3, 3) beside them, and phenotype and local-change coefficients select from those. A reimplementation that skins <code>template_vertices</code> directly will not reproduce this number, and the error will look like a skinning bug rather than a missing stage.</p>
+<p>That stage is also ordinary arithmetic: a coefficient vector against a (624, N, 3) stack is a matmul, so it folds into the same operator set as the skinning below. The operations are Gather, MatMul, Mul and ReduceSum, all four of which already compiled in the backbone.</p>
+<p><code>vertex_bone_weights</code> is (13718, 9), nine influences per vertex. An earlier cost estimate assumed four and is low by roughly 2x: the mesh forward is about 1.5 MMAC, not 0.7.</p>
+</section>
+<section id="withdrawn-the-rig-was-not-wrong-and-the-numbers-still-differ" class="level2">
+<h2 class="anchored" data-anchor-id="withdrawn-the-rig-was-not-wrong-and-the-numbers-still-differ">Withdrawn: the rig was not wrong, and the numbers still differ</h2>
+<p>This section previously read “Corrected: this was built against the wrong rig”, and said the torch reimplementation above targets the wrong one. That is withdrawn.</p>
+<p><strong>The rest mesh is the definition, and it is ANNY. The skeleton converts.</strong> So a reimplementation written against ANNY is written against the thing that defines the body, and the SOMA figures below are a second skeleton over the same mesh rather than a different subject. <code>anny_from_soma</code> in <code>AlternativeTopology</code> is that conversion, named in the package.</p>
+<p>What stands is narrower and still worth having: the numbers differ, so anything that indexes by joint or by vertex has to say which skeleton it means.</p>
+<p><code>lbfgs_polish.py</code> constructs with <code>rig="soma", topology="soma"</code>, and <code>sinew-solve/core/soma_rig.h</code> bakes that skeleton as SoA C arrays:</p>
+<pre><code>SOMA_V 18056    SOMA_J 78    SOMA_F 36108    SOMA_K 10</code></pre>
+<p>78 joints and 10 influences against ANNY’s 104 and 9. <code>soma_parents[78]</code> in the same header is the forward-kinematics tree. <code>topology_id</code> is a foreign key in RFD 1122’s schema for this reason, and the reason survives the withdrawal above: a <code>vertex_id</code> or a joint index means nothing without the skeleton it was taken under.</p>
+<p><code>sinew-solve</code> describes itself as the body solve, FK plus linear blend skinning of the ANNY body, as Lean to Slang kernels, with <code>core/gen/lbs.spv</code> compiled and a CPU reference in <code>core/spec/tests/lbs_cpu</code>. <code>humanoid-rom/HumanoidRom/core/KusudamaEncoding.lean</code> holds the joint-limit encoding. Both were already written. Neither is ONNX, so what they supply is the specification, the baked arrays and a reference to validate against, rather than a graph.</p>
+</section>
+<section id="the-clamp-is-a-concatenation-of-pairwise-kusudamas" class="level2">
+<h2 class="anchored" data-anchor-id="the-clamp-is-a-concatenation-of-pairwise-kusudamas">The clamp is a concatenation of pairwise kusudamas</h2>
+<p>RFD 1126’s decision clamps every unrolled step to the Kusudama cone. How that clamp is BUILT was settled in a meeting, and it is not the obvious reading of the phrase.</p>
+<p><strong>No kusudama carries two or more cones. Constraints are pairwise, and concatenated.</strong> A joint limit that a multi-cone kusudama was being asked to express is built instead as a concatenation of pairwise ones, and nothing in the pipeline constructs a kusudama of two or more rotation cones.</p>
+<p>Note the rule is stricter than the measurement below requires. The degeneracy was measured at three equidistant cones; the rule cuts at two. That margin is deliberate rather than an overstatement of the evidence: two cones already admit the opposed case, whose centre sum is degenerate for the same reason, and a threshold nobody has to reason about at the call site is worth more than the one cone it gives up.</p>
+<p>The measurement behind that choice is already in <code>humanoid-rom/FINDINGS.md</code>:</p>
+<pre><code>3 equidistant cones, 120 degrees apart    |sum| = 4.003e-16   degenerate</code></pre>
+<p><code>KusudamaSolver</code> derived the pole of its gnomonic projection by summing every cone centre and normalising. Three equidistant cones sum to zero, <code>normalize</code> of zero is undefined, and one unit in the last place moves the derived pole by 45 degrees. The flip is a degenerate centroid and not a race. <code>KusudamaEncoding.lean</code> separately retires the pole derivation in favour of projecting against the nearest cone, which is a fix to the solver; the decision recorded here is upstream of it, and removes the many-cone case from the pipeline rather than repairing it.</p>
+<p>The consequence for an unrolled clamp is favourable. A pairwise kusudama is a fixed, small computation, and a concatenation of them is a fixed-length chain of the same, so the whole constraint stays feed-forward with no data-dependent count. Comparisons and selects are <code>Min</code> and <code>Where</code>, which the backbone already compiled. A many-cone kusudama would have needed a normalise whose input can be zero, and an INT8 pipeline has no good answer for that division.</p>
+<p>Recorded because the unrolled clamp is a new consumer of this decision, and building a single multi-cone kusudama is what reads most naturally from “clamp to the Kusudama cone”.</p>
+</section>
+<section id="what-is-not-measured" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-not-measured">What is not measured</h2>
+<p>Utilisation, which every throughput number above assumes. Whether the unrolled fit reaches an acceptable residual as a percentage of stature at the precision the part offers, which is the number the whole approach rests on. Rig calibration, which nothing in the workspace solves. The cost of two compiled graphs and a per-frame context switch on one device.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/weftspun\.github\.io\/request-for-discussion");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Serials are OID arcs under the 66606 PEN and are never reused.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/logbook-edge-npu-and-the-anny-forward.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/logbook-edge-npu-and-the-anny-forward.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/weftspun/request-for-discussion">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
