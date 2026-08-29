@@ -112,6 +112,35 @@ a scorer the loops do not converge, so what people make is not made
 well. It is invisible and load-bearing at once, and 10 recorded only
 the first half.
 
+## What this ranking does not tell you
+
+It ranks **units of work**, not deliverable capabilities, and two
+things follow that a ladder would otherwise walk into.
+
+**A chain delivers when every stage is placed, not when its best stage
+is.** Accelerating one row leaves the others on the host, which is
+often fine and sometimes the whole point -- rf-detr is worth doing
+alone. But no row's rank is a claim that finishing it finishes
+anything.
+
+**Two rows are mutually exclusive, and the table hides it.**
+`TRELLIS.2 / Pixal3D` sits at 11 and `VoxHammer` at 12 as though they
+were separate work. They are a fork. VoxHammer scores `shape` 0
+because it replaces `ss_flow`'s and `slat_flow_model`'s forwards at
+runtime, and a compiled graph has no Python forward to replace. So the
+3D backbone can be accelerated, or it can be driven by VoxHammer, and
+not both.
+
+That is a decision the ranking cannot make. Accelerating the backbone
+buys speed on generation and gives up in-place editing; keeping
+VoxHammer keeps editing and leaves the backbone on the host. Which is
+worth more is a product question, and RFD 1163's division is where it
+would be settled.
+
+The same shape may hold elsewhere and has not been looked for. Any
+stage that drives another by patching it will conflict with compiling
+the thing it patches.
+
 ## The critical path is a chain, not a set of loops
 
 `value` was first scored per invocation, which treated the models as
