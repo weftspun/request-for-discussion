@@ -123,23 +123,31 @@ often fine and sometimes the whole point -- rf-detr is worth doing
 alone. But no row's rank is a claim that finishing it finishes
 anything.
 
-**Two rows are mutually exclusive, and the table hides it.**
-`TRELLIS.2 / Pixal3D` sits at 11 and `VoxHammer` at 12 as though they
-were separate work. They are a fork. VoxHammer scores `shape` 0
-because it replaces `ss_flow`'s and `slat_flow_model`'s forwards at
-runtime, and a compiled graph has no Python forward to replace. So the
-3D backbone can be accelerated, or it can be driven by VoxHammer, and
-not both.
+**Two rows interact, and the table shows them as separate jobs.**
+`TRELLIS.2 / Pixal3D` sits at 11 and `VoxHammer` at 12 as though each
+could be taken on alone. An earlier revision of this section said they
+were mutually exclusive, on the reasoning that a compiled graph has no
+Python forward for VoxHammer to replace. **That was asserted from a
+general principle and the code does not support it.**
 
-That is a decision the ranking cannot make. Accelerating the backbone
-buys speed on generation and gives up in-place editing; keeping
-VoxHammer keeps editing and leaves the backbone on the host. Which is
-worth more is a product question, and RFD 1163's division is where it
-would be settled.
+The patched attention blends a cached key against a live one:
 
-The same shape may hold elsewhere and has not been looked for. Any
-stage that drives another by patching it will conflict with compiling
-the thing it patches.
+    k = k * kv_mask + ss_kv[...].cuda() * (1 - kv_mask)
+
+Mul, Sub, Mul, Add, all of them already inside `DEVICE_OPS`. The
+arithmetic compiles. What is Python is the dict lookup, and a compiled
+graph would take those cached tensors as inputs rather than fetching
+them.
+
+What actually bites is the interface, not the patching. The cache is
+keyed by timestep, order, position, layer and type, so the tensors
+crossing the boundary scale with all five, and the cache is state held
+between the inversion pass and the edit pass. On a part that pays
+2.18 ms a dispatch, marshalling that per timestep is the same
+arithmetic that rules out a per-node ggml backend.
+
+So the two rows are not a fork. They are one job that is larger than
+either row suggests, and nothing here has measured how much larger.
 
 ## The critical path is a chain, not a set of loops
 

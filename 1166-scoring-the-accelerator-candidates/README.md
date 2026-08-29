@@ -31,11 +31,9 @@ about tractability.
 Rank by **STAR**, score then automatic runoff, the eight dimensions
 voting: take the two highest sums, let them vote, seat the winner,
 remove it, repeat. `scripts/check_rfd1166_rank.py` recomputes that
-with `starvote` and fails if `DETAILS.md` disagrees.
-
-**It ranks units of work, not capabilities.** A chain delivers when
-every stage is placed, and two rows are a fork rather than two jobs:
-the 3D backbone can be compiled or driven by VoxHammer, not both.
+with `starvote` and fails if `DETAILS.md` disagrees. **It ranks units
+of work, not capabilities**: a chain delivers when every stage is
+placed, and rows interact.
 
 ## Related
 
