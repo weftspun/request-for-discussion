@@ -1,0 +1,19 @@
+---
+title: "Logbook"
+toc: true
+listing:
+  type: table
+  contents:
+    - "../logbook-*.md"
+  sort: "title"
+  fields: [title, date]
+---
+
+Entries record what was **measured**, not what was intended, and clip
+enough of the experimental apparatus to re-run the test rather than
+merely its conclusion.
+
+These 145 entries were a separate repository until `weftspun/logbook`
+was archived. A decision and its measurement sat one repository apart;
+they no longer do. Entries kept their filenames, so an entry is still
+findable by the thing it measured rather than by where it used to live.

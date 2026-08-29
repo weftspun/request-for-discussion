@@ -918,3 +918,99 @@ They are neighbours in input format and nothing else. **This entry constrains XL
 not at all**, and the Cloud TPU route -- tapping the StableHLO that `litert-torch`
 already builds, one stage upstream of the flatbuffer -- is unaffected by it. Any
 future reader who reaches for that route should not be stopped by this row.
+
+### `24yearsold/metricdepth3d_tmp` is blocklisted, and unreadable terms are why
+
+`https://huggingface.co/24yearsold/metricdepth3d_tmp` returns **HTTP 401**. No model
+card, no stated licence, no named author, and a repository name ending `_tmp`.
+
+CLAUDE.md already settles this shape of case for datasets and the reasoning carries: a
+set behind a registration form is not licence-clean, because terms that cannot be read
+without accepting them cannot be gated on. A 401 is that condition at its strongest --
+there is nothing to read, so nothing can be checked against the commercial-use and
+derivatives bar `filter_coco_licenses.py` applies to images.
+
+**It is not hypothetical.** `seethrough-layerdiff`, `seethrough-marigold-depth`,
+`seethrough-partseg` and `seethrough-vae` all reference it, so four checked-out projects
+load a checkpoint whose terms nobody here has seen. It was found by reading what the code
+loads rather than what the repository's own LICENSE says, which is the only method that
+finds this class of problem.
+
+**What this row does not claim.** Not that the weights are unlicensed or that anyone did
+anything wrong -- the repository may be private, renamed or withdrawn. The claim is
+narrower and sufficient: an artifact whose terms cannot be read cannot enter a corpus or
+a deliverable here.
+
+**Removing it is a separate question from replacing it.** See-Through's depth stage also
+loads `prs-eth/marigold-depth-v1-1`, which is CreativeML Open RAIL++-M and blocked by the
+OpenRAIL-M row, so the obvious fallback is blocked too. The replacement search is in
+RFD 1166.
+
+### SMPL and every variant are blocklisted, and SOMA-X to ANNY is the bypass
+
+The SMPL family -- SMPL, SMPL-H, SMPL-X and the later Max Planck body models built on
+them -- is free for non-commercial research and requires a separate licence from the
+Max Planck Gesellschaft for commercial use. That is the bar RFD 1028 sets for anything
+shipped to paying users, so **the whole family is out, not just the one variant somebody
+happens to be looking at.** A row naming only `SMPL` invites the next reader to conclude
+that `SMPL-X` was considered and allowed.
+
+**SOMA-X is the sanctioned bypass, and it is a real code path rather than an intention.**
+Motion reaches deliverables as SOMA-X to ANNY to Godot Humanoid to VRM, pivoting on
+`meshula/LabRCSF`'s `joints.csv` canonical joint table. RFD 1122 records
+`AlternativeTopology` as `smplx`, `smpl`, `soma`, `anny_from_soma`, `notoes` and three
+collapse variants -- `anny_from_soma` is the conversion this row depends on, and it
+exists. Nothing on that path carries a SMPL topology.
+
+**This row writes down a standing decision rather than making a new one, and that it was
+unwritten is the finding.** Nothing in this repository recorded it. `SMPL` appeared only
+as a topology name in that RFD 1122 list and in two logbook notes about Kimodo's
+checkpoints; neither the blocklist table nor RFD 1028's own detail mentioned the family
+at all. A constraint that lives only in memory is exactly the drift the anti-entropy
+check exists to catch, and it went unnoticed because no gate reads a rule nobody wrote.
+
+**It is also why one Kimodo checkpoint can be ignored rather than argued about.**
+`Kimodo-SMPLX-RP-v1` carries NVIDIA's Internal Scientific Research and Development
+licence, which is not commercial. That would matter if the checkpoint were reachable, and
+it is not: it is a SMPL-X checkpoint, SMPL-X is blocklisted by this row, and the rig route
+does not pass through it. `Kimodo-SOMA-*` is under the NVIDIA Open Model Licence, permits
+commercial use, and matches the rig. `logbook-rfd1016-model-repos.md` reached the same
+conclusion and warned against swapping checkpoints without re-checking RFD 1028.
+
+### See-Through's checkpoints are blocklisted, and the taxonomy is kept instead
+
+The repository is Apache-2.0 and that covers its code. Every checkpoint its inference
+scripts actually load is hosted separately and carries no grant:
+
+| checkpoint                                    | state                |
+| --------------------------------------------- | -------------------- |
+| `layerdifforg/seethroughv0.0.1_marigold`      | no licence stated    |
+| `24yearsold/l2d_sam_iter2`                    | no licence stated    |
+| `24yearsold/seethroughv0.0.2_layerdiff3d_nf4` | no licence stated    |
+| `24yearsold/metricdepth3d_tmp`                | HTTP 401, unreadable |
+
+**No stated licence is not a permissive licence.** Absent a grant the default is all
+rights reserved, so these fail RFD 1028's commercial bar on their own, before anything
+upstream is considered.
+
+**Shipping beside Apache-2.0 code does not extend it to weights.** That assumption was
+made and checked: the LICENSE is the stock Apache text with no weights clause and the
+README never mentions licensing. Projects that do intend it say so -- NVIDIA states the
+weights licence for every Kimodo checkpoint separately from the code's Apache-2.0.
+
+**A fine-tune does not reset an upstream licence.** The depth checkpoint is a fine-tune
+of `prs-eth/marigold-depth-v1-1`, which is CreativeML Open RAIL++-M over
+`stable-diffusion-2`. RAIL requires its use restrictions to travel into derivatives --
+the same propagation the OpenRAIL-M row above is written for -- and nobody downstream can
+relicense away restrictions they do not hold. An Apache-2.0 label on that checkpoint
+would be ineffective rather than merely missing.
+
+**What is kept needs no weights.** See-Through remains a reference for layer taxonomy.
+`common/live2d/scrap_model.py` carries `VALID_BODY_PARTS_V3`, 23 parts, and the
+V2-to-V3 change is the valuable one: hair splits into front and back, and the eye into
+irides, eyewhite, eyelash and eyebrow. That split is what CLAUDE.md points at when it
+says a photograph has no ground-truth front-hair/back-hair, and it is why the blinded
+COCO holdout cannot validate this task.
+
+RFD 1166 dropped See-Through from the candidate ranking on this basis, taking it from
+twelve rows to eleven.

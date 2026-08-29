@@ -28,9 +28,11 @@ pose pipeline and not this one.
 Abandoned on 2026-08-28. The accelerator work is scoped to
 rf-detr keypoint and RFD 1157, and this scored 15 of 25 against RFD 1157's 18.
 
-It ranked first among the abandoned candidates, on headroom. If it
-returns, resolve what the 4.9 B covers before trusting that rank,
-and take partseg or the vae up the ladder before layerdiff.
+It ranked first among the abandoned candidates, on headroom.
+
+**LICENSING NOW, NOT FIT.** RFD 1166 dropped See-Through entirely: no
+checkpoint it loads carries a grant, so the headroom above measures a
+model that cannot be used.
 
 ## Related
 

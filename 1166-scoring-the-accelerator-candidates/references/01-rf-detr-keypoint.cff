@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "RF-DETR is Roboflow's. The device-half export and its gates are this workspace's."
+title: "RF-DETR: real-time transformer detection, keypoint preview checkpoint"
+type: software
+authors:
+  - name: "Roboflow"
+repository-code: "https://github.com/roboflow/rf-detr"
+license: Apache-2.0
+notes: "Checkpoint rf-detr-keypoint-preview-xlarge.pth. weftspun/rf-detr-cpp holds the
+  device-half export, the operator allowlist and the compile scripts, not the model."

@@ -3,3 +3,12 @@ __pycache__/
 
 # The BEAM writes this where it dies; the trope gate runs elixir.
 erl_crash.dump
+
+# The Quarto site. Pages under RFD directories and the serials table are written
+# by `scripts/render_site.py` from the README and the register, so committing them
+# would put the same content in two places -- which is what moved `serials.qmd`
+# out of this repository in the first place.
+_site/
+.quarto/
+[0-9]*-*/index.md
+pages/serials.md

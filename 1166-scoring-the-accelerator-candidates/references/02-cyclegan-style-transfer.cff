@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "Cite the CycleGAN paper. The ResNet-9block generator and checkpoint layout are upstream's."
+title: "Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks"
+type: software
+authors:
+  - family-names: "Zhu"
+    given-names: "Jun-Yan"
+  - family-names: "Park"
+    given-names: "Taesung"
+  - family-names: "Isola"
+    given-names: "Phillip"
+  - family-names: "Efros"
+    given-names: "Alexei A."
+repository-code: "https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix"
+license: BSD-3-Clause
+notes: "weftspun/cyclegan-style-transfer is an HTTP wrapper, Apache-2.0, holding no model code."

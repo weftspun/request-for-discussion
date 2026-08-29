@@ -1,0 +1,36 @@
+name: Publish
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        run: pip install usd-core==26.8
+
+      # The pages are generated, never committed. A render without this step
+      # publishes an index of nothing, which reads exactly like an empty site.
+      - name: Render RFD pages and the serial register
+        run: python scripts/render_site.py
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+
+      - run: quarto render
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _site

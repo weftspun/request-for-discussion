@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "SkinTokens is VAST-AI-Research's. Cite it as below."
+title: "SkinTokens: a learned compact representation for unified autoregressive rigging"
+type: software
+authors:
+  - name: "VAST-AI-Research"
+repository-code: "https://github.com/VAST-AI-Research/SkinTokens"
+license: MIT
+notes: "weftspun/interactor-skintokens-auto-rig is an HTTP wrapper that raises
+  NotImplementedError outside stub mode and holds no model. Its own comment records the
+  checkpoint as not yet verified against this upstream."

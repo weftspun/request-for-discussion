@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "EditScore is a LoRA over Qwen3-VL; cite both the adapter and the base model."
+title: "EditScore: reward modelling for instructed image editing"
+type: software
+authors:
+  - name: "VectorSpaceLab"
+repository-code: "https://github.com/VectorSpaceLab/EditScore"
+license: Apache-2.0
+references:
+  - type: software
+    title: "Qwen3-VL"
+    authors:
+      - name: "Qwen Team, Alibaba Group"
+    repository-code: "https://github.com/QwenLM/Qwen3-VL"
+notes: "The adapter holds 516 tensors, 12 of them at deepstack_merger_list; the ViT is stock."
