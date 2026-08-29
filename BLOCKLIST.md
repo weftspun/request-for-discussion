@@ -1005,6 +1005,28 @@ the same propagation the OpenRAIL-M row above is written for -- and nobody downs
 relicense away restrictions they do not hold. An Apache-2.0 label on that checkpoint
 would be ineffective rather than merely missing.
 
+**BOTH WAYS IN ARE CLOSED, AND THE SECOND WAS ONLY CHECKED LATER.**
+RFD 1166's rubric asks two questions of any candidate: `ask`, whether an
+answer can be got out of it, and `adapt`, whether this desk can train,
+tune or LoRA it. See-Through fails both, for different reasons.
+
+**`ask` is closed by the weights.** Every checkpoint the inference
+scripts load states no licence, so there is nothing to run.
+
+**`adapt` is closed by the base model, which is the part that had not
+been looked at.** The repository ships training scripts for all four
+models -- LayerDiff, the Marigold depth stage, the VAE and the body-part
+segmentation -- under its Apache-2.0. That looks at first like a way
+around the weights: train our own. It is not. LayerDiff is
+"diffusion-based transparent layer generation (SDXL)", crediting
+LayerDiffuse, and SDXL is CreativeML Open RAIL++-M -- the row above.
+Training code being permissive does not change what it trains from, and
+use-restrictions propagate into anything trained on the output.
+
+So the two routes fail independently, and closing one would not open the
+other. A licence on the released weights would answer `ask` and leave
+`adapt` exactly where it is.
+
 **What is kept needs no weights.** See-Through remains a reference for layer taxonomy.
 `common/live2d/scrap_model.py` carries `VALID_BODY_PARTS_V3`, 23 parts, and the
 V2-to-V3 change is the valuable one: hair splits into front and back, and the eye into

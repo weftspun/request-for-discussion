@@ -353,6 +353,114 @@ manifest at `3-interactor/lingbot-map-upstream`.
 MoGe is not displaced. It keeps the single-image case, where no sequence
 exists and no map can be built -- which is every illustration.
 
+## `depth_term.py` is written against Marigold, which is now blocked
+
+`pose-consensus/python/depth_term.py` is the forward that pairs with a
+learned depth inverse, and it names Marigold throughout: the docstring,
+the pipeline table, and the affine-alignment rationale. RFD 1166
+blocklisted See-Through's checkpoints, and the depth one is a Marigold
+derivative under OpenRAIL++-M.
+
+**The code does not break.** `depth_loss` takes `target_depth` as a
+tensor and nothing imports Marigold, so the source is swappable. What is
+stale is the reasoning, and it is stale in a way that matters.
+
+**Why depth is the right third opinion is measured, not asserted.** The
+silhouette scores 0.849 on a depth-plus-scale change, which is exactly
+its own self-IoU floor -- perfectly blind. That is the strongest
+independence argument anywhere in this workspace:
+
+    LBFGS vertex   sees 3D with correspondence  blind to whether the
+                                                correspondence is right
+    silhouette     sees the outline             blind to depth and interior
+    depth          sees the interior            blind to absolute scale
+
+## Swapping Marigold for MoGe loses independence, and that is the cost
+
+Marigold is Stable-Diffusion-derived. rf-detr's backbone and MoGe are
+both DINOv2 descendants. **A second opinion is worth having only if it
+fails differently**, which is `silhouette.py`'s own stated test, and two
+models from one lineage can fail together in a way an SD model and a
+DETR could not.
+
+So taking MoGe for this slot keeps the depth signal and spends the
+independence. That is a real cost and it is being paid knowingly rather
+than overlooked.
+
+**What would restore it, under a clean licence:**
+
+    ZoeDepth              MIT, metric, BEiT backbone
+    DPT-BEiT-Large        MIT, relative, BEiT backbone
+    DPT-hybrid-MiDaS      Apache-2.0, ViT and ResNet
+    lingbot-map           Apache-2.0, but needs a sequence
+    classical MVS         OpenCV Apache-2.0, no learned prior at all
+
+Every row is off the DINOv2 lineage. None is chosen here, because the
+single-view decision was about the primary and not about the check.
+
+**And the third opinion's blind spot moved.** The table above lists
+depth as blind to absolute scale, which was true of Marigold and of
+MoGe-1. MoGe-2 and MoGe-3 are metric, so that entry is wrong for the
+model now in the slot. The trio may still cover, and nobody has
+re-derived it.
+
+**`align_affine` needs a decision it has not been given.** It solves an
+`(a, b)` alignment inside the objective because Marigold was
+affine-invariant. Against a metric source that alignment is optional,
+and leaving it on will absorb genuine scale error instead of reporting
+it -- blinding the term to the axis metric depth was bought for.
+
+## LingBot-Depth was checked and is not a candidate
+
+Same family, Apache-2.0, ViT-L/14. It takes RGB **and** a sparse or
+noisy depth map **and** camera intrinsics, and returns refined depth. It
+is completion rather than estimation, so it presupposes both things the
+single-view slot exists to produce. It belongs downstream of
+LingBot-Map, which emits exactly those inputs, and nowhere near the
+start of a chain.
+
+## Single view: MoGe-3 is taken, and MoGe-2 stays for Pixal3D
+
+    checkpoint          licence   gives                        kept for
+
+    moge-3-vitl/vitg    MIT       metric points, depth,        new work
+                                  normals, FOV
+    moge-2-vitl         MIT       the same, one generation     Pixal3D
+                                  older
+    moge-vitl (v1)      MIT       AFFINE points and FOV        nothing
+
+**Two corrections fall out of choosing.**
+
+**MoGe is not affine-invariant, and this document said it was.** That
+was read off v1. Versions 2 and 3 return **metric** point maps, depth,
+normal maps and camera FOV, and the checkout at
+`3-interactor/moge-upstream` already carries `v1.py`, `v2.py` and
+`v3.py`. MoGe-3 landed 2026-08-18 under MIT, which is newer than most of
+the field discussed above.
+
+**Pixal3D pins v2, not v1.** `pixal3d-upstream/app.py:68` sets
+`MOGE_MODEL_NAME = "Ruicheng/moge-2-vitl"` and imports
+`moge.model.v2.MoGeModel`. So the version worth retaining for
+compatibility is the second, and nothing found here depends on the
+first.
+
+**One checkout serves all of it**, because the versions are modules in
+one repository and differ by checkpoint. No manifest change is needed.
+
+## The rung-2 export describes the wrong model now
+
+`moge-upstream/export_device_half.py` exports `dinov2_vitb14` with four
+intermediate layers, which is **v1's** encoder. RFD 1167 records MoGe at
+rung 1 and 2 on that basis: 885 nodes, 26 operators, `Mod x4` outside
+`DEVICE_OPS`.
+
+That measurement is still true and it is true about a model this
+workspace has now decided not to use. MoGe-2 and MoGe-3 are ViT-L, so
+the graph is larger and the operator census has to be redone rather than
+assumed to carry over. **The rung entry stands with that caveat rather
+than being deleted**, because the number was measured and deleting it
+would lose the fact that the family exports cleanly at all.
+
 ## The walk video can be rendered, which makes the error measurable
 
 A walk video is a camera path, and this workspace already renders camera

@@ -55,6 +55,12 @@ about work not yet started rather than work that left no trace.
 
 ## Rung 2 -- the operator set is known
 
+**MoGe's rung-2 entry is about v1, and RFD 1171 has since taken v3.**
+The export targets `dinov2_vitb14`, which is v1's encoder; v2 and v3 are
+ViT-L, so the census below has to be redone rather than carried over.
+The measurement stands as made.
+
+
     model                  [1166]  evidence
 
     VoxHammer, DINOv2 stage  [12]  22 operators, every one inside
