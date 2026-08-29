@@ -1,0 +1,17 @@
+---
+title: "Working agreements"
+toc: true
+---
+
+The standing constraints for every project in this workspace live in
+`CLAUDE.md` at the repository root, which reaches the workspace root
+through a `linkfile` in `default.xml` rather than a second copy.
+
+They are not rendered into this site. The file is read by an agent at
+the top of every session, and a published copy would be a second home
+for a document whose whole point is having one -- the same failure the
+serial register was built against.
+
+- [Working agreements](https://github.com/weftspun/request-for-discussion/blob/main/CLAUDE.md)
+- [Blocklist, with the argument behind each row](https://github.com/weftspun/request-for-discussion/blob/main/BLOCKLIST.md)
+- [Recurring failure modes and the guards that catch them](https://github.com/weftspun/request-for-discussion/blob/main/PITFALLS.md)
