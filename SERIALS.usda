@@ -665,6 +665,10 @@ def Scope "Serials"
                 {
                     custom string slug = "the-ladder-and-where-each-model-stands"
                 }
+                def "S1168"
+                {
+                    custom string slug = "segmenting-the-3d-latent-with-rf-detr"
+                }
             }
         }
 
