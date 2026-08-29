@@ -8,17 +8,20 @@ dimensions vote between them, seat the winner, remove it, repeat.
 `loops` is which of RFD 1143 to RFD 1146 the model appears in.
 
      #  model                     fit shp ref clr val adp ask wnt  sum  runoff role
-     1  rf-detr keypoint         100 100 100  80 100  95 100  85  760  7-0-1  fit
-     2  cyclegan_style_transfer   95  95  60  50  70  95  80  60  605  4-4-0  style, both
-     3  OmniGen2                  50  50  15  50  95  75 100  55  490  4-3-1  2D edit only
-     4  EditScore, Qwen3-VL-8B    40  45  90  55  60  70 100  70  530  6-2-0  all three
-     5  Kimodo                    95  40  10  55  40  85  30  80  435  5-3-0  -
-     6  MoGe                      85  90  55  50  30  60  40  50  460  4-4-0  bootstrap only
-     7  SkinTokens                95  15  10  45  35  80  30  85  395  4-3-1  -
-     8  MuJoCo MJX                95  30   5  15  20  90  85  80  420  3-3-2  presence
-     9  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  35  90  355  4-3-1  3D backbone
-    10  Mitsuba 3 shading         95  75   5  10  55  15  95  45  395  4-4-0  3D views
-    11  VoxHammer                 30  50  55  15  60  10  30  80  330  last   3D ingest+edit
+     1  rf-detr keypoint         100 100 100  80 100  95 100  85  760  6-0-2  fit
+     2  Qwen3-ASR-1.7B            95  85  45  80  80  75  95  85  640  4-3-1  ears
+     3  cyclegan_style_transfer   95  95  60  50  70  95  80  60  605  4-4-0  style, both
+     4  Qwen3-TTS CustomVoice     95  25  15  80  70  70  90  80  525  4-3-1  voice, host
+     5  LaMa, AnimeMangaInpaint   95   5   5  85  65  80  90  70  495  4-3-1  inpaint, host
+     6  OmniGen2                  50  50  15  50  95  75 100  55  490  4-3-1  2D edit only
+     7  EditScore, Qwen3-VL-8B    40  45  90  55  60  70 100  70  530  6-2-0  all three
+     8  Kimodo                    95  40  10  55  40  85  30  80  435  5-3-0  -
+     9  MoGe                      85  90  55  50  30  60  40  50  460  4-4-0  bootstrap only
+    10  SkinTokens                95  15  10  45  35  80  30  85  395  4-3-1  -
+    11  MuJoCo MJX                95  30   5  15  20  90  85  80  420  3-3-2  presence
+    12  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  35  90  355  4-3-1  3D backbone
+    13  Mitsuba 3 shading         95  75   5  10  55  15  95  45  395  4-4-0  3D views
+    14  VoxHammer                 30  50  55  15  60  10  30  80  330  last   3D ingest+edit
 
 The sum is not the order. MoGe outscores EditScore by 20 and sits
 below it, having lost the runoff that decided the seat.
@@ -139,6 +142,12 @@ either invites the reader to supply their own.
                              the 3D backbone                     24.04 GB weights
     VoxHammer                edit an existing asset in latent    read only, then
                              space                               its ViT measured
+    Qwen3-ASR-1.7B           transcription and alignment, the    measured, 2.04 B,
+                             ear of every making flow            enc 1024 x 24
+    Qwen3-TTS CustomVoice    a cloned voice, host-side           measured, 1.92 B,
+                                                                 12 Hz codec
+    LaMa, AnimeMangaInpaint  fills what a mask removed, so a     measured, MIT,
+                             layer comes out whole               rfftn refused
 
 **Two rows are not networks and the basis column says so.** MuJoCo MJX
 is a physics engine and Mitsuba 3 is a renderer. Both were measured at
@@ -351,6 +360,52 @@ code loads, which is the only method that works here.
 scored, or cited, at the granularity of the checkpoints it loads. The
 row is a name for a bundle, and a bundle has no licence and no operator
 census of its own.
+
+## Three rows added, and where their numbers come from
+
+RFDs 1168 and 1169 turned up candidates the ranking had no row for. They
+are scored on the same eight dimensions, and because these scores were
+assigned here rather than inherited, the basis for each is stated.
+
+**Qwen3-ASR-1.7B enters at seat 2**, behind only rf-detr.
+
+    fit   95  2.04 B, 2.04 GB at eight bits against 8 GB. Measured. It
+              never meets RFD 1128's four-bit question at all.
+    shp   85  the encoder is fixed-shape and every operator it needs is
+              in DEVICE_OPS; `PROJECTOR_TYPE_QWEN3A`'s conv2d front end
+              says the log-mel is image-shaped. Decode is on the host.
+    ref   45  rf-detr's device half is the precedent for the shape, and
+              there is no Hailo audio reference anywhere. Split the
+              difference rather than pretend either way.
+    clr   80  Apache-2.0, ungated, newer than our base. The only
+              obstacle is widening our own `clip_init_hailo`.
+    val   80  it is the only row that adds a modality
+    adp   75  1.7 B is trainable on hardware this workspace has
+    ask   95  downloadable and runnable today
+    wnt   85  sound was the reason Gemma 4 was wanted at all
+
+**Qwen3-TTS CustomVoice at seat 4** scores `shape` 25 and `reference`
+15 because the autoregressive stage does not compile, and `clear` 80
+because nothing else about it is in the way. It is a host-side row that
+earns its place on `fit`, `ask` and `wanted` rather than on
+accelerability, which is the honest shape of it.
+
+**LaMa at seat 5** scores `shape` 5 and `reference` 5 on a measured
+refusal, not an estimate: `ffc.py` calls `torch.fft.rfftn` and no
+Fourier operator appears in `DEVICE_OPS`. `clear` is 85, the highest in
+the table, because MIT weights over Apache-2.0 code with no gate is as
+clean as a row gets here.
+
+**Three of the five top seats are now host-side rows.** That is a real
+change to what this table says. It ranks what is worth doing, and what
+is worth doing has stopped being the same question as what compiles --
+`Qwen3-ASR`'s encoder is the only one of the three new rows with a
+device half at all.
+
+**These scores are mine and are the weakest part of the table.** Every
+other row was scored by somebody deciding; these were derived from
+measurements taken the same day. `value` and `wanted` in particular are
+judgements about the product that a measurement cannot settle.
 
 ## How much of this needs original research, and the answer is almost none
 

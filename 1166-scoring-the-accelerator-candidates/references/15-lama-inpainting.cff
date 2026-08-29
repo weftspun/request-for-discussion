@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "Cite the LaMa paper and the anime/manga checkpoint separately."
+title: "LaMa: resolution-robust large mask inpainting with Fourier convolutions"
+type: software
+authors:
+  - name: "Samsung AI Center Moscow"
+repository-code: "https://github.com/advimman/lama"
+license: Apache-2.0
+references:
+  - type: software
+    title: "AnimeMangaInpainting, lama_large_512px"
+    authors:
+      - name: "dreMaz"
+    url: "https://huggingface.co/dreMaz/AnimeMangaInpainting"
+    license: MIT
+notes: "Reached through See-Through's annotators, and the only part of that project
+  whose weights carry a grant -- MIT over Apache-2.0. It does NOT compile for the
+  accelerator: ffc.py's Fast Fourier Convolution calls torch.fft.rfftn and no Fourier
+  operator appears in DEVICE_OPS."
