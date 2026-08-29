@@ -1,5 +1,50 @@
 # RFD 1171 details: every role, what fills it, and the five that are empty
 
+## Every movement runs both ways, and the inverses are the hard half
+
+The frame is not new here. `pose-consensus/python/depth_term.py` opens
+by saying every stage of the avatar pipeline has a forward and an
+inverse, and tabulates four of them. The movements sit on top of the
+same column:
+
+    forward                            inverse
+
+    make      a description becomes    fit        a picture becomes the
+              a body                              body that cast it
+    dress     a layer goes onto the    recover    the body comes back
+              body                                out from under it
+    be it     a person supplies the    a friend   a model supplies it
+              motion and the voice                instead
+
+    pose      FK and LBS, sinew-solve  AnnyInverter, LBFGS
+    skinning  LBS apply                SkinTokens
+    build     624 blendshapes          soft silhouette
+    depth     soft_depth               a monocular estimator
+
+**The forwards are arithmetic and the inverses are not.** Posing a mesh
+from joint angles has one answer. Recovering the joint angles from a
+picture has many, and the whole of `pose-consensus` exists because of
+that asymmetry: the LBFGS fit, the silhouette and the depth term are
+three opinions on one inverse, and RFD 1168's masking-as-corruption is
+the same admission one movement up.
+
+**So the checkers are not distributed evenly, and should not be.**
+Nothing checks the forward directions. Every inverse has at least one
+check, and the ill-posed ones have several. A reader looking for where
+the risk sits should read the right-hand column.
+
+## `recover`, not `undress`
+
+The inverse of `dress` takes the body back out from under a garment. It
+is named for what it produces, and naming it after the clothing would
+lose that -- the operation exists to obtain a body model, and the
+garment is what stands in the way.
+
+It is also the subtraction already recorded here, read backwards: the
+posed mesh gives the body outline, MoGe depth gives the person's
+outline, and the difference is the layer. Forwards that composes a
+clothed figure; backwards it recovers the body.
+
 ## The taxonomy is the spine, and it already splits correctly
 
 `common/live2d/scrap_model.py` in See-Through's tree carries
