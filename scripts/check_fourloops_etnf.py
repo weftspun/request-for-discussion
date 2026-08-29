@@ -84,7 +84,7 @@ from pxr import Usd
 
 HERE = pathlib.Path(__file__).resolve().parent
 PROJECT = HERE.parent
-DEFAULT_LAYER = HERE.parent / "rfd" / "fourloops-etnf.usda"
+DEFAULT_LAYER = HERE.parent / "rfd" / "1143-keypoints-to-anny" / "fourloops-etnf.usda"
 
 # The scopes holding relations. Naming them rather than treating every scope as relations
 # keeps a prose scope from being read as a set of relations with no columns, which would

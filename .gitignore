@@ -13,7 +13,10 @@ _site/
 rfd/1[0-9]*-*/index.md
 pages/serials.md
 
-# The fourloops layers live in rfd/ and default.xml links them back to this root,
-# so the scripts and every RFD that scopes them keep the path they were written to.
+# The fourloops layers live in rfd/1143-keypoints-to-anny/, the first loop. default.xml links them to this root and into
+# each of the four RFDs that scope them, so every Scope naming the bare filename
+# resolves beside its own document. The links are not committed as second copies.
 /fourloops-plan.usda
 /fourloops-etnf.usda
+rfd/114[4-6]-*/fourloops-plan.usda
+rfd/114[4-6]-*/fourloops-etnf.usda
