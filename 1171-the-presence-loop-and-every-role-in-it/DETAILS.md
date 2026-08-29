@@ -296,6 +296,59 @@ Two negative controls, and the second is the useful one:
 numpy only, and nothing about it needs the accelerator. It is the
 smallest piece of the plan and it is done.
 
+## Multi-view is preferred, and the input decides whether it exists
+
+**A webcam is multi-view by construction.** Frames over time are views
+of one scene from a moving relationship, so the presence loop gets
+multi-view for free and should use it: "a person is scenery if they do
+not move" is a temporal statement, and a single frame cannot make it.
+
+**An illustration has one view and there is no second one to take.** A
+drawing is not a scene anybody can walk around. For that input,
+multi-view has to be *generated* -- which is TRELLIS.2 or Pixal3D --
+and then verified back against what conditioned it, exactly the control
+rule CLAUDE.md states for poses.
+
+    input          views available     what supplies geometry
+
+    webcam         many, over time     multi-view over frames
+    photograph     one, or a few       depends how many were taken
+    illustration   exactly one         generated views, then verified
+
+**That is the real split in this pipeline**, and it is not depth
+against mapping. It is whether a second view exists.
+
+## Mapping models were reconsidered, and the field is licence-hostile
+
+RFDs 1051 and 1052 abandoned WorldMirror 2.0 and TripoSplat when RFD
+1064 turned toward character concepts and away from scene
+reconstruction. **That reason has inverted** -- the presence loop makes
+scene reconstruction a character tool, because the static scene is what
+a moving person is separated from. So the abandonment was revisited.
+
+The models are not available:
+
+    tencent/HunyuanWorld-Mirror   tencent-hunyuanworld-mirror-community,
+                                  the same family as Hunyuan3D-Part,
+                                  blocklisted for excluding the EU, UK
+                                  and South Korea
+    facebook/VGGT-1B              CC-BY-NC-4.0, non-commercial
+    naver/dust3r                  CC-BY-NC-SA, non-commercial AND
+                                  share-alike, blocked twice over
+
+**Every learned multi-view reconstructor reachable from here is
+non-commercial or territory-restricted.** That is worth recording as a
+property of the field rather than as three separate disappointments,
+and it is probably why RFD 1064's pivot cost less than it looked like
+it would.
+
+**What is licence-clean is classical.** OpenCV is Apache-2.0 and COLMAP
+is new BSD, with the caveat COLMAP states itself: its dependencies are
+separately licensed and building against them can affect the result.
+For a fixed webcam the classical route is also the simpler one --
+accumulating a static scene over frames is arithmetic, not a model, and
+it needs no checkpoint, no corpus and no licence at all.
+
 ## Metric3D v2 was assessed as a fallback, and it is not one
 
 Proposed as a substitute for MoGe. It is not a substitute, and the
