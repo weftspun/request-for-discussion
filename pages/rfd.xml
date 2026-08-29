@@ -10,10 +10,10 @@
 <atom:link href="https://weftspun.github.io/request-for-discussion/pages/rfd.xml" rel="self" type="application/rss+xml"/>
 <description>Request-for-Discussion documents, the serial register, and the logbook.</description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Sat, 29 Aug 2026 19:51:27 GMT</lastBuildDate>
+<lastBuildDate>Sat, 29 Aug 2026 20:07:58 GMT</lastBuildDate>
 <item>
   <title>RFD 1171: The presence loop, and every role in it</title>
-  <link>https://weftspun.github.io/request-for-discussion/1171-the-presence-loop-and-every-role-in-it/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1171-the-presence-loop-and-every-role-in-it/</link>
   <description><![CDATA[ 
 
 
@@ -43,18 +43,18 @@ be it   a person supplies motion  friend   a model supplies it</code></pre>
 </section>
 <section id="details" class="level2">
 <h2 class="anchored" data-anchor-id="details">Details</h2>
-<p><a href="../1171-the-presence-loop-and-every-role-in-it/DETAILS.html">The measurements and the retractions</a></p>
+<p><a href="../../rfd/1171-the-presence-loop-and-every-role-in-it/DETAILS.html">The measurements and the retractions</a></p>
 
 
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1171-the-presence-loop-and-every-role-in-it/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1171-the-presence-loop-and-every-role-in-it/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1170: A cleanroom presence loop, and which components swap</title>
-  <link>https://weftspun.github.io/request-for-discussion/1170-a-cleanroom-presence-loop/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1170-a-cleanroom-presence-loop/</link>
   <description><![CDATA[ 
 
 
@@ -86,18 +86,18 @@ three.js           MIT          Godot, with Mitsuba as oracle</code></pre>
 </section>
 <section id="details" class="level2">
 <h2 class="anchored" data-anchor-id="details">Details</h2>
-<p><a href="../1170-a-cleanroom-presence-loop/DETAILS.html">The measurements and the retractions</a></p>
+<p><a href="../../rfd/1170-a-cleanroom-presence-loop/DETAILS.html">The measurements and the retractions</a></p>
 
 
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1170-a-cleanroom-presence-loop/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1170-a-cleanroom-presence-loop/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1169: The audio tower for Qwen3-VL, and which half compiles</title>
-  <link>https://weftspun.github.io/request-for-discussion/1169-the-audio-tower-for-qwen3-vl/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1169-the-audio-tower-for-qwen3-vl/</link>
   <description><![CDATA[ 
 
 
@@ -122,18 +122,18 @@ three.js           MIT          Godot, with Mitsuba as oracle</code></pre>
 </section>
 <section id="details" class="level2">
 <h2 class="anchored" data-anchor-id="details">Details</h2>
-<p><a href="../1169-the-audio-tower-for-qwen3-vl/DETAILS.html">The measurements and the retractions</a></p>
+<p><a href="../../rfd/1169-the-audio-tower-for-qwen3-vl/DETAILS.html">The measurements and the retractions</a></p>
 
 
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1169-the-audio-tower-for-qwen3-vl/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1169-the-audio-tower-for-qwen3-vl/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1168: Segment the 3D latent with rf-detr, and treat masking as corruption</title>
-  <link>https://weftspun.github.io/request-for-discussion/1168-segmenting-the-3d-latent-with-rf-detr/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1168-segmenting-the-3d-latent-with-rf-detr/</link>
   <description><![CDATA[ 
 
 
@@ -159,18 +159,18 @@ three.js           MIT          Godot, with Mitsuba as oracle</code></pre>
 </section>
 <section id="details" class="level2">
 <h2 class="anchored" data-anchor-id="details">Details</h2>
-<p><a href="../1168-segmenting-the-3d-latent-with-rf-detr/DETAILS.html">The measurements and the retractions</a></p>
+<p><a href="../../rfd/1168-segmenting-the-3d-latent-with-rf-detr/DETAILS.html">The measurements and the retractions</a></p>
 
 
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1168-segmenting-the-3d-latent-with-rf-detr/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1168-segmenting-the-3d-latent-with-rf-detr/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1167: The ladder, and which rung each model is on</title>
-  <link>https://weftspun.github.io/request-for-discussion/1167-the-ladder-and-where-each-model-stands/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1167-the-ladder-and-where-each-model-stands/</link>
   <description><![CDATA[ 
 
 
@@ -201,18 +201,18 @@ three.js           MIT          Godot, with Mitsuba as oracle</code></pre>
 </section>
 <section id="details" class="level2">
 <h2 class="anchored" data-anchor-id="details">Details</h2>
-<p><a href="../1167-the-ladder-and-where-each-model-stands/DETAILS.html">The measurements and the retractions</a></p>
+<p><a href="../../rfd/1167-the-ladder-and-where-each-model-stands/DETAILS.html">The measurements and the retractions</a></p>
 
 
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1167-the-ladder-and-where-each-model-stands/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1167-the-ladder-and-where-each-model-stands/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1166: How the accelerator candidates were scored</title>
-  <link>https://weftspun.github.io/request-for-discussion/1166-scoring-the-accelerator-candidates/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1166-scoring-the-accelerator-candidates/</link>
   <description><![CDATA[ 
 
 
@@ -245,18 +245,18 @@ wanted     does anyone want the thing it does</code></pre>
 </section>
 <section id="details" class="level2">
 <h2 class="anchored" data-anchor-id="details">Details</h2>
-<p><a href="../1166-scoring-the-accelerator-candidates/DETAILS.html">The measurements and the retractions</a></p>
+<p><a href="../../rfd/1166-scoring-the-accelerator-candidates/DETAILS.html">The measurements and the retractions</a></p>
 
 
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1166-scoring-the-accelerator-candidates/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1166-scoring-the-accelerator-candidates/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1165: Fine-tuning exhausts the desk card, and batch size is the lever</title>
-  <link>https://weftspun.github.io/request-for-discussion/1165-finetuning-exhausts-the-desk-card/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1165-finetuning-exhausts-the-desk-card/</link>
   <description><![CDATA[ 
 
 
@@ -284,18 +284,18 @@ try Quantization-Aware Fine-Tuning with lower batch size.</code></pre>
 </section>
 <section id="details" class="level2">
 <h2 class="anchored" data-anchor-id="details">Details</h2>
-<p><a href="../1165-finetuning-exhausts-the-desk-card/DETAILS.html">The measurements and the retractions</a></p>
+<p><a href="../../rfd/1165-finetuning-exhausts-the-desk-card/DETAILS.html">The measurements and the retractions</a></p>
 
 
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1165-finetuning-exhausts-the-desk-card/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1165-finetuning-exhausts-the-desk-card/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1164: A calibration set is training data</title>
-  <link>https://weftspun.github.io/request-for-discussion/1164-calibration-is-training-data/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1164-calibration-is-training-data/</link>
   <description><![CDATA[ 
 
 
@@ -325,12 +325,12 @@ Epoch 1/4</code></pre>
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1164-calibration-is-training-data/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1164-calibration-is-training-data/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1163: The flow rents a card, the accelerator stays on the desk</title>
-  <link>https://weftspun.github.io/request-for-discussion/1163-the-accelerator-in-the-loops/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1163-the-accelerator-in-the-loops/</link>
   <description><![CDATA[ 
 
 
@@ -355,18 +355,18 @@ Epoch 1/4</code></pre>
 </section>
 <section id="details" class="level2">
 <h2 class="anchored" data-anchor-id="details">Details</h2>
-<p><a href="../1163-the-accelerator-in-the-loops/DETAILS.html">The measurements and the retractions</a></p>
+<p><a href="../../rfd/1163-the-accelerator-in-the-loops/DETAILS.html">The measurements and the retractions</a></p>
 
 
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1163-the-accelerator-in-the-loops/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1163-the-accelerator-in-the-loops/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1162: VoxHammer holds no weights, so it inherits a placement</title>
-  <link>https://weftspun.github.io/request-for-discussion/1162-voxhammer-zero-weights/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1162-voxhammer-zero-weights/</link>
   <description><![CDATA[ 
 
 
@@ -395,12 +395,12 @@ Epoch 1/4</code></pre>
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1162-voxhammer-zero-weights/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1162-voxhammer-zero-weights/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1161: Kimodo is the smallest catalog model, and it is a decoder</title>
-  <link>https://weftspun.github.io/request-for-discussion/1161-kimodo-edge-fit/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1161-kimodo-edge-fit/</link>
   <description><![CDATA[ 
 
 
@@ -429,12 +429,12 @@ Epoch 1/4</code></pre>
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1161-kimodo-edge-fit/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1161-kimodo-edge-fit/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1160: SkinTokens fits at every precision</title>
-  <link>https://weftspun.github.io/request-for-discussion/1160-skintokens-edge-fit/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1160-skintokens-edge-fit/</link>
   <description><![CDATA[ 
 
 
@@ -462,12 +462,12 @@ Epoch 1/4</code></pre>
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1160-skintokens-edge-fit/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1160-skintokens-edge-fit/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1159: TRELLIS.2 sits exactly on the ceiling at bf16</title>
-  <link>https://weftspun.github.io/request-for-discussion/1159-trellis2-at-the-ceiling/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1159-trellis2-at-the-ceiling/</link>
   <description><![CDATA[ 
 
 
@@ -495,12 +495,12 @@ Epoch 1/4</code></pre>
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1159-trellis2-at-the-ceiling/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1159-trellis2-at-the-ceiling/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1158: See-Through is the largest model that fits at eight bits</title>
-  <link>https://weftspun.github.io/request-for-discussion/1158-seethrough-layer-decomposition-edge/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1158-seethrough-layer-decomposition-edge/</link>
   <description><![CDATA[ 
 
 
@@ -529,12 +529,12 @@ Epoch 1/4</code></pre>
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1158-seethrough-layer-decomposition-edge/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1158-seethrough-layer-decomposition-edge/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1157: EditScore needs its own encoder, not a stock one</title>
-  <link>https://weftspun.github.io/request-for-discussion/1157-editscore-merger-lora/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1157-editscore-merger-lora/</link>
   <description><![CDATA[ 
 
 
@@ -562,12 +562,12 @@ Epoch 1/4</code></pre>
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1157-editscore-merger-lora/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1157-editscore-merger-lora/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1156: OmniGen2 fits as stages, not as a pipeline</title>
-  <link>https://weftspun.github.io/request-for-discussion/1156-omnigen2-staged-residency/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1156-omnigen2-staged-residency/</link>
   <description><![CDATA[ 
 
 
@@ -595,12 +595,12 @@ Epoch 1/4</code></pre>
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1156-omnigen2-staged-residency/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1156-omnigen2-staged-residency/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1155: Gemma 4 reaches the device as towers, not as a decoder</title>
-  <link>https://weftspun.github.io/request-for-discussion/1155-gemma4-towers-not-decoder/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1155-gemma4-towers-not-decoder/</link>
   <description><![CDATA[ 
 
 
@@ -626,12 +626,12 @@ Epoch 1/4</code></pre>
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1155-gemma4-towers-not-decoder/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1155-gemma4-towers-not-decoder/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1154: Pixal3D fits only at four bits, as a whole</title>
-  <link>https://weftspun.github.io/request-for-discussion/1154-pixal3d-at-four-bits/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1154-pixal3d-at-four-bits/</link>
   <description><![CDATA[ 
 
 
@@ -656,18 +656,18 @@ Epoch 1/4</code></pre>
 </section>
 <section id="details" class="level2">
 <h2 class="anchored" data-anchor-id="details">Details</h2>
-<p><a href="../1154-pixal3d-at-four-bits/DETAILS.html">The measurements and the retractions</a></p>
+<p><a href="../../rfd/1154-pixal3d-at-four-bits/DETAILS.html">The measurements and the retractions</a></p>
 
 
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1154-pixal3d-at-four-bits/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1154-pixal3d-at-four-bits/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1153: Judging matte quality</title>
-  <link>https://weftspun.github.io/request-for-discussion/1153-judging-matte-quality/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1153-judging-matte-quality/</link>
   <description><![CDATA[ 
 
 
@@ -695,18 +695,18 @@ Epoch 1/4</code></pre>
 </section>
 <section id="details" class="level2">
 <h2 class="anchored" data-anchor-id="details">Details</h2>
-<p><a href="../1153-judging-matte-quality/DETAILS.html">The measurements and the retractions</a></p>
+<p><a href="../../rfd/1153-judging-matte-quality/DETAILS.html">The measurements and the retractions</a></p>
 
 
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1153-judging-matte-quality/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1153-judging-matte-quality/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1152: Background removal for photographic corpora</title>
-  <link>https://weftspun.github.io/request-for-discussion/1152-background-removal-photographic-corpora/</link>
+  <link>https://weftspun.github.io/request-for-discussion/rfd/1152-background-removal-photographic-corpora/</link>
   <description><![CDATA[ 
 
 
@@ -732,14 +732,14 @@ Epoch 1/4</code></pre>
 </section>
 <section id="details" class="level2">
 <h2 class="anchored" data-anchor-id="details">Details</h2>
-<p><a href="../1152-background-removal-photographic-corpora/DETAILS.html">The measurements and the retractions</a></p>
+<p><a href="../../rfd/1152-background-removal-photographic-corpora/DETAILS.html">The measurements and the retractions</a></p>
 
 
 </section>
 
  ]]></description>
-  <guid>https://weftspun.github.io/request-for-discussion/1152-background-removal-photographic-corpora/</guid>
-  <pubDate>Sat, 29 Aug 2026 19:51:27 GMT</pubDate>
+  <guid>https://weftspun.github.io/request-for-discussion/rfd/1152-background-removal-photographic-corpora/</guid>
+  <pubDate>Sat, 29 Aug 2026 20:07:58 GMT</pubDate>
 </item>
 </channel>
 </rss>

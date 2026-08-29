@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>details – Taskweft — Manuals</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-3336bfa29d6298ea485ddf0d64c2ca2e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Taskweft — Manuals</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/rfd.html"> 
+<span class="menu-text">RFDs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/serials.html"> 
+<span class="menu-text">Serials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/logbook.html"> 
+<span class="menu-text">Logbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/agreements.html"> 
+<span class="menu-text">Working agreements</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#rfd-1082-details-data-flow-implementation-status-constraints-and-testing" id="toc-rfd-1082-details-data-flow-implementation-status-constraints-and-testing" class="nav-link active" data-scroll-target="#rfd-1082-details-data-flow-implementation-status-constraints-and-testing">RFD 1082 details: data flow, implementation status, constraints, and testing</a>
+  <ul class="collapse">
+  <li><a href="#end-to-end-data-flow" id="toc-end-to-end-data-flow" class="nav-link" data-scroll-target="#end-to-end-data-flow">End-to-end data flow</a></li>
+  <li><a href="#facekeeperactivity-black-screen-guard" id="toc-facekeeperactivity-black-screen-guard" class="nav-link" data-scroll-target="#facekeeperactivity-black-screen-guard">FaceKeeperActivity, black-screen guard</a></li>
+  <li><a href="#what-is-already-implemented" id="toc-what-is-already-implemented" class="nav-link" data-scroll-target="#what-is-already-implemented">What is already implemented</a>
+  <ul class="collapse">
+  <li><a href="#payload-contract-the-json-post-body" id="toc-payload-contract-the-json-post-body" class="nav-link" data-scroll-target="#payload-contract-the-json-post-body">Payload contract, the JSON POST body</a></li>
+  </ul></li>
+  <li><a href="#status-after-a-may-2026-rebuild-verify-on-device" id="toc-status-after-a-may-2026-rebuild-verify-on-device" class="nav-link" data-scroll-target="#status-after-a-may-2026-rebuild-verify-on-device">Status after a May 2026 rebuild (verify on device)</a>
+  <ul class="collapse">
+  <li><a href="#implemented-that-same-pass" id="toc-implemented-that-same-pass" class="nav-link" data-scroll-target="#implemented-that-same-pass">Implemented that same pass</a></li>
+  <li><a href="#known-gaps-not-fully-fixed" id="toc-known-gaps-not-fully-fixed" class="nav-link" data-scroll-target="#known-gaps-not-fully-fixed">Known gaps, not fully fixed</a></li>
+  <li><a href="#success-criteria-on-a-re-test-after-rebuild" id="toc-success-criteria-on-a-re-test-after-rebuild" class="nav-link" data-scroll-target="#success-criteria-on-a-re-test-after-rebuild">Success criteria, on a re-test after rebuild</a></li>
+  </ul></li>
+  <li><a href="#key-files-to-open-first" id="toc-key-files-to-open-first" class="nav-link" data-scroll-target="#key-files-to-open-first">Key files to open first</a></li>
+  <li><a href="#platform-constraints-do-not-violate" id="toc-platform-constraints-do-not-violate" class="nav-link" data-scroll-target="#platform-constraints-do-not-violate">Platform constraints, do not violate</a></li>
+  <li><a href="#follow-up-tasks-if-full-space-ar-still-fails" id="toc-follow-up-tasks-if-full-space-ar-still-fails" class="nav-link" data-scroll-target="#follow-up-tasks-if-full-space-ar-still-fails">Follow-up tasks, if Full Space AR still fails</a></li>
+  <li><a href="#how-to-test" id="toc-how-to-test" class="nav-link" data-scroll-target="#how-to-test">How to test</a></li>
+  <li><a href="#related-web-repository-paths" id="toc-related-web-repository-paths" class="nav-link" data-scroll-target="#related-web-repository-paths">Related web repository paths</a></li>
+  <li><a href="#one-sentence-summary" id="toc-one-sentence-summary" class="nav-link" data-scroll-target="#one-sentence-summary">One-sentence summary</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1082-android-studio-ai-brief/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1082-android-studio-ai-brief/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+
+<section id="rfd-1082-details-data-flow-implementation-status-constraints-and-testing" class="level1">
+<h1>RFD 1082 details: data flow, implementation status, constraints, and testing</h1>
+<section id="end-to-end-data-flow" class="level2">
+<h2 class="anchored" data-anchor-id="end-to-end-data-flow">End-to-end data flow</h2>
+<pre><code>[Galaxy XR headset]
+  Weftspun XR Face APK
+    Jetpack XR Session + Face (BLEND_SHAPES)  --,
+    OpenXR xrGetFaceStateANDROID (parallel)   --+
+                                                v
+    FaceHttpRelay -&gt; POST https://&lt;PC_LAN_IP&gt;:3000/__native_face_ingest
+                                                |
+[Dev PC] npm run dev (Vite)                     |
+    relay plugin -&gt; SSE /__native_face_sse      |
+                                                v
+  Chrome WebXR (immersive AR/VR)
+    ?nativeFaceRelay=1 -&gt; nativeFaceBridge.js -&gt; VRM morph targets</code></pre>
+<p>WebView path, works with no relay: the APK loads this project’s own URL in a <code>WebView</code>, and calls <code>evaluateJavascript("__characterStudioNativeFace.push(...)")</code> directly. <code>WebView</code> does not support <code>navigator.xr</code>, so AR/VR must run in Chrome instead.</p>
+<p>Chrome path, needs the relay: the user opens the app menu, “Open in Chrome for WebXR (+ face).” The APK must keep face tracking alive while Chrome is foreground, through picture-in-picture, <code>FaceKeeperActivity</code>, and a foreground service.</p>
+</section>
+<section id="facekeeperactivity-black-screen-guard" class="level2">
+<h2 class="anchored" data-anchor-id="facekeeperactivity-black-screen-guard">FaceKeeperActivity, black-screen guard</h2>
+<p><code>FaceKeeperActivity</code> is a transparent 1x1 activity. It keeps the Jetpack XR session host alive while Chrome runs WebXR. A missing guard below shows the user a black-screen flash on “Open in Chrome for WebXR (+ face).”</p>
+<p><code>Theme.FaceKeeper</code>, in <code>themes.xml</code>, must keep every one of: <code>windowIsTranslucent</code> true, <code>windowBackground</code> and <code>colorBackground</code> transparent, <code>windowNoTitle</code> true, <code>windowContentOverlay</code> null, <code>backgroundDimEnabled</code> false, <code>windowDisablePreview</code> true (this is the one that stops the starting-window snapshot flash), and <code>windowAnimationStyle</code> null. <code>AndroidManifest.xml</code> must set this theme on <code>FaceKeeperActivity</code>.</p>
+<p>In <code>FaceKeeperActivity.kt</code>, <code>onCreate()</code> and <code>onResume()</code> must call <code>finish()</code> plus <code>overridePendingTransition(0, 0)</code> when <code>FaceHandoffState.isChromeHandoff()</code> is false. <code>FaceKeeperActivity</code> must never call <code>setChromeHandoff(true)</code> itself; only <code>MainActivity</code>, PiP, or the Chrome flow sets that. <code>FaceKeeper</code>’s own <code>acquire()</code> and <code>release()</code> must add <code>Intent.FLAG_ACTIVITY_NO_ANIMATION</code>, and the caller must call <code>overridePendingTransition(0, 0)</code> after <code>startActivity()</code>.</p>
+<p><code>recordRelayPostSuccess()</code> fires only on a successful HTTP ingest in <code>FaceHttpRelay</code>, never on a handoff toggle. A cold launcher start (<code>ACTION_MAIN</code>, <code>CATEGORY_LAUNCHER</code>, no saved state) must call <code>clearChromeHandoff()</code>. <code>canRestoreHandoffSession(inPiP, pausingForChrome)</code> gates the keeper restore; it returns true only when a handoff is active and the app is in PiP or transitioning to Chrome.</p>
+</section>
+<section id="what-is-already-implemented" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-already-implemented">What is already implemented</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 82%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Area</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Gradle app, WebView shell, dev HTTPS (debug SSL proceed)</td>
+<td>Done</td>
+</tr>
+<tr class="even">
+<td><code>XrFaceTrackingEngine</code>, Jetpack <code>Session</code>, <code>Face.getUserFace</code>, roughly 30 Hz</td>
+<td>Done</td>
+</tr>
+<tr class="odd">
+<td><code>FaceHttpRelay</code>, an OkHttp POST to <code>/__native_face_ingest</code></td>
+<td>Done</td>
+</tr>
+<tr class="even">
+<td><code>FaceBridgeForegroundService</code> plus notification</td>
+<td>Done</td>
+</tr>
+<tr class="odd">
+<td><code>FaceKeeper</code>/<code>FaceKeeperActivity</code>, a transparent 1x1 host during the Chrome handoff</td>
+<td>Done</td>
+</tr>
+<tr class="even">
+<td><code>FaceHandoffState</code>, <code>SharedPreferences</code> for <code>chromeHandoff</code>, a 30-second stale threshold</td>
+<td>Done</td>
+</tr>
+<tr class="odd">
+<td><code>FaceTrackingCoordinator</code>, Jetpack plus OpenXR, picks the freshest <code>lastPostAgeMs()</code></td>
+<td>Done</td>
+</tr>
+<tr class="even">
+<td>OpenXR native (<code>libcs_openxr_face.so</code>, <code>OpenXrFaceEngine</code>, GLES/PBuffer Phase 1b)</td>
+<td>Scaffolded, partial</td>
+</tr>
+<tr class="odd">
+<td>Permissions: <code>FACE_TRACKING</code>, notifications, camera, audio for WebView</td>
+<td>Done</td>
+</tr>
+<tr class="even">
+<td>Web side: <code>nativeFaceBridge.js</code>, <code>nativeFaceRelay.js</code>, a Vite plugin, tests</td>
+<td>Done</td>
+</tr>
+</tbody>
+</table>
+<section id="payload-contract-the-json-post-body" class="level3">
+<h3 class="anchored" data-anchor-id="payload-contract-the-json-post-body">Payload contract, the JSON POST body</h3>
+<p>Preferred: WebXR-style keys, <code>{ "weights": { "jaw_drop": 0.6, ... }, "t": &lt;epochMs&gt; }</code>. Or a dense array: <code>{ "openxrParameters": [68 floats], "t": ... }</code>, in the Khronos <code>XrFaceParameterIndicesANDROID</code> order. The web side maps this through <code>src/library/openxrFaceParameterMap.js</code> into <code>applyExpressionWeightRecordToVRMS</code>, in <code>src/library/xrExpressionTrackingDriver.js</code>. RFD 1096 gives the full spec.</p>
+</section>
+</section>
+<section id="status-after-a-may-2026-rebuild-verify-on-device" class="level2">
+<h2 class="anchored" data-anchor-id="status-after-a-may-2026-rebuild-verify-on-device">Status after a May 2026 rebuild (verify on device)</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 32%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Mode</th>
+<th>Behavior before the fix</th>
+<th>Expected after</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Flat Chrome or WebView</td>
+<td>Works: <code>nativeKeys</code> 25, 42</td>
+<td>Unchanged</td>
+</tr>
+<tr class="even">
+<td>Chrome immersive AR (Full Space)</td>
+<td>Relay stale, <code>nativeKeys=0</code>, Jetpack <code>not TRACKING</code></td>
+<td>The OpenXR PBuffer path plus <code>FaceKeeperActivity</code> host; Jetpack as fallback</td>
+</tr>
+</tbody>
+</table>
+<section id="implemented-that-same-pass" class="level3">
+<h3 class="anchored" data-anchor-id="implemented-that-same-pass">Implemented that same pass</h3>
+<ol type="1">
+<li>Headless OpenXR (Phase 1b): <code>openxr_face_engine.cpp</code> prefers PBuffer EGL; <code>OpenXrFaceEngine.tryStartNative</code> needs no <code>TextureView</code> or <code>surfaceReady</code>.</li>
+<li>Chrome handoff: <code>FaceKeeperActivity.onResume</code> calls <code>setActivity</code>, <code>setSessionHost</code>, <code>ensureFacePipeline("keeper-onResume")</code>.</li>
+<li>Coordinator: <code>OpenXrFaceEngine.ensureFacePipeline</code> always runs; Jetpack also runs when <code>!OpenXrFaceEngine.isCollecting()</code> or <code>chromeHandoff</code>.</li>
+<li>Watchdog and recycle: <code>CHROME_HANDOFF_STALE_MS</code> is 10 seconds. A forced recycle happens when the relay stays quiet twice that threshold (roughly 20 seconds), even if the collector still ticks; <code>COLLECTOR_STUCK_CHROME_MS</code> is 20 seconds.</li>
+<li>Foreground service type: <code>dataSync|camera|microphone</code> (the microphone type gated to API 34+); the manifest declares <code>FOREGROUND_SERVICE_MICROPHONE</code>.</li>
+<li>Handoff expiry: a restored handoff only applies if the last successful relay ingest was under 60 seconds ago. A cold launcher start clears the handoff; <code>FaceKeeperActivity</code> finishes if the handoff flag is false.</li>
+</ol>
+</section>
+<section id="known-gaps-not-fully-fixed" class="level3">
+<h3 class="anchored" data-anchor-id="known-gaps-not-fully-fixed">Known gaps, not fully fixed</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 77%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Issue</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Web-versus-APK stale mismatch</td>
+<td>The web side holds the last weights for 30 seconds while <code>xrPresenting</code>; the APK’s own handoff staleness is 10 seconds, intentionally, trading UI stability against faster recovery.</td>
+</tr>
+<tr class="even">
+<td>Jetpack and OpenXR running in parallel during handoff</td>
+<td>The coordinator can still start Jetpack while <code>chromeHandoff</code> is set, even when OpenXR is already collecting, which can compete for GLES on Galaxy XR; watch logcat for session failures.</td>
+</tr>
+<tr class="odd">
+<td>The foreground-service <code>microphone</code> type</td>
+<td>Declared only for process priority; face tracking itself does not use the microphone. Add it only if the WebView/foreground path actually records audio, or a store policy may question it.</td>
+</tr>
+<tr class="even">
+<td>A prior assistant summary’s typo</td>
+<td>It claimed “1.5x stale = 15s”; the code actually uses 2x <code>effectiveStaleMs()</code>, roughly 20 seconds, during handoff.</td>
+</tr>
+<tr class="odd">
+<td><code>OpenXrFaceEngine.kt</code></td>
+<td><code>setSurface</code> still only nudges the pipeline when <code>surfaceReady</code>; the headless path runs through <code>ensureFacePipeline</code> with no surface, which is correct.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="success-criteria-on-a-re-test-after-rebuild" class="level3">
+<h3 class="anchored" data-anchor-id="success-criteria-on-a-re-test-after-rebuild">Success criteria, on a re-test after rebuild</h3>
+<p>In Chrome AR: <code>nativeKeys &gt; 25</code>, <code>relay=poll+sse/&lt;500ms</code>, sustained while <code>xrPresenting=true</code> (live ingest, not a frozen cache). Logcat shows <code>ON-OpenXrFace</code> “OpenXR GLES face started” or “First OpenXR face push”, or <code>ON-JetpackFace</code> “TRACKING” plus <code>ON-FaceHttpRelay</code> posts.</p>
+</section>
+</section>
+<section id="key-files-to-open-first" class="level2">
+<h2 class="anchored" data-anchor-id="key-files-to-open-first">Key files to open first</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 66%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>MainActivity.kt</code></td>
+<td>WebView, permissions, the Chrome-handoff menu item, picture-in-picture, FaceKeeper get/release</td>
+</tr>
+<tr class="even">
+<td><code>XrFaceTrackingEngine.kt</code></td>
+<td>The Jetpack face-collect loop, <code>FaceHttpRelay.post</code>, watchdog and recycle logic</td>
+</tr>
+<tr class="odd">
+<td><code>FaceKeeper.kt</code> / <code>FaceKeeperActivity.kt</code></td>
+<td>The session host while Chrome runs in XR</td>
+</tr>
+<tr class="even">
+<td><code>FaceHandoffState.kt</code></td>
+<td>The persistent Chrome-handoff flag</td>
+</tr>
+<tr class="odd">
+<td><code>FaceBridgeForegroundService.kt</code></td>
+<td>The foreground service, keeper restart, reconfigure on a stale relay</td>
+</tr>
+<tr class="even">
+<td><code>FaceTrackingCoordinator.kt</code></td>
+<td>Starts and stops Jetpack plus OpenXR</td>
+</tr>
+<tr class="odd">
+<td><code>FaceHttpRelay.kt</code></td>
+<td>The LAN POST to the dev server</td>
+</tr>
+<tr class="even">
+<td><code>OpenXrFaceEngine.kt</code> plus <code>app/src/main/cpp/*</code></td>
+<td>OpenXR 1.0.x, <code>XR_ANDROID_face_tracking</code>, the GLES binding</td>
+</tr>
+<tr class="odd">
+<td><code>FaceBlendShapeMaps.kt</code></td>
+<td>The Jetpack-to-WebXR key mapping</td>
+</tr>
+<tr class="even">
+<td><code>AndroidXrBridgeInterface.kt</code></td>
+<td>The JS-facing <code>AndroidXRBridge.onBridgeReady()</code></td>
+</tr>
+</tbody>
+</table>
+<p>Log tags: <code>ON-JetpackFace</code>, <code>ON-FaceKeeper</code>, <code>ON-FaceBridgeSvc</code>, <code>ON-FaceHttpRelay</code>, <code>ON-OpenXrNative</code>, <code>ON-XR-WebView</code>.</p>
+</section>
+<section id="platform-constraints-do-not-violate" class="level2">
+<h2 class="anchored" data-anchor-id="platform-constraints-do-not-violate">Platform constraints, do not violate</h2>
+<ol type="1">
+<li>WebView is not WebXR; never attempt immersive XR inside WebView. Chrome only, for AR or VR.</li>
+<li>The Galaxy XR OpenXR runtime accepts API 1.0.x only (1.1 is rejected: “Max supported version is 1.0.34”).</li>
+<li><code>android.permission.FACE_TRACKING</code> is required before <code>xrCreateFaceTrackerANDROID</code>.</li>
+<li>Chrome cannot share an OpenXR session with this APK; a headless, separate OpenXR instance is the intended Phase 1b approach.</li>
+<li>The dev URL comes from <code>local.properties</code>: <code>weftspun3dStudio.url=https://&lt;PC_LAN_IP&gt;:3000/</code> (the legacy alias <code>characterStudio.url</code> still works). The PC runs <code>npm run dev --host</code>, and the firewall allows TCP 3000.</li>
+<li>HTTPS: debug builds trust dev certificates for the relay POST; a release build must never blindly <code>proceed()</code> on an SSL error.</li>
+</ol>
+</section>
+<section id="follow-up-tasks-if-full-space-ar-still-fails" class="level2">
+<h2 class="anchored" data-anchor-id="follow-up-tasks-if-full-space-ar-still-fails">Follow-up tasks, if Full Space AR still fails</h2>
+<ol type="1">
+<li>Verify OpenXR actually posts in AR: check logcat’s <code>ON-OpenXrFace</code> tag, or a remote-log <code>faceSrc=openxr</code> / payload <code>"source":"openxr"</code>.</li>
+<li>Reduce Jetpack/OpenXR contention: consider running Jetpack only when <code>!OpenXrFaceEngine.isCollecting()</code> during handoff (today, Jetpack always runs on handoff).</li>
+<li>Confirm the <code>FACE_TRACKING</code> runtime permission is granted before <code>xrCreateFaceTrackerANDROID</code> runs.</li>
+<li>If a future Google release documents face data reaching Chrome WebXR without a relay, prefer that path for production.</li>
+</ol>
+<p>Do not remove the HTTP relay without a Chrome replacement ready. Do not break WebView’s <code>evaluateJavascript</code> path. Never commit a secret or a LAN IP into source.</p>
+</section>
+<section id="how-to-test" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-test">How to test</h2>
+<ol type="1">
+<li>On the PC: <code>npm run dev</code>, then open <code>https://&lt;PC_IP&gt;:3000/?remoteLog=1&amp;nativeFaceRelay=1</code>.</li>
+<li>Install the debug APK; grant face, notification, and camera permissions.</li>
+<li>Open the app, load the site, then the menu’s “Open in Chrome for WebXR (+ face)”.</li>
+<li>Keep the Weftspun XR Face app visible, or its picture-in-picture bubble, in Home Space.</li>
+<li>Enter AR in Chrome; watch the PC’s <code>logs/remote-log.txt</code> for <code>[ON-NATIVE-FACE-DIAG] nativeKeys=… relay=… xrPresenting=…</code>.</li>
+<li>Use <code>adb logcat</code> with the tags above, or this repository’s own <code>scripts/capture-apk-logcat.ps1</code>.</li>
+</ol>
+</section>
+<section id="related-web-repository-paths" class="level2">
+<h2 class="anchored" data-anchor-id="related-web-repository-paths">Related web repository paths</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 36%">
+<col style="width: 63%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Path</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>src/library/nativeFaceBridge.js</code></td>
+<td>Consumes native weights</td>
+</tr>
+<tr class="even">
+<td><code>src/library/nativeFaceRelay.js</code></td>
+<td>Chrome-side SSE/poll from the dev server</td>
+</tr>
+<tr class="odd">
+<td><code>vite.config.js</code></td>
+<td>The <code>__native_face_ingest</code> and <code>__native_face_sse</code> plugins</td>
+</tr>
+<tr class="even">
+<td>RFD 1096</td>
+<td>Spec links, the payload contract</td>
+</tr>
+<tr class="odd">
+<td>RFD 1105</td>
+<td>WebXR expression notes, remote logging</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="one-sentence-summary" class="level2">
+<h2 class="anchored" data-anchor-id="one-sentence-summary">One-sentence summary</h2>
+<p>Keep Jetpack XR, and optionally OpenXR’s <code>XR_ANDROID_face_tracking</code>, posting roughly 30 Hz of face blend shapes to a LAN HTTP relay while Chrome runs Full Space WebXR, because Chrome does not expose <code>expression-tracking</code> and WebView cannot run WebXR at all.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/weftspun\.github\.io\/request-for-discussion");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Serials are OID arcs under the 66606 PEN and are never reused.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1082-android-studio-ai-brief/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1082-android-studio-ai-brief/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/weftspun/request-for-discussion">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

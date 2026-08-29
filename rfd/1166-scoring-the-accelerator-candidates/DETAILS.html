@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>details – Taskweft — Manuals</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-3336bfa29d6298ea485ddf0d64c2ca2e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Taskweft — Manuals</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/rfd.html"> 
+<span class="menu-text">RFDs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/serials.html"> 
+<span class="menu-text">Serials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/logbook.html"> 
+<span class="menu-text">Logbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/agreements.html"> 
+<span class="menu-text">Working agreements</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#rfd-1166-details-the-table-the-runoff-and-what-each-row-rests-on" id="toc-rfd-1166-details-the-table-the-runoff-and-what-each-row-rests-on" class="nav-link active" data-scroll-target="#rfd-1166-details-the-table-the-runoff-and-what-each-row-rests-on">RFD 1166 details: the table, the runoff, and what each row rests on</a>
+  <ul class="collapse">
+  <li><a href="#the-star-rank" id="toc-the-star-rank" class="nav-link" data-scroll-target="#the-star-rank">The STAR rank</a></li>
+  <li><a href="#wanted-and-what-the-product-is-for" id="toc-wanted-and-what-the-product-is-for" class="nav-link" data-scroll-target="#wanted-and-what-the-product-is-for"><code>wanted</code>, and what the product is for</a></li>
+  <li><a href="#what-each-row-is-for-and-what-its-score-rests-on" id="toc-what-each-row-is-for-and-what-its-score-rests-on" class="nav-link" data-scroll-target="#what-each-row-is-for-and-what-its-score-rests-on">What each row is for, and what its score rests on</a></li>
+  <li><a href="#the-citations-and-the-eight-this-workspace-had-to-correct" id="toc-the-citations-and-the-eight-this-workspace-had-to-correct" class="nav-link" data-scroll-target="#the-citations-and-the-eight-this-workspace-had-to-correct">The citations, and the eight this workspace had to correct</a></li>
+  <li><a href="#see-through-leaves-the-ranking-and-stays-as-a-taxonomy" id="toc-see-through-leaves-the-ranking-and-stays-as-a-taxonomy" class="nav-link" data-scroll-target="#see-through-leaves-the-ranking-and-stays-as-a-taxonomy">See-Through leaves the ranking and stays as a taxonomy</a></li>
+  <li><a href="#a-row-is-not-a-model-and-that-is-systemic" id="toc-a-row-is-not-a-model-and-that-is-systemic" class="nav-link" data-scroll-target="#a-row-is-not-a-model-and-that-is-systemic">A row is not a model, and that is systemic</a></li>
+  <li><a href="#three-rows-added-and-where-their-numbers-come-from" id="toc-three-rows-added-and-where-their-numbers-come-from" class="nav-link" data-scroll-target="#three-rows-added-and-where-their-numbers-come-from">Three rows added, and where their numbers come from</a></li>
+  <li><a href="#how-much-of-this-needs-original-research-and-the-answer-is-almost-none" id="toc-how-much-of-this-needs-original-research-and-the-answer-is-almost-none" class="nav-link" data-scroll-target="#how-much-of-this-needs-original-research-and-the-answer-is-almost-none">How much of this needs original research, and the answer is almost none</a></li>
+  <li><a href="#what-this-ranking-does-not-tell-you" id="toc-what-this-ranking-does-not-tell-you" class="nav-link" data-scroll-target="#what-this-ranking-does-not-tell-you">What this ranking does not tell you</a></li>
+  <li><a href="#the-critical-path-is-a-chain-not-a-set-of-loops" id="toc-the-critical-path-is-a-chain-not-a-set-of-loops" class="nav-link" data-scroll-target="#the-critical-path-is-a-chain-not-a-set-of-loops">The critical path is a chain, not a set of loops</a></li>
+  <li><a href="#omnigen2-is-2d-only-and-the-measurement-is-why" id="toc-omnigen2-is-2d-only-and-the-measurement-is-why" class="nav-link" data-scroll-target="#omnigen2-is-2d-only-and-the-measurement-is-why">OmniGen2 is 2D only, and the measurement is why</a></li>
+  <li><a href="#voxhammer-has-a-device-half-and-it-took-three-tries-to-see-it" id="toc-voxhammer-has-a-device-half-and-it-took-three-tries-to-see-it" class="nav-link" data-scroll-target="#voxhammer-has-a-device-half-and-it-took-three-tries-to-see-it">VoxHammer has a device half, and it took three tries to see it</a></li>
+  <li><a href="#five-models-the-earlier-revision-omitted" id="toc-five-models-the-earlier-revision-omitted" class="nav-link" data-scroll-target="#five-models-the-earlier-revision-omitted">Five models the earlier revision omitted</a></li>
+  <li><a href="#what-each-row-rests-on" id="toc-what-each-row-rests-on" class="nav-link" data-scroll-target="#what-each-row-rests-on">What each row rests on</a></li>
+  <li><a href="#the-adapt-column-and-the-one-number-that-bounds-it" id="toc-the-adapt-column-and-the-one-number-that-bounds-it" class="nav-link" data-scroll-target="#the-adapt-column-and-the-one-number-that-bounds-it">The <code>adapt</code> column, and the one number that bounds it</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1166-scoring-the-accelerator-candidates/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1166-scoring-the-accelerator-candidates/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+
+<section id="rfd-1166-details-the-table-the-runoff-and-what-each-row-rests-on" class="level1">
+<h1>RFD 1166 details: the table, the runoff, and what each row rests on</h1>
+<section id="the-star-rank" class="level2">
+<h2 class="anchored" data-anchor-id="the-star-rank">The STAR rank</h2>
+<p>STAR applied repeatedly: take the two highest sums, let the six dimensions vote between them, seat the winner, remove it, repeat. <code>runoff</code> reads wins-losses-ties against the runner-up it beat. <code>loops</code> is which of RFD 1143 to RFD 1146 the model appears in.</p>
+<pre><code> #  model                     fit shp ref clr val adp ask wnt  sum  runoff role
+ 1  rf-detr keypoint         100 100 100  80 100  95 100  85  760  6-0-2  fit
+ 2  Qwen3-ASR-1.7B            95  85  45  80  80  75  95  85  640  4-3-1  ears
+ 3  cyclegan_style_transfer   95  95  60  50  70  95  80  60  605  4-4-0  style, both
+ 4  Qwen3-TTS CustomVoice     95  25  15  80  70  70  90  80  525  4-3-1  voice, host
+ 5  LaMa, AnimeMangaInpaint   95   5   5  85  65  80  90  70  495  4-3-1  inpaint, host
+ 6  OmniGen2                  50  50  15  50  95  75 100  55  490  4-3-1  2D edit only
+ 7  EditScore, Qwen3-VL-8B    40  45  90  55  60  70 100  70  530  6-2-0  all three
+ 8  Kimodo                    95  40  10  55  40  85  30  80  435  5-3-0  -
+ 9  MoGe                      85  90  55  50  30  60  40  50  460  4-4-0  bootstrap only
+10  SkinTokens                95  15  10  45  35  80  30  85  395  4-3-1  -
+11  MuJoCo MJX                95  30   5  15  20  90  85  80  420  3-3-2  presence
+12  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  35  90  355  4-3-1  3D backbone
+13  Mitsuba 3 shading         95  75   5  10  55  15  95  45  395  4-4-0  3D views
+14  VoxHammer                 30  50  55  15  60  10  30  80  330  last   3D ingest+edit</code></pre>
+<p>The sum is not the order. MoGe outscores EditScore by 20 and sits below it, having lost the runoff that decided the seat.</p>
+<p><strong>TRELLIS.2 and Pixal3D are one row.</strong> They were never independent candidates: Pixal3D’s README says it is “heavily built upon Trellis.2 … the foundation of our codebase and model architecture”, and its install step begins by following TRELLIS.2’s. Scoring them separately counted one backbone twice and let the derived model rank below the thing it is made of. The row takes the staged view RFD 1154 arrived at – the 1.3 B sparse structure stage rather than the 12.02 B whole – which is why <code>fit</code> is 60 rather than Pixal3D’s old 30.</p>
+<p><strong>Gemma 4 and <code>qwen35-defiant</code> are both struck from the ranking.</strong> Neither was a close call. Both are GGUF, so the format ends them before memory or operators are reached, and no exporter can close that gap because GGUF carries no graph at all. RFD 1155 abandoned Gemma 4 on the same ground.</p>
+<p>Ranking a candidate with no path flatters the ranking rather than informing it, and keeping one as a worked example only made the table look like it had considered language models on their merits. It had not: it had rediscovered the blocklist. BLOCKLIST.md is where that argument lives.</p>
+<p><strong><code>unified-modal-embedder</code> and <code>residual-fsq-recommender</code> are struck for a different reason: they are not what this product is.</strong> One embeds content for search and the other recommends a next item. Both are infrastructure for finding things, and the two wants this ranking serves are making and being present. Neither is in a chain, neither has run here, and the embedder held the lowest <code>wanted</code> of any surviving row at 20.</p>
+<p>Nothing is wrong with either. A ranking of accelerator candidates is not a list of the workspace’s models, and the checkouts stay in the manifest where they are placed.</p>
+<p><strong>MoGe was struck and is restored, scoped to bootstrap.</strong> It is not an independent candidate: it sits in Pixal3D’s core <code>requirements.txt</code> and <code>app.py</code> calls it from <code>get_camera_params_wild_moge</code>, which takes a photograph somebody else shot and estimates the camera that shot it, producing exactly the <code>camera_params</code> dict <code>run()</code> demands.</p>
+<p>The strike said the inverted chain deletes that input, and it does – after the first turn. <strong>It does not answer where the first asset comes from.</strong> ANNY originating a pose has no wild image and needs no camera recovered. A photograph does, and image-to-3D is a catalog entry with two models behind it, which is not what gets built if nobody brings images.</p>
+<p>So the strike was wrong twice over. The case survives at the bootstrap, and more to the point, <strong>a dependency that might be needed is still code to write and QA on the device.</strong> This ranking tracks work the accelerator programme takes on, and work that turns out to be unnecessary is discovered by doing it. Its <code>value</code> falls from 40 to 30 because it runs once at ingestion rather than every round, and that is the whole of what the inversion changes.</p>
+</section>
+<section id="wanted-and-what-the-product-is-for" class="level2">
+<h2 class="anchored" data-anchor-id="wanted-and-what-the-product-is-for"><code>wanted</code>, and what the product is for</h2>
+<p>The other seven dimensions all ask whether a model is tractable. None asks whether the thing it does is wanted, and a model can be easy to accelerate and serve nothing anybody needs.</p>
+<p>What the product is for answers it, and the manifest says: a social world with avatars people wear. <code>v-sekai</code> and <code>v-sekai-fabric</code> carry the client and the fabric, ANNY is the body, and RFD 1122 is the chain that puts a person into it. Two things follow and nothing else does.</p>
+<p><strong>People make things and wear them.</strong> A mesh someone made is worth nothing until it is rigged, textured and in the world, so <code>TRELLIS.2 / Pixal3D</code> takes 90 as the shortest path from an image to a wearable asset and <code>SkinTokens</code> 85, because an unrigged mesh cannot be worn at all. <code>VoxHammer</code> takes 60 for editing what exists.</p>
+<p><strong>People are present to each other, and keypoints are how.</strong> rf-detr is markerless motion capture: a camera, a body, and the pose that carries one person’s movement onto another’s avatar. That is embodiment rather than a step toward it, so it takes 85, and <code>Kimodo</code> 80 for moving a body without a camera in front of it. <code>MuJoCo MJX</code> takes 70, because a world that responds is the difference between a room and a backdrop.</p>
+<p><strong>EditScore takes 70, and an earlier revision had it at 10.</strong> That scored it as a thing nobody wears or sees, which is true and beside the point: <strong>it is a dependency of every making flow above it.</strong> A mesh generated, edited or restyled is a proposal, and something has to say whether the proposal is good before it reaches a wardrobe. Without a scorer the loops do not converge, so what people make is not made well. It is invisible and load-bearing at once, and 10 recorded only the first half.</p>
+</section>
+<section id="what-each-row-is-for-and-what-its-score-rests-on" class="level2">
+<h2 class="anchored" data-anchor-id="what-each-row-is-for-and-what-its-score-rests-on">What each row is for, and what its score rests on</h2>
+<p>The table above ranks. This says what each row would actually do in a chain and where its numbers came from, because a rank read without either invites the reader to supply their own.</p>
+<pre><code>model                    role in a chain                     basis
+
+rf-detr keypoint         live markerless pose, the           measured,
+                         capture end of every making flow    40.85 M params
+cyclegan_style_transfer  style transfer, 2D and 3D views     read only
+OmniGen2                 text-guided 2D edit and corpus      measured,
+                         restyle                             7.81 B params
+EditScore, Qwen3-VL-8B   the gate: scores a proposal         inferred from
+                         before it is accepted               code, 6.75 GiB
+Kimodo                   pose without a camera               RFD 1026 estimate
+MoGe                     depth and intrinsics from one       read only, a
+                         photograph, the ingest bootstrap    Pixal3D dependency
+SkinTokens               rigging and skinning, mesh to       RFD 1026 estimate
+                         wearable asset
+MuJoCo MJX               body dynamics and collision,        runtime only,
+                         the presence goal                   not a network
+Mitsuba 3 shading        forward shading, G-buffer and       measured, 14.1 ns
+                         MToon per pixel                     a pixel
+TRELLIS.2 / Pixal3D      image to sparse 3D structure,       measured,
+                         the 3D backbone                     24.04 GB weights
+VoxHammer                edit an existing asset in latent    read only, then
+                         space                               its ViT measured
+Qwen3-ASR-1.7B           transcription and alignment, the    measured, 2.04 B,
+                         ear of every making flow            enc 1024 x 24
+Qwen3-TTS CustomVoice    a cloned voice, host-side           measured, 1.92 B,
+                                                             12 Hz codec
+LaMa, AnimeMangaInpaint  fills what a mask removed, so a     measured, MIT,
+                         layer comes out whole               rfftn refused</code></pre>
+<p><strong>Two rows are not networks and the basis column says so.</strong> MuJoCo MJX is a physics engine and Mitsuba 3 is a renderer. Both were measured at runtime and neither has weights or a graph, so their <code>shape</code> and <code>reference</code> scores answer a question the models were asked and these two cannot be. RFD 1167 puts them off the ladder for the same reason.</p>
+<p><strong>Mitsuba’s 14.1 ns is the forward shading pass alone</strong> – fixed-dimension per-pixel G-buffer and MToon arithmetic. Backward ray tracing and BVH traversal are excluded, and that exclusion is the whole reason the row scores 75 on <code>shape</code>: what remains is dense arithmetic at a fixed size, and pointer-chasing traversal is not.</p>
+</section>
+<section id="the-citations-and-the-eight-this-workspace-had-to-correct" class="level2">
+<h2 class="anchored" data-anchor-id="the-citations-and-the-eight-this-workspace-had-to-correct">The citations, and the eight this workspace had to correct</h2>
+<p><code>references/</code> holds a <code>CITATION.cff</code> for each row. They exist because a candidate table that names twelve projects and credits none of them is a provenance failure of the kind the blocklist exists to catch.</p>
+<p>A first draft of these files was supplied and <strong>eight of the twelve attributed work to the wrong party</strong>, so every entry was checked against the manifest’s pinned parents and the LICENSE in each checkout rather than accepted:</p>
+<pre><code>row                  claimed                    actually
+rf-detr keypoint     Weftspun Team              Roboflow
+OmniGen2             VectorSpaceLab/OmniGen     .../OmniGen2
+EditScore            QwenLM/Qwen-VL             VectorSpaceLab/EditScore,
+                                                a LoRA over Qwen3-VL
+Kimodo               Weftspun Team              a weftspun wrapper only;
+                                                upstream unverified
+MoGe                 RuidaZhang/MoGe            microsoft/MoGe
+SkinTokens           Weftspun Team              a weftspun wrapper only
+See-Through          Weftspun Team              shitagaki-lab/see-through
+TRELLIS.2 / Pixal3D  microsoft/TRELLIS          microsoft/TRELLIS.2 and
+                                                TencentARC/Pixal3D, two
+                                                upstreams in one row
+VoxHammer            Weftspun Team              Nelipot-Lee/VoxHammer</code></pre>
+<p>Five of those credited someone else’s model to this workspace, which is the direction of error that matters. Licenses are read from the LICENSE file in each checkout and not inferred: MIT for MoGe, TRELLIS.2, Pixal3D and VoxHammer; Apache-2.0 for OmniGen2, EditScore, See-Through and MuJoCo. Kimodo, SkinTokens and <code>rf-detr-cpp</code> carry no LICENSE file, so none is claimed for them.</p>
+<p>Where a row is a weftspun HTTP wrapper around a model held elsewhere, the file says so and tells the reader not to cite it as the model.</p>
+</section>
+<section id="see-through-leaves-the-ranking-and-stays-as-a-taxonomy" class="level2">
+<h2 class="anchored" data-anchor-id="see-through-leaves-the-ranking-and-stays-as-a-taxonomy">See-Through leaves the ranking and stays as a taxonomy</h2>
+<p><strong>Decision: Marigold is dropped and See-Through is kept as a reference for layer taxonomy rather than as a model.</strong> It is no longer an acceleration candidate, so it is no longer a row, and the table above holds eleven.</p>
+<p>The reason is that nothing in its weight set can be used. The repository is Apache-2.0 and that covers the code; every checkpoint the inference scripts actually load is hosted separately and <strong>states no licence at all</strong>, which is not permissive – absent a grant the default is all rights reserved:</p>
+<pre><code>layerdifforg/seethroughv0.0.1_marigold     none stated (moved from 24yearsold/)
+24yearsold/l2d_sam_iter2                   none stated
+24yearsold/seethroughv0.0.2_layerdiff3d_nf4  none stated
+24yearsold/metricdepth3d_tmp               HTTP 401, unreadable</code></pre>
+<p>The depth checkpoint is additionally a fine-tune of <code>prs-eth/marigold-depth-v1-1</code>, which is CreativeML Open RAIL++-M over <code>stable-diffusion-2</code>. <strong>A fine-tune does not reset that licence.</strong> RAIL requires its use restrictions to travel into derivatives, which is the mechanism the OpenRAIL-M blocklist row already names, and nobody downstream can relicense away restrictions they do not hold. Shipping alongside Apache-2.0 code does not extend that licence to weights; a project meaning to do so says so, as NVIDIA does for Kimodo.</p>
+<p>Replacing the depth stage with MoGe was considered and is not a substitution. MoGe is MIT and already in the manifest, but Marigold here is a latent diffusion estimator – VAE, UNet and CLIP, with <code>cvt_marigold2d_to_3d.py</code> around it – while MoGe is a feed-forward ViT emitting point maps. That is a rewrite of the stage, and the fine-tune exists because See-Through works on illustration where MoGe is trained on photographs. Whether MoGe holds up there is unmeasured.</p>
+<p><strong>What is kept costs nothing and is the useful part.</strong> The layer taxonomy is a vocabulary, and <code>common/live2d/scrap_model.py</code> carries three revisions of it:</p>
+<pre><code>V1  20 parts   hair, skin, beard, and single-part eyes
+V2  20 parts   drops skin and beard, adds objects
+V3  23 parts   front hair, back hair, headwear, face, irides,
+               eyebrow, eyewhite, eyelash, eyewear, ears, earwear,
+               nose, mouth, neck, neckwear, topwear, handwear,
+               bottomwear, legwear, footwear, tail, wings, objects</code></pre>
+<p>The V2-to-V3 change is the one worth having: hair splits into front and back, and the eye splits into irides, eyewhite, eyelash and eyebrow. That split is exactly what CLAUDE.md points at when it says a photograph has no ground-truth <code>front hair</code> / <code>back hair</code>, and it is why the blinded COCO holdout cannot validate this task whatever else it is good for.</p>
+<p><strong>Removing the row moved two others, and that is a property of the method rather than a mistake.</strong> With See-Through present, Mitsuba 3 took seat 9 and TRELLIS.2 / Pixal3D seat 11; without it they swap to 9 and 10. STAR’s runoff is not independent of irrelevant alternatives, so dropping a candidate can reorder the ones that remain. The recorded order is the one the eleven-row election produces, and <code>check_rfd1166_rank.py</code> recomputes it against <code>starvote</code> rather than trusting the arithmetic above.</p>
+</section>
+<section id="a-row-is-not-a-model-and-that-is-systemic" class="level2">
+<h2 class="anchored" data-anchor-id="a-row-is-not-a-model-and-that-is-systemic">A row is not a model, and that is systemic</h2>
+<p>Every row here names a project. Not one of them is a single network, and the composite is where both the licence and the accelerable part live. Scoring and citing at row granularity hides both.</p>
+<pre><code>row                  the part that would compile   the part that binds the licence
+
+rf-detr keypoint     a patch-12 DINOv2 backbone    Roboflow, Apache-2.0
+EditScore            Qwen3-VL's stock ViT          a LoRA over someone else's
+                                                   base model
+MoGe                 DINOv2 ViT-B/14, four         microsoft/MoGe, MIT
+                     intermediate layers
+VoxHammer            stock dinov2_vitl14_reg       Nelipot-Lee, MIT, over a
+                     at 518 square                  TRELLIS backbone
+Kimodo               not examined                  code Apache-2.0, weights
+                                                   NVIDIA Open Model, one
+                                                   variant NVIDIA R&amp;D
+See-Through          not examined                  code Apache-2.0, depth
+                                                   OpenRAIL++-M, one checkpoint
+                                                   unreadable
+TRELLIS.2 / Pixal3D  the SS stage alone            two upstreams, Microsoft
+                                                   and TencentARC</code></pre>
+<p><strong>Four of the twelve rows compile because of DINOv2, and none of them compile the same DINOv2.</strong> rf-detr runs a custom patch-12 variant, MoGe a ViT-B/14 taking intermediate layers, VoxHammer a stock ViT-L/14 with registers at 518 square, EditScore the ViT inside Qwen3-VL. One HEF does not serve them, and the tempting conclusion that it might is the reason to write the sub-model down rather than the row.</p>
+<p><strong>Kimodo’s Apache-2.0 badge covers the code and not the weights.</strong> <code>Kimodo-SOMA-*</code> and <code>Kimodo-G1-*</code> are under the NVIDIA Open Model Licence, which permits commercial use; <code>Kimodo-SMPLX-RP-v1</code> is under NVIDIA’s Internal Scientific Research and Development licence, which does not. Reading the badge and stopping there answers for neither.</p>
+<p>The restrictive variant turns out not to constrain this row, and the reason is the rig rather than the licence. Motion travels SOMA-X to ANNY to Godot Humanoid to VRM, so no SMPL-X checkpoint is on the route – and SMPL-X is blocklisted besides. <code>Kimodo-SOMA-*</code> matches the rig and is the shippable variant, which is the same conclusion <code>logbook-rfd1016-model-repos.md</code> reached when it warned against swapping checkpoints without re-checking RFD 1028.</p>
+<p><strong>Retraining Kimodo to get an Apache-2.0 or MIT artifact was considered and is not available, and the reason is the data rather than the model.</strong></p>
+<p>The NVIDIA Open Model Licence does not force it. It permits commercial use, permits derivative models, and states that the derivative is owned by whoever made it – it is not share-alike, so nothing propagates the way OpenRAIL-M’s restrictions do. What it does attach is attribution, a guardrail-circumvention clause that terminates the grant, a patent-litigation trigger, and NVIDIA’s Trustworthy AI terms. Those are conditions on use, not a bar to shipping, and <code>logbook-rfd1016-model-repos.md</code> already recorded <code>Kimodo-SOMA</code> as the shippable variant on that basis.</p>
+<p>Retraining would buy an artifact with no third-party terms at all. It cannot be done on Kimodo’s own corpus. <strong>BONES-SEED sits behind an acceptance gate</strong> – 288 hours, 142,220 annotated animations, 522 performers, under a custom <code>bones-seed-license</code> whose terms are not readable without accepting them first. That is the condition CLAUDE.md names in as many words: a set behind a registration form is not licence-clean, because terms that cannot be read cannot be gated on. It is the same test that blocklists <code>24yearsold/metricdepth3d_tmp</code> two sections above.</p>
+<p>So the licence-clean motion pool is what remains after the blocklist takes CMU on provenance, Mixamo on licensing and posemaniacs on scraping: ANNY/SOMA’s own pose library, constructed synthetic rendered from assets held here, or a CC-BY-4.0 capture set with citation metadata. A retrain is a data programme before it is a training run, and pretending otherwise would put the effort in the wrong place.</p>
+<p><strong>The recommendation is therefore to ship <code>Kimodo-SOMA-*</code> under its licence and treat the retrain as a separate decision about corpus independence, not about whether this row can be used.</strong></p>
+<p><strong>See-Through is the sharpest case, and it reaches the blocklist.</strong> The repository is Apache-2.0 and pulls two checkpoints that are not:</p>
+<ul>
+<li><code>prs-eth/marigold-depth-v1-1</code> is <strong>CreativeML Open RAIL++-M</strong>, fine-tuned from <code>stable-diffusion-2</code>. CLAUDE.md blocklists OpenRAIL-M as a generator because its use-restrictions propagate into anything trained on the output, and exempts passthrough use. Which of the two this is depends on whether See-Through’s output enters a corpus – and <code>seethrough PSDs</code> is already a blocklist row for secondary generation. Those are the same fact reached from two directions.</li>
+<li><code>24yearsold/metricdepth3d_tmp</code> returns <strong>HTTP 401</strong>. No readable licence, no model card, and a name ending <code>_tmp</code>. CLAUDE.md is explicit that terms which cannot be read without accepting them cannot be gated on, so this is not licence-clean.</li>
+</ul>
+<p>Neither was visible from the row. Both were found by reading what the code loads, which is the only method that works here.</p>
+<p><strong>So the rule this section exists to state:</strong> a candidate is cleared, or scored, or cited, at the granularity of the checkpoints it loads. The row is a name for a bundle, and a bundle has no licence and no operator census of its own.</p>
+</section>
+<section id="three-rows-added-and-where-their-numbers-come-from" class="level2">
+<h2 class="anchored" data-anchor-id="three-rows-added-and-where-their-numbers-come-from">Three rows added, and where their numbers come from</h2>
+<p>RFDs 1168 and 1169 turned up candidates the ranking had no row for. They are scored on the same eight dimensions, and because these scores were assigned here rather than inherited, the basis for each is stated.</p>
+<p><strong>Qwen3-ASR-1.7B enters at seat 2</strong>, behind only rf-detr.</p>
+<pre><code>fit   95  2.04 B, 2.04 GB at eight bits against 8 GB. Measured. It
+          never meets RFD 1128's four-bit question at all.
+shp   85  the encoder is fixed-shape and every operator it needs is
+          in DEVICE_OPS; `PROJECTOR_TYPE_QWEN3A`'s conv2d front end
+          says the log-mel is image-shaped. Decode is on the host.
+ref   45  rf-detr's device half is the precedent for the shape, and
+          there is no Hailo audio reference anywhere. Split the
+          difference rather than pretend either way.
+clr   80  Apache-2.0, ungated, newer than our base. The only
+          obstacle is widening our own `clip_init_hailo`.
+val   80  it is the only row that adds a modality
+adp   75  1.7 B is trainable on hardware this workspace has
+ask   95  downloadable and runnable today
+wnt   85  sound was the reason Gemma 4 was wanted at all</code></pre>
+<p><strong>Qwen3-TTS CustomVoice at seat 4</strong> scores <code>shape</code> 25 and <code>reference</code> 15 because the autoregressive stage does not compile, and <code>clear</code> 80 because nothing else about it is in the way. It is a host-side row that earns its place on <code>fit</code>, <code>ask</code> and <code>wanted</code> rather than on accelerability, which is the honest shape of it.</p>
+<p><strong>LaMa at seat 5</strong> scores <code>shape</code> 5 and <code>reference</code> 5 on a measured refusal, not an estimate: <code>ffc.py</code> calls <code>torch.fft.rfftn</code> and no Fourier operator appears in <code>DEVICE_OPS</code>. <code>clear</code> is 85, the highest in the table, because MIT weights over Apache-2.0 code with no gate is as clean as a row gets here.</p>
+<p><strong>Three of the five top seats are now host-side rows.</strong> That is a real change to what this table says. It ranks what is worth doing, and what is worth doing has stopped being the same question as what compiles – <code>Qwen3-ASR</code>’s encoder is the only one of the three new rows with a device half at all.</p>
+<p><strong>These scores are mine and are the weakest part of the table.</strong> Every other row was scored by somebody deciding; these were derived from measurements taken the same day. <code>value</code> and <code>wanted</code> in particular are judgements about the product that a measurement cannot settle.</p>
+</section>
+<section id="how-much-of-this-needs-original-research-and-the-answer-is-almost-none" class="level2">
+<h2 class="anchored" data-anchor-id="how-much-of-this-needs-original-research-and-the-answer-is-almost-none">How much of this needs original research, and the answer is almost none</h2>
+<p>Worth asking before anyone’s time is committed, because the eight dimensions do not separate <em>hard</em> from <em>unknown</em>. Sorting the field by what actually blocks each row:</p>
+<pre><code>blocker                                 rows
+
+hardware, nothing else                  rf-detr
+wiring or an export nobody has run      VoxHammer's DINOv2 stage,
+                                        MoGe, EditScore, OmniGen2,
+                                        CycleGAN, Kimodo, SkinTokens
+a corpus                                RFD 1168's segmenter
+a compiler refusal not yet understood   TRELLIS.2 / Pixal3D
+off this ladder                         MuJoCo MJX, Mitsuba 3</code></pre>
+<p><strong>Seven of the eleven are blocked on work, not on knowledge.</strong> Nothing in them asks a question the field has not answered. VoxHammer’s stage is a stock <code>dinov2_vitl14_reg</code> and MoGe’s is a stock ViT-B/14 – both exported today, both clean against <code>DEVICE_OPS</code>, both needing a DFC run that costs an afternoon. Kimodo and SkinTokens are <code>NotImplementedError</code> in a weftspun wrapper with a licence-clean upstream sitting behind it. EditScore needs an encoder built with its merger LoRA merged, which RFD 1157 already specifies. CycleGAN needs its checkpoint fetched.</p>
+<p><strong>rf-detr is blocked on a card and nothing else.</strong> 32.5 GiB against the desk’s 24 is a purchase or a rental, and RFD 1165 carries the number. The model translates, the calibration set exists, the compile script exists. That is the whole gap between rung 3 and rung 5.</p>
+<p><strong>One row is genuinely open.</strong> Pixal3D dies in <code>_add_input_layers</code> on input rank, four times, and whether that is a graph restructuring or a real limit of the parser has not been established. It is the only place in this table where somebody would have to find something out rather than build something.</p>
+<p><strong>One is a data programme wearing a model’s clothes.</strong> RFD 1168’s segmenter needs <code>VALID_BODY_PARTS_V3</code> labels that do not exist here. The technique is ordinary supervised segmentation; the corpus is the work, and RFD 1168 records that corrupt-clean render pairs generate it from assets already held. Kimodo’s retrain is the same shape and is worse off, because BONES-SEED is gated.</p>
+<p><strong>So the honest summary is that this workspace is short of compute and wiring, not of ideas.</strong> That is the more actionable finding, and it is the opposite of what a ranking with a <code>reference</code> column tends to suggest – low <code>reference</code> scores read as “nobody knows how”, when for most of these rows they mean “nobody here has run it yet”.</p>
+</section>
+<section id="what-this-ranking-does-not-tell-you" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-ranking-does-not-tell-you">What this ranking does not tell you</h2>
+<p>It ranks <strong>units of work</strong>, not deliverable capabilities, and two things follow that a ladder would otherwise walk into.</p>
+<p><strong>A chain delivers when every stage is placed, not when its best stage is.</strong> Accelerating one row leaves the others on the host, which is often fine and sometimes the whole point – rf-detr is worth doing alone. But no row’s rank is a claim that finishing it finishes anything.</p>
+<p><strong>Two rows interact, and the table shows them as separate jobs.</strong> <code>TRELLIS.2 / Pixal3D</code> sits at 11 and <code>VoxHammer</code> at 12 as though each could be taken on alone. An earlier revision of this section said they were mutually exclusive, on the reasoning that a compiled graph has no Python forward for VoxHammer to replace. <strong>That was asserted from a general principle and the code does not support it.</strong></p>
+<p>The patched attention blends a cached key against a live one:</p>
+<pre><code>k = k * kv_mask + ss_kv[...].cuda() * (1 - kv_mask)</code></pre>
+<p>Mul, Sub, Mul, Add, all of them already inside <code>DEVICE_OPS</code>. The arithmetic compiles. What is Python is the dict lookup, and a compiled graph would take those cached tensors as inputs rather than fetching them.</p>
+<p>What actually bites is the interface, not the patching. The cache is keyed by timestep, order, position, layer and type, so the tensors crossing the boundary scale with all five, and the cache is state held between the inversion pass and the edit pass. On a part that pays 2.18 ms a dispatch, marshalling that per timestep is the same arithmetic that rules out a per-node ggml backend.</p>
+<p>So the two rows are not a fork. They are one job that is larger than either row suggests, and nothing here has measured how much larger.</p>
+</section>
+<section id="the-critical-path-is-a-chain-not-a-set-of-loops" class="level2">
+<h2 class="anchored" data-anchor-id="the-critical-path-is-a-chain-not-a-set-of-loops">The critical path is a chain, not a set of loops</h2>
+<p><code>value</code> was first scored per invocation, which treated the models as independent candidates. They are stages of one shape:</p>
+<pre><code>2D edit   CycleGAN  -&gt;  OmniGen2                          -&gt;  EditScore
+3D edit   CycleGAN  -&gt;  VoxHammer over TRELLIS.2/Pixal3D  -&gt;  EditScore
+fit       rf-detr   -&gt;  ANNY fit                          -&gt;  EditScore
+                                                              + soma_referee</code></pre>
+<p>OmniGen2 appears in one chain and not the other, which is a decision rather than an omission. See below.</p>
+<p><strong>The two are siblings here and the corpus already orders them.</strong> <code>pose-consensus/README.md</code> records the inversion: instead of estimating poses from images, ANNY originates the pose, renders it, and a diffusion model stylizes the render with the geometry pinned, so the label is true by construction. That inversion ended the consensus panel outright – you do not convene three estimators to adjudicate a pose you authored.</p>
+<p>Run that way the chain is one, not two:</p>
+<pre><code>originate 3D  -&gt;  render views  -&gt;  style views  -&gt;  edit  -&gt;  score</code></pre>
+<p>and 2D is an operation on views rather than a stage before 3D. Three things follow.</p>
+<p><strong>The camera question disappears.</strong> OmniGen2’s 0.04 obedience slope only matters if the camera is asked for. Rendering from <code>sphere_hammersley_sequence</code> gives it exactly, and the measurement below stops being a problem to work around.</p>
+<p><strong>The labels land on the right side of CLAUDE.md’s synthetic rule.</strong> A render is constructed, deterministic from assets held here, with labels true by construction. An image generated first and reconstructed after is generated, and carries all five conditions.</p>
+<p><strong>rf-detr changes job without changing score.</strong> Estimating an unknown pose and confirming an authored one survived a restyle are different questions, and <code>test_pose_survives_restyle.py</code> asks the second. Its <code>wanted</code> 85 covers the live case, a person in front of a camera, which the inversion does not touch.</p>
+<p><strong>The 3D chain does not go through the 2D one.</strong> Pixal3D’s <code>run()</code> takes a single <code>Image.Image</code>, so reading it as an image flow suggests 2D must produce that image. It need not. <code>get_cond</code> one layer down takes <code>list[Image.Image]</code>, and VoxHammer already drives that path: <code>extract_feature.py</code> renders 150 views, runs DINOv2 over them, projects voxel centres into each view and averages the patch tokens, reproducing the encoder input for an asset that already exists.</p>
+<p>So the views come from rendering an asset rather than generating an image, which is also the cleaner side of CLAUDE.md’s synthetic line: constructed rather than generated. <code>sphere_hammersley_sequence</code> is the mandated sequence and Mitsuba renders a view in 1.79 ms.</p>
+<p><strong>Go through VoxHammer rather than calling the multi-view path directly.</strong> Both reach the same samplers, and only one of them is already written, tested against a real asset and handling the inversion the edit needs.</p>
+<p>Three consequences, and each moved a row.</p>
+<p><strong>EditScore terminates every chain.</strong> Nothing reaches a wardrobe without passing it, so a gain there lands three times. Its <code>wanted</code> is 70 for being the dependency of making it does not itself perform.</p>
+<p><strong>CycleGAN styles both chains, and style is not 2D-only.</strong> A 3D asset is restyled through its views: render, restyle the views, ingest the styled views. It is the same stage doing the same work in both chains rather than a 2D step the 3D chain routes around, so <code>value</code> 70 and <code>wanted</code> 60. It holds second on a runoff it drew four-all, seated by score and the narrowest result in the table.</p>
+<p>The hazard in that is already guarded. <code>test_pose_survives_restyle.py</code> restyles and re-detects to measure joint drift, and <code>verify_restyle.py</code> scores silhouette against the render’s own alpha with a shifted-reference control that must fail. A restyle that moves the body is the failure both exist to catch, and styling views before reconstruction is exactly where it would happen.</p>
+<p><strong>Mitsuba is the 3D chain’s view source, not a bystander</strong>, which takes <code>value</code> from 30 to 55 and <code>wanted</code> from 25 to 45.</p>
+</section>
+<section id="omnigen2-is-2d-only-and-the-measurement-is-why" class="level2">
+<h2 class="anchored" data-anchor-id="omnigen2-is-2d-only-and-the-measurement-is-why">OmniGen2 is 2D only, and the measurement is why</h2>
+<p>The 3D chain could route through it and does not. Camera control is what it would be for, and <code>write_omnigen2_jsonl.py</code> records what that costs: asked for eight azimuths in plain language, the recovered azimuth tracked the request with <strong>a slope of 0.04</strong>, where 1.00 is obedience and 0.00 is a body that never turned. Six of eight views came back between -1 and -11 degrees whatever was asked. The trained adapter reached 0.099.</p>
+<p>The 3D chain does not ask. It renders the view it wants from <code>sphere_hammersley_sequence</code>, exactly, in 1.79 ms. Paying 133 s for a slope of 0.04 when a camera transform is exact and free is the trade this records, and it is why the 3D chain takes rendered views instead.</p>
+<p><strong>What OmniGen2 keeps is the 2D chain, and nothing else here can do it.</strong> CycleGAN is style transfer, one learned mapping. OmniGen2 is instructed editing: change this specific thing, in words. Those are different capabilities and the second is what “moddable” means. It is also <code>anny-camera-lora</code>’s base, so dropping it orphans RFD 1141’s published adapter, and it generates the corpus restyles.</p>
+<p>Its <code>value</code> of 95 is the highest here because it is 133 s of a 163 s round, so removing it takes out the largest cost in the loop. <code>value</code> measures what accelerating a stage buys, not whether the stage should exist, and on OmniGen2 those two point in opposite directions.</p>
+</section>
+<section id="voxhammer-has-a-device-half-and-it-took-three-tries-to-see-it" class="level2">
+<h2 class="anchored" data-anchor-id="voxhammer-has-a-device-half-and-it-took-three-tries-to-see-it">VoxHammer has a device half, and it took three tries to see it</h2>
+<p>It holds no weights: no <code>nn.Module</code>, no <code>nn.Parameter</code> and no checkpoint in <code>3-interactor/voxhammer-upstream</code>. An early revision scored it n/a on that basis, which answered the wrong question – weighing nothing does not put it outside a ranking of work.</p>
+<p><strong><code>shape</code> was then 0, on the reasoning that VoxHammer replaces forwards at runtime and a compiled graph has none to replace. That was wrong, and defended twice before anybody read the stage it describes.</strong></p>
+<p><code>extract_feature.py</code> loads <code>dinov2_vitl14_reg</code> and runs it at 518 square, <code>n_patch = 518 // 14</code>, under the same ImageNet constants <code>compile_hef.py</code> folds into an input layer, <strong>150 times per asset</strong>. A stock ViT at fixed resolution is the same family as rf-detr’s device half, which translated at 825 nodes with the allowlist holding. <code>reference</code> is 55 for that precedent rather than 0.</p>
+<p>What does not compile is separable and was never the whole model: <code>F.grid_sample</code> projecting voxel centres into views, and the N x M coordinate match with its <code>argmax</code> and scatter. Both are RFD 1131’s refused family and both sit either side of the encoder, which is the cut rf-detr already uses. So <code>shape</code> is 50.</p>
+<p><code>fit</code> 30 and <code>clear</code> 15 are the model’s own. <code>ask</code> 30 is not: upstream runs, and the two weftspun wrappers raise <code>NotImplementedError</code> outside stub mode, a wiring gap here. <code>value</code> 60 and <code>wanted</code> 80 follow from the chain, where it is two stages and the 3D route has no other way in.</p>
+<p>It still ranks last, now for an honest reason: four columns are low, and one strong column does not carry a row through a runoff. RFD 1167 puts it on rung 0 with a rung-1 stage waiting – the shortest export left in the field.</p>
+</section>
+<section id="five-models-the-earlier-revision-omitted" class="level2">
+<h2 class="anchored" data-anchor-id="five-models-the-earlier-revision-omitted">Five models the earlier revision omitted</h2>
+<p><code>cyclegan_style_transfer</code> is the serious omission. It is <strong>Loop 3</strong>, called at <code>localhost:8000</code> by <code>3-stylized-to-omnigen2.livemd</code> before OmniGen2 runs, so the ranking claimed to cover the candidates while skipping a model already inside the pipeline the accelerator serves. It is also the accelerator’s home ground: fixed-resolution image-to-image convolution, no autoregression, no sparse indexing.</p>
+<p><code>MoGe</code> recovers point maps, depth, normals and camera FOV from one image, and depth estimation is a category the Hailo zoo already ships for HAILO10H, which is what its <code>reference</code> 55 records.</p>
+<p><strong>MuJoCo MJX serves presence, and was twice mis-filed.</strong> First as tooling, then as interactability at the edge of the product. Physics is embodiment: a body that collides, stands on ground and responds is present, and one that floats and clips is not. Its <code>wanted</code> is 80, with <code>rf-detr</code> and <code>Kimodo</code>.</p>
+<p><code>mjx/mujoco/mjx</code> is MuJoCo reimplemented in JAX: a differentiable physics graph, made fixed-shape on purpose through fixed-size contact buffers, which is why <code>adapt</code> is 90 – gradients run through the simulator itself.</p>
+<p>Its blocker is the interchange. JAX lowers to StableHLO through XLA and the Dataflow Compiler consumes TensorFlow, TFLite and ONNX, so there is no path today. That is a different failure from GGUF’s: GGUF carries no graph at all and nothing can convert it, while StableHLO is a graph in the wrong dialect. Blocked on format, not structurally, and <code>clear</code> 15 says which.</p>
+<p><strong>Mitsuba 3 is scored as its shading pass, not as the renderer.</strong> It is a pixi dependency of <code>anny-render-corpus</code> at 3.9.1 rather than a manifest project, and the row covers only the half that could go.</p>
+<p>Ray tracing cannot: BVH traversal is pointer chasing with data-dependent branch depth, which is what a dataflow part is least able to express. Shading over a G-buffer is the opposite – per-pixel arithmetic at fixed dimensions – and the corpus already separates them, at 48.1 ns a pixel for the G-buffer against 14.1 for MToon shading.</p>
+<p>Two things hold it at 220 anyway. Dr.Jit compiles to LLVM IR and PTX, which is machine code rather than a portable graph, so it is a level below even MJX’s wrong-dialect problem, and whether the Slang shading path can be expressed as ONNX at all is unverified. And the ceiling is small: the same measurements put intersection at 77 per cent of the combined cost, so the whole prize is the other 23 of a pass already made 1,272 times faster.</p>
+<p>Not models, correctly absent: <code>tropes-removal-model</code> is <code>ste-enforcer</code>, a prose linter under a misleading directory name; <code>mujoco-riscv64</code> is an engine port; <code>anny</code> and <code>soma-x</code> are parametric bodies; <code>pose-consensus</code> is a solver; <code>bumblebee</code> is a framework.</p>
+</section>
+<section id="what-each-row-rests-on" class="level2">
+<h2 class="anchored" data-anchor-id="what-each-row-rests-on">What each row rests on</h2>
+<pre><code>row               basis
+rf-detr           MEASURED. 40.852 M parameters from the
+                  checkpoint, 25.245 M in the device half.
+                  Exported and translated.
+OmniGen2          MEASURED. 15.87 + 15.02 + 0.34 GB on disk at
+                  fp32, so 7.81 B. Trained here: anny-camera-lora,
+                  200 steps at 256 square in 22 minutes.
+Pixal3D           MEASURED. Repo safetensors total 24.04 GB
+                  against RFD 1026's estimated 24.05.
+See-Through       RFD 1026 ESTIMATE, and the four components it
+                  covers are not recorded. Only `layerdiff` is in
+                  this table; `marigold-depth`, `vae` and
+                  `partseg` are separate repos.
+TRELLIS.2         RFD 1026 estimate.
+SkinTokens        RFD 1026 estimate.
+Kimodo            RFD 1026 estimate.
+EditScore         INFERRED, and the inference was wrong once:
+                  scoring assumed Qwen3-VL-4B and `weft_score.py`
+                  loads the 8B.
+CycleGAN          UNEXAMINED. Scored from what it is, not from
+                  anything run. `clear` 50 says so.</code></pre>
+</section>
+<section id="the-adapt-column-and-the-one-number-that-bounds-it" class="level2">
+<h2 class="anchored" data-anchor-id="the-adapt-column-and-the-one-number-that-bounds-it">The <code>adapt</code> column, and the one number that bounds it</h2>
+<p>It leans on RFD 1140: the desk trains an OmniGen2 LoRA at 256 square in 22 minutes and does not finish one step in twelve at 512. Pixal3D’s 20 and Gemma 4’s 15 come from that, and from GGUF carrying no graph to train against.</p>
+<p><strong>One kind of adaptation is out of reach entirely, at any size in this table.</strong> Quantization-aware fine-tuning exhausts the desk’s 24 GiB on rf-detr’s own device half – 25.245 M parameters, the smallest graph here – at the default batch and again at <code>batch_size=1, epochs=1</code> over 64 frames, the directive verified in the loaded model script. RFD 1165 carries the retraction that batch size was ever the lever.</p>
+<p>So <code>adapt</code> scores ordinary training and LoRA, which the desk does. It does not score QAT, which the desk does not do for anything, and a column that scored both would rate every row zero and say nothing. The distinction matters because RFD 1128’s four-bit question wants QAT: compression without fine-tuning is what optimization level 1 gives, and that is a different artifact rather than a slower one.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/weftspun\.github\.io\/request-for-discussion");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Serials are OID arcs under the 66606 PEN and are never reused.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1166-scoring-the-accelerator-candidates/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1166-scoring-the-accelerator-candidates/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/weftspun/request-for-discussion">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

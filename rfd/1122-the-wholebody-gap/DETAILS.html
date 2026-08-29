@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>details – Taskweft — Manuals</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-3336bfa29d6298ea485ddf0d64c2ca2e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Taskweft — Manuals</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/rfd.html"> 
+<span class="menu-text">RFDs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/serials.html"> 
+<span class="menu-text">Serials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/logbook.html"> 
+<span class="menu-text">Logbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/agreements.html"> 
+<span class="menu-text">Working agreements</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#rfd-1122-details-the-checkpoint-survey-the-schema-and-the-inventory" id="toc-rfd-1122-details-the-checkpoint-survey-the-schema-and-the-inventory" class="nav-link active" data-scroll-target="#rfd-1122-details-the-checkpoint-survey-the-schema-and-the-inventory">RFD 1122 details: the checkpoint survey, the schema, and the inventory</a>
+  <ul class="collapse">
+  <li><a href="#why-the-head-cannot-be-bought" id="toc-why-the-head-cannot-be-bought" class="nav-link" data-scroll-target="#why-the-head-cannot-be-bought">Why the head cannot be bought</a></li>
+  <li><a href="#the-corpus-schema" id="toc-the-corpus-schema" class="nav-link" data-scroll-target="#the-corpus-schema">The corpus schema</a></li>
+  <li><a href="#correspondence-is-14-of-17-and-it-fails-informatively" id="toc-correspondence-is-14-of-17-and-it-fails-informatively" class="nav-link" data-scroll-target="#correspondence-is-14-of-17-and-it-fails-informatively">Correspondence is 14 of 17, and it fails informatively</a></li>
+  <li><a href="#layer-extraction-in-3d" id="toc-layer-extraction-in-3d" class="nav-link" data-scroll-target="#layer-extraction-in-3d">Layer extraction in 3D</a></li>
+  <li><a href="#what-pixal3ds-toolkit-demands" id="toc-what-pixal3ds-toolkit-demands" class="nav-link" data-scroll-target="#what-pixal3ds-toolkit-demands">What Pixal3D’s toolkit demands</a></li>
+  <li><a href="#retracted-the-topology-loads" id="toc-retracted-the-topology-loads" class="nav-link" data-scroll-target="#retracted-the-topology-loads">Retracted: the topology loads</a></li>
+  <li><a href="#openusd-is-where-the-topology-now-lives" id="toc-openusd-is-where-the-topology-now-lives" class="nav-link" data-scroll-target="#openusd-is-where-the-topology-now-lives">OpenUSD is where the topology now lives</a></li>
+  <li><a href="#colour-sketch-qwen-image-edit" id="toc-colour-sketch-qwen-image-edit" class="nav-link" data-scroll-target="#colour-sketch-qwen-image-edit">Colour sketch: Qwen-Image-Edit</a>
+  <ul class="collapse">
+  <li><a href="#the-server-must-return-its-checkpoint-hash" id="toc-the-server-must-return-its-checkpoint-hash" class="nav-link" data-scroll-target="#the-server-must-return-its-checkpoint-hash">The server must return its checkpoint hash</a></li>
+  <li><a href="#why-not-a-gan-recorded-because-it-was-nearly-the-answer" id="toc-why-not-a-gan-recorded-because-it-was-nearly-the-answer" class="nav-link" data-scroll-target="#why-not-a-gan-recorded-because-it-was-nearly-the-answer">Why not a GAN, recorded because it was nearly the answer</a></li>
+  </ul></li>
+  <li><a href="#what-exists-and-what-does-not" id="toc-what-exists-and-what-does-not" class="nav-link" data-scroll-target="#what-exists-and-what-does-not">What exists, and what does not</a></li>
+  <li><a href="#what-the-chain-is-for" id="toc-what-the-chain-is-for" class="nav-link" data-scroll-target="#what-the-chain-is-for">What the chain is for</a></li>
+  <li><a href="#the-corrected-hm08-claim" id="toc-the-corrected-hm08-claim" class="nav-link" data-scroll-target="#the-corrected-hm08-claim">The corrected hm08 claim</a></li>
+  <li><a href="#the-order-by-critical-path" id="toc-the-order-by-critical-path" class="nav-link" data-scroll-target="#the-order-by-critical-path">The order, by critical path</a>
+  <ul class="collapse">
+  <li><a href="#reranked-on-durations-hailo-first-2026-08-24" id="toc-reranked-on-durations-hailo-first-2026-08-24" class="nav-link" data-scroll-target="#reranked-on-durations-hailo-first-2026-08-24">Reranked on durations, Hailo-first, 2026-08-24</a></li>
+  </ul></li>
+  <li><a href="#the-cheapest-thing-that-could-change-the-plan" id="toc-the-cheapest-thing-that-could-change-the-plan" class="nav-link" data-scroll-target="#the-cheapest-thing-that-could-change-the-plan">The cheapest thing that could change the plan</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1122-the-wholebody-gap/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1122-the-wholebody-gap/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+
+<section id="rfd-1122-details-the-checkpoint-survey-the-schema-and-the-inventory" class="level1">
+<h1>RFD 1122 details: the checkpoint survey, the schema, and the inventory</h1>
+<section id="why-the-head-cannot-be-bought" class="level2">
+<h2 class="anchored" data-anchor-id="why-the-head-cannot-be-bought">Why the head cannot be bought</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 91%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>checkpoint</th>
+<th>why it fails</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sapiens</td>
+<td>CC-BY-NC, the exact class <code>filter_coco_licenses.py</code> drops</td>
+</tr>
+<tr class="even">
+<td>DWPose</td>
+<td>Apache-2.0 weights, trained on UBody, distributed only behind a registration form</td>
+</tr>
+<tr class="odd">
+<td>RTMW</td>
+<td>the same UBody dependency, and not independent of DWPose, which distils from an RTMPose teacher</td>
+</tr>
+<tr class="even">
+<td>OpenPose</td>
+<td>non-commercial academic licence, and CMU is blocklisted for provenance</td>
+</tr>
+<tr class="odd">
+<td>AlphaPose</td>
+<td>commercial use needs a separate licence</td>
+</tr>
+<tr class="even">
+<td>MediaPipe</td>
+<td>Apache-2.0 and verified, but 33 plus 468 plus 42 landmarks, which is not a COCO-compatible wholebody head</td>
+</tr>
+</tbody>
+</table>
+<p>Five of the six fail on terms. The sixth answers a different question.</p>
+<p>A permissive licence on the weights is not sufficient. A permissively licensed checkpoint trained on a form-gated corpus re-exports terms nobody has read. DeepFashion is already blocklisted for that pattern.</p>
+<p>DWPose and RTMW are also not two opinions. RTMW supplies the teacher DWPose distils from, so picking both gives one lineage wearing two names.</p>
+</section>
+<section id="the-corpus-schema" class="level2">
+<h2 class="anchored" data-anchor-id="the-corpus-schema">The corpus schema</h2>
+<p>Essential Tuple Normal Form. Interned vocabularies, satellite relations rather than nullable columns, no NULLs, no derivable columns.</p>
+<p>Authored relations: <code>topologies</code>, <code>identities</code>, <code>bones</code>, <code>pose_rotations</code>, <code>rest_mesh</code>, <code>constraints</code>. Emitted relations: <code>keypoints_2d</code>, <code>segmentation</code>, <code>depth_map</code>, <code>meshes</code>, each reached by foreign key from <code>renders</code>.</p>
+<p>Three attributes carry a decision rather than data.</p>
+<p><strong><code>rotation</code> is 3x2, not a quaternion and not 3x3.</strong> A quaternion double-covers, so one rotation has two tuples and the table would hold two rows for one fact. A 3x3 carries a third column derivable as the cross product of the first two, which is a derivable column.</p>
+<p><strong><code>visibility</code> is int8, not bool.</strong> Three separate reasons, and each alone is sufficient.</p>
+<ol type="1">
+<li>COCO has three states. Masked training must tell <em>not annotated</em> from <em>annotated as occluded</em>. A boolean cannot, so you skip the first and learn the second.</li>
+<li>Multi-view labels are computed rather than annotated. Z-test each projected joint against the rendered depth. The answer is 2 for visible, 1 for projects inside the silhouette but fails the test, and 0 for outside the frame.</li>
+<li>Real datasets guess at that middle state or omit it. A render knows it, and a boolean cannot carry the state that makes occlusion learnable.</li>
+</ol>
+<p><strong><code>topology_id</code> is a foreign key.</strong> A <code>vertex_id</code> means nothing without it. The two ANNY topologies share zero vertices, measured in both directions.</p>
+<p><strong>Root translation is absent on purpose.</strong> It follows from <code>constraints</code> and the chain, so storing it would be a derivable column.</p>
+<pre class="mermaid"><code>erDiagram
+  topologies    ||--o{ rest_mesh      : topology_id
+  identities    ||--o{ renders        : identity_id
+  bones         ||--o{ pose_rotations : bone_id
+  pose_rotations||--o{ renders        : pose_id
+  pose_rotations||--o{ constraints    : pose_id
+  renders       ||--o{ keypoints_2d   : render_id
+  renders       ||--o{ segmentation   : render_id
+  renders       ||--o{ depth_map      : render_id
+  renders       ||--o{ meshes         : render_id
+  bones         ||--o{ keypoints_2d   : bone_id
+
+  topologies {
+    int16 topology_id PK
+    string name "anny is 13,718 vertices"
+  }
+  identities {
+    int16 identity_id PK
+    float32 phenotype "11"
+    float32 local_change "256"
+    float32 facial_action "52"
+  }
+  bones {
+    int16 bone_id PK
+    int16 parent_bone_id "104 rows, -1 is a value not a NULL"
+  }
+  pose_rotations {
+    int64 pose_id PK
+    int16 bone_id FK
+    float32 rotation "3x2, never a quaternion"
+  }
+  rest_mesh {
+    int32 vertex_id PK
+    int16 topology_id FK
+    float32 xyz
+    int16 group_id FK
+  }
+  constraints {
+    int64 pose_id FK
+    int16 bone_id FK
+    string kind "connect or limit, MJCF"
+  }
+  renders {
+    int64 render_id PK
+    int16 identity_id FK
+    int64 pose_id FK
+    int16 camera_id FK
+    int8 appearance "1 of 4"
+  }
+  keypoints_2d {
+    int64 render_id FK
+    int16 bone_id FK
+    float32 xy
+    int8 visibility "not bool, three states"
+  }
+  segmentation {
+    int64 render_id FK
+    bytes mask "from hm08 groups"
+  }
+  depth_map {
+    int64 render_id FK
+    float32 z
+  }
+  meshes {
+    int64 render_id FK
+    bytes geometry "for Pixal3D"
+  }</code></pre>
+<p>Authored relations are on the left of <code>renders</code> and emitted relations on the right. Everything right of <code>renders</code> is exact by projection rather than annotated, which is the property the whole corpus is built to have. Root translation appears nowhere on purpose: it follows from <code>constraints</code> and the chain, so a column for it would be derivable.</p>
+</section>
+<section id="correspondence-is-14-of-17-and-it-fails-informatively" class="level2">
+<h2 class="anchored" data-anchor-id="correspondence-is-14-of-17-and-it-fails-informatively">Correspondence is 14 of 17, and it fails informatively</h2>
+<p>Shoulders, elbows, wrists, hips, knees, ankles and eyes map to ANNY bones. The nose and both ears have no bone and need fixed mesh vertices. Those are topology-dependent, which is the reason <code>topology_id</code> became a foreign key rather than a label.</p>
+<p>Note the keypoint asset itself carries <strong>23</strong> points, not 17. <code>anny/data/keypoints/coco.pth</code> is COCO-17 plus the six foot points. Each entry is a weight vector over the mesh that sums to 1, so a keypoint position is a weighted sum of posed vertices. The label is computed, never detected.</p>
+<p>The vectors are 19,158 wide, so the render must pin the topology that returns that count. The default returns 13,718 and would fail to multiply.</p>
+</section>
+<section id="layer-extraction-in-3d" class="level2">
+<h2 class="anchored" data-anchor-id="layer-extraction-in-3d">Layer extraction in 3D</h2>
+<p>Every piece is MIT and already packaged. They share one backbone, so the latent passes between them without conversion.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 17%">
+<col style="width: 71%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>step</th>
+<th>does</th>
+<th>why it is that one</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Pixal3D</td>
+<td>image in, SLAT out</td>
+<td>it emits SLAT natively, so nothing is inverted. An ANNY-first order would pay a lossy <code>a_invert</code> on every use</td>
+</tr>
+<tr class="even">
+<td>fit ANNY</td>
+<td>supplies the part semantics</td>
+<td>Pixal3D gives geometry and not labels. A fitted ANNY carries hm08 groups, so masks come from the fit rather than from a segmentation model</td>
+</tr>
+<tr class="odd">
+<td>mask by set operation</td>
+<td>tokens, not meshes</td>
+<td><code>ANNY and Pixal3D</code> is body. <code>Pixal3D without ANNY</code> is garment or hair, because ANNY models anatomy and nothing else. No decode and no correspondence</td>
+</tr>
+<tr class="even">
+<td>VoxHammer</td>
+<td>fills what was never seen</td>
+<td>the 3D inpainter. It replaces LaMa rather than calling it</td>
+</tr>
+<tr class="odd">
+<td><code>a_splice</code></td>
+<td>preserves everything outside the mask</td>
+<td>inversion is lossy, so without it every extracted layer perturbs the ones you did not touch</td>
+</tr>
+</tbody>
+</table>
+<p><strong>VoxHammer replaces LaMa because it is consistent across views.</strong> A 2D inpaint answers for one view. Fill behind the hair for a front view, then ask for a three-quarter view, and the two disagree. A masked fill in the latent is one piece of geometry, so every view of it agrees. See-Through’s 2D path keeps LaMa, because there is no geometry to fill.</p>
+<p><strong>The honest claim is smaller than it first sounds.</strong> Where the image saw a surface and a nearer layer covered it, 3D wins, because that content is rendered rather than invented. Where nothing ever saw it, the back of a head being the obvious case, it is still invented. It is invented earlier, by the reconstruction rather than by the inpainter.</p>
+<p>Occlusion becomes rendering. Hallucination becomes verifiable. The second half is the real gain. An inpainted patch cannot be checked against anything. A reconstructed surface can be checked against a second view.</p>
+<p><strong>Helmet hair removes the resolution problem.</strong> Individual strands and one-pixel edges are the cases a sparse latent cannot resolve, and they are out of scope by construction. What remains is a front mass against a back mass, separated by the width of a head. That resolves, so there is no densifying to 256 or 1024 and no retraining at a resolution the checkpoints never saw. It is also what VRM and VR avatars already are.</p>
+<p><strong>A hairline pixel holds two layers.</strong> Split it fractionally so the alphas sum to one. That leaves no seam and makes no choice. The soft rasteriser already computes this, because the sigmoid of distance over temperature is fractional boundary coverage. Anti-aliased mattes come free from the renderer built for the fit.</p>
+<p>Bleeding is a separate and smaller thing. Dilate each layer’s colour under its alpha, so downstream resampling finds colour rather than background. One fills a layer’s interior and the other protects its edge. Both are called bleeding, which is how they get conflated.</p>
+<p><strong>What this does not cover.</strong> Multi-view refinement has to run before a 360 degree decomposition is trustworthy. Until then the rear layers are confident fiction, and the greedy version of that refinement is order-dependent by construction.</p>
+</section>
+<section id="what-pixal3ds-toolkit-demands" class="level2">
+<h2 class="anchored" data-anchor-id="what-pixal3ds-toolkit-demands">What Pixal3D’s toolkit demands</h2>
+<p>Read from <code>data_toolkit/README.md</code> rather than assumed.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 40%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>toolkit step</th>
+<th>who does it</th>
+<th>state</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>download 3D assets</td>
+<td>skipped, because ANNY is the asset</td>
+<td>not applicable</td>
+</tr>
+<tr class="even">
+<td>process mesh, extract PBR</td>
+<td>our renderer</td>
+<td>build</td>
+</tr>
+<tr class="odd">
+<td>render multi-view and cameras</td>
+<td>our renderer</td>
+<td>build</td>
+</tr>
+<tr class="even">
+<td>voxelize to O-Voxels</td>
+<td>upstream</td>
+<td>theirs</td>
+</tr>
+<tr class="odd">
+<td>encode shape, PBR and sparse latents</td>
+<td>upstream</td>
+<td>theirs</td>
+</tr>
+</tbody>
+</table>
+<p>The last row is why decode-only still holds for us. Supplying geometry is not owning an encoder.</p>
+<p><strong>MakeHuman already has the material.</strong> <code>node_trees/enhanced_skin.json</code> is a Principled skin shader, a thin wrapper over a shader group. It drives Roughness with 3 references, Normal with 4 and Clearcoat with 2, and it sets Metallic nowhere, because skin is dielectric. <code>sss.png</code> ships alongside it, with per-region maps for face, ears, lips, eyelids, fingernails and toenails.</p>
+<p>The toolkit wants a flat texture set and this is not one. So the job is a <strong>bake</strong>. Run the node group once over the hm08 UV layout and write albedo, roughness and normal. Metallic is a constant zero and needs no map. Bake once and reuse it in every render.</p>
+<p>Do the bake in Blender. MPFB2 is a Blender addon, so the bake happens in the tool the material was authored for rather than in a reimplementation of it.</p>
+<p>The bake needs UVs, and they exist. <code>texture_coordinates</code> is (21334, 2) under <code>topology="anny"</code>. An earlier version of this file called the bake blocked, which the section below retracts.</p>
+</section>
+<section id="retracted-the-topology-loads" class="level2">
+<h2 class="anchored" data-anchor-id="retracted-the-topology-loads">Retracted: the topology loads</h2>
+<p>An earlier version of this file marked the UV claim UNVERIFIED and reported that the topology the corpus depends on does not load. Both were wrong. The retraction stays here beside what replaces it.</p>
+<p><code>TopologyConfig(base_mesh=...)</code> and the <code>topology=</code> spec string take different vocabularies. <code>AlternativeTopology</code> is <code>smplx</code>, <code>smpl</code>, <code>soma</code>, <code>anny_from_soma</code>, <code>notoes</code> and three collapse variants. <code>"anny"</code> is not among them, so <code>base_mesh="anny"</code> falls through to <code>data/topology/anny.obj</code>. That file was never meant to exist, and the resulting <code>FileNotFoundError</code> names a missing asset rather than a bad argument. The failure mode invites the wrong reading, and it got one.</p>
+<p>The claim re-derives exactly through the spec string.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>call</th>
+<th>vertices</th>
+<th><code>texture_coordinates</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>topology="anny"</code></td>
+<td>13,718</td>
+<td>(21334, 2)</td>
+</tr>
+<tr class="even">
+<td><code>topology="soma"</code></td>
+<td>18,056</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+<p>The PBR bake is not blocked.</p>
+<p><strong>The helper geometry was recovered too.</strong> <code>Anny.faces</code> is the body submodel: 27,420 triangles reaching vertex index 14741, and no higher under any of the eight combinations of <code>eyes</code>, <code>tongue</code> and <code>nudity_edits</code>. Read as the whole mesh, it says <code>helper-hair</code>, <code>helper-tights</code> and <code>helper-skirt</code> have no faces.</p>
+<p>They do. <code>basemesh_face_to_vertex_table.json.gz</code> holds <strong>18,486 quads</strong> reaching <strong>19,157</strong>, referencing all 19,158 vertices with none unreferenced. Every group has faces. A proxy surface with no appearance is a different thing from absent geometry, and RFD 1121 means the first.</p>
+</section>
+<section id="openusd-is-where-the-topology-now-lives" class="level2">
+<h2 class="anchored" data-anchor-id="openusd-is-where-the-topology-now-lives">OpenUSD is where the topology now lives</h2>
+<p>RFD 1053 makes OpenUSD the internal format. <code>export_hm08_usd.py</code> in <code>2-contract/hm08-partition</code> is the body’s entry point.</p>
+<pre><code>/Hm08/Basemesh   19,158 points, 18,486 quads, all 12 groups, partition
+/Hm08/Body       13,718 points, 27,420 triangles, UVs (21334, 2)</code></pre>
+<p>The map between the two spaces is measured rather than assumed. <code>ref</code> is the ascending unique index set of <code>Anny.faces</code>, the maximum positional difference between <code>basemesh[ref]</code> and the body mesh is 0.0 exactly, so <code>body_index = searchsorted(ref, basemesh_index)</code>.</p>
+<p><code>UsdGeomSubset</code> carries a <code>partition</code> family type and USD validates it, so <code>three_groups_cover</code> is enforced by the format rather than argued in a comment. <code>groups_by_range</code> is written as <code>nonOverlapping</code> on purpose, because the Lean file proves it is not a partition.</p>
+<p>Four negative controls ship with it. Two found real defects in the validator while being written. A reused temporary filename handed each control the previous one’s stage, because USD caches stages by identifier, so three controls reported the second one’s defect while all four still printed FAIL. And <code>GetFamilyType</code> read the wrong prim, so relaxing the basemesh family type to <code>unrestricted</code> was invisible and the layer validated while claiming no partition.</p>
+</section>
+<section id="colour-sketch-qwen-image-edit" class="level2">
+<h2 class="anchored" data-anchor-id="colour-sketch-qwen-image-edit">Colour sketch: Qwen-Image-Edit</h2>
+<p>The fourth appearance is a colour sketch, produced by Qwen-Image-Edit. It is Apache-2.0, independently checked, and it is already in the catalog as <code>qwen_q4_k_m_image_edit</code>, so the style needs no training run and no new domain corpus.</p>
+<p>Two costs come with that choice. Both are accepted rather than absent, and both are stated here so nobody rediscovers them.</p>
+<p><strong>The photoreal branch is the same model.</strong> Two of the four appearances now come from one model, so their errors correlate. Qwen’s idea of a hand appears in two domains rather than one, and the four-way spread narrows to something closer to three. The purpose of four appearances is independent error modes, so this is a real reduction in what step 2 buys.</p>
+<p>Report the two Qwen-derived domains together when scoring, not as two independent columns. An average over four domains where two share a model overstates the spread.</p>
+<p><strong>There is no depth control on this path.</strong> The packaged interface takes <code>image</code>, <code>instruction</code>, <code>strength</code>, <code>steps</code> and <code>seed</code>. Geometry preservation therefore rests on <code>strength</code> alone. RFD 1121 requires a depth control wherever generated geometry must match an authored pose, and this path has none, so the guarantee is weaker than the stylised branch had before.</p>
+<p>That matters most at the setting a real sketch needs. A low <code>strength</code> preserves the pose and barely changes the picture. A high <code>strength</code> gives a convincing sketch and is free to move a limb. The usable window is an empirical question and it may be empty. Measure it before scaling, and treat an empty window as the signal to reconsider rather than as a tuning problem.</p>
+<p>The default is 0.8, which is high for this purpose. Do not inherit it.</p>
+<section id="the-server-must-return-its-checkpoint-hash" class="level3">
+<h3 class="anchored" data-anchor-id="the-server-must-return-its-checkpoint-hash">The server must return its checkpoint hash</h3>
+<p><code>interactor-qwen-image-edit</code> returns <code>{image, seed, stub}</code>. It does not return the checkpoint hash or echo the instruction.</p>
+<p>That is sufficient for interactive editing and insufficient here. Condition 1 requires the generating model, checkpoint and conditioning recorded <strong>with the data</strong>, and the CycleGAN image already returns <code>checkpoint_sha256</code> per result for exactly that reason, because a hash in a server log is not with the data.</p>
+<p>So this is a change to <code>qwen-image-edit</code>’s <code>server.py</code>, not a note. Return the checkpoint hash and the instruction with every result before the corpus uses this path.</p>
+<p>Note also RFD 1043’s open question. No measurement compares Q4_K_M against bf16 for this model, and Q4_K_M is the only format the image ships. A quantisation artefact in a corpus is harder to find later than a quantisation artefact in one edit.</p>
+</section>
+<section id="why-not-a-gan-recorded-because-it-was-nearly-the-answer" class="level3">
+<h3 class="anchored" data-anchor-id="why-not-a-gan-recorded-because-it-was-nearly-the-answer">Why not a GAN, recorded because it was nearly the answer</h3>
+<p>The GAN route was worked through and is kept here, because it explains what the alternative would have cost and because one of its findings survives the change of direction.</p>
+<p><strong>Full CUT is disqualified by its own headline feature.</strong> The authors report:</p>
+<blockquote class="blockquote">
+<p>Our full method CUT has the flexibility to <strong>enlarge the horses</strong>, as a means of better matching of the training statistics than CycleGAN. FastCUT behaves more conservatively like CycleGAN.</p>
+</blockquote>
+<p>Changing object size to match target statistics is the advertised advantage, and it is the one behaviour a labelled corpus cannot tolerate. A stylizer that enlarges a body moves every joint, and the keypoint label then describes a picture that no longer exists. That finding stands whatever tool is chosen, so CUT stays excluded for any labelled corpus, not only this one.</p>
+<p><strong>FastCUT was the strong candidate.</strong> BSD-2, read from the LICENSE file rather than the <code>NOASSERTION</code> badge, which reports that only because two licence texts share one file. Same ResNet generator as CycleGAN, so the server and hash discipline carry over. About half the training memory and about twice the speed. And single-image training, where each domain is one image, so the colour-sketch domain needed one licence-clean sketch rather than a corpus.</p>
+<p>It costs a training run, which Qwen-Image-Edit does not. That is the trade that was made.</p>
+<p><code>StyTR2</code> remains excluded for carrying no licence. <code>AdaAttN</code> is Apache-2.0 and exemplar-driven, <code>CAST</code> is Apache-2.0, <code>EFDM</code> is MIT. Any of them remains available if the common-mode cost above turns out to matter, and picking one then is cheaper than regretting it later.</p>
+</section>
+</section>
+<section id="what-exists-and-what-does-not" class="level2">
+<h2 class="anchored" data-anchor-id="what-exists-and-what-does-not">What exists, and what does not</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 67%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>piece</th>
+<th>note</th>
+<th>state</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>licence-clean mocap</td>
+<td>810 clips, CC-BY-4.0 and Apache or MIT, with <code>CITATION.cff</code></td>
+<td>exists</td>
+</tr>
+<tr class="even">
+<td><code>extract_poses.py</code></td>
+<td>world-space joint positions, convention-free, avoiding the Euler trap</td>
+<td>exists</td>
+</tr>
+<tr class="odd">
+<td><code>AnnyInverter</code> and LBFGS</td>
+<td>solves pose, phenotype and local changes jointly</td>
+<td>exists</td>
+</tr>
+<tr class="even">
+<td><strong>renderer</strong></td>
+<td>image, keypoints, masks, camera parameters. Nothing turns a posed mesh into a labelled frame</td>
+<td><strong>build</strong></td>
+</tr>
+<tr class="odd">
+<td>appearance generators</td>
+<td>Qwen-Image-Edit, CycleGAN monet and ukiyoe, algorithmic corruption, all licence-cleared</td>
+<td>exists</td>
+</tr>
+<tr class="even">
+<td>colour sketch</td>
+<td>Qwen-Image-Edit, Apache-2.0, already in the catalog</td>
+<td>exists</td>
+</tr>
+<tr class="odd">
+<td><strong>checkpoint hash on the Qwen path</strong></td>
+<td><code>server.py</code> returns no hash and no instruction. Condition 1 needs both</td>
+<td><strong>build</strong></td>
+</tr>
+<tr class="even">
+<td>drift and hand verification</td>
+<td><code>silhouette.py</code>, <code>depth_term.py</code>, <code>soma_referee.py</code>, controls passing</td>
+<td>exists</td>
+</tr>
+<tr class="odd">
+<td>schema</td>
+<td><code>KEYPOINTS_2D</code>, <code>SEGMENTATION</code>, <code>RENDERS</code> defined. <code>visibility</code> int8 and <code>topology_id</code> pending</td>
+<td>exists</td>
+</tr>
+<tr class="even">
+<td>COCO-format bridge</td>
+<td><code>gen_coco_dataset.py</code>, <code>gen_reference_keypoints.py</code>, <code>gen_reference_loss.py</code></td>
+<td>exists</td>
+</tr>
+<tr class="odd">
+<td><strong>training loop</strong></td>
+<td>upstream RF-DETR is Apache-2.0. The masked-loss run does not exist</td>
+<td><strong>build</strong></td>
+</tr>
+<tr class="even">
+<td>GGUF conversion</td>
+<td><code>convert_keypoints_to_gguf.py</code></td>
+<td>exists</td>
+</tr>
+<tr class="odd">
+<td><code>rf-detr-cpp</code> inference</td>
+<td>working port, head is COCO-17</td>
+<td>exists</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid"><code>flowchart LR
+  P["ANNY pose&lt;br/&gt;authored or licence-clean mocap"] --&gt; R
+  R["RENDER&lt;br/&gt;104 joints, 52 blendshapes&lt;br/&gt;masks, cameras, mesh and PBR"] --&gt; A
+  A["4 appearances&lt;br/&gt;Qwen-Image-Edit, CycleGAN&lt;br/&gt;algorithmic corruption"] --&gt; V
+  V["verify&lt;br/&gt;drift, hands, reachability&lt;br/&gt;only verified frames pass"] --&gt; T
+  T["MASKED TRAIN&lt;br/&gt;104 out, COCO masks 90&lt;br/&gt;plus licence-filtered COCO"] --&gt; G
+  G["GGUF&lt;br/&gt;convert_keypoints_to_gguf"] --&gt; C
+  C["rf-detr-cpp&lt;br/&gt;inference port"] --&gt; E
+  E["evaluate&lt;br/&gt;blinded val2017, real photographs only"]
+  V -. "second student, same frames" .-&gt; X["FINE-TUNE PIXAL3D&lt;br/&gt;image and mesh"]
+  S["SLAT stays decode-only&lt;br/&gt;upstream encodes internally"]
+  classDef build stroke-dasharray:6 3,stroke-width:2px;
+  classDef aside opacity:0.55,stroke-dasharray:3 3;
+  class R,T,X build
+  class S aside</code></pre>
+<p>Dashed boxes are the <strong>build</strong> rows of the table above: <code>RENDER</code> is the renderer and <code>MASKED TRAIN</code> is the masked-loss run. The table carries a third build row the diagram cannot show as a box, because it is not a stage: the Qwen path’s <code>server.py</code> returns no checkpoint hash, so condition 1 is unsatisfied on an edge rather than at a node. <code>SLAT stays decode-only</code> sits off the path deliberately, as a reminder that supplying geometry is not owning an encoder.</p>
+</section>
+<section id="what-the-chain-is-for" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-chain-is-for">What the chain is for</h2>
+<p>The head recovers a body from a picture. Each stage is blind to something another stage covers.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 42%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>step</th>
+<th>recovers</th>
+<th>blind to</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RF-DETR wholebody</td>
+<td>104 keypoints in 2D</td>
+<td>depth, shape, anything unlabelled</td>
+</tr>
+<tr class="even">
+<td><code>AnnyInverter</code> and LBFGS</td>
+<td>the pose that puts those joints there</td>
+<td>whether its correspondence is right</td>
+</tr>
+<tr class="odd">
+<td>silhouette fit</td>
+<td>the 11 phenotypes no keypoint constrains</td>
+<td>depth, and the interior</td>
+</tr>
+<tr class="even">
+<td>depth fit and Marigold</td>
+<td>interior surface, limb ordering</td>
+<td>absolute scale</td>
+</tr>
+<tr class="odd">
+<td>MediaPipe</td>
+<td>51 of 52 blendshape coefficients</td>
+<td>the tongue, verified absent from the model</td>
+</tr>
+<tr class="even">
+<td>hm08 groups on the fit</td>
+<td>body layers in 3D, depth-ordered, nothing inpainted</td>
+<td>hair and garments, which ANNY does not model</td>
+</tr>
+</tbody>
+</table>
+<p>The estimator panel never had that property, because its members were all COCO-trained and their errors correlated. Every fit here is descent through a forward we own. Where the forward is differentiable there is no inverse model to license, train or trust.</p>
+<p><strong>Qualified, not retracted, and the qualification stays here beside the sentence.</strong> An earlier version of this note said RFD 1126 retracted half of it, because that RFD replaced the fit with a learned student and a student is an inverse model. RFD 1126 now unrolls the descent instead, so the sentence largely stands and the earlier retraction is withdrawn.</p>
+<p>What changes is smaller. An unrolled fit is still descent through a forward we own, with the iteration count frozen rather than decided at run time, so nothing is licensed and nothing replaces the parametric model. Two things do become measurements. The step sizes are learned, so they are trained. And a fixed step count stops short of convergence by construction, so “trust” becomes the residual that K steps actually reach, reported as a percentage of stature.</p>
+<p>The reason the wording matters is in the row above about correlated members. A regressor would have put a discriminative estimator back where the parametric model was, and lost the property that a parametric model cannot represent an impossible skeleton. Unrolling with a per-step joint-limit clamp keeps that property in a graph an accelerator will take.</p>
+<p>The last row is what RFD 1121 answers.</p>
+</section>
+<section id="the-corrected-hm08-claim" class="level2">
+<h2 class="anchored" data-anchor-id="the-corrected-hm08-claim">The corrected hm08 claim</h2>
+<p>The plan leaned on one sentence: the mesh already labels its own parts, so the layer masks have no gaps. <code>2-contract/hm08-partition</code> states it in Lean 4 with Mathlib, 847 build jobs.</p>
+<p>The first version of that file reported 992 unassigned vertices, 124 cubes and a 19,150-vertex mesh. All three were wrong, and the file was wrong in the class of error it was written to catch. It counted the ranges in one JSON field and took that count for the mesh.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 76%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>statement</th>
+<th>result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>segs_disjoint</code></td>
+<td>holds. No vertex is in two groups</td>
+</tr>
+<tr class="even">
+<td><code>not_a_partition</code></td>
+<td>the twelve-range claim fails. Vertex 13606 is in the mesh and in no group</td>
+</tr>
+<tr class="odd">
+<td><code>jointCubes_card</code></td>
+<td>the block is 1,000 vertices, which is 125 cubes of 8</td>
+</tr>
+<tr class="even">
+<td><code>covered_or_jointCubes</code></td>
+<td>the corrected claim, and it holds</td>
+</tr>
+<tr class="odd">
+<td><code>three_groups_cover</code></td>
+<td><code>body</code> and <code>HelperGeometry</code> and <code>JointCubes</code> are the whole mesh</td>
+</tr>
+<tr class="even">
+<td><code>three_groups_disjoint</code></td>
+<td>and no vertex is in two of them</td>
+</tr>
+</tbody>
+</table>
+<p><code>JointCubes</code> is <code>[[13606, 14597], [19150, 19157]]</code>. The missing eight are <code>joint-ground</code>. <code>HelperGeometry</code> excludes the cubes exactly, so <code>select_groups</code>’ <code>HELPERS</code> entry never named them.</p>
+<p>The file uses interval sets rather than finite sets on purpose. A finite set over 19,158 vertices would tempt the checker into listing every one, and a single counterexample settles it.</p>
+<p><code>check_hm08_claims.py</code> now re-derives every constant from the installed ANNY package, with six negative controls that each must fail. RFD 1121 records the full measurement.</p>
+</section>
+<section id="the-order-by-critical-path" class="level2">
+<h2 class="anchored" data-anchor-id="the-order-by-critical-path">The order, by critical path</h2>
+<p>The ten tasks and their edges are the USD stage in the logbook, not this list – the list is read off the graph so the two cannot disagree. What the graph does not carry is durations, so the path below is computed on unit durations, one step per task.</p>
+<p>State that assumption plainly, because it decides the answer. On unit durations the project is six layers deep and <strong>nine of the ten tasks are critical</strong>: three chains tie for longest and only one task has any slack. That is not a finding about this plan, it is what equal durations always produce, and it is the reason the list below is more useful read as layers than as a ranking.</p>
+<p>The critical chain, in the order it has to happen:</p>
+<ol type="1">
+<li>Check the pose library is worth rendering. It starts at zero, everything else waits on it, and it is the one task flagged as able to redirect the plan. Cheapest thing here, and first.</li>
+<li>Render the labels rather than annotate them. The renderer is the RFD’s subject and the only step that supplies image, keypoints, masks, camera and depth from a posed body.</li>
+<li>Verify before training, not after. Three branches converge here, so it cannot start until the slowest of them lands.</li>
+<li>One head on heterogeneous annotation.</li>
+<li>GGUF, and the head from 17 to 104.</li>
+<li>Score on real photographs, shared points apart from render-only.</li>
+</ol>
+<p>Two branches are co-critical and converge at step 3, so neither has slack either. The PBR bake over the hm08 UVs hangs off the pose gate; recording the Qwen checkpoint hash starts at zero alongside the gate, and the strength window follows it.</p>
+<p>One task has slack, and it is the schema completion – visibility as int8 with topology_id as a foreign key. It is reachable one layer after the pose gate and not needed until masked training, so it can float by a full layer without moving the finish.</p>
+<p><strong>What this ordering does not capture, and it is the thing most likely to bite.</strong> The PBR bake is co-critical by structure and has no method at all: it was specified as a Blender bake, and Blender is blocklisted for reproducibility, so its duration is not one step but unknown. A critical path computed on unit durations reports the longest chain; the actual risk is the branch whose estimate does not exist. Costing a replacement renderer that a lockfile can pin is therefore the first thing that would change this table, ahead of any resequencing.</p>
+<p><strong>SUPERSEDED 2026-08-24 by the reranked table below, which prices the tasks instead of counting them. Kept because knowing which reading was in force is worth more than a tidy document.</strong></p>
+<p><strong>RESOLVED, AND IT DID CHANGE THE TABLE — TWICE.</strong> The paragraph above stands as written because it was correct and because knowing which risk was named is worth more than a tidy document. Two of its premises have since moved.</p>
+<p>The bake has a method: Mitsuba 3.9.1, pinned in <code>anny-render-corpus</code>’s <code>pixi.toml</code>, with the determinism measured rather than asserted — <code>llvm_ad_rgb</code> at one thread is byte-identical over two runs by sha256, while the default thread count drifts by up to 1/255 on a dozen pixels through film accumulation order. So the branch with no estimate has one, and it is one step like the others.</p>
+<p>And the pose gate has run. That is what actually resequences this, because the table above is computed as though nothing is done. <strong>Recomputed with T01 complete, nine-of-ten-critical collapses to one chain of six</strong>, and it is not the chain the list above names:</p>
+<pre><code>T04  record the checkpoint on the editor path   slack 0
+T05  find the conditioning window               slack 0
+T07  verify before training                     slack 0
+T08  one head on heterogeneous annotation       slack 0
+T09  GGUF, and the head from 17 to 104          slack 0
+T10  score on real photographs                  slack 0
+
+T02  render the labels                          slack 1
+T03  bake albedo, roughness, normal             slack 1
+T06  finish the corpus schema                   slack 2</code></pre>
+<p>The renderer is the RFD’s subject and it is no longer on the critical path. The reason is structural rather than surprising: <code>T04 → T05 → T07</code> is two layers where <code>T01 → T02 → T07</code> was two layers, so the two chains tied only while the gate was outstanding. Finishing the gate broke the tie in favour of the editor branch, and the subject of the document acquired a step of slack without anybody deciding it should.</p>
+<p>That is the argument for keeping durations out of the graph and the state of play out of the prose. Both readings are correct; they answer different questions, and only one of them moves when a task completes.</p>
+<section id="reranked-on-durations-hailo-first-2026-08-24" class="level3">
+<h3 class="anchored" data-anchor-id="reranked-on-durations-hailo-first-2026-08-24">Reranked on durations, Hailo-first, 2026-08-24</h3>
+<p>The reading above counts tasks. This one prices them, and the two disagree about what the plan is mostly made of.</p>
+<p><strong>What forced it.</strong> Every duration the plan inherited came from the 4090, and the 4090 is unplugged. The load-bearing figure is the soft renderer entry’s Mitsuba throughput — 1.79 ms/image, 0.4 GPU-hours over 800k — and it is doubly inapplicable: <code>mi_bench.py:19</code> and <code>mi_bench2.py:20</code> both open with <code>mi.set_variant('cuda_ad_rgb')</code>, which is neither the variant that ships nor one this fleet can run outside that card. <strong>Retracted as a corpus-render estimate</strong>; it remains correct about what it measured.</p>
+<p><code>scripts/mi_bench_llvm.py</code> replaces it for the pair that ships, <code>llvm_ad_rgb</code> at one thread, which no benchmark here had ever timed. On the M2 Pro, at ANNY’s face count, 1024², one sample:</p>
+<pre><code>BENCH film -- aov integrator, box filter, 1 sample. A DEPTH PASS.
+llvm_ad_rgb, 1 thread             73.00 ms/img   800k = overnight
+metal_ad_rgb, default threads      9.01 ms/img   800k = an afternoon
+cuda_ad_rgb (4090, UNPLUGGED)      1.79 ms/img   800k = half an hour
+
+SHIPPING film -- path integrator max_depth 6, gaussian filter, 128 samples.
+THIS IS WHAT RENDERS THE CORPUS, and a second matte pass follows it.
+llvm_ad_rgb, 1 thread          32,592.00 ms/img   800k = a month of wall-clock
+llvm_ad_rgb, default threads    4,363.90 ms/img   differs run to run
+metal_ad_rgb, default threads     545.00 ms/img   differs run to run</code></pre>
+<p>ms/image is the record and keeps its decimals; the 800k column is a projection and gets a span. Two rows landing on the same span are not being claimed equal — they are indistinguishable at the resolution a plan can act on, and the ms/image column is where the difference lives.</p>
+<p>Determinism is <strong>per-image</strong>, so eight single-threaded processes reach 2.2 hours without touching the guarantee the one-thread rule buys. That is the whole corpus in an afternoon, on the weakest device in the fleet, and it settles the question the ordering turned on: the renderer is not the expensive thing.</p>
+<p><strong>A result that is deliberately not used.</strong> Multithreaded <code>llvm_ad_rgb</code> and <code>metal_ad_rgb</code> both came back byte-identical across two processes, and <code>pixi.toml</code> records the multithreaded case drifting by up to 1/255 on a dozen pixels. The negative control went looking for that drift at 1, 4, 16 and 64 samples per pixel and never reproduced it, so nothing has shown the check <em>can</em> fail — which makes its <code>identical</code> column decoration rather than evidence. The one-thread constraint therefore stands unchanged, and it costs nothing: the process-scaling row reaches the same throughput with every frame single-threaded.</p>
+<p><strong>Hailo-first reaches backwards into the training run.</strong> RFD 1126 already decided the backbone compiles at <code>num_windows=1</code> — 825 ONNX nodes parse, 868 are rejected — and that it “costs 1.35x wall-clock and <strong>needs retraining</strong>”. T09 converts and ports, and it sits <em>after</em> T08 trains. A plan followed in its own numbered order therefore trains at the wrong windowing, finds out at T09, and pays for the run twice. This is recorded as a standing constraint, <code>EdgeCompileGatesTraining</code>, rather than a new edge: an edge from T09 back into T08 is a cycle, and 107e’s decision is already made, so what is owed is that T08 honours it. One quantization schedule comes out of DFC 5.3.0 and the rest of the fleet runs that same schedule, because a detector quantised three ways is three detectors and no measurement transfers between desks.</p>
+<p>Not to be confused with condition 5, which forbids a quantised <strong>generator</strong> from writing corpus data. The detector’s quantization is deployment; only T05’s generator path is bound by it.</p>
+<p><strong>The reranked path: 20.0 size points.</strong> Computed by <code>check_rfd1122_plan.py</code> from the sizes in the stage and asserted against this paragraph so the two cannot drift. The formulas are the standard PERT pair, already in use in this workspace at <code>2-contract/manuals-multiplayer-fabric/rfd/204d-pert-critical-path-zonefabric</code> — cited by path rather than by number, because that document lives in another repository and the citation gate here correctly refuses a number it cannot resolve:</p>
+<pre><code>TE = (O + 4M + P) / 6        sigma^2 = ((P - O) / 6)^2</code></pre>
+<p><strong>Sizes rather than days, and the swap is an admission.</strong> An earlier revision of this section carried optimistic, likely and pessimistic figures in engineering days and printed a total of “38.8 engineering days”. Not one of those numbers was measured — they were judgement, and the decimal point made them read as something else. A t-shirt size cannot be mistaken for a calendar. The spread is kept because it carried a real signal: T08’s pessimistic sits four times its optimistic, which is a different fact from T08 merely being large. Points are Fibonacci and <strong>relative</strong>; they order tasks against each other and convert to no duration at all. Anything wanting a calendar has to go and measure one.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>task</th>
+<th>O</th>
+<th>M</th>
+<th>P</th>
+<th>TE</th>
+<th>slack</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>T07 verify before training</td>
+<td>S</td>
+<td>M</td>
+<td>L</td>
+<td>3.2</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td><strong>T02 render the labels</strong></td>
+<td>M</td>
+<td>L</td>
+<td>XL</td>
+<td>5.2</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td><strong>T08 masked training</strong></td>
+<td>L</td>
+<td>XL</td>
+<td>XL</td>
+<td>7.5</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>T09 GGUF, and 17 to 104</td>
+<td>S</td>
+<td>M</td>
+<td>L</td>
+<td>3.2</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>T10 score on real photographs</td>
+<td>XS</td>
+<td>XS</td>
+<td>XS</td>
+<td>1.0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>T03 bake albedo and normal</td>
+<td>XS</td>
+<td>S</td>
+<td>M</td>
+<td>2.0</td>
+<td>3.2</td>
+</tr>
+<tr class="odd">
+<td>T04 record the checkpoint</td>
+<td>XS</td>
+<td>XS</td>
+<td>S</td>
+<td>1.2</td>
+<td>1.7</td>
+</tr>
+<tr class="even">
+<td>T05 the conditioning window</td>
+<td>XS</td>
+<td>S</td>
+<td>L</td>
+<td>2.3</td>
+<td>1.7</td>
+</tr>
+<tr class="odd">
+<td><del>T06 finish the corpus schema</del></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>done</td>
+</tr>
+</tbody>
+</table>
+<p>T01 and T06 are complete and carry no size. They are counted and named in the checker’s output rather than folded in as a zero — it reports <code>2 complete</code> beside the path.</p>
+<p><strong>T06 closed on 2026-08-24</strong> (<code>anny-render-corpus#6</code>), and it was larger than the two attributes it named. <code>KEYPOINTS_2D</code> keyed on <code>bone_id</code>, which asserts every keypoint follows a bone; the nose and both ears have none, so three of the 104 points were not merely unvalidated but <strong>inexpressible</strong>. Anchoring moved into satellite relations, <code>topologies</code> interns the vocabulary, and <code>topology_id</code> is a foreign key because ANNY’s two topologies share zero vertices — 19,158 basemesh against 13,718 body — so a <code>vertex_id</code> carrying the wrong one is wrong at an index where nothing notices.</p>
+<p>Completing it does not move the path: T06 held 7.3 slack and the total stays 20.0. And it does not mean the corpus can be written — the renderer emits npz, json and png rather than parquet, which is T02’s output format. <strong>The schema is finished and there is still nothing to put in it.</strong></p>
+<p><strong>The chain is now five tasks, and it is not the one either earlier reading named.</strong> Correcting the render measurement put <strong>T02 back on the critical path</strong> and took <code>T04 → T05</code> off it, which is the reversal the first rerank got wrong in the other direction: it demoted the renderer on the strength of a depth pass. T08 is still the single heaviest at 7.5 points, <strong>38% of the path</strong>, and no resequencing touches it. T06 gains slack rather than losing it — 7.3, over seven times its own size — and it is the one outstanding task that runs on any desk in the fleet.</p>
+<p><strong>The bottleneck is a device, not a task, and the graph cannot see it.</strong> T05, T07 and T08 are all <code>gpuBound</code> and all want the one desk with native bf16. Their TE sums to <strong>13.0 of the 20.0 points, 65% of the path, on the PC</strong> — a serial floor imposed by contention that no dependency edge expresses.</p>
+<p><strong>Devices are machines now, not card models.</strong> The plan named an <code>RTX3090</code> and an <code>RTX4090</code> until 2026-08-24. Which silicon sits in the PC changes without the plan changing, so pinning to a model made the schedule depend on an inventory fact. The desks are the Mac and the PC, and the PC’s peak is recorded as <strong>unmeasured</strong> rather than derived from a model nobody committed to.</p>
+<p>What survives that is the constraint that actually binds: <strong>the PC is the only desk with native bf16.</strong> Condition 5 requires a generator to run at its published precision, and the Mac’s bf16 is emulated — 2.96 TFLOP/s, 0.48x its own fp16 and below fp32. Whether emulated bf16 is numerically the same bf16 is unmeasured, and “probably” does not satisfy a condition about provenance. So corpus generation is pinned to the PC by <strong>rule</strong>, not by speed.</p>
+<p><strong>RETRACTED: “plugging in the 4090 is worth 30%”.</strong> That figure scaled the <code>gpuBound</code> tasks by the ratio of two card models’ derived peaks, and both halves were derived rather than measured. It read as a schedule decision and was really an inventory one, so it goes with the card rows it came from.</p>
+<p>Nothing replaces it, deliberately. The contention is real and its relief is <strong>unquantified</strong> until somebody measures the desk that would relieve it. What is left is the shape: three tasks, one desk, 65% of the remaining work.</p>
+</section>
+</section>
+<section id="the-cheapest-thing-that-could-change-the-plan" class="level2">
+<h2 class="anchored" data-anchor-id="the-cheapest-thing-that-could-change-the-plan">The cheapest thing that could change the plan</h2>
+<p>All 810 clips are locomotion. Walking, running, turning and standing still. Character drawings are rarely mid-stride, so walk cycles teach a keypoint detector little about sitting or leaning.</p>
+<p>The check needs no renderer, no GPU and no install. Project the 104 joints with the camera arithmetic, draw the stick figure, and look at twenty. Ask whether a character artist would draw that pose.</p>
+<p>If the answer is no, author poses by hand. The pose-source rule already permits that, and a hand-authored pose is constructed rather than generated.</p>
+<p>Run this first. It is the one result that could redirect the work before any of it is built.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/weftspun\.github\.io\/request-for-discussion");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Serials are OID arcs under the 66606 PEN and are never reused.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1122-the-wholebody-gap/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1122-the-wholebody-gap/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/weftspun/request-for-discussion">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

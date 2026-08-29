@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>details – Taskweft — Manuals</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-3336bfa29d6298ea485ddf0d64c2ca2e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-ea71ec77f2e5f2de0947d12aa6258b01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Taskweft — Manuals</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/rfd.html"> 
+<span class="menu-text">RFDs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/serials.html"> 
+<span class="menu-text">Serials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/logbook.html"> 
+<span class="menu-text">Logbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/agreements.html"> 
+<span class="menu-text">Working agreements</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#rfd-1023-details-the-layout-the-content-split-the-asset-port-method-risks-status" id="toc-rfd-1023-details-the-layout-the-content-split-the-asset-port-method-risks-status" class="nav-link active" data-scroll-target="#rfd-1023-details-the-layout-the-content-split-the-asset-port-method-risks-status">RFD 1023 details: the layout, the content split, the asset port, method, risks, status</a>
+  <ul class="collapse">
+  <li><a href="#the-layout" id="toc-the-layout" class="nav-link" data-scroll-target="#the-layout">The layout</a>
+  <ul class="collapse">
+  <li><a href="#content-and-not-content" id="toc-content-and-not-content" class="nav-link" data-scroll-target="#content-and-not-content">Content, and not content</a></li>
+  <li><a href="#the-port-for-owned-assets" id="toc-the-port-for-owned-assets" class="nav-link" data-scroll-target="#the-port-for-owned-assets">The port for owned assets</a></li>
+  <li><a href="#a-test-guards-the-boundary" id="toc-a-test-guards-the-boundary" class="nav-link" data-scroll-target="#a-test-guards-the-boundary">A test guards the boundary</a></li>
+  </ul></li>
+  <li><a href="#method" id="toc-method" class="nav-link" data-scroll-target="#method">Method</a></li>
+  <li><a href="#what-this-does-not-do" id="toc-what-this-does-not-do" class="nav-link" data-scroll-target="#what-this-does-not-do">What this does not do</a></li>
+  <li><a href="#risks" id="toc-risks" class="nav-link" data-scroll-target="#risks">Risks</a></li>
+  <li><a href="#status" id="toc-status" class="nav-link" data-scroll-target="#status">Status</a>
+  <ul class="collapse">
+  <li><a href="#the-refactor-step" id="toc-the-refactor-step" class="nav-link" data-scroll-target="#the-refactor-step">The refactor step</a></li>
+  <li><a href="#the-test-suite-sorted-by-concern" id="toc-the-test-suite-sorted-by-concern" class="nav-link" data-scroll-target="#the-test-suite-sorted-by-concern">The test suite, sorted by concern</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1023-ports-and-adapters-with-headless-cms-style/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1023-ports-and-adapters-with-headless-cms-style/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+
+<section id="rfd-1023-details-the-layout-the-content-split-the-asset-port-method-risks-status" class="level1">
+<h1>RFD 1023 details: the layout, the content split, the asset port, method, risks, status</h1>
+<section id="the-layout" class="level2">
+<h2 class="anchored" data-anchor-id="the-layout">The layout</h2>
+<pre><code>src/composition.js   the composition root. The only file that
+                     picks adapters.
+src/core/
+  domain/     pure content rules. No I/O, no React, no three.js.
+  ports/      contracts, each one a test.
+  adapters/   content adapters that need no chain.
+src/chain/    every module that imports a chain library,
+  adapters/   and the adapters that need one.</code></pre>
+<p>The composition root sits outside <code>src/core/</code>, because it must know every side, and the core may not reach a chain.</p>
+<section id="content-and-not-content" class="level3">
+<h3 class="anchored" data-anchor-id="content-and-not-content">Content, and not content</h3>
+<p>The split is by concern, not by technology.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Concern</th>
+<th>In scope</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Which models exist</td>
+<td>Yes</td>
+<td><code>CatalogSource</code>, RFD 1022</td>
+</tr>
+<tr class="even">
+<td>Which assets an owner may use</td>
+<td>Yes</td>
+<td><code>OwnedAssetSource</code></td>
+</tr>
+<tr class="odd">
+<td>Minting, payment, x402</td>
+<td>No</td>
+<td><code>src/chain/</code></td>
+</tr>
+<tr class="even">
+<td>Rendering, three.js, WebXR</td>
+<td>No</td>
+<td>stays in <code>src/library/</code></td>
+</tr>
+</tbody>
+</table>
+<p>Rendering is not a content concern, so this RFD leaves it. Commerce is not a content concern either. Minting writes to a chain, and a content server never writes to a chain.</p>
+</section>
+<section id="the-port-for-owned-assets" class="level3">
+<h3 class="anchored" data-anchor-id="the-port-for-owned-assets">The port for owned assets</h3>
+<p>Content needs one answer from a chain: <strong>which assets may this owner use?</strong> A trait an owner holds is a trait a picker may offer. That is a content availability question, and it is the whole of the port.</p>
+<p>A manifest asks the question two ways, and neither one is by address. A locked collection asks which traits of that collection the holder has. A purchase definition asks which traits the holder bought. Both answer with the same shape, thus both belong on the same port.</p>
+<p><code>OwnedAssetSource</code>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 43%">
+<col style="width: 56%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>isEnabled()</code></td>
+<td>False when no chain is configured.</td>
+</tr>
+<tr class="even">
+<td><code>listCollections()</code></td>
+<td>The collections the client knows.</td>
+</tr>
+<tr class="odd">
+<td><code>listOwnedTraitIds(address)</code></td>
+<td>The trait ids one address holds.</td>
+</tr>
+<tr class="even">
+<td><code>listCollectionTraits(query)</code></td>
+<td>The traits a locked collection frees.</td>
+</tr>
+<tr class="odd">
+<td><code>listPurchasedTraits(query)</code></td>
+<td>The traits a purchase frees.</td>
+</tr>
+</tbody>
+</table>
+<p>The last two answer with <code>{ownedIDs, ownedTraits}</code>, which is the shape <code>unlockTraits</code> reads. An incomplete query frees nothing, and no adapter rejects. A picker that cannot reach a chain shows the locked set, and the page still loads.</p>
+<p><code>nullOwnedAssetSource</code> is the default. It reports <code>isEnabled()</code> as false and returns empty lists. This is the headless case: content serves with no wallet, no network, and no chain library.</p>
+<p><code>walletOwnedAssetSource</code> reads the real collections, through the modules that now live in <code>src/chain/</code>.</p>
+<p><code>VITE_ENABLE_CHAIN</code> turns the wallet adapter on. Without it the client takes the null adapter, so a content-only deployment carries no chain behavior.</p>
+</section>
+<section id="a-test-guards-the-boundary" class="level3">
+<h3 class="anchored" data-anchor-id="a-test-guards-the-boundary">A test guards the boundary</h3>
+<p>A rule that only a document states is a rule that decays. So the boundary ships as a test. It reads every file under <code>src/core/</code> and fails when one imports a chain library or a <code>src/chain/</code> module.</p>
+<p><code>src/library/</code> still holds violations. The test lists them, and that list may only shrink. A new violation fails the build.</p>
+</section>
+</section>
+<section id="method" class="level2">
+<h2 class="anchored" data-anchor-id="method">Method</h2>
+<p>Red, green, refactor, as RFD 1022 sets out. The RFD is the first red.</p>
+<ol type="1">
+<li><strong>Red.</strong> This document, then the port the contract failing test and the boundary failing test.</li>
+<li><strong>Green.</strong> Failing tests pass. The two adapters, and the move into <code>src/chain/</code>.</li>
+<li><strong>Refactor.</strong> Point content code at the port, one caller at a time, and shorten the violation list.</li>
+</ol>
+</section>
+<section id="what-this-does-not-do" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-does-not-do">What this does not do</h2>
+<p>It does not change what the client does. The wallet adapter runs the same code as before, from a new place.</p>
+<p>It does not rewrite <code>characterManager.js</code>. That module mixes avatar loading with minting, and minting is commerce. The boundary test records it instead, so the debt stays visible and cannot grow.</p>
+<p>It does not port three.js, WebXR, or rendering.</p>
+<p>It does not fix the test failures the client already carries. Those predate the rebrand, and RFD 1022 records them. The Status section gives the measured count.</p>
+</section>
+<section id="risks" class="level2">
+<h2 class="anchored" data-anchor-id="risks">Risks</h2>
+<p>A moved module is a changed import path. The move touches 14 import statements. The suite is the check, and it must hold at the count it had before.</p>
+<p>The null adapter changes what a picker shows when no chain is configured. It shows no owned traits, which is right for a headless deployment. The wallet adapter restores the old answer.</p>
+<p><code>src/library/</code> keeps a copy of rules that also live in <code>domain/</code>, until each caller moves. The port marks which one is current.</p>
+</section>
+<section id="status" class="level2">
+<h2 class="anchored" data-anchor-id="status">Status</h2>
+<p>Done:</p>
+<ul>
+<li><code>src/chain/</code> holds the 9 chain modules. 11 files changed import path, and 5 sibling imports inside the moved files moved with them.</li>
+<li><code>OwnedAssetSource</code> ships as a contract test. <code>nullOwnedAssetSource</code> and <code>walletOwnedAssetSource</code> both pass it.</li>
+<li>The wallet adapter loads the wallet stack through a dynamic import. A static import pulled the VRM and three.js exporters into every consumer, and those run work at load time.</li>
+<li><code>src/composition.js</code> is the composition root, outside the core. It takes the null adapter unless <code>VITE_ENABLE_CHAIN</code> is <code>1</code>.</li>
+<li>The boundary ships as <code>src/core/architecture.test.js</code>, with 10 tests.</li>
+<li>37 new tests. The build passes, and the suite holds at the failure count it had before. The refactor step below gives the measured numbers, and corrects the count this line first recorded.</li>
+</ul>
+<p>The boundary test needed two corrections, and both matter.</p>
+<p>It first derived the source directory from <code>import.meta.url</code>. Vitest rewrites that to a served path, thus every read failed. The directory walk returned an empty list, and all six tests passed while they read nothing. The walk now throws for a missing directory, and two tests assert that the walk found real files.</p>
+<p>It also counted a commented-out import as a dependency. That put <code>characterManager.js</code> on the list of modules that import a chain library, which was wrong.</p>
+<section id="the-refactor-step" class="level3">
+<h3 class="anchored" data-anchor-id="the-refactor-step">The refactor step</h3>
+<p>The first move put <code>aigcRigContract.js</code> in <code>src/chain/</code>. That module validates a rig contract, not a blockchain contract. Its name put it there, and it pulled three.js and <code>rigBoneUtils.js</code> in behind it. It is back in <code>src/library/</code>, where the code it reads is. A module belongs in <code>src/chain/</code> for what it imports, and not for what it is called. A test now holds that rule: <code>src/chain/</code> may import nothing that renders.</p>
+<p>That correction alone took <code>sceneManager.js</code> off the leak list, because that module never reached a chain.</p>
+<p><code>CharacterManifestData.js</code> now takes an <code>OwnedAssetSource</code>, and <code>new WalletCollections()</code> is gone. <code>ManifestDataManager</code> passes the source to each manifest it builds, and <code>characterManager.js</code> asks the composition root for it. The source arrives as a promise, because the root builds the wallet adapter through a dynamic import, and a constructor cannot wait.</p>
+<p>The port did not fit the caller at first. It answered by address, and a manifest asks by collection lock or by purchase definition. So the port took two more functions, and the contract test holds them.</p>
+<p>Two faults came out of the move:</p>
+<ul>
+<li>The old purchase read got <code>undefined</code> for <code>delegateAddress</code>, every time. <code>SolanaPurchaseAssets</code> dropped the field, and the read asked for it. The field now goes through. A manifest without the field reads as it did before.</li>
+<li><code>getSolanaPurchasedAssets</code> answers with <code>null</code> when the read fails, and <code>unlockTraits</code> read <code>null.ownedIDs</code>. The port answers with one shape, thus the fault cannot return.</li>
+</ul>
+<p>The boundary test compared a path from <code>node:path</code> with a name written with forward slashes. On Windows the two never matched, and the leak list did nothing. The test normalizes the separator now. Two boundary tests failed on Windows before this step, and both pass now.</p>
+<p><code>characterManager.js</code> also held a <code>walletCollections</code> field that no code read. It is gone.</p>
+<p>The refactor step adds 23 test cases. The port contract takes 5 of them, and each of the two adapters runs the contract. The wallet adapter takes 4 more, the manifest takes 7, the composition root takes 1, and the boundary takes 1.</p>
+<p>Open:</p>
+<ul>
+<li><code>characterManager.js</code> and <code>pages/Load.jsx</code> still reach chain code. <code>characterManager.js</code> mints, and <code>pages/Load.jsx</code> reads a contract with ethers. Neither is a content concern. The boundary test holds that list, and it may only shrink.</li>
+<li><code>ownedNFTTraitIDs.js</code> sits in <code>src/chain/</code> and reaches no chain. It turns metadata into trait ids, which is a content rule, thus it belongs in <code>domain/</code>. It reads <code>DOMParser</code> for one data source, and that must move first.</li>
+<li>Ports for the job lifecycle and for assets.</li>
+<li>The app shell runs work at load time, through two paths. The XR world package draws a cursor texture on a canvas when it loads. <code>download-utils.js</code> builds the VRM exporter, and that starts KTX tools. A shell that shows no XR and exports nothing still pays for both. This is the cost the wallet adapter already avoids with a dynamic import.</li>
+<li><code>src/components/TaskManager.jsx</code> line 1163 imports <code>prepareGlbForApiUpload</code> from <code>glbCompress.js</code>. RFD 1061 later implemented that function as an interim stopgap.</li>
+</ul>
+</section>
+<section id="the-test-suite-sorted-by-concern" class="level3">
+<h3 class="anchored" data-anchor-id="the-test-suite-sorted-by-concern">The test suite, sorted by concern</h3>
+<p>The suite mixed concerns, and that hid what was broken:</p>
+<ul>
+<li>Playwright owns <code>tests/e2e</code>, and the vitest include pattern matches <code>.spec.js</code>. Vitest collected 3 Playwright specs and failed on them. <code>vitest.config.js</code> excludes them now.</li>
+<li><code>tests/setup.js</code> gave no 2D canvas context, no <code>ResizeObserver</code>, and no <code>IntersectionObserver</code>. The app shell needs all three, thus its test file threw before one test ran.</li>
+<li>Two mocks were closed lists. The <code>three</code> mock threw for each symbol it did not name, and the <code>SceneContext</code> mock threw for the context object. Both take the real module as a base now.</li>
+</ul>
+<p>That work removed 6 failed files and added 45 passing tests. It changed no source file, except for the RFD itself.</p>
+<p>The suite ran on Windows for this step. Before the step it gave 27 failures in 547 tests. After the step it gives 25 failures in 570 tests. The 2 failures that went away are the 2 boundary tests above. No test that passed before fails now.</p>
+<p>The earlier count of 33 failures was wrong. It counted lines of <code>FAIL</code> output, and vitest prints one such line for a test and one for a file. The count of failed tests is what matters, and it was 27.</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/weftspun\.github\.io\/request-for-discussion");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Serials are OID arcs under the 66606 PEN and are never reused.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1023-ports-and-adapters-with-headless-cms-style/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1023-ports-and-adapters-with-headless-cms-style/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/weftspun/request-for-discussion">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
