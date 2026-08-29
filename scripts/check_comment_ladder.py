@@ -14,7 +14,7 @@ import tempfile
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comment_density import density, is_source  # noqa: E402
 
-FROZEN = ("rfd/", "changelog/", "data/")
+FROZEN = ("rfd/2", "changelog/", "data/")
 
 RUNGS = (0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40)
 ENTRY = 0.10
@@ -34,8 +34,20 @@ def git(repo, *args):
     return out.stdout if out.returncode == 0 else None
 
 
-def at_ref(repo, ref, path):
-    return git(repo, "show", "%s:%s" % (ref, path))
+def renames(repo, base):
+    out, m = git(repo, "diff", "--name-status", "-M", base) or "", {}
+    for line in out.splitlines():
+        f = line.split("	")
+        if len(f) == 3 and f[0].startswith("R"):
+            m[f[2]] = f[1]
+    return m
+
+
+def at_ref(repo, ref, path, moved=None):
+    text = git(repo, "show", "%s:%s" % (ref, path))
+    if text is None and moved and path in moved:
+        text = git(repo, "show", "%s:%s" % (ref, moved[path]))
+    return text
 
 
 def changed(repo, base):
@@ -66,6 +78,7 @@ def measure(path, text):
 
 def check(repo, base, verbose=True):
     rows, failures = [], []
+    moved = renames(repo, base)
     for path in changed(repo, base):
         now = read(repo, path)
         if now is None:
@@ -73,7 +86,7 @@ def check(repo, base, verbose=True):
         n_com, n_code, n_ratio = measure(path, now)
         if n_com + n_code < MIN_LINES:
             continue
-        before = at_ref(repo, base, path)
+        before = at_ref(repo, base, path, moved)
         if before is None:
             ceiling, was = ENTRY, None
         else:

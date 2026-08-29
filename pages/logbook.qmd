@@ -4,7 +4,7 @@ toc: true
 listing:
   type: table
   contents:
-    - "../logbook-*.md"
+    - "../logbook/logbook-*.md"
   sort: "title"
   fields: [title, date]
 ---

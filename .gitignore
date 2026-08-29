@@ -10,5 +10,5 @@ erl_crash.dump
 # out of this repository in the first place.
 _site/
 .quarto/
-[0-9]*-*/index.md
+rfd/1[0-9]*-*/index.md
 pages/serials.md

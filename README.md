@@ -39,7 +39,7 @@ following the Oxide RFD style. An RFD records a decision.
 The logbook: the cross-project engineering record of what was measured,
 what it cost, and which roads turned out to be dead ends. `PITFALLS.md`
 holds the recurring failure modes and `BLOCKLIST.md` the excluded
-sources. A `logbook-*.md` entry records a measurement.
+sources. A `logbook/logbook-*.md` entry records a measurement.
 `weftspun/logbook` is archived, and its history is here.
 
 Each RFD number has four decimal digits. The first digit names the
@@ -48,7 +48,8 @@ serial. RFD 1000 gives the rule and the OID arc it comes from.
 
 It also holds digit 2, and does not author it. `v-sekai-fabric` was
 site 2 of PEN 66606 and was decommissioned on 2026-08-29. Its 129
-documents are under `rfd/`, its register is
+documents sit under `rfd/` beside this site's own, told apart by the
+first digit, and its register is
 `SERIALS-vsekai-fabric.usda`, and `pen-66606.usda` composes both. The
 arcs are kept and never reused, and no serial is allocated under
 `66606.1.2` again.
@@ -57,9 +58,10 @@ arcs are kept and never reused, and no serial is allocated under
 different shape -- `rfd/NNNN-slug/index.md` with YAML front matter,
 where this site writes `NNNN-slug/README.md` under 40 lines with a
 `DETAILS.md` beside it -- and 110 of them exceed that limit.
-`check-rfd-structure.py` reads root-level directories, so it does not
-see them, and `check_comment_ladder.py` names `rfd/`, `changelog/` and
-`data/` in its `FROZEN` tuple for the same reason -- migrated history
+Every gate here enumerates `rfd/` and keeps to the site it authors by
+that first digit, so it does not see them, and
+`check_comment_ladder.py` names `rfd/2`, `changelog/` and `data/` in
+its `FROZEN` tuple for the same reason -- migrated history
 is not new code entering at the 10 per cent rung. That is stated here because an unchecked thing that nobody
 names reads exactly like a checked one. They are a frozen record, not
 a corpus this site maintains.

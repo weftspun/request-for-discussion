@@ -12,7 +12,7 @@
         string holder = "iFire"
         string category = "1"
         string categoryName = "documents"
-        string rule = "1000-conventions/DETAILS.md"
+        string rule = "rfd/1000-conventions/DETAILS.md"
         string scope = "This layer resolves only in a repo workspace, because its sublayers are other repositories. check_pen_66606.py reads it there, at the manual stage. A single-repository checkout cannot, which is why .pre-commit-config.yaml excludes it from usd-valid by name."
         string[] sites = [
             "1 weftspun request-for-discussion 1.3.6.1.4.1.66606.1.1",

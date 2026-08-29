@@ -8,7 +8,7 @@ from __future__ import annotations
 import re
 import sys
 
-DOC = "1166-scoring-the-accelerator-candidates/DETAILS.md"
+DOC = "rfd/1166-scoring-the-accelerator-candidates/DETAILS.md"
 MAX = 100
 
 

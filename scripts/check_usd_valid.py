@@ -197,7 +197,7 @@ def self_test():
     from pxr import Usd
 
     scratch, where = scratch_dir()
-    source = REPO / "rfd1122-plan.usda"
+    source = REPO / "rfd" / "1122-the-wholebody-gap" / "rfd1122-plan.usda"
     if not source.exists():
         print(f"  FAIL self-test needs {source.name}, which is not here")
         return 1
