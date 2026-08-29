@@ -12,13 +12,14 @@ dimensions vote between them, seat the winner, remove it, repeat.
      2  cyclegan_style_transfer   95  95  60  50  70  95  80  60  605  5-2-1  style, both
      3  OmniGen2                  50  50  15  50  95  75 100  55  490  4-3-1  2D edit only
      4  EditScore, Qwen3-VL-8B    40  45  90  55  60  70 100  70  530  4-3-1  all three
-     5  Kimodo                    95  40  10  55  40  85  30  80  435  4-1-3  -
-     6  SkinTokens                95  15  10  45  35  80  30  85  395  4-3-1  -
-     7  MuJoCo MJX                95  30   5  15  20  90  85  80  420  3-3-2  presence
-     8  Mitsuba 3 shading         95  75   5  10  55  15  95  45  395  5-3-0  3D views
-     9  See-Through               75  60  10  55  50  45  40  40  375  6-2-0  -
-    10  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  35  90  355  8-0-0  3D backbone
-    11  VoxHammer                 30   0   0  15  60  10  30  80  225  last   3D ingest+edit
+     5  Kimodo                    95  40  10  55  40  85  30  80  435  5-3-0  -
+     6  MoGe                      85  90  55  50  30  60  40  50  460  4-4-0  bootstrap only
+     7  SkinTokens                95  15  10  45  35  80  30  85  395  4-3-1  -
+     8  MuJoCo MJX                95  30   5  15  20  90  85  80  420  3-3-2  presence
+     9  Mitsuba 3 shading         95  75   5  10  55  15  95  45  395  5-3-0  3D views
+    10  See-Through               75  60  10  55  50  45  40  40  375  6-2-0  -
+    11  TRELLIS.2 / Pixal3D       60  35   5  25  75  30  35  90  355  8-0-0  3D backbone
+    12  VoxHammer                 30   0   0  15  60  10  30  80  225  last   3D ingest+edit
 
 The sum is not the order. MoGe outscores EditScore by 20 and sits
 below it, having lost the runoff that decided the seat.
@@ -56,18 +57,26 @@ Nothing is wrong with either. A ranking of accelerator candidates is
 not a list of the workspace's models, and the checkouts stay in the
 manifest where they are placed.
 
-**MoGe is struck because the inversion deletes its input.** It is not
-an independent candidate: it is in Pixal3D's core `requirements.txt`
+**MoGe was struck and is restored, scoped to bootstrap.** It is not
+an independent candidate: it sits in Pixal3D's core `requirements.txt`
 and `app.py` calls it from `get_camera_params_wild_moge`, which takes
-a photograph somebody else shot and estimates the camera that shot it
--- intrinsics, then `camera_angle_x` and `distance`, which is exactly
-the `camera_params` dict `run()` demands.
+a photograph somebody else shot and estimates the camera that shot it,
+producing exactly the `camera_params` dict `run()` demands.
 
-*Wild* is the operative word. Render the view yourself and there is no
-wild image and no camera to recover: the angle, the distance and the
-mesh scale are yours by construction. So the inverted chain does not
-make MoGe redundant, it removes the case MoGe exists for, which is the
-same thing that happened to the consensus panel.
+The strike said the inverted chain deletes that input, and it does --
+after the first turn. **It does not answer where the first asset comes
+from.** ANNY originating a pose has no wild image and needs no camera
+recovered. A photograph does, and image-to-3D is a catalog entry with
+two models behind it, which is not what gets built if nobody brings
+images.
+
+So the strike was wrong twice over. The case survives at the
+bootstrap, and more to the point, **a dependency that might be needed
+is still code to write and QA on the device.** This ranking tracks
+work the accelerator programme takes on, and work that turns out to be
+unnecessary is discovered by doing it. Its `value` falls from 40 to 30
+because it runs once at ingestion rather than every round, and that is
+the whole of what the inversion changes.
 
 ## `wanted`, and what the product is for
 
