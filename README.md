@@ -43,8 +43,24 @@ sources. A `logbook-*.md` entry records a measurement.
 `weftspun/logbook` is archived, and its history is here.
 
 Each RFD number has four decimal digits. The first digit names the
-organization. This repository uses digit 1. The last three digits are
-the serial. RFD 1000 gives the rule and the OID arc it comes from.
+site. This repository authors digit 1. The last three digits are the
+serial. RFD 1000 gives the rule and the OID arc it comes from.
+
+It also holds digit 2, and does not author it. `v-sekai-fabric` was
+site 2 of PEN 66606 and was decommissioned on 2026-08-29. Its 129
+documents are under `rfd/`, its register is
+`SERIALS-vsekai-fabric.usda`, and `pen-66606.usda` composes both. The
+arcs are kept and never reused, and no serial is allocated under
+`66606.1.2` again.
+
+**Those 129 are not gated by the rules below.** They were written to a
+different shape -- `rfd/NNNN-slug/index.md` with YAML front matter,
+where this site writes `NNNN-slug/README.md` under 40 lines with a
+`DETAILS.md` beside it -- and 110 of them exceed that limit.
+`check-rfd-structure.py` reads root-level directories, so it does not
+see them. That is stated here because an unchecked thing that nobody
+names reads exactly like a checked one. They are a frozen record, not
+a corpus this site maintains.
 
 Each RFD is a reference design. It records a decision and points to
 the canonical documentation, in whichever project's own repository
