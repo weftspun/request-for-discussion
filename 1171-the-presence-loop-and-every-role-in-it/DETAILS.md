@@ -129,9 +129,113 @@ providing has to come from a model instead.
 
     supplied by a person       supplied by a model
 
-    body motion, mocap         Kimodo
+    body motion, a webcam      Kimodo
+    what is in the room, the   nothing -- the friend sees only what it
+    same webcam                is shown
     speech, a microphone       Qwen3-VL and Qwen3-TTS
     intent                     the persona's manner
+
+## The webcam is not only a motion source, and one HEF covers all of it
+
+The table above says "body motion, a webcam" and that undersells it.
+rf-detr carries three heads -- **keypoints, segmentation and object
+detection** -- and they sit on one backbone.
+
+**That backbone is the device half.** `gate_onnx_device.py` builds it
+from `model.model.model.backbone[0]` under a docstring reading *"The
+backbone and projector, which is exactly what would be compiled"*, and
+`rf-detr-cpp/scripts/` holds separate GGUF converters for the decoder,
+the keypoint head and the segmentation head. So the arrangement is one
+compiled graph and three small heads on the host:
+
+    on the device     the backbone and projector, 825 nodes, rung 3
+
+    on the host       keypoint head    -> a pose
+                      segmentation head -> a mask per part
+                      decoder          -> boxes
+
+**One HEF therefore serves every camera task in the loop**, and the
+825-node translation already measured is most of the work for all three
+rather than for pose alone. That is a better position than RFD 1166
+described, where rf-detr was scored as though it did one thing.
+
+## So the camera feeds all four movements, not just `be it`
+
+    movement        what the camera gives          through
+
+    make            a photograph of a person or    detection, then
+                    a garment becomes the source   segmentation
+    dress           show a real garment to the     segmentation, into
+                    camera and try it on           the slot it belongs
+    be it           a body tracked every frame     keypoints
+    make a friend   the friend sees what it is     detection
+                    shown
+
+**The `dress` row is the one worth noticing.** RFD 1168 established that
+a try-on needs a boundary and a hole to fill. A webcam plus the
+segmentation head is a boundary from the real world, so a garment can
+enter the loop by being held up rather than by being modelled. Nothing
+in this workspace does that yet and the parts are all present.
+
+**And `objects` stops being only a taxonomy problem.** The detection
+head names things the nine worn slots do not cover, which is the bucket
+flagged above as unmodelled. Detection does not say what to do with a
+held prop, but it does say one is there, which is more than the
+taxonomy manages.
+
+## Express everything as keypoints, because keypoints are fixed-shape
+
+The three heads can be collapsed into one, and the reason is not
+economy. **A keypoint head has a fixed-shape output by construction,
+and fixed shape is the single thing the compiler demands.**
+
+    task            as its own head              as keypoints
+
+    detection       boxes, a variable-length     N centre points, fixed
+                    list, then NMS
+    segmentation    a mask, then a per-pixel     M contour points in
+                    argmax or run-length          order, fixed
+    pose            joints                       joints
+
+**The head-shaped versions reach for operators RFD 1131 refuses.** A
+detection head wants `TopK` for query selection and
+`NonMaxSuppression`, both in `KNOWN_BLOCKERS`, and the second is there
+specifically for a data-dependent output shape. A mask head wants
+`NonZero` or a scatter. A head that regresses a fixed count of
+coordinates wants none of them.
+
+That is the argument. Not that one head is tidier than three, but that
+two of the three are shaped like the thing the accelerator cannot do,
+and the third is shaped like the thing it can.
+
+**The technique is established rather than invented here.** Detection
+as centre points and segmentation as an ordered contour are both
+published families, and this workspace would be choosing them for a
+reason the papers were not written for.
+
+**It also suits the deployment rule.** A contour is coordinates, which
+is data, and CLAUDE.md's glTF constraint is that an export carries pure
+data. A mask is pixels and needs somewhere to live.
+
+## What the unification costs, which is not nothing
+
+**A fixed contour cannot express a hole or a split.** A garment
+occluded into two pieces by an arm is two regions, and an ordered ring
+of M points is one. That is a real loss and it lands on exactly the
+case a try-on produces most often.
+
+**Fine boundaries get worse.** M points around a silhouette is a
+polygon, and hair, lace or a fringe is not a polygon at any M this
+would use. RFD 1168 already bounds the fine parts out on latent
+resolution; this bounds them out again for a different reason, and two
+independent bounds agreeing is worth more than either alone.
+
+**A kludge is available before any of this.** If only the keypoint head
+is compiled, a coarse box follows from the joints and a coarse region
+per limb follows from the box. It would place `topwear` roughly where a
+torso is. That is enough for RFD 1168's step 1, which only tests the
+plumbing, and nowhere near enough to cut a garment out of a photograph.
+Take it to close the loop early, not as the answer.
 
 **Only one row differs in hardware terms**, and it is the important
 one: `be it` needs rf-detr running every frame on the accelerator,
