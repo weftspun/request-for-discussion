@@ -330,12 +330,13 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="decision" class="level2">
 <h2 class="anchored" data-anchor-id="decision">Decision</h2>
-<p>One loop, four movements:</p>
-<pre><code>make      language and an image become a persona
-dress     its worn layers are swapped and tried on
-be it     a person wears it, live, through a camera
-a friend  it wears itself, and has presence to someone</code></pre>
-<p><strong><code>be it</code> and <code>make a friend</code> are the same avatar and opposite loops.</strong> In the first a person supplies motion and voice; in the second nobody does. That is why Kimodo sits beside rf-detr rather than behind it.</p>
+<p>One loop, four movements, and each runs both ways:</p>
+<pre><code>forward                     inverse
+
+make    a description -&gt; a body   fit      a picture -&gt; the body
+dress   a layer onto the body     recover  the body out from under
+be it   a person supplies motion  friend   a model supplies it</code></pre>
+<p><strong>Each inverse is under-determined, which is why every one has a checker</strong> and why Kimodo sits beside rf-detr rather than behind it.</p>
 <p><strong>The See-Through taxonomy is the vocabulary.</strong> <code>VALID_BODY_PARTS_V3</code> names 23 parts, nine worn and the rest body, and <strong>that line is the try-on axis</strong>. A try-on is then masking treated as corruption: remove <code>topwear</code> and LaMa fills the hole the garment leaves.</p>
 <p><strong>The boundary is subtraction, not segmentation.</strong> The posed ANNY mesh gives the body outline through <code>silhouette.py</code>; MoGe depth gives the person’s outline and the camera both project through. What lies between is worn — no taxonomy-aware segmenter, so no labelled corpus. <code>contour.py</code> makes either a fixed ring. <code>DETAILS.md</code> places every candidate and names the empty stages.</p>
 </section>

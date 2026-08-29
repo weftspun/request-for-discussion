@@ -295,6 +295,8 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#rfd-1171-details-every-role-what-fills-it-and-the-five-that-are-empty" id="toc-rfd-1171-details-every-role-what-fills-it-and-the-five-that-are-empty" class="nav-link active" data-scroll-target="#rfd-1171-details-every-role-what-fills-it-and-the-five-that-are-empty">RFD 1171 details: every role, what fills it, and the five that are empty</a>
   <ul class="collapse">
+  <li><a href="#every-movement-runs-both-ways-and-the-inverses-are-the-hard-half" id="toc-every-movement-runs-both-ways-and-the-inverses-are-the-hard-half" class="nav-link" data-scroll-target="#every-movement-runs-both-ways-and-the-inverses-are-the-hard-half">Every movement runs both ways, and the inverses are the hard half</a></li>
+  <li><a href="#recover-not-undress" id="toc-recover-not-undress" class="nav-link" data-scroll-target="#recover-not-undress"><code>recover</code>, not <code>undress</code></a></li>
   <li><a href="#the-taxonomy-is-the-spine-and-it-already-splits-correctly" id="toc-the-taxonomy-is-the-spine-and-it-already-splits-correctly" class="nav-link" data-scroll-target="#the-taxonomy-is-the-spine-and-it-already-splits-correctly">The taxonomy is the spine, and it already splits correctly</a></li>
   <li><a href="#movement-one-make-a-persona" id="toc-movement-one-make-a-persona" class="nav-link" data-scroll-target="#movement-one-make-a-persona">Movement one: make a persona</a></li>
   <li><a href="#movement-two-dress-it" id="toc-movement-two-dress-it" class="nav-link" data-scroll-target="#movement-two-dress-it">Movement two: dress it</a></li>
@@ -340,6 +342,30 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="rfd-1171-details-every-role-what-fills-it-and-the-five-that-are-empty" class="level1">
 <h1>RFD 1171 details: every role, what fills it, and the five that are empty</h1>
+<section id="every-movement-runs-both-ways-and-the-inverses-are-the-hard-half" class="level2">
+<h2 class="anchored" data-anchor-id="every-movement-runs-both-ways-and-the-inverses-are-the-hard-half">Every movement runs both ways, and the inverses are the hard half</h2>
+<p>The frame is not new here. <code>pose-consensus/python/depth_term.py</code> opens by saying every stage of the avatar pipeline has a forward and an inverse, and tabulates four of them. The movements sit on top of the same column:</p>
+<pre><code>forward                            inverse
+
+make      a description becomes    fit        a picture becomes the
+          a body                              body that cast it
+dress     a layer goes onto the    recover    the body comes back
+          body                                out from under it
+be it     a person supplies the    a friend   a model supplies it
+          motion and the voice                instead
+
+pose      FK and LBS, sinew-solve  AnnyInverter, LBFGS
+skinning  LBS apply                SkinTokens
+build     624 blendshapes          soft silhouette
+depth     soft_depth               a monocular estimator</code></pre>
+<p><strong>The forwards are arithmetic and the inverses are not.</strong> Posing a mesh from joint angles has one answer. Recovering the joint angles from a picture has many, and the whole of <code>pose-consensus</code> exists because of that asymmetry: the LBFGS fit, the silhouette and the depth term are three opinions on one inverse, and RFD 1168’s masking-as-corruption is the same admission one movement up.</p>
+<p><strong>So the checkers are not distributed evenly, and should not be.</strong> Nothing checks the forward directions. Every inverse has at least one check, and the ill-posed ones have several. A reader looking for where the risk sits should read the right-hand column.</p>
+</section>
+<section id="recover-not-undress" class="level2">
+<h2 class="anchored" data-anchor-id="recover-not-undress"><code>recover</code>, not <code>undress</code></h2>
+<p>The inverse of <code>dress</code> takes the body back out from under a garment. It is named for what it produces, and naming it after the clothing would lose that – the operation exists to obtain a body model, and the garment is what stands in the way.</p>
+<p>It is also the subtraction already recorded here, read backwards: the posed mesh gives the body outline, MoGe depth gives the person’s outline, and the difference is the layer. Forwards that composes a clothed figure; backwards it recovers the body.</p>
+</section>
 <section id="the-taxonomy-is-the-spine-and-it-already-splits-correctly" class="level2">
 <h2 class="anchored" data-anchor-id="the-taxonomy-is-the-spine-and-it-already-splits-correctly">The taxonomy is the spine, and it already splits correctly</h2>
 <p><code>common/live2d/scrap_model.py</code> in See-Through’s tree carries <code>VALID_BODY_PARTS_V3</code>. RFD 1166 kept it as the one part of that project whose licence permits reuse, and it turns out to be the vocabulary this whole loop needs:</p>
