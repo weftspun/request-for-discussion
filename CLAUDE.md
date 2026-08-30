@@ -56,6 +56,14 @@ the machine is about to vanish.
 parquet for bulk storage. **zip is not acceptable**, and neither is gzip;
 compress and verify payload hashes before deleting an original.
 
+**usdz is exempt from the zip ban.** A usdz is a STORED zip — the entries are
+uncompressed by specification — used as USD's interchange package, so nothing
+this rule protects against happens inside one: no compression to silently
+corrupt, and the payload crate reads in place without extraction. Decided
+2026-08-30, when the canonical ANNY fixture's 317 blendshapes took its text
+form to 92 MB and the packaged crate to 23.6 MB. The generators stay the
+text-form source of truth; usdz is a delivery container, not an archive.
+
 **Normal form.** Data is in **Essential Tuple Normal Form**: interned
 vocabularies, satellite relations rather than nullable columns, **no nulls**, no
 derivable columns. A value like `-1` for "no parent" is a value; a NULL is not.
