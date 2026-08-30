@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "rfd/2133-the-pool-rents-from-the-spot-book/index.html",
+    "href": "rfd/2133-the-pool-rents-from-the-spot-book/index.html",
+    "title": "RFD 2133: The pool rents from the spot book, gated on requirements first",
+    "section": "",
+    "text": "Pool generation wants days of GPU the desk 3090 should not give up: that card is the interactive seat, and RFD 1163 already keeps it for the loops. Rented RTX 4090s carry the batch instead, chosen from the vast.ai book with requirements applied before price – CUDA 12.8 or newer, 100 GB of disk, 32 GB of RAM, 200 Mbit/s down – because the cheap listings that fail those gates convert their discount into paid idle: a 52 GB disk cannot hold the model set, and over a starved link the two-hour model pull is paid idle time.\nMeasured on 2026-08-30 and recorded in DETAILS.md: the qualified on-demand book floors near 21 cents with a median near 39; qualified interruptible floors at 7.3 cents globally and 16 within US/CA, so the latency gate costs about two-to-one at the floor and is a per-job choice, not a standing one. Sub-floor outliers lived minutes in every observation, which is why catching one is a watcher’s job and not a person’s. Pool work checkpoints per seed, so the interruptible tier’s failure mode costs one pull.\nThe RunPod discipline transfers whole: push results when produced, destroy the instance after use, double-check the destruction. The API key stays in the user environment, sourced from the password manager, absent from repositories and transcripts. The first rental under this rule is contract 49287440, a Texas host at 21.63 cents per hour whose $46 of credit covers the pool activity roughly four times over."
+  },
+  {
     "objectID": "rfd/2132-a-permission-cannot-be-granted-sideways/index.html",
     "href": "rfd/2132-a-permission-cannot-be-granted-sideways/index.html",
     "title": "RFD 2132: A permission cannot be granted sideways",
@@ -26661,5 +26668,47 @@
     "title": "RFD 2130: Every repository we have authority over states what it is made of",
     "section": "References",
     "text": "References\n\nCLAUDE.md, “Citation”: the rule this gate enforces\nRFD 2124: the Fine gate, added under the same argument"
+  },
+  {
+    "objectID": "rfd/2133-the-pool-rents-from-the-spot-book/DETAILS.html",
+    "href": "rfd/2133-the-pool-rents-from-the-spot-book/DETAILS.html",
+    "title": "Details: the measurements behind the gates",
+    "section": "",
+    "text": "All prices in dollars per hour, single RTX 4090, measured 2026-08-30 between 10:30 and 11:00 PDT via the public bundles endpoint. The book moves in minutes; these are snapshots with their time attached, not a menu.\n\n\n\n\n\n\n\n\n\n\ngate\nvalue\nreason\n\n\n\n\nCUDA\n&gt;= 12.8\ntorch cu128 wheels; one floor host offered 12.6\n\n\ndisk\n&gt;= 100 GB\nPixal3D ~25 + OmniGen2 ~12 + EditScore ~9 + SkinTokens ~2 + envs ~15 + workdir; a live 12.15-cent host carried 52 GB total\n\n\nRAM\n&gt;= 32 GB\nUSD authoring and exports; a 14.81-cent host carried 16 GB\n\n\ndown\n&gt;= 200 Mbit/s\n~60 GB of model pulls; at a measured 59 Mbit/s that is 2.3 hours of paid idle\n\n\n\n\n\n\ntier                     n   min   p10   p25   med   p75   p90   max   &lt;=.12  &lt;=.14  &lt;=.20\non-demand, global       61  .216  .322  .361  .394  .536  .697  4.002    0      0      0\non-demand, US/CA        38  .216  .336  .362  .484  .607  .710  4.002    0      0      0\ninterruptible, global   49  .073  .160  .188  .267  .400  .600   .667    2      3     18\ninterruptible, US/CA    32  .160  .175  .200  .333  .467  .613   .733    0      0     10\nThe latency gate (US/CA) costs about two-to-one at the interruptible floor, 0.160 against 0.073, and nothing at the on-demand floor.\n\n\n\n\nA 0.121 on-demand listing appeared and was taken inside twenty minutes; the five-minute watcher caught only its disappearance.\nA 0.1215 listing that followed failed the disk gate at 52 GB.\nA 0.120 qualified interruptible (Virginia, 99.7%, 1.45 TB) was present in one scan and gone in the next, minutes later.\n\nSixty-second polling is the correction the first observation forced.\n\n\n\nContract 49287440: host 48234252, Texas, on-demand at 0.2163 – 126 GB RAM, 748 GB disk, 909/643 Mbit/s, CUDA 13.2, reliability 98.0%. Chosen at roughly 60% of the qualified p25; nothing at or under the p25 beat it on any axis without costing half again more. The pool activity at two GPU-days costs about $10 on it.\n\n\n\nVAST_API_KEY at user scope in the Windows environment, written by setx from a 1Password read (op item get ... --fields credential), value never echoed into a transcript. The snipe tooling reads it from the registry so fresh shells inherit it without the session snapshot."
+  },
+  {
+    "objectID": "rfd/2133-the-pool-rents-from-the-spot-book/DETAILS.html#the-requirement-gates-each-with-its-reason",
+    "href": "rfd/2133-the-pool-rents-from-the-spot-book/DETAILS.html#the-requirement-gates-each-with-its-reason",
+    "title": "Details: the measurements behind the gates",
+    "section": "",
+    "text": "gate\nvalue\nreason\n\n\n\n\nCUDA\n&gt;= 12.8\ntorch cu128 wheels; one floor host offered 12.6\n\n\ndisk\n&gt;= 100 GB\nPixal3D ~25 + OmniGen2 ~12 + EditScore ~9 + SkinTokens ~2 + envs ~15 + workdir; a live 12.15-cent host carried 52 GB total\n\n\nRAM\n&gt;= 32 GB\nUSD authoring and exports; a 14.81-cent host carried 16 GB\n\n\ndown\n&gt;= 200 Mbit/s\n~60 GB of model pulls; at a measured 59 Mbit/s that is 2.3 hours of paid idle"
+  },
+  {
+    "objectID": "rfd/2133-the-pool-rents-from-the-spot-book/DETAILS.html#qualified-price-distributions",
+    "href": "rfd/2133-the-pool-rents-from-the-spot-book/DETAILS.html#qualified-price-distributions",
+    "title": "Details: the measurements behind the gates",
+    "section": "",
+    "text": "tier                     n   min   p10   p25   med   p75   p90   max   &lt;=.12  &lt;=.14  &lt;=.20\non-demand, global       61  .216  .322  .361  .394  .536  .697  4.002    0      0      0\non-demand, US/CA        38  .216  .336  .362  .484  .607  .710  4.002    0      0      0\ninterruptible, global   49  .073  .160  .188  .267  .400  .600   .667    2      3     18\ninterruptible, US/CA    32  .160  .175  .200  .333  .467  .613   .733    0      0     10\nThe latency gate (US/CA) costs about two-to-one at the interruptible floor, 0.160 against 0.073, and nothing at the on-demand floor."
+  },
+  {
+    "objectID": "rfd/2133-the-pool-rents-from-the-spot-book/DETAILS.html#outlier-lifetimes-observed",
+    "href": "rfd/2133-the-pool-rents-from-the-spot-book/DETAILS.html#outlier-lifetimes-observed",
+    "title": "Details: the measurements behind the gates",
+    "section": "",
+    "text": "A 0.121 on-demand listing appeared and was taken inside twenty minutes; the five-minute watcher caught only its disappearance.\nA 0.1215 listing that followed failed the disk gate at 52 GB.\nA 0.120 qualified interruptible (Virginia, 99.7%, 1.45 TB) was present in one scan and gone in the next, minutes later.\n\nSixty-second polling is the correction the first observation forced."
+  },
+  {
+    "objectID": "rfd/2133-the-pool-rents-from-the-spot-book/DETAILS.html#the-first-rental",
+    "href": "rfd/2133-the-pool-rents-from-the-spot-book/DETAILS.html#the-first-rental",
+    "title": "Details: the measurements behind the gates",
+    "section": "",
+    "text": "Contract 49287440: host 48234252, Texas, on-demand at 0.2163 – 126 GB RAM, 748 GB disk, 909/643 Mbit/s, CUDA 13.2, reliability 98.0%. Chosen at roughly 60% of the qualified p25; nothing at or under the p25 beat it on any axis without costing half again more. The pool activity at two GPU-days costs about $10 on it."
+  },
+  {
+    "objectID": "rfd/2133-the-pool-rents-from-the-spot-book/DETAILS.html#key-handling",
+    "href": "rfd/2133-the-pool-rents-from-the-spot-book/DETAILS.html#key-handling",
+    "title": "Details: the measurements behind the gates",
+    "section": "",
+    "text": "VAST_API_KEY at user scope in the Windows environment, written by setx from a 1Password read (op item get ... --fields credential), value never echoed into a transcript. The snipe tooling reads it from the registry so fresh shells inherit it without the session snapshot."
   }
 ]
