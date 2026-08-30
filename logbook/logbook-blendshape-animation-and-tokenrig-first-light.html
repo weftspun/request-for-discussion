@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Logbook – Taskweft — Manuals</title>
+<title>logbook-blendshape-animation-and-tokenrig-first-light – Taskweft — Manuals</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -36,8 +36,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -79,65 +77,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -329,7 +269,7 @@ window.Quarto = {
 <span class="menu-text">Serials</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../pages/logbook.html" aria-current="page"> 
+    <a class="nav-link" href="../pages/logbook.html"> 
 <span class="menu-text">Logbook</span></a>
   </li>  
   <li class="nav-item">
@@ -348,231 +288,62 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#blend-shape-animation-through-the-flow-adapter-and-tokenrigs-first-light" id="toc-blend-shape-animation-through-the-flow-adapter-and-tokenrigs-first-light" class="nav-link active" data-scroll-target="#blend-shape-animation-through-the-flow-adapter-and-tokenrigs-first-light">Blend-shape animation through the flow adapter, and TokenRig’s first light</a>
+  <ul class="collapse">
+  <li><a href="#tokenrig-runs-on-this-desk-without-bpy-and-without-flash-attn" id="toc-tokenrig-runs-on-this-desk-without-bpy-and-without-flash-attn" class="nav-link" data-scroll-target="#tokenrig-runs-on-this-desk-without-bpy-and-without-flash-attn">TokenRig runs on this desk, without bpy and without flash-attn</a></li>
+  <li><a href="#the-bake-stage-plays-blend-shapes-and-the-port-fixed-a-bug-the-original-had" id="toc-the-bake-stage-plays-blend-shapes-and-the-port-fixed-a-bug-the-original-had" class="nav-link" data-scroll-target="#the-bake-stage-plays-blend-shapes-and-the-port-fixed-a-bug-the-original-had">The bake stage plays blend shapes, and the port fixed a bug the original had</a></li>
+  <li><a href="#the-canonical-anny-through-the-importer-nine-ways-checked-to-0.1-mm" id="toc-the-canonical-anny-through-the-importer-nine-ways-checked-to-0.1-mm" class="nav-link" data-scroll-target="#the-canonical-anny-through-the-importer-nine-ways-checked-to-0.1-mm">The canonical ANNY through the importer, nine ways, checked to 0.1 mm</a></li>
+  <li><a href="#godot-plays-it" id="toc-godot-plays-it" class="nav-link" data-scroll-target="#godot-plays-it">Godot plays it</a></li>
+  <li><a href="#where-this-leaves-the-demo" id="toc-where-this-leaves-the-demo" class="nav-link" data-scroll-target="#where-this-leaves-the-demo">Where this leaves the demo</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/logbook/logbook-blendshape-animation-and-tokenrig-first-light.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/logbook/logbook-blendshape-animation-and-tokenrig-first-light.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Logbook</h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>Entries record what was <strong>measured</strong>, not what was intended, and clip enough of the experimental apparatus to re-run the test rather than merely its conclusion.</p>
-<p>These 145 entries were a separate repository until <code>weftspun/logbook</code> was archived. A decision and its measurement sat one repository apart; they no longer do. Entries kept their filenames, so an entry is still findable by the thing it measured rather than by where it used to live.</p>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-      <option value="" disabled="" selected="" hidden="">Order By</option>
-      <option value="index" data-direction="asc">Default</option>
-      <option value="listing-date-sort" data-direction="asc">
-        Date - Oldest
-      </option>
-      <option value="listing-date-sort" data-direction="desc">
-        Date - Newest
-      </option>
-      <option value="listing-title-sort" data-direction="asc">
-        Title
-      </option>
-    </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
-</div>
-<table class="quarto-listing-table table">
-<thead>
-<tr>
 
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
-</th>
+<section id="blend-shape-animation-through-the-flow-adapter-and-tokenrigs-first-light" class="level1">
+<h1>Blend-shape animation through the flow adapter, and TokenRig’s first light</h1>
+<p>Two stages of the character pipeline gained running code today: the rig stage ran its upstream forward pass for the first time, and the USD-to-Godot bake stage learned to play blend-shape animations.</p>
+<section id="tokenrig-runs-on-this-desk-without-bpy-and-without-flash-attn" class="level2">
+<h2 class="anchored" data-anchor-id="tokenrig-runs-on-this-desk-without-bpy-and-without-flash-attn">TokenRig runs on this desk, without bpy and without flash-attn</h2>
+<p><code>skintokens-auto-rig</code> was a stub with two <code>NotImplementedError</code>s and sat alone on the demo’s critical path. The upstream checkpoint is confirmed as HF <code>VAST-AI/SkinTokens</code> (MIT): TokenRig 1.1 GB, skin VAE 465 MB, a Qwen3-0.6B config. <code>probe_forward.py</code> drives it through the npz loader: trimesh reads the mesh, so upstream’s bpy I/O layer is never imported, which keeps the Blender row of the blocklist untouched. flash-attn does not build on this desk; a scoped <code>flash_attn_interface</code> stand-in computes through sdpa and is deleted from <code>sys.modules</code> before transformers probes for it, and the Qwen backbone is forced to <code>attn_implementation="sdpa"</code>.</p>
+<p>The giraffe example returned 51 joints and a (14807, 51) skin, mean 2.20 joints per vertex above 1%. Row sums came back 0.045 to 2.573 because the voxel post-process is not applied yet; that is the next step, not a defect. The environment is pixi with torch-gpu cu12, so the build is declared rather than remembered.</p>
+</section>
+<section id="the-bake-stage-plays-blend-shapes-and-the-port-fixed-a-bug-the-original-had" class="level2">
+<h2 class="anchored" data-anchor-id="the-bake-stage-plays-blend-shapes-and-the-port-fixed-a-bug-the-original-had">The bake stage plays blend shapes, and the port fixed a bug the original had</h2>
+<p>The flow adapter is <code>v-sekai-fabric/datasource-flow</code> now. The <code>idtx-flow</code> fork holds two unmerged branches with the blend-shape animation work, and the restructure moved every file they touch. So the change was re-derived rather than cherry-picked: TRACK_BLEND_WEIGHT in the core AnimationConverter, scalar keys in the FlatTree model, <code>idtx_anim_track_get_key_float</code> across the C ABI including <code>idtx_core.sigs</code>, native TYPE_BLEND_SHAPE tracks in the Godot builder, and playback in UsdSkeletonNode3D resolving shape names onto child mesh instances.</p>
+<p>The original branch sampled blend weights at the joint-transform timecodes, on the reasoning that both live on the same UsdSkelAnimation prim. A key that exists only in <code>blendShapeWeights</code>, such as a mid-clip peak, is invisible to that sampling, and the fixture was built with exactly one: weights keyed 0 -&gt; 1 -&gt; 0 at timecodes 0/24/48 against joint samples at 0/48. First run returned 2 keys instead of 3, both zero. Sampling at <code>GetBlendShapeWeightTimeSamples</code> returns the three. Had the fixture’s peak lined up with a joint keyframe, the spec would have passed on the broken sampling; the fixture is only as good as the disagreement it plants.</p>
+<p>The spec (<code>flow/core/spec/test_blend_shape_animation.py</code>) drives the built DLL over ctypes with no engine, and carries three controls. Static weights yield only rest keys, with the population asserted first so that an empty scan is a FAIL rather than a vacuous pass. A shapeless rig yields no tracks. The comparator is shown to reject a planted wrong key.</p>
+</section>
+<section id="the-canonical-anny-through-the-importer-nine-ways-checked-to-0.1-mm" class="level2">
+<h2 class="anchored" data-anchor-id="the-canonical-anny-through-the-importer-nine-ways-checked-to-0.1-mm">The canonical ANNY through the importer, nine ways, checked to 0.1 mm</h2>
+<p>Three phenotypes (default, heavy, tall_muscular) times three poses (identity, elbow at 90 degrees, wrist roll at 60 degrees dispersed across the forearm), built from <code>anny_rig.build_corpus_model</code> so the twist fix rides along, 13,718 vertices each, written as Z-up metre stages by <code>mesh_to_usda.py</code>.</p>
+<p>The first run of the checker read 0% coverage on all nine, and the importer was right: it converts Z-up to Y-up, so every position moves by (x, y, z) -&gt; (x, z, -y), and it splits vertices per face corner, 13,718 becoming 82,260. A checker that assumes no convention reads a correct import as total failure. With the stage’s declared mapping applied, all nine variants round-trip with bidirectional position coverage above 99.9% at 0.1 mm, about an eighth of a credit card’s thickness. Two controls prove the checker can fail: the bent pose is not covered by the identity source, nor the heavy phenotype by the default.</p>
+</section>
+<section id="godot-plays-it" class="level2">
+<h2 class="anchored" data-anchor-id="godot-plays-it">Godot plays it</h2>
+<p><code>datasource-flow-project</code> turned out to already carry the Godot-side harness and fixtures, plus the vsekai_godot_mcp addon. Its committed animation fixture has a valueless <code>blendShapeWeights</code>, which is the content-side half of “blend-shape animations are not done”. A new fixture keys one shape 0 -&gt; 1 -&gt; 0 over two seconds; <code>test_blendshape_animation.gd</code> samples <code>get_blend_shape_value</code> while the stage plays. Animated: 218 samples spanning 0.116 to 0.999. Static control on the committed fixture: 219 samples, flat at 0.000.</p>
+<p>Found and reported rather than fixed: the project’s pre-existing <code>test_blendshapes.gd</code> expects <code>smile</code> at weight 0.75 from a fixture that carries <code>thin</code>/<code>angle</code> with no weight values. It was red against its own fixture before this work and is red after; the expectations belong with whoever swapped the fixture.</p>
+</section>
+<section id="where-this-leaves-the-demo" class="level2">
+<h2 class="anchored" data-anchor-id="where-this-leaves-the-demo">Where this leaves the demo</h2>
+<p>The gacha’s critical path was one red stage. It is now a stage with a proven forward pass and a bake seam that carries the full deformation budget: LBS, twist bones (the canonical ANNY already has them), and corrective blend shapes animated in clips. Owed next: the voxel post-process and skin normalization, a Pixal3D mesh through TokenRig, skeleton-conditioned skin mode against the canonical ANNY, and the UsdSkel writer with the VRM joint-map metadata.</p>
 
-<th>
-<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
-</th>
 
-</tr>
-</thead>
-<tbody class="list">
+</section>
+</section>
 
-<tr data-index="0" data-listing-file-modified-sort="1788095661753" data-listing-reading-time-sort="4" data-listing-word-count-sort="725" data-listing-title-sort="Blend-shape animation through the flow adapter, and TokenRig's first light" data-listing-filename-sort="logbook-blendshape-animation-and-tokenrig-first-light.md">
-<td>
-<a href="../logbook/logbook-blendshape-animation-and-tokenrig-first-light.html" class="title listing-title">Blend-shape animation through the flow adapter, and TokenRig’s first light</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="1" data-listing-file-modified-sort="1788095661753" data-listing-reading-time-sort="8" data-listing-word-count-sort="1464" data-listing-title-sort="Logbook: CineForm in Godot, and what recording actually costs" data-listing-filename-sort="logbook-cineform-movie-writer.md">
-<td>
-<a href="../logbook/logbook-cineform-movie-writer.html" class="title listing-title">Logbook: CineForm in Godot, and what recording actually costs</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="2" data-listing-file-modified-sort="1788095661753" data-listing-reading-time-sort="31" data-listing-word-count-sort="6080" data-listing-title-sort="Logbook: RFD 1016 model-repo build-out" data-listing-filename-sort="logbook-rfd1016-model-repos.md">
-<td>
-<a href="../logbook/logbook-rfd1016-model-repos.html" class="title listing-title">Logbook: RFD 1016 model-repo build-out</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="3" data-listing-file-modified-sort="1788095661753" data-listing-reading-time-sort="11" data-listing-word-count-sort="2018" data-listing-title-sort="Logbook: RFD 1122 T01, the pose-library check" data-listing-filename-sort="logbook-rfd1122-t01-pose-check.md">
-<td>
-<a href="../logbook/logbook-rfd1122-t01-pose-check.html" class="title listing-title">Logbook: RFD 1122 T01, the pose-library check</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="4" data-listing-file-modified-sort="1788095661754" data-listing-reading-time-sort="18" data-listing-word-count-sort="3434" data-listing-title-sort="Logbook: one base, measured, and the rerank" data-listing-filename-sort="logbook-rfd1171-gemma-first-rerank.md">
-<td>
-<a href="../logbook/logbook-rfd1171-gemma-first-rerank.html" class="title listing-title">Logbook: one base, measured, and the rerank</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="5" data-listing-file-modified-sort="1788095661753" data-listing-reading-time-sort="7" data-listing-word-count-sort="1241" data-listing-title-sort="Logbook: the ANNY fit that the corpus does not need" data-listing-filename-sort="logbook-anny-phenotype-fit-retired.md">
-<td>
-<a href="../logbook/logbook-anny-phenotype-fit-retired.html" class="title listing-title">Logbook: the ANNY fit that the corpus does not need</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="6" data-listing-file-modified-sort="1788095661753" data-listing-reading-time-sort="11" data-listing-word-count-sort="2026" data-listing-title-sort="Logbook: the Qwen3-VL vision tower against the Dataflow Compiler" data-listing-filename-sort="logbook-qwen3vl-vit-translate-walls.md">
-<td>
-<a href="../logbook/logbook-qwen3vl-vit-translate-walls.html" class="title listing-title">Logbook: the Qwen3-VL vision tower against the Dataflow Compiler</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="7" data-listing-file-modified-sort="1788095661753" data-listing-reading-time-sort="6" data-listing-word-count-sort="1171" data-listing-title-sort="Logbook: the first four-loop rounds on the desk card" data-listing-filename-sort="logbook-fourloops-first-runs.md">
-<td>
-<a href="../logbook/logbook-fourloops-first-runs.html" class="title listing-title">Logbook: the first four-loop rounds on the desk card</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="8" data-listing-file-modified-sort="1788095661754" data-listing-reading-time-sort="5" data-listing-word-count-sort="992" data-listing-title-sort="Logbook: the soft renderer's three constants, and Mitsuba" data-listing-filename-sort="logbook-soft-renderer-and-mitsuba.md">
-<td>
-<a href="../logbook/logbook-soft-renderer-and-mitsuba.html" class="title listing-title">Logbook: the soft renderer’s three constants, and Mitsuba</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="9" data-listing-file-modified-sort="1788095661753" data-listing-reading-time-sort="9" data-listing-word-count-sort="1605" data-listing-title-sort="Logbook: two DFC emulation contexts disagree by six orders of magnitude" data-listing-filename-sort="logbook-dfc-emulation-contexts-disagree.md">
-<td>
-<a href="../logbook/logbook-dfc-emulation-contexts-disagree.html" class="title listing-title">Logbook: two DFC emulation contexts disagree by six orders of magnitude</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="10" data-listing-file-modified-sort="1788095661753" data-listing-reading-time-sort="6" data-listing-word-count-sort="1163" data-listing-title-sort="Logbook: two walls between a translated graph and a HEF" data-listing-filename-sort="logbook-rfd1130-two-walls-to-a-hef.md">
-<td>
-<a href="../logbook/logbook-rfd1130-two-walls-to-a-hef.html" class="title listing-title">Logbook: two walls between a translated graph and a HEF</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="11" data-listing-file-modified-sort="1788095661753" data-listing-reading-time-sort="11" data-listing-word-count-sort="2074" data-listing-title-sort="Logbook: what an edge NPU takes, and what the ANNY forward will not export" data-listing-filename-sort="logbook-edge-npu-and-the-anny-forward.md">
-<td>
-<a href="../logbook/logbook-edge-npu-and-the-anny-forward.html" class="title listing-title">Logbook: what an edge NPU takes, and what the ANNY forward will not export</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="12" data-listing-file-modified-sort="1788095661753" data-listing-reading-time-sort="12" data-listing-word-count-sort="2261" data-listing-title-sort="Logbook: what the Neural Engine reaches, and what it holds" data-listing-filename-sort="logbook-rfd1142-neural-engine-against-the-ugen300.md">
-<td>
-<a href="../logbook/logbook-rfd1142-neural-engine-against-the-ugen300.html" class="title listing-title">Logbook: what the Neural Engine reaches, and what it holds</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="13" data-listing-file-modified-sort="1788095661753" data-listing-reading-time-sort="14" data-listing-word-count-sort="2799" data-listing-title-sort="Logbook: what the plan costs once the durations are real, and the card is a 3090" data-listing-filename-sort="logbook-rfd1122-hailo-first-rerank.md">
-<td>
-<a href="../logbook/logbook-rfd1122-hailo-first-rerank.html" class="title listing-title">Logbook: what the plan costs once the durations are real, and the card is a 3090</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="14" data-listing-file-modified-sort="1788095661753" data-listing-reading-time-sort="6" data-listing-word-count-sort="1157" data-listing-title-sort="The comment ladder" data-listing-filename-sort="logbook-comment-ladder.md">
-<td>
-<a href="../logbook/logbook-comment-ladder.html" class="title listing-title">The comment ladder</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-</tbody>
-</table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -994,7 +765,7 @@ window.Quarto = {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/pages/logbook.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/pages/logbook.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/logbook/logbook-blendshape-animation-and-tokenrig-first-light.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/logbook/logbook-blendshape-animation-and-tokenrig-first-light.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
