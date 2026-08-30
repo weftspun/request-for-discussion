@@ -261,7 +261,10 @@ What would reopen it: production demand for always-on judging that the
 desktop GPU cannot spare cycles for. Until then the entry ends here.
 
 The apparatus is committed rather than discarded:
-`weftspun/interactor-hailo-ugen300`, placed in the live manifest at
-`3-interactor/hailo-ugen300` -- the shim, the probes, the rung ladders
-and the small HEFs, with the reproducible 1.6 GB ONNX exports left to
-`export_vit.py`. Restarting begins there.
+`weftspun/interactor-hailo-ugen300` on GitHub -- the shim, the probes,
+the rung ladders and the small HEFs -- with the large binaries at
+`chibifire/hailo-ugen300-artifacts` on Hugging Face, each linking the
+other. Neither is in the manifest: it was placed at
+`3-interactor/hailo-ugen300` for a few hours and then deliberately
+un-placed, because a shelf checked out on every desk is not shelved.
+Restarting begins at the GitHub repository.
