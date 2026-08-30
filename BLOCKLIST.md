@@ -880,7 +880,7 @@ above as the cost of the ban and it is now the ground for the exemption.
 
 What the row still says is narrow and factual: **GGUF carries no graph, so nothing
 converts out of it.** That is the finding worth keeping, and it constrains where a
-model of ours is *stored for conversion* rather than which runtimes may be built.
+model of ours is _stored for conversion_ rather than which runtimes may be built.
 Neither repository converts a GGUF to anything — Hailo runs a separate HEF beside
 ggml, Godot embeds ggml whole — so neither is affected by it.
 
