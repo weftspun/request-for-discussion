@@ -71,6 +71,7 @@ wall-clock against the checkpoint default of 2. Measured 2026-08-28:
     translate   parse OK, arch hailo10h, operators outside
                 the allowlist: none
     compile     not reached; SIGKILL at 30.26 GiB
+                ceiling lifted 2026-08-28: .wslconfig memory=48GB, WSL reports 47 GiB
 
 The device half is 25.245 M parameters against the full model's
 40.852 M, both counted rather than estimated. At bf16 that is

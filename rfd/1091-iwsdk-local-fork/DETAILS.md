@@ -1,44 +1,10 @@
 # RFD 1091 details: the layout, the commands, and the package table
 
-## Sibling-clone layout
+**Compacted.** This RFD is abandoned, so its working-out was removed to keep the
+live corpus small. 165 words are in git history and nothing was lost.
 
-```
-/home/sifr/
-  immersive-web-sdk/     git clone AlfaOmegaGrafx/immersive-web-sdk
-  Weftspun3DStudio/      file:../immersive-web-sdk/packages/*/iwsdk-*.tgz
-```
+    git show ac8201e2df493305313466c3764ce2cc2d88bdec:rfd/1091-iwsdk-local-fork/DETAILS.md
 
-On a second machine, clone `immersive-web-sdk` next to this
-project's own checkout the same way.
-
-## Link or refresh
-
-```bash
-cd Weftspun3DStudio
-npm run iwsdk:link-local              # build tgz if missing, then npm install
-npm run iwsdk:link-local:rebuild      # force rebuild the fork, then reinstall
-```
-
-Or by hand:
-
-```bash
-cd ../immersive-web-sdk
-pnpm install && npm run build:tgz:skip-reference-assets
-cd ../Weftspun3DStudio && npm install
-```
-
-## Packages this project wires in
-
-| Package                  | Role                            |
-| ------------------------ | ------------------------------- |
-| `@iwsdk/core`            | World, ECS, grab, locomotion    |
-| `@iwsdk/locomotor`       | `EnvironmentType`, locomotion   |
-| `@iwsdk/xr-input`        | Galaxy XR controllers and hands |
-| `@iwsdk/vite-plugin-dev` | XR emulation inside Vite        |
-| `@iwsdk/cli`             | `dev:iwsdk`, adapter sync       |
-| `@iwsdk/reference`       | Reference assets for the CLI    |
-
-## Reverting to the npm release
-
-In `package.json`, restore the `^0.4.2` ranges, then run `npm
-install`.
+The README beside this file is whole. It carries the state, the
+decision and the retraction, which is what a reader needs to know a
+road is closed and why.

@@ -23,17 +23,17 @@ Eight dimensions, each scored 0 to 100:
     ask        can we get an answer out of it
     wanted     does anyone want the thing it does
 
-`adapt` and `ask` are duals. Rank by **STAR**, the eight dimensions voting; `scripts/check_rfd1166_rank.py` recomputes it with `starvote`.
+`adapt` and `ask` are duals. `check_rfd1166_rank.py` recomputes the
+**STAR** order with `starvote`.
 
 **ABANDONED 2026-08-29, and RFD 1171 replaces it.** The ranking asked
 which candidate is most worth accelerating, and that was the wrong
-question: these are not competitors for one device but stages of one
-loop, and a stage does not outrank the stage it feeds. `Qwen3-ASR`
-entering at seat 2 made it plain — it beat every 3D row while doing
-something none of them do.
+question: these are stages of one loop, not competitors for one device,
+and a stage does not outrank the stage it feeds. `Qwen3-ASR` entering at
+seat 2 made it plain.
 
-`DETAILS.md` keeps the table and the measurements, which RFD 1171
-cites; what is withdrawn is the ordering itself.
+<!-- retain-details -->
+`DETAILS.md` keeps the table and the measurements that RFD 1171 cites.
 
 ## Related
 

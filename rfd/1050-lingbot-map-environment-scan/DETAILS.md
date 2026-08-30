@@ -1,37 +1,10 @@
 # RFD 1050 details: the phases, the gravity rule, the metric gate, blockers
 
-## The two phases
+**Compacted.** This RFD is abandoned, so its working-out was removed to keep the
+live corpus small. 221 words are in git history and nothing was lost.
 
-| Phase | Does                               |
-| ----- | ---------------------------------- |
-| A     | Tracks the camera through the walk |
-| B     | Reconstructs the surfaces          |
+    git show ac8201e2df493305313466c3764ce2cc2d88bdec:rfd/1050-lingbot-map-environment-scan/DETAILS.md
 
-Phase B needs the poses from Phase A. The guard states that, thus no
-plan may reverse them.
-
-## The gravity rule
-
-decisions/agent/DECISIONS.md records the rule from 2026-07-26. A
-LingBot cloud is gravity aligned, and it must never take the
-TripoSplat X-flip. It must never load through the XYZRGB point stride
-either, because that stride scatters a Gaussian PLY.
-
-The domain carries `orientation_mode` as a `:ref` variable with the
-value `none`. A plan that sets anything else is wrong by construction.
-
-## The metric gate
-
-The door width is the check. A real door is a known width, thus a
-scan that measures it wrongly has a wrong scale.
-
-`a_calibrate` sets `/have/metric`, and `a_write_stage` requires it. A
-scan that fails the gate produces no stage at all.
-
-## What blocks the packaging
-
-| Question           | Why it blocks                 |
-| ------------------ | ----------------------------- |
-| Parameter count    | RFD 1026 and RFD 1027 need it |
-| License            | RFD 1028 gates the ship       |
-| Door metric source | The gate needs a known width  |
+The README beside this file is whole. It carries the state, the
+decision and the retraction, which is what a reader needs to know a
+road is closed and why.

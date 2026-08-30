@@ -12,8 +12,9 @@ memory rather than failing, so the symptom is a run that stops being
 fast.
 
 The UGen300 has no place in any loop. The compile that would give it
-one was killed at 30.26 GiB, Docker's ceiling and also WSL's, since
-both are one virtual machine under an absent `.wslconfig`.
+one was killed at 30.26 GiB, Docker's ceiling and also WSL's under an
+absent `.wslconfig`. That file now grants 48 GB and WSL reports 47, so
+the ceiling is lifted and the compile is untried rather than blocked.
 
 Renting answers the first and cannot answer the second: a pod has no
 USB, so no rented card runs a HEF. The compiler needs no device at
