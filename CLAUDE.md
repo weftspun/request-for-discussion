@@ -268,6 +268,20 @@ These recur often enough to state as rules:
 7. **Bugs live at interfaces**, not inside components. Name the interfaces and
    check each.
 
+## How Our Own C++ Is Typed
+
+C++ we write uses no `auto`. The code this workspace writes in C++ sits at
+wire and ABI edges — NIFs, bus endpoints, VFS shims — where the reader should
+see the struct being held, not deduce it from the initializer. The rule is
+prospective: code written before it, and vendored code, is not swept in.
+
+`scripts/check_no_auto.py` gates it, keyword-only — comments, strings and
+identifiers like `autopilot` do not count, and both directions carry a
+control.
+
+    python scripts/check_no_auto.py <paths...>
+    python scripts/check_no_auto.py --self-test
+
 ## How Our Own Code Is Commented
 
 Use comments extremely sparingly. Most should be at the request of the user.
