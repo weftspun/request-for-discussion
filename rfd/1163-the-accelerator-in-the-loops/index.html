@@ -327,7 +327,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="problem" class="level2">
 <h2 class="anchored" data-anchor-id="problem">Problem</h2>
 <p>The four loops run on the desk card, and RFD 1140 recorded what that costs: one RTX 3090 at 24 GiB, where OmniGen2 pages into shared memory rather than failing, so the symptom is a run that stops being fast.</p>
-<p>The UGen300 has no place in any loop. The compile that would give it one was killed at 30.26 GiB, Docker’s ceiling and also WSL’s, since both are one virtual machine under an absent <code>.wslconfig</code>.</p>
+<p>The UGen300 has no place in any loop. The compile that would give it one was killed at 30.26 GiB, Docker’s ceiling and also WSL’s under an absent <code>.wslconfig</code>. That file now grants 48 GB and WSL reports 47, so the ceiling is lifted and the compile is untried rather than blocked.</p>
 <p>Renting answers the first and cannot answer the second: a pod has no USB, so no rented card runs a HEF. The compiler needs no device at all – <code>gate_dfc_parse.py</code> says so in its own docstring – and that splits the work rather than blocking it.</p>
 </section>
 <section id="decision" class="level2">

@@ -293,13 +293,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#rfd-1051-details-the-model-the-interface-poses-the-splat-payload" id="toc-rfd-1051-details-the-model-the-interface-poses-the-splat-payload" class="nav-link active" data-scroll-target="#rfd-1051-details-the-model-the-interface-poses-the-splat-payload">RFD 1051 details: the model, the interface, poses, the splat payload</a>
-  <ul class="collapse">
-  <li><a href="#the-model" id="toc-the-model" class="nav-link" data-scroll-target="#the-model">The model</a></li>
-  <li><a href="#the-interface" id="toc-the-interface" class="nav-link" data-scroll-target="#the-interface">The interface</a></li>
-  <li><a href="#no-pose-input-and-that-is-the-point" id="toc-no-pose-input-and-that-is-the-point" class="nav-link" data-scroll-target="#no-pose-input-and-that-is-the-point">No pose input, and that is the point</a></li>
-  <li><a href="#the-splat-is-not-a-mesh" id="toc-the-splat-is-not-a-mesh" class="nav-link" data-scroll-target="#the-splat-is-not-a-mesh">The splat is not a mesh</a></li>
-  </ul></li>
+  <li><a href="#rfd-1051-details-the-model-the-interface-poses-the-splat-payload" id="toc-rfd-1051-details-the-model-the-interface-poses-the-splat-payload" class="nav-link active" data-scroll-target="#rfd-1051-details-the-model-the-interface-poses-the-splat-payload">RFD 1051 details: the model, the interface, poses, the splat payload</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1051-worldmirror2-reconstruct/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1051-worldmirror2-reconstruct/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -312,78 +306,11 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="rfd-1051-details-the-model-the-interface-poses-the-splat-payload" class="level1">
 <h1>RFD 1051 details: the model, the interface, poses, the splat payload</h1>
-<section id="the-model" class="level2">
-<h2 class="anchored" data-anchor-id="the-model">The model</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Property</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Parameters</td>
-<td>1.2 B, estimated</td>
-</tr>
-<tr class="even">
-<td>bf16</td>
-<td>2.4 GB</td>
-</tr>
-<tr class="odd">
-<td>Q4_K_M</td>
-<td>0.66 GB</td>
-</tr>
-<tr class="even">
-<td>Format</td>
-<td>bf16</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="the-interface" class="level2">
-<h2 class="anchored" data-anchor-id="the-interface">The interface</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Input</th>
-<th>Type</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>images</td>
-<td>list[Path]</td>
-<td>none</td>
-</tr>
-<tr class="even">
-<td>max_splats</td>
-<td>int</td>
-<td>1000000</td>
-</tr>
-<tr class="odd">
-<td>seed</td>
-<td>int</td>
-<td>-1</td>
-</tr>
-</tbody>
-</table>
-<p><code>images</code> needs 2 or more entries. The model image checks that count, thus the contract holds when a caller bypasses the client.</p>
-</section>
-<section id="no-pose-input-and-that-is-the-point" class="level2">
-<h2 class="anchored" data-anchor-id="no-pose-input-and-that-is-the-point">No pose input, and that is the point</h2>
-<p>COLMAP needs a pose solve before it reconstructs. RFD 1033 records it as the geometric alternative at 3 or more photos.</p>
-<p>WorldMirror needs no poses. It solves them inside the forward pass, which is why it works at 2 photos where COLMAP fails.</p>
-<p>Do not add a pose input to this model image. A caller who has poses wants COLMAP, and a caller who does not wants this.</p>
-</section>
-<section id="the-splat-is-not-a-mesh" class="level2">
-<h2 class="anchored" data-anchor-id="the-splat-is-not-a-mesh">The splat is not a mesh</h2>
-<p>RFD 1053 makes USD the internal format, and a Gaussian splat has no settled USD schema. Write the PLY as the payload, and reference it from a prim with the transform and the bounds.</p>
-<p>The stage then places the splat in the world. It does not try to describe the Gaussians.</p>
+<p><strong>Compacted.</strong> This RFD is abandoned, so its working-out was removed to keep the live corpus small. 244 words are in git history and nothing was lost.</p>
+<pre><code>git show ac8201e2df493305313466c3764ce2cc2d88bdec:rfd/1051-worldmirror2-reconstruct/DETAILS.md</code></pre>
+<p>The README beside this file is whole. It carries the state, the decision and the retraction, which is what a reader needs to know a road is closed and why.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

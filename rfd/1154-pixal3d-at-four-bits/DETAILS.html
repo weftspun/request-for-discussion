@@ -293,15 +293,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#rfd-1154-details-what-the-sparse-structure-stage-actually-does" id="toc-rfd-1154-details-what-the-sparse-structure-stage-actually-does" class="nav-link active" data-scroll-target="#rfd-1154-details-what-the-sparse-structure-stage-actually-does">RFD 1154 details: what the sparse structure stage actually does</a>
-  <ul class="collapse">
-  <li><a href="#the-stage-sized" id="toc-the-stage-sized" class="nav-link" data-scroll-target="#the-stage-sized">The stage, sized</a></li>
-  <li><a href="#why-it-runs-here-and-the-other-stages-do-not" id="toc-why-it-runs-here-and-the-other-stages-do-not" class="nav-link" data-scroll-target="#why-it-runs-here-and-the-other-stages-do-not">Why it runs here and the other stages do not</a></li>
-  <li><a href="#the-export-measured" id="toc-the-export-measured" class="nav-link" data-scroll-target="#the-export-measured">The export, measured</a></li>
-  <li><a href="#real-valued-rope-and-what-it-unblocked" id="toc-real-valued-rope-and-what-it-unblocked" class="nav-link" data-scroll-target="#real-valued-rope-and-what-it-unblocked">Real-valued RoPE, and what it unblocked</a></li>
-  <li><a href="#what-the-compiler-refuses-which-is-not-the-operators" id="toc-what-the-compiler-refuses-which-is-not-the-operators" class="nav-link" data-scroll-target="#what-the-compiler-refuses-which-is-not-the-operators">What the compiler refuses, which is not the operators</a></li>
-  <li><a href="#what-is-still-unasked" id="toc-what-is-still-unasked" class="nav-link" data-scroll-target="#what-is-still-unasked">What is still unasked</a></li>
-  </ul></li>
+  <li><a href="#rfd-1154-details-what-the-sparse-structure-stage-actually-does" id="toc-rfd-1154-details-what-the-sparse-structure-stage-actually-does" class="nav-link active" data-scroll-target="#rfd-1154-details-what-the-sparse-structure-stage-actually-does">RFD 1154 details: what the sparse structure stage actually does</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1154-pixal3d-at-four-bits/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1154-pixal3d-at-four-bits/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -314,55 +306,11 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="rfd-1154-details-what-the-sparse-structure-stage-actually-does" class="level1">
 <h1>RFD 1154 details: what the sparse structure stage actually does</h1>
-<section id="the-stage-sized" class="level2">
-<h2 class="anchored" data-anchor-id="the-stage-sized">The stage, sized</h2>
-<p><code>configs/gen/ss_flow_img_dit_1_3B_32_bf16_proj_finetune.json</code> builds a <code>SparseStructureFlowModel</code>: resolution 8, 8 in and out channels, 1536 model channels, 30 blocks, 12 heads, <code>pe_mode</code> rope, <code>image_attn_mode</code> proj. Roughly 1.3 B parameters.</p>
-<p>Weights are <code>TencentARC/Pixal3D</code>, MIT and ungated:</p>
-<pre><code>ss_flow_img_dit_1_3B_64_bf16.safetensors     5359.82 MB
-ss_dec_conv3d_16l8_fp16.safetensors           147.59 MB
-all safetensors in the repo                   24.04 GB</code></pre>
-<p>The 24.04 GB confirms RFD 1026’s 24.05 GB, which was an estimate. The flow file is 5.36 GB at 4 bytes a parameter, so <code>1_3B</code> is honest even though the name says bf16.</p>
-</section>
-<section id="why-it-runs-here-and-the-other-stages-do-not" class="level2">
-<h2 class="anchored" data-anchor-id="why-it-runs-here-and-the-other-stages-do-not">Why it runs here and the other stages do not</h2>
-<p>Its two configs are the only ones in <code>configs/gen</code> that do not set <code>use_naf_upsample</code>, so they never reach NAF and never reach NATTEN. RFD 1140 measured the consequence: stage 1 succeeds in 22 s, stage 2 dies on a missing sm_86 kernel.</p>
-<p>That is a packaging failure rather than a hardware one, and RFD 1140 now says so. The failing run used the prebuilt NATTEN wheel from <code>requirements-hfdemo.txt</code>; the README’s own step 3 builds it with <code>NATTEN_CUDA_ARCH</code> set for the machine. Nobody has tried that here, so the later stages are untested on this desk rather than excluded from it.</p>
-</section>
-<section id="the-export-measured" class="level2">
-<h2 class="anchored" data-anchor-id="the-export-measured">The export, measured</h2>
-<p>A 2-block, 384-channel instance with random weights. Operator coverage does not depend on weight values, and RFD 1129’s skill asks for the smallest graph that carries the question.</p>
-<pre><code>instantiated        8.44 M parameters
-forward             OK, output [1, 8, 8, 8, 8]
-TorchScript 17/20/23  aten::view_as_complex is not supported
-dynamo              DispatchError on aten.unsqueeze: no
-                    decomposition for complex-valued input</code></pre>
-<p>Two exporters, two messages, one cause: ONNX has no complex dtype, so RoPE stops both. TorchScript names the operator that makes the complex tensor and dynamo names the next one to touch it.</p>
-</section>
-<section id="real-valued-rope-and-what-it-unblocked" class="level2">
-<h2 class="anchored" data-anchor-id="real-valued-rope-and-what-it-unblocked">Real-valued RoPE, and what it unblocked</h2>
-<p>The rotation is exact in reals. <code>(a + bi)(cos t + i sin t)</code> is <code>(a cos t - b sin t) + i(a sin t + b cos t)</code>, so carrying cos and sin instead of a complex tensor changes the encoding and not the arithmetic. Checked before use rather than after:</p>
-<pre><code>patched against original   max|diff| 0.000e+00
-perturbed control          max|diff| 5.278e-01</code></pre>
-<p>Bit-identical, and the control fires, so the equivalence check is not vacuous. With the patch the graph exports:</p>
-<pre><code>544 nodes, 28 distinct operators</code></pre>
-<p>Twenty-five are in <code>DEVICE_OPS</code>. Three are not: <code>Cos</code>, <code>Sin</code> and <code>ReduceL2</code> – the first two introduced by this patch, the third from the qk RMS norm. NONE of RFD 1131’s refused family appears: no GridSample, ScatterND, GatherElements or TopK.</p>
-</section>
-<section id="what-the-compiler-refuses-which-is-not-the-operators" class="level2">
-<h2 class="anchored" data-anchor-id="what-the-compiler-refuses-which-is-not-the-operators">What the compiler refuses, which is not the operators</h2>
-<pre><code>input                     verdict
-rank 5, x [1,8,8,8,8]     _add_input_layers: output_format is None
-rank 4 on x only          identical
-rank 4 on all four        IndexError, further into the parse</code></pre>
-<p>The first two die in <code>_add_input_layers</code> before any operator is read. Making every input NHWC moves the failure, which is what identifies the cause: the parser wants all four inputs image-shaped, and a rank-1 timestep and rank-3 conditioning have no format.</p>
-<p>So the three operators outside <code>DEVICE_OPS</code> are still unjudged after four attempts. What is measured is that this is a conditional diffusion transformer with heterogeneous inputs meeting a parser built for image graphs, and each fix reveals the next assumption.</p>
-<p><code>gate_dfc_parse.py</code> reported PASS on the first of these, because the allowlist predicted a rejection and a rejection arrived. The two disagreed about the reason. The gate compares verdicts and not causes, so any rejection confirms whatever was predicted.</p>
-</section>
-<section id="what-is-still-unasked" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-still-unasked">What is still unasked</h2>
-<p>The Conv3D decoder, <code>ss_dec_conv3d_16l8</code>, is a separate 148 MB file and nothing here has exported it. The three later stages need a card this desk does not have, whatever their operators turn out to be.</p>
+<p><strong>Compacted.</strong> This RFD is abandoned, so its working-out was removed to keep the live corpus small. 622 words are in git history and nothing was lost.</p>
+<pre><code>git show ac8201e2df493305313466c3764ce2cc2d88bdec:rfd/1154-pixal3d-at-four-bits/DETAILS.md</code></pre>
+<p>The README beside this file is whole. It carries the state, the decision and the retraction, which is what a reader needs to know a road is closed and why.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

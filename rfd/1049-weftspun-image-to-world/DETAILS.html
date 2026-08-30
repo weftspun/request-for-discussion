@@ -293,12 +293,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#rfd-1049-details-the-model-the-interface-why-the-planner-earns-its-place" id="toc-rfd-1049-details-the-model-the-interface-why-the-planner-earns-its-place" class="nav-link active" data-scroll-target="#rfd-1049-details-the-model-the-interface-why-the-planner-earns-its-place">RFD 1049 details: the model, the interface, why the planner earns its place</a>
-  <ul class="collapse">
-  <li><a href="#the-model" id="toc-the-model" class="nav-link" data-scroll-target="#the-model">The model</a></li>
-  <li><a href="#the-interface" id="toc-the-interface" class="nav-link" data-scroll-target="#the-interface">The interface</a></li>
-  <li><a href="#why-the-planner-earns-its-place" id="toc-why-the-planner-earns-its-place" class="nav-link" data-scroll-target="#why-the-planner-earns-its-place">Why the planner earns its place</a></li>
-  </ul></li>
+  <li><a href="#rfd-1049-details-the-model-the-interface-why-the-planner-earns-its-place" id="toc-rfd-1049-details-the-model-the-interface-why-the-planner-earns-its-place" class="nav-link active" data-scroll-target="#rfd-1049-details-the-model-the-interface-why-the-planner-earns-its-place">RFD 1049 details: the model, the interface, why the planner earns its place</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1049-weftspun-image-to-world/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1049-weftspun-image-to-world/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -311,78 +306,11 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="rfd-1049-details-the-model-the-interface-why-the-planner-earns-its-place" class="level1">
 <h1>RFD 1049 details: the model, the interface, why the planner earns its place</h1>
-<section id="the-model" class="level2">
-<h2 class="anchored" data-anchor-id="the-model">The model</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Part</th>
-<th>Source</th>
-<th style="text-align: right;">bf16</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>TripoSplat</td>
-<td>RFD 1052</td>
-<td style="text-align: right;">2.2 GB</td>
-</tr>
-<tr class="even">
-<td>TRELLIS.2</td>
-<td>RFD 1038</td>
-<td style="text-align: right;">8.0 GB</td>
-</tr>
-<tr class="odd">
-<td><strong>total</strong></td>
-<td></td>
-<td style="text-align: right;">10.2 GB</td>
-</tr>
-</tbody>
-</table>
-<p>The two never need to be resident together. The domain carries <code>a_load</code> and <code>a_unload</code>, thus the peak is 8.0 GB and not 10.2 GB.</p>
-</section>
-<section id="the-interface" class="level2">
-<h2 class="anchored" data-anchor-id="the-interface">The interface</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Input</th>
-<th>Type</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>image</td>
-<td>Path</td>
-<td>none</td>
-</tr>
-<tr class="even">
-<td>prop_count</td>
-<td>int</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td>prop_prompts</td>
-<td>str</td>
-<td>“”</td>
-</tr>
-<tr class="even">
-<td>seed</td>
-<td>int</td>
-<td>-1</td>
-</tr>
-</tbody>
-</table>
-<p><code>prop_count</code> of 0 gives the environment only. That is the common case, and it must not pay for the TRELLIS.2 load.</p>
-</section>
-<section id="why-the-planner-earns-its-place" class="level2">
-<h2 class="anchored" data-anchor-id="why-the-planner-earns-its-place">Why the planner earns its place</h2>
-<p><code>prop_count</code> decides whether TRELLIS.2 runs at all. A method alternative checks it, thus the plan for an environment-only job never mentions the mesh model.</p>
-<p>A script would load it and then skip it.</p>
+<p><strong>Compacted.</strong> This RFD is abandoned, so its working-out was removed to keep the live corpus small. 186 words are in git history and nothing was lost.</p>
+<pre><code>git show ac8201e2df493305313466c3764ce2cc2d88bdec:rfd/1049-weftspun-image-to-world/DETAILS.md</code></pre>
+<p>The README beside this file is whole. It carries the state, the decision and the retraction, which is what a reader needs to know a road is closed and why.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

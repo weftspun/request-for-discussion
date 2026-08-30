@@ -339,9 +339,10 @@ value      what accelerating it buys
 adapt      can this desk train, tune or LoRA it
 ask        can we get an answer out of it
 wanted     does anyone want the thing it does</code></pre>
-<p><code>adapt</code> and <code>ask</code> are duals. Rank by <strong>STAR</strong>, the eight dimensions voting; <code>scripts/check_rfd1166_rank.py</code> recomputes it with <code>starvote</code>.</p>
-<p><strong>ABANDONED 2026-08-29, and RFD 1171 replaces it.</strong> The ranking asked which candidate is most worth accelerating, and that was the wrong question: these are not competitors for one device but stages of one loop, and a stage does not outrank the stage it feeds. <code>Qwen3-ASR</code> entering at seat 2 made it plain — it beat every 3D row while doing something none of them do.</p>
-<p><code>DETAILS.md</code> keeps the table and the measurements, which RFD 1171 cites; what is withdrawn is the ordering itself.</p>
+<p><code>adapt</code> and <code>ask</code> are duals. <code>check_rfd1166_rank.py</code> recomputes the <strong>STAR</strong> order with <code>starvote</code>.</p>
+<p><strong>ABANDONED 2026-08-29, and RFD 1171 replaces it.</strong> The ranking asked which candidate is most worth accelerating, and that was the wrong question: these are stages of one loop, not competitors for one device, and a stage does not outrank the stage it feeds. <code>Qwen3-ASR</code> entering at seat 2 made it plain.</p>
+<!-- retain-details -->
+<p><code>DETAILS.md</code> keeps the table and the measurements that RFD 1171 cites.</p>
 </section>
 <section id="related" class="level2">
 <h2 class="anchored" data-anchor-id="related">Related</h2>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Logbook – Taskweft — Manuals</title>
+<title>logbook-rfd1171-gemma-first-rerank – Taskweft — Manuals</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -36,8 +36,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -79,65 +77,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -329,7 +269,7 @@ window.Quarto = {
 <span class="menu-text">Serials</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../pages/logbook.html" aria-current="page"> 
+    <a class="nav-link" href="../pages/logbook.html"> 
 <span class="menu-text">Logbook</span></a>
   </li>  
   <li class="nav-item">
@@ -348,221 +288,204 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#logbook-one-base-measured-and-the-rerank" id="toc-logbook-one-base-measured-and-the-rerank" class="nav-link active" data-scroll-target="#logbook-one-base-measured-and-the-rerank">Logbook: one base, measured, and the rerank</a>
+  <ul class="collapse">
+  <li><a href="#gemma-4-is-apache-2.0-and-the-prior-that-says-otherwise-is-wrong" id="toc-gemma-4-is-apache-2.0-and-the-prior-that-says-otherwise-is-wrong" class="nav-link" data-scroll-target="#gemma-4-is-apache-2.0-and-the-prior-that-says-otherwise-is-wrong">Gemma 4 is Apache-2.0, and the prior that says otherwise is wrong</a></li>
+  <li><a href="#the-checkpoints-measured" id="toc-the-checkpoints-measured" class="nav-link" data-scroll-target="#the-checkpoints-measured">The checkpoints, measured</a></li>
+  <li><a href="#kv-cost-from-config.json-rather-than-a-rule-of-thumb" id="toc-kv-cost-from-config.json-rather-than-a-rule-of-thumb" class="nav-link" data-scroll-target="#kv-cost-from-config.json-rather-than-a-rule-of-thumb">KV cost, from <code>config.json</code> rather than a rule of thumb</a></li>
+  <li><a href="#what-dropping-the-larger-two-costs-stated-rather-than-discovered" id="toc-what-dropping-the-larger-two-costs-stated-rather-than-discovered" class="nav-link" data-scroll-target="#what-dropping-the-larger-two-costs-stated-rather-than-discovered">What dropping the larger two costs, stated rather than discovered</a></li>
+  <li><a href="#gryphes-corpus-cannot-be-reproduced-and-does-not-need-to-be" id="toc-gryphes-corpus-cannot-be-reproduced-and-does-not-need-to-be" class="nav-link" data-scroll-target="#gryphes-corpus-cannot-be-reproduced-and-does-not-need-to-be">Gryphe’s corpus cannot be reproduced, and does not need to be</a></li>
+  <li><a href="#the-abliteration-is-a-lora-and-heretic-computes-it-natively" id="toc-the-abliteration-is-a-lora-and-heretic-computes-it-natively" class="nav-link" data-scroll-target="#the-abliteration-is-a-lora-and-heretic-computes-it-natively">The abliteration is a LoRA, and Heretic computes it natively</a></li>
+  <li><a href="#both-accelerators-are-present-and-neither-has-been-measured" id="toc-both-accelerators-are-present-and-neither-has-been-measured" class="nav-link" data-scroll-target="#both-accelerators-are-present-and-neither-has-been-measured">Both accelerators are present, and neither has been measured</a></li>
+  <li><a href="#onnx-was-unblocked-and-the-row-was-scoped-to-a-one-device-world" id="toc-onnx-was-unblocked-and-the-row-was-scoped-to-a-one-device-world" class="nav-link" data-scroll-target="#onnx-was-unblocked-and-the-row-was-scoped-to-a-one-device-world">ONNX was unblocked, and the row was scoped to a one-device world</a></li>
+  <li><a href="#the-style-corpus-is-an-rl-environment-not-a-distillation" id="toc-the-style-corpus-is-an-rl-environment-not-a-distillation" class="nav-link" data-scroll-target="#the-style-corpus-is-an-rl-environment-not-a-distillation">The style corpus is an RL environment, not a distillation</a></li>
+  <li><a href="#the-account-is-five-characters-and-the-corpus-is-calendar-bound" id="toc-the-account-is-five-characters-and-the-corpus-is-calendar-bound" class="nav-link" data-scroll-target="#the-account-is-five-characters-and-the-corpus-is-calendar-bound">The account is five characters, and the corpus is calendar-bound</a></li>
+  <li><a href="#agentic-datasets-licence-is-the-easy-half-the-generator-decides-it" id="toc-agentic-datasets-licence-is-the-easy-half-the-generator-decides-it" class="nav-link" data-scroll-target="#agentic-datasets-licence-is-the-easy-half-the-generator-decides-it">Agentic datasets: licence is the easy half, the generator decides it</a></li>
+  <li><a href="#the-editscore-corpora-and-where-a-naive-split-leaks" id="toc-the-editscore-corpora-and-where-a-naive-split-leaks" class="nav-link" data-scroll-target="#the-editscore-corpora-and-where-a-naive-split-leaks">The EditScore corpora, and where a naive split leaks</a></li>
+  <li><a href="#three-repositories-were-created-and-destroyed-without-holding-anything" id="toc-three-repositories-were-created-and-destroyed-without-holding-anything" class="nav-link" data-scroll-target="#three-repositories-were-created-and-destroyed-without-holding-anything">Three repositories were created and destroyed without holding anything</a></li>
+  <li><a href="#no-money-was-spent" id="toc-no-money-was-spent" class="nav-link" data-scroll-target="#no-money-was-spent">No money was spent</a></li>
+  <li><a href="#still-open" id="toc-still-open" class="nav-link" data-scroll-target="#still-open">Still open</a></li>
+  <li><a href="#the-rerank" id="toc-the-rerank" class="nav-link" data-scroll-target="#the-rerank">The rerank</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/logbook/logbook-rfd1171-gemma-first-rerank.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/logbook/logbook-rfd1171-gemma-first-rerank.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Logbook</h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>Entries record what was <strong>measured</strong>, not what was intended, and clip enough of the experimental apparatus to re-run the test rather than merely its conclusion.</p>
-<p>These 145 entries were a separate repository until <code>weftspun/logbook</code> was archived. A decision and its measurement sat one repository apart; they no longer do. Entries kept their filenames, so an entry is still findable by the thing it measured rather than by where it used to live.</p>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-      <option value="" disabled="" selected="" hidden="">Order By</option>
-      <option value="index" data-direction="asc">Default</option>
-      <option value="listing-date-sort" data-direction="asc">
-        Date - Oldest
-      </option>
-      <option value="listing-date-sort" data-direction="desc">
-        Date - Newest
-      </option>
-      <option value="listing-title-sort" data-direction="asc">
-        Title
-      </option>
-    </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
-</div>
-<table class="quarto-listing-table table">
-<thead>
-<tr>
 
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
-</th>
+<section id="logbook-one-base-measured-and-the-rerank" class="level1">
+<h1>Logbook: one base, measured, and the rerank</h1>
+<p>Apparatus: <code>huggingface_hub.model_info</code> and <code>dataset_info</code> with <code>files_metadata=True</code>; <code>config.json</code> and safetensors headers read directly, the latter by ranged GET; <code>git show</code> against <code>3-interactor/llama-cpp-npu-vision-upstream</code> at <code>6a272903</code>; <code>GET /my/details</code> and <code>/my/characters</code> against <code>api.artifactsmmo.com</code>; <code>hailortcli fw-control identify</code> and <code>Get-PnpDevice</code> on the local desk. Sizes are the sum of <code>siblings[].size</code>, decimal GB.</p>
+<p><strong>Decided: <code>gemma-4-E4B</code> is the only base.</strong> The 31B and the 12B are both dropped – one model to maintain, evaluated on our own courses rather than on published benchmarks. What follows is why the other two were considered, what they measured, and what dropping them costs, because the next reader will otherwise re-derive the whole comparison.</p>
+<section id="gemma-4-is-apache-2.0-and-the-prior-that-says-otherwise-is-wrong" class="level2">
+<h2 class="anchored" data-anchor-id="gemma-4-is-apache-2.0-and-the-prior-that-says-otherwise-is-wrong">Gemma 4 is Apache-2.0, and the prior that says otherwise is wrong</h2>
+<p>Gemma 1, 2 and 3 carried Google’s custom Gemma Terms of Use. <strong>Gemma 4, released 2026-04-02, is Apache-2.0</strong>, confirmed on <code>google/gemma-4-31B-it</code> and every sibling checked. This is recorded because it was asserted the other way during the session that produced this entry, from a stale prior, and the licence is a precondition here rather than a detail.</p>
+<p>The old terms extended the licence to models trained on Gemma-generated synthetic data. That propagation is what the OpenRAIL-M row exists to stop, and it is gone.</p>
+</section>
+<section id="the-checkpoints-measured" class="level2">
+<h2 class="anchored" data-anchor-id="the-checkpoints-measured">The checkpoints, measured</h2>
+<pre><code>repo                                          size      note
 
-<th>
-<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
-</th>
+google/gemma-4-E4B-it                         16.0 GB   2130 tensors
+google/gemma-4-E4B-it-qat-q4_0-unquantized    15.9 GB   2076 tensors
+google/gemma-4-E4B-it-qat-w4a16-ct            11.5 GB
+google/gemma-4-E4B-it-qat-mobile-transformers  3.6 GB
+google/gemma-4-12B-it                         24.0 GB   dropped
+google/gemma-4-31B-it-qat-q4_0-unquantized    62.6 GB   dropped
+google/gemma-4-31B-it-qat-q4_0-gguf           18.9 GB   GGUF, the wrong artefact
+Gryphe/Gemma-4-12B-StyleTune                  26.0 GB   dropped with the 12B
+densenet/...-31B-StyleTune-heretic-ara        65.4 GB   dropped with the 31B</code></pre>
+<p><strong>The QAT repo that fits a small card is the GGUF one, and it is the wrong artefact.</strong> <code>-unquantized</code> is the usable QAT release: QAT-<em>trained</em> weights at full precision, quantised downstream. The 18.9 GB figure that makes QAT look like a free win is the GGUF.</p>
+<p><strong>The two E4B checkpoints differ by 54 tensors.</strong> <code>-it</code> carries 2130 and the QAT variant 2076; the QAT one drops <code>k_proj</code>, <code>v_proj</code> and <code>k_norm</code> for 18 layers. That is <code>num_kv_shared_layers: 18</code> materialised into the checkpoint. A delta computed against <code>-it</code> does not align with the QAT variant, so an adapter is specific to whichever it was built on. Neither has an <code>lm_head</code> – both tie the output head to <code>model.embed_tokens</code>.</p>
+<p><strong>The untied <code>lm_head</code> in the StyleTune line is Gryphe’s, not Heretic’s.</strong> <code>Gemma-4-31B-StyleTune</code> and <code>...-heretic-ara</code> are both 65.4 GB against Google’s 62.6, and both carry 1189 tensors to Google’s 1188. 262144 x 5376 x 2 bytes is 2.82 GB, the whole difference. The abliteration adds no tensor. This was attributed to Heretic first and the attribution was wrong.</p>
+</section>
+<section id="kv-cost-from-config.json-rather-than-a-rule-of-thumb" class="level2">
+<h2 class="anchored" data-anchor-id="kv-cost-from-config.json-rather-than-a-rule-of-thumb">KV cost, from <code>config.json</code> rather than a rule of thumb</h2>
+<pre><code>model  layers  kv_heads  head_dim  sw    full  KV/token (fp16)  fixed sliding
 
-</tr>
-</thead>
-<tbody class="list">
+E4B    42       2        256        512   7     14 KiB           28 MiB
+12B    48       8        256       1024   8     64 KiB          320 MiB
+31B    60      16        256       1024  10    160 KiB          800 MiB</code></pre>
+<p>E4B also carries <code>num_kv_shared_layers: 18</code>. On the local 3090, an int4 E4B is about 4 GB with encoders, leaving ~20 GB of KV at 14 KiB/token – far past the 262K position limit. Context stops being a constraint at all.</p>
+</section>
+<section id="what-dropping-the-larger-two-costs-stated-rather-than-discovered" class="level2">
+<h2 class="anchored" data-anchor-id="what-dropping-the-larger-two-costs-stated-rather-than-discovered">What dropping the larger two costs, stated rather than discovered</h2>
+<p>Google’s published figures, 31B / 12B / E4B:</p>
+<pre><code>Tau2, agentic tool use      76.9 / 69.0 / 42.2
+MRCR v2 @128K               66.4 / 43.4 / 25.4
+MMLU Pro                    85.2 / 77.2 / 69.4
+MMMU Pro, vision            76.9 / 69.1 / 52.6</code></pre>
+<p>Tau2 and MRCR are the two that matter for an agent, and E4B is worst on both. Two things bound the cost. Evaluation is on our own courses, so a public benchmark measures a distribution we are not deploying into. And taskweft’s HTN planner holds the long dependency chains that MRCR is a proxy for, so the planner does the remembering.</p>
+<p><strong>The persona has no source now.</strong> Gryphe’s StyleTune line covers 12B, 26B-A4B and 31B and not E4B, so dropping the 12B drops the only licence-clean persona checkpoint reachable from here. Style has to come from our own traces. That was already the plan; it is now the only plan.</p>
+</section>
+<section id="gryphes-corpus-cannot-be-reproduced-and-does-not-need-to-be" class="level2">
+<h2 class="anchored" data-anchor-id="gryphes-corpus-cannot-be-reproduced-and-does-not-need-to-be">Gryphe’s corpus cannot be reproduced, and does not need to be</h2>
+<p>Four of Gryphe’s eight datasets state no licence. The rest are generated by Claude Sonnet 3.5, Claude Opus or GPT-4o – all API-only, and the hosted-API row says condition 1 cannot be satisfied without a checkpoint. <code>CoEdit-Alpaca</code> at 20 MB is the only survivor and it is text editing, not style. Using someone’s Apache-2.0 weights is not the act that row governs; it governs what enters a corpus.</p>
+</section>
+<section id="the-abliteration-is-a-lora-and-heretic-computes-it-natively" class="level2">
+<h2 class="anchored" data-anchor-id="the-abliteration-is-a-lora-and-heretic-computes-it-natively">The abliteration is a LoRA, and Heretic computes it natively</h2>
+<p>Heretic’s ARA uses no refusal direction. It captures module input/output tensors through hooks and performs direct, unconstrained matrix optimisation, so <strong>the delta is high-rank by construction</strong> – which is what “arbitrary rank” names. A truncated-SVD extraction was written, syntax-checked, and never run: it would have measured what the method’s own description already states.</p>
+<p>That was the wrong question. <code>--export-strategy ADAPTER</code> emits a LoRA directly, and <code>--row-normalization FULL</code>, the default, already “compute[s] LoRA adapter relative to row-normalized weights”. So the adapter comes out of the run rather than out of a decomposition, and <strong>Google’s QAT weights stay bit-identical</strong> – which also removes the risk that unconstrained optimisation knocks them off the 4-bit grid.</p>
+<p>Run, on the local 3090:</p>
+<pre><code>model   google/gemma-4-E4B-it-qat-q4_0-unquantized @ 476025a0
+seed    1171
+export  ADAPTER
+heretic-llm 1.4.0, torch 2.10.0+cu128</code></pre>
+<p>Pinned commit plus seed plus Heretic’s own <code>reproduce.json</code> satisfies condition 1 by construction.</p>
+<p><strong>Two dependency failures worth recording, because both reported success.</strong> The first run died on <code>Gemma4Processor requires the PIL library</code>; the second on <code>No module named 'torchvision'</code>. Gemma 4 is multimodal and its processor imports both even for a text-only run. Both were reported as exit code 0 by a PowerShell wrapper that did not propagate <code>$LASTEXITCODE</code>, so the runs read as started when they had already failed. The wrapper now throws, and a preflight checks the imports before any GPU time is spent.</p>
+<p>Also: pixi resolved <code>torch 2.13.0+cpu</code> from conda-forge. It imports, it runs, and <code>cuda.is_available()</code> is False. The cu128 index is pinned per-package in <code>pixi.toml</code> – globally, via <code>extra-index-urls</code>, it makes the resolver look for every package there and the solve fails on <code>tqdm</code>.</p>
+</section>
+<section id="both-accelerators-are-present-and-neither-has-been-measured" class="level2">
+<h2 class="anchored" data-anchor-id="both-accelerators-are-present-and-neither-has-been-measured">Both accelerators are present, and neither has been measured</h2>
+<pre><code>UGen300 USB AI Accelerator (Hailo-10H)   status OK, firmware 5.3.2, usb/001:001
+NPU Compute Accelerator Device            status OK, AMD, PCI\VEN_1022&amp;DEV_1502
+NVIDIA GeForce RTX 3090                   24 GB, idle</code></pre>
+<p>The second is the 7840U’s own XDNA1 NPU, and nothing in this workspace knew it was there.</p>
+<p><strong>The Hailo was power-starved, and moving it to a USB4 dock cleared it.</strong> On the first port <code>hailortcli</code> warned: <em>“USB-C source electrical current advertised: 1.5A. The module may run in reduced-performance mode.”</em> On the dock the device re-enumerated from <code>usb/001:001</code> to <code>usb/001:009</code> and the warning stopped. RFD 1130 exists to report what the device delivers, and a figure taken on the first port would have been a figure about a cable.</p>
+<p><strong>The evidence is the absence of the firmware’s own flag, not a power reading</strong>, and that distinction is worth keeping. Neither direct route works here: <code>measure-power</code> fails with <code>HAILO_OPEN_FILE_FAILURE(13)</code>, and <code>monitor</code> – the command whose help promises “on H10, presents performance and health stats” – reports that it “is not supported on Windows”. So the claim is that the module no longer reports reduced-performance mode, which is weaker than a measured current and is what we have.</p>
+<p><strong>The comparison that would have settled it is now gone.</strong> No throughput was taken at 1.5A before the move, so the cost of the power limit cannot be quantified from here. Recovering it means deliberately plugging back into the 1.5A port and benchmarking both, which is worth an hour if RFD 1130 wants the delta rather than just a good number.</p>
+<p>Extended identify, for the record: <code>HAILO10H</code>, firmware 5.3.2 (release,app), boot source FLASH, LCS 5, board SKU-ID 8, chip serial <code>F8FBFDDB7CD6F769D3CE75F9</code>.</p>
+<p><strong>Neither NPU has a measured rate.</strong> <code>gpu_tops.py</code> says published TOPS are “a ranking and not a budget” – 40 TOPS INT4 at an assumed 30% utilisation, profiler never run. It now has two local devices to point at instead of zero.</p>
+<p><strong><code>adapt</code> cannot run on either.</strong> HailoRT executes a compiled HEF, a forward graph: no backward pass, no gradient, no optimizer. A training step has no representation in the format. The 3090 does <code>adapt</code>; the accelerators serve <code>ask</code>.</p>
+<p><strong>And <code>ask</code> on the Hailo is not limited to an encoder, which this entry implied.</strong> HailoRT 5.3.2 ships <code>genai/llm/llm.hpp</code> and <code>genai/vlm/vlm.hpp</code> – autoregressive generation with sampling parameters, token streaming, and a LoRA selected by name at load time. The Qwen3-VL-only gating recorded above is a property of llama.cpp’s <code>mtmd</code> path, not of the device. See <code>logbook-dfc-emulation-contexts-disagree.md</code>, which retracts the wider claim and records the evidence that produced it.</p>
+</section>
+<section id="onnx-was-unblocked-and-the-row-was-scoped-to-a-one-device-world" class="level2">
+<h2 class="anchored" data-anchor-id="onnx-was-unblocked-and-the-row-was-scoped-to-a-one-device-world">ONNX was unblocked, and the row was scoped to a one-device world</h2>
+<p>The ONNX row argued that “ONNX had one job left after the runtimes went, which was carrying models into Hailo’s Dataflow Compiler”, and retired the format because TFLite does that job better by Hailo’s own direction. That argument was about Hailo, and it was sound about Hailo.</p>
+<p>It never considered a second accelerator, because nobody knew there was one. XDNA’s whole toolchain is ONNX-shaped: AMD Quark quantises ONNX-to-ONNX, and the VitisAI EP executes ONNX. The row was not wrong; it was scoped to a world that stopped being true when a device scan turned up a second NPU. Row and section both removed, 21/21.</p>
+<p>Open, and measurable locally: whether XDNA1 gets AMD’s INT4 flows or whether those target XDNA2 only.</p>
+</section>
+<section id="the-style-corpus-is-an-rl-environment-not-a-distillation" class="level2">
+<h2 class="anchored" data-anchor-id="the-style-corpus-is-an-rl-environment-not-a-distillation">The style corpus is an RL environment, not a distillation</h2>
+<p>The character plays ArtifactsMMO and lives the character-avatar; traces become the corpus. The EditScore schema transfers directly:</p>
+<pre><code>EditScore                     game equivalent
 
-<tr data-index="0" data-listing-file-modified-sort="1788068184089" data-listing-reading-time-sort="8" data-listing-word-count-sort="1464" data-listing-title-sort="Logbook: CineForm in Godot, and what recording actually costs" data-listing-filename-sort="logbook-cineform-movie-writer.md">
-<td>
-<a href="../logbook/logbook-cineform-movie-writer.html" class="title listing-title">Logbook: CineForm in Godot, and what recording actually costs</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
+images: [before, after]       states: [before, after]
+instruction                   the HTN task from taskweft
+task_type, 11 classes         action class: move, fight, gather, craft, trade
+expected_scores: [22, 20]     outcome delta, computed by the engine</code></pre>
+<p>EditScore’s scores had to be <strong>judged</strong>. Game outcomes are <strong>computed</strong> – HP, XP, gold, inventory and success come back in the action response, and taskweft says whether the action satisfied the next precondition. Two deterministic label sources, one learned policy.</p>
+<p><strong>That settles condition 3.</strong> The rule is about capability transfer, and playing a game is capability, so it binds where style alone would not have. But the reward comes from the engine rather than a teacher, so “a student excellent on its teacher’s output and mediocre on the world” cannot occur. Condition 4 lands the same way, and evaluation is on our courses, which are real data we hold.</p>
+</section>
+<section id="the-account-is-five-characters-and-the-corpus-is-calendar-bound" class="level2">
+<h2 class="anchored" data-anchor-id="the-account-is-five-characters-and-the-corpus-is-calendar-bound">The account is five characters, and the corpus is calendar-bound</h2>
+<pre><code>AriaWeft  WarpWeft  ShuttleWeft  HeddleWeft  SelvageWeft     all level 1</code></pre>
+<p><code>/characters/create</code> states the cap: “You can create up to 5 characters.” The account was at 1 and is now at 5. Multi-accounting is a ban, so five is the hard ceiling.</p>
+<pre><code>minimum cooldown    3 s per action per character, a bypass having been patched
+sandbox             451, "you must be a member" -- membership is paid
+servers             seasonal, about 4 months, so a corpus is tied to a season</code></pre>
+<p>At 5 to 10 s average across action types, five characters yield 43,000 to 86,000 actions a day: <strong>1.2 to 2.2 days</strong> for a 97k-row corpus, against 6 to 11 on one character.</p>
+<p><strong>This is the only step whose cost is calendar rather than money.</strong> Everything else goes faster on better hardware. This does not, and the season expires.</p>
+<p>Five characters should specialise rather than run five copies of one policy. EditScore’s own corpus is roughly balanced across its 11 <code>task_type</code> classes, and a single character grinding one skill produces a corpus dominated by one class.</p>
+</section>
+<section id="agentic-datasets-licence-is-the-easy-half-the-generator-decides-it" class="level2">
+<h2 class="anchored" data-anchor-id="agentic-datasets-licence-is-the-easy-half-the-generator-decides-it">Agentic datasets: licence is the easy half, the generator decides it</h2>
+<pre><code>dataset                                    licence      generated by         verdict
 
-</tr>
+Salesforce/xlam-function-calling-60k       cc-by-4.0    DeepSeek-V2, Mixtral  passes
+nvidia/Llama-Nemotron-Post-Training        cc-by-4.0    Llama-3.1/3.3         passes
+PrimeIntellect/SYNTHETIC-1                 apache-2.0   DeepSeek-R1           passes
+microsoft/orca-agentinstruct-1M-v1         cdla-perm.   GPT-4                 blocked
+Nexusflow/Function_Call_Definitions        cc-by-nc-sa  --                    blocked
+THUDM/AgentInstruct                        none stated  --                    blocked
+NousResearch/hermes-function-calling-v1    apache-2.0   unstated              unclear
+gorilla-llm/BFCL                           apache-2.0   benchmark             eval only</code></pre>
+<p><strong>xlam documents which id ranges came from which model</strong> – DeepSeek-V2 for ids 0 to 33658, Mixtral for the rest – so condition 1 is satisfied at row granularity. Both are downloadable checkpoints.</p>
+<p>The dataset named after the agent we want to run is the one that cannot document its generator: hermes-function-calling-v1’s card credits people, not models.</p>
+</section>
+<section id="the-editscore-corpora-and-where-a-naive-split-leaks" class="level2">
+<h2 class="anchored" data-anchor-id="the-editscore-corpora-and-where-a-naive-split-leaks">The EditScore corpora, and where a naive split leaks</h2>
+<pre><code>dataset                    rows      instruction distinct   max repeat
 
-<tr data-index="1" data-listing-file-modified-sort="1788068184089" data-listing-reading-time-sort="31" data-listing-word-count-sort="6080" data-listing-title-sort="Logbook: RFD 1016 model-repo build-out" data-listing-filename-sort="logbook-rfd1016-model-repos.md">
-<td>
-<a href="../logbook/logbook-rfd1016-model-repos.html" class="title listing-title">Logbook: RFD 1016 model-repo build-out</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
+EditScore-Reward-Data      97,256    10,915                 36
+EditScore-RL-Data         110,000    68,426                890</code></pre>
+<p><strong>A random row split puts the same instruction on both sides.</strong> Split on <code>instruction</code>, stratified on <code>task_type</code>. <code>expected_scores: [22, 20]</code> is an absolute score per image, not a preference label, so arity-1 quality-control examples come free: each row yields two. <code>conversations</code> is instruction plus a fixed template and is a derivable column.</p>
+<p>The images ship as a split <strong>gzip</strong> tarball, which the archive-format rule refuses, so the fork repackages to ZStandard parquet – the same pass as the split. <code>EditReward-Bench</code> is arrow, evaluation-only, and <strong>published</strong>, so it is not blinded the way <code>coco_person_commercial_val2017</code> is.</p>
+</section>
+<section id="three-repositories-were-created-and-destroyed-without-holding-anything" class="level2">
+<h2 class="anchored" data-anchor-id="three-repositories-were-created-and-destroyed-without-holding-anything">Three repositories were created and destroyed without holding anything</h2>
+<p><code>chibifire/runpod-gemma4-serve</code>, <code>chibifire/gemma4-31b-styletune-heretic-lora</code> and <code>chibifire/gemma4-31b-it-qat-q4_0-unquantized-1e4d8bee</code> were created while the 31B path looked settled. All three were deleted at 0 bytes and verified gone. A repository is cheap to make and it advertises a decision; making one before the decision is the same error as measuring throughput on a model that fails RFD 1128.</p>
+</section>
+<section id="no-money-was-spent" class="level2">
+<h2 class="anchored" data-anchor-id="no-money-was-spent">No money was spent</h2>
+<p>RunPod was audited for pods, serverless endpoints and network volumes: none, ever. The whole plan runs on the 3090 and the two accelerators, and the $250 wall is untouched.</p>
+</section>
+<section id="still-open" class="level2">
+<h2 class="anchored" data-anchor-id="still-open">Still open</h2>
+<pre><code>split ratio for the two corpora       90/10 or 80/20 on instruction groups
+whether `conversations` is dropped    correct under ETNF, costs a loader dependency
+does XDNA1 get AMD's INT4 flows       or do those target XDNA2 only
+the cost of the 1.5A limit            unmeasured, and only recoverable by
+                                      plugging back in on purpose</code></pre>
+</section>
+<section id="the-rerank" class="level2">
+<h2 class="anchored" data-anchor-id="the-rerank">The rerank</h2>
+<pre><code>DONE  move the Hailo off the 1.5A port          on a USB4 dock, warning gone
 
-</tr>
+1  start the five characters playing             the only calendar-bound step
+2  finish ARA on E4B, verify the adapter         running
+3  gpu_tops.py against both NPUs                 first measured rate for either
+4  RFD 1129 and 1128 on E4B                      LiteRT and ONNX are both open now
+5  fork and split the EditScore corpora          zstd parquet, split on instruction
+6  xlam-function-calling-60k as a tool-call prior  cheap; Tau2 42.2 is partly format
+7  style LoRA on E4B, DPO on the traces
+8  retrain EditScore on E4B                      no Gemma variant is published</code></pre>
+<p>The device numbers are now worth taking, which they were not an hour ago. Step 1 stays at the front because it is the one cost that hardware cannot buy back.</p>
 
-<tr data-index="2" data-listing-file-modified-sort="1788068184089" data-listing-reading-time-sort="11" data-listing-word-count-sort="2018" data-listing-title-sort="Logbook: RFD 1122 T01, the pose-library check" data-listing-filename-sort="logbook-rfd1122-t01-pose-check.md">
-<td>
-<a href="../logbook/logbook-rfd1122-t01-pose-check.html" class="title listing-title">Logbook: RFD 1122 T01, the pose-library check</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
 
-</tr>
+</section>
+</section>
 
-<tr data-index="3" data-listing-file-modified-sort="1788068184089" data-listing-reading-time-sort="18" data-listing-word-count-sort="3434" data-listing-title-sort="Logbook: one base, measured, and the rerank" data-listing-filename-sort="logbook-rfd1171-gemma-first-rerank.md">
-<td>
-<a href="../logbook/logbook-rfd1171-gemma-first-rerank.html" class="title listing-title">Logbook: one base, measured, and the rerank</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="4" data-listing-file-modified-sort="1788068184089" data-listing-reading-time-sort="7" data-listing-word-count-sort="1241" data-listing-title-sort="Logbook: the ANNY fit that the corpus does not need" data-listing-filename-sort="logbook-anny-phenotype-fit-retired.md">
-<td>
-<a href="../logbook/logbook-anny-phenotype-fit-retired.html" class="title listing-title">Logbook: the ANNY fit that the corpus does not need</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="5" data-listing-file-modified-sort="1788068184089" data-listing-reading-time-sort="11" data-listing-word-count-sort="2026" data-listing-title-sort="Logbook: the Qwen3-VL vision tower against the Dataflow Compiler" data-listing-filename-sort="logbook-qwen3vl-vit-translate-walls.md">
-<td>
-<a href="../logbook/logbook-qwen3vl-vit-translate-walls.html" class="title listing-title">Logbook: the Qwen3-VL vision tower against the Dataflow Compiler</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="6" data-listing-file-modified-sort="1788068184089" data-listing-reading-time-sort="6" data-listing-word-count-sort="1171" data-listing-title-sort="Logbook: the first four-loop rounds on the desk card" data-listing-filename-sort="logbook-fourloops-first-runs.md">
-<td>
-<a href="../logbook/logbook-fourloops-first-runs.html" class="title listing-title">Logbook: the first four-loop rounds on the desk card</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="7" data-listing-file-modified-sort="1788068184090" data-listing-reading-time-sort="5" data-listing-word-count-sort="992" data-listing-title-sort="Logbook: the soft renderer's three constants, and Mitsuba" data-listing-filename-sort="logbook-soft-renderer-and-mitsuba.md">
-<td>
-<a href="../logbook/logbook-soft-renderer-and-mitsuba.html" class="title listing-title">Logbook: the soft renderer’s three constants, and Mitsuba</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="8" data-listing-file-modified-sort="1788068184089" data-listing-reading-time-sort="9" data-listing-word-count-sort="1605" data-listing-title-sort="Logbook: two DFC emulation contexts disagree by six orders of magnitude" data-listing-filename-sort="logbook-dfc-emulation-contexts-disagree.md">
-<td>
-<a href="../logbook/logbook-dfc-emulation-contexts-disagree.html" class="title listing-title">Logbook: two DFC emulation contexts disagree by six orders of magnitude</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="9" data-listing-file-modified-sort="1788068184089" data-listing-reading-time-sort="6" data-listing-word-count-sort="1163" data-listing-title-sort="Logbook: two walls between a translated graph and a HEF" data-listing-filename-sort="logbook-rfd1130-two-walls-to-a-hef.md">
-<td>
-<a href="../logbook/logbook-rfd1130-two-walls-to-a-hef.html" class="title listing-title">Logbook: two walls between a translated graph and a HEF</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="10" data-listing-file-modified-sort="1788068184089" data-listing-reading-time-sort="11" data-listing-word-count-sort="2074" data-listing-title-sort="Logbook: what an edge NPU takes, and what the ANNY forward will not export" data-listing-filename-sort="logbook-edge-npu-and-the-anny-forward.md">
-<td>
-<a href="../logbook/logbook-edge-npu-and-the-anny-forward.html" class="title listing-title">Logbook: what an edge NPU takes, and what the ANNY forward will not export</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="11" data-listing-file-modified-sort="1788068184089" data-listing-reading-time-sort="12" data-listing-word-count-sort="2261" data-listing-title-sort="Logbook: what the Neural Engine reaches, and what it holds" data-listing-filename-sort="logbook-rfd1142-neural-engine-against-the-ugen300.md">
-<td>
-<a href="../logbook/logbook-rfd1142-neural-engine-against-the-ugen300.html" class="title listing-title">Logbook: what the Neural Engine reaches, and what it holds</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="12" data-listing-file-modified-sort="1788068184089" data-listing-reading-time-sort="14" data-listing-word-count-sort="2799" data-listing-title-sort="Logbook: what the plan costs once the durations are real, and the card is a 3090" data-listing-filename-sort="logbook-rfd1122-hailo-first-rerank.md">
-<td>
-<a href="../logbook/logbook-rfd1122-hailo-first-rerank.html" class="title listing-title">Logbook: what the plan costs once the durations are real, and the card is a 3090</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="13" data-listing-file-modified-sort="1788068184089" data-listing-reading-time-sort="6" data-listing-word-count-sort="1157" data-listing-title-sort="The comment ladder" data-listing-filename-sort="logbook-comment-ladder.md">
-<td>
-<a href="../logbook/logbook-comment-ladder.html" class="title listing-title">The comment ladder</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-</tbody>
-</table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -984,7 +907,7 @@ window.Quarto = {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/pages/logbook.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/pages/logbook.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/logbook/logbook-rfd1171-gemma-first-rerank.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/logbook/logbook-rfd1171-gemma-first-rerank.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">

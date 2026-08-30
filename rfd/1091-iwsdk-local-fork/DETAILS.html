@@ -26,41 +26,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -328,13 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#rfd-1091-details-the-layout-the-commands-and-the-package-table" id="toc-rfd-1091-details-the-layout-the-commands-and-the-package-table" class="nav-link active" data-scroll-target="#rfd-1091-details-the-layout-the-commands-and-the-package-table">RFD 1091 details: the layout, the commands, and the package table</a>
-  <ul class="collapse">
-  <li><a href="#sibling-clone-layout" id="toc-sibling-clone-layout" class="nav-link" data-scroll-target="#sibling-clone-layout">Sibling-clone layout</a></li>
-  <li><a href="#link-or-refresh" id="toc-link-or-refresh" class="nav-link" data-scroll-target="#link-or-refresh">Link or refresh</a></li>
-  <li><a href="#packages-this-project-wires-in" id="toc-packages-this-project-wires-in" class="nav-link" data-scroll-target="#packages-this-project-wires-in">Packages this project wires in</a></li>
-  <li><a href="#reverting-to-the-npm-release" id="toc-reverting-to-the-npm-release" class="nav-link" data-scroll-target="#reverting-to-the-npm-release">Reverting to the npm release</a></li>
-  </ul></li>
+  <li><a href="#rfd-1091-details-the-layout-the-commands-and-the-package-table" id="toc-rfd-1091-details-the-layout-the-commands-and-the-package-table" class="nav-link active" data-scroll-target="#rfd-1091-details-the-layout-the-commands-and-the-package-table">RFD 1091 details: the layout, the commands, and the package table</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1091-iwsdk-local-fork/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1091-iwsdk-local-fork/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -347,66 +306,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="rfd-1091-details-the-layout-the-commands-and-the-package-table" class="level1">
 <h1>RFD 1091 details: the layout, the commands, and the package table</h1>
-<section id="sibling-clone-layout" class="level2">
-<h2 class="anchored" data-anchor-id="sibling-clone-layout">Sibling-clone layout</h2>
-<pre><code>/home/sifr/
-  immersive-web-sdk/     git clone AlfaOmegaGrafx/immersive-web-sdk
-  Weftspun3DStudio/      file:../immersive-web-sdk/packages/*/iwsdk-*.tgz</code></pre>
-<p>On a second machine, clone <code>immersive-web-sdk</code> next to this project’s own checkout the same way.</p>
-</section>
-<section id="link-or-refresh" class="level2">
-<h2 class="anchored" data-anchor-id="link-or-refresh">Link or refresh</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> Weftspun3DStudio</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run iwsdk:link-local              <span class="co"># build tgz if missing, then npm install</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run iwsdk:link-local:rebuild      <span class="co"># force rebuild the fork, then reinstall</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Or by hand:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../immersive-web-sdk</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pnpm</span> install <span class="kw">&amp;&amp;</span> <span class="ex">npm</span> run build:tgz:skip-reference-assets</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../Weftspun3DStudio <span class="kw">&amp;&amp;</span> <span class="ex">npm</span> install</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="packages-this-project-wires-in" class="level2">
-<h2 class="anchored" data-anchor-id="packages-this-project-wires-in">Packages this project wires in</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Package</th>
-<th>Role</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>@iwsdk/core</code></td>
-<td>World, ECS, grab, locomotion</td>
-</tr>
-<tr class="even">
-<td><code>@iwsdk/locomotor</code></td>
-<td><code>EnvironmentType</code>, locomotion</td>
-</tr>
-<tr class="odd">
-<td><code>@iwsdk/xr-input</code></td>
-<td>Galaxy XR controllers and hands</td>
-</tr>
-<tr class="even">
-<td><code>@iwsdk/vite-plugin-dev</code></td>
-<td>XR emulation inside Vite</td>
-</tr>
-<tr class="odd">
-<td><code>@iwsdk/cli</code></td>
-<td><code>dev:iwsdk</code>, adapter sync</td>
-</tr>
-<tr class="even">
-<td><code>@iwsdk/reference</code></td>
-<td>Reference assets for the CLI</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="reverting-to-the-npm-release" class="level2">
-<h2 class="anchored" data-anchor-id="reverting-to-the-npm-release">Reverting to the npm release</h2>
-<p>In <code>package.json</code>, restore the <code>^0.4.2</code> ranges, then run <code>npm install</code>.</p>
+<p><strong>Compacted.</strong> This RFD is abandoned, so its working-out was removed to keep the live corpus small. 165 words are in git history and nothing was lost.</p>
+<pre><code>git show ac8201e2df493305313466c3764ce2cc2d88bdec:rfd/1091-iwsdk-local-fork/DETAILS.md</code></pre>
+<p>The README beside this file is whole. It carries the state, the decision and the retraction, which is what a reader needs to know a road is closed and why.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

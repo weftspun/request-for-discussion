@@ -293,13 +293,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#rfd-1052-details-the-model-the-interface-the-x-flip-the-viewport-contract" id="toc-rfd-1052-details-the-model-the-interface-the-x-flip-the-viewport-contract" class="nav-link active" data-scroll-target="#rfd-1052-details-the-model-the-interface-the-x-flip-the-viewport-contract">RFD 1052 details: the model, the interface, the X-flip, the viewport contract</a>
-  <ul class="collapse">
-  <li><a href="#the-model" id="toc-the-model" class="nav-link" data-scroll-target="#the-model">The model</a></li>
-  <li><a href="#the-interface" id="toc-the-interface" class="nav-link" data-scroll-target="#the-interface">The interface</a></li>
-  <li><a href="#the-x-flip-belongs-here-and-only-here" id="toc-the-x-flip-belongs-here-and-only-here" class="nav-link" data-scroll-target="#the-x-flip-belongs-here-and-only-here">The X-flip belongs here, and only here</a></li>
-  <li><a href="#the-viewport-contract" id="toc-the-viewport-contract" class="nav-link" data-scroll-target="#the-viewport-contract">The viewport contract</a></li>
-  </ul></li>
+  <li><a href="#rfd-1052-details-the-model-the-interface-the-x-flip-the-viewport-contract" id="toc-rfd-1052-details-the-model-the-interface-the-x-flip-the-viewport-contract" class="nav-link active" data-scroll-target="#rfd-1052-details-the-model-the-interface-the-x-flip-the-viewport-contract">RFD 1052 details: the model, the interface, the X-flip, the viewport contract</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1052-triposplat-image-to-splat/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1052-triposplat-image-to-splat/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -312,76 +306,11 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="rfd-1052-details-the-model-the-interface-the-x-flip-the-viewport-contract" class="level1">
 <h1>RFD 1052 details: the model, the interface, the X-flip, the viewport contract</h1>
-<section id="the-model" class="level2">
-<h2 class="anchored" data-anchor-id="the-model">The model</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Property</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Parameters</td>
-<td>1.1 B, estimated</td>
-</tr>
-<tr class="even">
-<td>bf16</td>
-<td>2.2 GB</td>
-</tr>
-<tr class="odd">
-<td>Q4_K_M</td>
-<td>0.61 GB</td>
-</tr>
-<tr class="even">
-<td>Format</td>
-<td>bf16</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="the-interface" class="level2">
-<h2 class="anchored" data-anchor-id="the-interface">The interface</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Input</th>
-<th>Type</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>image</td>
-<td>Path</td>
-<td>none</td>
-</tr>
-<tr class="even">
-<td>max_splats</td>
-<td>int</td>
-<td>500000</td>
-</tr>
-<tr class="odd">
-<td>seed</td>
-<td>int</td>
-<td>-1</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="the-x-flip-belongs-here-and-only-here" class="level2">
-<h2 class="anchored" data-anchor-id="the-x-flip-belongs-here-and-only-here">The X-flip belongs here, and only here</h2>
-<p>decisions/agent/DECISIONS.md records the rule from 2026-07-26. A TripoSplat cloud takes an X-flip. A LingBot cloud does not, and RFD 1050 states that.</p>
-<p>Apply the flip inside this model image, and write the result already flipped. A caller must never decide, because the two clouds then look alike and the wrong one takes the flip.</p>
-</section>
-<section id="the-viewport-contract" class="level2">
-<h2 class="anchored" data-anchor-id="the-viewport-contract">The viewport contract</h2>
-<p>RFD 1009 records the viewport. It loads splats through Spark, and it must not use the XYZRGB point stride. That stride scatters a Gaussian PLY.</p>
-<p>The output PLY must therefore carry the Gaussian attributes and not a bare point list. A point list would load, and it would look wrong.</p>
+<p><strong>Compacted.</strong> This RFD is abandoned, so its working-out was removed to keep the live corpus small. 204 words are in git history and nothing was lost.</p>
+<pre><code>git show ac8201e2df493305313466c3764ce2cc2d88bdec:rfd/1052-triposplat-image-to-splat/DETAILS.md</code></pre>
+<p>The README beside this file is whole. It carries the state, the decision and the retraction, which is what a reader needs to know a road is closed and why.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

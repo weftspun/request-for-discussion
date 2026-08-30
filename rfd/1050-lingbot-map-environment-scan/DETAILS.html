@@ -293,13 +293,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#rfd-1050-details-the-phases-the-gravity-rule-the-metric-gate-blockers" id="toc-rfd-1050-details-the-phases-the-gravity-rule-the-metric-gate-blockers" class="nav-link active" data-scroll-target="#rfd-1050-details-the-phases-the-gravity-rule-the-metric-gate-blockers">RFD 1050 details: the phases, the gravity rule, the metric gate, blockers</a>
-  <ul class="collapse">
-  <li><a href="#the-two-phases" id="toc-the-two-phases" class="nav-link" data-scroll-target="#the-two-phases">The two phases</a></li>
-  <li><a href="#the-gravity-rule" id="toc-the-gravity-rule" class="nav-link" data-scroll-target="#the-gravity-rule">The gravity rule</a></li>
-  <li><a href="#the-metric-gate" id="toc-the-metric-gate" class="nav-link" data-scroll-target="#the-metric-gate">The metric gate</a></li>
-  <li><a href="#what-blocks-the-packaging" id="toc-what-blocks-the-packaging" class="nav-link" data-scroll-target="#what-blocks-the-packaging">What blocks the packaging</a></li>
-  </ul></li>
+  <li><a href="#rfd-1050-details-the-phases-the-gravity-rule-the-metric-gate-blockers" id="toc-rfd-1050-details-the-phases-the-gravity-rule-the-metric-gate-blockers" class="nav-link active" data-scroll-target="#rfd-1050-details-the-phases-the-gravity-rule-the-metric-gate-blockers">RFD 1050 details: the phases, the gravity rule, the metric gate, blockers</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1050-lingbot-map-environment-scan/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1050-lingbot-map-environment-scan/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -312,65 +306,11 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="rfd-1050-details-the-phases-the-gravity-rule-the-metric-gate-blockers" class="level1">
 <h1>RFD 1050 details: the phases, the gravity rule, the metric gate, blockers</h1>
-<section id="the-two-phases" class="level2">
-<h2 class="anchored" data-anchor-id="the-two-phases">The two phases</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Phase</th>
-<th>Does</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>A</td>
-<td>Tracks the camera through the walk</td>
-</tr>
-<tr class="even">
-<td>B</td>
-<td>Reconstructs the surfaces</td>
-</tr>
-</tbody>
-</table>
-<p>Phase B needs the poses from Phase A. The guard states that, thus no plan may reverse them.</p>
-</section>
-<section id="the-gravity-rule" class="level2">
-<h2 class="anchored" data-anchor-id="the-gravity-rule">The gravity rule</h2>
-<p>decisions/agent/DECISIONS.md records the rule from 2026-07-26. A LingBot cloud is gravity aligned, and it must never take the TripoSplat X-flip. It must never load through the XYZRGB point stride either, because that stride scatters a Gaussian PLY.</p>
-<p>The domain carries <code>orientation_mode</code> as a <code>:ref</code> variable with the value <code>none</code>. A plan that sets anything else is wrong by construction.</p>
-</section>
-<section id="the-metric-gate" class="level2">
-<h2 class="anchored" data-anchor-id="the-metric-gate">The metric gate</h2>
-<p>The door width is the check. A real door is a known width, thus a scan that measures it wrongly has a wrong scale.</p>
-<p><code>a_calibrate</code> sets <code>/have/metric</code>, and <code>a_write_stage</code> requires it. A scan that fails the gate produces no stage at all.</p>
-</section>
-<section id="what-blocks-the-packaging" class="level2">
-<h2 class="anchored" data-anchor-id="what-blocks-the-packaging">What blocks the packaging</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Question</th>
-<th>Why it blocks</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Parameter count</td>
-<td>RFD 1026 and RFD 1027 need it</td>
-</tr>
-<tr class="even">
-<td>License</td>
-<td>RFD 1028 gates the ship</td>
-</tr>
-<tr class="odd">
-<td>Door metric source</td>
-<td>The gate needs a known width</td>
-</tr>
-</tbody>
-</table>
+<p><strong>Compacted.</strong> This RFD is abandoned, so its working-out was removed to keep the live corpus small. 221 words are in git history and nothing was lost.</p>
+<pre><code>git show ac8201e2df493305313466c3764ce2cc2d88bdec:rfd/1050-lingbot-map-environment-scan/DETAILS.md</code></pre>
+<p>The README beside this file is whole. It carries the state, the decision and the retraction, which is what a reader needs to know a road is closed and why.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

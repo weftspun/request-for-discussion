@@ -293,17 +293,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#rfd-1062-details-why-fly-why-tailscale-the-existing-port-what-ships-galls-law-scope" id="toc-rfd-1062-details-why-fly-why-tailscale-the-existing-port-what-ships-galls-law-scope" class="nav-link active" data-scroll-target="#rfd-1062-details-why-fly-why-tailscale-the-existing-port-what-ships-galls-law-scope">RFD 1062 details: why Fly, why Tailscale, the existing port, what ships, Gall’s law, scope</a>
-  <ul class="collapse">
-  <li><a href="#the-split-node-by-node" id="toc-the-split-node-by-node" class="nav-link" data-scroll-target="#the-split-node-by-node">The split, node by node</a></li>
-  <li><a href="#why-fly-for-the-toplevel-and-not-the-worker" id="toc-why-fly-for-the-toplevel-and-not-the-worker" class="nav-link" data-scroll-target="#why-fly-for-the-toplevel-and-not-the-worker">Why Fly for the toplevel, and not the worker</a></li>
-  <li><a href="#why-the-worker-stays-on-tailscale-not-a-public-port" id="toc-why-the-worker-stays-on-tailscale-not-a-public-port" class="nav-link" data-scroll-target="#why-the-worker-stays-on-tailscale-not-a-public-port">Why the worker stays on Tailscale, not a public port</a></li>
-  <li><a href="#the-port-this-project-already-built-for-exactly-this" id="toc-the-port-this-project-already-built-for-exactly-this" class="nav-link" data-scroll-target="#the-port-this-project-already-built-for-exactly-this">The port this project already built for exactly this</a></li>
-  <li><a href="#what-ships-where" id="toc-what-ships-where" class="nav-link" data-scroll-target="#what-ships-where">What ships where</a></li>
-  <li><a href="#galls-law-once-more" id="toc-galls-law-once-more" class="nav-link" data-scroll-target="#galls-law-once-more">Gall’s law, once more</a></li>
-  <li><a href="#the-asset-half-of-the-wire-format-is-already-built" id="toc-the-asset-half-of-the-wire-format-is-already-built" class="nav-link" data-scroll-target="#the-asset-half-of-the-wire-format-is-already-built">The asset half of the wire format is already built</a></li>
-  <li><a href="#what-this-rfd-does-not-do" id="toc-what-this-rfd-does-not-do" class="nav-link" data-scroll-target="#what-this-rfd-does-not-do">What this RFD does not do</a></li>
-  </ul></li>
+  <li><a href="#rfd-1062-details-why-fly-why-tailscale-the-existing-port-what-ships-galls-law-scope" id="toc-rfd-1062-details-why-fly-why-tailscale-the-existing-port-what-ships-galls-law-scope" class="nav-link active" data-scroll-target="#rfd-1062-details-why-fly-why-tailscale-the-existing-port-what-ships-galls-law-scope">RFD 1062 details: why Fly, why Tailscale, the existing port, what ships, Gall’s law, scope</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1062-flyio-toplevel-4090-worker-split/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1062-flyio-toplevel-4090-worker-split/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -316,89 +306,11 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="rfd-1062-details-why-fly-why-tailscale-the-existing-port-what-ships-galls-law-scope" class="level1">
 <h1>RFD 1062 details: why Fly, why Tailscale, the existing port, what ships, Gall’s law, scope</h1>
-<section id="the-split-node-by-node" class="level2">
-<h2 class="anchored" data-anchor-id="the-split-node-by-node">The split, node by node</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 23%">
-<col style="width: 52%">
-<col style="width: 24%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Node</th>
-<th>Runs</th>
-<th>Reachable by</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Toplevel</strong> (Fly.io)</td>
-<td><code>weftspun_studio</code> (router, planner, catalog), CockroachDB, the built browser client</td>
-<td>the public internet</td>
-</tr>
-<tr class="even">
-<td><strong>Worker</strong> (this 4090 box, localhost)</td>
-<td>the model images, dispatched jobs</td>
-<td>the toplevel node only, over Tailscale</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="why-fly-for-the-toplevel-and-not-the-worker" class="level2">
-<h2 class="anchored" data-anchor-id="why-fly-for-the-toplevel-and-not-the-worker">Why Fly for the toplevel, and not the worker</h2>
-<p>Fly.io machines with a GPU are priced for rented GPU time, the same market RFD 1055 already priced vast.ai against. Moving the GPU there changes nothing in that comparison. It would cost more than the GPU this project already has power drawn for, sitting in this box.</p>
-<p>The router, the planner, and CockroachDB need none of that. RFD 1027 never sized them. They are not a model, and they hold no weights. A small, cheap, always-on Fly machine is the right size for them, and it is the piece that benefits from a public IP. A router with no public address routes nothing.</p>
-</section>
-<section id="why-the-worker-stays-on-tailscale-not-a-public-port" class="level2">
-<h2 class="anchored" data-anchor-id="why-the-worker-stays-on-tailscale-not-a-public-port">Why the worker stays on Tailscale, not a public port</h2>
-<p>RFD 1058 grounds its whole design in one fact. A bound port past <code>127.0.0.1</code> is a port the internet can reach. That fact does not change because the caller moved to Fly instead of staying on this box. It gets stronger, because now the caller really is off-box.</p>
-<p>This box already runs Tailscale. RFD 1058’s own firewall investigation found <code>tailscale0</code> and a live <code>ts-forward</code> nftables chain while chasing an unrelated Podman networking fault. Join the Fly toplevel to the same tailnet, and bind the worker’s job-receiving port to the Tailscale interface’s address, not <code>0.0.0.0</code> and not only <code>127.0.0.1</code>.</p>
-<p>That is a third bind mode past the two RFD 1058 already uses. It is reachable by tailnet peers, and by nothing else. It still holds no public bind, and it still keeps the same zero-trust framing, now extended across a WAN instead of confined to loopback.</p>
-</section>
-<section id="the-port-this-project-already-built-for-exactly-this" class="level2">
-<h2 class="anchored" data-anchor-id="the-port-this-project-already-built-for-exactly-this">The port this project already built for exactly this</h2>
-<p>RFD 1023 designed <code>Ports.JobSink</code> / <code>Ports.JobSource</code> so the router never learns which host runs a model:</p>
-<blockquote class="blockquote">
-<p>A vast.ai adapter implements the same two behaviors, thus the router never learns which host runs the model.</p>
-</blockquote>
-<p><code>WeftspunStudio.Adapters.ReplicateJobs</code> is the only adapter today. Its own moduledoc calls itself “a passthrough, and nothing more.” It forwards to Replicate’s queue and translates Replicate’s six statuses into RFD 1003’s four. A worker adapter for this box does the same shape of translation, against a queue this project runs itself instead of Replicate’s.</p>
-<p>This RFD names the target and does not build it. The adapter, its wire format to the worker, and the worker-side receiver are open work. See RFD 1057.</p>
-</section>
-<section id="what-ships-where" class="level2">
-<h2 class="anchored" data-anchor-id="what-ships-where">What ships where</h2>
-<p><strong>Toplevel, on Fly.io:</strong></p>
-<ul>
-<li><code>Dockerfile</code> at the repo root (RFD 1060 moved it there, and RFD 1058 already proved it builds a working release image) and a <code>fly.toml</code> this RFD does not yet write.</li>
-<li>CockroachDB, co-located with the router the same way RFD 1058 puts it beside <code>weftspun_studio</code> today, on a Fly Volume, since a Fly machine’s own disk is ephemeral across restarts.</li>
-<li>The built browser client (<code>thirdparty/3d_studio/</code>), served the way RFD 1019 already intends: the router as the one thing a browser talks to.</li>
-</ul>
-<p><strong>Worker, staying local:</strong></p>
-<ul>
-<li><code>weftspun.network</code>, and the quadlet isolation pattern RFD 1058 wrote. Not <code>weftspun-crdb.build</code>/<code>.container</code>/<code>.volume</code> themselves, though. CockroachDB is the toplevel’s persistence, not the worker’s, so those three quadlets move with the router role, to wherever the toplevel’s CockroachDB actually runs. The worker’s role narrows to the model images and their isolation, once the database they used to sit beside is gone from this box.</li>
-<li>A new job-receiving quadlet, not yet written, bound to the Tailscale interface per the section above.</li>
-</ul>
-</section>
-<section id="galls-law-once-more" class="level2">
-<h2 class="anchored" data-anchor-id="galls-law-once-more">Gall’s law, once more</h2>
-<p>RFD 1055 already invokes this: rent a card only after the owned one is the bottleneck. This RFD takes that step literally. The 4090 this box already has is the whole compute budget until it is not enough. Renting on vast.ai stays exactly where RFD 1055 leaves it, as the next tier once one box stops being enough.</p>
-</section>
-<section id="the-asset-half-of-the-wire-format-is-already-built" class="level2">
-<h2 class="anchored" data-anchor-id="the-asset-half-of-the-wire-format-is-already-built">The asset half of the wire format is already built</h2>
-<p><code>thirdparty/fabric-flow-adapters/flow/</code>’s <code>idtx_transport.h</code> speaks a real, working protocol against a service called aria-storage: <code>PUT</code>, <code>HEAD</code>, and <code>GET</code> over content-addressed chunks (<code>.cacnk</code>, casync, SHA-512/256, zstd-compressed) and indexes (<code>.caibx</code>), with bearer-token auth already wired in. RFD 1061 names the same pair, <code>idtx_chunker.h</code> and <code>idtx_transport.c</code>, as the transport that already backs <code>multiplayer-fabric-godot</code>’s asset streaming.</p>
-<p>That settles the hard half of this RFD’s open wire format, the binary mesh and USD payload moving between the toplevel and the worker. A worker adapter does not invent binary transport. It passes a <code>.caibx</code> URL as the asset reference, the same shape RFD 1061 needs for browser uploads.</p>
-<p>Unlike RFD 1061, this adapter needs no NIF. RFD 1061’s gap is generic USD-native mesh import and export, which needs <code>idtx_core</code> linked into the BEAM. This adapter only exchanges REST calls with aria-storage, plain HTTP the <code>req</code> dependency <code>mix.exs</code> already carries can reach on its own.</p>
-<p>What stays open is smaller than the whole wire format now: the job-control envelope. <code>Ports.JobSource</code> already defines RFD 1003’s four states, <code>:queued</code>, <code>:running</code>, <code>:completed</code>, <code>:failed</code>. Dispatching a job and polling that status is a small message, and <code>idtx_transport</code> was not built for that shape. Also open: whether an aria-storage instance runs anywhere reachable over the Tailscale join this RFD specifies. <code>idtx_transport.h</code>’s own example base URLs are generic placeholders, and this project names no deployed one yet.</p>
-</section>
-<section id="what-this-rfd-does-not-do" class="level2">
-<h2 class="anchored" data-anchor-id="what-this-rfd-does-not-do">What this RFD does not do</h2>
-<p><code>fly.toml</code> and <code>Dockerfile.fly</code> now exist, colocating CockroachDB on a Fly Volume the way <code>character_taxonomy/Dockerfile</code> already proves. A third process, <code>versitygw</code>, runs colocated too, per RFD 1073 and RFD 1058’s own zero-trust rule, bound to <code>127.0.0.1:10000</code>.</p>
-<p>The toplevel is live, on real Fly.io infrastructure, not only verified locally. <code>weftspun-studio</code> is a real app, with a real 3 GB Volume (<code>weftspun_studio_data</code>, region <code>sjc</code>), deployed and running. <code>https://weftspun-studio.fly.dev/api/v1/health</code>, <code>/api/v1/models</code>, and <code>/api/v1/pipelines</code> all answer, over the public internet. Inside the running machine, <code>versitygw</code> answers <code>403</code> on <code>127.0.0.1:10000</code>, the correct posix-backend response, and CockroachDB’s own health check answers <code>200</code>, both confirmed over <code>flyctl ssh console</code>.</p>
-<p>It still does not write the worker-side job-receiving adapter or its job-control envelope. It does not configure this box’s Tailscale ACLs to admit a Fly machine, or confirm Fly’s side of that join actually works. That pairing is asserted here, not run. It does not move CockroachDB off this box’s own RFD 1058 deployment, since the Fly toplevel runs its own separate, colocated CockroachDB instead. RFD 1057 tracks the rest as open work.</p>
-<p>It does not retire <code>ReplicateJobs</code>. RFD 1055 already records why that adapter stays until a worker answers. This RFD gives that worker a second candidate host, not a reason to remove the first.</p>
+<p><strong>Compacted.</strong> This RFD is abandoned, so its working-out was removed to keep the live corpus small. 1152 words are in git history and nothing was lost.</p>
+<pre><code>git show ac8201e2df493305313466c3764ce2cc2d88bdec:rfd/1062-flyio-toplevel-4090-worker-split/DETAILS.md</code></pre>
+<p>The README beside this file is whole. It carries the state, the decision and the retraction, which is what a reader needs to know a road is closed and why.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

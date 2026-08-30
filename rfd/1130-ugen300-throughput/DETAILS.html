@@ -297,6 +297,10 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#the-device" id="toc-the-device" class="nav-link" data-scroll-target="#the-device">The device</a></li>
   <li><a href="#the-three-quantities" id="toc-the-three-quantities" class="nav-link" data-scroll-target="#the-three-quantities">The three quantities</a></li>
+  <li><a href="#first-measurements-2026-08-29" id="toc-first-measurements-2026-08-29" class="nav-link" data-scroll-target="#first-measurements-2026-08-29">First measurements, 2026-08-29</a></li>
+  <li><a href="#the-first-port-was-starving-the-device-and-every-earlier-number-would-have-been-wrong" id="toc-the-first-port-was-starving-the-device-and-every-earlier-number-would-have-been-wrong" class="nav-link" data-scroll-target="#the-first-port-was-starving-the-device-and-every-earlier-number-would-have-been-wrong">THE FIRST PORT WAS STARVING THE DEVICE, AND EVERY EARLIER NUMBER WOULD HAVE BEEN WRONG</a></li>
+  <li><a href="#the-controlled-input-path-needed-a-shim-and-the-flat-c-api-does-not-work-on-h10" id="toc-the-controlled-input-path-needed-a-shim-and-the-flat-c-api-does-not-work-on-h10" class="nav-link" data-scroll-target="#the-controlled-input-path-needed-a-shim-and-the-flat-c-api-does-not-work-on-h10">The controlled-input path needed a shim, and the flat C API does not work on H10</a></li>
+  <li><a href="#a-host-side-change-reaches-the-device-which-is-what-a-scoring-loop-needs" id="toc-a-host-side-change-reaches-the-device-which-is-what-a-scoring-loop-needs" class="nav-link" data-scroll-target="#a-host-side-change-reaches-the-device-which-is-what-a-scoring-loop-needs">A host-side change reaches the device, which is what a scoring loop needs</a></li>
   <li><a href="#confounds-worth-naming-before-they-are-discovered" id="toc-confounds-worth-naming-before-they-are-discovered" class="nav-link" data-scroll-target="#confounds-worth-naming-before-they-are-discovered">Confounds worth naming before they are discovered</a></li>
   <li><a href="#what-the-comparison-is-for" id="toc-what-the-comparison-is-for" class="nav-link" data-scroll-target="#what-the-comparison-is-for">What the comparison is for</a></li>
   <li><a href="#what-is-not-measured-here" id="toc-what-is-not-measured-here" class="nav-link" data-scroll-target="#what-is-not-measured-here">What is not measured here</a></li>
@@ -347,6 +351,59 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <p>A single “frames per second” hides which of the three it came from, and the three diverge by more than an order of magnitude on a USB device.</p>
+</section>
+<section id="first-measurements-2026-08-29" class="level2">
+<h2 class="anchored" data-anchor-id="first-measurements-2026-08-29">First measurements, 2026-08-29</h2>
+<p><code>efficientnet_lite0.hef</code>, single context, DFC 5.3.0, on the UGen300 over USB. Apparatus: <code>hailortcli benchmark</code> and <code>hailortcli run2 --measure-latency --measure-overall-latency</code> for the rates, and <code>hailo/rung3_shim.py</code> for the controlled input.</p>
+<pre><code>steady-state rate         ~1168 FPS   (1177.4 / 1174.0 / 1153.9, spread 2%)
+HW latency, NN core          2.27 ms
+overall latency              3.95 ms
+transferred bytes         150,528 in, 1,000 out per inference
+chip temperature           38.7 - 41.7 C</code></pre>
+<p><strong>The third quantity is the answer to the question this RFD was written to ask.</strong> Overall minus hardware is <strong>1.68 ms of USB crossing per inference</strong>, 43% of end-to-end latency. It amortises under pipelining – 1168 FPS is 0.86 ms per frame against 3.95 ms for a lone frame – so the bus is a latency cost and not a throughput cost at this model size. A resident model pays it once per frame for the activations, not per weight.</p>
+<p>At 1168 FPS the input traffic alone is 1168 x 150,528 = <strong>176 MB/s</strong>, against the bus’s ~1.2 GB/s. So this model leaves the bus 85% idle, and the “streaming weights cost everything” case has not been reached at 4.7 MB of HEF.</p>
+</section>
+<section id="the-first-port-was-starving-the-device-and-every-earlier-number-would-have-been-wrong" class="level2">
+<h2 class="anchored" data-anchor-id="the-first-port-was-starving-the-device-and-every-earlier-number-would-have-been-wrong">THE FIRST PORT WAS STARVING THE DEVICE, AND EVERY EARLIER NUMBER WOULD HAVE BEEN WRONG</h2>
+<p>On the port it was first plugged into, <code>hailortcli</code> warned:</p>
+<pre><code>[HailoRT] [warning] USB-C source electrical current advertised: 1.5A.
+The module may run in reduced-performance mode.</code></pre>
+<p>Moving it to a USB4 dock re-enumerated it from <code>usb/001:001</code> to <code>usb/001:009</code> and the warning stopped. Every figure above was taken after the move.</p>
+<p><strong>The evidence is the absence of the firmware’s own flag, not a power reading</strong>, and the distinction is worth keeping. Neither direct route works: <code>measure-power</code> fails with <code>HAILO_OPEN_FILE_FAILURE(13)</code>, and <code>monitor</code> – whose help promises “on H10, presents performance and health stats” – reports it “is not supported on Windows”. So temperature is the only proxy available, and <strong>this RFD should not promise a power figure it cannot take.</strong></p>
+<p><strong>The comparison that would have priced the limit is gone.</strong> No throughput was taken at 1.5A before the move, so the cost of the power limit is unmeasured and only recoverable by plugging back in on purpose.</p>
+<p><strong>Backfilled 2026-08-29: throughput at 1.5A now exists, and it is the same.</strong> A frame ladder of raw uint8 transport – a 1x1 convolution, so the compute is negligible and the number is the link – was run at pipeline depth 4 across three different ports, each advertising 1.5A:</p>
+<pre><code>frame    in MB   out MB   ms/frame   frames/s   MB/s
+512p      1.05     0.26      4.83       207       272
+720p      3.69     0.92     15.75        63       293
+1080p     8.29     2.07     33.59        29       302
+4K       33.18     8.29    144.80         7       286</code></pre>
+<p>The link plateaus at ~285-300 MB/s and holds there across a 32x range of frame sizes, and across <code>usb/004:013</code>, <code>usb/001:001</code> and <code>usb/004:001</code> the 4K figure reproduced to within 0.07%. So the 1.5A ports do not differ from each other, and the ~176 MB/s this RFD measured for the keypoint model sits comfortably under that ceiling – which is why that model never felt the limit. <strong>The power question is still open</strong>: every port reached on this desk advertised 1.5A, so a run at 3.0A remains untaken and the plateau is a 1.5A number until one is. What is now closed is the within-1.5A comparison the paragraph above called unrecoverable.</p>
+<p><strong>Two software knobs that did not move it.</strong> <code>HAILO_POWER_MODE_ULTRA_PERFORMANCE</code> and <code>VDevice::dma_map</code> on the caller’s frame buffer were each measured at 4K, depth 4, against a baseline: 145.8 ms, ultra 146.2 ms, DMA-mapped 144.1 ms, both 146.7 ms – all within 1.5%, which is noise. The bounce copy DMA mapping removes is a 33 MB <code>memcpy</code> at 25.7 GB/s, 1.29 ms, 0.9% of a frame’s 145 ms. At this link speed the copy is not the cost, so zero-copy transport buys under one percent and its value here is multi-process topology, not throughput.</p>
+<p><strong>Pipelining is where the bus idle time converts to rate.</strong> Queueing frames through <code>run_async</code> instead of one synchronous call climbed 724 -&gt; 2094 FPS on a 16 KB block, 2.89x, and flattened exactly at the device’s own reported async queue depth of 32. That isolates ~0.9 ms of the 1.38 ms single-shot latency as USB round trip, the same crossing this RFD priced at 1.68 ms for the larger keypoint frame.</p>
+</section>
+<section id="the-controlled-input-path-needed-a-shim-and-the-flat-c-api-does-not-work-on-h10" class="level2">
+<h2 class="anchored" data-anchor-id="the-controlled-input-path-needed-a-shim-and-the-flat-c-api-does-not-work-on-h10">The controlled-input path needed a shim, and the flat C API does not work on H10</h2>
+<p><code>hailortcli</code> generates its own random inputs and dumps no outputs, so it cannot answer whether a host-side change reaches the device. HailoRT’s flat C API is exported and binds cleanly – all 17 declarations in <code>hailo/hailort.sigs</code> resolve against <code>libhailort.dll</code> – and the Hailo-10H <strong>rejects it</strong>:</p>
+<pre><code>hailo_init_configure_params_by_vdevice -&gt; HAILO_NOT_IMPLEMENTED(7)
+[HailoRT] [error] Did you try calling create_configure_params on H10?
+                  If so, use InferModel instead</code></pre>
+<p><code>InferModel</code> returns <code>Expected&lt;std::shared_ptr&lt;InferModel&gt;&gt;</code>, which ctypes cannot call, and the DLL exports no <code>extern "C"</code> entry points for it – 245 mangled C++ symbols and no flat ones. <code>hailo_platform</code>, Hailo’s Python bindings, are not on PyPI and are not shipped with the HailoRT 5.3.2 Windows install: <code>lib/</code> holds <code>libhailort.lib</code> and cmake files only.</p>
+<p>So <code>hailort_shim.cpp</code> wraps <code>InferModel</code> in six <code>extern "C"</code> functions, declared in <code>hailort_shim.sigs</code> and bound by <code>sigs_ctypes.py</code> – the same declarative-ABI convention this workspace uses for <code>iceoryx2.sigs</code> and <code>openvr_api.sigs</code>. 178 KB, built with clang++ against <code>libhailort.lib</code>.</p>
+<p>With it, on <code>efficientnet_lite0</code>:</p>
+<pre><code>different inputs   -&gt; different outputs, so the device computes on what is sent
+same input twice   -&gt; bit-identical, deterministic
+undersized buffer  -&gt; refused, status 2</code></pre>
+</section>
+<section id="a-host-side-change-reaches-the-device-which-is-what-a-scoring-loop-needs" class="level2">
+<h2 class="anchored" data-anchor-id="a-host-side-change-reaches-the-device-which-is-what-a-scoring-loop-needs">A host-side change reaches the device, which is what a scoring loop needs</h2>
+<p>Three HEFs of one architecture, compiled from authored ONNX:</p>
+<pre><code>variant   kernels sha         conv1 out_scale   device output
+base      58710ab3776b8531        6.44e-05      mean 85.989
+weights   1c35cff027a49580        6.72e-05      mean 79.814
+scale     f8830de2b0930035        1.79e-04      mean 84.769</code></pre>
+<p><strong>base against weights: 7,946 of 8,192 output bytes differ</strong>, and a rerun of base is bit-identical. So author -&gt; DFC -&gt; HEF -&gt; silicon -&gt; a score the host can read is closed, and an on-device evaluation loop has a foundation.</p>
+<p><strong>The scale row is confounded and is recorded rather than used.</strong> <code>force_range_out</code> moved conv1’s scale 2.8x as asked, but the kernel hash changed too: the optimiser re-derives weight quantisation, bias correction and its distillation pass against the new range. So forcing a range is not a scale-only perturbation, which matters to anything built on QZO – see <code>logbook-dfc-emulation-contexts-disagree.md</code>.</p>
+<p>Compile cost, for anything that recompiles per generation: <strong>optimize 12.9-15.9 s, compile 4.5-5.0 s</strong> for a two-conv graph, and <strong>8.7 s</strong> to compile a 131k-parameter stack.</p>
 </section>
 <section id="confounds-worth-naming-before-they-are-discovered" class="level2">
 <h2 class="anchored" data-anchor-id="confounds-worth-naming-before-they-are-discovered">Confounds worth naming before they are discovered</h2>

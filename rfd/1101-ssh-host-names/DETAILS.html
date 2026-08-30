@@ -26,41 +26,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -328,16 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#rfd-1101-details-what-is-what-and-every-repair-script" id="toc-rfd-1101-details-what-is-what-and-every-repair-script" class="nav-link active" data-scroll-target="#rfd-1101-details-what-is-what-and-every-repair-script">RFD 1101 details: what is what, and every repair script</a>
-  <ul class="collapse">
-  <li><a href="#what-is-what" id="toc-what-is-what" class="nav-link" data-scroll-target="#what-is-what">What is what</a></li>
-  <li><a href="#auto-guard-keeps-the-layout-after-an-update" id="toc-auto-guard-keeps-the-layout-after-an-update" class="nav-link" data-scroll-target="#auto-guard-keeps-the-layout-after-an-update">Auto-guard, keeps the layout after an update</a></li>
-  <li><a href="#fix-auth" id="toc-fix-auth" class="nav-link" data-scroll-target="#fix-auth">Fix auth</a></li>
-  <li><a href="#fix-dgx-remote-only" id="toc-fix-dgx-remote-only" class="nav-link" data-scroll-target="#fix-dgx-remote-only">Fix <code>DGX-Remote</code> only</a></li>
-  <li><a href="#editor-terminal-stuck-reconnecting" id="toc-editor-terminal-stuck-reconnecting" class="nav-link" data-scroll-target="#editor-terminal-stuck-reconnecting">Editor terminal stuck reconnecting</a></li>
-  <li><a href="#other-scripts" id="toc-other-scripts" class="nav-link" data-scroll-target="#other-scripts">Other scripts</a></li>
-  <li><a href="#dgx-to-surface-reverse-ssh" id="toc-dgx-to-surface-reverse-ssh" class="nav-link" data-scroll-target="#dgx-to-surface-reverse-ssh">DGX to Surface, reverse SSH</a></li>
-  </ul></li>
+  <li><a href="#rfd-1101-details-what-is-what-and-every-repair-script" id="toc-rfd-1101-details-what-is-what-and-every-repair-script" class="nav-link active" data-scroll-target="#rfd-1101-details-what-is-what-and-every-repair-script">RFD 1101 details: what is what, and every repair script</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1101-ssh-host-names/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1101-ssh-host-names/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -350,92 +306,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="rfd-1101-details-what-is-what-and-every-repair-script" class="level1">
 <h1>RFD 1101 details: what is what, and every repair script</h1>
-<section id="what-is-what" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-what">What is what</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 31%">
-<col style="width: 27%">
-<col style="width: 29%">
-<col style="width: 11%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Seen in NVIDIA Sync</th>
-<th>SSH name (editor)</th>
-<th>Address underneath</th>
-<th>When</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>DGX Sparks local</td>
-<td><code>DGX-Local</code></td>
-<td><code>dgx-spark.local</code></td>
-<td>At home</td>
-</tr>
-<tr class="even">
-<td>DGX Sparks remote</td>
-<td><code>DGX-Remote</code></td>
-<td><code>100.93.124.59</code></td>
-<td>Away</td>
-</tr>
-</tbody>
-</table>
-<p><code>DGX-Local</code> in the SSH config is correct; prefer Remote-SSH to either <code>DGX-Local</code> or <code>DGX-Remote</code> directly.</p>
-<p>If an old editor session still shows <code>dgx-spark.local</code>, that is not a third machine, it is the address under <code>DGX-Local</code>. The editor uses <code>~/.ssh/config-cursor</code> (the main config, plus a mapping from <code>dgx-spark.local</code> to user <code>sifr</code>); NVIDIA Sync uses <code>~/.ssh/config</code> directly, two hosts only.</p>
-<p>NVIDIA Sync uses <code>~/.ssh/config</code> plus <code>nvsync.key</code>. If Sync fails but the editor still worked before, the key on the Spark needs reinstalling, not deleting <code>DGX-Local</code>.</p>
-</section>
-<section id="auto-guard-keeps-the-layout-after-an-update" class="level2">
-<h2 class="anchored" data-anchor-id="auto-guard-keeps-the-layout-after-an-update">Auto-guard, keeps the layout after an update</h2>
-<p>Golden templates live in this repository’s own <code>scripts/</code> (<code>dgx-spark.ssh.config</code>, <code>cursor-ssh-extras.config</code>, and others). The guard restores them whenever NVIDIA Sync or the editor’s SSH settings drift.</p>
-<p>One-time install (before every <code>npm run dev</code>, and at Windows sign-in):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> C<span class="op">:</span>\Users\alfao\Documents\GitHub\Weftspun3DStudio</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\scripts\install-dgx-ssh-guard<span class="op">.</span><span class="fu">ps1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Manual check: <code>npm run dgx:guard</code>.</p>
-<p>The guard does not re-pair NVIDIA Sync or delete a host; it only restores config files, strips a bad <code>Include</code> line, fixes a byte-order mark, and resets the editor’s own SSH settings. Use the repair scripts below if auth or remote pairing actually breaks.</p>
-</section>
-<section id="fix-auth" class="level2">
-<h2 class="anchored" data-anchor-id="fix-auth">Fix auth</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> C<span class="op">:</span>\Users\alfao\Documents\GitHub\Weftspun3DStudio</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\scripts\repair-dgx-auth<span class="op">.</span><span class="fu">ps1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This script keeps <code>DGX-Local</code> and <code>DGX-Remote</code> in <code>~/.ssh/config</code>, installs the NVIDIA Sync public key on the Spark (one password prompt), and re-registers with NVIDIA Sync without wiping the SSH config.</p>
-</section>
-<section id="fix-dgx-remote-only" class="level2">
-<h2 class="anchored" data-anchor-id="fix-dgx-remote-only">Fix <code>DGX-Remote</code> only</h2>
-<p>For <code>knownhost: remote host not known</code>, when <code>DGX-Local</code> already works. This script does not change <code>DGX-Local</code>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> C<span class="op">:</span>\Users\alfao\Documents\GitHub\Weftspun3DStudio</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\scripts\repair-dgx-remote<span class="op">.</span><span class="fu">ps1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="editor-terminal-stuck-reconnecting" class="level2">
-<h2 class="anchored" data-anchor-id="editor-terminal-stuck-reconnecting">Editor terminal stuck reconnecting</h2>
-<p>A stale <code>cursor-server</code> process on the Spark causes a multiplex 401 and an endless reconnect loop.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> C<span class="op">:</span>\Users\alfao\Documents\GitHub\Weftspun3DStudio</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\scripts\fix-cursor-remote-loop<span class="op">.</span><span class="fu">ps1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Quit the editor fully, run the script, reopen it, then connect through <code>DGX-Local</code>, not <code>dgx-spark.local</code> directly.</p>
-</section>
-<section id="other-scripts" class="level2">
-<h2 class="anchored" data-anchor-id="other-scripts">Other scripts</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> C<span class="op">:</span>\Users\alfao\Documents\GitHub\Weftspun3DStudio</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\scripts\repair-nvidia-sync-devices<span class="op">.</span><span class="fu">ps1</span>   <span class="co"># removes old junk device names only</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\scripts\restart-nvidia-sync<span class="op">.</span><span class="fu">ps1</span>          <span class="co"># for when the app itself will not open</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="dgx-to-surface-reverse-ssh" class="level2">
-<h2 class="anchored" data-anchor-id="dgx-to-surface-reverse-ssh">DGX to Surface, reverse SSH</h2>
-<p>Lets the Spark SSH into the Surface (<code>alfao@10.0.0.32</code>), for sync scripts and file pulls.</p>
-<p>One-time, administrator PowerShell on the Surface:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> C<span class="op">:</span>\Users\alfao\Documents\GitHub\Weftspun3DStudio</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\scripts\install-surface-openssh-server<span class="op">.</span><span class="fu">ps1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Then, in a normal PowerShell:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\scripts\allow-dgx-ssh-to-surface<span class="op">.</span><span class="fu">ps1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This fetches or creates <code>~/.ssh/id_ed25519</code> on the Spark, adds it to <code>~/.ssh/authorized_keys</code> on the Surface, fixes the key’s file permissions, and appends a <code>Host Surface-PC</code> block to the Spark’s own <code>~/.ssh/config</code>.</p>
-<p>Test from the DGX:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> Surface-PC hostname</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or: ssh alfao@10.0.0.32</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The Surface’s LAN IP is auto-detected, Wi-Fi first; Tailscale (<code>100.94.x.x</code>) is not used for LAN SSH unless a separate host block is added for it.</p>
+<p><strong>Compacted.</strong> This RFD is abandoned, so its working-out was removed to keep the live corpus small. 481 words are in git history and nothing was lost.</p>
+<pre><code>git show ac8201e2df493305313466c3764ce2cc2d88bdec:rfd/1101-ssh-host-names/DETAILS.md</code></pre>
+<p>The README beside this file is whole. It carries the state, the decision and the retraction, which is what a reader needs to know a road is closed and why.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

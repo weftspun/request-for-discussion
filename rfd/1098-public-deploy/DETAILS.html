@@ -26,41 +26,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -328,16 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#rfd-1098-details-the-deploy-modes-the-forbidden-variables-and-local-verify" id="toc-rfd-1098-details-the-deploy-modes-the-forbidden-variables-and-local-verify" class="nav-link active" data-scroll-target="#rfd-1098-details-the-deploy-modes-the-forbidden-variables-and-local-verify">RFD 1098 details: the deploy modes, the forbidden variables, and local verify</a>
-  <ul class="collapse">
-  <li><a href="#the-two-modes" id="toc-the-two-modes" class="nav-link" data-scroll-target="#the-two-modes">The two modes</a></li>
-  <li><a href="#setting-up-the-vercel-demo" id="toc-setting-up-the-vercel-demo" class="nav-link" data-scroll-target="#setting-up-the-vercel-demo">Setting up the Vercel demo</a></li>
-  <li><a href="#what-must-never-be-set-on-vercel" id="toc-what-must-never-be-set-on-vercel" class="nav-link" data-scroll-target="#what-must-never-be-set-on-vercel">What must never be set on Vercel</a></li>
-  <li><a href="#optional-on-vercel-public-client-ids-only" id="toc-optional-on-vercel-public-client-ids-only" class="nav-link" data-scroll-target="#optional-on-vercel-public-client-ids-only">Optional on Vercel, public client IDs only</a></li>
-  <li><a href="#local-development-unchanged" id="toc-local-development-unchanged" class="nav-link" data-scroll-target="#local-development-unchanged">Local development, unchanged</a></li>
-  <li><a href="#verify-before-a-push" id="toc-verify-before-a-push" class="nav-link" data-scroll-target="#verify-before-a-push">Verify before a push</a></li>
-  <li><a href="#full-stack-private" id="toc-full-stack-private" class="nav-link" data-scroll-target="#full-stack-private">Full-stack, private</a></li>
-  </ul></li>
+  <li><a href="#rfd-1098-details-the-deploy-modes-the-forbidden-variables-and-local-verify" id="toc-rfd-1098-details-the-deploy-modes-the-forbidden-variables-and-local-verify" class="nav-link active" data-scroll-target="#rfd-1098-details-the-deploy-modes-the-forbidden-variables-and-local-verify">RFD 1098 details: the deploy modes, the forbidden variables, and local verify</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1098-public-deploy/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1098-public-deploy/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -350,162 +306,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="rfd-1098-details-the-deploy-modes-the-forbidden-variables-and-local-verify" class="level1">
 <h1>RFD 1098 details: the deploy modes, the forbidden variables, and local verify</h1>
-<section id="the-two-modes" class="level2">
-<h2 class="anchored" data-anchor-id="the-two-modes">The two modes</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 10%">
-<col style="width: 28%">
-<col style="width: 42%">
-<col style="width: 17%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Mode</th>
-<th>Where</th>
-<th>AI backend</th>
-<th>Secrets</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Local dev</td>
-<td><code>npm run dev</code>, on a PC or DGX</td>
-<td><code>VITE_API_ENDPOINT</code>, <code>DEV_API_PROXY_TARGET</code></td>
-<td><code>.env</code>, gitignored</td>
-</tr>
-<tr class="even">
-<td>Public demo</td>
-<td>Vercel (<code>vercel.json</code>)</td>
-<td>None: viewport, VRM upload, traits UI only</td>
-<td>No client secret</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="setting-up-the-vercel-demo" class="level2">
-<h2 class="anchored" data-anchor-id="setting-up-the-vercel-demo">Setting up the Vercel demo</h2>
-<ol type="1">
-<li>Import <code>weftspun/weftspun-3d-studio</code> in Vercel.</li>
-<li>Framework preset: Vite, or use the repository’s own <code>vercel.json</code>.</li>
-<li>Build command: <code>npm run build</code> (runs <code>verify-public-build-env</code>, then <code>vite build</code>).</li>
-<li>Output directory: <code>build</code>.</li>
-</ol>
-<p><code>vercel.json</code> sets two safe, build-time-only flags:</p>
-<ul>
-<li><code>VITE_PUBLIC_DEMO=1</code>: hides the API status panel, shows user-facing “no AI backend” copy, and swaps the XR Voice sidebar (<code>XrAiPanel.jsx</code>, top of the left sidebar) for a static demo preview instead of a live DGX iframe. Mic, camera, and task handoff still need local development plus a real DGX Spark.</li>
-<li><code>VITE_ASSET_PATH=https://m3-org.github.io/loot-assets/</code>: reads loot assets from a CDN instead of cloning the full asset repository in CI.</li>
-</ul>
-</section>
-<section id="what-must-never-be-set-on-vercel" class="level2">
-<h2 class="anchored" data-anchor-id="what-must-never-be-set-on-vercel">What must never be set on Vercel</h2>
-<p>Every <code>VITE_*</code> variable inlines into the browser bundle:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 45%">
-<col style="width: 54%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Variable</th>
-<th>Why</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>VITE_3DAIGC_API_KEY</code></td>
-<td>API bearer token</td>
-</tr>
-<tr class="even">
-<td><code>VITE_AVATARSDK_CLIENT_SECRET</code></td>
-<td>OAuth secret</td>
-</tr>
-<tr class="odd">
-<td><code>VITE_THIRDWEB_SECRET_KEY</code></td>
-<td>Wallet secret</td>
-</tr>
-<tr class="even">
-<td><code>VITE_PINATA_*</code>, <code>VITE_ALCHEMY_*</code>, <code>VITE_BASE_X402_*</code>, <code>VITE_VANA_*</code></td>
-<td>Service secrets</td>
-</tr>
-<tr class="odd">
-<td><code>VITE_HELIUS_KEY</code>, <code>VITE_OPENSEA_KEY</code></td>
-<td>Paid API keys</td>
-</tr>
-<tr class="even">
-<td><code>VITE_API_ENDPOINT</code> pointing at a LAN/DGX/Tailscale address</td>
-<td>Private infrastructure leak</td>
-</tr>
-<tr class="odd">
-<td><code>VITE_XR_HUB_URL</code> / <code>VITE_MSF_PUBLIC_URL</code> with <code>10.0.0.*</code> or a LAN IP</td>
-<td>Private infrastructure leak; use a Tailscale Funnel HTTPS address on Vercel instead</td>
-</tr>
-<tr class="even">
-<td><code>MSF_EDIT_KEY</code>, <code>MSF_DB_PASSWORD</code>, <code>VITE_3DAIGC_API_KEY</code></td>
-<td>Server or edit secrets; never a <code>VITE_*</code> name</td>
-</tr>
-<tr class="odd">
-<td><code>DEV_API_PROXY_TARGET</code></td>
-<td>Development-only; unused in a production build</td>
-</tr>
-</tbody>
-</table>
-<p><code>npm run build</code> fails on Vercel or CI outright if any of these are present (<code>scripts/verify-public-build-env.mjs</code>).</p>
-</section>
-<section id="optional-on-vercel-public-client-ids-only" class="level2">
-<h2 class="anchored" data-anchor-id="optional-on-vercel-public-client-ids-only">Optional on Vercel, public client IDs only</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 26%">
-<col style="width: 73%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Variable</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>VITE_THIRDWEB_CLIENT_ID</code></td>
-<td>Public wallet client id</td>
-</tr>
-<tr class="even">
-<td><code>VITE_AVATARSDK_CLIENT_ID</code></td>
-<td>Public AvatarSDK client id, no secret</td>
-</tr>
-<tr class="odd">
-<td><code>VITE_JOB_STATUS_PATH</code></td>
-<td>Only if a real public API URL is exposed</td>
-</tr>
-<tr class="even">
-<td><code>VITE_XR_HUB_URL</code></td>
-<td>Local development or self-hosted only; unused on the Vercel public demo</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="local-development-unchanged" class="level2">
-<h2 class="anchored" data-anchor-id="local-development-unchanged">Local development, unchanged</h2>
-<p>Copy <code>.env.example</code> to <code>.env</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">DEV_API_PROXY_TARGET</span><span class="op">=</span>http://10.0.0.158:7842</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="va">VITE_API_ENDPOINT</span><span class="op">=</span>/__dev_dgx_proxy</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="va">VITE_JOB_STATUS_PATH</span><span class="op">=</span>api/v1/system/jobs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>DEV_API_PROXY_TARGET</code> is read only by the Vite dev server (<code>vite.config.js</code>); it never reaches the client bundle. The DGX proxy, HTTPS certs, remote logging, and IWSDK plugins are development-only (<code>command === 'serve'</code>).</p>
-</section>
-<section id="verify-before-a-push" class="level2">
-<h2 class="anchored" data-anchor-id="verify-before-a-push">Verify before a push</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate Vercel, no local .env loaded</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="va">VERCEL</span><span class="op">=</span>1 <span class="va">CI</span><span class="op">=</span>1 <span class="va">VITE_PUBLIC_DEMO</span><span class="op">=</span>1 <span class="dt">\</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">VITE_ASSET_PATH</span><span class="op">=</span>https://m3-org.github.io/loot-assets/ <span class="dt">\</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">npm</span> run build</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="full-stack-private" class="level2">
-<h2 class="anchored" data-anchor-id="full-stack-private">Full-stack, private</h2>
-<p>Run <code>3DAIGC-API</code> (<code>github.com/AlfaOmegaGrafx/3DAIGC-API</code>) on a real GPU machine, and point a local <code>.env</code> at it. Never put a DGX URL on Vercel; use a public HTTPS API, or keep AI generation local-only.</p>
+<p><strong>Compacted.</strong> This RFD is abandoned, so its working-out was removed to keep the live corpus small. 487 words are in git history and nothing was lost.</p>
+<pre><code>git show ac8201e2df493305313466c3764ce2cc2d88bdec:rfd/1098-public-deploy/DETAILS.md</code></pre>
+<p>The README beside this file is whole. It carries the state, the decision and the retraction, which is what a reader needs to know a road is closed and why.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

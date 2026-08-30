@@ -349,7 +349,8 @@ EditScore NF4                6.75 GiB     28-36 s</code></pre>
 <pre><code>export      825 nodes, 22 operators, max|diff| 3.099e-06
 translate   parse OK, arch hailo10h, operators outside
             the allowlist: none
-compile     not reached; SIGKILL at 30.26 GiB</code></pre>
+compile     not reached; SIGKILL at 30.26 GiB
+            ceiling lifted 2026-08-28: .wslconfig memory=48GB, WSL reports 47 GiB</code></pre>
 <p>The device half is 25.245 M parameters against the full model’s 40.852 M, both counted rather than estimated. At bf16 that is 0.050 GB, about 0.6 per cent of the part’s 8 GB, so memory was never what stopped it.</p>
 </section>
 <section id="the-editscore-correction" class="level2">
