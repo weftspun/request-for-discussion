@@ -1,0 +1,304 @@
+# Logbook: one base, measured, and the rerank
+
+Apparatus: `huggingface_hub.model_info` and `dataset_info` with `files_metadata=True`;
+`config.json` and safetensors headers read directly, the latter by ranged GET; `git show`
+against `3-interactor/llama-cpp-npu-vision-upstream` at `6a272903`; `GET /my/details` and
+`/my/characters` against `api.artifactsmmo.com`; `hailortcli fw-control identify` and
+`Get-PnpDevice` on the local desk. Sizes are the sum of `siblings[].size`, decimal GB.
+
+**Decided: `gemma-4-E4B` is the only base.** The 31B and the 12B are both dropped -- one
+model to maintain, evaluated on our own courses rather than on published benchmarks. What
+follows is why the other two were considered, what they measured, and what dropping them
+costs, because the next reader will otherwise re-derive the whole comparison.
+
+## Gemma 4 is Apache-2.0, and the prior that says otherwise is wrong
+
+Gemma 1, 2 and 3 carried Google's custom Gemma Terms of Use. **Gemma 4, released
+2026-04-02, is Apache-2.0**, confirmed on `google/gemma-4-31B-it` and every sibling
+checked. This is recorded because it was asserted the other way during the session that
+produced this entry, from a stale prior, and the licence is a precondition here rather
+than a detail.
+
+The old terms extended the licence to models trained on Gemma-generated synthetic data.
+That propagation is what the OpenRAIL-M row exists to stop, and it is gone.
+
+## The checkpoints, measured
+
+    repo                                          size      note
+
+    google/gemma-4-E4B-it                         16.0 GB   2130 tensors
+    google/gemma-4-E4B-it-qat-q4_0-unquantized    15.9 GB   2076 tensors
+    google/gemma-4-E4B-it-qat-w4a16-ct            11.5 GB
+    google/gemma-4-E4B-it-qat-mobile-transformers  3.6 GB
+    google/gemma-4-12B-it                         24.0 GB   dropped
+    google/gemma-4-31B-it-qat-q4_0-unquantized    62.6 GB   dropped
+    google/gemma-4-31B-it-qat-q4_0-gguf           18.9 GB   GGUF, the wrong artefact
+    Gryphe/Gemma-4-12B-StyleTune                  26.0 GB   dropped with the 12B
+    densenet/...-31B-StyleTune-heretic-ara        65.4 GB   dropped with the 31B
+
+**The QAT repo that fits a small card is the GGUF one, and it is the wrong artefact.**
+`-unquantized` is the usable QAT release: QAT-*trained* weights at full precision,
+quantised downstream. The 18.9 GB figure that makes QAT look like a free win is the GGUF.
+
+**The two E4B checkpoints differ by 54 tensors.** `-it` carries 2130 and the QAT variant
+2076; the QAT one drops `k_proj`, `v_proj` and `k_norm` for 18 layers. That is
+`num_kv_shared_layers: 18` materialised into the checkpoint. A delta computed against
+`-it` does not align with the QAT variant, so an adapter is specific to whichever it was
+built on. Neither has an `lm_head` -- both tie the output head to `model.embed_tokens`.
+
+**The untied `lm_head` in the StyleTune line is Gryphe's, not Heretic's.**
+`Gemma-4-31B-StyleTune` and `...-heretic-ara` are both 65.4 GB against Google's 62.6, and
+both carry 1189 tensors to Google's 1188. 262144 x 5376 x 2 bytes is 2.82 GB, the whole
+difference. The abliteration adds no tensor. This was attributed to Heretic first and the
+attribution was wrong.
+
+## KV cost, from `config.json` rather than a rule of thumb
+
+    model  layers  kv_heads  head_dim  sw    full  KV/token (fp16)  fixed sliding
+
+    E4B    42       2        256        512   7     14 KiB           28 MiB
+    12B    48       8        256       1024   8     64 KiB          320 MiB
+    31B    60      16        256       1024  10    160 KiB          800 MiB
+
+E4B also carries `num_kv_shared_layers: 18`. On the local 3090, an int4 E4B is about 4 GB
+with encoders, leaving ~20 GB of KV at 14 KiB/token -- far past the 262K position limit.
+Context stops being a constraint at all.
+
+## What dropping the larger two costs, stated rather than discovered
+
+Google's published figures, 31B / 12B / E4B:
+
+    Tau2, agentic tool use      76.9 / 69.0 / 42.2
+    MRCR v2 @128K               66.4 / 43.4 / 25.4
+    MMLU Pro                    85.2 / 77.2 / 69.4
+    MMMU Pro, vision            76.9 / 69.1 / 52.6
+
+Tau2 and MRCR are the two that matter for an agent, and E4B is worst on both. Two things
+bound the cost. Evaluation is on our own courses, so a public benchmark measures a
+distribution we are not deploying into. And taskweft's HTN planner holds the long
+dependency chains that MRCR is a proxy for, so the planner does the remembering.
+
+**The persona has no source now.** Gryphe's StyleTune line covers 12B, 26B-A4B and 31B and
+not E4B, so dropping the 12B drops the only licence-clean persona checkpoint reachable
+from here. Style has to come from our own traces. That was already the plan; it is now
+the only plan.
+
+## Gryphe's corpus cannot be reproduced, and does not need to be
+
+Four of Gryphe's eight datasets state no licence. The rest are generated by Claude Sonnet
+3.5, Claude Opus or GPT-4o -- all API-only, and the hosted-API row says condition 1 cannot
+be satisfied without a checkpoint. `CoEdit-Alpaca` at 20 MB is the only survivor and it is
+text editing, not style. Using someone's Apache-2.0 weights is not the act that row
+governs; it governs what enters a corpus.
+
+## The abliteration is a LoRA, and Heretic computes it natively
+
+Heretic's ARA uses no refusal direction. It captures module input/output tensors through
+hooks and performs direct, unconstrained matrix optimisation, so **the delta is high-rank
+by construction** -- which is what "arbitrary rank" names. A truncated-SVD extraction was
+written, syntax-checked, and never run: it would have measured what the method's own
+description already states.
+
+That was the wrong question. `--export-strategy ADAPTER` emits a LoRA directly, and
+`--row-normalization FULL`, the default, already "compute[s] LoRA adapter relative to
+row-normalized weights". So the adapter comes out of the run rather than out of a
+decomposition, and **Google's QAT weights stay bit-identical** -- which also removes the
+risk that unconstrained optimisation knocks them off the 4-bit grid.
+
+Run, on the local 3090:
+
+    model   google/gemma-4-E4B-it-qat-q4_0-unquantized @ 476025a0
+    seed    1171
+    export  ADAPTER
+    heretic-llm 1.4.0, torch 2.10.0+cu128
+
+Pinned commit plus seed plus Heretic's own `reproduce.json` satisfies condition 1 by
+construction.
+
+**Two dependency failures worth recording, because both reported success.** The first run
+died on `Gemma4Processor requires the PIL library`; the second on `No module named
+'torchvision'`. Gemma 4 is multimodal and its processor imports both even for a text-only
+run. Both were reported as exit code 0 by a PowerShell wrapper that did not propagate
+`$LASTEXITCODE`, so the runs read as started when they had already failed. The wrapper now
+throws, and a preflight checks the imports before any GPU time is spent.
+
+Also: pixi resolved `torch 2.13.0+cpu` from conda-forge. It imports, it runs, and
+`cuda.is_available()` is False. The cu128 index is pinned per-package in `pixi.toml` --
+globally, via `extra-index-urls`, it makes the resolver look for every package there and
+the solve fails on `tqdm`.
+
+## Both accelerators are present, and neither has been measured
+
+    UGen300 USB AI Accelerator (Hailo-10H)   status OK, firmware 5.3.2, usb/001:001
+    NPU Compute Accelerator Device            status OK, AMD, PCI\VEN_1022&DEV_1502
+    NVIDIA GeForce RTX 3090                   24 GB, idle
+
+The second is the 7840U's own XDNA1 NPU, and nothing in this workspace knew it was there.
+
+**The Hailo was power-starved, and moving it to a USB4 dock cleared it.** On the first
+port `hailortcli` warned: *"USB-C source electrical current advertised: 1.5A. The module may
+run in reduced-performance mode."* On the dock the device re-enumerated from `usb/001:001`
+to `usb/001:009` and the warning stopped. RFD 1130 exists to report what the device
+delivers, and a figure taken on the first port would have been a figure about a cable.
+
+**The evidence is the absence of the firmware's own flag, not a power reading**, and that
+distinction is worth keeping. Neither direct route works here: `measure-power` fails with
+`HAILO_OPEN_FILE_FAILURE(13)`, and `monitor` -- the command whose help promises "on H10,
+presents performance and health stats" -- reports that it "is not supported on Windows". So
+the claim is that the module no longer reports reduced-performance mode, which is weaker
+than a measured current and is what we have.
+
+**The comparison that would have settled it is now gone.** No throughput was taken at 1.5A
+before the move, so the cost of the power limit cannot be quantified from here. Recovering
+it means deliberately plugging back into the 1.5A port and benchmarking both, which is
+worth an hour if RFD 1130 wants the delta rather than just a good number.
+
+Extended identify, for the record: `HAILO10H`, firmware 5.3.2 (release,app), boot source
+FLASH, LCS 5, board SKU-ID 8, chip serial `F8FBFDDB7CD6F769D3CE75F9`.
+
+**Neither NPU has a measured rate.** `gpu_tops.py` says published TOPS are "a ranking and
+not a budget" -- 40 TOPS INT4 at an assumed 30% utilisation, profiler never run. It now has
+two local devices to point at instead of zero.
+
+**`adapt` cannot run on either.** HailoRT executes a compiled HEF, a forward graph: no
+backward pass, no gradient, no optimizer. A training step has no representation in the
+format. The 3090 does `adapt`; the accelerators serve `ask`.
+
+**And `ask` on the Hailo is not limited to an encoder, which this entry implied.** HailoRT
+5.3.2 ships `genai/llm/llm.hpp` and `genai/vlm/vlm.hpp` -- autoregressive generation with
+sampling parameters, token streaming, and a LoRA selected by name at load time. The
+Qwen3-VL-only gating recorded above is a property of llama.cpp's `mtmd` path, not of the
+device. See `logbook-dfc-emulation-contexts-disagree.md`, which retracts the wider claim and
+records the evidence that produced it.
+
+## ONNX was unblocked, and the row was scoped to a one-device world
+
+The ONNX row argued that "ONNX had one job left after the runtimes went, which was carrying
+models into Hailo's Dataflow Compiler", and retired the format because TFLite does that job
+better by Hailo's own direction. That argument was about Hailo, and it was sound about
+Hailo.
+
+It never considered a second accelerator, because nobody knew there was one. XDNA's whole
+toolchain is ONNX-shaped: AMD Quark quantises ONNX-to-ONNX, and the VitisAI EP executes
+ONNX. The row was not wrong; it was scoped to a world that stopped being true when a device
+scan turned up a second NPU. Row and section both removed, 21/21.
+
+Open, and measurable locally: whether XDNA1 gets AMD's INT4 flows or whether those target
+XDNA2 only.
+
+## The style corpus is an RL environment, not a distillation
+
+The character plays ArtifactsMMO and lives the character-avatar; traces become the corpus.
+The EditScore schema transfers directly:
+
+    EditScore                     game equivalent
+
+    images: [before, after]       states: [before, after]
+    instruction                   the HTN task from taskweft
+    task_type, 11 classes         action class: move, fight, gather, craft, trade
+    expected_scores: [22, 20]     outcome delta, computed by the engine
+
+EditScore's scores had to be **judged**. Game outcomes are **computed** -- HP, XP, gold,
+inventory and success come back in the action response, and taskweft says whether the
+action satisfied the next precondition. Two deterministic label sources, one learned policy.
+
+**That settles condition 3.** The rule is about capability transfer, and playing a game is
+capability, so it binds where style alone would not have. But the reward comes from the
+engine rather than a teacher, so "a student excellent on its teacher's output and mediocre
+on the world" cannot occur. Condition 4 lands the same way, and evaluation is on our
+courses, which are real data we hold.
+
+## The account is five characters, and the corpus is calendar-bound
+
+    AriaWeft  WarpWeft  ShuttleWeft  HeddleWeft  SelvageWeft     all level 1
+
+`/characters/create` states the cap: "You can create up to 5 characters." The account was
+at 1 and is now at 5. Multi-accounting is a ban, so five is the hard ceiling.
+
+    minimum cooldown    3 s per action per character, a bypass having been patched
+    sandbox             451, "you must be a member" -- membership is paid
+    servers             seasonal, about 4 months, so a corpus is tied to a season
+
+At 5 to 10 s average across action types, five characters yield 43,000 to 86,000 actions a
+day: **1.2 to 2.2 days** for a 97k-row corpus, against 6 to 11 on one character.
+
+**This is the only step whose cost is calendar rather than money.** Everything else goes
+faster on better hardware. This does not, and the season expires.
+
+Five characters should specialise rather than run five copies of one policy. EditScore's
+own corpus is roughly balanced across its 11 `task_type` classes, and a single character
+grinding one skill produces a corpus dominated by one class.
+
+## Agentic datasets: licence is the easy half, the generator decides it
+
+    dataset                                    licence      generated by         verdict
+
+    Salesforce/xlam-function-calling-60k       cc-by-4.0    DeepSeek-V2, Mixtral  passes
+    nvidia/Llama-Nemotron-Post-Training        cc-by-4.0    Llama-3.1/3.3         passes
+    PrimeIntellect/SYNTHETIC-1                 apache-2.0   DeepSeek-R1           passes
+    microsoft/orca-agentinstruct-1M-v1         cdla-perm.   GPT-4                 blocked
+    Nexusflow/Function_Call_Definitions        cc-by-nc-sa  --                    blocked
+    THUDM/AgentInstruct                        none stated  --                    blocked
+    NousResearch/hermes-function-calling-v1    apache-2.0   unstated              unclear
+    gorilla-llm/BFCL                           apache-2.0   benchmark             eval only
+
+**xlam documents which id ranges came from which model** -- DeepSeek-V2 for ids 0 to 33658,
+Mixtral for the rest -- so condition 1 is satisfied at row granularity. Both are
+downloadable checkpoints.
+
+The dataset named after the agent we want to run is the one that cannot document its
+generator: hermes-function-calling-v1's card credits people, not models.
+
+## The EditScore corpora, and where a naive split leaks
+
+    dataset                    rows      instruction distinct   max repeat
+
+    EditScore-Reward-Data      97,256    10,915                 36
+    EditScore-RL-Data         110,000    68,426                890
+
+**A random row split puts the same instruction on both sides.** Split on `instruction`,
+stratified on `task_type`. `expected_scores: [22, 20]` is an absolute score per image, not
+a preference label, so arity-1 quality-control examples come free: each row yields two.
+`conversations` is instruction plus a fixed template and is a derivable column.
+
+The images ship as a split **gzip** tarball, which the archive-format rule refuses, so the
+fork repackages to ZStandard parquet -- the same pass as the split. `EditReward-Bench` is
+arrow, evaluation-only, and **published**, so it is not blinded the way
+`coco_person_commercial_val2017` is.
+
+## Three repositories were created and destroyed without holding anything
+
+`chibifire/runpod-gemma4-serve`, `chibifire/gemma4-31b-styletune-heretic-lora` and
+`chibifire/gemma4-31b-it-qat-q4_0-unquantized-1e4d8bee` were created while the 31B path
+looked settled. All three were deleted at 0 bytes and verified gone. A repository is cheap
+to make and it advertises a decision; making one before the decision is the same error as
+measuring throughput on a model that fails RFD 1128.
+
+## No money was spent
+
+RunPod was audited for pods, serverless endpoints and network volumes: none, ever. The
+whole plan runs on the 3090 and the two accelerators, and the $250 wall is untouched.
+
+## Still open
+
+    split ratio for the two corpora       90/10 or 80/20 on instruction groups
+    whether `conversations` is dropped    correct under ETNF, costs a loader dependency
+    does XDNA1 get AMD's INT4 flows       or do those target XDNA2 only
+    the cost of the 1.5A limit            unmeasured, and only recoverable by
+                                          plugging back in on purpose
+
+## The rerank
+
+    DONE  move the Hailo off the 1.5A port          on a USB4 dock, warning gone
+
+    1  start the five characters playing             the only calendar-bound step
+    2  finish ARA on E4B, verify the adapter         running
+    3  gpu_tops.py against both NPUs                 first measured rate for either
+    4  RFD 1129 and 1128 on E4B                      LiteRT and ONNX are both open now
+    5  fork and split the EditScore corpora          zstd parquet, split on instruction
+    6  xlam-function-calling-60k as a tool-call prior  cheap; Tau2 42.2 is partly format
+    7  style LoRA on E4B, DPO on the traces
+    8  retrain EditScore on E4B                      no Gemma variant is published
+
+The device numbers are now worth taking, which they were not an hour ago. Step 1 stays at
+the front because it is the one cost that hardware cannot buy back.

@@ -802,8 +802,22 @@ measures 5.066e-06 against PyTorch there.
 ### ggml and GGUF are blocklisted, and the missing graph is why
 
 ggml is quick on this desk. This entry turns on a different question — where a
-model in GGUF can go — and the answer is: this GPU and other desktop GPUs, and
-neither of the devices this work is aimed at.
+model in GGUF can go — and the answer is: this GPU and other desktop GPUs, the
+Cloud TPU not at all, and Hailo through the vendor's own runtime rather than
+through the compiler.
+
+**"NEITHER OF THE DEVICES THIS WORK IS AIMED AT" IS RETRACTED, AND HALF OF IT WAS
+ALWAYS WRONG.** `3-interactor/llama-cpp-npu-vision-upstream` is pinned in the live
+manifest at `6a272903`, and the commit under it is `d35d0ec1`, authored by
+`hailort@hailo.ai` and merged from `hailo-ai/hailo-mtmd-vision-encoder`. It
+offloads a vision encoder to a Hailo NPU from inside llama.cpp, reading input
+size, patch size and embedding sizes out of a `.hef` passed to `--mmproj`. GGUF
+reaches Hailo. It reached Hailo while this paragraph said it could not, and the
+checkout proving it sat in the same manifest as the paragraph.
+
+The Cloud TPU half stands: PJRT consumes StableHLO and ggml still does not emit
+it. So the sentence was half a measurement and half an assumption, and the
+assumption is the half that shipped.
 
 Hailo's Dataflow Compiler parses a TensorFlow checkpoint, a TensorFlow frozen
 graph, a TFLite file or an ONNX file. GGUF is on none of those lists. Cloud TPU
@@ -834,68 +848,111 @@ re-derive it, find ggml quick, and quietly drop the whole row.
 that produced a single static executable for macOS, Windows and Linux, with
 native Metal, CUDA, HIP, Vulkan, SYCL, OpenCL and BLAS backends in `ggml/src`
 and `GGML_METAL_EMBED_LIBRARY ON` compiling the shader source into the binary.
-Nothing in the replacement restores that: the single-binary deliverable now has
-no provider at all.
+
+**"NO PROVIDER AT ALL" IS RETRACTED.** `V-Sekai-fire/turboquant-godot`, branch
+`feat/turboquant-on-master`, carries "Add LLM module with llama.cpp for on-device
+inference" dated 2026-07-29, MIT like the engine around it. A Godot binary with an
+embedded llama.cpp module is the single-binary deliverable this paragraph said had
+no provider. The loss was real when it was written and it has since been repaid —
+by a repository in no manifest, which is why nobody noticed. Placement is the fix
+for that, not this entry.
 
 **The checkouts stay.** `3-interactor/trellis2cpp` and the `weftspun/ggml` fork
-pinned at `331b9cba` remain in the live manifest. This entry governs new work; it
-does not delete the only existing TRELLIS.2 port, nor its published f16 figures
--- rel L2 2e-5 on the SS decoder, under 1e-3 on the SS-flow DiT -- which are the
-nearest correctness reference for whatever replaces them. A blocklisted backend
-with live checkouts is exactly the shape that rots quietly, so the reason is
-written here rather than left to inference.
+pinned at `331b9cba` remain in the live manifest, and so do the TRELLIS.2 port's
+published f16 figures -- rel L2 2e-5 on the SS decoder, under 1e-3 on the SS-flow
+DiT -- which are the nearest correctness reference for whatever replaces them.
 
-### ONNX is blocklisted as our interchange, and a vendor's internal use is exempt
+**"THIS ENTRY GOVERNS NEW WORK" IS RETRACTED.** It was written as a boundary and
+did not hold as one. Two of the checkouts above are new ggml work done after this
+entry: Hailo's vision encoder at `d35d0ec1`, dated 2026-08-27, and the Godot LLM
+module dated 2026-07-29. A rule new work crosses twice with no exception filed is
+not governing new work, it is describing a preference. Saying so is cheaper than a
+third crossing.
 
-The runtimes went first and separately: `onnxruntime GPU providers on macOS` has
-its own entry above, on measurement. This entry retires the **format**.
+**Both crossings are allowed, named here so nobody has to file for them.**
+`3-interactor/llama-cpp-npu-vision-upstream` and `V-Sekai-fire/turboquant-godot`
+are permitted uses of ggml, and so is new work on either. A vendor's own runtime
+reaching a vendor's own device is exempt, which is the ONNX row's wording and the
+same reasoning: Hailo shipping a Hailo NPU encoder inside llama.cpp is Hailo's
+business, not our interchange decision. An on-device single-binary deliverable is
+exempt for the reason ggml was valued here in the first place — that was recorded
+above as the cost of the ban and it is now the ground for the exemption.
 
-ONNX had one job left after the runtimes went, which was carrying models into
-Hailo's Dataflow Compiler. TFLite does that job better, and by Hailo's own
-direction rather than by our preference. The DFC 5.3.0 guide mentions TFLite 57
-times, shows `runner.translate_tf_model(tflite_path, name)` as the interface, and
-**deprecates parsing TensorFlow 1.x and 2.x `.ckpt`/`.pb` models "using all
-parsing APIs"** with guidelines for moving to TensorFlow Lite. Picking TFLite
-lands on the input the vendor is consolidating on; picking ONNX keeps a second
-format alive for nothing.
+What the row still says is narrow and factual: **GGUF carries no graph, so nothing
+converts out of it.** That is the finding worth keeping, and it constrains where a
+model of ours is *stored for conversion* rather than which runtimes may be built.
+Neither repository converts a GGUF to anything — Hailo runs a separate HEF beside
+ggml, Godot embeds ggml whole — so neither is affected by it.
 
-**The exemption carries real weight, and a reader who skips it will conclude the
-toolchain cannot be installed.** The Dataflow Compiler wheel itself pins
-`onnx==1.17.0`, `onnxruntime==1.18.0`, `onnx-tf` and `onnxscript~=0.5.0` among
-its 61 dependencies. That is a vendor's private business. What is blocklisted is
-ONNX as **our** interchange format and **our** runtime -- a file we produce, hand
-between stages, or execute. A dependency resolved inside somebody else's package
-falls outside that, so installing the DFC breaks no rule here.
+A blocklisted backend with live checkouts is exactly the shape that rots quietly,
+and this row rotted three claims deep before a reader went and looked.
 
-**A gate's own scratch file is exempt, and the boundary is where it is written.**
-`gate_onnx_device.py` exports the device half, runs it, and diffs it against PyTorch to
-decide whether the graph stays inside the operator set the compiler takes. That produces
-an ONNX file, which reads like the thing this row forbids until you ask where the file
-goes: `--out` defaults under `tempfile.gettempdir()`, no `.onnx` path is tracked in any
-repository here, and `.gitignore` already carries the compiler's `.sim.onnx` and `.har`.
-Nothing is handed to a later stage and nothing is deployed.
+### The CPU is blocklisted as a model execution target, and orchestration is exempt
 
-This is the split CLAUDE.md already draws for pose sources -- a **control**, transient and
-verified back, against something **targeted** into an asset we ship. ONNX as a check
-vehicle is the first. ONNX as the format a model travels in is the second, and that is
-what this row blocks.
+With the XDNA NPU blocked, the execution targets are the **Radeon 780M** through DirectML,
+the **Hailo-10H**, and the RTX 3090. The first two are the deployment target -- an integrated
+GPU beside a USB accelerator is an edge box -- and this row is what stops work drifting off
+the accelerators onto the interpreter's own processor.
 
-The exemption is bounded by three conditions, and a gate that breaks any of them has
-stopped being a control: the artifact is written outside the working tree, no `.onnx` file
-is committed, and no later stage reads one. `scripts/check_no_committed_onnx.py` in
-`rf-detr-cpp` holds the middle condition, which is the one a careless `--out` would break.
+**WHAT IS BLOCKED IS WHERE A MODEL RUNS, NOT WHERE PYTHON RUNS.** The interpreter, the data
+loader, the tokeniser, the JSON parsing and every gate in `scripts/` run on the CPU and always
+will; a row forbidding that would forbid the machine working at all. What is blocked is the CPU
+as the device a model's tensors live on: `device="cpu"` for weights or activations, an ONNX
+Runtime CPU execution provider, a `--device cpu` flag. Orchestration is exempt because
+orchestration is not the thing being proven.
 
-**The allowlist cannot simply be renamed.** `DEVICE_OPS` is 40 operators under ONNX names
-and `KNOWN_BLOCKERS` is 9 more; TFLite names its operators differently, so moving this gate
-to TFLite means re-deriving the set against the Dataflow Compiler rather than translating a
-list. That needs the DFC, which needs the Linux box, so the gate stays ONNX-shaped until
-there is a measurement to replace it with.
+**THE SILENT FALLBACK IS THE TRAP, AND IT IS THE SAME SHAPE AS THE DIRECTML DEFAULT.** DirectML
+does not implement every operator. An unsupported op does not raise; it falls back, and the run
+completes with a number that looks like a 780M measurement and is partly a CPU one. That is
+rule 3 again -- a silent skip reads exactly like a pass -- and it is worse here than the device-0
+trap, because device 0 is at least visible in a device name. A run that claims the 780M prints
+the resolved device and asserts no fallback occurred, or it has not measured what it says.
 
-**What it costs.** `gate_onnx_device.py`'s numeric oracle, 5.066e-06 against
-PyTorch, is what every other backend row was diffed against, and it goes with the
-format. The replacement is torch on CPU, which is already a dependency; until
-that is in place there is no cross-backend numeric reference, and any new
-accelerator row should say so rather than quietly compare against nothing.
+**THE DFC RUNTIME IS EXEMPT, AND THE BOUNDARY IS WHAT IT IS FOR.** `ClientRunner.infer` in
+Hailo's Dataflow Compiler runs a translated graph in emulation, on the CPU, and that is how you
+find out whether a compile is worth making before you make it. It is the same act as
+`gate_onnx_device.py` exporting an ONNX to diff against PyTorch, and it earns the same exemption
+the ONNX row already grants twice -- a vendor's internal use, and a gate's own scratch file.
+
+The boundary is the purpose rather than the processor. Emulating a graph to decide whether it
+compiles, to read its quantisation behaviour, or to diff it against full precision is exempt.
+Emulating one because it is easier than getting it onto the device is the thing this row exists
+to stop, and it looks identical from the outside. What separates them is that an exempt run
+produces a decision about the device; a violating run produces an answer somebody uses instead
+of the device.
+
+**What this costs, stated rather than discovered.** A CPU fallback is the thing that makes an
+unsupported operator survivable: with it, a graph runs slowly; without it, the graph fails. So
+this row converts performance bugs into hard errors, which is the intent and is also why a first
+run against a new model will fail more often than it did.
+
+**Gradients have somewhere to go.** The Hailo cannot compute one -- HailoRT's nine verbs are
+inference and diagnostics, and an HEF is a forward graph. So `adapt` runs on the 780M or the
+3090; the forward-only work that QZO exists for is what the Hailo is for.
+
+### The AMD XDNA NPU is blocklisted as an execution target
+
+The 7840U carries an XDNA1 NPU, `PCI\VEN_1022&DEV_1502`, driver 32.0.203.280, which nothing in
+this workspace knew about until a device scan turned it up. It is blocklisted as a target.
+
+**Decided, on toolchain surface rather than on speed.** Reaching it means AMD Quark for
+ONNX-to-ONNX quantisation and the VitisAI execution provider to run the result -- a second
+compiler and a second runtime beside Hailo's Dataflow Compiler, for a second device, on the
+same desk. The workspace consolidated the edge target on Hailo and on the format Hailo's own
+compiler is moving to; adding XDNA re-splits it.
+
+**Nothing about it has been measured here, and that is not the reason.** No Ryzen AI runtime
+is installed, no ONNX Runtime is present, and Windows registers no performance counter set for
+it, so its published ~10 TOPS INT8 stands as what `gpu_tops.py` calls "a ranking and not a
+budget". Whether XDNA1 gets AMD's INT4 flows or those target XDNA2 only is also unestablished.
+A row resting on unmeasured performance would invite the next reader to measure it, find it
+adequate, and drop the row; this rests on not maintaining two edge toolchains.
+
+**What it costs.** AMD publishes NPU-ready exports -- `amd/gemma-4-e4b-npu-eager` splits a
+model into embedding, decoder, vision encoder and audio encoder, built with Microsoft Olive --
+and that decomposition is a useful reference for how a VLM partitions for an accelerator, whoever
+compiles it. The reference stays readable; the device stays untargeted. That repository also
+states no licence and ships a `.zip`, so it was not usable as a source regardless.
 
 ### IREE is blocklisted as a build target, and it differs from XLA
 
