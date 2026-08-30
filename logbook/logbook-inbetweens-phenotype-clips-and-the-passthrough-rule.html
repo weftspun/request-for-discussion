@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Logbook – Taskweft — Manuals</title>
+<title>logbook-inbetweens-phenotype-clips-and-the-passthrough-rule – Taskweft — Manuals</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -36,8 +36,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -79,65 +77,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -329,7 +269,7 @@ window.Quarto = {
 <span class="menu-text">Serials</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../pages/logbook.html" aria-current="page"> 
+    <a class="nav-link" href="../pages/logbook.html"> 
 <span class="menu-text">Logbook</span></a>
   </li>  
   <li class="nav-item">
@@ -348,241 +288,71 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#in-betweens-phenotype-clips-and-what-pass-through-means" id="toc-in-betweens-phenotype-clips-and-what-pass-through-means" class="nav-link active" data-scroll-target="#in-betweens-phenotype-clips-and-what-pass-through-means">In-betweens, phenotype clips, and what pass-through means</a>
+  <ul class="collapse">
+  <li><a href="#in-betweens-bake-through-a-piecewise-linear-basis-and-the-corner-control" id="toc-in-betweens-bake-through-a-piecewise-linear-basis-and-the-corner-control" class="nav-link" data-scroll-target="#in-betweens-bake-through-a-piecewise-linear-basis-and-the-corner-control">In-betweens bake through a piecewise-linear basis, and the corner control</a></li>
+  <li><a href="#phenotypes-are-clips-not-sliders-and-clips-must-be-independent" id="toc-phenotypes-are-clips-not-sliders-and-clips-must-be-independent" class="nav-link" data-scroll-target="#phenotypes-are-clips-not-sliders-and-clips-must-be-independent">Phenotypes are clips, not sliders, and clips must be independent</a></li>
+  <li><a href="#pass-through-stated-as-a-systemic-rule-and-applied-in-both-directions" id="toc-pass-through-stated-as-a-systemic-rule-and-applied-in-both-directions" class="nav-link" data-scroll-target="#pass-through-stated-as-a-systemic-rule-and-applied-in-both-directions">Pass-through, stated as a systemic rule and applied in both directions</a></li>
+  <li><a href="#the-quaternion-frame-bug-measured-to-the-digit" id="toc-the-quaternion-frame-bug-measured-to-the-digit" class="nav-link" data-scroll-target="#the-quaternion-frame-bug-measured-to-the-digit">The quaternion frame bug, measured to the digit</a></li>
+  <li><a href="#sizes-and-the-container-decision" id="toc-sizes-and-the-container-decision" class="nav-link" data-scroll-target="#sizes-and-the-container-decision">Sizes, and the container decision</a></li>
+  <li><a href="#the-stress-fixture-goes-back-to-its-source" id="toc-the-stress-fixture-goes-back-to-its-source" class="nav-link" data-scroll-target="#the-stress-fixture-goes-back-to-its-source">The stress fixture goes back to its source</a></li>
+  <li><a href="#correspondence-checked-per-slider" id="toc-correspondence-checked-per-slider" class="nav-link" data-scroll-target="#correspondence-checked-per-slider">Correspondence, checked per slider</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/logbook/logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/logbook/logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Logbook</h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>Entries record what was <strong>measured</strong>, not what was intended, and clip enough of the experimental apparatus to re-run the test rather than merely its conclusion.</p>
-<p>These 145 entries were a separate repository until <code>weftspun/logbook</code> was archived. A decision and its measurement sat one repository apart; they no longer do. Entries kept their filenames, so an entry is still findable by the thing it measured rather than by where it used to live.</p>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-      <option value="" disabled="" selected="" hidden="">Order By</option>
-      <option value="index" data-direction="asc">Default</option>
-      <option value="listing-date-sort" data-direction="asc">
-        Date - Oldest
-      </option>
-      <option value="listing-date-sort" data-direction="desc">
-        Date - Newest
-      </option>
-      <option value="listing-title-sort" data-direction="asc">
-        Title
-      </option>
-    </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
-</div>
-<table class="quarto-listing-table table">
-<thead>
-<tr>
 
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
-</th>
+<section id="in-betweens-phenotype-clips-and-what-pass-through-means" class="level1">
+<h1>In-betweens, phenotype clips, and what pass-through means</h1>
+<p>The blend-shape work grew in-betweens, phenotype clips, and a stated pass-through rule today, and each one paid for itself by failing first in a way a control caught.</p>
+<section id="in-betweens-bake-through-a-piecewise-linear-basis-and-the-corner-control" class="level2">
+<h2 class="anchored" data-anchor-id="in-betweens-bake-through-a-piecewise-linear-basis-and-the-corner-control">In-betweens bake through a piecewise-linear basis, and the corner control</h2>
+<p>USD in-betweens are intermediate targets at sub-unit weights. Each is promoted to its own shape carrying its position, and the primary’s single weight evaluates through the basis (base at 0, in-betweens at their positions, primary at 1) into per-member values and animation keys. The trap is at the edges: a weight crossing a member position BETWEEN two authored samples needs a key inserted at the crossing time. The fixture plants exactly that: keys at 0 and 1 only, an in-between at 0.5. A bake without crossing keys leaves the in-between flat at zero rather than merely undershooting. A second control catches the other wrong implementation: when the primary reads 0.999 the in-between must read near zero (measured 0.001), because an in-between wrongly wearing the primary’s own curve passes every min/max check and fails only the phase.</p>
+</section>
+<section id="phenotypes-are-clips-not-sliders-and-clips-must-be-independent" class="level2">
+<h2 class="anchored" data-anchor-id="phenotypes-are-clips-not-sliders-and-clips-must-be-independent">Phenotypes are clips, not sliders, and clips must be independent</h2>
+<p>A blendshape moves vertices and never joints, and ANNY’s phenotypes move both. Our own rules close the escape hatches, since a runtime driver and a custom extension are both banned, but an animation clip is pure data, and a clip can key the joint transforms default-rest to phenotype-rest in sync with the shape weight. Scrubbing the clip is the slider. The shape must then be the RESIDUAL against the skeleton-only LBS deformation or the change is counted twice: for the weight axis the residual moves 5,214 of 13,718 vertices where the dense delta moved all of them.</p>
+<p>The first authoring put eleven segments on one timeline, and that was wrong twice: a 0-1-0 loop cannot hold a phenotype, and one timeline cannot compose two. The shipped form is eleven INDEPENDENT SkelAnimation prims, each 0 -&gt; 1 and holding, with a variantSet as the selector. That is the format’s own idiom: multiple SkelAnimation prims are USD’s clip library, variants its documented switch, and blending is deliberately absent from UsdSkel because it is a baked-interchange model. The adapter grew the matching feature through all five rings (converter, flat model, C ABI and sigs, builder, node): every SkelAnimation imports as a named clip in a library.</p>
+<p>Composition then belongs to the engine, and it measured clean through an AnimationTree of Add2 nodes, one parameter per axis: weight=1 alone probes the upperleg at 2.18 mm of an authored 2.18, about a penny and a half; weight and muscle together at 3.49 mm; and both sliders zeroed return to 0.00. Godot’s additive blend subtracts the rest pose itself, so clips pre-converted to deltas double-count: the same 2.18 mm authored travel probed 100.47 mm, which is the rest origin’s own length, before the clips went back to absolute values.</p>
+<p>Two playback facts cost an hour each: the player loops by default and starts during the async load, so any baseline captured at find-time is mid-ramp, and closure is periodic, not terminal.</p>
+</section>
+<section id="pass-through-stated-as-a-systemic-rule-and-applied-in-both-directions" class="level2">
+<h2 class="anchored" data-anchor-id="pass-through-stated-as-a-systemic-rule-and-applied-in-both-directions">Pass-through, stated as a systemic rule and applied in both directions</h2>
+<p>If an attribute is not authored, nothing downstream invents it; if it is authored, nothing downstream changes it. Applying that rule cut both ways today. The importer’s inline face-normal fabrication and its grouped-normal resmooth are gone. And the audit it forced found the opposite defect: the export had been DROPPING authored data, namely ANNY’s 21,334 faceVarying texture coordinates and two whole shape families. The canonical fixture now carries everything the source authors: 11 phenotype axes, 52 facial actions, 254 local-change dials (317 shapes), the source’s own UVs, and 9-influence skinning. Normals are genuinely unauthored at the source (vn=0 in base.obj), so the GENERATOR authors them: it is the asset’s author, which is the line between authorship and fabrication.</p>
+<p>Correcting this entry’s own inputs: the canonical ANNY has zero twist bones. Its shipping twist fix is re-weighting, so the graded twist rides in the skin weights and survives any export that carries them.</p>
+</section>
+<section id="the-quaternion-frame-bug-measured-to-the-digit" class="level2">
+<h2 class="anchored" data-anchor-id="the-quaternion-frame-bug-measured-to-the-digit">The quaternion frame bug, measured to the digit</h2>
+<p>The importer rebases rest transforms and translations into Y-up but passed animation rotations through in the stage’s own frame, so a Z-up stage played its joint animation 125.9 degrees off its own rest pose at the canonical pelvis. Conjugating a rotation by the up-basis maps its axis through the basis; predicted against the authored quat, the sign-flipped twin matched component for component, and after the fix the offset measured 0.0. The same session fixed a track-offset accumulation that wrote a third animated attribute’s keys past the end of the vector.</p>
+</section>
+<section id="sizes-and-the-container-decision" class="level2">
+<h2 class="anchored" data-anchor-id="sizes-and-the-container-decision">Sizes, and the container decision</h2>
+<p>At 317 shapes the fixture’s text form reached 92 MB, and the local dials are honestly dense: a torso scale moves 13,532 vertices at a 0.01 mm threshold, so sparsity thresholds cannot save it. It ships as a stored usdz package, 23.6 MB, with the zip-ban exemption now written into the working agreements: a usdz stores its entries uncompressed and reads in place, so neither hazard the ban names can occur. The GLB re-export was a static scene until the exporter materialised an AnimationPlayer, because the adapter plays clips from inside its nodes and GLTFDocument had nothing to read. Bone tracks then retargeted through the joint map: full slashed USD joint paths cannot ride in a :subname, and resolved naively only the slash-free root bone survived, 3 channels against 209 after (104 rotations, 104 translations, one weights channel packing all 317 morph curves).</p>
+</section>
+<section id="the-stress-fixture-goes-back-to-its-source" class="level2">
+<h2 class="anchored" data-anchor-id="the-stress-fixture-goes-back-to-its-source">The stress fixture goes back to its source</h2>
+<p>The committed morph stress usdc was a Blender conversion of Khronos’s MorphStressTest, and it had drifted from its origin: Key_8’s authored range in the canonical GLB is [0, 1], not the 0.1754 the derivative carried and an earlier version of this record repeated. The fixture is now generated straight from the GLB by a parser-and-author script, no Blender in the chain. The test learned something too: a live frame sweep cannot pin a one-sample-wide authored spike (it read 0.845 at frame rate), so track fidelity is asserted by densely interpolating the imported animation, exact to 0.01, and the live sweep only has to prove playback drives the shape at all.</p>
+</section>
+<section id="correspondence-checked-per-slider" class="level2">
+<h2 class="anchored" data-anchor-id="correspondence-checked-per-slider">Correspondence, checked per slider</h2>
+<p>Each phenotype axis at 1.0, plus the default body, round-trips USD-import against an independently parsed GLB with bidirectional vertex coverage above 99.9% at 0.1 mm – an eighth of a credit card. The control demands the heavy GLB fail against the default body, so a green board is evidence the sliders differ.</p>
 
-<th>
-<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
-</th>
 
-</tr>
-</thead>
-<tbody class="list">
+</section>
+</section>
 
-<tr data-index="0" data-listing-file-modified-sort="1788108018753" data-listing-reading-time-sort="4" data-listing-word-count-sort="725" data-listing-title-sort="Blend-shape animation through the flow adapter, and TokenRig's first light" data-listing-filename-sort="logbook-blendshape-animation-and-tokenrig-first-light.md">
-<td>
-<a href="../logbook/logbook-blendshape-animation-and-tokenrig-first-light.html" class="title listing-title">Blend-shape animation through the flow adapter, and TokenRig’s first light</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="1" data-listing-file-modified-sort="1788108018753" data-listing-reading-time-sort="5" data-listing-word-count-sort="994" data-listing-title-sort="In-betweens, phenotype clips, and what pass-through means" data-listing-filename-sort="logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.md">
-<td>
-<a href="../logbook/logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.html" class="title listing-title">In-betweens, phenotype clips, and what pass-through means</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="2" data-listing-file-modified-sort="1788108018753" data-listing-reading-time-sort="8" data-listing-word-count-sort="1464" data-listing-title-sort="Logbook: CineForm in Godot, and what recording actually costs" data-listing-filename-sort="logbook-cineform-movie-writer.md">
-<td>
-<a href="../logbook/logbook-cineform-movie-writer.html" class="title listing-title">Logbook: CineForm in Godot, and what recording actually costs</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="3" data-listing-file-modified-sort="1788108018753" data-listing-reading-time-sort="31" data-listing-word-count-sort="6080" data-listing-title-sort="Logbook: RFD 1016 model-repo build-out" data-listing-filename-sort="logbook-rfd1016-model-repos.md">
-<td>
-<a href="../logbook/logbook-rfd1016-model-repos.html" class="title listing-title">Logbook: RFD 1016 model-repo build-out</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="4" data-listing-file-modified-sort="1788108018754" data-listing-reading-time-sort="11" data-listing-word-count-sort="2018" data-listing-title-sort="Logbook: RFD 1122 T01, the pose-library check" data-listing-filename-sort="logbook-rfd1122-t01-pose-check.md">
-<td>
-<a href="../logbook/logbook-rfd1122-t01-pose-check.html" class="title listing-title">Logbook: RFD 1122 T01, the pose-library check</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="5" data-listing-file-modified-sort="1788108018754" data-listing-reading-time-sort="18" data-listing-word-count-sort="3434" data-listing-title-sort="Logbook: one base, measured, and the rerank" data-listing-filename-sort="logbook-rfd1171-gemma-first-rerank.md">
-<td>
-<a href="../logbook/logbook-rfd1171-gemma-first-rerank.html" class="title listing-title">Logbook: one base, measured, and the rerank</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="6" data-listing-file-modified-sort="1788108018753" data-listing-reading-time-sort="7" data-listing-word-count-sort="1241" data-listing-title-sort="Logbook: the ANNY fit that the corpus does not need" data-listing-filename-sort="logbook-anny-phenotype-fit-retired.md">
-<td>
-<a href="../logbook/logbook-anny-phenotype-fit-retired.html" class="title listing-title">Logbook: the ANNY fit that the corpus does not need</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="7" data-listing-file-modified-sort="1788108018753" data-listing-reading-time-sort="11" data-listing-word-count-sort="2026" data-listing-title-sort="Logbook: the Qwen3-VL vision tower against the Dataflow Compiler" data-listing-filename-sort="logbook-qwen3vl-vit-translate-walls.md">
-<td>
-<a href="../logbook/logbook-qwen3vl-vit-translate-walls.html" class="title listing-title">Logbook: the Qwen3-VL vision tower against the Dataflow Compiler</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="8" data-listing-file-modified-sort="1788108018753" data-listing-reading-time-sort="6" data-listing-word-count-sort="1171" data-listing-title-sort="Logbook: the first four-loop rounds on the desk card" data-listing-filename-sort="logbook-fourloops-first-runs.md">
-<td>
-<a href="../logbook/logbook-fourloops-first-runs.html" class="title listing-title">Logbook: the first four-loop rounds on the desk card</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="9" data-listing-file-modified-sort="1788108018754" data-listing-reading-time-sort="5" data-listing-word-count-sort="992" data-listing-title-sort="Logbook: the soft renderer's three constants, and Mitsuba" data-listing-filename-sort="logbook-soft-renderer-and-mitsuba.md">
-<td>
-<a href="../logbook/logbook-soft-renderer-and-mitsuba.html" class="title listing-title">Logbook: the soft renderer’s three constants, and Mitsuba</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="10" data-listing-file-modified-sort="1788108018753" data-listing-reading-time-sort="9" data-listing-word-count-sort="1605" data-listing-title-sort="Logbook: two DFC emulation contexts disagree by six orders of magnitude" data-listing-filename-sort="logbook-dfc-emulation-contexts-disagree.md">
-<td>
-<a href="../logbook/logbook-dfc-emulation-contexts-disagree.html" class="title listing-title">Logbook: two DFC emulation contexts disagree by six orders of magnitude</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="11" data-listing-file-modified-sort="1788108018754" data-listing-reading-time-sort="6" data-listing-word-count-sort="1163" data-listing-title-sort="Logbook: two walls between a translated graph and a HEF" data-listing-filename-sort="logbook-rfd1130-two-walls-to-a-hef.md">
-<td>
-<a href="../logbook/logbook-rfd1130-two-walls-to-a-hef.html" class="title listing-title">Logbook: two walls between a translated graph and a HEF</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="12" data-listing-file-modified-sort="1788108018753" data-listing-reading-time-sort="11" data-listing-word-count-sort="2074" data-listing-title-sort="Logbook: what an edge NPU takes, and what the ANNY forward will not export" data-listing-filename-sort="logbook-edge-npu-and-the-anny-forward.md">
-<td>
-<a href="../logbook/logbook-edge-npu-and-the-anny-forward.html" class="title listing-title">Logbook: what an edge NPU takes, and what the ANNY forward will not export</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="13" data-listing-file-modified-sort="1788108018754" data-listing-reading-time-sort="12" data-listing-word-count-sort="2261" data-listing-title-sort="Logbook: what the Neural Engine reaches, and what it holds" data-listing-filename-sort="logbook-rfd1142-neural-engine-against-the-ugen300.md">
-<td>
-<a href="../logbook/logbook-rfd1142-neural-engine-against-the-ugen300.html" class="title listing-title">Logbook: what the Neural Engine reaches, and what it holds</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="14" data-listing-file-modified-sort="1788108018754" data-listing-reading-time-sort="14" data-listing-word-count-sort="2799" data-listing-title-sort="Logbook: what the plan costs once the durations are real, and the card is a 3090" data-listing-filename-sort="logbook-rfd1122-hailo-first-rerank.md">
-<td>
-<a href="../logbook/logbook-rfd1122-hailo-first-rerank.html" class="title listing-title">Logbook: what the plan costs once the durations are real, and the card is a 3090</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="15" data-listing-file-modified-sort="1788108018753" data-listing-reading-time-sort="6" data-listing-word-count-sort="1157" data-listing-title-sort="The comment ladder" data-listing-filename-sort="logbook-comment-ladder.md">
-<td>
-<a href="../logbook/logbook-comment-ladder.html" class="title listing-title">The comment ladder</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-</tbody>
-</table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -1004,7 +774,7 @@ window.Quarto = {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/pages/logbook.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/pages/logbook.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/logbook/logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/logbook/logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
