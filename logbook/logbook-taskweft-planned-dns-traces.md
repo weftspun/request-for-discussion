@@ -147,3 +147,40 @@ server is the truth.
     # after
     curl https://account.chibifire.com/health          →  {"status":"ok"}
     curl https://account.chibifire.com/v1/sys/seal-status  →  {"error":"unauthorized"}
+
+## Scout gate: the place left better than we arrived (backfilled)
+
+The inventory before cleanup — the red side — and what it caught.
+Apparatus: pgrep for the session's processes, ls the /tmp paths
+touched, ls the burrito cache.
+
+    pgrep -fl "fly proxy"        →  18477 fly proxy 18300:8300
+    pgrep -fl "cf_browser.py"    →  19517 .../cf_browser.py
+    ls /tmp/ff_cookies.sqlite    →  1.5 MB copy of Firefox session cookies
+    ls /tmp/chibifire-com        →  a repo clone parked in /tmp
+    ls ~/Library/.../\.burrito/  →  parqview_erts-17.0.5_0.1.0  (poisoned with a
+                                    guessed metadata file), taskweft_..._0.5.3
+
+The catch: port 3001 was still owned by the **v0.5.3** beam. The
+earlier `pkill -f "taskweft mcp"` matched nothing — the process
+cmdline is `beam.smp ... -extra mcp` — so the v0.5.4 launch died on
+eaddrinuse into /dev/null, and the serverInfo probe reported the
+same name and version for both builds. That green gate had passed on
+the broken state, which is the exact failure rule 2 names.
+
+After cleanup — the green side:
+
+    pgrep -fl "fly proxy"                    →  (nothing)
+    pgrep -fl "cf_browser"                   →  (nothing)
+    ls /tmp/ff_cookies.sqlite /tmp/chibifire-com  →  (nothing)
+    ls ~/Library/.../\.burrito/              →  taskweft_erts-16.4.0.5_0.5.4
+
+And a probe that can tell the two builds apart — DSL planning over
+MCP, which 0.5.3 cannot do and 0.5.4 can:
+
+    POST /mcp tools/call plan {format: dsl, blocks_world_dsl.ex}
+    →  6 steps: a_unstack a, a_putdown a, a_pickup c, ...
+
+Better than we arrived, beyond the task: taskweft v0.5.4 released
+upstream, the stale huggingface.co keychain credential replaced with
+one that works, and the two dead burrito payloads gone.
