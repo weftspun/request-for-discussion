@@ -314,7 +314,6 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#architecture-forked-base-with-qaft-checkpoint" id="toc-architecture-forked-base-with-qaft-checkpoint" class="nav-link" data-scroll-target="#architecture-forked-base-with-qaft-checkpoint">Architecture: forked base with QAFT checkpoint</a></li>
   <li><a href="#models-to-qaft" id="toc-models-to-qaft" class="nav-link" data-scroll-target="#models-to-qaft">Models to QAFT</a></li>
   <li><a href="#extraction-ladder-galls-law" id="toc-extraction-ladder-galls-law" class="nav-link" data-scroll-target="#extraction-ladder-galls-law">Extraction ladder (Gall’s Law)</a></li>
-  <li><a href="#cached-latent-satellite" id="toc-cached-latent-satellite" class="nav-link" data-scroll-target="#cached-latent-satellite">Cached latent satellite</a></li>
   <li><a href="#cost-summary" id="toc-cost-summary" class="nav-link" data-scroll-target="#cost-summary">Cost summary</a></li>
   <li><a href="#vast.ai-tear-down-discipline" id="toc-vast.ai-tear-down-discipline" class="nav-link" data-scroll-target="#vast.ai-tear-down-discipline">Vast.ai tear-down discipline</a></li>
   <li><a href="#hf-artifacts" id="toc-hf-artifacts" class="nav-link" data-scroll-target="#hf-artifacts">HF artifacts</a></li>
@@ -354,7 +353,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="decision" class="level2">
 <h2 class="anchored" data-anchor-id="decision">Decision</h2>
-<p>QAFT all seven pipeline models to NF4. Fork each upstream model on HF. Cache pipeline latents in a satellite table for pretraining.</p>
+<p>QAFT all seven pipeline models to NF4. Fork each upstream model on HF.</p>
 <section id="architecture-forked-base-with-qaft-checkpoint" class="level3">
 <h3 class="anchored" data-anchor-id="architecture-forked-base-with-qaft-checkpoint">Architecture: forked base with QAFT checkpoint</h3>
 <p>Each upstream model is forked to chibifire/ on HF. The fork stores:</p>
@@ -537,15 +536,6 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-</section>
-<section id="cached-latent-satellite" class="level3">
-<h3 class="anchored" data-anchor-id="cached-latent-satellite">Cached latent satellite</h3>
-<p>The main dataset tuple stays (face_image, depth, keypoints, pose, waveform). A satellite table caches the pipeline latents per ETNF (derivable columns go in their own relation):</p>
-<pre><code>maskscore_latents/
-  pixal3d_slat.parquet
-  omnigen2_latent.parquet
-  qwen3_embed.parquet</code></pre>
-<p>Each satellite records the QAFT base version that produced it. The latents support pretraining the reward model before RL, where recomputing them on every batch is wasteful.</p>
 </section>
 <section id="cost-summary" class="level3">
 <h3 class="anchored" data-anchor-id="cost-summary">Cost summary</h3>
