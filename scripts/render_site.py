@@ -187,14 +187,7 @@ def book_page(root):
     by_arc = arcs(root)
     lines = ['---', 'title: "Weftspun RFDs"',
              'subtitle: "The register as one book"', 'author: "Weftspun"',
-             'format:',
-             '  epub:',
-             '    toc: true',
-             '    number-sections: false',
-             '  pdf:',
-             '    toc: true',
-             '    number-sections: false',
-             '    documentclass: scrreprt',
+             'toc: true', 'number-sections: false',
              '---', '', GENERATED, '']
     for d in sorted(rfd_dirs(root), key=lambda x: int(RFD_DIR.match(x).group(1))):
         serial = int(RFD_DIR.match(d).group(1))
