@@ -1,21 +1,8 @@
 #!/usr/bin/env python3
-"""Trope density did not rise. Same shape as check_comment_ladder.py: a
-changed prose file may not gain trope hits per non-blank line beyond what it
-already had.
+"""Trope density did not rise.
 
-The tells are the ones the prose-detrope subagent removes most often — the
-list is deliberately narrow, because a wide scanner false-positives on
-legitimate prose and teaches the writer to route around the gate rather
-than to think. Each tell has a rationale so a later reader can revise the
-list rather than deleting a rule they no longer understand.
-
-Scope: `rfd/*/README.md`, `rfd/*/DETAILS.md`, `logbook/*.md`. Working
-agreements (`CLAUDE.md`, `BLOCKLIST.md`, `PITFALLS.md`, `KEYPOINTS.md`) are
-out — they carry retractions and named tells verbatim; a gate on them
-would catch itself.
-
-    python scripts/check_tropes.py                              # report only
-    python scripts/check_tropes.py --base origin/main           # fail on rise
+    python scripts/check_tropes.py                # report
+    python scripts/check_tropes.py --base <ref>   # gate
     python scripts/check_tropes.py --self-test
 """
 import argparse
@@ -27,31 +14,17 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 
-# One regex per tell, chosen from the subagent's own report language.
 TELLS = {
-    # An em-dash between clauses is the highest-signal AI-writing tell.
-    # A range dash inside a word (day 12–14) is a hyphen-minus and does
-    # not match; the required whitespace on both sides is deliberate.
     "em_dash_join": re.compile(r"\s[-—][-—]?\s"),
-    # A comma-separated triad that opens with "in three ways", "for two
-    # reasons", "on four counts" and similar is the counting-announcement.
     "counting_announcement": re.compile(
         r"\b(in|for|on)\s+(two|three|four|five|six)\s+(ways|reasons|counts|things|senses)\b",
         re.I,
     ),
-    # Reasoning-leak: "the reason X is Y is that", "the whole point is that",
-    # "what makes X ... is". These are the sentences the subagent tightens
-    # into "X because Y" or "X: Y".
     "reasoning_leak": re.compile(
         r"\b(the reason .+? is that|the whole point .+? is that|what makes .+? is)\b",
         re.I,
     ),
-    # "the X that Y" as a pompous copula for "X Y": "the check that proves"
-    # rather than "the check proves". Narrowly scoped by the "is what" tail
-    # that reliably marks it.
     "pompous_copula": re.compile(r"\b(is|are)\s+what\s+(makes|proves|shows|says)\b", re.I),
-    # Absolutist intensifiers in soft contexts. "exact" attached to a window
-    # or a moment is almost always dropped by the subagent.
     "exact_window": re.compile(r"\bthe exact (window|moment|shape|line|point|reason|failure)\b", re.I),
 }
 
@@ -67,8 +40,6 @@ def in_scope(path: str) -> bool:
 
 
 def count_tropes(text: str) -> tuple[int, dict[str, int]]:
-    # Strip fenced code blocks: SVG viewBox strings and other pass-through
-    # content are not prose and must not fire the tells.
     text_no_code = re.sub(r"```.*?```", "", text, flags=re.DOTALL)
     per = {name: len(rx.findall(text_no_code)) for name, rx in TELLS.items()}
     return sum(per.values()), per
