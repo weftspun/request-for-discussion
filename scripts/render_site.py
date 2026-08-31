@@ -99,9 +99,6 @@ def serials_page(root):
              "A serial is appended once. It is never removed and never reused,",
              "because it is the last arc of an OID and an arc names one document",
              "for as long as that document exists.", '']
-    # Both registers, one section each, the same table shape: the 1000 range is
-    # the Weftspun site, and the 2000 range came here with v-sekai-fabric's
-    # documents and keeps its own file.
     registers = (("Weftspun (1000)", "SERIALS.usda"),
                  ("V-Sekai-Fabric (2000)", "SERIALS-vsekai-fabric.usda"))
     total_a = total_d = 0
