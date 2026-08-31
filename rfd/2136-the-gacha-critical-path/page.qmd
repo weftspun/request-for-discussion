@@ -13,6 +13,7 @@ are wave 2 by RFD 1121's own route.
 
 ## The network
 
+```{=html}
 <div style="overflow-x:auto">
 <svg viewBox="0 0 1160 500" role="img" aria-label="PERT network: activity A skin-mode rigging and activity H taxonomy partition run in parallel from day zero; both feed I taxonomy transfer, which starts the critical path A, I, D, E, G totalling 13.2 days; B UsdSkel writer now has 1.0 day of slack, the bend gate C 3.0, and the cabinet page F 8.9.">
       <defs>
@@ -152,6 +153,7 @@ are wave 2 by RFD 1121's own route.
       </g>
     </svg>
 </div>
+```
 
 Activity-on-node network on a time axis. Red is the critical path
 (A and H both start day zero; I waits for the later of them); dashed
