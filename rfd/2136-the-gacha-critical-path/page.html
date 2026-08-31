@@ -323,7 +323,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">The gacha critical path, as a ladder</h1>
-<p class="subtitle lead">Gall’s Law rungs, 2026-08-31</p>
+<p class="subtitle lead">Gall’s Law rungs, hours calibrated against RFD 1130 and RFD 2133–2135, 2026-08-31</p>
 </div>
 
 
@@ -526,29 +526,37 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="the-same-ladder-as-a-pert-network" class="level2">
 <h2 class="anchored" data-anchor-id="the-same-ladder-as-a-pert-network">The same ladder as a PERT network</h2>
-<p>The ladder read as a PERT chain, so the schedule shape stays legible next to the demo shape. Estimates are working days; every rung is a single node because every rung is a demo that has to run before the next one starts. t<sub>e</sub> = (O + 4M + P)/6.</p>
+<p>The ladder read as a PERT chain, so the schedule shape stays legible next to the demo shape. Estimates are in focused <strong>hours</strong>, not working days: RFD 1130 measured pipeline stages in <code>MM:SS</code>, RFD 1016 in projected hours, and today’s own arc calibrated the smaller ones against real work — RFD 2133–2135 shipped end to end in roughly 8–10 focused hours across a day. A day of continuous 8-hour focus is not a real unit here; the honest atom is the session. t<sub>e</sub> = (O + 4M + P)/6.</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: right;">Rung</th>
-<th style="text-align: right;">O</th>
-<th style="text-align: right;">M</th>
-<th style="text-align: right;">P</th>
-<th style="text-align: right;">t<sub>e</sub></th>
-<th style="text-align: right;">σ</th>
+<th style="text-align: right;">O (h)</th>
+<th style="text-align: right;">M (h)</th>
+<th style="text-align: right;">P (h)</th>
+<th style="text-align: right;">t<sub>e</sub> (h)</th>
+<th style="text-align: right;">σ (h)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">1 prompt→mesh (Pixal3D)</td>
-<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0 text→image (OmniGen2)</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">1.1</td>
-<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">0.50</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">2 EditScore judge</td>
+<td style="text-align: right;">1 image→mesh (Pixal3D)</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">4</td>
@@ -556,113 +564,114 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">0.50</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">3 repair (VoxHammer)</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">2.3</td>
-<td style="text-align: right;">0.67</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">4 skin-mode rig (SkinTokens→ANNY)</td>
+<td style="text-align: right;">2 EditScore judge</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: right;">4.7</td>
-<td style="text-align: right;">1.33</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">1.00</td>
 </tr>
-<tr class="odd">
-<td style="text-align: right;">5 taxonomy transfer</td>
-<td style="text-align: right;">1</td>
+<tr class="even">
+<td style="text-align: right;">3 repair (VoxHammer)</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">6</td>
-<td style="text-align: right;">3.2</td>
-<td style="text-align: right;">0.83</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">6 seed→VRM</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">2.0</td>
-<td style="text-align: right;">0.33</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">1.50</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">7 pool ×50</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">4 skin-mode (SkinTokens→ANNY) <strong>research risk</strong></td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">19.7</td>
+<td style="text-align: right;">7.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5 partition recovery (VoxHammer + EditScore)</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">1.50</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6 seed→VRM</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3.2</td>
 <td style="text-align: right;">0.50</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">8 roll button</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">7 pool ×50</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">2.0</td>
-<td style="text-align: right;">0.33</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">1.00</td>
 </tr>
 <tr class="odd">
+<td style="text-align: right;">8 roll button</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">1.50</td>
+</tr>
+<tr class="even">
 <td style="text-align: right;">9 ship</td>
-<td style="text-align: right;">0.5</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1.1</td>
-<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1.7</td>
+<td style="text-align: right;">0.33</td>
 </tr>
 </tbody>
 </table>
-<p>Sum of t<sub>e</sub>: <strong>20.8 working days</strong>, σ 2.0 (finish window 18.8 to 22.8). The chain is the critical path because it IS the chain; ladder rungs have no non-critical siblings by construction, which is the Gall’s Law property this shape buys.</p>
+<p>Sum of t<sub>e</sub>: <strong>57.1 hours</strong>, σ 7.7 (finish window 49–65 hours). At 5 focused hours a day (RFD 2135’s duty-hours note) that is roughly <strong>10–13 working days</strong> wall-clock. Rung 4 dominates the variance — it is the one research risk on the chain and every other rung is integration. The chain is the critical path because it IS the chain; ladder rungs have no non-critical siblings by construction, which is the Gall’s Law property this shape buys.</p>
 <div style="overflow-x:auto">
-<svg viewbox="0 0 1160 180" role="img" aria-label="PERT chain: nine sequential nodes from rung 1 prompt-to-mesh through rung 9 ship, on a working-day time axis, totalling 20.8 expected days sigma 2.0.">
+<svg viewbox="0 0 1200 200" role="img" aria-label="PERT chain in focused hours: ten sequential nodes from rung 0 text-to-image through rung 9 ship. Node widths are proportional to t_e; rung 4 (skin-mode rig, the one research risk) is the widest by far. Totals 57.1 hours expected, sigma 7.7.">
   <defs>
     <marker id="ap" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="var(--rfd-critical)"></path>
     </marker>
   </defs>
   <g stroke="var(--rfd-grid)" stroke-width="1">
-    <line x1="60" y1="30" x2="60" y2="130"></line>
-    <line x1="200" y1="30" x2="200" y2="130"></line>
-    <line x1="340" y1="30" x2="340" y2="130"></line>
-    <line x1="480" y1="30" x2="480" y2="130"></line>
-    <line x1="620" y1="30" x2="620" y2="130"></line>
-    <line x1="760" y1="30" x2="760" y2="130"></line>
-    <line x1="900" y1="30" x2="900" y2="130"></line>
-    <line x1="1040" y1="30" x2="1040" y2="130"></line>
-    <line x1="1140" y1="30" x2="1140" y2="130"></line>
+    <line x1="60" y1="30" x2="60" y2="140"></line>
+    <line x1="212" y1="30" x2="212" y2="140"></line>
+    <line x1="364" y1="30" x2="364" y2="140"></line>
+    <line x1="516" y1="30" x2="516" y2="140"></line>
+    <line x1="668" y1="30" x2="668" y2="140"></line>
+    <line x1="820" y1="30" x2="820" y2="140"></line>
+    <line x1="972" y1="30" x2="972" y2="140"></line>
+    <line x1="1124" y1="30" x2="1124" y2="140"></line>
   </g>
   <g font-size="10" font-family="IBM Plex Mono, monospace" fill="var(--rfd-ink-soft)" text-anchor="middle">
-    <text x="60" y="150">day 0</text>
-    <text x="200" y="150">2</text>
-    <text x="340" y="150">4</text>
-    <text x="480" y="150">6</text>
-    <text x="620" y="150">10</text>
-    <text x="760" y="150">14</text>
-    <text x="900" y="150">17</text>
-    <text x="1040" y="150">19</text>
-    <text x="1140" y="150">21</text>
+    <text x="60" y="160">0 h</text>
+    <text x="212" y="160">8</text>
+    <text x="364" y="160">16</text>
+    <text x="516" y="160">24</text>
+    <text x="668" y="160">32</text>
+    <text x="820" y="160">40</text>
+    <text x="972" y="160">48</text>
+    <text x="1124" y="160">56</text>
+    <text x="640" y="180" font-size="9">~ 1 focused day = 5 h (RFD 2135)</text>
   </g>
   <g font-family="Libre Franklin, sans-serif" font-size="11" fill="var(--rfd-ink)">
-    <g><rect x="60" y="70" width="60" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"></rect><text x="90" y="90" text-anchor="middle" font-weight="600">1 mesh</text></g>
-    <g><rect x="140" y="70" width="90" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"></rect><text x="185" y="90" text-anchor="middle" font-weight="600">2 judge</text></g>
-    <g><rect x="250" y="70" width="90" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"></rect><text x="295" y="90" text-anchor="middle" font-weight="600">3 repair</text></g>
-    <g><rect x="360" y="70" width="150" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"></rect><text x="435" y="90" text-anchor="middle" font-weight="600">4 skin-mode rig</text></g>
-    <g><rect x="530" y="70" width="120" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"></rect><text x="590" y="90" text-anchor="middle" font-weight="600">5 tag</text></g>
-    <g><rect x="670" y="70" width="90" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"></rect><text x="715" y="90" text-anchor="middle" font-weight="600">6 VRM</text></g>
-    <g><rect x="780" y="70" width="90" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"></rect><text x="825" y="90" text-anchor="middle" font-weight="600">7 pool</text></g>
-    <g><rect x="890" y="70" width="90" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"></rect><text x="935" y="90" text-anchor="middle" font-weight="600">8 roll</text></g>
-    <g><rect x="1000" y="70" width="60" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"></rect><text x="1030" y="90" text-anchor="middle" font-weight="600">9 ship</text></g>
+    <g><rect x="60" y="75" width="42" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"></rect><text x="81" y="95" text-anchor="middle" font-weight="600">0 t2i</text></g>
+    <g><rect x="102" y="75" width="42" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"></rect><text x="123" y="95" text-anchor="middle" font-weight="600">1 mesh</text></g>
+    <g><rect x="144" y="75" width="82" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"></rect><text x="185" y="95" text-anchor="middle" font-weight="600">2 judge</text></g>
+    <g><rect x="226" y="75" width="123" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"></rect><text x="287" y="95" text-anchor="middle" font-weight="600">3 repair</text></g>
+    <g><rect x="349" y="75" width="374" height="40" rx="2" fill="var(--rfd-band)" stroke="var(--rfd-critical)" stroke-width="2.5"></rect><text x="536" y="95" text-anchor="middle" font-weight="800" fill="var(--rfd-critical)">4 skin-mode rig — research risk</text><text x="536" y="110" text-anchor="middle" font-size="10" fill="var(--rfd-ink-soft)">t_e 19.7 h, σ 7.0</text></g>
+    <g><rect x="723" y="75" width="123" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"></rect><text x="784" y="95" text-anchor="middle" font-weight="600">5 tags</text></g>
+    <g><rect x="846" y="75" width="61" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"></rect><text x="876" y="95" text-anchor="middle" font-weight="600">6 VRM</text></g>
+    <g><rect x="907" y="75" width="82" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"></rect><text x="948" y="95" text-anchor="middle" font-weight="600">7 pool</text></g>
+    <g><rect x="989" y="75" width="123" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"></rect><text x="1050" y="95" text-anchor="middle" font-weight="600">8 roll</text></g>
+    <g><rect x="1112" y="75" width="33" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"></rect><text x="1128" y="95" text-anchor="middle" font-weight="600">9 ship</text></g>
   </g>
   <g stroke="var(--rfd-critical)" stroke-width="2" fill="none">
-    <line x1="120" y1="85" x2="140" y2="85" marker-end="url(#ap)"></line>
-    <line x1="230" y1="85" x2="250" y2="85" marker-end="url(#ap)"></line>
-    <line x1="340" y1="85" x2="360" y2="85" marker-end="url(#ap)"></line>
-    <line x1="510" y1="85" x2="530" y2="85" marker-end="url(#ap)"></line>
-    <line x1="650" y1="85" x2="670" y2="85" marker-end="url(#ap)"></line>
-    <line x1="760" y1="85" x2="780" y2="85" marker-end="url(#ap)"></line>
-    <line x1="870" y1="85" x2="890" y2="85" marker-end="url(#ap)"></line>
-    <line x1="980" y1="85" x2="1000" y2="85" marker-end="url(#ap)"></line>
+    <line x1="1140" y1="90" x2="1160" y2="90" marker-end="url(#ap)"></line>
   </g>
 </svg>
 </div>
