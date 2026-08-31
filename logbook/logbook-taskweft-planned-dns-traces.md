@@ -86,3 +86,64 @@ bytes with TLS verify 0, and `/v1/sys/seal-status` returns 401 —
 the bao proxy refusing an unauthenticated caller, which is the
 auth gate demonstrating itself. All seven planned actions ran;
 the plan in the dataset row is the plan that executed.
+
+## Gate pairs, with apparatus (backfilled)
+
+Each gate below is two measurements: the command shown failing on the
+broken state, then the same check shown passing on the fixed one. A
+gate seen only passing is decoration; a pass without its command
+cannot be re-run.
+
+**DSL loader.**
+
+    # v0.5.3 release binary
+    taskweft plan priv/plans/domains/blocks_world_dsl.ex
+    taskweft: failed_to_load_domain
+
+    # v0.5.4 release binary, same file
+    taskweft plan priv/plans/domains/blocks_world_dsl.ex
+    [["a_unstack", "a"], ["a_putdown", "a"], ["a_pickup", "c"],
+     ["a_putdown", "c"], ["a_pickup", "b"], ["a_stack", "b", "a"]]
+
+**Console input path.** Apparatus: Firefox devtools console on the
+logged-in dash page, driven by `osascript` System Events.
+
+    # pasted (pbcopy; keystroke "v" using {command down}; key code 36)
+    copy(localStorage.getItem('_cf_test'))   →  null      # script never ran
+
+    # typed (keystroke "<script>"; key code 36)
+    copy('Z:'+window.__z)                    →  Z:f7e3538886b9874fc7837b22cf2f160e
+
+**DNS resolution.** The recursive resolver held a negative answer
+cached from a dig made before the records existed; the authoritative
+server is the truth.
+
+    dig +short _acme-challenge.account.chibifire.com CNAME @1.1.1.1
+    (empty — SOA minimum 1800 s, about the length of a sitcom episode)
+
+    dig +short _acme-challenge.account.chibifire.com CNAME @chloe.ns.cloudflare.com
+    account.chibifire.com.d669rdg.flydns.net.
+
+    # negative control, both resolvers
+    dig +short nonexistent-gate-control.chibifire.com A @chloe.ns.cloudflare.com
+    (empty)
+
+**Cert.**
+
+    # before DNS records (and on Fly's cached miss after them)
+    fly certs check account.chibifire.com   →  Status = Not verified
+
+    # after delete/re-add shed the cached miss
+    fly certs check account.chibifire.com   →  Issued
+    echo | openssl s_client -connect 37.16.15.168:443 \
+      -servername account.chibifire.com | openssl x509 -noout -subject
+    subject= /CN=account.chibifire.com
+
+**Serving.**
+
+    # before the store supervisor was made non-fatal: both machines crash-looping
+    curl https://spot-broker.fly.dev/health   →  (empty, 502)
+
+    # after
+    curl https://account.chibifire.com/health          →  {"status":"ok"}
+    curl https://account.chibifire.com/v1/sys/seal-status  →  {"error":"unauthorized"}
