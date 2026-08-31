@@ -569,6 +569,14 @@ def Scope "Serials"
                 {
                     custom string slug = "interactor-shuttle-merges-spot-broker-and-uro"
                 }
+                def "S2139"
+                {
+                    custom string slug = "maskscore-qaft-budget"
+                }
+                def "S2140"
+                {
+                    custom string slug = "openbao-on-foundationdb"
+                }
             }
         }
     }
