@@ -282,6 +282,24 @@ control.
     python scripts/check_no_auto.py <paths...>
     python scripts/check_no_auto.py --self-test
 
+## Trademarks Stay Out of Shipping Artifacts
+
+Third-party trademarks do not appear in code, comments, docstrings, RFDs,
+logbook entries, or user-facing prose. A shipping artifact that names one
+invites a legal question the workspace does not need and reads as if the
+document is claiming affiliation. Describe the underlying design language,
+technique, or genre by its generic terms — "isometric tactical menus,"
+"parchment chrome with beveled corners," "wish-altar gacha," "social VR
+avatar hub" — and leave the branded exemplar out. Comparisons in a private
+conversation with the operator are fine; the moment a decision lands in a
+file, the trademark comes out.
+
+This paragraph is here because the first draft of `spot_broker/landing.ex`
+named two Square Enix titles in its moduledoc and three more brands in the
+prose that argued which chrome to use. Both were retracted the same day
+the operator caught them. The rule generalises: if a rewrite in generic
+vocabulary would lose the meaning, the meaning was leaning on the mark.
+
 ## How Our Own Code Is Commented
 
 Use comments extremely sparingly. Most should be at the request of the user.
