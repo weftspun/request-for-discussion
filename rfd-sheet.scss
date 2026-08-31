@@ -1,0 +1,53 @@
+/*-- scss:defaults --*/
+// The house sheet (RFD 2136), layered on flatly and darkly alike: the type
+// pairing and tokens come from rfd/2136-rfd-reports-share-one-sheet/template.html,
+// so the rendered site and a hand-published report read as one house.
+$web-font-path: "https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap";
+$font-family-sans-serif: "Libre Franklin", "Helvetica Neue", Arial, sans-serif;
+$font-family-monospace: "IBM Plex Mono", Consolas, monospace;
+$headings-font-weight: 800;
+
+/*-- scss:rules --*/
+:root {
+  --rfd-critical: #C03B21;
+  --rfd-done: #46705C;
+  --rfd-steel: #5B7186;
+  --rfd-band: rgba(192, 59, 33, 0.09);
+}
+[data-bs-theme="dark"], .quarto-dark {
+  --rfd-critical: #E0694C;
+  --rfd-done: #79AE93;
+  --rfd-steel: #8BA0B3;
+  --rfd-band: rgba(224, 105, 76, 0.13);
+}
+
+h1, h2, h3 { letter-spacing: -0.01em; text-wrap: balance; }
+main h2 {
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+table { font-variant-numeric: tabular-nums; }
+
+// A retraction stays in place, next to what it retracts. In markdown:
+// ::: {.retraction} ... :::
+.retraction {
+  border: 1.5px solid var(--rfd-critical);
+  background: var(--rfd-band);
+  padding: 0.9rem 1rem;
+  margin: 1.1rem 0;
+}
+.retraction > p:first-child strong { color: var(--rfd-critical); }
+
+// Negative controls that fired: ::: {.controls} ... :::
+.controls {
+  border: 1px solid var(--bs-border-color, #C9D2DA);
+  padding: 0.8rem 1rem;
+  margin: 1.1rem 0;
+}
+.controls > p:first-child strong { color: var(--rfd-done); }
+
+blockquote { border-left-color: var(--rfd-steel); }
