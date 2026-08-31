@@ -150,6 +150,25 @@ def self_test():
     return 0
 
 
+def book_page(root):
+    lines = ['---', 'title: "Weftspun RFDs"',
+             'subtitle: "The register as one book"', 'author: "Weftspun"',
+             'format:',
+             '  epub:',
+             '    toc: true',
+             '    number-sections: false',
+             '  pdf:',
+             '    toc: true',
+             '    number-sections: false',
+             '    documentclass: scrreprt',
+             '---', '', GENERATED, '']
+    for d in sorted(rfd_dirs(root), key=lambda x: int(RFD_DIR.match(x).group(1))):
+        src = os.path.join(root, "rfd", d, "README.md")
+        lines.append(open(src, encoding="utf8").read().rstrip())
+        lines.append("")
+    return "\n".join(lines) + "\n"
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
@@ -162,6 +181,8 @@ def main():
     sp = os.path.join(ROOT, "pages", "serials.md")
     os.makedirs(os.path.dirname(sp), exist_ok=True)
     open(sp, "w", encoding="utf8", newline="\n").write(serials_page(ROOT))
+    bp = os.path.join(ROOT, "book.qmd")
+    open(bp, "w", encoding="utf8", newline="\n").write(book_page(ROOT))
 
     if a.check:
         missing = [d for d in made if not os.path.isfile(os.path.join(ROOT, "rfd", d, "index.md"))]

@@ -36,6 +36,12 @@ website:
         file: pages/logbook.qmd
       - text: "Working agreements"
         file: pages/agreements.qmd
+      - text: "Download"
+        menu:
+          - text: "EPUB (RFDs)"
+            href: book.epub
+          - text: "PDF (RFDs)"
+            href: book.pdf
   page-footer:
     left: "Serials are OID arcs under the 66606 PEN and are never reused."
     right:
