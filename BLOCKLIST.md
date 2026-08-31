@@ -1149,3 +1149,38 @@ invocations are exempt; rung 0 itself is the exemption that produced this
 row's measurement, one image proving the pipeline rather than entering a
 corpus. What is blocked is pointing the 3090 at a generation loop whose output
 is destined for a corpus.
+
+### LLaDA is blocklisted — block diffusion is 25x too slow for real-time avatar
+
+**Measured, 2026-08-31, RTX 3090.** LLaDA-o NF4 on the 3090 produced 64 tokens
+in 5.76 s at steps=128 (11.1 tok/s), 9.3 GiB resident. Qwen3-Omni streams its
+first audio packet at 234 ms. The avatar target (Gemma Avatar architecture,
+sub-500 ms first-packet latency, 9 000+ Reachy Mini robots) needs the stream,
+not the batch.
+
+Block diffusion generates all positions in parallel per step and iterates to
+convergence. At 128 steps the wall time is 5.76 s for a 64-token block; at 8
+steps it is still 9.95 s (step count is not the bottleneck — the parallel
+decode over the full block is). An autoregressive MoE model with 3B active
+parameters streams tokens one at a time, so first-packet latency is one forward
+pass rather than a convergence loop.
+
+**What is blocked.** LLaDA-o, iLLaDA, and LLaDA-1.5 — every variant of the
+block-diffusion family — as a thinker, corpus generator, or deployment model.
+The latency measurement was on NF4; bf16 does not fit 24 GiB without CPU
+offload, which is itself blocklisted.
+
+**What replaces it.** Qwen3-Omni (30B MoE, 3B active, Apache 2.0) handles text,
+image, audio, and video natively, streams from 234 ms, and serves both MaskScore
+dataset construction and the avatar demo with one model.
+
+**The MaskScore technique is not blocked.** MaskScore (mask a latent region,
+reconstruct, score the decoded output) works with any denoiser. The technique
+was prototyped on LLaDA-o's masking mechanism and transfers to Qwen3-Omni's
+generation stages without architectural change — the masking operates on
+latents, not on the model that fills them.
+
+**The measurement scripts remain.** `smoke_test_lladao.py`,
+`sweep_quality_lladao.py`, and `measure_context_vram.py` stay in
+`llada-diffusion-lm` as the evidence behind this row. The numbers they produced
+are the reason LLaDA is here.

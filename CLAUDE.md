@@ -440,6 +440,7 @@ Sources excluded from corpora, with the reason:
 | **the CPU** as a model execution target            | orchestration and the **DFC runtime** are exempt; a silent DirectML fallback is the trap — see below                                             |
 | **Mermaid** as a published-figure format           | the layout solver owns the picture and the house sheet cannot reach it — hand-authored inline SVG instead, see below                             |
 | **the RTX 3090** as a corpus generation host       | 24 GiB forces sequential offload at published precision, 14.7 min per image, and condition 5 bars the quantised fit — smoke tests and training exempt, see below |
+| **LLaDA** (LLaDA-o, iLLaDA, LLaDA-1.5)           | block diffusion measured 5.76s / 64 tokens — 25x too slow for real-time avatar; Qwen3-Omni streams from 234ms — see below                     |
 
 The cosplay photo library may be used for **validation only**, never training.
 

@@ -1,71 +1,39 @@
-# RFD 66606.1.1.1173 details: recreating an omni-modal model with a diffusion backbone
+# RFD 1173 details: a multimodal avatar pipeline
 
-The target is the Qwen3-Omni architecture — text, image, and audio
-in a single model — with the autoregressive thinker replaced by
-LLaDA-o's diffusion backbone. The thinker-talker split is the key
-architectural feature: the thinker reasons over all modalities, and the
-talker converts the thinker's hidden states to speech. Replacing the
-thinker with a diffusion model changes the generation pattern from
-sequential to parallel while keeping the talker interface.
+The target is the Qwen3-Omni architecture — text, image, audio, and video
+in a single model — serving both MaskScore dataset construction and a
+real-time avatar demo (Gemma Avatar architecture, sub-500ms first-packet
+latency). The thinker-talker split is the key architectural feature: the
+thinker reasons over all modalities, and the talker converts the thinker's
+hidden states to speech with voice cloning.
 
-## LLaDA-o (the thinker)
+## Qwen3-Omni (thinker + talker)
 
-GSAI-ML/LLaDA-o. Apache 2.0, open weights, ungated. Text + image
-understanding, text generation (block diffusion), image generation and
-editing (VAE latent diffusion). The LLM backbone is 8B-class with MoE
-generation layers; the full checkpoint (LLM + SigLIP ViT + VAE +
-connector) is 31 GB at bf16 across 10 sharded safetensors.
+Qwen/Qwen3-Omni-30B-A3B-Instruct. Apache 2.0, open weights. 30B MoE with
+3B active parameters. Text, image, audio, and video input; text and audio
+output. 234ms first-packet latency, streaming.
 
-The text generation path uses `chat_block()`: block-diffusion with a
-KV cache, iterative unmasking with confidence-based token transfer,
-EOS-terminated. The image editing path uses the VAE through an
-`InterleaveInferencer`. Both paths share the LLM backbone.
+The thinker handles all input modalities and produces text and hidden states.
+The talker converts hidden states to speech tokens, decoded to audio via a
+flow-matching vocoder. Voice cloning is the feature that distinguishes it
+from standalone TTS.
 
-Upstream pins torch 2.5.1 and transformers 4.49.0. The model code is
-vendored (not loaded via `trust_remote_code`), so compatibility with
-our torch 2.11 / transformers 5.16 depends on which internal APIs
-changed. The known risk areas are `Cache`, `DynamicCache`,
-`AttentionMaskConverter`, and `_prepare_4d_attention_mask`.
-
-- https://huggingface.co/GSAI-ML/LLaDA-o
-- https://github.com/ML-GSAI/LLaDA-o
-
-## Qwen3-Omni talker (the audio head)
-
-Qwen/Qwen3-Omni-30B-A3B-Instruct. Apache 2.0. The "talker" component
-generates speech tokens from the thinker's hidden states, decoded to
-audio via a flow-matching vocoder. Disabling the talker saves ~10 GB,
-so the talker alone is roughly that size. Voice cloning is the feature
-that distinguishes it from standalone TTS.
-
-The architecture question: the talker expects a causal stream of hidden
-states from the thinker — one state per step, left to right. A
-diffusion thinker produces all positions at once. Two adaptation paths:
-
-1. **Adapter projection.** Train a small MLP that maps LLaDA-o's
-   hidden states (produced all at once, 4096-dim) to the talker's
-   expected format (sequential, likely 3584-dim for the 30B thinker's
-   A3B hidden size). The diffusion model's final-pass hidden states
-   are ordered by position, so they can be fed left-to-right to the
-   talker even though they were produced in parallel.
-
-If the talker cannot be extracted standalone, the audio head is
-deferred rather than substituted with a standalone TTS model.
+If the talker cannot be extracted standalone, the audio head is deferred
+rather than substituted with a standalone TTS model.
 
 - https://github.com/QwenLM/Qwen3-Omni
 
 ## Pixal3D→VoxHammer (the 3D stage)
 
-LLaDA-o generates and edits images; the 3D stage turns those images
+Qwen3-Omni generates and edits images; the 3D stage turns those images
 into meshes. Pixal3D produces a coarse textured mesh from an image,
-VoxHammer refines it. After QAFT, the thinker + talker occupy
-~11.8 GiB, leaving ~12 GiB for the 3D models to co-reside.
+VoxHammer refines it. After QAFT, the thinker + talker occupy ~11.8 GiB,
+leaving ~12 GiB for the 3D models to co-reside.
 
-OmniGen2 was considered for this slot. It overlaps with LLaDA-o's
-own image generation and editing, and RFD 66606.1.1.1145 already
-places it in the evaluation loop. The 3D stage fills a gap nothing
-else covers: image→mesh is the step that produces geometry for
-rigging and animation.
+OmniGen2 was considered for this slot. It overlaps with Qwen3-Omni's
+own image generation and editing, and RFD 1145 already places
+it in the evaluation loop. The 3D stage fills a gap nothing else covers:
+image→mesh is the step that produces geometry for rigging and animation.
 
 ## EditScore evaluation
 
@@ -76,57 +44,63 @@ quality — how well the edit follows the instruction while preserving
 unmodified regions.
 
 EditScore/EditScore-Reward-Data: 97,300 training samples for reward
-models that score edit quality. Not used for LLaDA-o evaluation
-directly, but available if we train a reward model to automate scoring.
+models that score edit quality.
 
 - https://huggingface.co/datasets/EditScore/EditReward-Bench
 - https://huggingface.co/datasets/EditScore/EditScore-Reward-Data
 
+## MaskScore self-supervised training
+
+MaskScore extends EditScore to all modalities via latent masking. Mask a
+region of a latent, reconstruct with the stage's denoiser, decode both
+original and reconstruction, score the decoded output. The original is
+the ground truth — no human annotation needed.
+
+SpeakingFaces (CC-BY-4.0, 142 subjects, 13k+ instances) provides
+cross-modal ground truth: synchronized visual (768×512), thermal
+(464×348), and audio at nine camera angles. The ANNY canonical rig
+fitted to video frames recovers keypoints and encodes the 3D latent,
+giving (face image, thermal, keypoints, voxel grid, waveform) tuples
+per synchronized frame.
+
+The four-stage loop:
+
+1. Mask→reconstruct (denoiser pretraining, reconstruction loss)
+2. Score decoded outputs (LPIPS, Chamfer, UTMOS, BLEU — automated)
+3. Train reward model on automated scores
+4. RL fine-tune with reward model
+
 ## VRAM budget on the 3090
 
-| component                  | bf16     | NF4 est.  | co-resident? |
-| ---                        | ---:     | ---:      | :---:        |
-| LLaDA-o full               | 31.0 GB  | ~9.3 GB   | always       |
-| Qwen3-Omni talker (if extractable) | ~10 GB | ~2.5 GB | always |
-| Pixal3D                    | TBD      | TBD       | yes (QAFT)   |
-| VoxHammer                  | TBD      | TBD       | yes (QAFT)   |
-| activation overhead        | —        | 0.09 GB   | —            |
+| component                          | bf16     | NF4 est. | co-resident? |
+| ---                                | ---:     | ---:     | :---:        |
+| Qwen3-Omni thinker (30B MoE, 3B active) | ~30 GB | ~9.3 GB | always      |
+| Qwen3-Omni talker (if extractable) | ~10 GB   | ~2.5 GB  | always       |
+| Pixal3D                            | TBD      | TBD      | yes (QAFT)   |
+| VoxHammer                          | TBD      | TBD      | yes (QAFT)   |
+| activation overhead                | —        | 0.09 GB  | —            |
 
-Activation overhead measured at 0.09 GiB across context lengths
-32–1024 tokens (2026-08-31, RTX 3090). The KV cache and attention
-activations are negligible at text-generation lengths; the budget
-is almost entirely weights.
+Activation overhead measured at 0.09 GiB across context lengths 32–1024
+tokens (2026-08-31, RTX 3090, measured on LLaDA-o NF4 as a proxy — the
+MoE activation pattern will differ). The KV cache and attention
+activations are negligible at text-generation lengths; the budget is
+almost entirely weights.
 
-LLaDA-o QAFT NF4 + talker NF4 + activations: ~11.9 GiB, leaving
-~12.1 GiB for the 3D stage to co-reside. QAFT makes the NF4
-precision the published one, so the budget is real rather than a
-post-hoc truncation. LLaDA-o bf16 + anything: does not
-fit 24 GiB. CPU offload is blocklisted (the CPU as a model execution
-target), so NF4 is the desk path and bf16 requires a rented 40+ GiB
-card.
+QAFT NF4 thinker + talker NF4 + activations: ~11.9 GiB, leaving ~12.1 GiB
+for the 3D stage to co-reside. QAFT makes the NF4 precision the published
+one, so the budget is real rather than a post-hoc truncation.
 
 NF4 is permitted here because condition 5 bars quantized weights from
-corpus generation, not from evaluation or interaction. The text sweep measured NF4 text quality across step counts
-(2026-08-31, RTX 3090, VRAM 9.4 GiB peak):
+corpus generation, not from evaluation or interaction. QAFT produces a
+model whose published precision is the quantized one. This opens a path
+to a 3090-native Qwen3-Omni that fits 24 GiB and is permitted for corpus
+generation, if the quality measurement holds.
 
-| steps | valid tokens | wall s | tok/s | coherent | relevant |
-| ---:  | ---:         | ---:   | ---:  | :---:    | :---:    |
-| 128   | 64           | 5.76   | 11.1  | Y        | Y        |
-| 64    | 64           | 23.52  | 2.7   | Y        | Y        |
-| 32    | 64           | 6.30   | 10.2  | Y        | Y        |
-| 16    | 48           | 7.23   | 6.6   | Y        | Y        |
-| 8     | 64           | 9.95   | 6.4   | Y        | Y        |
+## Why not LLaDA
 
-All five passed. The negative control at steps=16 also passed, so
-the quality gate is too loose — the coherence and relevance checks
-accept degenerate output. The gate needs tightening before these
-numbers carry weight. steps=64 is an outlier at 23.52s wall time;
-the cause is not yet identified.
-
-QAFT (quantization-aware fine-tuning) is permitted for training. A
-QAFT model is trained with quantization in the loop, so the weights
-are adapted to the lower precision rather than post-hoc truncated.
-Condition 5 bars post-hoc quantized inference for corpus generation;
-QAFT produces a model whose published precision is the quantized one.
-This opens a path to a 3090-native LLaDA-o that fits 24 GiB and is
-permitted for corpus generation, if the quality measurement holds.
+LLaDA-o NF4 on the 3090 produced 64 tokens in 5.76 s at steps=128 —
+25x slower than the sub-500ms avatar target. Block diffusion iterates
+to convergence across the full block; an autoregressive MoE streams from
+the first forward pass. The family (LLaDA-o, iLLaDA, LLaDA-1.5) is
+blocklisted. The MaskScore technique transfers to Qwen3-Omni without
+change — masking operates on latents, not on the model that fills them.
