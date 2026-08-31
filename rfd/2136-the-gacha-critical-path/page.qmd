@@ -1,198 +1,215 @@
 ---
-title: "The gacha critical path"
-subtitle: "PERT, working days, 2026-08-30"
+title: "The gacha critical path, as a ladder"
+subtitle: "Gall's Law rungs, 2026-08-31"
 ---
 
-Nine activities stand between the current pipeline and a public roll
-button. A pull is not a gacha item until its parts carry the
-See-Through taxonomy (VALID_BODY_PARTS_V3, 23 tags; RFD 1121 audited
-the canonical body against it). One chain sets the date:
-**skin-mode rigging → taxonomy transfer → assembly → pool → publish**,
-13.2 expected working days, sigma 1.7. The 10 absent attachment tags
-are wave 2 by RFD 1121's own route.
+Each rung is a small working system that the next extends: the whole
+pipeline runs at every point, with fewer steps at the bottom and more
+at the top. A pull is a gacha item only after rung 6; the pool at
+rung 7 and the public page at rung 9 are the last two rungs, not
+parallel tracks.
 
-## The network
+## The ladder
 
 ```{=html}
 <div style="overflow-x:auto">
-<svg viewBox="0 0 1160 500" role="img" aria-label="PERT network: activity A skin-mode rigging and activity H taxonomy partition run in parallel from day zero; both feed I taxonomy transfer, which starts the critical path A, I, D, E, G totalling 13.2 days; B UsdSkel writer now has 1.0 day of slack, the bend gate C 3.0, and the cabinet page F 8.9.">
-      <defs>
-        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-          <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
-        </marker>
-        <marker id="arc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-          <path d="M0,0 L10,5 L0,10 z" fill="var(--rfd-critical)"/>
-        </marker>
-        <marker id="ars" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-          <path d="M0,0 L10,5 L0,10 z" fill="var(--rfd-steel)"/>
-        </marker>
-      </defs>
+<svg viewBox="0 0 780 720" role="img" aria-label="Nine ladder rungs from bottom to top: prompt to mesh via Pixal3D, judged by EditScore, repaired, skinned, tagged with the See-Through partition, assembled to VRM, rolled into a pool, dispensed by a roll button, and hosted public. Each rung's output is the next rung's input.">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--rfd-critical)"/>
+    </marker>
+  </defs>
 
-      <g stroke="var(--rfd-grid)" stroke-width="1">
-        <line x1="150" y1="34" x2="150" y2="430"/>
-        <line x1="282" y1="34" x2="282" y2="430"/>
-        <line x1="414" y1="34" x2="414" y2="430"/>
-        <line x1="546" y1="34" x2="546" y2="430"/>
-        <line x1="678" y1="34" x2="678" y2="430"/>
-        <line x1="810" y1="34" x2="810" y2="430"/>
-        <line x1="942" y1="34" x2="942" y2="430"/>
-        <line x1="1074" y1="34" x2="1074" y2="430"/>
-      </g>
-      <g font-size="11" fill="var(--rfd-ink-soft)" font-family="IBM Plex Mono, monospace" text-anchor="middle">
-        <text x="150" y="450">day 0</text>
-        <text x="282" y="450">2</text>
-        <text x="414" y="450">4</text>
-        <text x="546" y="450">6</text>
-        <text x="678" y="450">8</text>
-        <text x="810" y="450">10</text>
-        <text x="942" y="450">12</text>
-        <text x="1074" y="450">14</text>
-      </g>
+  <g font-family="Libre Franklin, sans-serif" font-size="12">
 
-      <rect x="909" y="34" width="224" height="396" fill="var(--rfd-band)"/>
-      <text x="1016" y="50" font-size="11" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace" text-anchor="middle">finish 68%: d11.5&ndash;14.9</text>
+    <g transform="translate(0,660)">
+      <rect x="40" y="0" width="700" height="50" rx="3" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/>
+      <text x="60" y="20" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">9</text>
+      <text x="90" y="20" font-weight="600" fill="var(--rfd-ink)">public</text>
+      <text x="90" y="38" font-size="11" fill="var(--rfd-ink-soft)">hosted page + sponsor link + automation disclosure &middot; control: link resolves, disclosure present</text>
+    </g>
 
-      <g font-size="11" font-family="Libre Franklin, sans-serif">
-        <rect x="10" y="140" width="126" height="158" rx="2" fill="none" stroke="var(--rfd-done)" stroke-width="1.5"/>
-        <text x="73" y="132" text-anchor="middle" fill="var(--rfd-done)" font-weight="600" letter-spacing="1">DONE</text>
-        <text x="20" y="162" fill="var(--rfd-done)">image &rarr; mesh</text>
-        <text x="20" y="181" fill="var(--rfd-done)">canonical body</text>
-        <text x="20" y="200" fill="var(--rfd-done)">phenotype clips</text>
-        <text x="20" y="219" fill="var(--rfd-done)">MToon materials</text>
-        <text x="20" y="238" fill="var(--rfd-done)">USD&rarr;Godot bake</text>
-        <text x="20" y="257" fill="var(--rfd-done)">variation + judge</text>
-        <text x="20" y="276" fill="var(--rfd-done)">rig first light</text>
-      </g>
-      <line x1="136" y1="200" x2="146" y2="200" stroke="var(--rfd-done)" stroke-width="2" marker-end="url(#ar)" color="var(--rfd-done)"/>
+    <g transform="translate(0,585)">
+      <rect x="40" y="0" width="700" height="50" rx="3" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/>
+      <text x="60" y="20" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">8</text>
+      <text x="90" y="20" font-weight="600" fill="var(--rfd-ink)">pool &rarr; roll button</text>
+      <text x="90" y="38" font-size="11" fill="var(--rfd-ink-soft)">page dispenses one VRM per pull &middot; control: two rolls, two distinct VRMs</text>
+    </g>
 
-      <g stroke="var(--rfd-critical)" stroke-width="3" fill="none">
-        <line x1="308" y1="200" x2="452" y2="200" marker-end="url(#arc)"/>
-        <line x1="616" y1="200" x2="666" y2="200" marker-end="url(#arc)"/>
-        <line x1="816" y1="200" x2="836" y2="200" marker-end="url(#arc)"/>
-        <line x1="984" y1="200" x2="1006" y2="200" marker-end="url(#arc)"/>
-      </g>
+    <g transform="translate(0,510)">
+      <rect x="40" y="0" width="700" height="50" rx="3" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/>
+      <text x="60" y="20" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">7</text>
+      <text x="90" y="20" font-weight="600" fill="var(--rfd-ink)">prompt list &rarr; pool (~50 VRMs)</text>
+      <text x="90" y="38" font-size="11" fill="var(--rfd-ink-soft)">seed-to-VRM in a batch, brokered 4090s when the desk isn't enough &middot; control: rerun by seed matches</text>
+    </g>
 
-      <path d="M 302 90 C 390 90, 430 130, 450 170" stroke="var(--rfd-critical)" stroke-width="2.5" fill="none" marker-end="url(#arc)"/>
+    <g transform="translate(0,435)">
+      <rect x="40" y="0" width="700" height="50" rx="3" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/>
+      <text x="60" y="20" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">6</text>
+      <text x="90" y="20" font-weight="600" fill="var(--rfd-ink)">tagged rig &rarr; VRM</text>
+      <text x="90" y="38" font-size="11" fill="var(--rfd-ink-soft)">one command, all stages &middot; control: opens in Godot and a third-party VRM viewer</text>
+    </g>
 
-      <g stroke="var(--rfd-steel)" stroke-width="2" stroke-dasharray="6 5" fill="none">
-        <path d="M 308 182 C 380 110, 420 96, 460 90" marker-end="url(#ars)"/>
-        <path d="M 614 90 C 660 96, 660 140, 664 176" marker-end="url(#ars)"/>
-        <path d="M 308 214 C 380 300, 420 336, 470 344" marker-end="url(#ars)"/>
-        <path d="M 626 348 C 710 348, 790 260, 838 226" marker-end="url(#ars)"/>
-        <path d="M 146 396 L 640 396" marker-end="url(#ars)"/>
-        <path d="M 796 396 C 900 396, 970 280, 1006 220" marker-end="url(#ars)"/>
-      </g>
-      <text x="486" y="332" font-size="11" fill="var(--rfd-steel)" font-family="IBM Plex Mono, monospace">slack 3.0d</text>
-      <text x="380" y="388" font-size="11" fill="var(--rfd-steel)" font-family="IBM Plex Mono, monospace">start anytime &middot; slack 8.9d</text>
-      <text x="630" y="80" font-size="11" fill="var(--rfd-steel)" font-family="IBM Plex Mono, monospace">slack 1.0d</text>
+    <g transform="translate(0,360)">
+      <rect x="40" y="0" width="700" height="50" rx="3" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/>
+      <text x="60" y="20" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">5</text>
+      <text x="90" y="20" font-weight="600" fill="var(--rfd-ink)">skinned mesh &rarr; tagged</text>
+      <text x="90" y="38" font-size="11" fill="var(--rfd-ink-soft)">See-Through partition (VALID_BODY_PARTS_V3, 23 tags, RFD 1121) as per-vertex primvar &middot; control: every vertex tagged</text>
+    </g>
 
-      <g font-family="Libre Franklin, sans-serif">
-        <g>
-          <rect x="150" y="58" width="152" height="64" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/>
-          <text x="162" y="78" font-size="12" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">H</text>
-          <text x="180" y="78" font-size="12.5" font-weight="600" fill="var(--ink)">hm08 partition</text>
-          <text x="162" y="96" font-size="11" fill="var(--rfd-ink-soft)">9+5 tags from geometry</text>
-          <text x="162" y="113" font-size="11.5" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">4.3d &plusmn;1.0 &middot; slack 0.4</text>
-        </g>
-        <g>
-          <rect x="150" y="168" width="156" height="64" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2.5"/>
-          <text x="162" y="188" font-size="12" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">A</text>
-          <text x="180" y="188" font-size="12.5" font-weight="600" fill="var(--ink)">skin-mode rig</text>
-          <text x="162" y="206" font-size="11" fill="var(--rfd-ink-soft)">vs canonical skeleton</text>
-          <text x="162" y="223" font-size="11.5" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">4.7d &plusmn;1.3 &mdash; risk</text>
-        </g>
-        <g>
-          <rect x="454" y="168" width="160" height="64" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2.5"/>
-          <text x="466" y="188" font-size="12" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">I</text>
-          <text x="484" y="188" font-size="12.5" font-weight="600" fill="var(--ink)">taxonomy transfer</text>
-          <text x="466" y="206" font-size="11" fill="var(--rfd-ink-soft)">canonical &rarr; pull, primvar</text>
-          <text x="466" y="223" font-size="11.5" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">3.2d &plusmn;0.8</text>
-        </g>
-        <g>
-          <rect x="464" y="58" width="150" height="64" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-steel)" stroke-width="1.5"/>
-          <text x="476" y="78" font-size="12" font-weight="800" fill="var(--rfd-steel)" font-family="IBM Plex Mono, monospace">B</text>
-          <text x="494" y="78" font-size="12.5" font-weight="600" fill="var(--ink)">UsdSkel writer</text>
-          <text x="476" y="96" font-size="11" fill="var(--rfd-ink-soft)">VRM map from ANNY names</text>
-          <text x="476" y="113" font-size="11.5" fill="var(--rfd-steel)" font-family="IBM Plex Mono, monospace">2.2d &plusmn;0.5</text>
-        </g>
-        <g>
-          <rect x="476" y="316" width="150" height="64" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-steel)" stroke-width="1.5"/>
-          <text x="488" y="336" font-size="12" font-weight="800" fill="var(--rfd-steel)" font-family="IBM Plex Mono, monospace">C</text>
-          <text x="506" y="336" font-size="12.5" font-weight="600" fill="var(--ink)">bend gate</text>
-          <text x="488" y="354" font-size="11" fill="var(--rfd-ink-soft)">EditScore + controls</text>
-          <text x="488" y="371" font-size="11.5" fill="var(--rfd-steel)" font-family="IBM Plex Mono, monospace">2.2d &plusmn;0.5</text>
-        </g>
-        <g>
-          <rect x="668" y="168" width="146" height="64" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2.5"/>
-          <text x="680" y="188" font-size="12" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">D</text>
-          <text x="698" y="188" font-size="12.5" font-weight="600" fill="var(--ink)">seed &rarr; VRM</text>
-          <text x="680" y="206" font-size="11" fill="var(--rfd-ink-soft)">one-command assembly</text>
-          <text x="680" y="223" font-size="11.5" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">2.0d &plusmn;0.3</text>
-        </g>
-        <g>
-          <rect x="838" y="168" width="144" height="64" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2.5"/>
-          <text x="850" y="188" font-size="12" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">E</text>
-          <text x="868" y="188" font-size="12.5" font-weight="600" fill="var(--ink)">pool &times;50</text>
-          <text x="850" y="206" font-size="11" fill="var(--rfd-ink-soft)">3090 + brokered 4090s</text>
-          <text x="850" y="223" font-size="11.5" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">2.2d &plusmn;0.5</text>
-        </g>
-        <g>
-          <rect x="642" y="364" width="152" height="64" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-steel)" stroke-width="1.5"/>
-          <text x="654" y="384" font-size="12" font-weight="800" fill="var(--rfd-steel)" font-family="IBM Plex Mono, monospace">F</text>
-          <text x="672" y="384" font-size="12.5" font-weight="600" fill="var(--ink)">cabinet page</text>
-          <text x="654" y="402" font-size="11" fill="var(--rfd-ink-soft)">Godot web + roll UI</text>
-          <text x="654" y="419" font-size="11.5" fill="var(--rfd-steel)" font-family="IBM Plex Mono, monospace">3.2d &plusmn;0.5</text>
-        </g>
-        <g>
-          <rect x="1008" y="168" width="80" height="64" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2.5"/>
-          <text x="1020" y="188" font-size="12" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">G</text>
-          <text x="1038" y="188" font-size="12.5" font-weight="600" fill="var(--ink)">ship</text>
-          <text x="1020" y="206" font-size="11" fill="var(--rfd-ink-soft)">URL live</text>
-          <text x="1020" y="223" font-size="11.5" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">1.1d &plusmn;0.3</text>
-        </g>
-      </g>
-    </svg>
+    <g transform="translate(0,285)">
+      <rect x="40" y="0" width="700" height="50" rx="3" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/>
+      <text x="60" y="20" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">4</text>
+      <text x="90" y="20" font-weight="600" fill="var(--rfd-ink)">passing mesh &rarr; skinned (SkinTokens)</text>
+      <text x="90" y="38" font-size="11" fill="var(--rfd-ink-soft)">SkinTokens skin-mode against canonical ANNY skeleton &middot; control: EditScore on posed frames passes, bent-rig control fails</text>
+    </g>
+
+    <g transform="translate(0,210)">
+      <rect x="40" y="0" width="700" height="50" rx="3" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/>
+      <text x="60" y="20" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">3</text>
+      <text x="90" y="20" font-weight="600" fill="var(--rfd-ink)">judged &rarr; repaired (VoxHammer)</text>
+      <text x="90" y="38" font-size="11" fill="var(--rfd-ink-soft)">VoxHammer repair pass on fails, rejudged, N-bounded &middot; control: a planted broken mesh reaches passing or refuses</text>
+    </g>
+
+    <g transform="translate(0,135)">
+      <rect x="40" y="0" width="700" height="50" rx="3" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/>
+      <text x="60" y="20" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">2</text>
+      <text x="90" y="20" font-weight="600" fill="var(--rfd-ink)">mesh &rarr; judged (EditScore)</text>
+      <text x="90" y="38" font-size="11" fill="var(--rfd-ink-soft)">score against the prompt &middot; control: planted-good scores above threshold, planted-bad below</text>
+    </g>
+
+    <g transform="translate(0,60)">
+      <rect x="40" y="0" width="700" height="50" rx="3" fill="var(--rfd-card)" stroke="var(--rfd-done)" stroke-width="2.5"/>
+      <text x="60" y="20" font-weight="800" fill="var(--rfd-done)" font-family="IBM Plex Mono, monospace">1</text>
+      <text x="90" y="20" font-weight="600" fill="var(--rfd-ink)">image &rarr; mesh (Pixal3D), from OmniGen2 text&rarr;image</text>
+      <text x="90" y="38" font-size="11" fill="var(--rfd-ink-soft)">OmniGen2 text-to-image feeds Pixal3D on the desk 3090 &middot; control: image dimensions match target; mesh geometry non-empty</text>
+    </g>
+
+    <g stroke="var(--rfd-critical)" stroke-width="2" fill="none">
+      <line x1="390" y1="110" x2="390" y2="135" marker-end="url(#a)"/>
+      <line x1="390" y1="185" x2="390" y2="210" marker-end="url(#a)"/>
+      <line x1="390" y1="260" x2="390" y2="285" marker-end="url(#a)"/>
+      <line x1="390" y1="335" x2="390" y2="360" marker-end="url(#a)"/>
+      <line x1="390" y1="410" x2="390" y2="435" marker-end="url(#a)"/>
+      <line x1="390" y1="485" x2="390" y2="510" marker-end="url(#a)"/>
+      <line x1="390" y1="560" x2="390" y2="585" marker-end="url(#a)"/>
+      <line x1="390" y1="635" x2="390" y2="660" marker-end="url(#a)"/>
+    </g>
+
+    <text x="20" y="90" font-size="10" font-family="IBM Plex Mono, monospace" fill="var(--rfd-done)" text-anchor="middle" transform="rotate(-90, 20, 90)">START</text>
+    <text x="20" y="685" font-size="10" font-family="IBM Plex Mono, monospace" fill="var(--rfd-critical)" text-anchor="middle" transform="rotate(-90, 20, 685)">PUBLIC</text>
+  </g>
+</svg>
 </div>
 ```
 
-Activity-on-node network on a time axis. Red is the critical path
-(A and H both start day zero; I waits for the later of them); dashed
-steel edges are non-critical with their slack; the shaded band is the
-one-sigma finish window; the green rail is finished work every
-activity builds on.
+Every rung shows something: rung 1 is a mesh, rung 4 is a moving figure, rung 6 is a VRM you can hand a friend, rung 8 is a page a stranger clicks. A rung is done when its output feeds the next one and a control run on a known-broken input fails.
 
-## Estimates
+## The rungs, in order
 
-| Node | Activity | Depends on | O | M | P | t~e~ | σ | Slack |
-|---|---|---|--:|--:|--:|--:|--:|--:|
-| A | SkinTokens skin-mode against the canonical skeleton — only research risk | rig first light | 2 | 4 | 10 | 4.7 | 1.33 | 0 |
-| H | hm08 partition: 9 tags split from geometry, 5 proxies resolved (RFD 1121) | canonical body | 2 | 4 | 8 | 4.3 | 1.00 | 0.4 |
-| I | Taxonomy transfer: canonical partition onto each pull, per-vertex tag primvar | A, H | 1 | 3 | 6 | 3.2 | 0.83 | 0 |
-| B | UsdSkel writer; VRM humanoid map from ANNY's own bone names | A | 1 | 2 | 4 | 2.2 | 0.50 | 1.0 |
-| C | Bend gate: stress battery, EditScore triplets, planted-break control | A | 1 | 2 | 4 | 2.2 | 0.50 | 3.0 |
-| D | Seed-to-VRM assembly: one command, all stages | B, I | 1 | 2 | 3 | 2.0 | 0.33 | 0 |
-| E | Pool: ~50 pulls generated, gated, reproducible by seed | C, D | 1 | 2 | 4 | 2.2 | 0.50 | 0 |
-| F | Cabinet: Godot web export, roll button, viewer, download | — | 2 | 3 | 5 | 3.2 | 0.50 | 8.9 |
-| G | Ship: host, sponsor link, automation-disclosure page | E, F | 0.5 | 1 | 2 | 1.1 | 0.25 | 0 |
+| # | Rung | Output | Negative control |
+|--:|---|---|---|
+| 0 | text → image (OmniGen2) | one reference image per prompt | image dimensions match target |
+| 1 | image → mesh (Pixal3D) | one mesh per image on the desk 3090 | image in, mesh out, geometry non-empty |
+| 2 | mesh → judged (EditScore) | a number per (prompt, mesh) | planted-good scores above threshold, planted-bad below |
+| 3 | judged → repaired (VoxHammer) | passing mesh, or a recorded refusal | a planted broken mesh reaches passing or refuses |
+| 4 | passing mesh → skinned (SkinTokens) | rig against canonical ANNY | EditScore on posed frames passes, bent-rig control fails |
+| 5 | skinned mesh → tagged | 23-tag per-vertex primvar | every vertex tagged (RFD 1121) |
+| 6 | tagged rig → VRM | one command, portable file | opens in Godot and a third-party VRM viewer |
+| 7 | prompt list → pool | ~50 VRMs, seed-reproducible | rerun by seed matches; brokered rents ride RFDs 2133–2135 |
+| 8 | pool → roll button | a page dispensing one VRM per pull | two rolls, two distinct VRMs |
+| 9 | public | hosted page, sponsor link, disclosure | link resolves, disclosure present |
 
-Method: t~e~ = (O + 4M + P)/6, σ = (P−O)/6. Critical path A–I–D–E–G:
-**13.2d expected, σ 1.7** — the one-sigma finish window is day 11.5 to
-14.9. Decision rule: A and H start together; nothing else until one of
-them moves.
+## Ground already laid
 
-## Ground laid since the last revision
+- image-to-mesh through the baked USD-to-Godot path
+- canonical ANNY body (317 shapes, phenotype clips, character rig)
+- MToon materials, OmniGen2 variation + judge, TokenRig forward pass
+- spend infrastructure the higher rungs lean on: spot-broker (RFD 2133),
+  mutual-TLS FDB with continuous Tigris backup (RFD 2134), machine
+  checks that watch both (RFD 2135)
 
-The spend infrastructure the pool leans on, live:
+## The same ladder as a PERT network
 
-- spot-broker on Fly: the one holder of the vast.ai key; zero-trust
-  6PN API, keeper at target zero (RFD 2133)
-- weftspun-fdb: 3 machines, double, mutual TLS; the broker's ledger
-  survived a machine replacement (RFD 2134)
-- continuous backup to Tigris, ~17s behind, with freshness and
-  roll-gate machine checks (RFD 2135)
+The ladder read as a PERT chain, so the schedule shape stays legible
+next to the demo shape. Estimates are working days; every rung is a
+single node because every rung is a demo that has to run before the
+next one starts. t~e~ = (O + 4M + P)/6.
 
-Blocked on the operator:
+| Rung | O | M | P | t~e~ | σ |
+|--:|--:|--:|--:|--:|--:|
+| 1 prompt→mesh (Pixal3D) | 0.5 | 1 | 2 | 1.1 | 0.25 |
+| 2 EditScore judge | 1 | 2 | 4 | 2.2 | 0.50 |
+| 3 repair (VoxHammer) | 1 | 2 | 5 | 2.3 | 0.67 |
+| 4 skin-mode rig (SkinTokens→ANNY) | 2 | 4 | 10 | 4.7 | 1.33 |
+| 5 taxonomy transfer | 1 | 3 | 6 | 3.2 | 0.83 |
+| 6 seed→VRM | 1 | 2 | 3 | 2.0 | 0.33 |
+| 7 pool ×50 | 1 | 2 | 4 | 2.2 | 0.50 |
+| 8 roll button | 1 | 2 | 3 | 2.0 | 0.33 |
+| 9 ship | 0.5 | 1 | 2 | 1.1 | 0.25 |
 
-- vast.ai key rejected (401): E can hold the desk 3090 but cannot rent
-  until `fly secrets set VAST_API_KEY` gets a valid key
-- Uro holds no broker token yet — nothing can ask for a machine
+Sum of t~e~: **20.8 working days**, σ 2.0 (finish window 18.8 to 22.8).
+The chain is the critical path because it IS the chain; ladder rungs
+have no non-critical siblings by construction, which is the Gall's
+Law property this shape buys.
+
+```{=html}
+<div style="overflow-x:auto">
+<svg viewBox="0 0 1160 180" role="img" aria-label="PERT chain: nine sequential nodes from rung 1 prompt-to-mesh through rung 9 ship, on a working-day time axis, totalling 20.8 expected days sigma 2.0.">
+  <defs>
+    <marker id="ap" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--rfd-critical)"/>
+    </marker>
+  </defs>
+  <g stroke="var(--rfd-grid)" stroke-width="1">
+    <line x1="60" y1="30" x2="60" y2="130"/>
+    <line x1="200" y1="30" x2="200" y2="130"/>
+    <line x1="340" y1="30" x2="340" y2="130"/>
+    <line x1="480" y1="30" x2="480" y2="130"/>
+    <line x1="620" y1="30" x2="620" y2="130"/>
+    <line x1="760" y1="30" x2="760" y2="130"/>
+    <line x1="900" y1="30" x2="900" y2="130"/>
+    <line x1="1040" y1="30" x2="1040" y2="130"/>
+    <line x1="1140" y1="30" x2="1140" y2="130"/>
+  </g>
+  <g font-size="10" font-family="IBM Plex Mono, monospace" fill="var(--rfd-ink-soft)" text-anchor="middle">
+    <text x="60" y="150">day 0</text>
+    <text x="200" y="150">2</text>
+    <text x="340" y="150">4</text>
+    <text x="480" y="150">6</text>
+    <text x="620" y="150">10</text>
+    <text x="760" y="150">14</text>
+    <text x="900" y="150">17</text>
+    <text x="1040" y="150">19</text>
+    <text x="1140" y="150">21</text>
+  </g>
+  <g font-family="Libre Franklin, sans-serif" font-size="11" fill="var(--rfd-ink)">
+    <g><rect x="60" y="70" width="60" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/><text x="90" y="90" text-anchor="middle" font-weight="600">1 mesh</text></g>
+    <g><rect x="140" y="70" width="90" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/><text x="185" y="90" text-anchor="middle" font-weight="600">2 judge</text></g>
+    <g><rect x="250" y="70" width="90" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/><text x="295" y="90" text-anchor="middle" font-weight="600">3 repair</text></g>
+    <g><rect x="360" y="70" width="150" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/><text x="435" y="90" text-anchor="middle" font-weight="600">4 skin-mode rig</text></g>
+    <g><rect x="530" y="70" width="120" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/><text x="590" y="90" text-anchor="middle" font-weight="600">5 tag</text></g>
+    <g><rect x="670" y="70" width="90" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/><text x="715" y="90" text-anchor="middle" font-weight="600">6 VRM</text></g>
+    <g><rect x="780" y="70" width="90" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/><text x="825" y="90" text-anchor="middle" font-weight="600">7 pool</text></g>
+    <g><rect x="890" y="70" width="90" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/><text x="935" y="90" text-anchor="middle" font-weight="600">8 roll</text></g>
+    <g><rect x="1000" y="70" width="60" height="30" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/><text x="1030" y="90" text-anchor="middle" font-weight="600">9 ship</text></g>
+  </g>
+  <g stroke="var(--rfd-critical)" stroke-width="2" fill="none">
+    <line x1="120" y1="85" x2="140" y2="85" marker-end="url(#ap)"/>
+    <line x1="230" y1="85" x2="250" y2="85" marker-end="url(#ap)"/>
+    <line x1="340" y1="85" x2="360" y2="85" marker-end="url(#ap)"/>
+    <line x1="510" y1="85" x2="530" y2="85" marker-end="url(#ap)"/>
+    <line x1="650" y1="85" x2="670" y2="85" marker-end="url(#ap)"/>
+    <line x1="760" y1="85" x2="780" y2="85" marker-end="url(#ap)"/>
+    <line x1="870" y1="85" x2="890" y2="85" marker-end="url(#ap)"/>
+    <line x1="980" y1="85" x2="1000" y2="85" marker-end="url(#ap)"/>
+  </g>
+</svg>
+</div>
+```
+
+## What is not on this ladder
+
+The 10 absent attachment tags (headwear, tail, wings…) are wave 2 by
+RFD 1121's own route: nothing exists to tag until a later ladder
+generates them, so they are off-chart by design.

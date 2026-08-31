@@ -40,10 +40,10 @@ jobs:
       # because a missing PDF is a broken link, not a broken site.
       - name: Render the book (EPUB + PDF)
         run: |
-          quarto render book.qmd --to epub --output book.epub
-          quarto render book.qmd --to pdf  --output book.pdf || true
+          quarto render book.qmd --to epub
           mv book.epub _site/book.epub
-          mv book.pdf  _site/book.pdf  || true
+          quarto render book.qmd --to pdf || true
+          mv book.pdf _site/book.pdf || true
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
