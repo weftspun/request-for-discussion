@@ -1121,3 +1121,31 @@ rendered page gets the same figure the artifact delivery shows.
 The blocklist covers figures that are published: RFD pages, logbook
 entries, artifact reports. A throwaway sketch in a PR description or
 an issue comment is not a published figure and is not covered.
+
+### The RTX 3090 is blocklisted as a corpus generation host, and 24 GiB is why
+
+**Measured, on rung 0, 2026-08-30.** OmniGen2 at bf16 does not fit resident in
+the 3090's 24 GiB, so the first end-to-end invocation ran with sequential CPU
+offload: 30 denoising steps averaged 29.3 s each, 14 min 40 s wall for one
+1024 px image. Per-step time wandered between 24 and 39 s as layers shuttled
+over the bus, so the average is representative rather than a bad draw.
+
+**Condition 5 closes the obvious exit.** The quantised model fits in VRAM, and
+it does not matter, because quantised weights do not produce corpus data. That
+condition was decided rather than derived, and this row is the price of the
+decision landing on this desk: the only precision permitted for corpus work is
+the one the card cannot hold without offload.
+
+**What the rate means at corpus scale.** Regenerating the 95-image render
+corpus at this speed is about 23 hours; a thousand-image corpus is ten days of
+the desk GPU doing nothing else. Corpus generation runs on rented GPUs with the
+VRAM to hold bf16 resident, which also puts it back behind the tear-down
+forcing function the hard constraints say the local GPU lacks.
+
+**WHAT IS BLOCKED IS THE ROLE, NOT THE CARD.** The hard constraint stands: the
+local desktop GPU is available for compute. Training fits -- the rank-8 camera
+LoRA ran 200 steps in 22 minutes entirely in VRAM -- and single smoke
+invocations are exempt; rung 0 itself is the exemption that produced this
+row's measurement, one image proving the pipeline rather than entering a
+corpus. What is blocked is pointing the 3090 at a generation loop whose output
+is destined for a corpus.
