@@ -29,23 +29,21 @@ RFD 2134 issues one new client cert `fdb-shuttle.chibifire.com`
 alongside the existing `fdb-spot-broker.chibifire.com`; the spot-
 broker cert is revoked after the cutover week.
 
-## Cutover order, one step per session
+## Cutover, in place
+
+spot-broker has less than an hour of production time and no external
+callers pinned to its hostname, so the one-week 410 Gone overlap the
+prior draft named is retracted here: nothing outside would ever see
+those 410s. The cutover is:
 
 1. New repo `<org>/interactor-shuttle`, first commit is the two source
    trees merged with the `Shuttle.*` rename applied.
-2. Second commit lands the RFD 2138 wording as the repo's README and
-   places the repo in `weftspun/weftspun-keypoint`'s `default.xml`
-   under `3-interactor/interactor-shuttle`.
-3. Fly app `shuttle` created; secrets set; deploy runs; landing
-   answers.
-4. Uro data migration runs against the shuttle Fly app's database
-   (details on the shape belong in a separate logbook entry when the
-   uro schema is inventoried).
-5. spot-broker Fly app switched to return 410 Gone from every route;
-   the app stays alive one week.
-6. DNS/hostname cut to the shuttle app.
-7. After the week: spot-broker Fly app destroyed; its OAuth app
-   deleted; its client cert revoked from the FDB cluster.
+2. Manifest updated to place the repo at `3-interactor/interactor-shuttle`.
+3. Fly app `shuttle` created; secrets set; deploy runs; landing answers.
+4. Uro data migration runs against the shuttle Fly app's database.
+5. Fly apps `spot-broker` and `uro` destroyed; their OAuth apps deleted;
+   spot-broker's FDB client cert revoked. `weftspun/spot-broker` becomes
+   a GitHub-native repo redirect.
 
 ## Why interactor rather than service
 
