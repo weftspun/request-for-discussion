@@ -2,7 +2,7 @@
 
 **State:** discussion
 **Feature:** the plan of record for the public roll button, as a PERT network
-**Scope:** the gacha demo; `page.html` beside this file is the report
+**Scope:** the gacha demo; `page.qmd` beside this file is the report
 
 ## Problem
 
@@ -17,7 +17,7 @@ schedule's spine, not its margin.
 
 One chain sets the date: **skin-mode rigging, taxonomy transfer,
 assembly, pool, publish** — 13.2 expected working days, sigma 1.7.
-`page.html` carries the network on a time axis, the estimate table
+`page.qmd` carries the network on a time axis, the estimate table
 (t_e = (O + 4M + P)/6), and the slack on every non-critical edge.
 The decision rule it encodes: A (skin-mode rig, the only research
 risk) and H (hm08 partition) start together at day zero; nothing else
