@@ -51,3 +51,19 @@ table { font-variant-numeric: tabular-nums; }
 .controls > p:first-child strong { color: var(--rfd-done); }
 
 blockquote { border-left-color: var(--rfd-steel); }
+
+// Tokens the RFD 2136 figure (and any hand-authored inline SVG) draws with.
+// Mermaid is blocklisted for published figures; SVG in the .qmd is the
+// replacement and these are its palette on both themes.
+:root {
+  --rfd-ink: #1B2733;
+  --rfd-ink-soft: #45566A;
+  --rfd-grid: #C9D2DA;
+  --rfd-card: #FAFBFC;
+}
+[data-bs-theme="dark"], .quarto-dark {
+  --rfd-ink: #DCE4EA;
+  --rfd-ink-soft: #9AAABA;
+  --rfd-grid: #2A3946;
+  --rfd-card: #16212B;
+}
