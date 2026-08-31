@@ -9079,27 +9079,6 @@
     "text": "Start here\nNew to this? Read these three, in order. They take about fifteen minutes together.\n\nRFD 1171 — what the project is building, and which part every model plays.\nRFD 1000 — how to read any document here. The states, the numbering, the section order.\nWorking agreements — the standing constraints. What may enter a training corpus, and what may not."
   },
   {
-    "objectID": "index.html#everything-else",
-    "href": "index.html#everything-else",
-    "title": "Taskweft — Manuals",
-    "section": "Everything else",
-    "text": "Everything else\nRFDs — the design records. Sort by state to see what is settled and what is still open.\nSerials — the register. Every number this site has allocated and every one it has retired.\nLogbook — what was measured, with enough apparatus to run the test again."
-  },
-  {
-    "objectID": "index.html#two-things-that-will-confuse-you-first",
-    "href": "index.html#two-things-that-will-confuse-you-first",
-    "title": "Taskweft — Manuals",
-    "section": "Two things that will confuse you first",
-    "text": "Two things that will confuse you first\nDocuments here contradict themselves on purpose. When a number turns out to be wrong, the correction goes next to the original rather than replacing it. So a document may say a thing and then withdraw it a paragraph later. That is not an editing failure. A reader who knows which roads are dead ends is better off than one who only knows where the road ends today. Look for the paragraph in bold capitals — that is usually a retraction.\nA number is an identity, not a date. RFD 1171 is not newer than RFD 1170 in any meaningful sense, and a low number is not obsolete. Serials are allocated once and never reused, because each one is the last arc of an OID under the 66606 Private Enterprise Number. Renaming a document does not renumber it."
-  },
-  {
-    "objectID": "index.html#what-holds-it-together",
-    "href": "index.html#what-holds-it-together",
-    "title": "Taskweft — Manuals",
-    "section": "What holds it together",
-    "text": "What holds it together\nWhere a document states a measurement or a rule, a script checks that statement against live code. Drift fails a command instead of being found six months later. check_anti_entropy.py walks those pairs and reads every one of them rather than sampling."
-  },
-  {
     "objectID": "changelog/2026/20260807-deck-log.html",
     "href": "changelog/2026/20260807-deck-log.html",
     "title": "V-Sekai Multiplayer Fabric Deck Log — 2026-08-07 (Friday)",

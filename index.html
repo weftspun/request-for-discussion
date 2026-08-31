@@ -321,21 +321,6 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="rfd/1000-conventions/"><strong>RFD 1000</strong></a> — how to read any document here. The states, the numbering, the section order.</li>
 <li><a href="./pages/agreements.html"><strong>Working agreements</strong></a> — the standing constraints. What may enter a training corpus, and what may not.</li>
 </ol>
-</section>
-<section id="everything-else" class="level2">
-<h2 class="anchored" data-anchor-id="everything-else">Everything else</h2>
-<p><a href="./pages/rfd.html"><strong>RFDs</strong></a> — the design records. Sort by state to see what is settled and what is still open.</p>
-<p><a href="./pages/serials.html"><strong>Serials</strong></a> — the register. Every number this site has allocated and every one it has retired.</p>
-<p><a href="./pages/logbook.html"><strong>Logbook</strong></a> — what was measured, with enough apparatus to run the test again.</p>
-</section>
-<section id="two-things-that-will-confuse-you-first" class="level2">
-<h2 class="anchored" data-anchor-id="two-things-that-will-confuse-you-first">Two things that will confuse you first</h2>
-<p><strong>Documents here contradict themselves on purpose.</strong> When a number turns out to be wrong, the correction goes <em>next to</em> the original rather than replacing it. So a document may say a thing and then withdraw it a paragraph later. That is not an editing failure. A reader who knows which roads are dead ends is better off than one who only knows where the road ends today. Look for the paragraph in bold capitals — that is usually a retraction.</p>
-<p><strong>A number is an identity, not a date.</strong> RFD 1171 is not newer than RFD 1170 in any meaningful sense, and a low number is not obsolete. Serials are allocated once and never reused, because each one is the last arc of an OID under the 66606 Private Enterprise Number. Renaming a document does not renumber it.</p>
-</section>
-<section id="what-holds-it-together" class="level2">
-<h2 class="anchored" data-anchor-id="what-holds-it-together">What holds it together</h2>
-<p>Where a document states a measurement or a rule, a script checks that statement against live code. Drift fails a command instead of being found six months later. <code>check_anti_entropy.py</code> walks those pairs and reads every one of them rather than sampling.</p>
 
 
 </section>
