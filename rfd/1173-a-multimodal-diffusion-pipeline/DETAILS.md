@@ -58,8 +58,8 @@ deferred rather than substituted with a standalone TTS model.
 
 LLaDA-o generates and edits images; the 3D stage turns those images
 into meshes. Pixal3D produces a coarse textured mesh from an image,
-VoxHammer refines it. The two are sequential, not concurrent, so they
-swap in and out of VRAM rather than co-residing with the thinker.
+VoxHammer refines it. After QAFT, the thinker + talker occupy
+~11.8 GiB, leaving ~12 GiB for the 3D models to co-reside.
 
 OmniGen2 was considered for this slot. It overlaps with LLaDA-o's
 own image generation and editing, and RFD 66606.1.1.1145 already
@@ -88,13 +88,14 @@ directly, but available if we train a reward model to automate scoring.
 | ---                        | ---:     | ---:      | :---:        |
 | LLaDA-o full               | 31.0 GB  | ~9.3 GB   | always       |
 | Qwen3-Omni talker (if extractable) | ~10 GB | ~2.5 GB | always |
-| Pixal3D                    | TBD      | TBD       | swap         |
-| VoxHammer                  | TBD      | TBD       | swap         |
+| Pixal3D                    | TBD      | TBD       | yes (QAFT)   |
+| VoxHammer                  | TBD      | TBD       | yes (QAFT)   |
 | peak activation             | varies   | varies    | —            |
 
-LLaDA-o NF4 + Qwen3-Omni talker NF4: ~11.8 GB, fits if the talker
-can be extracted. The 3D models swap into the remaining ~12 GiB
-when needed. LLaDA-o bf16 + anything: does not
+LLaDA-o QAFT NF4 + Qwen3-Omni talker NF4: ~11.8 GiB, leaving
+~12 GiB for the 3D stage to co-reside. QAFT makes the NF4
+precision the published one, so the budget is real rather than a
+post-hoc truncation. LLaDA-o bf16 + anything: does not
 fit 24 GiB. CPU offload is blocklisted (the CPU as a model execution
 target), so NF4 is the desk path and bf16 requires a rented 40+ GiB
 card.
