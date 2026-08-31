@@ -16,20 +16,27 @@ generation task reduces to an edit. One reward covers every modality.
 
 ## Decision
 
-Recreate the Qwen3-Omni architecture with LLaDA-o as the thinker.
-The talker needs an adapter (4096→3584 dim MLP) because the diffusion
-thinker produces all positions at once and the talker expects a
-sequential stream; the adapter feeds the final-pass hidden states
-left-to-right. If the talker cannot be extracted standalone, halt.
+Two roles, two architectures. LLaDA-o's block diffusion measured
+5.76s for 64 tokens; Qwen3-Omni streams from 234ms. A real-time
+avatar demo (Gemma Avatar powers 9k+ robots) needs sub-500ms.
+Diffusion does not stream.
 
-    thinker     LLaDA-o (GSAI-ML)          Apache 2.0   diffusion text + image
-    talker      Qwen3-Omni audio head      Apache 2.0   voice-cloning speech
+**MaskScore corpus factory** (offline, batch): LLaDA-o as the
+thinker. Masking IS its training objective. Constructs the
+MaskScore training set and reward model data across all modalities.
+
+**Avatar deployment** (real-time, streaming): Qwen3-Omni thinker-
+talker architecture (or the Gemma Avatar pipeline: LLM + Qwen3-TTS).
+RL fine-tuned with the MaskScore reward model.
+
+    corpus      LLaDA-o (GSAI-ML)          Apache 2.0   MaskScore construction
+    deploy      Qwen3-Omni architecture    Apache 2.0   real-time streaming
     3D stage    Pixal3D → VoxHammer        Apache 2.0   image → mesh
-    evaluation  EditReward-Bench           —             universal edit scoring
+    scoring     MaskScore + EditScore      —             self-supervised reward
 
-LLaDA-o is 31 GB bf16. CPU offload is blocklisted; NF4 (~9.3 GB) is
-the desk path. After QAFT, thinker + talker occupy ~11.8 GiB,
-leaving ~12 GiB for the 3D stage to co-reside on one 24 GiB card.
+LLaDA-o NF4 (~9.3 GiB) is the desk path for corpus construction.
+After QAFT, thinker + talker occupy ~11.8 GiB, leaving ~12 GiB
+for the 3D stage to co-reside on one 24 GiB card.
 
 ## Related
 
