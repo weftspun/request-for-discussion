@@ -49,7 +49,7 @@ def body(text):
     return text.lstrip("\n")
 
 
-def page(d, text, has_details):
+def page(d, text, has_details, has_figure):
     m = TITLE.search(text)
     if not m:
         sys.exit("FAIL  %s/README.md has no title heading" % d)
@@ -61,6 +61,8 @@ def page(d, text, has_details):
     out = "\n".join(lines) + body(text)
     if has_details:
         out += "\n\n## Details\n\n[The measurements and the retractions](DETAILS.md)\n"
+    if has_figure:
+        out += "\n\n## Figure\n\n[The report as a page](page.qmd)\n"
     return out
 
 
@@ -70,7 +72,8 @@ def render(root, write=True):
         src = os.path.join(root, "rfd", d, "README.md")
         dst = os.path.join(root, "rfd", d, "index.md")
         want = page(d, open(src, encoding="utf8").read(),
-                    os.path.isfile(os.path.join(root, "rfd", d, "DETAILS.md")))
+                    os.path.isfile(os.path.join(root, "rfd", d, "DETAILS.md")),
+                    os.path.isfile(os.path.join(root, "rfd", d, "page.qmd")))
         have = open(dst, encoding="utf8").read() if os.path.isfile(dst) else None
         if have != want:
             stale.append(d)
@@ -117,7 +120,7 @@ def self_test():
     """A renderer that has never refused a bad page has not shown it can."""
     text = ("# RFD 1234: A title, with a colon\n\n**State:** ideation\n"
             "**Scope:** `some/path`\n\n## Problem\n\nBody.\n")
-    p = page("1234-a-slug", text, False)
+    p = page("1234-a-slug", text, False, False)
     if not p.startswith("---\n"):
         sys.exit("FAIL  no front matter emitted")
     if '"RFD 1234: A title, with a colon"' not in p:
@@ -129,16 +132,21 @@ def self_test():
     if "**State:**" in p or "# RFD 1234" in p:
         sys.exit("FAIL  metadata or title left in the body, so the page renders it twice")
 
-    if page("1234-a-slug", text, True).count("DETAILS.md") != 1:
+    if page("1234-a-slug", text, True, False).count("DETAILS.md") != 1:
         sys.exit("FAIL  a DETAILS.md beside the README was not linked")
     if "DETAILS.md" in p:
         sys.exit("FAIL  a DETAILS.md link was emitted where no DETAILS.md exists")
+    if page("1234-a-slug", text, False, True).count("page.qmd") != 1:
+        sys.exit("FAIL  a page.qmd beside the README was not linked")
+    if "page.qmd" in p:
+        sys.exit("FAIL  a page.qmd link was emitted where none exists")
 
     n = len(rfd_dirs(ROOT))
     if n < 100:
         sys.exit("FAIL  found %d RFD directories, far below the register's count" % n)
     print("self-test: colons quoted, absent fields omitted, title and metadata "
-          "moved out of the body, DETAILS linked only when present, %d dirs seen" % n)
+          "moved out of the body, DETAILS and page.qmd linked only when present, "
+          "%d dirs seen" % n)
     return 0
 
 
