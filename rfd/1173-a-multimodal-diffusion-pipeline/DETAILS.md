@@ -66,7 +66,7 @@ SpeakingFaces (CC-BY-4.0, 142 subjects, 13k+ instances) provides
 cross-modal ground truth: synchronized visual (768×512) and audio at
 nine camera angles. The ANNY canonical rig fitted to video frames
 recovers keypoints and SOMA bone poses (78 bones, rotation vectors
-plus root translation — the same format Kimodo-SOMA produces, so the
+plus root translation, the same format Kimodo-SOMA produces, so the
 fitted poses are directly consumable by any downstream that accepts
 Kimodo output, without running Kimodo itself). MoGe-3 produces metric
 depth maps from the visual frames; Pixal3D encodes images to voxel
