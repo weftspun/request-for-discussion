@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "rfd/2134-cluster-tls-is-decided-before-data/index.html",
+    "href": "rfd/2134-cluster-tls-is-decided-before-data/index.html",
+    "title": "RFD 2134: Cluster TLS is decided before data, and certificates carry v3 extensions",
+    "section": "",
+    "text": "The weftspun-fdb cluster came up plaintext and its backup could not reach the blob store, because FoundationDB has one TLS policy for peers and for S3. Enabling TLS met the documented wall: no in-place path from plaintext, so the gated reset recreates the cluster while it holds nothing worth keeping. It also met a new one: preverification rejects a bare openssl req -x509 chain as invalid CA certificate, so every certificate carries X.509v3 extensions (CA: basicConstraints critical CA:true with keyCertSign; leaf: CA:false, digitalSignature, server and client auth, SKID/AKID). Machines are named by Fly machine ID, clients by service name, all under Check.Valid=1,S.CN&gt;=fdb-,S.CN&lt;=.chibifire.com. A matched pair in local Docker proved the profile and reproduced the failure before anything touched the live cluster; in prod, a ledger event survived a machine replacement and read back over TLS."
+  },
+  {
     "objectID": "rfd/2133-the-pool-rents-from-the-spot-book/index.html",
     "href": "rfd/2133-the-pool-rents-from-the-spot-book/index.html",
     "title": "RFD 2133: The pool rents from the spot book, gated on requirements first",
@@ -26857,5 +26864,54 @@
     "title": "Details: the measurements behind the gates",
     "section": "",
     "text": "VAST_API_KEY at user scope in the Windows environment, written by setx from a 1Password read (op item get ... --fields credential), value never echoed into a transcript. The snipe tooling reads it from the registry so fresh shells inherit it without the session snapshot."
+  },
+  {
+    "objectID": "rfd/2134-cluster-tls-is-decided-before-data/DETAILS.html",
+    "href": "rfd/2134-cluster-tls-is-decided-before-data/DETAILS.html",
+    "title": "Details: the certificate profile, the proof, and the procedure",
+    "section": "",
+    "text": "With certificates from a bare openssl req -x509 CA and extension-less openssl x509 -req leaves, every fdbserver logged, on each handshake:\nType=\"TLSPolicyFailure\" Reason=\"preverification failed\"\nVerifyError=\"invalid CA certificate\"\nand status reported the cluster’s coordinators unreachable, the same line a network fault produces. Read the trace event, not the status line.\n\n\n\nCA (fdb-ca.chibifire.com, 4096-bit RSA, 10 years):\nbasicConstraints = critical, CA:true\nkeyUsage         = critical, keyCertSign, cRLSign\nsubjectKeyIdentifier = hash\nLeaf (2048-bit RSA, 2 years), one per machine and one per client service:\nbasicConstraints = CA:false\nkeyUsage         = critical, digitalSignature, keyEncipherment\nextendedKeyUsage = serverAuth, clientAuth\nsubjectKeyIdentifier   = hash\nauthorityKeyIdentifier = keyid, issuer\nSubjects: fdb-&lt;fly machine id&gt;.chibifire.com for cluster machines, fdb-&lt;service&gt;.chibifire.com for clients (fdb-spot-broker.chibifire.com). The machine ID survives fly machine update, which the entrypoint records a NIC-named scheme failing. All pass the one verify rule: Check.Valid=1,S.CN&gt;=fdb-,S.CN&lt;=.chibifire.com.\n\n\n\nOne foundationdb/foundationdb:7.3.63 container, one fdbserver on 127.0.0.1:4500:tls, the cluster’s verify rule on both ends:\n\n\n\n\n\n\n\ncertificates\nresult\n\n\n\n\nv3 profile above\nhandshake clean, configure new single memory creates the database, 0 TLSPolicyFailure\n\n\nextension-less (what production had)\nThe database is unavailable: the production symptom, reproduced\n\n\n\nThe negative control is the point: the same server, rule, and commands separate the two cert sets, so the diagnosis is the extensions and not the rule, the addresses, or Fly.\n\n\n\n\nCertificates as above; base64 each PEM (base64 -w0).\nfly secrets set on weftspun-fdb: FDB_TLS_CA_B64, and per machine FDB_TLS_CERT_&lt;machine id&gt;_B64 / FDB_TLS_KEY_&lt;machine id&gt;_B64. The entrypoint takes the pair addressed to the machine and refuses to borrow another’s.\nThe cluster will NOT form: coordinated state on disk names the plaintext addresses. This is the entrypoint’s documented wall. fly secrets set WEFT_FDB_RESET=1 wipes the data directories on restart; the lowest address reconfigures the database.\nVerify with a TLS-armed fdbcli (--tls_certificate_file, --tls_key_file, --tls_ca_file, --tls_verify_peers), then fly secrets unset WEFT_FDB_RESET and verify again; the second check proves a restart no longer wipes.\nEach client service: its own leaf via FDB_TLS_CERT_B64 / FDB_TLS_KEY_B64 / FDB_TLS_CA_B64 secrets, materialised to files at start and handed to libfdb_c through FDB_TLS_CERTIFICATE_FILE, FDB_TLS_KEY_FILE, FDB_TLS_CA_FILE, FDB_TLS_VERIFY_PEERS; the cluster string gains :tls on every coordinator.\n\n\n\n\nspot-broker’s POST /target/zero wrote a ledger event through the iceoryx2 bus into the TLS cluster. The broker machine was then fully replaced by a deploy (no volume exists on that app), and GET /status on the new machine returned the same event. That is the durability the architecture claims, measured: the machine held nothing, and the data came back from the cluster.\n\n\n\nWith the CA present the trust bundle forms (151 anchors) and OpenSSL verifies Tigris against it, yet fdbbackup times out. The trace names it: N2_ConnectHandshakeError ErrorMsg=\"stream truncated\" against both the A and the AAAA record. FoundationDB’s blobstore client sends no SNI, and Tigris’s edge requires it; curl succeeds from the same machine because curl sends it. The knob resolve_prefer_ipv4_addr changes which address dies, not whether.\nThe controlled counterpart ran in local Docker against versitygw (Apache-2.0), a server that presents its one certificate without SNI. Same fdbbackup, same CA profile, same verify-rule shape:\n\nthe TLS handshake completes — so the client’s TLS is fine and SNI is the whole difference;\n--knob_http_request_aws_v4_header=true is required — versitygw refuses FoundationDB’s default SigV2 (Tigris also speaks v4);\nthe bucket must pre-exist — FoundationDB’s create-bucket body is refused as MalformedXML; created through the S3 API, the backup submits and runs: The backup on tag 'default' is in progress.\n\nSo the production path is a versitygw sidecar on each cluster machine — versitygw s3 proxying to Tigris (its Go client sends SNI), the backup URL pointing at the local gateway. That is a datasource-store deployment change, recorded in the logbook when it lands."
+  },
+  {
+    "objectID": "rfd/2134-cluster-tls-is-decided-before-data/DETAILS.html#the-failure-this-profile-exists-for",
+    "href": "rfd/2134-cluster-tls-is-decided-before-data/DETAILS.html#the-failure-this-profile-exists-for",
+    "title": "Details: the certificate profile, the proof, and the procedure",
+    "section": "",
+    "text": "With certificates from a bare openssl req -x509 CA and extension-less openssl x509 -req leaves, every fdbserver logged, on each handshake:\nType=\"TLSPolicyFailure\" Reason=\"preverification failed\"\nVerifyError=\"invalid CA certificate\"\nand status reported the cluster’s coordinators unreachable, the same line a network fault produces. Read the trace event, not the status line."
+  },
+  {
+    "objectID": "rfd/2134-cluster-tls-is-decided-before-data/DETAILS.html#the-profile",
+    "href": "rfd/2134-cluster-tls-is-decided-before-data/DETAILS.html#the-profile",
+    "title": "Details: the certificate profile, the proof, and the procedure",
+    "section": "",
+    "text": "CA (fdb-ca.chibifire.com, 4096-bit RSA, 10 years):\nbasicConstraints = critical, CA:true\nkeyUsage         = critical, keyCertSign, cRLSign\nsubjectKeyIdentifier = hash\nLeaf (2048-bit RSA, 2 years), one per machine and one per client service:\nbasicConstraints = CA:false\nkeyUsage         = critical, digitalSignature, keyEncipherment\nextendedKeyUsage = serverAuth, clientAuth\nsubjectKeyIdentifier   = hash\nauthorityKeyIdentifier = keyid, issuer\nSubjects: fdb-&lt;fly machine id&gt;.chibifire.com for cluster machines, fdb-&lt;service&gt;.chibifire.com for clients (fdb-spot-broker.chibifire.com). The machine ID survives fly machine update, which the entrypoint records a NIC-named scheme failing. All pass the one verify rule: Check.Valid=1,S.CN&gt;=fdb-,S.CN&lt;=.chibifire.com."
+  },
+  {
+    "objectID": "rfd/2134-cluster-tls-is-decided-before-data/DETAILS.html#the-proof-run-before-the-push",
+    "href": "rfd/2134-cluster-tls-is-decided-before-data/DETAILS.html#the-proof-run-before-the-push",
+    "title": "Details: the certificate profile, the proof, and the procedure",
+    "section": "",
+    "text": "One foundationdb/foundationdb:7.3.63 container, one fdbserver on 127.0.0.1:4500:tls, the cluster’s verify rule on both ends:\n\n\n\n\n\n\n\ncertificates\nresult\n\n\n\n\nv3 profile above\nhandshake clean, configure new single memory creates the database, 0 TLSPolicyFailure\n\n\nextension-less (what production had)\nThe database is unavailable: the production symptom, reproduced\n\n\n\nThe negative control is the point: the same server, rule, and commands separate the two cert sets, so the diagnosis is the extensions and not the rule, the addresses, or Fly."
+  },
+  {
+    "objectID": "rfd/2134-cluster-tls-is-decided-before-data/DETAILS.html#the-procedure-on-a-live-plaintext-cluster",
+    "href": "rfd/2134-cluster-tls-is-decided-before-data/DETAILS.html#the-procedure-on-a-live-plaintext-cluster",
+    "title": "Details: the certificate profile, the proof, and the procedure",
+    "section": "",
+    "text": "Certificates as above; base64 each PEM (base64 -w0).\nfly secrets set on weftspun-fdb: FDB_TLS_CA_B64, and per machine FDB_TLS_CERT_&lt;machine id&gt;_B64 / FDB_TLS_KEY_&lt;machine id&gt;_B64. The entrypoint takes the pair addressed to the machine and refuses to borrow another’s.\nThe cluster will NOT form: coordinated state on disk names the plaintext addresses. This is the entrypoint’s documented wall. fly secrets set WEFT_FDB_RESET=1 wipes the data directories on restart; the lowest address reconfigures the database.\nVerify with a TLS-armed fdbcli (--tls_certificate_file, --tls_key_file, --tls_ca_file, --tls_verify_peers), then fly secrets unset WEFT_FDB_RESET and verify again; the second check proves a restart no longer wipes.\nEach client service: its own leaf via FDB_TLS_CERT_B64 / FDB_TLS_KEY_B64 / FDB_TLS_CA_B64 secrets, materialised to files at start and handed to libfdb_c through FDB_TLS_CERTIFICATE_FILE, FDB_TLS_KEY_FILE, FDB_TLS_CA_FILE, FDB_TLS_VERIFY_PEERS; the cluster string gains :tls on every coordinator."
+  },
+  {
+    "objectID": "rfd/2134-cluster-tls-is-decided-before-data/DETAILS.html#what-the-prod-verification-measured",
+    "href": "rfd/2134-cluster-tls-is-decided-before-data/DETAILS.html#what-the-prod-verification-measured",
+    "title": "Details: the certificate profile, the proof, and the procedure",
+    "section": "",
+    "text": "spot-broker’s POST /target/zero wrote a ledger event through the iceoryx2 bus into the TLS cluster. The broker machine was then fully replaced by a deploy (no volume exists on that app), and GET /status on the new machine returned the same event. That is the durability the architecture claims, measured: the machine held nothing, and the data came back from the cluster."
+  },
+  {
+    "objectID": "rfd/2134-cluster-tls-is-decided-before-data/DETAILS.html#the-backup-measured-locally-and-blocked-on-sni-in-prod",
+    "href": "rfd/2134-cluster-tls-is-decided-before-data/DETAILS.html#the-backup-measured-locally-and-blocked-on-sni-in-prod",
+    "title": "Details: the certificate profile, the proof, and the procedure",
+    "section": "",
+    "text": "With the CA present the trust bundle forms (151 anchors) and OpenSSL verifies Tigris against it, yet fdbbackup times out. The trace names it: N2_ConnectHandshakeError ErrorMsg=\"stream truncated\" against both the A and the AAAA record. FoundationDB’s blobstore client sends no SNI, and Tigris’s edge requires it; curl succeeds from the same machine because curl sends it. The knob resolve_prefer_ipv4_addr changes which address dies, not whether.\nThe controlled counterpart ran in local Docker against versitygw (Apache-2.0), a server that presents its one certificate without SNI. Same fdbbackup, same CA profile, same verify-rule shape:\n\nthe TLS handshake completes — so the client’s TLS is fine and SNI is the whole difference;\n--knob_http_request_aws_v4_header=true is required — versitygw refuses FoundationDB’s default SigV2 (Tigris also speaks v4);\nthe bucket must pre-exist — FoundationDB’s create-bucket body is refused as MalformedXML; created through the S3 API, the backup submits and runs: The backup on tag 'default' is in progress.\n\nSo the production path is a versitygw sidecar on each cluster machine — versitygw s3 proxying to Tigris (its Go client sends SNI), the backup URL pointing at the local gateway. That is a datasource-store deployment change, recorded in the logbook when it lands."
   }
 ]
