@@ -1121,3 +1121,66 @@ rendered page gets the same figure the artifact delivery shows.
 The blocklist covers figures that are published: RFD pages, logbook
 entries, artifact reports. A throwaway sketch in a PR description or
 an issue comment is not a published figure and is not covered.
+
+### The RTX 3090 is blocklisted as a corpus generation host, and 24 GiB is why
+
+**Measured, on rung 0, 2026-08-30.** OmniGen2 at bf16 does not fit resident in
+the 3090's 24 GiB, so the first end-to-end invocation ran with sequential CPU
+offload: 30 denoising steps averaged 29.3 s each, 14 min 40 s wall for one
+1024 px image. Per-step time wandered between 24 and 39 s as layers shuttled
+over the bus, so the average is representative rather than a bad draw.
+
+**Condition 5 closes the obvious exit.** The quantised model fits in VRAM, and
+it does not matter, because quantised weights do not produce corpus data. That
+condition was decided rather than derived, and this row is the price of the
+decision landing on this desk: the only precision permitted for corpus work is
+the one the card cannot hold without offload.
+
+**What the rate means at corpus scale.** Regenerating the 95-image render
+corpus at this speed is about 23 hours; a thousand-image corpus is ten days of
+the desk GPU doing nothing else. Corpus generation runs on rented GPUs with the
+VRAM to hold bf16 resident, which also puts it back behind the tear-down
+forcing function the hard constraints say the local GPU lacks.
+
+**WHAT IS BLOCKED IS THE ROLE, NOT THE CARD.** The hard constraint stands: the
+local desktop GPU is available for compute. Training fits -- the rank-8 camera
+LoRA ran 200 steps in 22 minutes entirely in VRAM -- and single smoke
+invocations are exempt; rung 0 itself is the exemption that produced this
+row's measurement, one image proving the pipeline rather than entering a
+corpus. What is blocked is pointing the 3090 at a generation loop whose output
+is destined for a corpus.
+
+### LLaDA is blocklisted — block diffusion is 25x too slow for real-time avatar
+
+**Measured, 2026-08-31, RTX 3090.** LLaDA-o NF4 on the 3090 produced 64 tokens
+in 5.76 s at steps=128 (11.1 tok/s), 9.3 GiB resident. Qwen3-Omni streams its
+first audio packet at 234 ms. The avatar target (Gemma Avatar architecture,
+sub-500 ms first-packet latency, 9 000+ Reachy Mini robots) needs the stream,
+not the batch.
+
+Block diffusion generates all positions in parallel per step and iterates to
+convergence. At 128 steps the wall time is 5.76 s for a 64-token block; at 8
+steps it is still 9.95 s (step count is not the bottleneck — the parallel
+decode over the full block is). An autoregressive MoE model with 3B active
+parameters streams tokens one at a time, so first-packet latency is one forward
+pass rather than a convergence loop.
+
+**What is blocked.** LLaDA-o, iLLaDA, and LLaDA-1.5 — every variant of the
+block-diffusion family — as a thinker, corpus generator, or deployment model.
+The latency measurement was on NF4; bf16 does not fit 24 GiB without CPU
+offload, which is itself blocklisted.
+
+**What replaces it.** Qwen3-Omni (30B MoE, 3B active, Apache 2.0) handles text,
+image, audio, and video natively, streams from 234 ms, and serves both MaskScore
+dataset construction and the avatar demo with one model.
+
+**The MaskScore technique is not blocked.** MaskScore (mask a latent region,
+reconstruct, score the decoded output) works with any denoiser. The technique
+was prototyped on LLaDA-o's masking mechanism and transfers to Qwen3-Omni's
+generation stages without architectural change — the masking operates on
+latents, not on the model that fills them.
+
+**The measurement scripts remain.** `smoke_test_lladao.py`,
+`sweep_quality_lladao.py`, and `measure_context_vram.py` stay in
+`llada-diffusion-lm` as the evidence behind this row. The numbers they produced
+are the reason LLaDA is here.
