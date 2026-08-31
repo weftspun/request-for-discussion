@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>maskscore – Taskweft — Manuals</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f36f388c175c695e587c9d92b6af4f92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Taskweft — Manuals</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/rfd.html"> 
+<span class="menu-text">RFDs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/serials.html"> 
+<span class="menu-text">Serials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/logbook.html"> 
+<span class="menu-text">Logbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/agreements.html"> 
+<span class="menu-text">Working agreements</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-download" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Download</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-download">    
+        <li>
+    <a class="dropdown-item" href="../../book.epub">
+ <span class="dropdown-text">EPUB (RFDs)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../book.pdf">
+ <span class="dropdown-text">PDF (RFDs)</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#maskscore-dataset-stubs-for-modalities-editscore-does-not-cover" id="toc-maskscore-dataset-stubs-for-modalities-editscore-does-not-cover" class="nav-link active" data-scroll-target="#maskscore-dataset-stubs-for-modalities-editscore-does-not-cover">MaskScore: dataset stubs for modalities EditScore does not cover</a>
+  <ul class="collapse">
+  <li><a href="#the-maskscore-self-supervised-training-loop" id="toc-the-maskscore-self-supervised-training-loop" class="nav-link" data-scroll-target="#the-maskscore-self-supervised-training-loop">The MaskScore self-supervised training loop</a>
+  <ul class="collapse">
+  <li><a href="#stage-1-mask-reconstruct-denoiser-pretraining" id="toc-stage-1-mask-reconstruct-denoiser-pretraining" class="nav-link" data-scroll-target="#stage-1-mask-reconstruct-denoiser-pretraining">Stage 1: mask → reconstruct (denoiser pretraining)</a></li>
+  <li><a href="#stage-2-construct-reward-signal-self-supervised-scoring" id="toc-stage-2-construct-reward-signal-self-supervised-scoring" class="nav-link" data-scroll-target="#stage-2-construct-reward-signal-self-supervised-scoring">Stage 2: construct reward signal (self-supervised scoring)</a></li>
+  <li><a href="#stage-3-train-a-reward-model-on-self-supervised-scores" id="toc-stage-3-train-a-reward-model-on-self-supervised-scores" class="nav-link" data-scroll-target="#stage-3-train-a-reward-model-on-self-supervised-scores">Stage 3: train a reward model on self-supervised scores</a></li>
+  <li><a href="#stage-4-rl-fine-tuning-with-the-reward-model" id="toc-stage-4-rl-fine-tuning-with-the-reward-model" class="nav-link" data-scroll-target="#stage-4-rl-fine-tuning-with-the-reward-model">Stage 4: RL fine-tuning with the reward model</a></li>
+  </ul></li>
+  <li><a href="#all-stages-operate-on-maskable-latents" id="toc-all-stages-operate-on-maskable-latents" class="nav-link" data-scroll-target="#all-stages-operate-on-maskable-latents">All stages operate on maskable latents</a></li>
+  <li><a href="#construction-via-masking-corruption" id="toc-construction-via-masking-corruption" class="nav-link" data-scroll-target="#construction-via-masking-corruption">Construction via masking corruption</a></li>
+  <li><a href="#texteditreward-bench" id="toc-texteditreward-bench" class="nav-link" data-scroll-target="#texteditreward-bench">1. TextEditReward-Bench</a></li>
+  <li><a href="#mesheditreward-bench" id="toc-mesheditreward-bench" class="nav-link" data-scroll-target="#mesheditreward-bench">2. MeshEditReward-Bench</a></li>
+  <li><a href="#speecheditreward-bench" id="toc-speecheditreward-bench" class="nav-link" data-scroll-target="#speecheditreward-bench">3. SpeechEditReward-Bench</a></li>
+  <li><a href="#multimodaleditreward-bench" id="toc-multimodaleditreward-bench" class="nav-link" data-scroll-target="#multimodaleditreward-bench">4. MultimodalEditReward-Bench</a></li>
+  <li><a href="#keypointeditreward-bench" id="toc-keypointeditreward-bench" class="nav-link" data-scroll-target="#keypointeditreward-bench">5. KeypointEditReward-Bench</a></li>
+  <li><a href="#deptheditreward-bench" id="toc-deptheditreward-bench" class="nav-link" data-scroll-target="#deptheditreward-bench">6. DepthEditReward-Bench</a></li>
+  <li><a href="#videoeditreward-bench" id="toc-videoeditreward-bench" class="nav-link" data-scroll-target="#videoeditreward-bench">7. VideoEditReward-Bench</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1173-a-multimodal-diffusion-pipeline/MASKSCORE.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1173-a-multimodal-diffusion-pipeline/MASKSCORE.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+
+<section id="maskscore-dataset-stubs-for-modalities-editscore-does-not-cover" class="level1">
+<h1>MaskScore: dataset stubs for modalities EditScore does not cover</h1>
+<p>EditReward-Bench covers 13 image-editing subtasks (background_change, subject-remove, subject-add, text_change, ps_human, style_change, motion_change, tone_transfer, color_alter, compose, subject-replace, material_alter, extract) across 3 dimensions (overall, prompt_following, consistency). All are image→image edits scored by a VLM reward model.</p>
+<p>The pipeline in RFD 1173 has seven modalities beyond image. Each stub names the gap, the format the dataset would take, and why the pipeline cannot close the loop without it.</p>
+<section id="the-maskscore-self-supervised-training-loop" class="level2">
+<h2 class="anchored" data-anchor-id="the-maskscore-self-supervised-training-loop">The MaskScore self-supervised training loop</h2>
+<p><strong>MaskScore</strong> is the codename for this technique: mask a region of a latent, reconstruct with the stage’s denoiser, decode to the output domain, score the decoded reconstruction against the decoded original. It parallels EditScore (which scores image edits via a VLM) but operates across all modalities and needs no human annotation — the original asset IS the ground truth.</p>
+<section id="stage-1-mask-reconstruct-denoiser-pretraining" class="level3">
+<h3 class="anchored" data-anchor-id="stage-1-mask-reconstruct-denoiser-pretraining">Stage 1: mask → reconstruct (denoiser pretraining)</h3>
+<p>This is how diffusion and flow-matching models are already trained. Take a clean latent, corrupt it (add noise or mask a region), predict the clean version back. Qwen3-Omni, Pixal3D, VoxHammer, and the talker are all trained this way. The training signal is reconstruction loss against the original. No labels.</p>
+</section>
+<section id="stage-2-construct-reward-signal-self-supervised-scoring" class="level3">
+<h3 class="anchored" data-anchor-id="stage-2-construct-reward-signal-self-supervised-scoring">Stage 2: construct reward signal (self-supervised scoring)</h3>
+<p>Mask a region of a latent from a held asset. Reconstruct. Decode BOTH original and reconstruction to the output domain. Score on the decoded output:</p>
+<ul>
+<li><strong>Preservation:</strong> perceptual distance on the decoded unmasked region (LPIPS for images, render-and-compare via Mitsuba 3 for meshes, mel distance for audio, BLEU/ROUGE for text)</li>
+<li><strong>Edit quality:</strong> perceptual quality on the decoded masked region (FID/CLIP-score for images, render-and-compare via Mitsuba 3 for meshes, UTMOS for audio, perplexity for text)</li>
+</ul>
+<p>The original decoded output is the reference. No human annotator. The score is computable from the data alone.</p>
+</section>
+<section id="stage-3-train-a-reward-model-on-self-supervised-scores" class="level3">
+<h3 class="anchored" data-anchor-id="stage-3-train-a-reward-model-on-self-supervised-scores">Stage 3: train a reward model on self-supervised scores</h3>
+<p>Collect (mask, reconstruction, score) triples from stage 2. Train a reward model (a VLM for images, an LLM for text, a domain model for meshes/audio) to predict the score from the (input, output, instruction) triple — where the “instruction” is the mask described in natural language (“fill the bottom-left quadrant”, “complete the masked sentence”). This is supervised learning, but the labels come from automated metrics, not humans.</p>
+<p>The reward model replaces the raw metric. EditScore did exactly this for images. The reward model here IS Qwen3-Omni — the same model that serves deployment scores its own generations during training (OmniScore). No separate VLM.</p>
+</section>
+<section id="stage-4-rl-fine-tuning-with-the-reward-model" class="level3">
+<h3 class="anchored" data-anchor-id="stage-4-rl-fine-tuning-with-the-reward-model">Stage 4: RL fine-tuning with the reward model</h3>
+<p>Use the trained reward model as the reward signal for online RL (PPO, GRPO, or similar). The denoiser generates, the reward model scores, the policy updates. Same loop EditScore uses for OmniGen2. No human in the loop.</p>
+<p>The quality ceiling of this loop is bounded by the automated metrics in stage 2. A metric that lies (latent L2 instead of decoded perceptual distance) propagates through every stage. Scoring on the decoded output rather than in latent space is the guard: the decoded image, mesh, or waveform is what the user sees.</p>
+</section>
+</section>
+<section id="all-stages-operate-on-maskable-latents" class="level2">
+<h2 class="anchored" data-anchor-id="all-stages-operate-on-maskable-latents">All stages operate on maskable latents</h2>
+<p>Every stage in the pipeline is either a 1D token sequence or a 3D spatial grid, and the generation model is a flow-matching or diffusion denoiser that takes <code>(x, t, cond)</code>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 37%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>stage</th>
+<th>latent format</th>
+<th>mask operation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Qwen3-Omni text</td>
+<td><code>(B, seq)</code> token ids</td>
+<td>replace span with mask_id</td>
+</tr>
+<tr class="even">
+<td>Qwen3-Omni image</td>
+<td><code>(B, C, H, W)</code> VAE latent</td>
+<td>noise a spatial patch</td>
+</tr>
+<tr class="odd">
+<td>Qwen3-Omni video</td>
+<td><code>(B, T, C, H, W)</code> temporal latent</td>
+<td>noise a temporal span</td>
+</tr>
+<tr class="even">
+<td>ANNY keypoints</td>
+<td><code>(B, N, 3)</code> landmark coords</td>
+<td>drop a landmark subset</td>
+</tr>
+<tr class="odd">
+<td>MoGe-3 depth</td>
+<td><code>(B, 1, H, W)</code> metric depth map</td>
+<td>noise a spatial patch</td>
+</tr>
+<tr class="even">
+<td>Pixal3D sparse structure</td>
+<td><code>(B, C, R, R, R)</code> voxel grid</td>
+<td>noise a 3D subvolume</td>
+</tr>
+<tr class="odd">
+<td>VoxHammer structured latent</td>
+<td>SparseTensor (coords + feats)</td>
+<td>drop/noise a spatial region</td>
+</tr>
+<tr class="even">
+<td>Talker</td>
+<td>speech token sequence</td>
+<td>replace span with mask token</td>
+</tr>
+</tbody>
+</table>
+<p>The 3D latents are confirmed maskable: <code>SparseStructureFlowModel</code> asserts <code>x.shape == [B, C, R, R, R]</code> (line 177 of <code>sparse_structure_flow.py</code>), and <code>SLatFlowModel</code> operates on SparseTensors with the same <code>(x, t, cond)</code> interface.</p>
+<p>Scoring happens on the decoded output, not in latent space. The masking operates on latents (where the model works); the evaluation decodes once (the “stages pass latents; VAE decode happens once, at final output” constraint) and scores what the user would see.</p>
+</section>
+<section id="construction-via-masking-corruption" class="level2">
+<h2 class="anchored" data-anchor-id="construction-via-masking-corruption">Construction via masking corruption</h2>
+<p>The masking corruption technique applies to any denoiser: mask a span, reconstruct, score. This is the StyleGAN corruption/reconstruction technique applied to discrete tokens and latents. A masked span IS an edit instruction, and the (original, mask, reconstruction) triple is a scored edit by construction. The technique was prototyped on LLaDA-o (now blocklisted for latency) and transfers to Qwen3-Omni’s generation stages without change.</p>
+<p>This makes all seven datasets <strong>constructed synthetic</strong>: deterministic from source assets we hold, labels true by construction (the original IS the ground truth), same seed reproduces the corpus. No generative model in the scoring loop, so none of the four conditions for generated synthetic apply.</p>
+</section>
+<section id="texteditreward-bench" class="level2">
+<h2 class="anchored" data-anchor-id="texteditreward-bench">1. TextEditReward-Bench</h2>
+<p><strong>Modality:</strong> text→text edit <strong>Why required:</strong> Qwen3-Omni generates and revises text. Without a text-edit reward signal, the thinker’s text output has no RL training signal and no automated quality gate.</p>
+<p><strong>Self-supervised construction:</strong></p>
+<ol type="1">
+<li>Take a source text from held assets</li>
+<li>Encode to token ids</li>
+<li>Mask a span (vary position and length for task diversity)</li>
+<li>Let the denoiser reconstruct</li>
+<li>Decode both to text</li>
+<li>Score: BLEU/ROUGE on unmasked tokens (preservation), perplexity on masked span (edit quality)</li>
+<li>Record (text, mask, reconstruction, scores)</li>
+</ol>
+<p>Mask length determines task_type: word-level = grammar_fix, sentence-level = rephrase, paragraph-level = summarize. No human annotation — the original text is the reference.</p>
+<p><strong>Format:</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>column</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>key</td>
+<td>string</td>
+<td>unique identifier</td>
+</tr>
+<tr class="even">
+<td>instruction</td>
+<td>string</td>
+<td>mask described as edit (“rephrase the second sentence”)</td>
+</tr>
+<tr class="odd">
+<td>input_text</td>
+<td>string</td>
+<td>original text</td>
+</tr>
+<tr class="even">
+<td>output_texts</td>
+<td>list[string]</td>
+<td>candidate reconstructions</td>
+</tr>
+<tr class="odd">
+<td>scores</td>
+<td>list[float]</td>
+<td>automated (preservation, edit_quality)</td>
+</tr>
+<tr class="even">
+<td>task_type</td>
+<td>string</td>
+<td>one of: tone_change, grammar_fix, summarize, expand, rephrase, factual_correction, style_transfer</td>
+</tr>
+<tr class="odd">
+<td>dimension</td>
+<td>string</td>
+<td>one of: overall, instruction_following, fluency, preservation</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Reward model (stage 3):</strong> Qwen3-Omni scores (input_text, instruction, output_text) directly — the thinker IS the reward model for its own text output (OmniScore).</p>
+</section>
+<section id="mesheditreward-bench" class="level2">
+<h2 class="anchored" data-anchor-id="mesheditreward-bench">2. MeshEditReward-Bench</h2>
+<p><strong>Modality:</strong> image→3D mesh and 3D→3D edit <strong>Why required:</strong> Pixal3D and VoxHammer produce meshes from images. Without a reward signal, mesh quality is manual inspection only and the 3D stage cannot participate in RL training.</p>
+<p><strong>Self-supervised construction:</strong></p>
+<ol type="1">
+<li>Take a mesh from Objaverse (held, Apache 2.0 subset)</li>
+<li>Encode to voxel grid <code>(B, C, R, R, R)</code> via the sparse structure VAE</li>
+<li>Mask a 3D subvolume (vary position, size, shape)</li>
+<li>Let the flow model reconstruct</li>
+<li>Decode both to meshes via FlexiCubes</li>
+<li>Score via render-and-compare: render both meshes from matched viewpoints (Mitsuba 3, sphere_hammersley_sequence), then L1 on mask/depth/normals, SSIM on normals, LPIPS on normals for the unmasked region (preservation) and the masked region (edit quality). For textured meshes: SSIM and LPIPS on rendered base color and material attributes</li>
+<li>Record (voxel latent, mask, reconstruction, scores)</li>
+</ol>
+<p>Mask shape determines task_type: a limb-sized subvolume = part_edit, a thin shell = texture_transfer, the full interior = mesh_refinement. No human annotation — the original mesh is the reference.</p>
+<p><strong>Format:</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 77%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>column</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>key</td>
+<td>string</td>
+<td>unique identifier</td>
+</tr>
+<tr class="even">
+<td>instruction</td>
+<td>string</td>
+<td>mask described as edit (“refine the hand region”)</td>
+</tr>
+<tr class="odd">
+<td>input_mesh</td>
+<td>string</td>
+<td>path to input mesh (.glb)</td>
+</tr>
+<tr class="even">
+<td>input_image</td>
+<td>image</td>
+<td>conditioning image (for image→mesh tasks)</td>
+</tr>
+<tr class="odd">
+<td>output_meshes</td>
+<td>list[string]</td>
+<td>paths to candidate meshes (.glb)</td>
+</tr>
+<tr class="even">
+<td>scores</td>
+<td>list[float]</td>
+<td>automated (preservation, edit_quality)</td>
+</tr>
+<tr class="odd">
+<td>task_type</td>
+<td>string</td>
+<td>one of: image_to_mesh, mesh_refinement, part_edit, texture_transfer, pose_change</td>
+</tr>
+<tr class="even">
+<td>dimension</td>
+<td>string</td>
+<td>one of: overall, geometric_fidelity, image_alignment, topology_quality, preservation</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Reward model (stage 3):</strong> Qwen3-Omni scores multi-view Mitsuba 3 renders of (input mesh, output mesh, instruction) directly — it judges geometric and visual quality from the rendered views, learning to weight the dimensions rather than averaging them (OmniScore).</p>
+</section>
+<section id="speecheditreward-bench" class="level2">
+<h2 class="anchored" data-anchor-id="speecheditreward-bench">3. SpeechEditReward-Bench</h2>
+<p><strong>Modality:</strong> text→speech and speech→speech edit <strong>Why required:</strong> The Qwen3-Omni talker produces speech with voice cloning. Without a reward signal, the audio head cannot participate in RL training.</p>
+<p><strong>Self-supervised construction:</strong></p>
+<ol type="1">
+<li>Take audio from held assets (license-clean speech corpora)</li>
+<li>Encode to speech token sequence</li>
+<li>Mask a time span (vary position, duration)</li>
+<li>Let the talker/vocoder reconstruct</li>
+<li>Decode both to waveforms</li>
+<li>Score: mel spectrogram distance on unmasked region (preservation), UTMOS on masked region (naturalness/quality), speaker embedding cosine similarity (voice identity preservation)</li>
+<li>Record (audio tokens, mask, reconstruction, scores)</li>
+</ol>
+<p>Mask duration determines task_type: a phoneme = pronunciation_fix, a word = prosody_edit, a sentence = full resynthesis. For voice cloning: mask the speaker conditioning and score identity preservation via speaker verification. No human annotation — the original waveform is the reference.</p>
+<p><strong>Format:</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 9%">
+<col style="width: 79%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>column</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>key</td>
+<td>string</td>
+<td>unique identifier</td>
+</tr>
+<tr class="even">
+<td>instruction</td>
+<td>string</td>
+<td>mask described as edit (“resynthesize from 2.0s to 3.5s”)</td>
+</tr>
+<tr class="odd">
+<td>input_audio</td>
+<td>string</td>
+<td>path to input audio (.wav)</td>
+</tr>
+<tr class="even">
+<td>reference_voice</td>
+<td>string</td>
+<td>path to voice reference (.wav) for cloning</td>
+</tr>
+<tr class="odd">
+<td>output_audios</td>
+<td>list[string]</td>
+<td>paths to candidate audio (.wav)</td>
+</tr>
+<tr class="even">
+<td>scores</td>
+<td>list[float]</td>
+<td>automated (preservation, quality, identity)</td>
+</tr>
+<tr class="odd">
+<td>task_type</td>
+<td>string</td>
+<td>one of: tts_generation, voice_cloning, prosody_edit, speed_change, emotion_transfer, pronunciation_fix</td>
+</tr>
+<tr class="even">
+<td>dimension</td>
+<td>string</td>
+<td>one of: overall, instruction_following, voice_identity, naturalness, preservation</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Reward model (stage 3):</strong> Qwen3-Omni scores (input audio, instruction, output audio) directly — the thinker handles audio natively, so it IS the reward model for the talker’s speech output (OmniScore).</p>
+</section>
+<section id="multimodaleditreward-bench" class="level2">
+<h2 class="anchored" data-anchor-id="multimodaleditreward-bench">4. MultimodalEditReward-Bench</h2>
+<p><strong>Modality:</strong> cross-modal edits (text↔︎image, image↔︎mesh, text↔︎speech) <strong>Why required:</strong> The pipeline is a chain: text→image→mesh, with audio parallel. Edits cross modality boundaries. Within-modality scoring does not cover the seam.</p>
+<p><strong>Self-supervised construction:</strong></p>
+<ol type="1">
+<li>Take a (text, image, mesh, audio) tuple from held assets</li>
+<li>Mask in one modality’s latent space</li>
+<li>Reconstruct</li>
+<li>Decode to the output modality</li>
+<li>Score cross-modal alignment: CLIP-score (text↔︎image), rendered LPIPS (image↔︎mesh), CLAP/UTMOS (text↔︎audio)</li>
+<li>Record (input modality latent, mask, output modality decoded, scores)</li>
+</ol>
+<p>The cross-modal score is the distance between the decoded reconstruction and the paired asset in the other modality. The paired assets provide the ground truth without annotation.</p>
+<p><strong>Format:</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 10%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>column</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>key</td>
+<td>string</td>
+<td>unique identifier</td>
+</tr>
+<tr class="even">
+<td>instruction</td>
+<td>string</td>
+<td>edit instruction</td>
+</tr>
+<tr class="odd">
+<td>input_modality</td>
+<td>string</td>
+<td>one of: text, image, mesh, audio</td>
+</tr>
+<tr class="even">
+<td>output_modality</td>
+<td>string</td>
+<td>one of: text, image, mesh, audio</td>
+</tr>
+<tr class="odd">
+<td>input_data</td>
+<td>varies</td>
+<td>the input in its modality</td>
+</tr>
+<tr class="even">
+<td>output_candidates</td>
+<td>list[varies]</td>
+<td>candidate outputs</td>
+</tr>
+<tr class="odd">
+<td>scores</td>
+<td>list[float]</td>
+<td>automated cross-modal alignment</td>
+</tr>
+<tr class="even">
+<td>task_type</td>
+<td>string</td>
+<td>one of: text_to_image_edit, image_to_mesh_edit, text_to_speech_edit, mesh_to_image_edit</td>
+</tr>
+<tr class="odd">
+<td>dimension</td>
+<td>string</td>
+<td>one of: overall, cross_modal_fidelity, instruction_following, preservation</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Source dataset: SpeakingFaces</strong> (issai/Speaking_Faces, CC-BY-4.0, 142 subjects, 13,000+ instances). Synchronized visual video (768×512), thermal video (464×348), and audio at nine camera angles. The synchronization IS the cross-modal ground truth:</p>
+<ul>
+<li>audio → face image: mask audio tokens, score reconstruction against the synchronized video frame</li>
+<li>face image → audio: mask visual regions, score voice identity against the paired audio</li>
+<li>thermal ↔︎ visual: mask one spectrum, score against the paired spectrum (domain transfer edit)</li>
+</ul>
+<p>The canonical ANNY rig can be fitted to the face video frames to recover keypoints and encode the 3D latent via the sparse structure VAE. This gives a (face image, ANNY keypoints, ANNY 3D latent, audio) tuple per synchronized frame — the full pipeline ground truth from visual through 3D through audio, all paired. The keypoint fit is deterministic from the video frames and the canonical mesh, so the derived latents are constructed synthetic.</p>
+<p>No annotation needed — the synchronized streams plus the ANNY fit are the paired assets. CC-BY-4.0 clears the license bar.</p>
+<ul>
+<li>https://huggingface.co/datasets/issai/Speaking_Faces</li>
+<li>https://doi.org/10.48333/smgd-yj77</li>
+</ul>
+<p><strong>Reward model (stage 3):</strong> Qwen3-Omni scores cross-modal alignment directly — it handles text, image, audio, and video natively, so it IS the reward model for cross-modal edits (OmniScore). The training signal is self-supervised (SpeakingFaces’ synchronized streams are the ground truth).</p>
+</section>
+<section id="keypointeditreward-bench" class="level2">
+<h2 class="anchored" data-anchor-id="keypointeditreward-bench">5. KeypointEditReward-Bench</h2>
+<p><strong>Modality:</strong> image→keypoints and keypoints→keypoints edit <strong>Why required:</strong> Keypoints and the canonical ANNY representation are interchangeable — the keypoints ARE the rig state expressed as sparse landmarks, and the canonical ANNY mesh IS the dense surface they parameterise. Fitting the canonical rig to a SpeakingFaces frame produces both: the landmarks locate the face, and the rig state reconstructs the mesh. Without a reward signal on this representation, the fit step is unscored and the downstream 3D latent inherits any drift silently.</p>
+<p><strong>Self-supervised construction:</strong></p>
+<ol type="1">
+<li>Fit ANNY canonical rig to a SpeakingFaces video frame → keypoints</li>
+<li>Represent as a structured sequence (landmark index, x, y, z, confidence)</li>
+<li>Mask a subset of landmarks (vary count, region — face, jaw, brow)</li>
+<li>Reconstruct the masked landmarks from the unmasked ones and the conditioning image</li>
+<li>Score: Euclidean distance on masked landmarks against the fit (geometric accuracy), reprojection error against the source frame (image alignment)</li>
+<li>Record (keypoints, mask, reconstruction, scores)</li>
+</ol>
+<p>Mask region determines task_type: jaw landmarks = expression_edit, brow landmarks = micro_expression, full-face = pose_refit. The ANNY fit is deterministic from the frame and the canonical mesh, so the derived keypoints are constructed synthetic.</p>
+<p><strong>Format:</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 12%">
+<col style="width: 73%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>column</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>key</td>
+<td>string</td>
+<td>unique identifier</td>
+</tr>
+<tr class="even">
+<td>instruction</td>
+<td>string</td>
+<td>mask described as edit (“refit the jaw landmarks”)</td>
+</tr>
+<tr class="odd">
+<td>input_keypoints</td>
+<td>list[float]</td>
+<td>ANNY landmark coordinates</td>
+</tr>
+<tr class="even">
+<td>conditioning_image</td>
+<td>string</td>
+<td>path to source frame</td>
+</tr>
+<tr class="odd">
+<td>output_keypoints</td>
+<td>list[list[float]]</td>
+<td>candidate reconstructions</td>
+</tr>
+<tr class="even">
+<td>scores</td>
+<td>list[float]</td>
+<td>automated (geometric_accuracy, reprojection_error)</td>
+</tr>
+<tr class="odd">
+<td>task_type</td>
+<td>string</td>
+<td>one of: expression_edit, micro_expression, pose_refit, landmark_interpolation, symmetry_correction</td>
+</tr>
+<tr class="even">
+<td>dimension</td>
+<td>string</td>
+<td>one of: overall, geometric_fidelity, image_alignment, anatomical_plausibility</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Reward model (stage 3):</strong> Qwen3-Omni scores (image, input keypoints, instruction, output keypoints) directly — the thinker sees the conditioning image and judges whether the reconstructed landmarks are anatomically plausible (OmniScore).</p>
+</section>
+<section id="deptheditreward-bench" class="level2">
+<h2 class="anchored" data-anchor-id="deptheditreward-bench">6. DepthEditReward-Bench</h2>
+<p><strong>Modality:</strong> image→depth and depth→depth edit <strong>Why required:</strong> Two depth sources exist. MoGe-3 produces metric depth maps from single images (monocular estimation). The canonical ANNY mesh fitted to the same frame can be rendered to a depth buffer via Mitsuba 3 (sphere_hammersley_sequence views), giving ground-truth depth from geometry rather than estimation. The Mitsuba-rendered depth is the reference; MoGe-3 depth is the fast single-image proxy. Scoring one against the other measures how well monocular depth tracks the geometry the rig already knows. Without a reward signal on depth quality, geometric consistency between the image and 3D stages is unscored.</p>
+<p><strong>Self-supervised construction:</strong></p>
+<ol type="1">
+<li>Take a SpeakingFaces visual frame</li>
+<li>Fit ANNY canonical rig to the frame, render the fitted mesh to a depth buffer via Mitsuba 3 (ground-truth depth from geometry)</li>
+<li>Run MoGe-3 on the same frame to produce a metric depth map <code>(B, 1, H, W)</code> (estimated depth)</li>
+<li>Mask a spatial patch in the MoGe-3 depth map</li>
+<li>Reconstruct the masked region from the unmasked depth and the conditioning image</li>
+<li>Decode both to depth maps</li>
+<li>Score: L1 on unmasked region (preservation), scale-invariant log depth error on masked region against the Mitsuba-rendered ANNY depth (geometric accuracy from ground truth), consistency against the ANNY keypoint reprojection (cross-modal alignment)</li>
+<li>Record (MoGe-3 depth, ANNY depth, mask, reconstruction, scores)</li>
+</ol>
+<p>Mask region determines task_type: foreground face = face_depth_edit, background = scene_completion, occluded region = depth_inpaint. Both depth sources are deterministic from the input: MoGe-3 from the image, ANNY depth from the fit + Mitsuba render. Both are constructed synthetic.</p>
+<p><strong>Format:</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 9%">
+<col style="width: 76%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>column</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>key</td>
+<td>string</td>
+<td>unique identifier</td>
+</tr>
+<tr class="even">
+<td>instruction</td>
+<td>string</td>
+<td>mask described as edit (“reconstruct the nose depth region”)</td>
+</tr>
+<tr class="odd">
+<td>input_depth</td>
+<td>string</td>
+<td>path to input depth map (.exr)</td>
+</tr>
+<tr class="even">
+<td>conditioning_image</td>
+<td>string</td>
+<td>path to source visual frame</td>
+</tr>
+<tr class="odd">
+<td>output_depths</td>
+<td>list[string]</td>
+<td>paths to candidate depth maps (.exr)</td>
+</tr>
+<tr class="even">
+<td>scores</td>
+<td>list[float]</td>
+<td>automated (preservation, geometric_accuracy, keypoint_alignment)</td>
+</tr>
+<tr class="odd">
+<td>task_type</td>
+<td>string</td>
+<td>one of: face_depth_edit, scene_completion, depth_inpaint, depth_super_resolution, depth_refinement</td>
+</tr>
+<tr class="even">
+<td>dimension</td>
+<td>string</td>
+<td>one of: overall, geometric_fidelity, image_alignment, keypoint_consistency</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Reward model (stage 3):</strong> Qwen3-Omni scores (image, input depth, instruction, output depth) directly, judging whether the reconstructed depth is geometrically consistent with the conditioning frame and the ANNY keypoints (OmniScore).</p>
+</section>
+<section id="videoeditreward-bench" class="level2">
+<h2 class="anchored" data-anchor-id="videoeditreward-bench">7. VideoEditReward-Bench</h2>
+<p><strong>Modality:</strong> video→video edit and video↔︎audio edit <strong>Why required:</strong> Qwen3-Omni handles video natively. SpeakingFaces video can be converted to CineForm with aligned audio, giving temporally coherent video+audio pairs. Without a video reward signal, the temporal dimension is unscored — frame-level image scoring misses motion coherence, lip sync, and temporal consistency.</p>
+<p><strong>Self-supervised construction:</strong></p>
+<ol type="1">
+<li>Take a SpeakingFaces video clip (converted to CineForm with aligned audio)</li>
+<li>Encode video frames to a temporal latent sequence</li>
+<li>Mask a temporal span (vary position, duration — a few frames to a full segment)</li>
+<li>Reconstruct the masked frames conditioned on unmasked context</li>
+<li>Decode both to video</li>
+<li>Score: per-frame LPIPS on unmasked frames (preservation), FVD on masked span (temporal coherence), lip-sync score against aligned audio (audio-visual alignment), optical flow consistency between reconstructed and original (motion coherence)</li>
+<li>Record (video latent sequence, mask, reconstruction, scores)</li>
+</ol>
+<p>Mask duration determines task_type: 1–3 frames = frame_interpolation, a segment = video_inpaint, the audio track = audio_driven_generation. The aligned audio is the temporal anchor: lip sync and audio-visual coherence are scored against the original audio track, not inferred.</p>
+<p><strong>Format:</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 7%">
+<col style="width: 83%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>column</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>key</td>
+<td>string</td>
+<td>unique identifier</td>
+</tr>
+<tr class="even">
+<td>instruction</td>
+<td>string</td>
+<td>mask described as edit (“interpolate frames 30–45”)</td>
+</tr>
+<tr class="odd">
+<td>input_video</td>
+<td>string</td>
+<td>path to input video (CineForm .mov)</td>
+</tr>
+<tr class="even">
+<td>aligned_audio</td>
+<td>string</td>
+<td>path to aligned audio (.wav)</td>
+</tr>
+<tr class="odd">
+<td>output_videos</td>
+<td>list[string]</td>
+<td>paths to candidate videos</td>
+</tr>
+<tr class="even">
+<td>scores</td>
+<td>list[float]</td>
+<td>automated (preservation, temporal_coherence, lip_sync, motion)</td>
+</tr>
+<tr class="odd">
+<td>task_type</td>
+<td>string</td>
+<td>one of: frame_interpolation, video_inpaint, audio_driven_generation, speed_change, expression_transfer, temporal_super_resolution</td>
+</tr>
+<tr class="even">
+<td>dimension</td>
+<td>string</td>
+<td>one of: overall, temporal_coherence, audio_visual_sync, motion_fidelity, preservation</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Reward model (stage 3):</strong> Qwen3-Omni scores (video clip, aligned audio, instruction, output video) directly — it handles video natively, so it judges temporal coherence and audio-visual alignment that frame-level image scoring cannot reach (OmniScore).</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/weftspun\.github\.io\/request-for-discussion");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Serials are OID arcs under the 66606 PEN and are never reused.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1173-a-multimodal-diffusion-pipeline/MASKSCORE.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1173-a-multimodal-diffusion-pipeline/MASKSCORE.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/weftspun/request-for-discussion">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

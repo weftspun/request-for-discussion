@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Logbook – Taskweft — Manuals</title>
+<title>details – Taskweft — Manuals</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -29,29 +29,27 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f36f388c175c695e587c9d92b6af4f92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f36f388c175c695e587c9d92b6af4f92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -79,65 +77,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -310,7 +250,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Taskweft — Manuals</span>
     </a>
   </div>
@@ -321,19 +261,19 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../pages/rfd.html"> 
+    <a class="nav-link" href="../../pages/rfd.html"> 
 <span class="menu-text">RFDs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../pages/serials.html"> 
+    <a class="nav-link" href="../../pages/serials.html"> 
 <span class="menu-text">Serials</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../pages/logbook.html" aria-current="page"> 
+    <a class="nav-link" href="../../pages/logbook.html"> 
 <span class="menu-text">Logbook</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../pages/agreements.html"> 
+    <a class="nav-link" href="../../pages/agreements.html"> 
 <span class="menu-text">Working agreements</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -342,11 +282,11 @@ window.Quarto = {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-download">    
         <li>
-    <a class="dropdown-item" href="../book.epub">
+    <a class="dropdown-item" href="../../book.epub">
  <span class="dropdown-text">EPUB (RFDs)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../book.pdf">
+    <a class="dropdown-item" href="../../book.pdf">
  <span class="dropdown-text">PDF (RFDs)</span></a>
   </li>  
     </ul>
@@ -363,291 +303,202 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#rfd-1172-details-the-candidates-and-the-throughput-numbers" id="toc-rfd-1172-details-the-candidates-and-the-throughput-numbers" class="nav-link active" data-scroll-target="#rfd-1172-details-the-candidates-and-the-throughput-numbers">RFD 1172 details: the candidates and the throughput numbers</a>
+  <ul class="collapse">
+  <li><a href="#the-candidate-table" id="toc-the-candidate-table" class="nav-link" data-scroll-target="#the-candidate-table">The candidate table</a></li>
+  <li><a href="#why-the-xdna1-npu-cannot-carry-any-of-them" id="toc-why-the-xdna1-npu-cannot-carry-any-of-them" class="nav-link" data-scroll-target="#why-the-xdna1-npu-cannot-carry-any-of-them">Why the XDNA1 NPU cannot carry any of them</a></li>
+  <li><a href="#what-this-does-not-decide" id="toc-what-this-does-not-decide" class="nav-link" data-scroll-target="#what-this-does-not-decide">What this does not decide</a></li>
+  <li><a href="#local-measurement-llada-1.5-on-the-rtx-3090" id="toc-local-measurement-llada-1.5-on-the-rtx-3090" class="nav-link" data-scroll-target="#local-measurement-llada-1.5-on-the-rtx-3090">Local measurement: LLaDA-1.5 on the RTX 3090</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1172-a-diffusion-lm-does-not-land-on-the-npu/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1172-a-diffusion-lm-does-not-land-on-the-npu/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Logbook</h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>Entries record what was <strong>measured</strong>, not what was intended, and clip enough of the experimental apparatus to re-run the test rather than merely its conclusion.</p>
-<p>These 145 entries were a separate repository until <code>weftspun/logbook</code> was archived. A decision and its measurement sat one repository apart; they no longer do. Entries kept their filenames, so an entry is still findable by the thing it measured rather than by where it used to live.</p>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-      <option value="" disabled="" selected="" hidden="">Order By</option>
-      <option value="index" data-direction="asc">Default</option>
-      <option value="listing-date-sort" data-direction="asc">
-        Date - Oldest
-      </option>
-      <option value="listing-date-sort" data-direction="desc">
-        Date - Newest
-      </option>
-      <option value="listing-title-sort" data-direction="asc">
-        Title
-      </option>
-    </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
-</div>
-<table class="quarto-listing-table table">
+
+<section id="rfd-1172-details-the-candidates-and-the-throughput-numbers" class="level1">
+<h1>RFD 1172 details: the candidates and the throughput numbers</h1>
+<p>Surveyed 2026-08-30. Claims below cite the vendor or paper that made them; none were reproduced on this desk. Throughput figures marked “claimed” have no independent replication we could find.</p>
+<section id="the-candidate-table" class="level2">
+<h2 class="anchored" data-anchor-id="the-candidate-table">The candidate table</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 7%">
+<col style="width: 51%">
+</colgroup>
 <thead>
-<tr>
-
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
-</th>
-
-<th>
-<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
-</th>
-
+<tr class="header">
+<th>model</th>
+<th>params</th>
+<th>weights</th>
+<th>licence</th>
+<th>standing</th>
 </tr>
 </thead>
-<tbody class="list">
-
-<tr data-index="0" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="4" data-listing-word-count-sort="725" data-listing-title-sort="Blend-shape animation through the flow adapter, and TokenRig's first light" data-listing-filename-sort="logbook-blendshape-animation-and-tokenrig-first-light.md">
-<td>
-<a href="../logbook/logbook-blendshape-animation-and-tokenrig-first-light.html" class="title listing-title">Blend-shape animation through the flow adapter, and TokenRig’s first light</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tbody>
+<tr class="odd">
+<td>LLaDA2.1-flash (inclusionAI)</td>
+<td>100B MoE, 6.1B active</td>
+<td>open, ungated</td>
+<td>Apache 2.0</td>
+<td>MMLU-Pro 76.6, BBH 88.7, HumanEval+ 89.6, AIME 2025 63.3; claimed 892 tok/s peak</td>
 </tr>
-
-<tr data-index="1" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="5" data-listing-word-count-sort="994" data-listing-title-sort="In-betweens, phenotype clips, and what pass-through means" data-listing-filename-sort="logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.md">
-<td>
-<a href="../logbook/logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.html" class="title listing-title">In-betweens, phenotype clips, and what pass-through means</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>LLaDA2.1-mini (inclusionAI)</td>
+<td>16B MoE, 1B active</td>
+<td>open, ungated</td>
+<td>Apache 2.0</td>
+<td>the small sibling of the same release</td>
 </tr>
-
-<tr data-index="2" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="8" data-listing-word-count-sort="1464" data-listing-title-sort="Logbook: CineForm in Godot, and what recording actually costs" data-listing-filename-sort="logbook-cineform-movie-writer.md">
-<td>
-<a href="../logbook/logbook-cineform-movie-writer.html" class="title listing-title">Logbook: CineForm in Godot, and what recording actually costs</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>DiffusionGemma 26B-A4B (Google)</td>
+<td>25.2B MoE, 3.8B active</td>
+<td>open</td>
+<td>Apache 2.0</td>
+<td>block diffusion on the Gemma 4 architecture; claimed 4x over comparable AR</td>
 </tr>
-
-<tr data-index="3" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="4" data-listing-word-count-sort="660" data-listing-title-sort="Logbook: FDB VFS embed into ecto_sqlite3, retracted" data-listing-filename-sort="logbook-rfd2133-vfs-embed-retracted.md">
-<td>
-<a href="../logbook/logbook-rfd2133-vfs-embed-retracted.html" class="title listing-title">Logbook: FDB VFS embed into ecto_sqlite3, retracted</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>Dream-v0 7B, Dream-Coder 7B</td>
+<td>7B dense</td>
+<td>open</td>
+<td>Apache 2.0</td>
+<td>strongest 2025-era 7B dLLM, now mid-tier</td>
 </tr>
-
-<tr data-index="4" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="31" data-listing-word-count-sort="6080" data-listing-title-sort="Logbook: RFD 1016 model-repo build-out" data-listing-filename-sort="logbook-rfd1016-model-repos.md">
-<td>
-<a href="../logbook/logbook-rfd1016-model-repos.html" class="title listing-title">Logbook: RFD 1016 model-repo build-out</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>LLaDA-8B-Instruct</td>
+<td>8B dense</td>
+<td>open</td>
+<td>MIT</td>
+<td>the original, near LLaMA3-8B quality</td>
 </tr>
-
-<tr data-index="5" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="11" data-listing-word-count-sort="2018" data-listing-title-sort="Logbook: RFD 1122 T01, the pose-library check" data-listing-filename-sort="logbook-rfd1122-t01-pose-check.md">
-<td>
-<a href="../logbook/logbook-rfd1122-t01-pose-check.html" class="title listing-title">Logbook: RFD 1122 T01, the pose-library check</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>Mercury 2 (Inception Labs)</td>
+<td>undisclosed</td>
+<td>closed, API only</td>
+<td>commercial</td>
+<td>claimed 1,009 tok/s on datacenter GPUs; trails frontier AR on reasoning by its own account</td>
 </tr>
-
-<tr data-index="6" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="4" data-listing-word-count-sort="614" data-listing-title-sort="Logbook: minimum-double weftspun-fdb on Fly" data-listing-filename-sort="logbook-rfd2133-weftspun-fdb-on-fly.md">
-<td>
-<a href="../logbook/logbook-rfd2133-weftspun-fdb-on-fly.html" class="title listing-title">Logbook: minimum-double weftspun-fdb on Fly</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>Gemini Diffusion (Google)</td>
+<td>undisclosed</td>
+<td>closed, waitlist</td>
+<td>none readable</td>
+<td>experimental demo, no public API</td>
 </tr>
-
-<tr data-index="7" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="18" data-listing-word-count-sort="3434" data-listing-title-sort="Logbook: one base, measured, and the rerank" data-listing-filename-sort="logbook-rfd1171-gemma-first-rerank.md">
-<td>
-<a href="../logbook/logbook-rfd1171-gemma-first-rerank.html" class="title listing-title">Logbook: one base, measured, and the rerank</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>Seed Diffusion Preview (ByteDance)</td>
+<td>undisclosed</td>
+<td>closed</td>
+<td>none readable</td>
+<td>code model; claimed 2,146 tok/s on H20</td>
 </tr>
-
-<tr data-index="8" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="3" data-listing-word-count-sort="474" data-listing-title-sort="Logbook: spot-broker on Fly" data-listing-filename-sort="logbook-rfd2133-spot-broker-on-fly.md">
-<td>
-<a href="../logbook/logbook-rfd2133-spot-broker-on-fly.html" class="title listing-title">Logbook: spot-broker on Fly</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="9" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="7" data-listing-word-count-sort="1241" data-listing-title-sort="Logbook: the ANNY fit that the corpus does not need" data-listing-filename-sort="logbook-anny-phenotype-fit-retired.md">
-<td>
-<a href="../logbook/logbook-anny-phenotype-fit-retired.html" class="title listing-title">Logbook: the ANNY fit that the corpus does not need</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="10" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="11" data-listing-word-count-sort="2026" data-listing-title-sort="Logbook: the Qwen3-VL vision tower against the Dataflow Compiler" data-listing-filename-sort="logbook-qwen3vl-vit-translate-walls.md">
-<td>
-<a href="../logbook/logbook-qwen3vl-vit-translate-walls.html" class="title listing-title">Logbook: the Qwen3-VL vision tower against the Dataflow Compiler</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="11" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="2" data-listing-word-count-sort="375" data-listing-title-sort="Logbook: the backup reaches Tigris through the SNI hop" data-listing-filename-sort="logbook-rfd2134-backup-through-the-sni-hop.md">
-<td>
-<a href="../logbook/logbook-rfd2134-backup-through-the-sni-hop.html" class="title listing-title">Logbook: the backup reaches Tigris through the SNI hop</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="12" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="6" data-listing-word-count-sort="1171" data-listing-title-sort="Logbook: the first four-loop rounds on the desk card" data-listing-filename-sort="logbook-fourloops-first-runs.md">
-<td>
-<a href="../logbook/logbook-fourloops-first-runs.html" class="title listing-title">Logbook: the first four-loop rounds on the desk card</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="13" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="5" data-listing-word-count-sort="992" data-listing-title-sort="Logbook: the soft renderer's three constants, and Mitsuba" data-listing-filename-sort="logbook-soft-renderer-and-mitsuba.md">
-<td>
-<a href="../logbook/logbook-soft-renderer-and-mitsuba.html" class="title listing-title">Logbook: the soft renderer’s three constants, and Mitsuba</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="14" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="9" data-listing-word-count-sort="1605" data-listing-title-sort="Logbook: two DFC emulation contexts disagree by six orders of magnitude" data-listing-filename-sort="logbook-dfc-emulation-contexts-disagree.md">
-<td>
-<a href="../logbook/logbook-dfc-emulation-contexts-disagree.html" class="title listing-title">Logbook: two DFC emulation contexts disagree by six orders of magnitude</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="15" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="3" data-listing-word-count-sort="486" data-listing-title-sort="Logbook: two checks, a stopped backup, and curl's signing limits" data-listing-filename-sort="logbook-rfd2135-two-checks-and-a-stopped-backup.md">
-<td>
-<a href="../logbook/logbook-rfd2135-two-checks-and-a-stopped-backup.html" class="title listing-title">Logbook: two checks, a stopped backup, and curl’s signing limits</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="16" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="6" data-listing-word-count-sort="1163" data-listing-title-sort="Logbook: two walls between a translated graph and a HEF" data-listing-filename-sort="logbook-rfd1130-two-walls-to-a-hef.md">
-<td>
-<a href="../logbook/logbook-rfd1130-two-walls-to-a-hef.html" class="title listing-title">Logbook: two walls between a translated graph and a HEF</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="17" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="11" data-listing-word-count-sort="2074" data-listing-title-sort="Logbook: what an edge NPU takes, and what the ANNY forward will not export" data-listing-filename-sort="logbook-edge-npu-and-the-anny-forward.md">
-<td>
-<a href="../logbook/logbook-edge-npu-and-the-anny-forward.html" class="title listing-title">Logbook: what an edge NPU takes, and what the ANNY forward will not export</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="18" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="12" data-listing-word-count-sort="2261" data-listing-title-sort="Logbook: what the Neural Engine reaches, and what it holds" data-listing-filename-sort="logbook-rfd1142-neural-engine-against-the-ugen300.md">
-<td>
-<a href="../logbook/logbook-rfd1142-neural-engine-against-the-ugen300.html" class="title listing-title">Logbook: what the Neural Engine reaches, and what it holds</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="19" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="14" data-listing-word-count-sort="2799" data-listing-title-sort="Logbook: what the plan costs once the durations are real, and the card is a 3090" data-listing-filename-sort="logbook-rfd1122-hailo-first-rerank.md">
-<td>
-<a href="../logbook/logbook-rfd1122-hailo-first-rerank.html" class="title listing-title">Logbook: what the plan costs once the durations are real, and the card is a 3090</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="20" data-listing-file-modified-sort="1788189971478" data-listing-reading-time-sort="6" data-listing-word-count-sort="1157" data-listing-title-sort="The comment ladder" data-listing-filename-sort="logbook-comment-ladder.md">
-<td>
-<a href="../logbook/logbook-comment-ladder.html" class="title listing-title">The comment ladder</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
 </tbody>
 </table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+<p>Strongest overall and strongest open with a commercially usable licence are the same row: LLaDA2.1-flash. The closed models publish speed, not a benchmark table that beats it.</p>
+<ol type="1">
+<li>https://huggingface.co/inclusionAI/LLaDA2.1-flash</li>
+<li>https://github.com/inclusionAI/LLaDA2.X</li>
+<li>https://ai.google.dev/gemma/docs/diffusiongemma</li>
+<li>https://huggingface.co/GSAI-ML/LLaDA-8B-Instruct</li>
+<li>https://www.inceptionlabs.ai/blog/mercury-refreshed</li>
+<li>https://deepmind.google/models/gemini-diffusion/</li>
+</ol>
+</section>
+<section id="why-the-xdna1-npu-cannot-carry-any-of-them" class="level2">
+<h2 class="anchored" data-anchor-id="why-the-xdna1-npu-cannot-carry-any-of-them">Why the XDNA1 NPU cannot carry any of them</h2>
+<p>The vendor’s own LLM flows exclude the part. The Ryzen AI OGA flows, hybrid and NPU-only, state that Phoenix and Hawk Point are not supported; every supported path requires the 50 TOPS XDNA2 generation. GAIA on a 7840U falls back to CPU and iGPU with the NPU idle. The third-party NPU runtimes say the same, citing tile-structure differences.</p>
+<ol type="1">
+<li>https://ryzenai.docs.amd.com/en/latest/hybrid_oga.html</li>
+<li>https://ryzenai.docs.amd.com/en/1.4/npu_oga.html</li>
+<li>https://github.com/amd/GAIA</li>
+</ol>
+<p>The one path that reaches Phoenix loses to its own CPU. The Ryzen AI 1.2-era eager-mode flow offloads GEMMs at w4abf16 (AWQ INT4 weights via Quark, bf16 activations) and is labelled prototyping-only. A published project measured a 7B autoregressive model at 2.3 tok/s on the Phoenix NPU against 7.8 tok/s on the same package’s CPU. That is the baseline rule: the floor sits in the same table, and the floor wins by 3.4x.</p>
+<ol type="1">
+<li>https://ryzenai.docs.amd.com/en/1.2/llm_flow.html</li>
+<li>https://www.hackster.io/ru3ll/ray-empowering-your-digital-life-943398</li>
+</ol>
+<p>The dLLM pattern is strictly heavier than the AR pattern that already loses. Bidirectional attention over the full sequence, dozens of denoising passes per generation, no KV cache in the standard formulation. The single published NPU deployment of a dLLM runs LLaDA-8B at Q4_0 on a Snapdragon Hexagon, a part in the 45 TOPS class, and reaches 128 tokens in about 16 s only by changing the algorithm: multi-block speculative decoding plus an approximate prefix cache with staged token stabilisation. Nothing comparable exists for any AMD NPU, XDNA1 or XDNA2.</p>
+<ol type="1">
+<li>https://arxiv.org/abs/2606.13740</li>
+</ol>
+</section>
+<section id="what-this-does-not-decide" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-does-not-decide">What this does not decide</h2>
+<p>Condition 5 of the data-hygiene rule does not bite here: an on-device dLLM would serve interaction, not corpus generation, so INT4 weights would be permissible in that role. The block is capability and toolchain, not policy. A future desk with an XDNA2 part reopens the toolchain half of the question and none of the physics; the blocklist row would still need its own revisiting first.</p>
+</section>
+<section id="local-measurement-llada-1.5-on-the-rtx-3090" class="level2">
+<h2 class="anchored" data-anchor-id="local-measurement-llada-1.5-on-the-rtx-3090">Local measurement: LLaDA-1.5 on the RTX 3090</h2>
+<p>LLaDA-1.5 (8B dense, MIT, GSAI-ML/LLaDA-1.5) was measured on the desk 3090 with quality controls: coherence gate (no comma degeneration, no excessive repetition, 10-word minimum), relevance gate (topic keywords), and a negative control (steps=16 must fail).</p>
+<p>bf16 + torch.compile (WSL2, Triton 3.6, PyTorch 2.11):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">steps</th>
+<th style="text-align: right;">batch</th>
+<th style="text-align: right;">wall s</th>
+<th style="text-align: right;">tok/s</th>
+<th>pass</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">128</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6.83</td>
+<td style="text-align: right;">18.7</td>
+<td>OK</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">37.4</td>
+<td>OK</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.71</td>
+<td style="text-align: right;">74.9</td>
+<td>OK</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.85</td>
+<td style="text-align: right;">149.9</td>
+<td>FAIL</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4.71</td>
+<td style="text-align: right;">108.7</td>
+<td>OK</td>
+</tr>
+</tbody>
+</table>
+<p>Best passing configuration: steps=32, batch=4, 108.7 tok/s at 15.9 GiB VRAM. NF4 quantization saves VRAM (6.5 GiB) but degrades quality at steps=32, capping its best passing throughput at 46.5 tok/s (steps=64, batch=8).</p>
+<p>The 108.7 tok/s is 9.2x below Mercury’s claimed 1,000 tok/s. The gap is hardware-bound: Mercury runs on datacenter GPUs with multi-GPU parallelism and a production serving stack. On a single 3090, software optimisation (compile, batching, step reduction) is exhausted.</p>
+<p>Unconfirmed, stated rather than smoothed over: Mercury 2 and Gemini Diffusion parameter counts; independent replication of the 892 and 1,009 tok/s claims; whether the Hexagon deployment’s code is public.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -1069,7 +920,7 @@ window.Quarto = {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/pages/logbook.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/pages/logbook.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1172-a-diffusion-lm-does-not-land-on-the-npu/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1172-a-diffusion-lm-does-not-land-on-the-npu/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
