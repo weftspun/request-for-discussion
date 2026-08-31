@@ -39,7 +39,7 @@ recurring failure modes and the guards that catch them).
 
 **Compute.** The local desktop GPU is available for compute.
 
-Rented GPU work runs on RunPod: please tear down after use, then
+Rented GPU work runs on Vast.ai: please tear down after use, then
 **double-check** the tear down, because anything not in a git repo goes with the
 machine — so if it matters, it is committed and pushed before tear down.
 
