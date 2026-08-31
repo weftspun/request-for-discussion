@@ -6,8 +6,10 @@
       "/logbook/logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.html",
       "/logbook/logbook-cineform-movie-writer.html",
       "/logbook/logbook-rfd2133-vfs-embed-retracted.html",
+      "/logbook/logbook-rfd2140-openbao-on-fdb.html",
       "/logbook/logbook-rfd1016-model-repos.html",
       "/logbook/logbook-rfd1122-t01-pose-check.html",
+      "/logbook/logbook-rfd2142-bao-pki-zerotrust.html",
       "/logbook/logbook-rfd2133-weftspun-fdb-on-fly.html",
       "/logbook/logbook-rfd1171-gemma-first-rerank.html",
       "/logbook/logbook-rfd2133-spot-broker-on-fly.html",
@@ -28,6 +30,9 @@
   {
     "listing": "/pages/rfd.html",
     "items": [
+      "/rfd/2142-bao-pki-zerotrust-service-tls/index.html",
+      "/rfd/2141-fdb-tls-rotation-without-data-loss/index.html",
+      "/rfd/2140-openbao-on-foundationdb/index.html",
       "/rfd/2139-maskscore-qaft-budget/index.html",
       "/rfd/2138-interactor-shuttle-merges-spot-broker-and-uro/index.html",
       "/rfd/2137-rfd-reports-share-one-sheet/index.html",

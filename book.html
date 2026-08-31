@@ -277,21 +277,6 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="./pages/agreements.html"> 
 <span class="menu-text">Working agreements</span></a>
   </li>  
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-download" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Download</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-download">    
-        <li>
-    <a class="dropdown-item" href="./book.epub">
- <span class="dropdown-text">EPUB (RFDs)</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./book.pdf">
- <span class="dropdown-text">PDF (RFDs)</span></a>
-  </li>  
-    </ul>
-  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -1355,6 +1340,25 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#what-is-not-in-this-budget" id="toc-what-is-not-in-this-budget" class="nav-link" data-scroll-target="#what-is-not-in-this-budget">What is NOT in this budget</a></li>
   </ul></li>
   <li><a href="#related-159" id="toc-related-159" class="nav-link" data-scroll-target="#related-159">Related</a></li>
+  </ul></li>
+  <li><a href="#rfd-2140-openbao-on-foundationdb" id="toc-rfd-2140-openbao-on-foundationdb" class="nav-link" data-scroll-target="#rfd-2140-openbao-on-foundationdb">RFD 2140: OpenBao on FoundationDB</a>
+  <ul class="collapse">
+  <li><a href="#problem-167" id="toc-problem-167" class="nav-link" data-scroll-target="#problem-167">Problem</a></li>
+  <li><a href="#decision-169" id="toc-decision-169" class="nav-link" data-scroll-target="#decision-169">Decision</a></li>
+  <li><a href="#verification-4" id="toc-verification-4" class="nav-link" data-scroll-target="#verification-4">Verification</a></li>
+  <li><a href="#related-160" id="toc-related-160" class="nav-link" data-scroll-target="#related-160">Related</a></li>
+  </ul></li>
+  <li><a href="#rfd-2141-fdb-tls-rotation-without-data-loss" id="toc-rfd-2141-fdb-tls-rotation-without-data-loss" class="nav-link" data-scroll-target="#rfd-2141-fdb-tls-rotation-without-data-loss">RFD 2141: FDB TLS rotation without data loss</a>
+  <ul class="collapse">
+  <li><a href="#problem-168" id="toc-problem-168" class="nav-link" data-scroll-target="#problem-168">Problem</a></li>
+  <li><a href="#decision-170" id="toc-decision-170" class="nav-link" data-scroll-target="#decision-170">Decision</a></li>
+  <li><a href="#related-161" id="toc-related-161" class="nav-link" data-scroll-target="#related-161">Related</a></li>
+  </ul></li>
+  <li><a href="#rfd-2142-zero-trust-service-tls-via-openbao-pki" id="toc-rfd-2142-zero-trust-service-tls-via-openbao-pki" class="nav-link" data-scroll-target="#rfd-2142-zero-trust-service-tls-via-openbao-pki">RFD 2142: Zero-trust service TLS via OpenBao PKI</a>
+  <ul class="collapse">
+  <li><a href="#problem-169" id="toc-problem-169" class="nav-link" data-scroll-target="#problem-169">Problem</a></li>
+  <li><a href="#decision-171" id="toc-decision-171" class="nav-link" data-scroll-target="#decision-171">Decision</a></li>
+  <li><a href="#related-162" id="toc-related-162" class="nav-link" data-scroll-target="#related-162">Related</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
@@ -5277,6 +5281,75 @@ scoring     MaskScore + EditScore      n/a           self-supervised reward</cod
 <section id="related-159" class="level2">
 <h2 class="anchored" data-anchor-id="related-159">Related</h2>
 <p>RFD 1173 (the pipeline design), RFD 1143 (keypoints to ANNY).</p>
+</section>
+</section>
+<section id="rfd-2140-openbao-on-foundationdb" class="level1">
+<h1>RFD 2140: OpenBao on FoundationDB</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2140</code></p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> FoundationDB as the storage backend for the secrets manager <strong>Scope:</strong> weftspun-bao on Fly.io; the OpenBao fork at weftspun/openbao</p>
+<section id="problem-167" class="level2">
+<h2 class="anchored" data-anchor-id="problem-167">Problem</h2>
+<p>OpenBao dropped every storage plugin when it forked from Vault v1.14.x. The weftspun-fdb cluster already runs three machines with double redundancy, TLS, and backup, and raft on a single shared-cpu machine has no replication path.</p>
+</section>
+<section id="decision-169" class="level2">
+<h2 class="anchored" data-anchor-id="decision-169">Decision</h2>
+<p>Restore the FoundationDB backend from Vault v1.14.8 (last MPL-2.0 release), connecting to the existing weftspun-fdb cluster over 6PN. The port rewrites three interfaces that diverged after the fork: <code>ListPage</code>, interactive transactions (<code>BeginTx</code>/<code>BeginReadOnlyTx</code> with Commit/Rollback), and pins the FDB 7.3.79 Go binding (<code>headerVersion = 730</code>). Build tag <code>foundationdb</code>, <code>CGO_ENABLED=1</code>.</p>
+<p>Deployment files in weftspun/service-openbao. The bao machine carries only the FDB client library and connects to the cluster via a TLS client certificate. Interface details and deploy measurements are in DETAILS.md.</p>
+</section>
+<section id="verification-4" class="level2">
+<h2 class="anchored" data-anchor-id="verification-4">Verification</h2>
+<p><code>bao status</code>: Storage foundationdb, unsealed. KV v2 at <code>secret/</code>, anchor creds written from weftspun-fdb over 6PN. Root in 1Password.</p>
+</section>
+<section id="related-160" class="level2">
+<h2 class="anchored" data-anchor-id="related-160">Related</h2>
+<p>RFD 2109 (FDB as the store), RFD 2134 (cluster TLS).</p>
+</section>
+</section>
+<section id="rfd-2141-fdb-tls-rotation-without-data-loss" class="level1">
+<h1>RFD 2141: FDB TLS rotation without data loss</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2141</code></p>
+<p><strong>State:</strong> prediscussion <strong>Feature:</strong> rotate the private CA and all leaf certificates on the live cluster <strong>Scope:</strong> weftspun-fdb (3 machines, double), weftspun-bao (FDB client)</p>
+<section id="problem-168" class="level2">
+<h2 class="anchored" data-anchor-id="problem-168">Problem</h2>
+<p>The CA private key from RFD 2134 is not recoverable, so no new leaf can be issued. bao needs a client cert, and the machine certs expire in two years. RFD 2134’s reset path wipes data, which was acceptable at initial setup and is not acceptable now.</p>
+</section>
+<section id="decision-170" class="level2">
+<h2 class="anchored" data-anchor-id="decision-170">Decision</h2>
+<p>A three-phase rolling rotation using FDB’s automatic TLS certificate refresh. The cluster stays available and data stays intact at every step; each phase is gated on <code>fdbcli status</code> reporting healthy.</p>
+<p><strong>Phase 1 (dual-CA trust).</strong> Generate a new CA with the RFD 2134 profile. Set <code>FDB_TLS_CA_B64</code> to old + new CAs concatenated. Rolling restart. Every machine trusts certs from either CA.</p>
+<p><strong>Phase 2 (new leaves).</strong> Mint new certs under the new CA for all three machines and for bao (<code>fdb-bao.chibifire.com</code>). Replace each machine’s cert/key secrets. Rolling restart.</p>
+<p><strong>Phase 3 (drop old CA).</strong> Set <code>FDB_TLS_CA_B64</code> to the new CA only. Rolling restart. Store the new CA key in bao and in 1Password.</p>
+<p>The cluster file does not change (addresses keep <code>:tls</code>), so no coordinator reset is needed.</p>
+<p>The rotation tool is an Elixir TUI in weft-warp-burrito, packaged via Burrito. It walks the phases, gates each on cluster health, and stores the CA key on completion. The procedure is in DETAILS.md.</p>
+</section>
+<section id="related-161" class="level2">
+<h2 class="anchored" data-anchor-id="related-161">Related</h2>
+<p>RFD 2134 (initial TLS), RFD 2140 (OpenBao on FDB).</p>
+</section>
+</section>
+<section id="rfd-2142-zero-trust-service-tls-via-openbao-pki" class="level1">
+<h1>RFD 2142: Zero-trust service TLS via OpenBao PKI</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2142</code></p>
+<p><strong>State:</strong> prediscussion <strong>Feature:</strong> mTLS on the bao listener and cert-based service auth <strong>Scope:</strong> weftspun-bao, spot-broker, weft-warp-burrito</p>
+<section id="problem-169" class="level2">
+<h2 class="anchored" data-anchor-id="problem-169">Problem</h2>
+<p>Services on 6PN read secrets from bao over plaintext HTTP. The root token in 1Password is for emergencies; sharing it with services is the credential distribution problem bao exists to solve. Any 6PN neighbor can observe or modify traffic to the listener.</p>
+<p>The FDB root CA key is lost a second time (the replacement from RFD 2141 was stored via <code>op item create</code>, which returned an item ID but did not persist the item). Chaining under that CA is not possible without rotating FDB again.</p>
+</section>
+<section id="decision-171" class="level2">
+<h2 class="anchored" data-anchor-id="decision-171">Decision</h2>
+<p>Bao’s PKI secrets engine becomes a standalone root CA for service auth. The FDB CA (<code>fdb-ca.chibifire.com</code>) stays separate for cluster mutual TLS.</p>
+<ol type="1">
+<li>Mount <code>pki/</code> and generate a root CA inside bao.</li>
+<li>Issue a listener cert; enable TLS on <code>:8200</code>.</li>
+<li>Enable the TLS cert auth backend. Each service presents a client cert signed by bao’s PKI and receives a scoped token for its KV paths.</li>
+<li>Elixir services use <code>libvault</code> (hex.pm) as the vault client.</li>
+</ol>
+<p><strong>Gate:</strong> bao rejects a plaintext request to <code>:8200</code>. <strong>Negative control:</strong> a request with no client cert, or with an expired cert, returns 403.</p>
+</section>
+<section id="related-162" class="level2">
+<h2 class="anchored" data-anchor-id="related-162">Related</h2>
+<p>RFD 2140 (bao on FDB), RFD 2141 (FDB TLS rotation).</p>
 
 
 </section>
