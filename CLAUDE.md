@@ -405,6 +405,7 @@ Sources excluded from corpora, with the reason:
 | **SMPL and every variant** as a body model         | non-commercial without an MPG licence; SOMA-X to ANNY is the sanctioned bypass — see below                                                       |
 | **AMD XDNA NPU** as an execution target            | a second accelerator toolchain, nothing measured and no runtime installed — see below                                                            |
 | **the CPU** as a model execution target            | orchestration and the **DFC runtime** are exempt; a silent DirectML fallback is the trap — see below                                             |
+| **Mermaid** as a published-figure format           | the layout solver owns the picture and the house sheet cannot reach it — hand-authored inline SVG instead, see below                             |
 
 The cosplay photo library may be used for **validation only**, never training.
 

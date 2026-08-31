@@ -1093,3 +1093,31 @@ COCO holdout cannot validate this task.
 
 RFD 1166 dropped See-Through from the candidate ranking on this basis, taking it from
 twelve rows to eleven.
+
+### Mermaid is blocklisted as a published-figure format, and the layout solver is why
+
+RFD 2136's network went through both formats in one day, so the
+comparison is a matched pair on the same figure. The hand-authored SVG
+places the critical path on a time axis, annotates each slack edge
+with its days, shades the one-sigma finish window, and colours by the
+house tokens. The Mermaid flowchart of the same network hands all of
+that to its layout solver: nodes land where the solver puts them, the
+time axis does not exist, edge labels collide at the solver's mercy,
+and the theme is a global it fights the site's tokens over. The
+operator's verdict on the render was the whole review.
+
+The objection is structural, not aesthetic taste. A figure in this
+workspace depicts a mechanism, and the mechanism's geometry -- what is
+parallel, what waits, how long the window is -- is the content. A
+format whose solver owns the geometry can express the graph but not
+the claim.
+
+What replaces it costs little: raw inline SVG inside the `.qmd`, which
+Quarto passes through untouched. That keeps the source rule intact --
+an SVG is text, diffable and editable like `.usda` -- while the
+rendered page gets the same figure the artifact delivery shows.
+`rfd/2136-the-gacha-critical-path/page.qmd` is the reference case.
+
+The blocklist covers figures that are published: RFD pages, logbook
+entries, artifact reports. A throwaway sketch in a PR description or
+an issue comment is not a published figure and is not covered.
