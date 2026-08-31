@@ -312,12 +312,12 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#the-maskscore-self-supervised-training-loop" id="toc-the-maskscore-self-supervised-training-loop" class="nav-link" data-scroll-target="#the-maskscore-self-supervised-training-loop">The MaskScore self-supervised training loop</a>
   <ul class="collapse">
-  <li><a href="#stage-1-mask-then-reconstruct-denoiser-pretraining" id="toc-stage-1-mask-then-reconstruct-denoiser-pretraining" class="nav-link" data-scroll-target="#stage-1-mask-then-reconstruct-denoiser-pretraining">Stage 1: mask, then reconstruct (denoiser pretraining)</a></li>
+  <li><a href="#stage-1-edit-then-score-self-supervised-pretraining" id="toc-stage-1-edit-then-score-self-supervised-pretraining" class="nav-link" data-scroll-target="#stage-1-edit-then-score-self-supervised-pretraining">Stage 1: edit, then score (self-supervised pretraining)</a></li>
   <li><a href="#stage-2-construct-reward-signal-self-supervised-scoring" id="toc-stage-2-construct-reward-signal-self-supervised-scoring" class="nav-link" data-scroll-target="#stage-2-construct-reward-signal-self-supervised-scoring">Stage 2: construct reward signal (self-supervised scoring)</a></li>
   <li><a href="#stage-3-train-a-reward-model-on-self-supervised-scores" id="toc-stage-3-train-a-reward-model-on-self-supervised-scores" class="nav-link" data-scroll-target="#stage-3-train-a-reward-model-on-self-supervised-scores">Stage 3: train a reward model on self-supervised scores</a></li>
   <li><a href="#stage-4-rl-fine-tuning-with-the-reward-model" id="toc-stage-4-rl-fine-tuning-with-the-reward-model" class="nav-link" data-scroll-target="#stage-4-rl-fine-tuning-with-the-reward-model">Stage 4: RL fine-tuning with the reward model</a></li>
   </ul></li>
-  <li><a href="#all-stages-operate-on-maskable-latents" id="toc-all-stages-operate-on-maskable-latents" class="nav-link" data-scroll-target="#all-stages-operate-on-maskable-latents">All stages operate on maskable latents</a></li>
+  <li><a href="#editor-to-modality-map" id="toc-editor-to-modality-map" class="nav-link" data-scroll-target="#editor-to-modality-map">Editor-to-modality map</a></li>
   <li><a href="#one-universal-metric-render-and-compare" id="toc-one-universal-metric-render-and-compare" class="nav-link" data-scroll-target="#one-universal-metric-render-and-compare">One universal metric: render-and-compare</a></li>
   <li><a href="#the-undivided-unit-1-speakingfaces-trial" id="toc-the-undivided-unit-1-speakingfaces-trial" class="nav-link" data-scroll-target="#the-undivided-unit-1-speakingfaces-trial">The undivided unit: 1 SpeakingFaces trial</a></li>
   <li><a href="#edits-are-frame-pairs-not-perturbations" id="toc-edits-are-frame-pairs-not-perturbations" class="nav-link" data-scroll-target="#edits-are-frame-pairs-not-perturbations">Edits are frame pairs, not perturbations</a></li>
@@ -356,13 +356,13 @@ ul.task-list li input[type="checkbox"] {
 <section id="the-maskscore-self-supervised-training-loop" class="level2">
 <h2 class="anchored" data-anchor-id="the-maskscore-self-supervised-training-loop">The MaskScore self-supervised training loop</h2>
 <p><strong>MaskScore</strong> is the codename for this technique: mask a region of a latent, reconstruct with the stage’s denoiser, decode to the output domain, score the decoded reconstruction against the decoded original. It parallels EditScore (which scores image edits via a VLM) but operates across all modalities and needs no human annotation, because the original asset IS the ground truth.</p>
-<section id="stage-1-mask-then-reconstruct-denoiser-pretraining" class="level3">
-<h3 class="anchored" data-anchor-id="stage-1-mask-then-reconstruct-denoiser-pretraining">Stage 1: mask, then reconstruct (denoiser pretraining)</h3>
-<p>This is how diffusion and flow-matching models are already trained. Take a clean latent, corrupt it (add noise or mask a region), predict the clean version back. Qwen3-Omni, Pixal3D, VoxHammer, and the talker are all trained this way. The training signal is reconstruction loss against the original. No labels.</p>
+<section id="stage-1-edit-then-score-self-supervised-pretraining" class="level3">
+<h3 class="anchored" data-anchor-id="stage-1-edit-then-score-self-supervised-pretraining">Stage 1: edit, then score (self-supervised pretraining)</h3>
+<p>Each model edits in its native way. Flow-matching models (OmniGen2, Pixal3D, VoxHammer, talker) noise a region and denoise. Qwen3-Omni edits text via instruction-following generation. The training signal is reconstruction loss against the original. No labels.</p>
 </section>
 <section id="stage-2-construct-reward-signal-self-supervised-scoring" class="level3">
 <h3 class="anchored" data-anchor-id="stage-2-construct-reward-signal-self-supervised-scoring">Stage 2: construct reward signal (self-supervised scoring)</h3>
-<p>Mask a region of a latent from a held asset. Reconstruct. Decode BOTH original and reconstruction to the output domain. Score on the decoded output via render-and-compare: render both through the ANNY mesh via Mitsuba 3 on <code>sphere_hammersley_sequence</code> views, then L1 on depth/normals, SSIM on normals, LPIPS on normals.</p>
+<p>Edit a region of an asset via the modality’s editor. Decode BOTH original and edit to the output domain. Score on the decoded output via render-and-compare: render both through the ANNY mesh via Mitsuba 3 on <code>sphere_hammersley_sequence</code> views, then L1 on depth/normals, SSIM on normals, LPIPS on normals.</p>
 <p>The original decoded output is the reference. No human annotator. The score is computable from the data alone.</p>
 </section>
 <section id="stage-3-train-a-reward-model-on-self-supervised-scores" class="level3">
@@ -372,71 +372,81 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="stage-4-rl-fine-tuning-with-the-reward-model" class="level3">
 <h3 class="anchored" data-anchor-id="stage-4-rl-fine-tuning-with-the-reward-model">Stage 4: RL fine-tuning with the reward model</h3>
-<p>Use the trained reward model as the reward signal for online RL (PPO, GRPO, or similar). The denoiser generates, the reward model scores, the policy updates. Same loop EditScore uses for OmniGen2. No human in the loop.</p>
+<p>Use the trained reward model as the reward signal for online RL (PPO, GRPO, or similar). The editor generates, the reward model scores, the policy updates. Same loop EditScore uses for OmniGen2. No human in the loop.</p>
 <p>The quality ceiling of this loop is bounded by the automated metrics in stage 2. A metric that lies (latent L2 instead of decoded perceptual distance) propagates through every stage. Scoring on the decoded output rather than in latent space is the guard: the decoded image, mesh, or waveform is what the user sees.</p>
 </section>
 </section>
-<section id="all-stages-operate-on-maskable-latents" class="level2">
-<h2 class="anchored" data-anchor-id="all-stages-operate-on-maskable-latents">All stages operate on maskable latents</h2>
-<p>Every stage in the pipeline is either a 1D token sequence or a 3D spatial grid, and the generation model is a flow-matching or diffusion denoiser that takes <code>(x, t, cond)</code>:</p>
+<section id="editor-to-modality-map" class="level2">
+<h2 class="anchored" data-anchor-id="editor-to-modality-map">Editor-to-modality map</h2>
+<p>Each modality has an editor that produces candidates and a decode path that reaches the ANNY mesh for scoring. Discriminative models (MoGe-3, ANNY) sit on the decode side; they do not edit.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 30%">
-<col style="width: 37%">
-<col style="width: 31%">
+<col style="width: 11%">
+<col style="width: 14%">
+<col style="width: 34%">
+<col style="width: 40%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>stage</th>
-<th>latent format</th>
-<th>mask operation</th>
+<th>modality</th>
+<th>editor</th>
+<th>mechanism</th>
+<th>decode path</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Qwen3-Omni text</td>
-<td><code>(B, seq)</code> token ids</td>
-<td>replace span with mask_id</td>
+<td>Image</td>
+<td>OmniGen2</td>
+<td>flow-matching on VAE latent</td>
+<td>decode to image</td>
 </tr>
 <tr class="even">
-<td>Qwen3-Omni image</td>
-<td><code>(B, C, H, W)</code> VAE latent</td>
-<td>noise a spatial patch</td>
+<td>Video</td>
+<td>OmniGen2</td>
+<td>flow-matching on VAE sequence</td>
+<td>decode to frame sequence</td>
 </tr>
 <tr class="odd">
-<td>Qwen3-Omni video</td>
-<td><code>(B, T, C, H, W)</code> temporal latent</td>
-<td>noise a temporal span</td>
+<td>Mesh</td>
+<td>Pixal3D</td>
+<td>flow-matching on SLATs</td>
+<td>decode to mesh</td>
 </tr>
 <tr class="even">
-<td>ANNY keypoints</td>
-<td><code>(B, N, 3)</code> landmark coords</td>
-<td>drop a landmark subset</td>
+<td>Depth</td>
+<td>Pixal3D</td>
+<td>flow-matching on SLATs</td>
+<td>mesh, render to depth via Mitsuba</td>
 </tr>
 <tr class="odd">
-<td>MoGe-3 depth</td>
-<td><code>(B, 1, H, W)</code> metric depth map</td>
-<td>noise a spatial patch</td>
+<td>Keypoints</td>
+<td>Pixal3D</td>
+<td>flow-matching on SLATs</td>
+<td>mesh, read surface vertices</td>
 </tr>
 <tr class="even">
-<td>Pixal3D sparse structure</td>
-<td><code>(B, C, R, R, R)</code> voxel grid</td>
-<td>noise a 3D subvolume</td>
+<td>Pose</td>
+<td>Pixal3D</td>
+<td>flow-matching on SLAT sequence</td>
+<td>mesh sequence, ANNY IK to bones</td>
 </tr>
 <tr class="odd">
-<td>VoxHammer structured latent</td>
-<td>SparseTensor (coords + feats)</td>
-<td>drop/noise a spatial region</td>
-</tr>
-<tr class="even">
+<td>Speech</td>
 <td>Talker</td>
-<td>speech token sequence</td>
-<td>replace span with mask token</td>
+<td>flow-matching vocoder</td>
+<td>decode to waveform</td>
+</tr>
+<tr class="even">
+<td>Text</td>
+<td>Qwen3-Omni</td>
+<td>autoregressive generation</td>
+<td>instruction-following edit</td>
 </tr>
 </tbody>
 </table>
-<p>The 3D latents are confirmed maskable: <code>SparseStructureFlowModel</code> asserts <code>x.shape == [B, C, R, R, R]</code> (line 177 of <code>sparse_structure_flow.py</code>), and <code>SLatFlowModel</code> operates on SparseTensors with the same <code>(x, t, cond)</code> interface.</p>
-<p>Scoring happens on the decoded output, not in latent space. The masking operates on latents (where the model works); the evaluation decodes once (the “stages pass latents; VAE decode happens once, at final output” constraint) and scores what the user would see.</p>
+<p>Pixal3D has three distinct latents: sparse structure <code>(B, C, R, R, R)</code>, shape SLAT (SparseTensor geometry), and texture SLAT (SparseTensor PBR). VoxHammer has two: sparse structure <code>(B, C, 16, 16, 16)</code> and a single unified SLAT. OmniGen2 uses the FLUX VAE with 16 channels, not 4.</p>
+<p>Scoring happens on the decoded output, not in latent space. The evaluation decodes once (the “stages pass latents; VAE decode happens once, at final output” constraint) and scores what the user would see.</p>
 </section>
 <section id="one-universal-metric-render-and-compare" class="level2">
 <h2 class="anchored" data-anchor-id="one-universal-metric-render-and-compare">One universal metric: render-and-compare</h2>

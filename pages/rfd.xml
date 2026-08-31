@@ -10,7 +10,7 @@
 <atom:link href="https://weftspun.github.io/request-for-discussion/pages/rfd.xml" rel="self" type="application/rss+xml"/>
 <description>Request-for-Discussion documents, the serial register, and the logbook.</description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Mon, 31 Aug 2026 17:24:31 GMT</lastBuildDate>
+<lastBuildDate>Mon, 31 Aug 2026 17:34:31 GMT</lastBuildDate>
 <item>
   <title>RFD 2139: MaskScore QAFT and extraction budget</title>
   <link>https://weftspun.github.io/request-for-discussion/rfd/2139-maskscore-qaft-budget/</link>
@@ -328,7 +328,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2139-maskscore-qaft-budget/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2138: interactor-shuttle merges spot-broker and uro</title>
@@ -362,7 +362,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2138-interactor-shuttle-merges-spot-broker-and-uro/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2137: RFD reports share one sheet</title>
@@ -400,7 +400,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2137-rfd-reports-share-one-sheet/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2136: The gacha critical path, as a ladder</title>
@@ -447,7 +447,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2136-the-gacha-critical-path/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2135: Checks run where the credentials already are</title>
@@ -482,7 +482,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2135-checks-run-where-the-credentials-already-are/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2134: Cluster TLS is decided before data, and certificates carry v3 extensions</title>
@@ -517,7 +517,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2134-cluster-tls-is-decided-before-data/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2133: The pool rents from the spot book, gated on requirements first</title>
@@ -552,7 +552,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2133-the-pool-rents-from-the-spot-book/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1173: A multimodal avatar pipeline</title>
@@ -593,7 +593,7 @@ scoring     MaskScore + EditScore      n/a           self-supervised reward</cod
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/1173-a-multimodal-diffusion-pipeline/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1172: A diffusion LM does not land on the NPU</title>
@@ -631,7 +631,7 @@ scoring     MaskScore + EditScore      n/a           self-supervised reward</cod
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/1172-a-diffusion-lm-does-not-land-on-the-npu/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1171: The presence loop, and every role in it</title>
@@ -672,7 +672,7 @@ be it   a person supplies motion  friend   a model supplies it</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/1171-the-presence-loop-and-every-role-in-it/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1170: A cleanroom presence loop, and which components swap</title>
@@ -715,7 +715,7 @@ three.js           MIT          Godot, with Mitsuba as oracle</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/1170-a-cleanroom-presence-loop/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1169: The audio tower for Qwen3-VL, and which half compiles</title>
@@ -751,7 +751,7 @@ three.js           MIT          Godot, with Mitsuba as oracle</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/1169-the-audio-tower-for-qwen3-vl/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1168: Segment the 3D latent with rf-detr, and treat masking as corruption</title>
@@ -788,7 +788,7 @@ three.js           MIT          Godot, with Mitsuba as oracle</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/1168-segmenting-the-3d-latent-with-rf-detr/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1167: The ladder, and which rung each model is on</title>
@@ -830,7 +830,7 @@ three.js           MIT          Godot, with Mitsuba as oracle</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/1167-the-ladder-and-where-each-model-stands/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1166: How the accelerator candidates were scored</title>
@@ -875,7 +875,7 @@ wanted     does anyone want the thing it does</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/1166-scoring-the-accelerator-candidates/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1165: Fine-tuning exhausts the desk card, and batch size is the lever</title>
@@ -914,7 +914,7 @@ try Quantization-Aware Fine-Tuning with lower batch size.</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/1165-finetuning-exhausts-the-desk-card/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1164: A calibration set is training data</title>
@@ -949,7 +949,7 @@ Epoch 1/4</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/1164-calibration-is-training-data/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1163: The flow rents a card, the accelerator stays on the desk</title>
@@ -985,7 +985,7 @@ Epoch 1/4</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/1163-the-accelerator-in-the-loops/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1162: VoxHammer holds no weights, so it inherits a placement</title>
@@ -1019,7 +1019,7 @@ Epoch 1/4</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/1162-voxhammer-zero-weights/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 <item>
   <title>RFD 1161: Kimodo is the smallest catalog model, and it is a decoder</title>
@@ -1053,7 +1053,7 @@ Epoch 1/4</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/1161-kimodo-edge-fit/</guid>
-  <pubDate>Mon, 31 Aug 2026 17:24:31 GMT</pubDate>
+  <pubDate>Mon, 31 Aug 2026 17:34:31 GMT</pubDate>
 </item>
 </channel>
 </rss>
