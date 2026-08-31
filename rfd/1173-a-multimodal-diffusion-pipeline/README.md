@@ -18,13 +18,13 @@ generation task reduces to an edit. One reward covers every modality.
 
 Qwen3-Omni for everything. 30B MoE (3B active), Apache 2.0,
 234ms first-packet latency, streaming talker with voice cloning.
-Handles text, image, audio, and video natively — constructs
-MaskScore data and serves the avatar demo with one model.
+Handles text, image, audio, and video natively, constructing
+MaskScore data and serving the avatar demo with one model.
 
     thinker     Qwen3-Omni thinker         Apache 2.0   text + image + audio + video
     talker      Qwen3-Omni talker          Apache 2.0   voice-cloning speech
     3D stage    Pixal3D → VoxHammer        Apache 2.0   image → mesh
-    scoring     MaskScore + EditScore      —             self-supervised reward
+    scoring     MaskScore + EditScore      n/a           self-supervised reward
 
 MaskScore constructs edit triples by masking, reconstructing, and
 scoring on decoded outputs. The reward model RL fine-tunes the

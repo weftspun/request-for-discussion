@@ -77,16 +77,16 @@ Every stage in the pipeline is either a 1D token sequence or a 3D
 spatial grid, and the generation model is a flow-matching or
 diffusion denoiser that takes `(x, t, cond)`:
 
-| stage | latent format | mask operation |
-|---|---|---|
-| Qwen3-Omni text | `(B, seq)` token ids | replace span with mask_id |
-| Qwen3-Omni image | `(B, C, H, W)` VAE latent | noise a spatial patch |
-| Qwen3-Omni video | `(B, T, C, H, W)` temporal latent | noise a temporal span |
-| ANNY keypoints | `(B, N, 3)` landmark coords | drop a landmark subset |
-| Thermal frame | `(B, C, H, W)` thermal latent | noise a spatial patch |
-| Pixal3D sparse structure | `(B, C, R, R, R)` voxel grid | noise a 3D subvolume |
-| VoxHammer structured latent | SparseTensor (coords + feats) | drop/noise a spatial region |
-| Talker | speech token sequence | replace span with mask token |
+| stage                       | latent format                     | mask operation               |
+| --------------------------- | --------------------------------- | ---------------------------- |
+| Qwen3-Omni text             | `(B, seq)` token ids              | replace span with mask_id    |
+| Qwen3-Omni image            | `(B, C, H, W)` VAE latent         | noise a spatial patch        |
+| Qwen3-Omni video            | `(B, T, C, H, W)` temporal latent | noise a temporal span        |
+| ANNY keypoints              | `(B, N, 3)` landmark coords       | drop a landmark subset       |
+| MoGe-3 depth                | `(B, 1, H, W)` metric depth map   | noise a spatial patch        |
+| Pixal3D sparse structure    | `(B, C, R, R, R)` voxel grid      | noise a 3D subvolume         |
+| VoxHammer structured latent | SparseTensor (coords + feats)     | drop/noise a spatial region  |
+| Talker                      | speech token sequence             | replace span with mask token |
 
 The 3D latents are confirmed maskable: `SparseStructureFlowModel`
 asserts `x.shape == [B, C, R, R, R]` (line 177 of
@@ -122,6 +122,7 @@ text-edit reward signal, the thinker's text output has no RL training
 signal and no automated quality gate.
 
 **Self-supervised construction:**
+
 1. Take a source text from held assets
 2. Encode to token ids
 3. Mask a span (vary position and length for task diversity)
@@ -137,15 +138,15 @@ annotation — the original text is the reference.
 
 **Format:**
 
-| column | type | description |
-|---|---|---|
-| key | string | unique identifier |
-| instruction | string | mask described as edit ("rephrase the second sentence") |
-| input_text | string | original text |
-| output_texts | list[string] | candidate reconstructions |
-| scores | list[float] | automated (preservation, edit_quality) |
-| task_type | string | one of: tone_change, grammar_fix, summarize, expand, rephrase, factual_correction, style_transfer |
-| dimension | string | one of: overall, instruction_following, fluency, preservation |
+| column       | type         | description                                                                                       |
+| ------------ | ------------ | ------------------------------------------------------------------------------------------------- |
+| key          | string       | unique identifier                                                                                 |
+| instruction  | string       | mask described as edit ("rephrase the second sentence")                                           |
+| input_text   | string       | original text                                                                                     |
+| output_texts | list[string] | candidate reconstructions                                                                         |
+| scores       | list[float]  | automated (preservation, edit_quality)                                                            |
+| task_type    | string       | one of: tone_change, grammar_fix, summarize, expand, rephrase, factual_correction, style_transfer |
+| dimension    | string       | one of: overall, instruction_following, fluency, preservation                                     |
 
 **Reward model (stage 3):** Qwen3-Omni scores (input_text, instruction,
 output_text) directly — the thinker IS the reward model for its own
@@ -159,6 +160,7 @@ Without a reward signal, mesh quality is manual inspection only and
 the 3D stage cannot participate in RL training.
 
 **Self-supervised construction:**
+
 1. Take a mesh from Objaverse (held, Apache 2.0 subset)
 2. Encode to voxel grid `(B, C, R, R, R)` via the sparse structure VAE
 3. Mask a 3D subvolume (vary position, size, shape)
@@ -178,16 +180,16 @@ No human annotation — the original mesh is the reference.
 
 **Format:**
 
-| column | type | description |
-|---|---|---|
-| key | string | unique identifier |
-| instruction | string | mask described as edit ("refine the hand region") |
-| input_mesh | string | path to input mesh (.glb) |
-| input_image | image | conditioning image (for image→mesh tasks) |
-| output_meshes | list[string] | paths to candidate meshes (.glb) |
-| scores | list[float] | automated (preservation, edit_quality) |
-| task_type | string | one of: image_to_mesh, mesh_refinement, part_edit, texture_transfer, pose_change |
-| dimension | string | one of: overall, geometric_fidelity, image_alignment, topology_quality, preservation |
+| column        | type         | description                                                                          |
+| ------------- | ------------ | ------------------------------------------------------------------------------------ |
+| key           | string       | unique identifier                                                                    |
+| instruction   | string       | mask described as edit ("refine the hand region")                                    |
+| input_mesh    | string       | path to input mesh (.glb)                                                            |
+| input_image   | image        | conditioning image (for image→mesh tasks)                                            |
+| output_meshes | list[string] | paths to candidate meshes (.glb)                                                     |
+| scores        | list[float]  | automated (preservation, edit_quality)                                               |
+| task_type     | string       | one of: image_to_mesh, mesh_refinement, part_edit, texture_transfer, pose_change     |
+| dimension     | string       | one of: overall, geometric_fidelity, image_alignment, topology_quality, preservation |
 
 **Reward model (stage 3):** Qwen3-Omni scores multi-view Mitsuba 3
 renders of (input mesh, output mesh, instruction) directly — it
@@ -202,6 +204,7 @@ cloning. Without a reward signal, the audio head cannot participate
 in RL training.
 
 **Self-supervised construction:**
+
 1. Take audio from held assets (license-clean speech corpora)
 2. Encode to speech token sequence
 3. Mask a time span (vary position, duration)
@@ -220,16 +223,16 @@ original waveform is the reference.
 
 **Format:**
 
-| column | type | description |
-|---|---|---|
-| key | string | unique identifier |
-| instruction | string | mask described as edit ("resynthesize from 2.0s to 3.5s") |
-| input_audio | string | path to input audio (.wav) |
-| reference_voice | string | path to voice reference (.wav) for cloning |
-| output_audios | list[string] | paths to candidate audio (.wav) |
-| scores | list[float] | automated (preservation, quality, identity) |
-| task_type | string | one of: tts_generation, voice_cloning, prosody_edit, speed_change, emotion_transfer, pronunciation_fix |
-| dimension | string | one of: overall, instruction_following, voice_identity, naturalness, preservation |
+| column          | type         | description                                                                                            |
+| --------------- | ------------ | ------------------------------------------------------------------------------------------------------ |
+| key             | string       | unique identifier                                                                                      |
+| instruction     | string       | mask described as edit ("resynthesize from 2.0s to 3.5s")                                              |
+| input_audio     | string       | path to input audio (.wav)                                                                             |
+| reference_voice | string       | path to voice reference (.wav) for cloning                                                             |
+| output_audios   | list[string] | paths to candidate audio (.wav)                                                                        |
+| scores          | list[float]  | automated (preservation, quality, identity)                                                            |
+| task_type       | string       | one of: tts_generation, voice_cloning, prosody_edit, speed_change, emotion_transfer, pronunciation_fix |
+| dimension       | string       | one of: overall, instruction_following, voice_identity, naturalness, preservation                      |
 
 **Reward model (stage 3):** Qwen3-Omni scores (input audio, instruction,
 output audio) directly — the thinker handles audio natively, so it
@@ -243,6 +246,7 @@ parallel. Edits cross modality boundaries. Within-modality scoring
 does not cover the seam.
 
 **Self-supervised construction:**
+
 1. Take a (text, image, mesh, audio) tuple from held assets
 2. Mask in one modality's latent space
 3. Reconstruct
@@ -257,17 +261,17 @@ paired assets provide the ground truth without annotation.
 
 **Format:**
 
-| column | type | description |
-|---|---|---|
-| key | string | unique identifier |
-| instruction | string | edit instruction |
-| input_modality | string | one of: text, image, mesh, audio |
-| output_modality | string | one of: text, image, mesh, audio |
-| input_data | varies | the input in its modality |
-| output_candidates | list[varies] | candidate outputs |
-| scores | list[float] | automated cross-modal alignment |
-| task_type | string | one of: text_to_image_edit, image_to_mesh_edit, text_to_speech_edit, mesh_to_image_edit |
-| dimension | string | one of: overall, cross_modal_fidelity, instruction_following, preservation |
+| column            | type         | description                                                                             |
+| ----------------- | ------------ | --------------------------------------------------------------------------------------- |
+| key               | string       | unique identifier                                                                       |
+| instruction       | string       | edit instruction                                                                        |
+| input_modality    | string       | one of: text, image, mesh, audio                                                        |
+| output_modality   | string       | one of: text, image, mesh, audio                                                        |
+| input_data        | varies       | the input in its modality                                                               |
+| output_candidates | list[varies] | candidate outputs                                                                       |
+| scores            | list[float]  | automated cross-modal alignment                                                         |
+| task_type         | string       | one of: text_to_image_edit, image_to_mesh_edit, text_to_speech_edit, mesh_to_image_edit |
+| dimension         | string       | one of: overall, cross_modal_fidelity, instruction_following, preservation              |
 
 **Source dataset: SpeakingFaces** (issai/Speaking_Faces, CC-BY-4.0,
 142 subjects, 13,000+ instances). Synchronized visual video
@@ -314,6 +318,7 @@ the fit step is unscored and the downstream 3D latent inherits any
 drift silently.
 
 **Self-supervised construction:**
+
 1. Fit ANNY canonical rig to a SpeakingFaces video frame → keypoints
 2. Represent as a structured sequence (landmark index, x, y, z, confidence)
 3. Mask a subset of landmarks (vary count, region — face, jaw, brow)
@@ -331,67 +336,75 @@ derived keypoints are constructed synthetic.
 
 **Format:**
 
-| column | type | description |
-|---|---|---|
-| key | string | unique identifier |
-| instruction | string | mask described as edit ("refit the jaw landmarks") |
-| input_keypoints | list[float] | ANNY landmark coordinates |
-| conditioning_image | string | path to source frame |
-| output_keypoints | list[list[float]] | candidate reconstructions |
-| scores | list[float] | automated (geometric_accuracy, reprojection_error) |
-| task_type | string | one of: expression_edit, micro_expression, pose_refit, landmark_interpolation, symmetry_correction |
-| dimension | string | one of: overall, geometric_fidelity, image_alignment, anatomical_plausibility |
+| column             | type              | description                                                                                        |
+| ------------------ | ----------------- | -------------------------------------------------------------------------------------------------- |
+| key                | string            | unique identifier                                                                                  |
+| instruction        | string            | mask described as edit ("refit the jaw landmarks")                                                 |
+| input_keypoints    | list[float]       | ANNY landmark coordinates                                                                          |
+| conditioning_image | string            | path to source frame                                                                               |
+| output_keypoints   | list[list[float]] | candidate reconstructions                                                                          |
+| scores             | list[float]       | automated (geometric_accuracy, reprojection_error)                                                 |
+| task_type          | string            | one of: expression_edit, micro_expression, pose_refit, landmark_interpolation, symmetry_correction |
+| dimension          | string            | one of: overall, geometric_fidelity, image_alignment, anatomical_plausibility                      |
 
 **Reward model (stage 3):** Qwen3-Omni scores (image, input keypoints,
 instruction, output keypoints) directly — the thinker sees the
 conditioning image and judges whether the reconstructed landmarks
 are anatomically plausible (OmniScore).
 
-## 6. ThermalEditReward-Bench
+## 6. DepthEditReward-Bench
 
-**Modality:** thermal→thermal and thermal↔visual edit
-**Status:** exploratory — the signal exists but the use is not yet known.
-**Why it exists:** SpeakingFaces provides synchronized thermal video
-(464×348) alongside visual video (768×512). Thermal captures heat
-distribution — a structural signal analogous to depth from the canonical
-ANNY fit: both encode face geometry through a physical quantity rather
-than appearance. The thermal→depth analogy suggests thermal could
-condition or validate the ANNY fit, but how is not yet decided.
-**Why it is stubbed rather than dropped:** the synchronized data is
-present and CC-BY-4.0. Recording the stub costs less than rediscovering
-the modality later if a use materialises.
+**Modality:** image→depth and depth→depth edit
+**Why required:** Two depth sources exist. MoGe-3 produces metric depth
+maps from single images (monocular estimation). The canonical ANNY mesh
+fitted to the same frame can be rendered to a depth buffer via Mitsuba 3
+(sphere_hammersley_sequence views), giving ground-truth depth from
+geometry rather than estimation. The Mitsuba-rendered depth is the
+reference; MoGe-3 depth is the fast single-image proxy. Scoring one
+against the other measures how well monocular depth tracks the geometry
+the rig already knows. Without a reward signal on depth quality,
+geometric consistency between the image and 3D stages is unscored.
 
 **Self-supervised construction:**
-1. Take a synchronized (visual, thermal) frame pair from SpeakingFaces
-2. Encode thermal frame to image latent
-3. Mask a spatial patch in the thermal latent
-4. Reconstruct
-5. Decode both to thermal images
-6. Score: LPIPS on unmasked region (preservation), SSIM on masked
-   region (reconstruction quality), cross-modal alignment against
-   the paired visual frame (domain consistency)
-7. Record (thermal latent, mask, reconstruction, scores)
 
-For thermal↔visual transfer: mask the thermal latent, condition on
-the visual frame, score the reconstruction against the original
-thermal. The synchronized pair IS the ground truth for domain transfer.
+1. Take a SpeakingFaces visual frame
+2. Fit ANNY canonical rig to the frame, render the fitted mesh to a
+   depth buffer via Mitsuba 3 (ground-truth depth from geometry)
+3. Run MoGe-3 on the same frame to produce a metric depth map
+   `(B, 1, H, W)` (estimated depth)
+4. Mask a spatial patch in the MoGe-3 depth map
+5. Reconstruct the masked region from the unmasked depth and the
+   conditioning image
+6. Decode both to depth maps
+7. Score: L1 on unmasked region (preservation), scale-invariant log
+   depth error on masked region against the Mitsuba-rendered ANNY
+   depth (geometric accuracy from ground truth), consistency against
+   the ANNY keypoint reprojection (cross-modal alignment)
+8. Record (MoGe-3 depth, ANNY depth, mask, reconstruction, scores)
+
+Mask region determines task_type: foreground face = face_depth_edit,
+background = scene_completion, occluded region = depth_inpaint.
+Both depth sources are deterministic from the input: MoGe-3 from
+the image, ANNY depth from the fit + Mitsuba render. Both are
+constructed synthetic.
 
 **Format:**
 
-| column | type | description |
-|---|---|---|
-| key | string | unique identifier |
-| instruction | string | mask described as edit ("reconstruct the forehead thermal region") |
-| input_thermal | string | path to input thermal frame |
-| paired_visual | string | path to synchronized visual frame |
-| output_thermals | list[string] | paths to candidate thermal frames |
-| scores | list[float] | automated (preservation, quality, cross_modal_alignment) |
-| task_type | string | one of: thermal_inpaint, thermal_to_visual, visual_to_thermal, thermal_enhancement, heat_region_edit |
-| dimension | string | one of: overall, thermal_fidelity, cross_modal_alignment, preservation |
+| column             | type         | description                                                                                        |
+| ------------------ | ------------ | -------------------------------------------------------------------------------------------------- |
+| key                | string       | unique identifier                                                                                  |
+| instruction        | string       | mask described as edit ("reconstruct the nose depth region")                                       |
+| input_depth        | string       | path to input depth map (.exr)                                                                     |
+| conditioning_image | string       | path to source visual frame                                                                        |
+| output_depths      | list[string] | paths to candidate depth maps (.exr)                                                               |
+| scores             | list[float]  | automated (preservation, geometric_accuracy, keypoint_alignment)                                   |
+| task_type          | string       | one of: face_depth_edit, scene_completion, depth_inpaint, depth_super_resolution, depth_refinement |
+| dimension          | string       | one of: overall, geometric_fidelity, image_alignment, keypoint_consistency                         |
 
-**Reward model (stage 3):** Qwen3-Omni scores (thermal frame, visual
-frame, instruction, output thermal) directly — the synchronized
-visual frame anchors the cross-modal score (OmniScore).
+**Reward model (stage 3):** Qwen3-Omni scores (image, input depth,
+instruction, output depth) directly, judging whether the reconstructed
+depth is geometrically consistent with the conditioning frame and the
+ANNY keypoints (OmniScore).
 
 ## 7. VideoEditReward-Bench
 
@@ -403,6 +416,7 @@ dimension is unscored — frame-level image scoring misses motion
 coherence, lip sync, and temporal consistency.
 
 **Self-supervised construction:**
+
 1. Take a SpeakingFaces video clip (converted to CineForm with aligned
    audio)
 2. Encode video frames to a temporal latent sequence
@@ -423,16 +437,16 @@ coherence are scored against the original audio track, not inferred.
 
 **Format:**
 
-| column | type | description |
-|---|---|---|
-| key | string | unique identifier |
-| instruction | string | mask described as edit ("interpolate frames 30–45") |
-| input_video | string | path to input video (CineForm .mov) |
-| aligned_audio | string | path to aligned audio (.wav) |
-| output_videos | list[string] | paths to candidate videos |
-| scores | list[float] | automated (preservation, temporal_coherence, lip_sync, motion) |
-| task_type | string | one of: frame_interpolation, video_inpaint, audio_driven_generation, speed_change, expression_transfer, temporal_super_resolution |
-| dimension | string | one of: overall, temporal_coherence, audio_visual_sync, motion_fidelity, preservation |
+| column        | type         | description                                                                                                                       |
+| ------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| key           | string       | unique identifier                                                                                                                 |
+| instruction   | string       | mask described as edit ("interpolate frames 30–45")                                                                               |
+| input_video   | string       | path to input video (CineForm .mov)                                                                                               |
+| aligned_audio | string       | path to aligned audio (.wav)                                                                                                      |
+| output_videos | list[string] | paths to candidate videos                                                                                                         |
+| scores        | list[float]  | automated (preservation, temporal_coherence, lip_sync, motion)                                                                    |
+| task_type     | string       | one of: frame_interpolation, video_inpaint, audio_driven_generation, speed_change, expression_transfer, temporal_super_resolution |
+| dimension     | string       | one of: overall, temporal_coherence, audio_visual_sync, motion_fidelity, preservation                                             |
 
 **Reward model (stage 3):** Qwen3-Omni scores (video clip, aligned
 audio, instruction, output video) directly — it handles video

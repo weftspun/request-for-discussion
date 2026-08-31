@@ -33,5 +33,5 @@ If diffusion text generation earns a place in this workspace, it runs on the
 
 ## References
 
-- Candidate table, sources, and the throughput numbers: `DETAILS.md`
-- The XDNA row in `BLOCKLIST.md` carries the standing toolchain argument.
+1. Candidate table, sources, and the throughput numbers: `DETAILS.md`
+2. The XDNA row in `BLOCKLIST.md` carries the standing toolchain argument.
