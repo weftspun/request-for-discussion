@@ -577,6 +577,10 @@ def Scope "Serials"
                 {
                     custom string slug = "openbao-on-foundationdb"
                 }
+                def "S2141"
+                {
+                    custom string slug = "fdb-tls-rotation-without-data-loss"
+                }
             }
         }
     }
