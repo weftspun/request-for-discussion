@@ -1,0 +1,85 @@
+---
+title: "The gacha critical path"
+subtitle: "PERT, working days, 2026-08-30"
+---
+
+Nine activities stand between the current pipeline and a public roll
+button. A pull is not a gacha item until its parts carry the
+See-Through taxonomy (VALID_BODY_PARTS_V3, 23 tags; RFD 1121 audited
+the canonical body against it). One chain sets the date:
+**skin-mode rigging → taxonomy transfer → assembly → pool → publish**,
+13.2 expected working days, sigma 1.7. The 10 absent attachment tags
+are wave 2 by RFD 1121's own route.
+
+## The network
+
+```{mermaid}
+flowchart LR
+  DONE["finished foundation:<br/>image→mesh · canonical body ·<br/>phenotype clips · MToon ·<br/>USD→Godot bake · judge · rig"]:::done
+  A["A · skin-mode rig<br/>4.7d ±1.3 — risk"]:::crit
+  H["H · hm08 partition<br/>4.3d ±1.0 · slack 0.4"]:::crit
+  I["I · taxonomy transfer<br/>3.2d ±0.8"]:::crit
+  B["B · UsdSkel writer<br/>2.2d ±0.5 · slack 1.0"]:::slack
+  C["C · bend gate<br/>2.2d ±0.5 · slack 3.0"]:::slack
+  D["D · seed→VRM<br/>2.0d ±0.3"]:::crit
+  E["E · pool ×50<br/>3090 + brokered 4090s<br/>2.2d ±0.5"]:::crit
+  F["F · cabinet page<br/>3.2d ±0.5 · slack 8.9"]:::slack
+  G["G · ship<br/>1.1d ±0.3"]:::crit
+
+  DONE --> A
+  DONE --> H
+  A --> I
+  H --> I
+  A --> B
+  A --> C
+  I --> D
+  B --> D
+  D --> E
+  C --> E
+  E --> G
+  F --> G
+
+  classDef crit stroke:#C03B21,stroke-width:2.5px;
+  classDef slack stroke:#5B7186,stroke-dasharray:6 5;
+  classDef done stroke:#46705C;
+```
+
+Red-bordered nodes are the critical path (A and H both start day
+zero; I waits for the later of them); dashed steel nodes carry their
+slack; the green node is finished work every activity builds on.
+
+## Estimates
+
+| Node | Activity | Depends on | O | M | P | t~e~ | σ | Slack |
+|---|---|---|--:|--:|--:|--:|--:|--:|
+| A | SkinTokens skin-mode against the canonical skeleton — only research risk | rig first light | 2 | 4 | 10 | 4.7 | 1.33 | 0 |
+| H | hm08 partition: 9 tags split from geometry, 5 proxies resolved (RFD 1121) | canonical body | 2 | 4 | 8 | 4.3 | 1.00 | 0.4 |
+| I | Taxonomy transfer: canonical partition onto each pull, per-vertex tag primvar | A, H | 1 | 3 | 6 | 3.2 | 0.83 | 0 |
+| B | UsdSkel writer; VRM humanoid map from ANNY's own bone names | A | 1 | 2 | 4 | 2.2 | 0.50 | 1.0 |
+| C | Bend gate: stress battery, EditScore triplets, planted-break control | A | 1 | 2 | 4 | 2.2 | 0.50 | 3.0 |
+| D | Seed-to-VRM assembly: one command, all stages | B, I | 1 | 2 | 3 | 2.0 | 0.33 | 0 |
+| E | Pool: ~50 pulls generated, gated, reproducible by seed | C, D | 1 | 2 | 4 | 2.2 | 0.50 | 0 |
+| F | Cabinet: Godot web export, roll button, viewer, download | — | 2 | 3 | 5 | 3.2 | 0.50 | 8.9 |
+| G | Ship: host, sponsor link, automation-disclosure page | E, F | 0.5 | 1 | 2 | 1.1 | 0.25 | 0 |
+
+Method: t~e~ = (O + 4M + P)/6, σ = (P−O)/6. Critical path A–I–D–E–G:
+**13.2d expected, σ 1.7** — the one-sigma finish window is day 11.5 to
+14.9. Decision rule: A and H start together; nothing else until one of
+them moves.
+
+## Ground laid since the last revision
+
+The spend infrastructure the pool leans on, live:
+
+- spot-broker on Fly: the one holder of the vast.ai key; zero-trust
+  6PN API, keeper at target zero (RFD 2133)
+- weftspun-fdb: 3 machines, double, mutual TLS; the broker's ledger
+  survived a machine replacement (RFD 2134)
+- continuous backup to Tigris, ~17s behind, with freshness and
+  roll-gate machine checks (RFD 2135)
+
+Blocked on the operator:
+
+- vast.ai key rejected (401): E can hold the desk 3090 but cannot rent
+  until `fly secrets set VAST_API_KEY` gets a valid key
+- Uro holds no broker token yet — nothing can ask for a machine

@@ -9,7 +9,7 @@ scope: "the gacha demo; page.html beside this file is the report"
 Nine activities stand between the current pipeline and a public roll
 button. One chain sets the date: skin-mode rigging, taxonomy transfer,
 assembly, pool, publish, at 13.2 expected working days with sigma 1.7.
-`page.html` beside this file carries the network on a time axis, the
+`page.qmd` beside this file carries the network on a time axis, the
 O/M/P estimate table, and the slack on every non-critical edge; its
 decision rule is that A (skin-mode rig, the only research risk) and H
 (hm08 partition) start together at day zero and nothing else starts
