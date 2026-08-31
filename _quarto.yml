@@ -46,8 +46,8 @@ format:
   html:
     toc: true
     theme:
-      light: flatly
-      dark: darkly
+      light: [flatly, rfd-sheet.scss]
+      dark: [darkly, rfd-sheet.scss]
     code-copy: true
 
 freeze: true
