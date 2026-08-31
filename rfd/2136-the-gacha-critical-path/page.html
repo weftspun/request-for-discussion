@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>The gacha critical path – Taskweft — Manuals</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f36f388c175c695e587c9d92b6af4f92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Taskweft — Manuals</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/rfd.html"> 
+<span class="menu-text">RFDs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/serials.html"> 
+<span class="menu-text">Serials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/logbook.html"> 
+<span class="menu-text">Logbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/agreements.html"> 
+<span class="menu-text">Working agreements</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-network" id="toc-the-network" class="nav-link active" data-scroll-target="#the-network">The network</a></li>
+  <li><a href="#estimates" id="toc-estimates" class="nav-link" data-scroll-target="#estimates">Estimates</a></li>
+  <li><a href="#ground-laid-since-the-last-revision" id="toc-ground-laid-since-the-last-revision" class="nav-link" data-scroll-target="#ground-laid-since-the-last-revision">Ground laid since the last revision</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2136-the-gacha-critical-path/page.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2136-the-gacha-critical-path/page.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">The gacha critical path</h1>
+<p class="subtitle lead">PERT, working days, 2026-08-30</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Nine activities stand between the current pipeline and a public roll button. A pull is not a gacha item until its parts carry the See-Through taxonomy (VALID_BODY_PARTS_V3, 23 tags; RFD 1121 audited the canonical body against it). One chain sets the date: <strong>skin-mode rigging → taxonomy transfer → assembly → pool → publish</strong>, 13.2 expected working days, sigma 1.7. The 10 absent attachment tags are wave 2 by RFD 1121’s own route.</p>
+<section id="the-network" class="level2">
+<h2 class="anchored" data-anchor-id="the-network">The network</h2>
+<div style="overflow-x:auto">
+<svg viewbox="0 0 1160 500" role="img" aria-label="PERT network: activity A skin-mode rigging and activity H taxonomy partition run in parallel from day zero; both feed I taxonomy transfer, which starts the critical path A, I, D, E, G totalling 13.2 days; B UsdSkel writer now has 1.0 day of slack, the bend gate C 3.0, and the cabinet page F 8.9.">
+</svg><p><defs> <marker id="ar" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"> <path d="M0,0 L10,5 L0,10 z" fill="currentColor"> </path></marker> <marker id="arc" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"> <path d="M0,0 L10,5 L0,10 z" fill="var(--rfd-critical)"> </path></marker> <marker id="ars" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"> <path d="M0,0 L10,5 L0,10 z" fill="var(--rfd-steel)"> </path></marker> </defs></p>
+<p><g stroke="var(--rfd-grid)" stroke-width="1"> <line x1="150" y1="34" x2="150" y2="430"> <line x1="282" y1="34" x2="282" y2="430"> <line x1="414" y1="34" x2="414" y2="430"> <line x1="546" y1="34" x2="546" y2="430"> <line x1="678" y1="34" x2="678" y2="430"> <line x1="810" y1="34" x2="810" y2="430"> <line x1="942" y1="34" x2="942" y2="430"> <line x1="1074" y1="34" x2="1074" y2="430"> </line></line></line></line></line></line></line></line></g> <g font-size="11" fill="var(--rfd-ink-soft)" font-family="IBM Plex Mono, monospace" text-anchor="middle"> <text x="150" y="450">day 0</text> <text x="282" y="450">2</text> <text x="414" y="450">4</text> <text x="546" y="450">6</text> <text x="678" y="450">8</text> <text x="810" y="450">10</text> <text x="942" y="450">12</text> <text x="1074" y="450">14</text> </g></p>
+<p><rect x="909" y="34" width="224" height="396" fill="var(--rfd-band)"> <text x="1016" y="50" font-size="11" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace" text-anchor="middle">finish 68%: d11.5–14.9</text></rect></p>
+<p><g font-size="11" font-family="Libre Franklin, sans-serif"> <rect x="10" y="140" width="126" height="158" rx="2" fill="none" stroke="var(--rfd-done)" stroke-width="1.5"> <text x="73" y="132" text-anchor="middle" fill="var(--rfd-done)" font-weight="600" letter-spacing="1">DONE</text> <text x="20" y="162" fill="var(--rfd-done)">image → mesh</text> <text x="20" y="181" fill="var(--rfd-done)">canonical body</text> <text x="20" y="200" fill="var(--rfd-done)">phenotype clips</text> <text x="20" y="219" fill="var(--rfd-done)">MToon materials</text> <text x="20" y="238" fill="var(--rfd-done)">USD→Godot bake</text> <text x="20" y="257" fill="var(--rfd-done)">variation + judge</text> <text x="20" y="276" fill="var(--rfd-done)">rig first light</text> </rect></g> <line x1="136" y1="200" x2="146" y2="200" stroke="var(--rfd-done)" stroke-width="2" marker-end="url(#ar)" color="var(--rfd-done)"></line></p>
+<p><g stroke="var(--rfd-critical)" stroke-width="3" fill="none"> <line x1="308" y1="200" x2="452" y2="200" marker-end="url(#arc)"> <line x1="616" y1="200" x2="666" y2="200" marker-end="url(#arc)"> <line x1="816" y1="200" x2="836" y2="200" marker-end="url(#arc)"> <line x1="984" y1="200" x2="1006" y2="200" marker-end="url(#arc)"> </line></line></line></line></g></p>
+<p><path d="M 302 90 C 390 90, 430 130, 450 170" stroke="var(--rfd-critical)" stroke-width="2.5" fill="none" marker-end="url(#arc)"></path></p>
+<p><g stroke="var(--rfd-steel)" stroke-width="2" stroke-dasharray="6 5" fill="none"> <path d="M 308 182 C 380 110, 420 96, 460 90" marker-end="url(#ars)"> <path d="M 614 90 C 660 96, 660 140, 664 176" marker-end="url(#ars)"> <path d="M 308 214 C 380 300, 420 336, 470 344" marker-end="url(#ars)"> <path d="M 626 348 C 710 348, 790 260, 838 226" marker-end="url(#ars)"> <path d="M 146 396 L 640 396" marker-end="url(#ars)"> <path d="M 796 396 C 900 396, 970 280, 1006 220" marker-end="url(#ars)"> </path></path></path></path></path></path></g> <text x="486" y="332" font-size="11" fill="var(--rfd-steel)" font-family="IBM Plex Mono, monospace">slack 3.0d</text> <text x="380" y="388" font-size="11" fill="var(--rfd-steel)" font-family="IBM Plex Mono, monospace">start anytime · slack 8.9d</text> <text x="630" y="80" font-size="11" fill="var(--rfd-steel)" font-family="IBM Plex Mono, monospace">slack 1.0d</text></p>
+<g font-family="Libre Franklin, sans-serif"> <g> <rect x="150" y="58" width="152" height="64" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"> <text x="162" y="78" font-size="12" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">H</text> <text x="180" y="78" font-size="12.5" font-weight="600" fill="var(--ink)">hm08 partition</text> <text x="162" y="96" font-size="11" fill="var(--rfd-ink-soft)">9+5 tags from geometry</text> <text x="162" y="113" font-size="11.5" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">4.3d ±1.0 · slack 0.4</text> </rect></g> <g> <rect x="150" y="168" width="156" height="64" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2.5"> <text x="162" y="188" font-size="12" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">A</text> <text x="180" y="188" font-size="12.5" font-weight="600" fill="var(--ink)">skin-mode rig</text> <text x="162" y="206" font-size="11" fill="var(--rfd-ink-soft)">vs canonical skeleton</text> <text x="162" y="223" font-size="11.5" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">4.7d ±1.3 — risk</text> </rect></g> <g> <rect x="454" y="168" width="160" height="64" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2.5"> <text x="466" y="188" font-size="12" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">I</text> <text x="484" y="188" font-size="12.5" font-weight="600" fill="var(--ink)">taxonomy transfer</text> <text x="466" y="206" font-size="11" fill="var(--rfd-ink-soft)">canonical → pull, primvar</text> <text x="466" y="223" font-size="11.5" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">3.2d ±0.8</text> </rect></g> <g> <rect x="464" y="58" width="150" height="64" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-steel)" stroke-width="1.5"> <text x="476" y="78" font-size="12" font-weight="800" fill="var(--rfd-steel)" font-family="IBM Plex Mono, monospace">B</text> <text x="494" y="78" font-size="12.5" font-weight="600" fill="var(--ink)">UsdSkel writer</text> <text x="476" y="96" font-size="11" fill="var(--rfd-ink-soft)">VRM map from ANNY names</text> <text x="476" y="113" font-size="11.5" fill="var(--rfd-steel)" font-family="IBM Plex Mono, monospace">2.2d ±0.5</text> </rect></g> <g> <rect x="476" y="316" width="150" height="64" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-steel)" stroke-width="1.5"> <text x="488" y="336" font-size="12" font-weight="800" fill="var(--rfd-steel)" font-family="IBM Plex Mono, monospace">C</text> <text x="506" y="336" font-size="12.5" font-weight="600" fill="var(--ink)">bend gate</text> <text x="488" y="354" font-size="11" fill="var(--rfd-ink-soft)">EditScore + controls</text> <text x="488" y="371" font-size="11.5" fill="var(--rfd-steel)" font-family="IBM Plex Mono, monospace">2.2d ±0.5</text> </rect></g> <g> <rect x="668" y="168" width="146" height="64" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2.5"> <text x="680" y="188" font-size="12" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">D</text> <text x="698" y="188" font-size="12.5" font-weight="600" fill="var(--ink)">seed → VRM</text> <text x="680" y="206" font-size="11" fill="var(--rfd-ink-soft)">one-command assembly</text> <text x="680" y="223" font-size="11.5" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">2.0d ±0.3</text> </rect></g> <g> <rect x="838" y="168" width="144" height="64" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2.5"> <text x="850" y="188" font-size="12" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">E</text> <text x="868" y="188" font-size="12.5" font-weight="600" fill="var(--ink)">pool ×50</text> <text x="850" y="206" font-size="11" fill="var(--rfd-ink-soft)">3090 + brokered 4090s</text> <text x="850" y="223" font-size="11.5" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">2.2d ±0.5</text> </rect></g> <g> <rect x="642" y="364" width="152" height="64" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-steel)" stroke-width="1.5"> <text x="654" y="384" font-size="12" font-weight="800" fill="var(--rfd-steel)" font-family="IBM Plex Mono, monospace">F</text> <text x="672" y="384" font-size="12.5" font-weight="600" fill="var(--ink)">cabinet page</text> <text x="654" y="402" font-size="11" fill="var(--rfd-ink-soft)">Godot web + roll UI</text> <text x="654" y="419" font-size="11.5" fill="var(--rfd-steel)" font-family="IBM Plex Mono, monospace">3.2d ±0.5</text> </rect></g> <g> <rect x="1008" y="168" width="80" height="64" rx="2" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2.5"> <text x="1020" y="188" font-size="12" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">G</text> <text x="1038" y="188" font-size="12.5" font-weight="600" fill="var(--ink)">ship</text> <text x="1020" y="206" font-size="11" fill="var(--rfd-ink-soft)">URL live</text> <text x="1020" y="223" font-size="11.5" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">1.1d ±0.3</text> </rect></g> </g>
+
+</div>
+<p>Activity-on-node network on a time axis. Red is the critical path (A and H both start day zero; I waits for the later of them); dashed steel edges are non-critical with their slack; the shaded band is the one-sigma finish window; the green rail is finished work every activity builds on.</p>
+</section>
+<section id="estimates" class="level2">
+<h2 class="anchored" data-anchor-id="estimates">Estimates</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Node</th>
+<th>Activity</th>
+<th>Depends on</th>
+<th style="text-align: right;">O</th>
+<th style="text-align: right;">M</th>
+<th style="text-align: right;">P</th>
+<th style="text-align: right;">t<sub>e</sub></th>
+<th style="text-align: right;">σ</th>
+<th style="text-align: right;">Slack</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>SkinTokens skin-mode against the canonical skeleton — only research risk</td>
+<td>rig first light</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">1.33</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>H</td>
+<td>hm08 partition: 9 tags split from geometry, 5 proxies resolved (RFD 1121)</td>
+<td>canonical body</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="odd">
+<td>I</td>
+<td>Taxonomy transfer: canonical partition onto each pull, per-vertex tag primvar</td>
+<td>A, H</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">3.2</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>UsdSkel writer; VRM humanoid map from ANNY’s own bone names</td>
+<td>A</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>Bend gate: stress battery, EditScore triplets, planted-break control</td>
+<td>A</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">3.0</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>Seed-to-VRM assembly: one command, all stages</td>
+<td>B, I</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">0.33</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td>E</td>
+<td>Pool: ~50 pulls generated, gated, reproducible by seed</td>
+<td>C, D</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>F</td>
+<td>Cabinet: Godot web export, roll button, viewer, download</td>
+<td>—</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3.2</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">8.9</td>
+</tr>
+<tr class="odd">
+<td>G</td>
+<td>Ship: host, sponsor link, automation-disclosure page</td>
+<td>E, F</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.1</td>
+<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p>Method: t<sub>e</sub> = (O + 4M + P)/6, σ = (P−O)/6. Critical path A–I–D–E–G: <strong>13.2d expected, σ 1.7</strong> — the one-sigma finish window is day 11.5 to 14.9. Decision rule: A and H start together; nothing else until one of them moves.</p>
+</section>
+<section id="ground-laid-since-the-last-revision" class="level2">
+<h2 class="anchored" data-anchor-id="ground-laid-since-the-last-revision">Ground laid since the last revision</h2>
+<p>The spend infrastructure the pool leans on, live:</p>
+<ul>
+<li>spot-broker on Fly: the one holder of the vast.ai key; zero-trust 6PN API, keeper at target zero (RFD 2133)</li>
+<li>weftspun-fdb: 3 machines, double, mutual TLS; the broker’s ledger survived a machine replacement (RFD 2134)</li>
+<li>continuous backup to Tigris, ~17s behind, with freshness and roll-gate machine checks (RFD 2135)</li>
+</ul>
+<p>Blocked on the operator:</p>
+<ul>
+<li>vast.ai key rejected (401): E can hold the desk 3090 but cannot rent until <code>fly secrets set VAST_API_KEY</code> gets a valid key</li>
+<li>Uro holds no broker token yet — nothing can ask for a machine</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/weftspun\.github\.io\/request-for-discussion");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Serials are OID arcs under the 66606 PEN and are never reused.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2136-the-gacha-critical-path/page.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2136-the-gacha-critical-path/page.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/weftspun/request-for-discussion">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
