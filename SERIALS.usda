@@ -681,6 +681,10 @@ def Scope "Serials"
                 {
                     custom string slug = "the-presence-loop-and-every-role-in-it"
                 }
+                def "S1172"
+                {
+                    custom string slug = "a-diffusion-lm-does-not-land-on-the-npu"
+                }
             }
         }
 
