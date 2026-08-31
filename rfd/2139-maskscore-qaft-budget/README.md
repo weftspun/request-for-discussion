@@ -15,8 +15,7 @@ precision.
 ## Decision
 
 QAFT all seven pipeline models to NF4. Fork each upstream model
-on HF. Cache pipeline latents in a satellite table for
-pretraining.
+on HF.
 
 ### Architecture: forked base with QAFT checkpoint
 
@@ -59,21 +58,6 @@ Each rung proves the next is worth building.
 | 3    | 390    | ~3120  | same             | ~6 hr      | ~$9       | usable bench set                     |
 | 4    | 12k    | ~97k   | 9x RTX 3090      | ~8 hr      | ~$14      | reward-train complete                |
 | 5    | 14k    | ~210k  | 18x RTX 3090     | ~8 hr      | ~$29      | all three datasets complete          |
-
-### Cached latent satellite
-
-The main dataset tuple stays (face_image, depth, keypoints, pose,
-waveform). A satellite table caches the pipeline latents per ETNF
-(derivable columns go in their own relation):
-
-    maskscore_latents/
-      pixal3d_slat.parquet
-      omnigen2_latent.parquet
-      qwen3_embed.parquet
-
-Each satellite records the QAFT base version that produced it.
-The latents support pretraining the reward model before RL,
-where recomputing them on every batch is wasteful.
 
 ### Cost summary
 
