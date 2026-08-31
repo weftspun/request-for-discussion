@@ -109,6 +109,21 @@ def render(root, write=True):
     return made, stale
 
 
+AGREEMENTS = [
+    "## Working agreements", '',
+    "The standing constraints for every project in this workspace live in",
+    "`CLAUDE.md` at the repository root, which reaches the workspace root",
+    "through a `linkfile` in `default.xml` rather than a second copy.", '',
+    "They are not rendered into this site. The file is read by an agent at",
+    "the top of every session, and a published copy would be a second home",
+    "for a document whose whole point is having one -- the same failure the",
+    "serial register was built against.", '',
+    "- [Working agreements](https://github.com/weftspun/request-for-discussion/blob/main/CLAUDE.md)",
+    "- [Blocklist, with the argument behind each row](https://github.com/weftspun/request-for-discussion/blob/main/BLOCKLIST.md)",
+    "- [Recurring failure modes and the guards that catch them](https://github.com/weftspun/request-for-discussion/blob/main/PITFALLS.md)",
+]
+
+
 def serials_page(root):
     """The register as a table, read with the gate's own parser rather than a second one."""
     import importlib.util
@@ -126,7 +141,8 @@ def serials_page(root):
             out.append("| `%s` | %s | %s | %s |" % (urn, serial, t[serial], note))
         return out
 
-    lines = ['---', 'title: "Serials"', 'toc: true', '---', '', GENERATED, '',
+    lines = ['---', 'title: "Register"', 'toc: true', '---', '', GENERATED, '',
+             '## Serials', '',
              "Every serial this site has allocated and every one it has retired.",
              "A serial is appended once. It is never removed and never reused,",
              "because it is the last arc of an OID and an arc names one document",
@@ -143,7 +159,8 @@ def serials_page(root):
                   "| OID (urn:oid:) | Serial | Slug | State |",
                   "| --- | --- | --- | --- |"]
         lines += rows(allocated, "allocated", fname) + rows(deleted, "deleted", fname) + ['']
-    lines += ["%d allocated, %d retired." % (total_a, total_d)]
+    lines += ["%d allocated, %d retired." % (total_a, total_d), '']
+    lines += AGREEMENTS
     return "\n".join(lines) + "\n"
 
 

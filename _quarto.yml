@@ -30,12 +30,10 @@ website:
     left:
       - text: "RFDs"
         file: pages/rfd.qmd
-      - text: "Serials"
-        file: pages/serials.md
       - text: "Logbook"
         file: pages/logbook.qmd
-      - text: "Working agreements"
-        file: pages/agreements.qmd
+      - text: "Register"
+        file: pages/serials.md
   page-footer:
     left: "Serials are OID arcs under the 66606 PEN and are never reused."
     right:
