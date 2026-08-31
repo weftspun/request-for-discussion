@@ -685,6 +685,10 @@ def Scope "Serials"
                 {
                     custom string slug = "a-diffusion-lm-does-not-land-on-the-npu"
                 }
+                def "S1173"
+                {
+                    custom string slug = "a-multimodal-diffusion-pipeline"
+                }
             }
         }
 
