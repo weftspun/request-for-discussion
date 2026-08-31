@@ -1341,6 +1341,22 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#decision-167" id="toc-decision-167" class="nav-link" data-scroll-target="#decision-167">Decision</a></li>
   <li><a href="#operator-questions-and-verification" id="toc-operator-questions-and-verification" class="nav-link" data-scroll-target="#operator-questions-and-verification">Operator questions and verification</a></li>
   </ul></li>
+  <li><a href="#rfd-2139-maskscore-qaft-and-extraction-budget" id="toc-rfd-2139-maskscore-qaft-and-extraction-budget" class="nav-link" data-scroll-target="#rfd-2139-maskscore-qaft-and-extraction-budget">RFD 2139: MaskScore QAFT and extraction budget</a>
+  <ul class="collapse">
+  <li><a href="#problem-166" id="toc-problem-166" class="nav-link" data-scroll-target="#problem-166">Problem</a></li>
+  <li><a href="#decision-168" id="toc-decision-168" class="nav-link" data-scroll-target="#decision-168">Decision</a>
+  <ul class="collapse">
+  <li><a href="#architecture-forked-base-with-qaft-checkpoint" id="toc-architecture-forked-base-with-qaft-checkpoint" class="nav-link" data-scroll-target="#architecture-forked-base-with-qaft-checkpoint">Architecture: forked base with QAFT checkpoint</a></li>
+  <li><a href="#models-to-qaft" id="toc-models-to-qaft" class="nav-link" data-scroll-target="#models-to-qaft">Models to QAFT</a></li>
+  <li><a href="#extraction-ladder-galls-law" id="toc-extraction-ladder-galls-law" class="nav-link" data-scroll-target="#extraction-ladder-galls-law">Extraction ladder (Gall’s Law)</a></li>
+  <li><a href="#cached-latent-satellite" id="toc-cached-latent-satellite" class="nav-link" data-scroll-target="#cached-latent-satellite">Cached latent satellite</a></li>
+  <li><a href="#cost-summary" id="toc-cost-summary" class="nav-link" data-scroll-target="#cost-summary">Cost summary</a></li>
+  <li><a href="#vast.ai-tear-down-discipline" id="toc-vast.ai-tear-down-discipline" class="nav-link" data-scroll-target="#vast.ai-tear-down-discipline">Vast.ai tear-down discipline</a></li>
+  <li><a href="#hf-artifacts" id="toc-hf-artifacts" class="nav-link" data-scroll-target="#hf-artifacts">HF artifacts</a></li>
+  <li><a href="#what-is-not-in-this-budget" id="toc-what-is-not-in-this-budget" class="nav-link" data-scroll-target="#what-is-not-in-this-budget">What is NOT in this budget</a></li>
+  </ul></li>
+  <li><a href="#related-159" id="toc-related-159" class="nav-link" data-scroll-target="#related-159">Related</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -4955,6 +4971,322 @@ scoring     MaskScore + EditScore      n/a           self-supervised reward</cod
 <section id="operator-questions-and-verification" class="level2">
 <h2 class="anchored" data-anchor-id="operator-questions-and-verification">Operator questions and verification</h2>
 <p>Org: recommend <code>v-sekai-fabric</code> since the V-Sekai user record is the load-bearing state, though uro lives at <code>v-sekai/uro</code> and spot-broker at <code>weftspun/spot-broker</code>. Cutover: land the code merge with both old services running, then keep spot-broker’s Fly app alive one week so pinned callers see 410 Gone rather than timeouts. Done when one Fly app serves both the landing and the GPU spend API, one GitHub OAuth app authenticates both, one deploy pipeline builds one release image, and the predecessor RFDs are not backfilled. Move-cost inventory in DETAILS.md.</p>
+</section>
+</section>
+<section id="rfd-2139-maskscore-qaft-and-extraction-budget" class="level1">
+<h1>RFD 2139: MaskScore QAFT and extraction budget</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2139</code></p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> QAFT quantization and dataset extraction for MaskScore <strong>Scope:</strong> Qwen3-Omni, OmniGen2, Pixal3D, VoxHammer, MoGe-3, Vast.ai budget</p>
+<section id="problem-166" class="level2">
+<h2 class="anchored" data-anchor-id="problem-166">Problem</h2>
+<p>The MaskScore extraction pipeline (RFD 1173) needs seven models co-resident on GPU. At published precision (bf16), VoxHammer alone requires 40 GB. QAFT to NF4 is required before extraction can begin. Condition 5 permits this: QAFT makes NF4 the published precision.</p>
+</section>
+<section id="decision-168" class="level2">
+<h2 class="anchored" data-anchor-id="decision-168">Decision</h2>
+<p>QAFT all seven pipeline models to NF4. Fork each upstream model on HF. Cache pipeline latents in a satellite table for pretraining.</p>
+<section id="architecture-forked-base-with-qaft-checkpoint" class="level3">
+<h3 class="anchored" data-anchor-id="architecture-forked-base-with-qaft-checkpoint">Architecture: forked base with QAFT checkpoint</h3>
+<p>Each upstream model is forked to chibifire/ on HF. The fork stores:</p>
+<ol type="1">
+<li>the original bf16 weights (upstream copy, for provenance)</li>
+<li>the QAFT’d NF4 checkpoint (merged, the working base)</li>
+<li>future adaptations as LoRAs on the NF4 base</li>
+</ol>
+<p>QAFT produces a merged NF4 checkpoint, not a LoRA. The NF4 checkpoint is the new base. Only post-QAFT work (RL, domain adaptation) is stored as LoRA adapters against it.</p>
+</section>
+<section id="models-to-qaft" class="level3">
+<h3 class="anchored" data-anchor-id="models-to-qaft">Models to QAFT</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 11%">
+<col style="width: 14%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>model</th>
+<th>params</th>
+<th>bf16</th>
+<th>NF4 est.</th>
+<th>where</th>
+<th>HF fork</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Qwen3-Omni thinker (30B MoE)</td>
+<td>~30B</td>
+<td>~30 GB</td>
+<td>~9.3 GB</td>
+<td>Vast.ai A100</td>
+<td>chibifire/qwen3-omni</td>
+</tr>
+<tr class="even">
+<td>Qwen3-Omni talker</td>
+<td>~10B</td>
+<td>~10 GB</td>
+<td>~2.5 GB</td>
+<td>Vast.ai A100</td>
+<td>(same repo)</td>
+</tr>
+<tr class="odd">
+<td>OmniGen2</td>
+<td>~5B</td>
+<td>~10 GB</td>
+<td>~3.1 GB</td>
+<td>Vast.ai A100</td>
+<td>chibifire/omnigen2</td>
+</tr>
+<tr class="even">
+<td>Pixal3D (8 subs)</td>
+<td>~4B</td>
+<td>~8 GB</td>
+<td>~2.5 GB</td>
+<td>Vast.ai A100</td>
+<td>chibifire/pixal3d</td>
+</tr>
+<tr class="odd">
+<td>VoxHammer</td>
+<td>TBD</td>
+<td>40 GB+</td>
+<td>TBD</td>
+<td>Vast.ai A100</td>
+<td>chibifire/voxhammer</td>
+</tr>
+<tr class="even">
+<td>MoGe-3 (ViT-L)</td>
+<td>~300M</td>
+<td>~600 MB</td>
+<td>~190 MB</td>
+<td>local Mac</td>
+<td>chibifire/moge3</td>
+</tr>
+<tr class="odd">
+<td>ANNY inverter</td>
+<td>small</td>
+<td>small</td>
+<td>skip</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+</tbody>
+</table>
+<p>ANNY is a small vertex correspondence fitter; Mitsuba 3 is a physics-based renderer. Neither needs QAFT.</p>
+</section>
+<section id="extraction-ladder-galls-law" class="level3">
+<h3 class="anchored" data-anchor-id="extraction-ladder-galls-law">Extraction ladder (Gall’s Law)</h3>
+<p>Each rung proves the next is worth building.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 17%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>rung</th>
+<th>trials</th>
+<th>rows</th>
+<th>GPUs</th>
+<th>est. hours</th>
+<th>est. cost</th>
+<th>proves</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>-1</td>
+<td>0</td>
+<td>0</td>
+<td>1x A100 80GB</td>
+<td>~8</td>
+<td>~$12</td>
+<td>QAFT all models to NF4</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>8</td>
+<td>1x A100</td>
+<td>minutes</td>
+<td>~$0.03</td>
+<td>extraction script runs, 8 stubs emit</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>13</td>
+<td>~104</td>
+<td>same</td>
+<td>~15 min</td>
+<td>~$0.38</td>
+<td>all 13 task types construct</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>130</td>
+<td>~1040</td>
+<td>same</td>
+<td>~2 hr</td>
+<td>~$3</td>
+<td>scoring separates good from bad</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>390</td>
+<td>~3120</td>
+<td>same</td>
+<td>~6 hr</td>
+<td>~$9</td>
+<td>usable bench set</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>12k</td>
+<td>~97k</td>
+<td>9x RTX 3090</td>
+<td>~8 hr</td>
+<td>~$14</td>
+<td>reward-train complete</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>14k</td>
+<td>~210k</td>
+<td>18x RTX 3090</td>
+<td>~8 hr</td>
+<td>~$29</td>
+<td>all three datasets complete</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="cached-latent-satellite" class="level3">
+<h3 class="anchored" data-anchor-id="cached-latent-satellite">Cached latent satellite</h3>
+<p>The main dataset tuple stays (face_image, depth, keypoints, pose, waveform). A satellite table caches the pipeline latents per ETNF (derivable columns go in their own relation):</p>
+<pre><code>maskscore_latents/
+  pixal3d_slat.parquet
+  omnigen2_latent.parquet
+  qwen3_embed.parquet</code></pre>
+<p>Each satellite records the QAFT base version that produced it. The latents support pretraining the reward model before RL, where recomputing them on every batch is wasteful.</p>
+</section>
+<section id="cost-summary" class="level3">
+<h3 class="anchored" data-anchor-id="cost-summary">Cost summary</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>line item</th>
+<th>cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>QAFT all models to NF4 (rung -1)</td>
+<td>~$12</td>
+</tr>
+<tr class="even">
+<td>MoGe-3 QAFT</td>
+<td>$0 (local Mac)</td>
+</tr>
+<tr class="odd">
+<td>Rungs 0 through 3 (same A100 session)</td>
+<td>~$13</td>
+</tr>
+<tr class="even">
+<td>Rung 4 (9x RTX 3090 spot, 8 hr)</td>
+<td>~$14</td>
+</tr>
+<tr class="odd">
+<td>Rung 5 (18x RTX 3090 spot, 8 hr)</td>
+<td>~$29</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td><strong>~$68</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="vast.ai-tear-down-discipline" class="level3">
+<h3 class="anchored" data-anchor-id="vast.ai-tear-down-discipline">Vast.ai tear-down discipline</h3>
+<p>Per the working agreements: commit and push before tear down, then double-check the tear down. The extraction script pushes parquet to HF after each batch, so a torn-down machine loses at most one batch, not the full run.</p>
+</section>
+<section id="hf-artifacts" class="level3">
+<h3 class="anchored" data-anchor-id="hf-artifacts">HF artifacts</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 12%">
+<col style="width: 42%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>artifact</th>
+<th>type</th>
+<th>purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>chibifire/qwen3-omni</td>
+<td>model</td>
+<td>bf16 + QAFT NF4 base</td>
+</tr>
+<tr class="even">
+<td>chibifire/omnigen2</td>
+<td>model</td>
+<td>bf16 + QAFT NF4 base</td>
+</tr>
+<tr class="odd">
+<td>chibifire/pixal3d</td>
+<td>model</td>
+<td>bf16 + QAFT NF4 base</td>
+</tr>
+<tr class="even">
+<td>chibifire/voxhammer</td>
+<td>model</td>
+<td>bf16 + QAFT NF4 base</td>
+</tr>
+<tr class="odd">
+<td>chibifire/moge3</td>
+<td>model</td>
+<td>bf16 + QAFT NF4 base</td>
+</tr>
+<tr class="even">
+<td>chibifire/maskscore-bench</td>
+<td>dataset</td>
+<td>evaluation (~2890 rows)</td>
+</tr>
+<tr class="odd">
+<td>chibifire/maskscore-reward-train</td>
+<td>dataset</td>
+<td>reward model training (~97k)</td>
+</tr>
+<tr class="even">
+<td>chibifire/maskscore-rl-train</td>
+<td>dataset</td>
+<td>RL training (~110k)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="what-is-not-in-this-budget" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-not-in-this-budget">What is NOT in this budget</h3>
+<ul>
+<li>SpeakingFaces download (already on local compute)</li>
+<li>The reward model training itself (rung 5 produces data, not a model)</li>
+</ul>
+</section>
+</section>
+<section id="related-159" class="level2">
+<h2 class="anchored" data-anchor-id="related-159">Related</h2>
+<p>RFD 1173 (the pipeline design), RFD 1143 (keypoints to ANNY).</p>
 
 
 </section>
