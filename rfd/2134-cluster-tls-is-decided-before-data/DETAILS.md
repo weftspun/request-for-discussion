@@ -103,7 +103,12 @@ same CA profile, same verify-rule shape:
    refused as MalformedXML; created through the S3 API, the backup
    submits and runs: `The backup on tag 'default' is in progress`.
 
-So the production path is a versitygw sidecar on each cluster machine —
-`versitygw s3` proxying to Tigris (its Go client sends SNI), the backup
-URL pointing at the local gateway. That is a datasource-store deployment
-change, recorded in the logbook when it lands.
+The production hop that landed is stunnel, not the versitygw sidecar
+first named here: the job needed only SNI added to a TCP stream, and a
+second S3 implementation in the path was more moving parts than eleven
+lines of stunnel config. One more wall surfaced live — Tigris routes
+buckets from the Host header, so the endpoint's name has to survive the
+hop (/etc/hosts points it at loopback after the IP is resolved for
+stunnel's literal dial). datasource-store PRs #4 and #5 carry the
+change; `logbook-rfd2134-backup-through-the-sni-hop.md` carries the
+measurements, ending with kvrange objects listed in the bucket.
