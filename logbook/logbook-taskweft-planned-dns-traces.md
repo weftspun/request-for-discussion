@@ -87,12 +87,12 @@ the bao proxy refusing an unauthenticated caller, which is the
 auth gate demonstrating itself. All seven planned actions ran;
 the plan in the dataset row is the plan that executed.
 
-## Gate pairs, with apparatus (backfilled)
+## Red and green gates, with apparatus (backfilled)
 
-Each gate below is two measurements: the command shown failing on the
-broken state, then the same check shown passing on the fixed one. A
-gate seen only passing is decoration; a pass without its command
-cannot be re-run.
+Each gate below is two measurements: the red control gate — the
+command shown failing on the broken state — then the green gate, the
+same check shown passing on the fixed one. A gate seen only green is
+decoration; a green without its command cannot be re-run.
 
 **DSL loader.**
 
