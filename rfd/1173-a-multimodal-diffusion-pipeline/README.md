@@ -2,36 +2,36 @@
 
 **State:** discussion
 **Feature:** omni-modal MaskScore construction and real-time avatar
-**Scope:** Qwen3-Omni, MaskScore, Pixal3D/VoxHammer, EditScore
+**Scope:** Qwen3-Omni, OmniGen2, MaskScore, Pixal3D/VoxHammer, EditScore
 
 ## Problem
 
 A real-time avatar demo (Gemma Avatar architecture, 9k+ robots)
 needs sub-500ms first-packet latency with text + image + audio.
-MaskScore (self-supervised edit scoring) needs a model that handles
-all three modalities to construct training data. One model for both.
+MaskScore (self-supervised edit scoring) needs models that handle
+all modalities to construct training data.
 
 EditScore is functionally complete in the NAND-gate sense: every
 generation task reduces to an edit. One reward covers every modality.
 
 ## Decision
 
-Qwen3-Omni for everything. 30B MoE (3B active), Apache 2.0,
-234ms first-packet latency, streaming talker with voice cloning.
-Handles text, image, audio, and video natively, constructing
-MaskScore data and serving the avatar demo with one model.
+Qwen3-Omni for understanding, text, and speech. OmniGen2 for image
+generation and editing. Qwen3-Omni outputs text and audio only; it
+does not generate images.
 
-    thinker     Qwen3-Omni thinker         Apache 2.0   text + image + audio + video
+    thinker     Qwen3-Omni thinker         Apache 2.0   text + image + audio + video → text
     talker      Qwen3-Omni talker          Apache 2.0   voice-cloning speech
+    image gen   OmniGen2                   Apache 2.0   text/image → image
     3D stage    Pixal3D → VoxHammer        Apache 2.0   image → mesh
     scoring     MaskScore + EditScore      n/a           self-supervised reward
 
 MaskScore constructs edit triples by masking, reconstructing, and
 scoring on decoded outputs. The reward model RL fine-tunes the
-same Qwen3-Omni that serves deployment.
+generators via EditScore.
 
 VRAM budget, sweep results, and the LLaDA retraction are in
-[DETAILS.md](DETAILS.md). The seven MaskScore dataset stubs are in
+[DETAILS.md](DETAILS.md). The eight MaskScore dataset stubs are in
 [MASKSCORE.md](MASKSCORE.md).
 
 ## Related

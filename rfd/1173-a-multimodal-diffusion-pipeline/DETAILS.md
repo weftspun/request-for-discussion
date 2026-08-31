@@ -23,17 +23,23 @@ rather than substituted with a standalone TTS model.
 
 1. https://github.com/QwenLM/Qwen3-Omni
 
+## OmniGen2 (image generation and editing)
+
+**Qwen3-Omni does not generate images.** Its outputs are text and speech;
+it understands images, audio, and video as input but produces neither.
+The earlier text here said otherwise and was wrong. OmniGen2 fills the
+image generation and editing slot that Qwen3-Omni leaves open.
+
+RFD 1145 already places OmniGen2 in the evaluation loop. It is also the
+generator that produces the images the 3D stage consumes and the images
+MaskScore's image-editing stubs mask and reconstruct.
+
 ## Pixal3D→VoxHammer (the 3D stage)
 
-Qwen3-Omni generates and edits images; the 3D stage turns those images
+OmniGen2 generates and edits images; the 3D stage turns those images
 into meshes. Pixal3D produces a coarse textured mesh from an image,
 VoxHammer refines it. After QAFT, the thinker + talker occupy ~11.8 GiB,
-leaving ~12 GiB for the 3D models to co-reside.
-
-OmniGen2 was considered for this slot. It overlaps with Qwen3-Omni's
-own image generation and editing, and RFD 1145 already places
-it in the evaluation loop. The 3D stage fills a gap nothing else covers:
-image→mesh is the step that produces geometry for rigging and animation.
+leaving ~12 GiB for the 3D models and OmniGen2 to co-reside.
 
 ## EditScore evaluation
 
@@ -59,9 +65,16 @@ the ground truth. No human annotation needed.
 SpeakingFaces (CC-BY-4.0, 142 subjects, 13k+ instances) provides
 cross-modal ground truth: synchronized visual (768×512) and audio at
 nine camera angles. The ANNY canonical rig fitted to video frames
-recovers keypoints and encodes the 3D latent; MoGe-3 produces metric
-depth maps from the visual frames, giving (face image, depth,
-keypoints, voxel grid, waveform) tuples per synchronized frame.
+recovers keypoints and SOMA bone poses (78 bones, rotation vectors
+plus root translation, the same format Kimodo-SOMA produces, so the
+fitted poses are directly consumable by any downstream that accepts
+Kimodo output, without running Kimodo itself). MoGe-3 produces metric
+depth maps from the visual frames; Pixal3D encodes images to voxel
+grid latents via the sparse structure VAE.
+
+This gives (face image, depth, keypoints, pose, waveform) tuples per
+synchronized frame, with voxel grids produced downstream by Pixal3D
+from the image rather than from the ANNY fit.
 
 The four-stage loop:
 
@@ -76,6 +89,7 @@ The four-stage loop:
 | --------------------------------------- | -----: | -------: | :----------: |
 | Qwen3-Omni thinker (30B MoE, 3B active) | ~30 GB |  ~9.3 GB |    always    |
 | Qwen3-Omni talker (if extractable)      | ~10 GB |  ~2.5 GB |    always    |
+| OmniGen2 (image gen/edit)               |    TBD |      TBD |   swapped    |
 | Pixal3D                                 |    TBD |      TBD |  yes (QAFT)  |
 | VoxHammer                               |    TBD |      TBD |  yes (QAFT)  |
 | activation overhead                     |    n/a |  0.09 GB |     n/a      |

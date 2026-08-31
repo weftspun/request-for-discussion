@@ -6,7 +6,7 @@ motion_change, tone_transfer, color_alter, compose, subject-replace,
 material_alter, extract) across 3 dimensions (overall, prompt_following,
 consistency). All are image→image edits scored by a VLM reward model.
 
-The pipeline in RFD 1173 has seven modalities beyond image.
+The pipeline in RFD 1173 has eight modalities beyond image.
 Each stub names the gap, the format the dataset would take, and why the
 pipeline cannot close the loop without it.
 
@@ -286,12 +286,14 @@ The synchronization IS the cross-modal ground truth:
   spectrum (domain transfer edit)
 
 The canonical ANNY rig can be fitted to the face video frames to
-recover keypoints and encode the 3D latent via the sparse structure
-VAE. This gives a (face image, ANNY keypoints, ANNY 3D latent,
-audio) tuple per synchronized frame — the full pipeline ground
-truth from visual through 3D through audio, all paired. The
-keypoint fit is deterministic from the video frames and the
-canonical mesh, so the derived latents are constructed synthetic.
+recover keypoints and SOMA bone poses (78 bones as rotation vectors
+plus root translation — the format Kimodo-SOMA produces, without
+running Kimodo). Pixal3D encodes the face image to a voxel grid
+latent via the sparse structure VAE. This gives a (face image,
+ANNY keypoints, SOMA pose, Pixal3D voxel latent, audio) tuple per
+synchronized frame. The keypoint fit and the pose are deterministic
+from the video frames and the canonical mesh; the voxel latent is
+deterministic from the image. All are constructed synthetic.
 
 No annotation needed — the synchronized streams plus the ANNY fit
 are the paired assets. CC-BY-4.0 clears the license bar.
@@ -452,3 +454,53 @@ coherence are scored against the original audio track, not inferred.
 audio, instruction, output video) directly — it handles video
 natively, so it judges temporal coherence and audio-visual alignment
 that frame-level image scoring cannot reach (OmniScore).
+
+## 8. PoseEditReward-Bench
+
+**Modality:** image→pose and pose→pose edit
+**Why required:** ANNY fitted to SpeakingFaces frames produces SOMA
+bone poses (78 bones, rotation vectors plus root translation). This
+is the same format Kimodo-SOMA produces, so any downstream that
+consumes Kimodo output consumes these poses directly. Without a
+reward signal on pose quality, the fit step is unscored and pose
+drift propagates silently into keypoints, depth, and the 3D stage.
+
+**Self-supervised construction:**
+
+1. Fit ANNY canonical rig to a SpeakingFaces video frame → SOMA
+   bone poses (78 bones × rotation vector + root translation)
+2. Mask a subset of bone rotations (vary count, region — face
+   bones, arm chain, spine chain, hand digits)
+3. Reconstruct the masked bone poses from unmasked bones and the
+   conditioning image
+4. Forward-kinematics both original and reconstructed poses to
+   world-space joint positions
+5. Score: rotation geodesic distance on masked bones (pose
+   accuracy), forward-kinematics endpoint error on the masked
+   chain (positional accuracy), reprojection of posed mesh
+   vertices against the source frame (image alignment)
+6. Record (SOMA poses, mask, reconstruction, scores)
+
+Mask region determines task_type: face bones = expression_pose,
+arm chain = arm_repose, spine = torso_repose, hand digits =
+hand_repose, full body = full_refit. The ANNY fit is deterministic
+from the frame and the canonical mesh, so the derived poses are
+constructed synthetic.
+
+**Format:**
+
+| column             | type              | description                                                                                 |
+| ------------------ | ----------------- | ------------------------------------------------------------------------------------------- |
+| key                | string            | unique identifier                                                                           |
+| instruction        | string            | mask described as edit ("refit the left arm chain")                                         |
+| input_pose         | list[float]       | SOMA bone rotation vectors [77×3] + root translation [3]                                   |
+| conditioning_image | string            | path to source frame                                                                        |
+| output_poses       | list[list[float]] | candidate reconstructions                                                                   |
+| scores             | list[float]       | automated (pose_accuracy, endpoint_error, reprojection_error)                               |
+| task_type          | string            | one of: expression_pose, arm_repose, torso_repose, hand_repose, full_refit, leg_repose     |
+| dimension          | string            | one of: overall, rotation_fidelity, positional_accuracy, image_alignment                    |
+
+**Reward model (stage 3):** Qwen3-Omni scores (image, input pose
+rendered via Mitsuba 3, instruction, output pose rendered) directly,
+judging whether the reconstructed pose is anatomically plausible and
+consistent with the conditioning frame (OmniScore).
