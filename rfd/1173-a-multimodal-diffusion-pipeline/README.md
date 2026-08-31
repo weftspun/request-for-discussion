@@ -1,4 +1,4 @@
-# RFD 1173: A multimodal diffusion pipeline
+# RFD 66606.1.1.1173: A multimodal diffusion pipeline
 
 **State:** discussion
 **Feature:** an omni-modal model with a diffusion backbone
@@ -17,24 +17,19 @@ generation task reduces to an edit. One reward covers every modality.
 ## Decision
 
 Recreate the Qwen3-Omni architecture with LLaDA-o as the thinker.
+The talker needs an adapter (4096→3584 dim MLP) because the diffusion
+thinker produces all positions at once and the talker expects a
+sequential stream; the adapter feeds the final-pass hidden states
+left-to-right. If the talker cannot be extracted standalone, halt.
 
     thinker     LLaDA-o (GSAI-ML)          Apache 2.0   diffusion text + image
     talker      Qwen3-Omni audio head      Apache 2.0   voice-cloning speech
     evaluation  EditReward-Bench           —             universal edit scoring
 
 LLaDA-o is 31 GB bf16. CPU offload is blocklisted; NF4 (~8 GB) is the
-desk path. QAFT is permitted for training. The talker sizes like
-Gemma 4 12B — it must fit one consumer card alongside the thinker.
-If the Qwen3-Omni talker cannot be extracted standalone, the audio
-head is deferred rather than substituted.
-
-## What this does not decide
-
-Whether the talker accepts hidden states from a different thinker
-without retraining. The diffusion thinker produces all positions at
-once; the talker expects a sequential stream. `DETAILS.md` carries
-the two adaptation paths.
+desk path. QAFT is permitted for training. The talker must fit one
+consumer card alongside the thinker.
 
 ## Related
 
-RFD 1172 (dLLM throughput), RFD 1166 (TTS), RFD 1170 (presence loop).
+RFD 66606.1.1.1172, RFD 66606.1.1.1166, RFD 66606.1.1.1170.

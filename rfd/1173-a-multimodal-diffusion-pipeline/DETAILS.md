@@ -1,4 +1,4 @@
-# RFD 1173 details: recreating an omni-modal model with a diffusion backbone
+# RFD 66606.1.1.1173 details: recreating an omni-modal model with a diffusion backbone
 
 The target is the Qwen3-Omni architecture — text, image, and audio
 in a single model — with the autoregressive thinker replaced by
@@ -84,9 +84,22 @@ target), so NF4 is the desk path and bf16 requires a rented 40+ GiB
 card.
 
 NF4 is permitted here because condition 5 bars quantized weights from
-corpus generation, not from evaluation or interaction. The text sweep
-will measure whether NF4 degrades LLaDA-o's text quality at each step
-count, the same way LLaDA-1.5's NF4 path degraded at steps=32.
+corpus generation, not from evaluation or interaction. The text sweep measured NF4 text quality across step counts
+(2026-08-31, RTX 3090, VRAM 9.4 GiB peak):
+
+| steps | valid tokens | wall s | tok/s | coherent | relevant |
+| ---:  | ---:         | ---:   | ---:  | :---:    | :---:    |
+| 128   | 64           | 5.76   | 11.1  | Y        | Y        |
+| 64    | 64           | 23.52  | 2.7   | Y        | Y        |
+| 32    | 64           | 6.30   | 10.2  | Y        | Y        |
+| 16    | 48           | 7.23   | 6.6   | Y        | Y        |
+| 8     | 64           | 9.95   | 6.4   | Y        | Y        |
+
+All five passed. The negative control at steps=16 also passed, so
+the quality gate is too loose — the coherence and relevance checks
+accept degenerate output. The gate needs tightening before these
+numbers carry weight. steps=64 is an outlier at 23.52s wall time;
+the cause is not yet identified.
 
 QAFT (quantization-aware fine-tuning) is permitted for training. A
 QAFT model is trained with quantization in the loop, so the weights
