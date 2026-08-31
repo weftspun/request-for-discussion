@@ -62,10 +62,10 @@ are kept in the repository's git history.
 
 Two KV v2 paths carry the FDB cluster's identity material:
 
-`secret/fdb/tls-anchor` — the CA certificate (base64 PEM), the
+`secret/fdb/tls-anchor`: the CA certificate (base64 PEM), the
 cluster ID, and the verify-peers rule.
 
-`secret/fdb/blobstore` — the Tigris S3 credentials used by the FDB
+`secret/fdb/blobstore`: the Tigris S3 credentials used by the FDB
 backup agents (AWS key pair, endpoint, region, bucket name).
 
 Both were written from a weftspun-fdb machine over 6PN, where the

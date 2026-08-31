@@ -5,7 +5,7 @@
 The CA was generated during the RFD 2134 session. The key file
 existed in a session scratchpad (`/private/tmp/claude-502/...`) that
 was cleaned up when the session ended. It was never committed to a
-repo (correctly — a CA key does not go in source control), never
+repo (correctly; a CA key does not go in source control), never
 uploaded to 1Password, and never stored as a Fly secret. The
 1Password item `OpenBao FDB CA` contains the raft-based bao init
 JSON, not the CA material.
@@ -20,8 +20,8 @@ peer.
 RFD 2134 states: "there is no in-place path from a plaintext cluster
 to a TLS one." That is about the coordinator addresses on disk, which
 carry a `:tls` suffix that plaintext addresses lack. A rotation from
-one TLS identity to another does not change the addresses — the
-`:tls` suffix stays — so the coordinated state on disk remains valid.
+one TLS identity to another does not change the addresses. The
+`:tls` suffix stays, so the coordinated state on disk remains valid.
 
 FoundationDB's TLS certificate refresh (documented in `tls.rst`,
 knob `tls-cert-refresh-delay-seconds`, default enabled) reloads the

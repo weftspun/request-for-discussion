@@ -581,6 +581,10 @@ def Scope "Serials"
                 {
                     custom string slug = "fdb-tls-rotation-without-data-loss"
                 }
+                def "S2142"
+                {
+                    custom string slug = "bao-pki-zerotrust-service-tls"
+                }
             }
         }
     }
