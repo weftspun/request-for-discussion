@@ -565,6 +565,10 @@ def Scope "Serials"
                 {
                     custom string slug = "rfd-reports-share-one-sheet"
                 }
+                def "S2138"
+                {
+                    custom string slug = "interactor-shuttle-merges-spot-broker-and-uro"
+                }
             }
         }
     }
