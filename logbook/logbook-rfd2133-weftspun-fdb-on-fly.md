@@ -26,9 +26,6 @@ read-reply merge is in this HEAD but does not exercise here — that is
       fly volumes create fdb_data --app weftspun-fdb --region sjc --size 1 --yes
     done
 
-    # One change to the copied fly.toml: dockerfile path is relative to the
-    # config file's directory, so `fly/Containerfile.fdb` in the source becomes
-    # `Containerfile.fdb` after --copy-config lands the toml under `fly/`.
     fly deploy --config fly/fdb.toml --app weftspun-fdb --remote-only --ha=false
 
     fly scale count 3 --app weftspun-fdb --region sjc --yes
@@ -56,14 +53,18 @@ reachable network is 6PN inside this org.
 
 ## What did not go as planned
 
-`fly deploy` refused to start the machines with a "dockerfile not found"
-error naming `fly/fly/Containerfile.fdb`. The doubled `fly/` is Fly's
-path resolution: with `--config fly/fdb.toml`, the `dockerfile` key is
-resolved relative to the config file's directory, and the source
-`fly/fdb.toml` names it as `fly/Containerfile.fdb`. `--copy-config`
-places the fly.toml under `fly/` in the repo, and the second `fly/`
-comes from there. The one-token edit fixes it; the source repository
-still names the path from its own root.
+**`fly launch --copy-config` rewrote the repo's fly/fdb.toml in place**:
+it flattened the file, stripped every comment — including the S.CN
+matcher retraction the file exists to carry — broke the dockerfile path
+(prefixing a second `fly/`), and injected an `[http_service]` block with
+`auto_stop_machines`, which is how the cluster's three machines later
+got idle-stopped out from under a quorum. The deploy errors that
+followed ("dockerfile not found: fly/fly/Containerfile.fdb"; the stopped
+cluster) were all downstream of that one rewrite. The fix was
+`git checkout -- fly/fdb.toml` and deploying with the repository's own
+file, which was correct all along. Lesson: `fly launch` writes to the
+config path it is given; point it at a scratch copy, never at a tracked
+file that carries reasoning.
 
 `fly scale count 3` created two more machines but left them in `created`
 state. `fly machine start <id>` on each. The first retry failed with
