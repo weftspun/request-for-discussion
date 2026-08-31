@@ -23,23 +23,23 @@ rather than substituted with a standalone TTS model.
 
 1. https://github.com/QwenLM/Qwen3-Omni
 
-## OmniGen2 (image generation and editing)
+## Wan-VACE (image and video generation)
 
 **Qwen3-Omni does not generate images.** Its outputs are text and speech;
 it understands images, audio, and video as input but produces neither.
-The earlier text here said otherwise and was wrong. OmniGen2 fills the
-image generation and editing slot that Qwen3-Omni leaves open.
+Wan-VACE fills the image and video generation slot that Qwen3-Omni
+leaves open. ~14B params, ~28 GB bf16, ~8.7 GB NF4.
 
-RFD 1145 already places OmniGen2 in the evaluation loop. It is also the
-generator that produces the images the 3D stage consumes and the images
-MaskScore's image-editing stubs mask and reconstruct.
+Wan-VACE is the generator that produces the images the 3D stage consumes
+and the images MaskScore's image-editing stubs edit and score.
 
 ## Pixal3D→VoxHammer (the 3D stage)
 
-OmniGen2 generates and edits images; the 3D stage turns those images
-into meshes. Pixal3D produces a coarse textured mesh from an image,
-VoxHammer refines it. After QAFT, the thinker + talker occupy ~11.8 GiB,
-leaving ~12 GiB for the 3D models and OmniGen2 to co-reside.
+Wan-VACE generates and edits images and video; the 3D stage turns those
+images into meshes. Pixal3D produces a coarse textured mesh from an
+image, VoxHammer refines it. After QAFT, the thinker + talker occupy
+~11.9 GiB. Wan-VACE NF4 (~8.7 GiB) is swapped in for generation and
+out for the 3D stage.
 
 ## EditScore evaluation
 
@@ -89,7 +89,7 @@ The four-stage loop:
 | --------------------------------------- | -----: | -------: | :----------: |
 | Qwen3-Omni thinker (30B MoE, 3B active) | ~30 GB |  ~9.3 GB |    always    |
 | Qwen3-Omni talker (if extractable)      | ~10 GB |  ~2.5 GB |    always    |
-| OmniGen2 (image gen/edit)               |    TBD |      TBD |   swapped    |
+| Wan-VACE (image/video gen)              | ~28 GB |  ~8.7 GB |   swapped    |
 | Pixal3D                                 |    TBD |      TBD |  yes (QAFT)  |
 | VoxHammer                               |    TBD |      TBD |  yes (QAFT)  |
 | activation overhead                     |    n/a |  0.09 GB |     n/a      |

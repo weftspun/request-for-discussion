@@ -2,7 +2,7 @@
 
 **State:** discussion
 **Feature:** omni-modal MaskScore construction and real-time avatar
-**Scope:** Qwen3-Omni, OmniGen2, MaskScore, Pixal3D/VoxHammer, EditScore
+**Scope:** Qwen3-Omni, Wan-VACE, MaskScore, Pixal3D/VoxHammer, EditScore
 
 ## Problem
 
@@ -16,13 +16,13 @@ generation task reduces to an edit. One reward covers every modality.
 
 ## Decision
 
-Qwen3-Omni for understanding, text, and speech. OmniGen2 for image
+Qwen3-Omni for understanding, text, and speech. Wan-VACE for image
 generation and editing. Qwen3-Omni outputs text and audio only; it
 does not generate images.
 
     thinker     Qwen3-Omni thinker         Apache 2.0   text + image + audio + video → text
     talker      Qwen3-Omni talker          Apache 2.0   voice-cloning speech
-    image gen   OmniGen2                   Apache 2.0   text/image → image
+    image gen   Wan-VACE                   Apache 2.0   text/image → image
     3D stage    Pixal3D → VoxHammer        Apache 2.0   image → mesh
     scoring     MaskScore + EditScore      n/a           self-supervised reward
 

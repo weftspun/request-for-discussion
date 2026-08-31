@@ -24,7 +24,7 @@ the original asset IS the ground truth.
 ### Stage 1: edit, then score (self-supervised pretraining)
 
 Each model edits in its native way. Flow-matching models
-(OmniGen2, Pixal3D, VoxHammer, talker) noise a region and
+(Wan-VACE, Pixal3D, VoxHammer, talker) noise a region and
 denoise. Qwen3-Omni edits text via instruction-following
 generation. The training signal is reconstruction loss against
 the original. No labels.
@@ -57,7 +57,7 @@ own generations during training (OmniScore). No separate VLM.
 
 Use the trained reward model as the reward signal for online RL
 (PPO, GRPO, or similar). The editor generates, the reward model
-scores, the policy updates. Same loop EditScore uses for OmniGen2.
+scores, the policy updates. Same loop EditScore uses for Wan-VACE.
 No human in the loop.
 
 The quality ceiling of this loop is bounded by the automated metrics
@@ -74,8 +74,8 @@ path that reaches the ANNY mesh for scoring. Discriminative models
 
 | modality   | editor       | mechanism                     | decode path                        |
 | ---------- | ------------ | ----------------------------- | ---------------------------------- |
-| Image      | OmniGen2     | flow-matching on VAE latent   | decode to image                    |
-| Video      | OmniGen2     | flow-matching on VAE sequence | decode to frame sequence           |
+| Image      | Wan-VACE     | flow-matching on VAE latent   | decode to image                    |
+| Video      | Wan-VACE     | flow-matching on VAE sequence | decode to frame sequence           |
 | Mesh       | Pixal3D      | flow-matching on SLATs        | decode to mesh                     |
 | Depth      | Pixal3D      | flow-matching on SLATs        | mesh, render to depth via Mitsuba  |
 | Keypoints  | Pixal3D      | flow-matching on SLATs        | mesh, read surface vertices        |
@@ -86,8 +86,8 @@ path that reaches the ANNY mesh for scoring. Discriminative models
 Pixal3D has three distinct latents: sparse structure
 `(B, C, R, R, R)`, shape SLAT (SparseTensor geometry), and texture
 SLAT (SparseTensor PBR). VoxHammer has two: sparse structure
-`(B, C, 16, 16, 16)` and a single unified SLAT. OmniGen2 uses
-the FLUX VAE with 16 channels, not 4.
+`(B, C, 16, 16, 16)` and a single unified SLAT. Wan-VACE uses
+a 16-channel VAE.
 
 Scoring happens on the decoded output, not in latent space. The
 evaluation decodes once (the "stages pass latents; VAE decode

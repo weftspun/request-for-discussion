@@ -2,7 +2,7 @@
 
 **State:** discussion
 **Feature:** QAFT quantization and dataset extraction for MaskScore
-**Scope:** Qwen3-Omni, OmniGen2, Pixal3D, VoxHammer, MoGe-3, Vast.ai budget
+**Scope:** Qwen3-Omni, Wan-VACE, Pixal3D, VoxHammer, MoGe-3, Vast.ai budget
 
 ## Problem
 
@@ -36,7 +36,7 @@ adaptation) is stored as LoRA adapters against it.
 |-------------------------------|--------|---------|-----------|--------------|-----------------------|
 | Qwen3-Omni thinker (30B MoE) | ~30B   | ~30 GB  | ~9.3 GB   | Vast.ai A100 | chibifire/qwen3-omni  |
 | Qwen3-Omni talker             | ~10B   | ~10 GB  | ~2.5 GB   | Vast.ai A100 | (same repo)           |
-| OmniGen2                      | ~5B    | ~10 GB  | ~3.1 GB   | Vast.ai A100 | chibifire/omnigen2    |
+| Wan-VACE                      | ~14B   | ~28 GB  | ~8.7 GB   | Vast.ai A100 | chibifire/wan-vace    |
 | Pixal3D (8 subs)              | ~4B    | ~8 GB   | ~2.5 GB   | Vast.ai A100 | chibifire/pixal3d     |
 | VoxHammer                     | TBD    | 40 GB+  | TBD       | Vast.ai A100 | chibifire/voxhammer   |
 | MoGe-3 (ViT-L)               | ~300M  | ~600 MB | ~190 MB   | local Mac    | chibifire/moge3       |
@@ -82,7 +82,7 @@ at most one batch, not the full run.
 | artifact                         | type    | purpose                        |
 |----------------------------------|---------|--------------------------------|
 | chibifire/qwen3-omni             | model   | bf16 + QAFT NF4 base          |
-| chibifire/omnigen2               | model   | bf16 + QAFT NF4 base          |
+| chibifire/wan-vace               | model   | bf16 + QAFT NF4 base          |
 | chibifire/pixal3d                | model   | bf16 + QAFT NF4 base          |
 | chibifire/voxhammer              | model   | bf16 + QAFT NF4 base          |
 | chibifire/moge3                  | model   | bf16 + QAFT NF4 base          |
