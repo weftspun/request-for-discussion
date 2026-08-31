@@ -90,10 +90,15 @@ directly, but available if we train a reward model to automate scoring.
 | Qwen3-Omni talker (if extractable) | ~10 GB | ~2.5 GB | always |
 | Pixal3D                    | TBD      | TBD       | yes (QAFT)   |
 | VoxHammer                  | TBD      | TBD       | yes (QAFT)   |
-| peak activation             | varies   | varies    | —            |
+| activation overhead        | —        | 0.09 GB   | —            |
 
-LLaDA-o QAFT NF4 + Qwen3-Omni talker NF4: ~11.8 GiB, leaving
-~12 GiB for the 3D stage to co-reside. QAFT makes the NF4
+Activation overhead measured at 0.09 GiB across context lengths
+32–1024 tokens (2026-08-31, RTX 3090). The KV cache and attention
+activations are negligible at text-generation lengths; the budget
+is almost entirely weights.
+
+LLaDA-o QAFT NF4 + talker NF4 + activations: ~11.9 GiB, leaving
+~12.1 GiB for the 3D stage to co-reside. QAFT makes the NF4
 precision the published one, so the budget is real rather than a
 post-hoc truncation. LLaDA-o bf16 + anything: does not
 fit 24 GiB. CPU offload is blocklisted (the CPU as a model execution
