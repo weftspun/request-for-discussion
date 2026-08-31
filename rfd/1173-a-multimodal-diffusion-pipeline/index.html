@@ -346,10 +346,10 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="decision" class="level2">
 <h2 class="anchored" data-anchor-id="decision">Decision</h2>
-<p>Qwen3-Omni for understanding, text, and speech. OmniGen2 for image generation and editing. Qwen3-Omni outputs text and audio only; it does not generate images.</p>
+<p>Qwen3-Omni for understanding, text, and speech. Wan-VACE for image generation and editing. Qwen3-Omni outputs text and audio only; it does not generate images.</p>
 <pre><code>thinker     Qwen3-Omni thinker         Apache 2.0   text + image + audio + video → text
 talker      Qwen3-Omni talker          Apache 2.0   voice-cloning speech
-image gen   OmniGen2                   Apache 2.0   text/image → image
+image gen   Wan-VACE                   Apache 2.0   text/image → image
 3D stage    Pixal3D → VoxHammer        Apache 2.0   image → mesh
 scoring     MaskScore + EditScore      n/a           self-supervised reward</code></pre>
 <p>MaskScore constructs edit triples by masking, reconstructing, and scoring on decoded outputs. The reward model RL fine-tunes the generators via EditScore.</p>

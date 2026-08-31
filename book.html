@@ -4818,7 +4818,7 @@ be it   a person supplies motion  friend   a model supplies it</code></pre>
 <section id="rfd-1173-a-multimodal-avatar-pipeline" class="level1">
 <h1>RFD 1173: A multimodal avatar pipeline</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.1.1173</code></p>
-<p><strong>State:</strong> discussion <strong>Feature:</strong> omni-modal MaskScore construction and real-time avatar <strong>Scope:</strong> Qwen3-Omni, OmniGen2, MaskScore, Pixal3D/VoxHammer, EditScore</p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> omni-modal MaskScore construction and real-time avatar <strong>Scope:</strong> Qwen3-Omni, Wan-VACE, MaskScore, Pixal3D/VoxHammer, EditScore</p>
 <section id="problem-159" class="level2">
 <h2 class="anchored" data-anchor-id="problem-159">Problem</h2>
 <p>A real-time avatar demo (Gemma Avatar architecture, 9k+ robots) needs sub-500ms first-packet latency with text + image + audio. MaskScore (self-supervised edit scoring) needs models that handle all modalities to construct training data.</p>
@@ -4826,10 +4826,10 @@ be it   a person supplies motion  friend   a model supplies it</code></pre>
 </section>
 <section id="decision-161" class="level2">
 <h2 class="anchored" data-anchor-id="decision-161">Decision</h2>
-<p>Qwen3-Omni for understanding, text, and speech. OmniGen2 for image generation and editing. Qwen3-Omni outputs text and audio only; it does not generate images.</p>
+<p>Qwen3-Omni for understanding, text, and speech. Wan-VACE for image generation and editing. Qwen3-Omni outputs text and audio only; it does not generate images.</p>
 <pre><code>thinker     Qwen3-Omni thinker         Apache 2.0   text + image + audio + video → text
 talker      Qwen3-Omni talker          Apache 2.0   voice-cloning speech
-image gen   OmniGen2                   Apache 2.0   text/image → image
+image gen   Wan-VACE                   Apache 2.0   text/image → image
 3D stage    Pixal3D → VoxHammer        Apache 2.0   image → mesh
 scoring     MaskScore + EditScore      n/a           self-supervised reward</code></pre>
 <p>MaskScore constructs edit triples by masking, reconstructing, and scoring on decoded outputs. The reward model RL fine-tunes the generators via EditScore.</p>
@@ -4975,7 +4975,7 @@ scoring     MaskScore + EditScore      n/a           self-supervised reward</cod
 <section id="rfd-2139-maskscore-qaft-and-extraction-budget" class="level1">
 <h1>RFD 2139: MaskScore QAFT and extraction budget</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2139</code></p>
-<p><strong>State:</strong> discussion <strong>Feature:</strong> QAFT quantization and dataset extraction for MaskScore <strong>Scope:</strong> Qwen3-Omni, OmniGen2, Pixal3D, VoxHammer, MoGe-3, Vast.ai budget</p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> QAFT quantization and dataset extraction for MaskScore <strong>Scope:</strong> Qwen3-Omni, Wan-VACE, Pixal3D, VoxHammer, MoGe-3, Vast.ai budget</p>
 <section id="problem-166" class="level2">
 <h2 class="anchored" data-anchor-id="problem-166">Problem</h2>
 <p>The MaskScore extraction pipeline (RFD 1173) needs seven models co-resident on GPU. At published precision (bf16), VoxHammer alone requires 40 GB. QAFT to NF4 is required before extraction can begin. Condition 5 permits this: QAFT makes NF4 the published precision.</p>
@@ -5032,12 +5032,12 @@ scoring     MaskScore + EditScore      n/a           self-supervised reward</cod
 <td>(same repo)</td>
 </tr>
 <tr class="odd">
-<td>OmniGen2</td>
-<td>~5B</td>
-<td>~10 GB</td>
-<td>~3.1 GB</td>
+<td>Wan-VACE</td>
+<td>~14B</td>
+<td>~28 GB</td>
+<td>~8.7 GB</td>
 <td>Vast.ai A100</td>
-<td>chibifire/omnigen2</td>
+<td>chibifire/wan-vace</td>
 </tr>
 <tr class="even">
 <td>Pixal3D (8 subs)</td>
@@ -5229,7 +5229,7 @@ scoring     MaskScore + EditScore      n/a           self-supervised reward</cod
 <td>bf16 + QAFT NF4 base</td>
 </tr>
 <tr class="even">
-<td>chibifire/omnigen2</td>
+<td>chibifire/wan-vace</td>
 <td>model</td>
 <td>bf16 + QAFT NF4 base</td>
 </tr>

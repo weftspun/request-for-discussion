@@ -358,7 +358,7 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>MaskScore</strong> is the codename for this technique: mask a region of a latent, reconstruct with the stage’s denoiser, decode to the output domain, score the decoded reconstruction against the decoded original. It parallels EditScore (which scores image edits via a VLM) but operates across all modalities and needs no human annotation, because the original asset IS the ground truth.</p>
 <section id="stage-1-edit-then-score-self-supervised-pretraining" class="level3">
 <h3 class="anchored" data-anchor-id="stage-1-edit-then-score-self-supervised-pretraining">Stage 1: edit, then score (self-supervised pretraining)</h3>
-<p>Each model edits in its native way. Flow-matching models (OmniGen2, Pixal3D, VoxHammer, talker) noise a region and denoise. Qwen3-Omni edits text via instruction-following generation. The training signal is reconstruction loss against the original. No labels.</p>
+<p>Each model edits in its native way. Flow-matching models (Wan-VACE, Pixal3D, VoxHammer, talker) noise a region and denoise. Qwen3-Omni edits text via instruction-following generation. The training signal is reconstruction loss against the original. No labels.</p>
 </section>
 <section id="stage-2-construct-reward-signal-self-supervised-scoring" class="level3">
 <h3 class="anchored" data-anchor-id="stage-2-construct-reward-signal-self-supervised-scoring">Stage 2: construct reward signal (self-supervised scoring)</h3>
@@ -372,7 +372,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="stage-4-rl-fine-tuning-with-the-reward-model" class="level3">
 <h3 class="anchored" data-anchor-id="stage-4-rl-fine-tuning-with-the-reward-model">Stage 4: RL fine-tuning with the reward model</h3>
-<p>Use the trained reward model as the reward signal for online RL (PPO, GRPO, or similar). The editor generates, the reward model scores, the policy updates. Same loop EditScore uses for OmniGen2. No human in the loop.</p>
+<p>Use the trained reward model as the reward signal for online RL (PPO, GRPO, or similar). The editor generates, the reward model scores, the policy updates. Same loop EditScore uses for Wan-VACE. No human in the loop.</p>
 <p>The quality ceiling of this loop is bounded by the automated metrics in stage 2. A metric that lies (latent L2 instead of decoded perceptual distance) propagates through every stage. Scoring on the decoded output rather than in latent space is the guard: the decoded image, mesh, or waveform is what the user sees.</p>
 </section>
 </section>
@@ -397,13 +397,13 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>Image</td>
-<td>OmniGen2</td>
+<td>Wan-VACE</td>
 <td>flow-matching on VAE latent</td>
 <td>decode to image</td>
 </tr>
 <tr class="even">
 <td>Video</td>
-<td>OmniGen2</td>
+<td>Wan-VACE</td>
 <td>flow-matching on VAE sequence</td>
 <td>decode to frame sequence</td>
 </tr>
@@ -445,7 +445,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<p>Pixal3D has three distinct latents: sparse structure <code>(B, C, R, R, R)</code>, shape SLAT (SparseTensor geometry), and texture SLAT (SparseTensor PBR). VoxHammer has two: sparse structure <code>(B, C, 16, 16, 16)</code> and a single unified SLAT. OmniGen2 uses the FLUX VAE with 16 channels, not 4.</p>
+<p>Pixal3D has three distinct latents: sparse structure <code>(B, C, R, R, R)</code>, shape SLAT (SparseTensor geometry), and texture SLAT (SparseTensor PBR). VoxHammer has two: sparse structure <code>(B, C, 16, 16, 16)</code> and a single unified SLAT. Wan-VACE uses a 16-channel VAE.</p>
 <p>Scoring happens on the decoded output, not in latent space. The evaluation decodes once (the “stages pass latents; VAE decode happens once, at final output” constraint) and scores what the user would see.</p>
 </section>
 <section id="one-universal-metric-render-and-compare" class="level2">

@@ -311,7 +311,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#rfd-1173-details-a-multimodal-avatar-pipeline" id="toc-rfd-1173-details-a-multimodal-avatar-pipeline" class="nav-link active" data-scroll-target="#rfd-1173-details-a-multimodal-avatar-pipeline">RFD 1173 details: a multimodal avatar pipeline</a>
   <ul class="collapse">
   <li><a href="#qwen3-omni-thinker-talker" id="toc-qwen3-omni-thinker-talker" class="nav-link" data-scroll-target="#qwen3-omni-thinker-talker">Qwen3-Omni (thinker + talker)</a></li>
-  <li><a href="#omnigen2-image-generation-and-editing" id="toc-omnigen2-image-generation-and-editing" class="nav-link" data-scroll-target="#omnigen2-image-generation-and-editing">OmniGen2 (image generation and editing)</a></li>
+  <li><a href="#wan-vace-image-and-video-generation" id="toc-wan-vace-image-and-video-generation" class="nav-link" data-scroll-target="#wan-vace-image-and-video-generation">Wan-VACE (image and video generation)</a></li>
   <li><a href="#pixal3dvoxhammer-the-3d-stage" id="toc-pixal3dvoxhammer-the-3d-stage" class="nav-link" data-scroll-target="#pixal3dvoxhammer-the-3d-stage">Pixal3D→VoxHammer (the 3D stage)</a></li>
   <li><a href="#editscore-evaluation" id="toc-editscore-evaluation" class="nav-link" data-scroll-target="#editscore-evaluation">EditScore evaluation</a></li>
   <li><a href="#maskscore-self-supervised-training" id="toc-maskscore-self-supervised-training" class="nav-link" data-scroll-target="#maskscore-self-supervised-training">MaskScore self-supervised training</a></li>
@@ -340,14 +340,14 @@ ul.task-list li input[type="checkbox"] {
 <li>https://github.com/QwenLM/Qwen3-Omni</li>
 </ol>
 </section>
-<section id="omnigen2-image-generation-and-editing" class="level2">
-<h2 class="anchored" data-anchor-id="omnigen2-image-generation-and-editing">OmniGen2 (image generation and editing)</h2>
-<p><strong>Qwen3-Omni does not generate images.</strong> Its outputs are text and speech; it understands images, audio, and video as input but produces neither. The earlier text here said otherwise and was wrong. OmniGen2 fills the image generation and editing slot that Qwen3-Omni leaves open.</p>
-<p>RFD 1145 already places OmniGen2 in the evaluation loop. It is also the generator that produces the images the 3D stage consumes and the images MaskScore’s image-editing stubs mask and reconstruct.</p>
+<section id="wan-vace-image-and-video-generation" class="level2">
+<h2 class="anchored" data-anchor-id="wan-vace-image-and-video-generation">Wan-VACE (image and video generation)</h2>
+<p><strong>Qwen3-Omni does not generate images.</strong> Its outputs are text and speech; it understands images, audio, and video as input but produces neither. Wan-VACE fills the image and video generation slot that Qwen3-Omni leaves open. ~14B params, ~28 GB bf16, ~8.7 GB NF4.</p>
+<p>Wan-VACE is the generator that produces the images the 3D stage consumes and the images MaskScore’s image-editing stubs edit and score.</p>
 </section>
 <section id="pixal3dvoxhammer-the-3d-stage" class="level2">
 <h2 class="anchored" data-anchor-id="pixal3dvoxhammer-the-3d-stage">Pixal3D→VoxHammer (the 3D stage)</h2>
-<p>OmniGen2 generates and edits images; the 3D stage turns those images into meshes. Pixal3D produces a coarse textured mesh from an image, VoxHammer refines it. After QAFT, the thinker + talker occupy ~11.8 GiB, leaving ~12 GiB for the 3D models and OmniGen2 to co-reside.</p>
+<p>Wan-VACE generates and edits images and video; the 3D stage turns those images into meshes. Pixal3D produces a coarse textured mesh from an image, VoxHammer refines it. After QAFT, the thinker + talker occupy ~11.9 GiB. Wan-VACE NF4 (~8.7 GiB) is swapped in for generation and out for the 3D stage.</p>
 </section>
 <section id="editscore-evaluation" class="level2">
 <h2 class="anchored" data-anchor-id="editscore-evaluation">EditScore evaluation</h2>
@@ -402,9 +402,9 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;">always</td>
 </tr>
 <tr class="odd">
-<td>OmniGen2 (image gen/edit)</td>
-<td style="text-align: right;">TBD</td>
-<td style="text-align: right;">TBD</td>
+<td>Wan-VACE (image/video gen)</td>
+<td style="text-align: right;">~28 GB</td>
+<td style="text-align: right;">~8.7 GB</td>
 <td style="text-align: center;">swapped</td>
 </tr>
 <tr class="even">
