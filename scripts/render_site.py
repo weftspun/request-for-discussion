@@ -20,7 +20,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 
-RFD_DIR = re.compile(r"^(1\d{3})-[a-z0-9-]+$")
+RFD_DIR = re.compile(r"^([12]\d{3})-[a-z0-9-]+$")
 TITLE = re.compile(r"^#\s+(.+?)\s*$", re.M)
 #: Optional: an absent field is omitted, never emitted empty.
 FIELDS = ("State", "Feature", "Scope")
@@ -88,8 +88,6 @@ def serials_page(root):
     spec = importlib.util.spec_from_file_location("rfd_serials", g)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
-    allocated, deleted = mod.read(open(os.path.join(root, "SERIALS.usda"), encoding="utf8").read())
-
     def rows(t, note):
         out = []
         for serial in sorted(t, key=int):
@@ -100,10 +98,21 @@ def serials_page(root):
              "Every serial this site has allocated and every one it has retired.",
              "A serial is appended once. It is never removed and never reused,",
              "because it is the last arc of an OID and an arc names one document",
-             "for as long as that document exists.", '',
-             "| Serial | Slug | State |", "| --- | --- | --- |"]
-    lines += rows(allocated, "allocated") + rows(deleted, "deleted")
-    lines += ['', "%d allocated, %d retired." % (len(allocated), len(deleted))]
+             "for as long as that document exists.", '']
+    # Both registers, one section each, the same table shape: the 1000 range is
+    # the Weftspun site, and the 2000 range came here with v-sekai-fabric's
+    # documents and keeps its own file.
+    registers = (("Weftspun (1000)", "SERIALS.usda"),
+                 ("V-Sekai-Fabric (2000)", "SERIALS-vsekai-fabric.usda"))
+    total_a = total_d = 0
+    for heading, fname in registers:
+        allocated, deleted = mod.read(open(os.path.join(root, fname), encoding="utf8").read())
+        total_a += len(allocated)
+        total_d += len(deleted)
+        lines += ["## %s" % heading, '',
+                  "| Serial | Slug | State |", "| --- | --- | --- |"]
+        lines += rows(allocated, "allocated") + rows(deleted, "deleted") + ['']
+    lines += ["%d allocated, %d retired." % (total_a, total_d)]
     return "\n".join(lines) + "\n"
 
 
