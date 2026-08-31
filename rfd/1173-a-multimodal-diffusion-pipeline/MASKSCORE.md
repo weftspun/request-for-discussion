@@ -21,20 +21,20 @@ It parallels EditScore (which scores image edits via a VLM) but
 operates across all modalities and needs no human annotation, because
 the original asset IS the ground truth.
 
-### Stage 1: mask, then reconstruct (denoiser pretraining)
+### Stage 1: edit, then score (self-supervised pretraining)
 
-This is how diffusion and flow-matching models are already trained.
-Take a clean latent, corrupt it (add noise or mask a region), predict
-the clean version back. Qwen3-Omni, Pixal3D, VoxHammer, and the talker
-are all trained this way. The training signal is reconstruction loss
-against the original. No labels.
+Each model edits in its native way. Flow-matching models
+(OmniGen2, Pixal3D, VoxHammer, talker) noise a region and
+denoise. Qwen3-Omni edits text via instruction-following
+generation. The training signal is reconstruction loss against
+the original. No labels.
 
 ### Stage 2: construct reward signal (self-supervised scoring)
 
-Mask a region of a latent from a held asset. Reconstruct. Decode
-BOTH original and reconstruction to the output domain. Score on the
-decoded output via render-and-compare: render both through the ANNY
-mesh via Mitsuba 3 on `sphere_hammersley_sequence` views, then L1 on
+Edit a region of an asset via the modality's editor. Decode BOTH
+original and edit to the output domain. Score on the decoded
+output via render-and-compare: render both through the ANNY mesh
+via Mitsuba 3 on `sphere_hammersley_sequence` views, then L1 on
 depth/normals, SSIM on normals, LPIPS on normals.
 
 The original decoded output is the reference. No human annotator.
@@ -56,7 +56,7 @@ own generations during training (OmniScore). No separate VLM.
 ### Stage 4: RL fine-tuning with the reward model
 
 Use the trained reward model as the reward signal for online RL
-(PPO, GRPO, or similar). The denoiser generates, the reward model
+(PPO, GRPO, or similar). The editor generates, the reward model
 scores, the policy updates. Same loop EditScore uses for OmniGen2.
 No human in the loop.
 
@@ -66,32 +66,33 @@ perceptual distance) propagates through every stage. Scoring on the
 decoded output rather than in latent space is the guard: the decoded
 image, mesh, or waveform is what the user sees.
 
-## All stages operate on maskable latents
+## Editor-to-modality map
 
-Every stage in the pipeline is either a 1D token sequence or a 3D
-spatial grid, and the generation model is a flow-matching or
-diffusion denoiser that takes `(x, t, cond)`:
+Each modality has an editor that produces candidates and a decode
+path that reaches the ANNY mesh for scoring. Discriminative models
+(MoGe-3, ANNY) sit on the decode side; they do not edit.
 
-| stage                       | latent format                     | mask operation               |
-| --------------------------- | --------------------------------- | ---------------------------- |
-| Qwen3-Omni text             | `(B, seq)` token ids              | replace span with mask_id    |
-| Qwen3-Omni image            | `(B, C, H, W)` VAE latent         | noise a spatial patch        |
-| Qwen3-Omni video            | `(B, T, C, H, W)` temporal latent | noise a temporal span        |
-| ANNY keypoints              | `(B, N, 3)` landmark coords       | drop a landmark subset       |
-| MoGe-3 depth                | `(B, 1, H, W)` metric depth map   | noise a spatial patch        |
-| Pixal3D sparse structure    | `(B, C, R, R, R)` voxel grid      | noise a 3D subvolume         |
-| VoxHammer structured latent | SparseTensor (coords + feats)     | drop/noise a spatial region  |
-| Talker                      | speech token sequence             | replace span with mask token |
+| modality   | editor       | mechanism                     | decode path                        |
+| ---------- | ------------ | ----------------------------- | ---------------------------------- |
+| Image      | OmniGen2     | flow-matching on VAE latent   | decode to image                    |
+| Video      | OmniGen2     | flow-matching on VAE sequence | decode to frame sequence           |
+| Mesh       | Pixal3D      | flow-matching on SLATs        | decode to mesh                     |
+| Depth      | Pixal3D      | flow-matching on SLATs        | mesh, render to depth via Mitsuba  |
+| Keypoints  | Pixal3D      | flow-matching on SLATs        | mesh, read surface vertices        |
+| Pose       | Pixal3D      | flow-matching on SLAT sequence| mesh sequence, ANNY IK to bones    |
+| Speech     | Talker       | flow-matching vocoder         | decode to waveform                 |
+| Text       | Qwen3-Omni   | autoregressive generation     | instruction-following edit         |
 
-The 3D latents are confirmed maskable: `SparseStructureFlowModel`
-asserts `x.shape == [B, C, R, R, R]` (line 177 of
-`sparse_structure_flow.py`), and `SLatFlowModel` operates on
-SparseTensors with the same `(x, t, cond)` interface.
+Pixal3D has three distinct latents: sparse structure
+`(B, C, R, R, R)`, shape SLAT (SparseTensor geometry), and texture
+SLAT (SparseTensor PBR). VoxHammer has two: sparse structure
+`(B, C, 16, 16, 16)` and a single unified SLAT. OmniGen2 uses
+the FLUX VAE with 16 channels, not 4.
 
 Scoring happens on the decoded output, not in latent space. The
-masking operates on latents (where the model works); the evaluation
-decodes once (the "stages pass latents; VAE decode happens once, at
-final output" constraint) and scores what the user would see.
+evaluation decodes once (the "stages pass latents; VAE decode
+happens once, at final output" constraint) and scores what the
+user would see.
 
 ## One universal metric: render-and-compare
 
