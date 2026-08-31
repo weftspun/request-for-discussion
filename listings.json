@@ -1,5 +1,29 @@
 [
   {
+    "listing": "/pages/logbook.html",
+    "items": [
+      "/logbook/logbook-blendshape-animation-and-tokenrig-first-light.html",
+      "/logbook/logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.html",
+      "/logbook/logbook-cineform-movie-writer.html",
+      "/logbook/logbook-rfd2133-vfs-embed-retracted.html",
+      "/logbook/logbook-rfd1016-model-repos.html",
+      "/logbook/logbook-rfd1122-t01-pose-check.html",
+      "/logbook/logbook-rfd2133-weftspun-fdb-on-fly.html",
+      "/logbook/logbook-rfd1171-gemma-first-rerank.html",
+      "/logbook/logbook-rfd2133-spot-broker-on-fly.html",
+      "/logbook/logbook-anny-phenotype-fit-retired.html",
+      "/logbook/logbook-qwen3vl-vit-translate-walls.html",
+      "/logbook/logbook-fourloops-first-runs.html",
+      "/logbook/logbook-soft-renderer-and-mitsuba.html",
+      "/logbook/logbook-dfc-emulation-contexts-disagree.html",
+      "/logbook/logbook-rfd1130-two-walls-to-a-hef.html",
+      "/logbook/logbook-edge-npu-and-the-anny-forward.html",
+      "/logbook/logbook-rfd1142-neural-engine-against-the-ugen300.html",
+      "/logbook/logbook-rfd1122-hailo-first-rerank.html",
+      "/logbook/logbook-comment-ladder.html"
+    ]
+  },
+  {
     "listing": "/pages/rfd.html",
     "items": [
       "/rfd/1171-the-presence-loop-and-every-role-in-it/index.html",
@@ -165,27 +189,6 @@
       "/rfd/1002-studio-pipeline-graph/index.html",
       "/rfd/1001-app-shell-and-routing/index.html",
       "/rfd/1000-conventions/index.html"
-    ]
-  },
-  {
-    "listing": "/pages/logbook.html",
-    "items": [
-      "/logbook/logbook-blendshape-animation-and-tokenrig-first-light.html",
-      "/logbook/logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.html",
-      "/logbook/logbook-cineform-movie-writer.html",
-      "/logbook/logbook-rfd1016-model-repos.html",
-      "/logbook/logbook-rfd1122-t01-pose-check.html",
-      "/logbook/logbook-rfd1171-gemma-first-rerank.html",
-      "/logbook/logbook-anny-phenotype-fit-retired.html",
-      "/logbook/logbook-qwen3vl-vit-translate-walls.html",
-      "/logbook/logbook-fourloops-first-runs.html",
-      "/logbook/logbook-soft-renderer-and-mitsuba.html",
-      "/logbook/logbook-dfc-emulation-contexts-disagree.html",
-      "/logbook/logbook-rfd1130-two-walls-to-a-hef.html",
-      "/logbook/logbook-edge-npu-and-the-anny-forward.html",
-      "/logbook/logbook-rfd1142-neural-engine-against-the-ugen300.html",
-      "/logbook/logbook-rfd1122-hailo-first-rerank.html",
-      "/logbook/logbook-comment-ladder.html"
     ]
   }
 ]
