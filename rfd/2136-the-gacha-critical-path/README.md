@@ -41,8 +41,11 @@ The ladder, bottom to top:
    without collapsing (EditScore on posed frames is the QA gate).
 5. **Prompt → skinned mesh → tagged.** The canonical See-Through
    partition (VALID_BODY_PARTS_V3, 23 tags; RFD 1121 audited) is
-   transferred to the mesh as a per-vertex primvar. Parts are
-   addressable.
+   recovered on the mesh by treating the mesh's partition as
+   corruption: VoxHammer proposes repairs toward the canonical
+   partition, EditScore judges each proposal, the loop bounds to N
+   attempts. Written to the mesh as a per-vertex tag primvar. Parts
+   are addressable.
 6. **Prompt → tagged rig → VRM.** The seed-to-VRM assembly runs end
    to end from a single command: a portable, editable character file.
 7. **Prompt list → pool.** The seed-to-VRM command runs against a

@@ -53,8 +53,8 @@ parallel tracks.
     <g transform="translate(0,360)">
       <rect x="40" y="0" width="700" height="50" rx="3" fill="var(--rfd-card)" stroke="var(--rfd-critical)" stroke-width="2"/>
       <text x="60" y="20" font-weight="800" fill="var(--rfd-critical)" font-family="IBM Plex Mono, monospace">5</text>
-      <text x="90" y="20" font-weight="600" fill="var(--rfd-ink)">skinned mesh &rarr; tagged</text>
-      <text x="90" y="38" font-size="11" fill="var(--rfd-ink-soft)">See-Through partition (VALID_BODY_PARTS_V3, 23 tags, RFD 1121) as per-vertex primvar &middot; control: every vertex tagged</text>
+      <text x="90" y="20" font-weight="600" fill="var(--rfd-ink)">skinned mesh &rarr; tagged (VoxHammer + EditScore recover partition)</text>
+      <text x="90" y="38" font-size="11" fill="var(--rfd-ink-soft)">partition-as-corruption: VoxHammer proposes toward canonical, EditScore judges, N-bounded &middot; every vertex tagged</text>
     </g>
 
     <g transform="translate(0,285)">
@@ -114,7 +114,7 @@ Every rung shows something: rung 1 is a mesh, rung 4 is a moving figure, rung 6 
 | 2 | mesh → judged (EditScore) | a number per (prompt, mesh) | planted-good scores above threshold, planted-bad below |
 | 3 | judged → repaired (VoxHammer) | passing mesh, or a recorded refusal | a planted broken mesh reaches passing or refuses |
 | 4 | passing mesh → skinned (SkinTokens) | rig against canonical ANNY | EditScore on posed frames passes, bent-rig control fails |
-| 5 | skinned mesh → tagged | 23-tag per-vertex primvar | every vertex tagged (RFD 1121) |
+| 5 | skinned mesh → tagged (VoxHammer + EditScore recovery) | 23-tag per-vertex primvar | every vertex tagged (RFD 1121); planted mislabeled partition converges to canonical |
 | 6 | tagged rig → VRM | one command, portable file | opens in Godot and a third-party VRM viewer |
 | 7 | prompt list → pool | ~50 VRMs, seed-reproducible | rerun by seed matches; brokered rents ride RFDs 2133–2135 |
 | 8 | pool → roll button | a page dispensing one VRM per pull | two rolls, two distinct VRMs |
