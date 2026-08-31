@@ -585,6 +585,10 @@ def Scope "Serials"
                 {
                     custom string slug = "bao-pki-zerotrust-service-tls"
                 }
+                def "S2143"
+                {
+                    custom string slug = "close-out-gates-red-green-scout"
+                }
             }
         }
     }
