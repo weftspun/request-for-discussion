@@ -24,11 +24,12 @@ left-to-right. If the talker cannot be extracted standalone, halt.
 
     thinker     LLaDA-o (GSAI-ML)          Apache 2.0   diffusion text + image
     talker      Qwen3-Omni audio head      Apache 2.0   voice-cloning speech
+    3D stage    Pixal3D → VoxHammer        Apache 2.0   image → mesh (swap)
     evaluation  EditReward-Bench           —             universal edit scoring
 
-LLaDA-o is 31 GB bf16. CPU offload is blocklisted; NF4 (~8 GB) is the
-desk path. QAFT is permitted for training. The talker must fit one
-consumer card alongside the thinker.
+LLaDA-o is 31 GB bf16. CPU offload is blocklisted; NF4 (~9.3 GB) is
+the desk path. QAFT is permitted for training. The talker co-resides
+with the thinker; the 3D models swap in when needed.
 
 ## Related
 

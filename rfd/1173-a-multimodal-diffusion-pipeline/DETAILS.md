@@ -54,6 +54,19 @@ deferred rather than substituted with a standalone TTS model.
 
 - https://github.com/QwenLM/Qwen3-Omni
 
+## Pixal3D→VoxHammer (the 3D stage)
+
+LLaDA-o generates and edits images; the 3D stage turns those images
+into meshes. Pixal3D produces a coarse textured mesh from an image,
+VoxHammer refines it. The two are sequential, not concurrent, so they
+swap in and out of VRAM rather than co-residing with the thinker.
+
+OmniGen2 was considered for this slot. It overlaps with LLaDA-o's
+own image generation and editing, and RFD 66606.1.1.1145 already
+places it in the evaluation loop. The 3D stage fills a gap nothing
+else covers: image→mesh is the step that produces geometry for
+rigging and animation.
+
 ## EditScore evaluation
 
 EditScore/EditReward-Bench: 2,890 samples across 12 task types and 3
@@ -71,14 +84,17 @@ directly, but available if we train a reward model to automate scoring.
 
 ## VRAM budget on the 3090
 
-| component                  | bf16     | NF4 est.  |
-| ---                        | ---:     | ---:      |
-| LLaDA-o full               | 31.0 GB  | ~8 GB     |
-| Qwen3-Omni talker (if extractable) | ~10 GB | ~2.5 GB |
-| peak activation             | varies   | varies    |
+| component                  | bf16     | NF4 est.  | co-resident? |
+| ---                        | ---:     | ---:      | :---:        |
+| LLaDA-o full               | 31.0 GB  | ~9.3 GB   | always       |
+| Qwen3-Omni talker (if extractable) | ~10 GB | ~2.5 GB | always |
+| Pixal3D                    | TBD      | TBD       | swap         |
+| VoxHammer                  | TBD      | TBD       | swap         |
+| peak activation             | varies   | varies    | —            |
 
-LLaDA-o NF4 + Qwen3-Omni talker NF4: ~10.5 GB, fits if the talker
-can be extracted. LLaDA-o bf16 + anything: does not
+LLaDA-o NF4 + Qwen3-Omni talker NF4: ~11.8 GB, fits if the talker
+can be extracted. The 3D models swap into the remaining ~12 GiB
+when needed. LLaDA-o bf16 + anything: does not
 fit 24 GiB. CPU offload is blocklisted (the CPU as a model execution
 target), so NF4 is the desk path and bf16 requires a rented 40+ GiB
 card.
