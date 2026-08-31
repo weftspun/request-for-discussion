@@ -268,6 +268,21 @@ These recur often enough to state as rules:
 7. **Bugs live at interfaces**, not inside components. Name the interfaces and
    check each.
 
+## How Prose Density Is Gated
+
+Trope density does not rise. `scripts/check_tropes.py` scans `rfd/*/README.md`,
+`rfd/*/DETAILS.md`, and `logbook/*.md`, counts hits for the tells the
+`prose-detrope` subagent removes most often (em-dash joins, counting
+announcements, reasoning leaks, pompous copulas, `exact` intensifiers on
+soft nouns), and refuses a commit that raises a changed file's hits per
+non-blank line. Same diff-based shape as `check_comment_ladder.py`; the
+working agreements (`CLAUDE.md`, `BLOCKLIST.md`, `PITFALLS.md`,
+`KEYPOINTS.md`) stay off it because they carry named tells verbatim.
+
+    python scripts/check_tropes.py                              # report
+    python scripts/check_tropes.py --base origin/main           # gate
+    python scripts/check_tropes.py --self-test                  # 8 controls
+
 ## How Our Own C++ Is Typed
 
 C++ we write uses no `auto`. The code this workspace writes in C++ sits at

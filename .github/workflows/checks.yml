@@ -137,6 +137,21 @@ jobs:
       - run: python scripts/check_comment_ladder.py --self-test
       - run: python scripts/check_comment_ladder.py --base origin/${{ github.event.pull_request.base.ref || 'main' }}
 
+  # Trope density did not rise. Same diff-based shape as comment-ladder,
+  # narrower scope (rfd/*/README.md, rfd/*/DETAILS.md, logbook/*.md) so the
+  # working agreements that carry named tells verbatim stay off it.
+  trope-density:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: python scripts/check_tropes.py --self-test
+      - run: python scripts/check_tropes.py --base origin/${{ github.event.pull_request.base.ref || 'main' }}
+
   # THE PR DESCRIPTION, WHICH ONLY EXISTS ON A PULL REQUEST.
   #
   # `if:` rather than a skip inside the script: a push to main has no description to read,
