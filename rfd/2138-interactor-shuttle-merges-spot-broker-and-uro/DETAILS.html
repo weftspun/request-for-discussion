@@ -312,7 +312,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#the-move-cost-inventory" id="toc-the-move-cost-inventory" class="nav-link" data-scroll-target="#the-move-cost-inventory">The move-cost inventory</a></li>
   <li><a href="#what-does-not-move" id="toc-what-does-not-move" class="nav-link" data-scroll-target="#what-does-not-move">What does not move</a></li>
-  <li><a href="#cutover-order-one-step-per-session" id="toc-cutover-order-one-step-per-session" class="nav-link" data-scroll-target="#cutover-order-one-step-per-session">Cutover order, one step per session</a></li>
+  <li><a href="#cutover-in-place" id="toc-cutover-in-place" class="nav-link" data-scroll-target="#cutover-in-place">Cutover, in place</a></li>
   <li><a href="#why-interactor-rather-than-service" id="toc-why-interactor-rather-than-service" class="nav-link" data-scroll-target="#why-interactor-rather-than-service">Why interactor rather than service</a></li>
   </ul></li>
   </ul>
@@ -395,16 +395,15 @@ ul.task-list li input[type="checkbox"] {
 <p>Serials do not move: RFDs 2133-2137 keep their numbers and their OID URNs, and the register still shows those slugs under the 1.2 arc. The RFDs’ prose is not backfilled to say “shuttle” where it says “spot-broker”: the workspace rule is that a retraction stays next to what it retracts, and a note here plus a mention in each affected RFD’s future logbook entry does the job. <code>check_anti_entropy.py</code> will not object because the slug matches the directory name, not the body.</p>
 <p>The FoundationDB cluster stays <code>weftspun-fdb</code>; the shuttle is a client of it exactly as spot-broker was. The Tigris backup bucket stays <code>weftspun-fdb-blob</code>. The mutual-TLS certificate profile from RFD 2134 issues one new client cert <code>fdb-shuttle.chibifire.com</code> alongside the existing <code>fdb-spot-broker.chibifire.com</code>; the spot- broker cert is revoked after the cutover week.</p>
 </section>
-<section id="cutover-order-one-step-per-session" class="level2">
-<h2 class="anchored" data-anchor-id="cutover-order-one-step-per-session">Cutover order, one step per session</h2>
+<section id="cutover-in-place" class="level2">
+<h2 class="anchored" data-anchor-id="cutover-in-place">Cutover, in place</h2>
+<p>spot-broker has less than an hour of production time and no external callers pinned to its hostname, so the one-week 410 Gone overlap the prior draft named is retracted here: nothing outside would ever see those 410s. The cutover is:</p>
 <ol type="1">
 <li>New repo <code>&lt;org&gt;/interactor-shuttle</code>, first commit is the two source trees merged with the <code>Shuttle.*</code> rename applied.</li>
-<li>Second commit lands the RFD 2138 wording as the repo’s README and places the repo in <code>weftspun/weftspun-keypoint</code>’s <code>default.xml</code> under <code>3-interactor/interactor-shuttle</code>.</li>
+<li>Manifest updated to place the repo at <code>3-interactor/interactor-shuttle</code>.</li>
 <li>Fly app <code>shuttle</code> created; secrets set; deploy runs; landing answers.</li>
-<li>Uro data migration runs against the shuttle Fly app’s database (details on the shape belong in a separate logbook entry when the uro schema is inventoried).</li>
-<li>spot-broker Fly app switched to return 410 Gone from every route; the app stays alive one week.</li>
-<li>DNS/hostname cut to the shuttle app.</li>
-<li>After the week: spot-broker Fly app destroyed; its OAuth app deleted; its client cert revoked from the FDB cluster.</li>
+<li>Uro data migration runs against the shuttle Fly app’s database.</li>
+<li>Fly apps <code>spot-broker</code> and <code>uro</code> destroyed; their OAuth apps deleted; spot-broker’s FDB client cert revoked. <code>weftspun/spot-broker</code> becomes a GitHub-native repo redirect.</li>
 </ol>
 </section>
 <section id="why-interactor-rather-than-service" class="level2">
