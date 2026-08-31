@@ -75,3 +75,14 @@ session: zone `f7e3538886b9874fc7837b22cf2f160e`, responses
 answer from a dig made before the records existed (SOA minimum 1800 s,
 about the length of a sitcom episode), which is why the recursive
 check lied while the authoritative one told the truth.
+
+## The gates, closed
+
+`gate_verify_cert`: after a delete/re-add to shed Fly's own cached
+negative check, Let's Encrypt issued for account.chibifire.com at
+21:43:14 GMT (CN=account.chibifire.com, valid to 2026-11-29). Over
+the live domain: `/health` returns ok, the landing page serves 9600
+bytes with TLS verify 0, and `/v1/sys/seal-status` returns 401 —
+the bao proxy refusing an unauthenticated caller, which is the
+auth gate demonstrating itself. All seven planned actions ran;
+the plan in the dataset row is the plan that executed.
