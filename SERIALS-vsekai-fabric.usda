@@ -28,8 +28,543 @@ def Scope "Serials"
                 custom string[] columns = ["serial int16 PK", "slug string"]
                 custom uniform token kind = "spine"
                 custom string primaryKey = "serial"
-                custom int[] serial = [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045, 2046, 2047, 2048, 2049, 2050, 2051, 2052, 2053, 2054, 2055, 2056, 2057, 2058, 2059, 2060, 2062, 2063, 2064, 2065, 2066, 2067, 2068, 2069, 2070, 2071, 2072, 2073, 2074, 2075, 2076, 2077, 2078, 2079, 2080, 2081, 2082, 2083, 2084, 2085, 2086, 2087, 2088, 2089, 2090, 2091, 2092, 2093, 2094, 2095, 2096, 2097, 2098, 2099, 2100, 2101, 2102, 2103, 2105, 2106, 2107, 2108, 2109, 2110, 2111, 2112, 2113, 2114, 2115, 2116, 2117, 2118, 2119, 2120, 2121, 2122, 2123, 2124, 2125, 2126, 2127, 2128, 2129, 2130, 2132, 2133, 2134, 2135, 2136, 2137]
-                custom string[] slug = ["conventions", "zonefabric-roadmap-vs-mas-bandwidth-fps", "taskweft-value-narrowing-primitives-and-refs", "castspell-sandbox-package-and-manifest-encoding", "castspell-libgodot-sandbox-runtime-scope", "gltf-interactivity-value-type-taxonomy-correction", "cockroachdb-with-mtls-role-separation", "godot-double-precision-template-release-for-zone", "webtransport-over-quic-for-game-traffic", "ghcr-package-ownership-same-repo", "maglev-cycle-1-gateway-handshake", "amend-pr-before-it-enters-the-queue", "archival-file-naming-convention", "art-game-loop-steel-thread", "bounded-llm-steering-queue", "checking-sccache", "compiling-godot-engine", "feature-classification-poc-baseline-stretch", "gitassembly-tag-release", "pin-engine-to-frozen-godot-4-7", "require-pr-and-merge-queue-on-main", "spatial-audio-patched-resonance-audio", "webtransport-http3-transport", "windows-background-services-nssm", "tenseless-continuous-present-voice", "commit-messages-sentence-case", "umbrella-package-installs-all-components", "hexagonal-core-ports-adapters", "cassie-desktop-curvenet-authoring", "cicd-runners-as-queueing-system", "content-build-merged-double-precision-mcp", "core-codegen-lean-slang", "core-contract-pure-reducer-byte-state", "deterministic-cores-integer-seeded-rng", "first-party-curated-content-zone-baker-budgets", "forward-renderer-baked-light", "generated-behavior-sandboxed-riscv", "genre-generic-naming-no-trademarks", "hexagon-budgeter-core", "hexagon-combat-core", "hexagon-loot-core", "hexagon-presence-core", "hexagon-progression-core", "lean4-kernel-cores-flat-c-host-adapters", "loot-action-core-loop-mvp-vertical-slice", "server-authoritative-simulation-deferred-rollback", "webtransportd-core-transport-adapter", "android-template-temurin-jdk21", "fabric-channels-as-reliability-classes", "five-second-transaction-limit", "headless-openxr-testing-with-monado", "http3-listener-session-findings", "integral-entity-transform-wire", "mcp-runtime-bridge-deployed-builds", "r128-fixed-point-as-lean-library", "systemd-quadlet-verification-queue", "vertical-slice-repository-map", "webtransport-persistent-framed-stream", "bad-news-reports-lead-with-the-bottom-line", "org-scoped-github-app-token-for-gh-access", "repository-and-capability-inventory", "repo-markdown-single-source-of-truth-for-project-state", "kebab-case-repos-snake-case-local-checkouts", "fabric-platform-central-elixir-burrito-casync", "game-loop-cluster-sequence", "release-tag-progression-dev-beta-rc", "sccache-github-actions-cache-for-godot-builds", "defer-loot-slice-hardening-until-needed", "loop-slice-telemetry-to-the-observability-collector", "yagni-times-structure-to-need", "actor-lite-worker-pool", "async-fdb-callback-chain", "binary-value-encoding-for-fdb", "fdb-over-cockroachdb-for-zone-state", "macaroon-xdp-security", "pert-critical-path-zonefabric", "plausible-witness-dag-feature-ablation", "sandboxed-godot-in-zone-server-h2o-via-raw-libriscv", "slotmap-entity-storage", "three-layer-verification-strategy", "zonefabric-scaling", "zone-server-h2o-replaces-godot-fabriczone", "zstd-compression-for-zone-state", "the-gyre-mud-setting-on-the-loot-action-shell", "defer-nogod-gossip-zone-authority", "avatar-ik-sinew-mocap-align-over-mink", "picoquic-picotls-transport-for-zone-server-h2o", "flyio-over-podman-quadlets", "uro-burrito-release", "the-gyre-mud-domain-and-mode-selector", "rebac-gates-libriscv-guest-access", "compile-taskweft-to-linear-automata", "minimum-ugc-game-loop-guest-composition", "two-guest-classes-domain-abi-and-bubblewrap", "guest-transport-measured-on-fly", "pubsub-belongs-in-userspace", "rollback-snapshot-budget", "server-authority-on-fly", "tick-rate-send-rate-and-the-bone-budget", "zstd-delta-on-the-wire", "the-whole-deployment-on-15-usd", "uro-on-ecto-foundationdb", "archive-self-host-era-support-repos", "split-the-archive-into-its-own-repo", "janet-scripting-over-a-c-taskweft-core", "local-cabi-guests-and-in-tick-fanout", "two-tiers-with-foundationdb-as-the-store", "h2o-libriscv-as-a-rivet-actor", "convert-the-deployment-words", "lexical-for-the-slash-command-interface", "foundationdb-on-windows-built-from-source", "prove-the-store-by-breaking-it", "a-planner-domain-document-is-a-cheap-layer-surface", "elixir-epoll-zone-server-in-the-h2o-style", "retire-the-h2o-tier-record-set", "a-baker-replaces-the-godot-editor", "salvage-you-can-hold", "the-gyre-became-a-settlement-game", "amend-rfd-2111-against-the-tree", "the-client-is-native", "a-second-webtransport-implementation", "elixir-error-tuples-in-every-reply", "an-interactor-in-another-process", "two-see-through-interactors", "a-service-is-not-a-side", "the-release-ladder-is-not-automated", "cost-and-latency-are-two-budgets", "state-what-a-repository-is-made-of", "a-permission-cannot-be-granted-sideways", "the-pool-rents-from-the-spot-book", "cluster-tls-is-decided-before-data", "checks-run-where-the-credentials-already-are", "the-gacha-critical-path", "rfd-reports-share-one-sheet"]
+
+                def "S2000"
+                {
+                    custom string slug = "conventions"
+                }
+                def "S2001"
+                {
+                    custom string slug = "zonefabric-roadmap-vs-mas-bandwidth-fps"
+                }
+                def "S2002"
+                {
+                    custom string slug = "taskweft-value-narrowing-primitives-and-refs"
+                }
+                def "S2003"
+                {
+                    custom string slug = "castspell-sandbox-package-and-manifest-encoding"
+                }
+                def "S2004"
+                {
+                    custom string slug = "castspell-libgodot-sandbox-runtime-scope"
+                }
+                def "S2005"
+                {
+                    custom string slug = "gltf-interactivity-value-type-taxonomy-correction"
+                }
+                def "S2006"
+                {
+                    custom string slug = "cockroachdb-with-mtls-role-separation"
+                }
+                def "S2007"
+                {
+                    custom string slug = "godot-double-precision-template-release-for-zone"
+                }
+                def "S2008"
+                {
+                    custom string slug = "webtransport-over-quic-for-game-traffic"
+                }
+                def "S2009"
+                {
+                    custom string slug = "ghcr-package-ownership-same-repo"
+                }
+                def "S2010"
+                {
+                    custom string slug = "maglev-cycle-1-gateway-handshake"
+                }
+                def "S2012"
+                {
+                    custom string slug = "amend-pr-before-it-enters-the-queue"
+                }
+                def "S2013"
+                {
+                    custom string slug = "archival-file-naming-convention"
+                }
+                def "S2014"
+                {
+                    custom string slug = "art-game-loop-steel-thread"
+                }
+                def "S2015"
+                {
+                    custom string slug = "bounded-llm-steering-queue"
+                }
+                def "S2016"
+                {
+                    custom string slug = "checking-sccache"
+                }
+                def "S2017"
+                {
+                    custom string slug = "compiling-godot-engine"
+                }
+                def "S2018"
+                {
+                    custom string slug = "feature-classification-poc-baseline-stretch"
+                }
+                def "S2019"
+                {
+                    custom string slug = "gitassembly-tag-release"
+                }
+                def "S2020"
+                {
+                    custom string slug = "pin-engine-to-frozen-godot-4-7"
+                }
+                def "S2021"
+                {
+                    custom string slug = "require-pr-and-merge-queue-on-main"
+                }
+                def "S2022"
+                {
+                    custom string slug = "spatial-audio-patched-resonance-audio"
+                }
+                def "S2023"
+                {
+                    custom string slug = "webtransport-http3-transport"
+                }
+                def "S2024"
+                {
+                    custom string slug = "windows-background-services-nssm"
+                }
+                def "S2025"
+                {
+                    custom string slug = "tenseless-continuous-present-voice"
+                }
+                def "S2026"
+                {
+                    custom string slug = "commit-messages-sentence-case"
+                }
+                def "S2027"
+                {
+                    custom string slug = "umbrella-package-installs-all-components"
+                }
+                def "S2028"
+                {
+                    custom string slug = "hexagonal-core-ports-adapters"
+                }
+                def "S2029"
+                {
+                    custom string slug = "cassie-desktop-curvenet-authoring"
+                }
+                def "S2030"
+                {
+                    custom string slug = "cicd-runners-as-queueing-system"
+                }
+                def "S2031"
+                {
+                    custom string slug = "content-build-merged-double-precision-mcp"
+                }
+                def "S2032"
+                {
+                    custom string slug = "core-codegen-lean-slang"
+                }
+                def "S2033"
+                {
+                    custom string slug = "core-contract-pure-reducer-byte-state"
+                }
+                def "S2034"
+                {
+                    custom string slug = "deterministic-cores-integer-seeded-rng"
+                }
+                def "S2035"
+                {
+                    custom string slug = "first-party-curated-content-zone-baker-budgets"
+                }
+                def "S2036"
+                {
+                    custom string slug = "forward-renderer-baked-light"
+                }
+                def "S2037"
+                {
+                    custom string slug = "generated-behavior-sandboxed-riscv"
+                }
+                def "S2038"
+                {
+                    custom string slug = "genre-generic-naming-no-trademarks"
+                }
+                def "S2039"
+                {
+                    custom string slug = "hexagon-budgeter-core"
+                }
+                def "S2040"
+                {
+                    custom string slug = "hexagon-combat-core"
+                }
+                def "S2041"
+                {
+                    custom string slug = "hexagon-loot-core"
+                }
+                def "S2042"
+                {
+                    custom string slug = "hexagon-presence-core"
+                }
+                def "S2043"
+                {
+                    custom string slug = "hexagon-progression-core"
+                }
+                def "S2044"
+                {
+                    custom string slug = "lean4-kernel-cores-flat-c-host-adapters"
+                }
+                def "S2045"
+                {
+                    custom string slug = "loot-action-core-loop-mvp-vertical-slice"
+                }
+                def "S2046"
+                {
+                    custom string slug = "server-authoritative-simulation-deferred-rollback"
+                }
+                def "S2047"
+                {
+                    custom string slug = "webtransportd-core-transport-adapter"
+                }
+                def "S2048"
+                {
+                    custom string slug = "android-template-temurin-jdk21"
+                }
+                def "S2049"
+                {
+                    custom string slug = "fabric-channels-as-reliability-classes"
+                }
+                def "S2050"
+                {
+                    custom string slug = "five-second-transaction-limit"
+                }
+                def "S2051"
+                {
+                    custom string slug = "headless-openxr-testing-with-monado"
+                }
+                def "S2052"
+                {
+                    custom string slug = "http3-listener-session-findings"
+                }
+                def "S2053"
+                {
+                    custom string slug = "integral-entity-transform-wire"
+                }
+                def "S2054"
+                {
+                    custom string slug = "mcp-runtime-bridge-deployed-builds"
+                }
+                def "S2055"
+                {
+                    custom string slug = "r128-fixed-point-as-lean-library"
+                }
+                def "S2056"
+                {
+                    custom string slug = "systemd-quadlet-verification-queue"
+                }
+                def "S2057"
+                {
+                    custom string slug = "vertical-slice-repository-map"
+                }
+                def "S2058"
+                {
+                    custom string slug = "webtransport-persistent-framed-stream"
+                }
+                def "S2059"
+                {
+                    custom string slug = "bad-news-reports-lead-with-the-bottom-line"
+                }
+                def "S2060"
+                {
+                    custom string slug = "org-scoped-github-app-token-for-gh-access"
+                }
+                def "S2062"
+                {
+                    custom string slug = "repository-and-capability-inventory"
+                }
+                def "S2063"
+                {
+                    custom string slug = "repo-markdown-single-source-of-truth-for-project-state"
+                }
+                def "S2064"
+                {
+                    custom string slug = "kebab-case-repos-snake-case-local-checkouts"
+                }
+                def "S2065"
+                {
+                    custom string slug = "fabric-platform-central-elixir-burrito-casync"
+                }
+                def "S2066"
+                {
+                    custom string slug = "game-loop-cluster-sequence"
+                }
+                def "S2067"
+                {
+                    custom string slug = "release-tag-progression-dev-beta-rc"
+                }
+                def "S2068"
+                {
+                    custom string slug = "sccache-github-actions-cache-for-godot-builds"
+                }
+                def "S2069"
+                {
+                    custom string slug = "defer-loot-slice-hardening-until-needed"
+                }
+                def "S2070"
+                {
+                    custom string slug = "loop-slice-telemetry-to-the-observability-collector"
+                }
+                def "S2071"
+                {
+                    custom string slug = "yagni-times-structure-to-need"
+                }
+                def "S2072"
+                {
+                    custom string slug = "actor-lite-worker-pool"
+                }
+                def "S2073"
+                {
+                    custom string slug = "async-fdb-callback-chain"
+                }
+                def "S2074"
+                {
+                    custom string slug = "binary-value-encoding-for-fdb"
+                }
+                def "S2075"
+                {
+                    custom string slug = "fdb-over-cockroachdb-for-zone-state"
+                }
+                def "S2076"
+                {
+                    custom string slug = "macaroon-xdp-security"
+                }
+                def "S2077"
+                {
+                    custom string slug = "pert-critical-path-zonefabric"
+                }
+                def "S2078"
+                {
+                    custom string slug = "plausible-witness-dag-feature-ablation"
+                }
+                def "S2079"
+                {
+                    custom string slug = "sandboxed-godot-in-zone-server-h2o-via-raw-libriscv"
+                }
+                def "S2080"
+                {
+                    custom string slug = "slotmap-entity-storage"
+                }
+                def "S2081"
+                {
+                    custom string slug = "three-layer-verification-strategy"
+                }
+                def "S2082"
+                {
+                    custom string slug = "zonefabric-scaling"
+                }
+                def "S2083"
+                {
+                    custom string slug = "zone-server-h2o-replaces-godot-fabriczone"
+                }
+                def "S2084"
+                {
+                    custom string slug = "zstd-compression-for-zone-state"
+                }
+                def "S2085"
+                {
+                    custom string slug = "the-gyre-mud-setting-on-the-loot-action-shell"
+                }
+                def "S2086"
+                {
+                    custom string slug = "defer-nogod-gossip-zone-authority"
+                }
+                def "S2087"
+                {
+                    custom string slug = "avatar-ik-sinew-mocap-align-over-mink"
+                }
+                def "S2088"
+                {
+                    custom string slug = "picoquic-picotls-transport-for-zone-server-h2o"
+                }
+                def "S2089"
+                {
+                    custom string slug = "flyio-over-podman-quadlets"
+                }
+                def "S2090"
+                {
+                    custom string slug = "uro-burrito-release"
+                }
+                def "S2091"
+                {
+                    custom string slug = "the-gyre-mud-domain-and-mode-selector"
+                }
+                def "S2092"
+                {
+                    custom string slug = "rebac-gates-libriscv-guest-access"
+                }
+                def "S2093"
+                {
+                    custom string slug = "compile-taskweft-to-linear-automata"
+                }
+                def "S2094"
+                {
+                    custom string slug = "minimum-ugc-game-loop-guest-composition"
+                }
+                def "S2095"
+                {
+                    custom string slug = "two-guest-classes-domain-abi-and-bubblewrap"
+                }
+                def "S2096"
+                {
+                    custom string slug = "guest-transport-measured-on-fly"
+                }
+                def "S2097"
+                {
+                    custom string slug = "pubsub-belongs-in-userspace"
+                }
+                def "S2098"
+                {
+                    custom string slug = "rollback-snapshot-budget"
+                }
+                def "S2099"
+                {
+                    custom string slug = "server-authority-on-fly"
+                }
+                def "S2100"
+                {
+                    custom string slug = "tick-rate-send-rate-and-the-bone-budget"
+                }
+                def "S2101"
+                {
+                    custom string slug = "zstd-delta-on-the-wire"
+                }
+                def "S2102"
+                {
+                    custom string slug = "the-whole-deployment-on-15-usd"
+                }
+                def "S2103"
+                {
+                    custom string slug = "uro-on-ecto-foundationdb"
+                }
+                def "S2105"
+                {
+                    custom string slug = "archive-self-host-era-support-repos"
+                }
+                def "S2106"
+                {
+                    custom string slug = "split-the-archive-into-its-own-repo"
+                }
+                def "S2107"
+                {
+                    custom string slug = "janet-scripting-over-a-c-taskweft-core"
+                }
+                def "S2108"
+                {
+                    custom string slug = "local-cabi-guests-and-in-tick-fanout"
+                }
+                def "S2109"
+                {
+                    custom string slug = "two-tiers-with-foundationdb-as-the-store"
+                }
+                def "S2110"
+                {
+                    custom string slug = "h2o-libriscv-as-a-rivet-actor"
+                }
+                def "S2111"
+                {
+                    custom string slug = "convert-the-deployment-words"
+                }
+                def "S2112"
+                {
+                    custom string slug = "lexical-for-the-slash-command-interface"
+                }
+                def "S2113"
+                {
+                    custom string slug = "foundationdb-on-windows-built-from-source"
+                }
+                def "S2114"
+                {
+                    custom string slug = "prove-the-store-by-breaking-it"
+                }
+                def "S2115"
+                {
+                    custom string slug = "a-planner-domain-document-is-a-cheap-layer-surface"
+                }
+                def "S2116"
+                {
+                    custom string slug = "elixir-epoll-zone-server-in-the-h2o-style"
+                }
+                def "S2117"
+                {
+                    custom string slug = "retire-the-h2o-tier-record-set"
+                }
+                def "S2118"
+                {
+                    custom string slug = "a-baker-replaces-the-godot-editor"
+                }
+                def "S2119"
+                {
+                    custom string slug = "salvage-you-can-hold"
+                }
+                def "S2120"
+                {
+                    custom string slug = "the-gyre-became-a-settlement-game"
+                }
+                def "S2121"
+                {
+                    custom string slug = "amend-rfd-2111-against-the-tree"
+                }
+                def "S2122"
+                {
+                    custom string slug = "the-client-is-native"
+                }
+                def "S2123"
+                {
+                    custom string slug = "a-second-webtransport-implementation"
+                }
+                def "S2124"
+                {
+                    custom string slug = "elixir-error-tuples-in-every-reply"
+                }
+                def "S2125"
+                {
+                    custom string slug = "an-interactor-in-another-process"
+                }
+                def "S2126"
+                {
+                    custom string slug = "two-see-through-interactors"
+                }
+                def "S2127"
+                {
+                    custom string slug = "a-service-is-not-a-side"
+                }
+                def "S2128"
+                {
+                    custom string slug = "the-release-ladder-is-not-automated"
+                }
+                def "S2129"
+                {
+                    custom string slug = "cost-and-latency-are-two-budgets"
+                }
+                def "S2130"
+                {
+                    custom string slug = "state-what-a-repository-is-made-of"
+                }
+                def "S2132"
+                {
+                    custom string slug = "a-permission-cannot-be-granted-sideways"
+                }
+                def "S2133"
+                {
+                    custom string slug = "the-pool-rents-from-the-spot-book"
+                }
+                def "S2134"
+                {
+                    custom string slug = "cluster-tls-is-decided-before-data"
+                }
+                def "S2135"
+                {
+                    custom string slug = "checks-run-where-the-credentials-already-are"
+                }
+                def "S2136"
+                {
+                    custom string slug = "the-gacha-critical-path"
+                }
+                def "S2137"
+                {
+                    custom string slug = "rfd-reports-share-one-sheet"
+                }
             }
         }
     }
