@@ -67,6 +67,17 @@ than by a serial, so digits 3 and 4 are reserved and hold nothing. A reserved
 digit costs one line here. An unreserved one costs what the collision above
 cost, which was 113 numbers meaning two documents at once.
 
+Site 1 was decommissioned on 2026-08-31. `SERIALS.usda` at arc 66606.1.1 is
+frozen: existing 1NNN serials stay in place and stay citable, and no new
+serial is allocated there. New RFDs in this repository take the next unused
+2NNN serial from `SERIALS-vsekai-fabric.usda` at arc 66606.1.2, whose site
+was decommissioned on 2026-08-29 and reactivated on 2026-08-31 for that
+purpose. The full argument, and the retraction of the 2026-08-29 sentence
+that promised no further allocations under 66606.1.2, is in
+`pen-66606.usda` `sitesDecommissioned`. When site 2 fills up, site 5 opens
+at arc 66606.1.5 under this rule; sites 3 and 4 stay reserved for
+date-named registers.
+
 The full identifier of an RFD is:
 
     1.3.6.1.4.1.66606.1.<site>.<number>

@@ -45,8 +45,9 @@ from pxr import Sdf, Usd
 
 HERE = pathlib.Path(__file__).resolve().parent
 DEFAULT_LAYER = HERE.parent / "pen-66606.usda"
-SITE_RE = re.compile(r"^(\d+)\s+(\S+)\s+(\S+)\s+(\S+)$")
+SITE_RE = re.compile(r"^(\d+)\s+(\S+)\s+(\S+)\s+(\S+)(?:\s+(decommissioned))?$")
 WITHOUT_RE = re.compile(r"^(\d+)\s+(.+)$")
+DECOMMISSIONED_RE = re.compile(r"^(\d+)\s")
 
 
 def open_layer(path):
@@ -57,12 +58,22 @@ def open_layer(path):
 
 
 def declared_sites(layer):
-    """site digit -> (owner, repository, arc), read out of the layer metadata."""
+    """site digit -> (owner, repository, arc, decommissioned)."""
     out = {}
     for row in layer.customLayerData.get("sites", []):
         m = SITE_RE.match(str(row).strip())
         if m:
-            out[m.group(1)] = (m.group(2), m.group(3), m.group(4))
+            out[m.group(1)] = (m.group(2), m.group(3), m.group(4), m.group(5) == "decommissioned")
+    return out
+
+
+def decommissioned_rows(layer):
+    """site digit -> its row in `sitesDecommissioned`."""
+    out = {}
+    for row in layer.customLayerData.get("sitesDecommissioned", []):
+        m = DECOMMISSIONED_RE.match(str(row).strip())
+        if m:
+            out.setdefault(m.group(1), str(row))
     return out
 
 
@@ -131,7 +142,7 @@ def site_of(spec_path, layer):
     """The site digit a relation belongs to, from the site scope in its path."""
     names = str(spec_path).strip("/").split("/")
     sites = declared_sites(layer)
-    for digit, (owner, _repo, _arc) in sites.items():
+    for digit, (owner, _repo, _arc, _dec) in sites.items():
         wanted = owner.replace("-", "").lower()
         for name in names:
             if name.lower() == wanted:
@@ -226,6 +237,20 @@ def check_columns_parallel(root_layer, problems):
     return problems
 
 
+def check_decommission_declared(root_layer, problems):
+    """A site marked `decommissioned` in `sites` has a row in `sitesDecommissioned`."""
+    sites = declared_sites(root_layer)
+    rows = decommissioned_rows(root_layer)
+    for digit in sorted(sites):
+        _owner, _repo, _arc, decommissioned = sites[digit]
+        if decommissioned and digit not in rows:
+            problems.append(
+                f"site {digit} is marked decommissioned in `sites` and carries no "
+                f"row in `sitesDecommissioned`"
+            )
+    return problems
+
+
 def check(layer_path=DEFAULT_LAYER):
     problems = []
     stage = open_layer(layer_path)
@@ -234,6 +259,7 @@ def check(layer_path=DEFAULT_LAYER):
     check_accounted(root_layer, problems)
     check_ownership_and_overlap(root_layer, problems)
     check_columns_parallel(root_layer, problems)
+    check_decommission_declared(root_layer, problems)
     return problems
 
 
@@ -352,6 +378,20 @@ def self_test():
           "site2": SECOND_SITE.replace("custom int[] serial = [2000]",
                                        "custom int[] serial = []")
           .replace('custom string[] slug = ["conventions"]', "custom string[] slug = []")}, True),
+        ("a decommissioned site with no row in sitesDecommissioned",
+         {"root": GOOD_ROOT.replace(
+             '"1 weftspun request-for-discussion 1.3.6.1.4.1.66606.1.1",',
+             '"1 weftspun request-for-discussion 1.3.6.1.4.1.66606.1.1 decommissioned",')}, True),
+        ("a decommissioned site with a matching row in sitesDecommissioned",
+         {"root": GOOD_ROOT.replace(
+             '"1 weftspun request-for-discussion 1.3.6.1.4.1.66606.1.1",',
+             '"1 weftspun request-for-discussion 1.3.6.1.4.1.66606.1.1 decommissioned",')
+          .replace(
+             '        string[] sitesWithoutRegister = [\n',
+             '        string[] sitesDecommissioned = [\n'
+             '            "1 decommissioned 2026-08-31. Test row.",\n'
+             '        ]\n'
+             '        string[] sitesWithoutRegister = [\n')}, False),
     ]
 
     ok = True
