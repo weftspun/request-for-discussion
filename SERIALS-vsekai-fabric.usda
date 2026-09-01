@@ -2,6 +2,7 @@
 (
     customLayerData = {
         string arc = "1.3.6.1.4.1.66606.1.2"
+        string reactivated = "Reactivated 2026-08-31 when site 1 was frozen. The site was decommissioned on 2026-08-29 and moved into request-for-discussion, which is where its register now lives; the 2026-08-29 sentence promising no new allocations was retracted in pen-66606.usda sitesDecommissioned. From 2026-08-31 forward this is the workspace source of new RFD serials -- new RFDs get 2NNN numbers here."
         string category = "1"
         string categoryName = "documents"
         string pen = "1.3.6.1.4.1.66606"
