@@ -1,6 +1,6 @@
 # RFD 2142: Zero-trust service TLS via OpenBao PKI
 
-**State:** prediscussion
+**State:** discussion (implemented 2026-09-01; see RFD 2146 for the role/policy map)
 **Feature:** mTLS on the bao listener and cert-based service auth
 **Scope:** weftspun-bao, spot-broker, weft-warp-burrito
 
