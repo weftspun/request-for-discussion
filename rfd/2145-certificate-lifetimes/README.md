@@ -16,11 +16,11 @@ after 15 years of key material.
     role                              notAfter       rotate every
     -----------------------------     ------------   ------------
     Root CA (private, offline key)    25 years       5 years, policy
+    Break-glass CA (in 1P)            25 years       5 years, policy
     Intermediate CA                   3 years        1 year
     mTLS server + client (services)   90 days        <=45 days
     WebTransport leaf                 14 days        <=10 days
     Break-glass leaf (rare, gated)    2 years        on use, then revoke
-    Break-glass CA (in 1P)            5 years        5 years
 
 The root's `notAfter` is 25 years because RFC 5280 §4.1.2.5 makes the
 field MANDATORY, not because rotation should wait that long. Offline
