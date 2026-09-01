@@ -229,7 +229,9 @@ words they already carry.
 This RFD was drafted by an AI and read by a human before it shipped.
 `scripts/check_rfd_canary.py` reads the sentence out of each new RFD's
 README or DETAILS and fails the CI job when it is missing, so a session
-that skipped `CLAUDE.md` cannot ship one.
+that skipped `CLAUDE.md` cannot ship one. A human-only draft carries
+`This RFD was drafted by a human without AI help.` instead; the gate
+accepts either, and asserts both in `--self-test`.
 
 ## Retractions
 

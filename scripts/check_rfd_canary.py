@@ -16,7 +16,9 @@ import subprocess
 import sys
 import tempfile
 
-CANARY = "This RFD was drafted by an AI and read by a human before it shipped."
+AI_CANARY = "This RFD was drafted by an AI and read by a human before it shipped."
+HUMAN_CANARY = "This RFD was drafted by a human without AI help."
+CANARIES = (AI_CANARY, HUMAN_CANARY)
 RFD_ROOT = "rfd"
 
 
@@ -36,7 +38,8 @@ def carries_canary(root, rel_dir):
     for name in ("README.md", "DETAILS.md"):
         p = os.path.join(root, rel_dir, name)
         if os.path.isfile(p):
-            if CANARY in open(p, encoding="utf-8").read():
+            text = open(p, encoding="utf-8").read()
+            if any(c in text for c in CANARIES):
                 return True
     return False
 
@@ -49,8 +52,9 @@ def run(root, base):
         for d in missing:
             print(f"       {d}")
         print()
-        print("     add this sentence to the RFD's README.md or DETAILS.md:")
-        print(f"     {CANARY!r}")
+        print("     add one of these sentences to the RFD's README.md or DETAILS.md:")
+        print(f"     AI-drafted:    {AI_CANARY!r}")
+        print(f"     human-drafted: {HUMAN_CANARY!r}")
         return 1
     print(f"ok   {len(news)} new RFD(s), canary in each.")
     return 0
@@ -79,24 +83,31 @@ def self_test():
     checks = []
     with tempfile.TemporaryDirectory() as t:
         _repo(t)
-        _plant(t, "1001-with-canary-in-readme", f"# a\n\n{CANARY}\n")
-        _plant(t, "1002-with-canary-in-details", "# b\n",
-               f"# b details\n\n{CANARY}\n")
+        _plant(t, "1001-ai-canary-in-readme", f"# a\n\n{AI_CANARY}\n")
+        _plant(t, "1002-ai-canary-in-details", "# b\n",
+               f"# b details\n\n{AI_CANARY}\n")
         _plant(t, "1003-no-canary", "# c\n", "# c details\n")
         _plant(t, "1004-canary-misspelled",
                "# d\n\nThis RFD was drafted by AI and read by a human before it shipped.\n")
+        _plant(t, "1005-human-canary", f"# e\n\n{HUMAN_CANARY}\n")
+        _plant(t, "1006-human-canary-in-details", "# f\n",
+               f"# f details\n\n{HUMAN_CANARY}\n")
         subprocess.run(["git", "-C", t, "add", "."], check=True)
         subprocess.run(["git", "-C", t, "commit", "-q", "-m", "new"], check=True)
         news = new_rfd_dirs(t, "main")
         missing = [d for d in news if not carries_canary(t, d)]
-        checks.append(("canary in README passes",
-                       "rfd/1001-with-canary-in-readme" not in missing))
-        checks.append(("canary in DETAILS passes",
-                       "rfd/1002-with-canary-in-details" not in missing))
+        checks.append(("AI canary in README passes",
+                       "rfd/1001-ai-canary-in-readme" not in missing))
+        checks.append(("AI canary in DETAILS passes",
+                       "rfd/1002-ai-canary-in-details" not in missing))
         checks.append(("no canary is rejected",
                        "rfd/1003-no-canary" in missing))
         checks.append(("a misspelled canary is rejected",
                        "rfd/1004-canary-misspelled" in missing))
+        checks.append(("human canary in README passes",
+                       "rfd/1005-human-canary" not in missing))
+        checks.append(("human canary in DETAILS passes",
+                       "rfd/1006-human-canary-in-details" not in missing))
         checks.append(("the baseline RFD is not rescanned",
                        "rfd/1000-baseline" not in news))
     print()
