@@ -224,6 +224,13 @@ The mapping is documentation. Documentation is what an outside reader
 first reaches for, and this file lets them find what is here in the
 words they already carry.
 
+## Canary
+
+This RFD was drafted by an AI and read by a human before it shipped.
+`scripts/check_rfd_canary.py` reads the sentence out of each new RFD's
+README or DETAILS and fails the CI job when it is missing, so a session
+that skipped `CLAUDE.md` cannot ship one.
+
 ## Retractions
 
 None yet. Any retraction stays next to what it retracts, as `CLAUDE.md`

@@ -170,3 +170,21 @@ jobs:
       - run: python scripts/check_pr_description.py ${{ github.event.pull_request.number }}
         env:
           GH_TOKEN: ${{ github.token }}
+
+  # EVERY NEW RFD CARRIES THE CANARY SENTENCE, which is the workspace's M&M's clause.
+  # An AI that read `CLAUDE.md` before drafting adds the sentence; one that skipped it
+  # will not, and this gate catches the omission. Scoped to RFD directories that did
+  # not exist on the base branch, so existing RFDs are outside the trap and human-only
+  # drafts add nothing they cannot truthfully attest.
+  rfd-canary:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: python scripts/check_rfd_canary.py --self-test
+      - run: python scripts/check_rfd_canary.py --base origin/${{ github.event.pull_request.base.ref || 'main' }}
