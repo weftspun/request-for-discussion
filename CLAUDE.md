@@ -327,8 +327,14 @@ This covers code and the specifications that describe it. It does not cover the
 documents — an RFD, a logbook entry and this file carry the measurement and the
 retraction that produced them, and that is what they are for.
 
-`check_comment_ladder.py` measures it. The rungs are 5, 10, 15, 20, 25, 30, 35
-and 40 per cent, and a changed file may not leave the rung it sits on.
+`check_comment_ladder.py` measures it. The rungs are 3, 5, 10, 15, 20, 25, 30,
+35 and 40 per cent, and a changed file may not leave the rung it sits on. The
+3% rung is the median comment density of `entities-godot-main` measured on
+2026-08-31 across 1341 files of 200+ non-blank lines with vendored trees
+excluded (median 3.27%, rounded down; mean 5.01%, p90 10.55%, p95 14.65%). It
+replaces a 12% rung floated earlier the same day: 12% was an intuition, 3% is
+the measurement, and a rung derived from what a peer codebase actually holds
+carries an argument the intuition did not.
 
 **Add a comment line and the density you already had is the ceiling.** A file at
 30.2% sits on the 30% rung, and the gap up to 35% is where that rung ends rather
