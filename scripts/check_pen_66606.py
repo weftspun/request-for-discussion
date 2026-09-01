@@ -13,29 +13,14 @@ authoring the same serial compose into one prim with one value, which reads exac
 agreement. Neither `usdchecker` nor `check_usd_valid.py` has an opinion about either.
 
 WHAT IT CHECKS.
+1. Every sublayer resolves.
+2. A site authors only its own serials.
+3. No two sites author the same serial.
+4. Every declared site contributes a register or is excused in `sitesWithoutRegister`.
+5. Column arrays declared by a relation are parallel.
+6. A site marked `decommissioned` in `sites` has a row in `sitesDecommissioned`.
 
-1. EVERY SUBLAYER RESOLVES. A path that does not resolve composes to nothing, and a
-   register that contributes nothing looks identical to a site with no serials.
-
-2. A SITE AUTHORS ONLY ITS OWN SERIALS. Site 1's serials begin with 1. A site that
-   authored 2015 would be allocating in another site's space, which is the collision RFD
-   1000 was written for: before it, 113 numbers named a document in two repositories.
-
-3. NO TWO SITES AUTHOR THE SAME SERIAL. Checked against the layer stack rather than the
-   composed stage, because composition is exactly what hides this. Two sites authoring
-   serial 1015 compose to one row.
-
-4. EVERY SITE IS ACCOUNTED FOR. A site named in `sites` either contributes a sublayer or
-   carries a row in `sitesWithoutRegister` saying why it does not. A site that quietly
-   left the composition would otherwise read as a site with nothing to declare.
-
-5. COLUMN ARRAYS ARE PARALLEL. Each relation declares its columns and authors one typed
-   array for each, equal in length. This is what the markdown table it replaced could not
-   carry: a packed row splits on whitespace, and a value with a space in it becomes two
-   columns without saying so.
-
-Run --self-test to see each check reject a known-bad input, because a check that passes on
-broken input certifies the defect instead of catching it.
+Run --self-test for the controls, one per known-bad input.
 """
 import pathlib
 import re
