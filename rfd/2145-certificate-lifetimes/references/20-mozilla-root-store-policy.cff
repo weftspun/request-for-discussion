@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "Cited for the 15-year cap on public-trust root key material."
+title: "Mozilla Root Store Policy"
+type: standard
+authors:
+  - name: "Mozilla Foundation"
+version: "2.9"
+url: "https://www.mozilla.org/en-US/about/governance/policies/security-group/certs/policy/"
+date-released: 2023-09
+license: "MPL-2.0"
+notes: "§7.1: 'For a Root CA certificate trusted for server authentication,
+  Mozilla will remove the websites trust bit when the CA key material is more
+  than 15 years old.' Our root is private, so Mozilla does not force our hand,
+  but the industry consensus is that 15 years is the outer edge before
+  cryptographic parameters and operational discipline drift. RFD 2145 rotates
+  at 5 years for the same reason, one-third of that bound."

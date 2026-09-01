@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "Cited for the 200 → 100 → 47 day schedule on publicly-trusted TLS
+  leaf validity, which sets the direction the private-PKI table follows."
+title: "Ballot SC-081v3: Introduce Schedule of Reducing Validity and Data Reuse Periods"
+type: standard
+authors:
+  - name: "CA/Browser Forum Server Certificate Working Group"
+url: "https://cabforum.org/2025/04/11/ballot-sc081v3-introduce-schedule-of-reducing-validity-and-data-reuse-periods/"
+date-released: 2025-04-11
+license: "CC-BY 4.0"
+notes: "Adopted 2025-04. Schedule: maximum TLS certificate lifespan drops to
+  200 days on 2026-03-15, 100 days on 2027-03-15, 47 days on 2029-03-15; DCV
+  reuse period shrinks in parallel. This RFD's mTLS leaf row (90 days) is
+  positioned between the 2026 and 2027 public-TLS ceilings; our private
+  chain has no dependency on public trust but adopts the direction."

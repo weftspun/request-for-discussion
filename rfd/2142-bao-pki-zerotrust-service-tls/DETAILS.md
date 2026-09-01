@@ -21,6 +21,13 @@ authentication to the secrets API.
 
 ## Enabling the PKI secrets engine
 
+Note: the `ttl=87600h` (10 years) and `max_ttl=8760h` (1 year) below
+were retracted by RFD 2145 on 2026-09-01. Current guidance:
+`ttl=26280h` (3 years) on intermediates, `max_ttl=2160h` (90 days) on
+service leaves. The old values are kept where they stand so a reader
+following an older link sees the change; new deploys use RFD 2145's
+numbers.
+
     bao secrets enable pki
     bao write pki/root/generate/internal \
       common_name="svc-ca.chibifire.com" \

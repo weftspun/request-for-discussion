@@ -594,6 +594,10 @@ def Scope "Serials"
                 {
                     custom string slug = "fdb-dr-runbook-first-run"
                 }
+                def "S2145"
+                {
+                    custom string slug = "certificate-lifetimes"
+                }
             }
         }
     }

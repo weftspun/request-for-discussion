@@ -41,6 +41,13 @@ The existing CA certificate, extracted from any running machine:
 
 ### Phase 1: dual-CA trust bundle
 
+The `-days 3650` (10 years) on the CA below was retracted by
+RFD 2145 on 2026-09-01. Current guidance: 25-year `notAfter` on the
+offline root with 5-year policy rotation; run the command with
+`-days 9125` and schedule the ceremony date in the anti-entropy
+check. Kept in place because a reader working from the earlier text
+should see the change and where it went.
+
 Generate the new CA:
 
     openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:4096 \
