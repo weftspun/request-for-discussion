@@ -327,8 +327,10 @@ This covers code and the specifications that describe it. It does not cover the
 documents — an RFD, a logbook entry and this file carry the measurement and the
 retraction that produced them, and that is what they are for.
 
-`check_comment_ladder.py` measures it. The rungs are 5, 10, 15, 20, 25, 30, 35
-and 40 per cent, and a changed file may not leave the rung it sits on.
+`check_comment_ladder.py` measures it. The rungs are 5, 10, 12, 15, 20, 25, 30,
+35 and 40 per cent, and a changed file may not leave the rung it sits on. The
+12% rung was added on 2026-08-31 to tighten the low end, so a file between 10
+and 12 per cent no longer inherits the slack of the 15% rung above it.
 
 **Add a comment line and the density you already had is the ceiling.** A file at
 30.2% sits on the 30% rung, and the gap up to 35% is where that rung ends rather
