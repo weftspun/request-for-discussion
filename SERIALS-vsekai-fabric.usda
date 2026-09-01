@@ -598,6 +598,10 @@ def Scope "Serials"
                 {
                     custom string slug = "certificate-lifetimes"
                 }
+                def "S2146"
+                {
+                    custom string slug = "bao-is-the-secret-store"
+                }
             }
         }
     }
