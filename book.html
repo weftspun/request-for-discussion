@@ -1381,6 +1381,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#decision-175" id="toc-decision-175" class="nav-link" data-scroll-target="#decision-175">Decision</a></li>
   <li><a href="#related-166" id="toc-related-166" class="nav-link" data-scroll-target="#related-166">Related</a></li>
   </ul></li>
+  <li><a href="#rfd-2146-bao-is-the-secret-store-cert-auth-is-the-fence" id="toc-rfd-2146-bao-is-the-secret-store-cert-auth-is-the-fence" class="nav-link" data-scroll-target="#rfd-2146-bao-is-the-secret-store-cert-auth-is-the-fence">RFD 2146: Bao is the secret store, cert-auth is the fence</a>
+  <ul class="collapse">
+  <li><a href="#problem-174" id="toc-problem-174" class="nav-link" data-scroll-target="#problem-174">Problem</a></li>
+  <li><a href="#decision-176" id="toc-decision-176" class="nav-link" data-scroll-target="#decision-176">Decision</a></li>
+  <li><a href="#related-167" id="toc-related-167" class="nav-link" data-scroll-target="#related-167">Related</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -5377,7 +5383,7 @@ scoring     MaskScore + EditScore      n/a           self-supervised reward</cod
 <section id="rfd-2142-zero-trust-service-tls-via-openbao-pki" class="level1">
 <h1>RFD 2142: Zero-trust service TLS via OpenBao PKI</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2142</code></p>
-<p><strong>State:</strong> prediscussion <strong>Feature:</strong> mTLS on the bao listener and cert-based service auth <strong>Scope:</strong> weftspun-bao, spot-broker, weft-warp-burrito</p>
+<p><strong>State:</strong> discussion (implemented 2026-09-01; see RFD 2146 for the role/policy map) <strong>Feature:</strong> mTLS on the bao listener and cert-based service auth <strong>Scope:</strong> weftspun-bao, spot-broker, weft-warp-burrito</p>
 <section id="problem-170" class="level2">
 <h2 class="anchored" data-anchor-id="problem-170">Problem</h2>
 <p>Services on 6PN read secrets from bao over plaintext HTTP. The root token in 1Password is for emergencies; sharing it with services is the credential distribution problem bao exists to solve. Any 6PN neighbor can observe or modify traffic to the listener.</p>
@@ -5463,6 +5469,25 @@ Break-glass leaf (rare, gated)    2 years        on use, then revoke</code></pre
 <section id="related-166" class="level2">
 <h2 class="anchored" data-anchor-id="related-166">Related</h2>
 <p>RFD 2134, 2141, 2142, 2144. Each carries a retraction pointing here.</p>
+</section>
+</section>
+<section id="rfd-2146-bao-is-the-secret-store-cert-auth-is-the-fence" class="level1">
+<h1>RFD 2146: Bao is the secret store, cert-auth is the fence</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2146</code></p>
+<p><strong>State:</strong> discussion <strong>Scope:</strong> the workspace’s Bao instance and every consumer that already presents a per-identity TLS leaf.</p>
+<section id="problem-174" class="level2">
+<h2 class="anchored" data-anchor-id="problem-174">Problem</h2>
+<p>Every service ends up with three identity questions: what secrets can it read, what actions can it take, and how does it prove it is what it claims to be. Left alone, each answer accretes its own credential: a shared bearer for reads, a root token for writes, a network ACL as an identity substitute. Every one becomes a rotation problem and a leak surface. When the store sits behind mTLS, the client already presents a per-identity cert at the TLS handshake, and the API layer above ignores it and re-asks with a token.</p>
+</section>
+<section id="decision-176" class="level2">
+<h2 class="anchored" data-anchor-id="decision-176">Decision</h2>
+<p>The cert is the answer. Bao’s cert auth backend accepts each identity’s per-service leaf as the login credential, mints a scoped token bound to that identity’s role’s policies, and returns it. No shared bearers, no root token in service code, no network ACL as an identity substitute. The cert is already the fence at TLS; this RFD extends it up the stack.</p>
+<p>Two axes carry the design. <strong>Policies</strong> shape <code>&lt;verb&gt;-&lt;scope&gt;</code>: verb in {read, write, admin, issue}; scope is a KV subtree, a PKI mount, or <code>*</code> for sudo. <strong>Roles</strong> bind one identity’s leaf (or a small exact-match CN allow-list, no globs) to a set of policies with a short-session TTL. New app: one policy, one role. New capability: one policy against an existing scope.</p>
+<p>The store becomes the source of truth for every secret; 1P retains the material as an offline mirror. Role table, walkthrough, negative controls in <code>DETAILS.md</code>.</p>
+</section>
+<section id="related-167" class="level2">
+<h2 class="anchored" data-anchor-id="related-167">Related</h2>
+<p>RFD 2140, 2142 (implemented here), 2144, 2145.</p>
 
 
 </section>

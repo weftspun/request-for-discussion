@@ -295,6 +295,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#changed" id="toc-changed" class="nav-link" data-scroll-target="#changed">Changed</a></li>
   <li><a href="#fixed" id="toc-fixed" class="nav-link" data-scroll-target="#fixed">Fixed</a></li>
   <li><a href="#also-added" id="toc-also-added" class="nav-link" data-scroll-target="#also-added">Also added</a></li>
+  <li><a href="#also-added-later-in-the-day" id="toc-also-added-later-in-the-day" class="nav-link" data-scroll-target="#also-added-later-in-the-day">Also added, later in the day</a></li>
   <li><a href="#end-of-day-state" id="toc-end-of-day-state" class="nav-link" data-scroll-target="#end-of-day-state">End-of-day state</a></li>
   </ul></li>
   </ul>
@@ -341,6 +342,15 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="also-added">Also added</h2>
 <ul>
 <li><a href="https://weftspun.github.io/weftspun-manuals/rfd/2145-certificate-lifetimes/">RFD 2145</a>: certificate lifetimes, from a risk-based ceiling. Replaces the 10-year CAs and 1-to-2-year leaves RFDs 2134, 2141, 2142, 2144 landed with. New ceilings: <strong>25 years on the offline Root’s <code>notAfter</code> with 5-year policy rotation</strong> (X.509 makes <code>notAfter</code> mandatory per RFC 5280 §4.1.2.5, so the field must exist, but rotation is a policy commitment rather than a validation gate on an offline key that pays no rent), <strong>3 years on intermediates with 1-year rotation</strong>, <strong>90 days on mTLS service leaves with ≤45-day rotation</strong>, and <strong>14 days on WebTransport leaves</strong> (Chromium’s <code>serverCertificateHashes</code> maximum). Citations live as <code>.cff</code> files under <code>rfd/2145-certificate-lifetimes/references/</code> — RFC 5280, Mozilla Root Store Policy §7.1’s 15-year public-trust cap, CA/B Forum SC-081v3’s 200 → 100 → 47 day schedule, NCSC’s “as short as practical” principle, NIST SP 800-57 Part 1 §5.3.6 cryptoperiod framing, W3C WebTransport. RFDs 2134, 2141, 2142, 2144 carry in-place retractions pointing here for the specific numbers replaced. S2145 registered.</li>
+</ul>
+</section>
+<section id="also-added-later-in-the-day" class="level2">
+<h2 class="anchored" data-anchor-id="also-added-later-in-the-day">Also added, later in the day</h2>
+<ul>
+<li><code>spot.chibifire.com</code> — first custom domain wired to a recovered app. CF <code>A</code> + <code>AAAA</code> for the shared IPv4 and dedicated IPv6 Fly allocated to <code>spot-broker</code>, plus the ACME challenge CNAME and ownership TXT records; <code>fly certs add</code> then <code>Issued</code> in about a minute. <code>https://spot.chibifire.com/</code> returns 200 with a Let’s Encrypt cert (<code>issuer=Let's Encrypt CN=YE2</code>).</li>
+<li><strong>Four secrets moved from 1P into Bao KV as source of truth</strong> (task 19): <code>secret/weftspun/fdb/cluster-id</code>, <code>secret/weftspun/cloudflare/edit-zone-dns</code>, <code>secret/weftspun/cloudflare/r2-bearer</code>, <code>secret/weftspun/fdb/r2-dr</code>. Each value tagged with its provenance. 1P items retained as offline mirror.</li>
+<li><a href="https://weftspun.github.io/weftspun-manuals/rfd/2146-bao-is-the-secret-store/">RFD 2146</a> — Bao is the secret store, cert-auth is the fence. Five policies (<code>admin</code>, <code>dns-editor</code>, <code>fdb-config-reader</code>, <code>pki-issuer</code>, <code>app-reader-spot</code>) and three initial cert-auth roles (<code>admin-v2</code>, <code>spot-broker-app</code>, <code>fdb-cluster</code>) each binding a specific <code>chibifire.com Intermediate CA v2</code> leaf to the minimum policies it needs. Verified: cert-only DNS edit path (no <code>op read</code>) works end-to-end; negative controls (spot-broker-app and fdb-cluster attempting to read <code>cloudflare/edit-zone-dns</code>) both return <code>403 permission denied</code>. RFD 2142 promoted from <code>prediscussion</code> to <code>discussion</code> and points forward here for the role table. S2146 registered.</li>
+<li><code>logbook/logbook-rfd2146-zerotrust-roles-first-run.md</code> — measured cost of enabling cert-auth (~9 HTTP POSTs, no Bao restart needed), the leaf-vs-bundle finding on TLS chain construction, and the two negative controls.</li>
 </ul>
 </section>
 <section id="end-of-day-state" class="level2">
