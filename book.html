@@ -1387,6 +1387,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#decision-176" id="toc-decision-176" class="nav-link" data-scroll-target="#decision-176">Decision</a></li>
   <li><a href="#related-167" id="toc-related-167" class="nav-link" data-scroll-target="#related-167">Related</a></li>
   </ul></li>
+  <li><a href="#rfd-2147-bao-is-critical-infrastructure-now" id="toc-rfd-2147-bao-is-critical-infrastructure-now" class="nav-link" data-scroll-target="#rfd-2147-bao-is-critical-infrastructure-now">RFD 2147: Bao is critical infrastructure now</a>
+  <ul class="collapse">
+  <li><a href="#problem-175" id="toc-problem-175" class="nav-link" data-scroll-target="#problem-175">Problem</a></li>
+  <li><a href="#decision-177" id="toc-decision-177" class="nav-link" data-scroll-target="#decision-177">Decision</a></li>
+  <li><a href="#related-168" id="toc-related-168" class="nav-link" data-scroll-target="#related-168">Related</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -5488,6 +5494,30 @@ Break-glass leaf (rare, gated)    2 years        on use, then revoke</code></pre
 <section id="related-167" class="level2">
 <h2 class="anchored" data-anchor-id="related-167">Related</h2>
 <p>RFD 2140, 2142 (implemented here), 2144, 2145.</p>
+</section>
+</section>
+<section id="rfd-2147-bao-is-critical-infrastructure-now" class="level1">
+<h1>RFD 2147: Bao is critical infrastructure now</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2147</code></p>
+<p><strong>State:</strong> discussion <strong>Scope:</strong> weftspun-bao, its consumers, its DR runbook.</p>
+<section id="problem-175" class="level2">
+<h2 class="anchored" data-anchor-id="problem-175">Problem</h2>
+<p>Bao was one machine, Shamir seal single share, operator+1P recovery per restart. RFD 2140’s <code>ha_enabled = "false"</code> fit that framing. RFD 2146 then moved every routine credential read, coordination write, and policy check onto Bao. Every consumer now depends on Bao being up, and RFD 2140’s reliability budget is smaller than what routes through Bao now needs.</p>
+</section>
+<section id="decision-177" class="level2">
+<h2 class="anchored" data-anchor-id="decision-177">Decision</h2>
+<p>Bao’s availability class rises to match its consumers’. Recovery becomes hands-off, not operator-with-1P.</p>
+<ol type="1">
+<li><strong>Replicas across zones, coordinated over FDB.</strong> <code>ha_enabled = true</code>, three Bao machines minimum (matching FDB’s three-zone spread and fault-tolerance-1 posture); consumers hit <code>weftspun-bao.internal</code>.</li>
+<li><strong>Auto-unseal.</strong> HA without auto-unseal is theatre. A fleet restart returns the operator to the critical path. KMS-backed seal wrapper removes the human from routine restarts; the Shamir key in 1P stays as break-glass (RFD 2144 defect #11’s day).</li>
+<li><strong>Consumers cache what they can.</strong> A bearer held for a few minutes puts Bao in the critical path only at cache expiry.</li>
+<li><strong>No CDN proxy in front of workspace services.</strong> CF-proxied records have Cloudflare terminating TLS at its edge, every byte plaintext at CF for the round trip. Workspace services stay DNS-only; edge cache, if needed, is Fly-side or origin-side.</li>
+</ol>
+<p>Details, sub-decisions, migration in <code>DETAILS.md</code>. S2147.</p>
+</section>
+<section id="related-168" class="level2">
+<h2 class="anchored" data-anchor-id="related-168">Related</h2>
+<p>RFD 2140, 2144, 2145, 2146.</p>
 
 
 </section>

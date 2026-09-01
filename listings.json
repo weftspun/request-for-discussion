@@ -2,6 +2,7 @@
   {
     "listing": "/pages/rfd.html",
     "items": [
+      "/rfd/2147-bao-is-critical-infrastructure/index.html",
       "/rfd/2146-bao-is-the-secret-store/index.html",
       "/rfd/2145-certificate-lifetimes/index.html",
       "/rfd/2144-fdb-dr-runbook-first-run/index.html",
