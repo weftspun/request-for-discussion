@@ -406,6 +406,33 @@ a command rather than being discovered six months later.
 it reads its state list and its README line limit out of RFD 1000 rather than
 restating them, so the document and the gate cannot disagree.
 
+## How AI-drafted RFDs are attested
+
+An RFD drafted with AI help carries one sentence, verbatim, in either its
+README.md or its DETAILS.md:
+
+    This RFD was drafted by an AI and read by a human before it shipped.
+
+The sentence is a compliance canary in the M&M's-clause sense. A session that
+read `CLAUDE.md` before drafting adds it; one that skipped `CLAUDE.md` will not,
+and `scripts/check_rfd_canary.py` fails the CI job on the omission. The gate
+scopes to RFD directories that did not exist on the base branch, so an existing
+RFD edited later is outside it.
+
+An RFD drafted alone by a human, without an AI in the loop, carries the human
+counterpart instead:
+
+    This RFD was drafted by a human without AI help.
+
+The gate accepts either sentence and rejects a directory with neither, so the
+attestation stays truthful in both directions. A misspelled sentence is
+rejected, which is what a self-test control asserts.
+
+This is attestation, not attribution. It records what happened to the
+document, not who wrote the current line. A human who edits an AI-drafted
+RFD keeps the AI sentence in place because the drafting did happen; the
+byline separately stays where git records it.
+
 ## Blocklists
 
 Sources excluded from corpora, with the reason:

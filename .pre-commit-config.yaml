@@ -226,6 +226,24 @@ repos:
         files: ^scripts/(check_comment_ladder|comment_density)\.py$
         pass_filenames: false
 
+      # THE M&M'S CLAUSE. A new RFD README that ships without the canary sentence is one
+      # an AI drafted from a session that skipped `CLAUDE.md`. The self-test is what
+      # makes the gate worth having; the run itself is a manual stage, because the
+      # base-branch diff has no useful meaning on a local commit.
+      - id: rfd-canary
+        name: every new RFD carries the drafting canary
+        entry: python scripts/check_rfd_canary.py
+        language: system
+        pass_filenames: false
+        stages: [manual]
+
+      - id: rfd-canary-self-test
+        name: the canary gate still fails on a new RFD without the sentence
+        entry: python scripts/check_rfd_canary.py --self-test
+        language: system
+        files: ^scripts/check_rfd_canary\.py$
+        pass_filenames: false
+
   # THE RFD HOOKS, FROM THE OTHER HALF OF THIS REPOSITORY.
   #
   # `weftspun/logbook` and `weftspun/request-for-discussion` were two repositories and
