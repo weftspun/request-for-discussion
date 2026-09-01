@@ -162,6 +162,12 @@ everything after the first `=`) or `sed 's/^uk=//'`.
 
 ## The break-glass CA
 
+The 5-year break-glass CA and 2-year machine leaves below are the
+"break-glass" row in RFD 2145's table. The 10-year Bao WebTransport
+intermediate this DR also minted (`pki-wt/`) is now RETRACTED by
+RFD 2145 down to 3 years; re-mint before its `notAfter` and rotate at
+year 1. See RFD 2145's `references/` for the CFF citations.
+
 Minted P-384 self-signed root, five-year validity:
 
     fingerprint  71:D6:EE:B6:E1:93:78:F6:70:05:72:1D:F4:BD:24:3A:B7:C3:9A:91:28:FE:A2:D2:60:E5:B8:8F:0F:1E:0F:15

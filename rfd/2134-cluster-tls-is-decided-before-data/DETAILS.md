@@ -14,6 +14,14 @@ line.
 
 ## The profile
 
+The 10-year CA and 2-year leaf numbers below were retracted by
+RFD 2145 on 2026-09-01. The current guidance is 25-year `notAfter` on
+the offline root with 5-year policy rotation, 3-year intermediates, and
+90-day service leaves; see RFD 2145 and its `references/` for the CFF
+citations. The lines are kept in place so a reader working from an
+older linked reference can see what the values used to say and what
+they moved to.
+
 CA (`fdb-ca.chibifire.com`, 4096-bit RSA, 10 years):
 
     basicConstraints = critical, CA:true
