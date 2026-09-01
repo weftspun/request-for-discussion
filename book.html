@@ -5452,11 +5452,11 @@ scoring     MaskScore + EditScore      n/a           self-supervised reward</cod
 <pre><code>role                              notAfter       rotate every
 -----------------------------     ------------   ------------
 Root CA (private, offline key)    25 years       5 years, policy
+Break-glass CA (in 1P)            25 years       5 years, policy
 Intermediate CA                   3 years        1 year
 mTLS server + client (services)   90 days        &lt;=45 days
 WebTransport leaf                 14 days        &lt;=10 days
-Break-glass leaf (rare, gated)    2 years        on use, then revoke
-Break-glass CA (in 1P)            5 years        5 years</code></pre>
+Break-glass leaf (rare, gated)    2 years        on use, then revoke</code></pre>
 <p>The root’s <code>notAfter</code> is 25 years because RFC 5280 §4.1.2.5 makes the field MANDATORY, not because rotation should wait that long. Offline root: tiny compromise surface, expensive downstream re-issuance. Rotation is a <strong>5-year policy commitment</strong>, enforced by <code>check_anti_entropy.py</code>, not by cert validation. Intermediates and leaves are the opposite: their <code>notAfter</code> IS the rotation gate.</p>
 <p><code>DETAILS.md</code> carries the citations (RFC 5280, Mozilla Root Store Policy, CA/B Forum SC-081v3, NCSC, NIST SP 800-57 Pt.1 §5.3.6) and the current-state audit.</p>
 </section>

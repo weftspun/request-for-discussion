@@ -293,6 +293,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#why-the-root-cert-has-an-expiry-at-all" id="toc-why-the-root-cert-has-an-expiry-at-all" class="nav-link" data-scroll-target="#why-the-root-cert-has-an-expiry-at-all">Why the root cert has an expiry at all</a></li>
   <li><a href="#why-the-rotation-on-the-root-is-5-years-not-25" id="toc-why-the-rotation-on-the-root-is-5-years-not-25" class="nav-link" data-scroll-target="#why-the-rotation-on-the-root-is-5-years-not-25">Why the ROTATION on the root is 5 years, not 25</a></li>
+  <li><a href="#why-the-break-glass-ca-gets-the-same-numbers-as-the-root" id="toc-why-the-break-glass-ca-gets-the-same-numbers-as-the-root" class="nav-link" data-scroll-target="#why-the-break-glass-ca-gets-the-same-numbers-as-the-root">Why the break-glass CA gets the SAME numbers as the root</a></li>
   <li><a href="#why-the-intermediates-get-3-years" id="toc-why-the-intermediates-get-3-years" class="nav-link" data-scroll-target="#why-the-intermediates-get-3-years">Why the intermediates get 3 years</a></li>
   <li><a href="#why-the-leaves-get-90-days-14-days" id="toc-why-the-leaves-get-90-days-14-days" class="nav-link" data-scroll-target="#why-the-leaves-get-90-days-14-days">Why the leaves get 90 days / 14 days</a></li>
   <li><a href="#current-state-2026-09-01" id="toc-current-state-2026-09-01" class="nav-link" data-scroll-target="#current-state-2026-09-01">Current state, 2026-09-01</a></li>
@@ -338,6 +339,11 @@ while balancing the operational overhead of renewal.
 <p><strong>NIST SP 800-57 Part 1 §5.3.6 (key lifetimes).</strong> Recommends “originator usage period” and “recipient usage period” both bounded; public-key signing keys used to certify other keys are the highest- value keys in the system and thus have the tightest recommended cryptoperiod. Not a specific year, but a directional bound.</p>
 <p>Five years is the smallest rotation cadence at which the CA ceremony is a set-piece event we prepare for rather than an emergency. Half of that is the “start scheduling the next ceremony” trigger.</p>
 </section>
+<section id="why-the-break-glass-ca-gets-the-same-numbers-as-the-root" class="level2">
+<h2 class="anchored" data-anchor-id="why-the-break-glass-ca-gets-the-same-numbers-as-the-root">Why the break-glass CA gets the SAME numbers as the root</h2>
+<p>The break-glass CA sits in 1P beside the operator’s other credentials and comes out on the day the primary root is unusable. That day is a disaster with a fixed script. The break-glass root immediately signs a new set of intermediates and every downstream leaf. If the break-glass has less validity remaining than the primary rotation cadence, the swap-in re-mints twice (once to swap, once to reach the next scheduled ceremony). That is the class of error a DR runbook cannot afford.</p>
+<p>So the break-glass CA carries the SAME <code>notAfter</code> as the primary root (25 years) and the SAME policy rotation window (5 years). It also carries a bigger compromise surface than the primary root because 1P is warmer storage than an offline HSM ceremony. Its audit expectation is stricter: <code>op</code> reads are logged, the 1P item is CONCEALED-only (RFD 2144 defect #12 was moving the key from <code>notesPlain</code> to CONCEALED), and any pull of the private key is followed by a <code>shred -u</code> of the scratch file.</p>
+</section>
 <section id="why-the-intermediates-get-3-years" class="level2">
 <h2 class="anchored" data-anchor-id="why-the-intermediates-get-3-years">Why the intermediates get 3 years</h2>
 <p>An intermediate CA is online (or at least reachable) whenever it signs a leaf. Its compromise surface is bigger than the root’s. Rotating it under 5 years is standard private-PKI practice, and 3 years keeps the cadence at “annual re-mint of a new one, run for a year, retire the older one” — a two-CA overlap window that costs nothing and lets the trust-store update propagate.</p>
@@ -356,7 +362,7 @@ while balancing the operational overhead of renewal.
 chibifire.com Root CA                         2036-08-28      root: 10y set, 25y max. Fine, keep.
 chibifire.com Intermediate CA                 2031-08-30      intermediate: 5y set, 3y max. RETRACT; rotate.
 chibifire.com WebTransport Intermediate CA    2036-08-29      intermediate: 10y set, 3y max. RETRACT; re-mint at 3y.
-weftspun-fdb-ca (break-glass, in 1P)          2031-08-31      break-glass CA: 5y set, 5y max. Fine.
+weftspun-fdb-ca (break-glass, in 1P)          2031-08-31      break-glass CA: 5y set, 25y max. RETRACT, re-mint at 25y to match Root.
 Bao listener leaf                             2028-09-01      service leaf: 2y set, 90d max. RETRACT; re-mint at 90d.
 FDB machine leaves (Bao-issued)               ~2026-10-01     service leaf: 30d set, 90d max. Fine, keep.
 Admin client cert (DR-time)                   2026-10-01      break-glass leaf: 30d set, 2y max. Fine (deliberately short).
