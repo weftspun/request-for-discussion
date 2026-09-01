@@ -602,6 +602,10 @@ def Scope "Serials"
                 {
                     custom string slug = "bao-is-the-secret-store"
                 }
+                def "S2147"
+                {
+                    custom string slug = "bao-is-critical-infrastructure"
+                }
             }
         }
     }
