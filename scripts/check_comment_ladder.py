@@ -16,7 +16,7 @@ from comment_density import density, is_source  # noqa: E402
 
 FROZEN = ("rfd/2", "changelog/", "data/")
 
-RUNGS = (0.05, 0.10, 0.12, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40)
+RUNGS = (0.03, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40)
 ENTRY = 0.10
 MIN_LINES = 100
 
@@ -190,12 +190,12 @@ def self_test():
         results.append(("a new file under the entry rung is accepted",
                         not check(repo, "HEAD", False)[1]))
 
-        _fixture(repo, "twelve.py", 22)
+        _fixture(repo, "three.py", 6, 250)
         _run(repo, "add", "-A")
-        _run(repo, "commit", "-qm", "twelve base")
-        _fixture(repo, "twelve.py", 22, 120)
-        results.append(("deleting code past the 12%% rung is rejected",
-                        any(f[0] == "twelve.py" for f in check(repo, "HEAD", False)[1])))
+        _run(repo, "commit", "-qm", "three base")
+        _fixture(repo, "three.py", 6, 130)
+        results.append(("deleting code past the 3%% rung is rejected",
+                        any(f[0] == "three.py" for f in check(repo, "HEAD", False)[1])))
 
     bad = sum(1 for _, got in results if not got)
     for name, got in results:
