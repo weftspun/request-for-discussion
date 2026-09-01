@@ -1375,6 +1375,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#decision-174" id="toc-decision-174" class="nav-link" data-scroll-target="#decision-174">Decision</a></li>
   <li><a href="#related-165" id="toc-related-165" class="nav-link" data-scroll-target="#related-165">Related</a></li>
   </ul></li>
+  <li><a href="#rfd-2145-certificate-lifetimes-from-a-risk-based-ceiling" id="toc-rfd-2145-certificate-lifetimes-from-a-risk-based-ceiling" class="nav-link" data-scroll-target="#rfd-2145-certificate-lifetimes-from-a-risk-based-ceiling">RFD 2145: Certificate lifetimes, from a risk-based ceiling</a>
+  <ul class="collapse">
+  <li><a href="#problem-173" id="toc-problem-173" class="nav-link" data-scroll-target="#problem-173">Problem</a></li>
+  <li><a href="#decision-175" id="toc-decision-175" class="nav-link" data-scroll-target="#decision-175">Decision</a></li>
+  <li><a href="#related-166" id="toc-related-166" class="nav-link" data-scroll-target="#related-166">Related</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -5431,6 +5437,32 @@ scoring     MaskScore + EditScore      n/a           self-supervised reward</cod
 <section id="related-165" class="level2">
 <h2 class="anchored" data-anchor-id="related-165">Related</h2>
 <p>RFD 2134, 2135, 2140, 2141 (prereq landed here), 2143 (runbook executed).</p>
+</section>
+</section>
+<section id="rfd-2145-certificate-lifetimes-from-a-risk-based-ceiling" class="level1">
+<h1>RFD 2145: Certificate lifetimes, from a risk-based ceiling</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2145</code></p>
+<p><strong>State:</strong> discussion <strong>Scope:</strong> every private CA and leaf the workspace issues.</p>
+<section id="problem-173" class="level2">
+<h2 class="anchored" data-anchor-id="problem-173">Problem</h2>
+<p>RFD 2134, 2141, 2142 landed with 10-year CAs and 1-to-2-year leaves. 2144 minted a 10-year WebTransport intermediate on the same pattern. The guidance predates CA/Browser Forum SC-081v3 (200 days now, 47 by 2029-03) and a Mozilla Root Store Policy that removes public trust after 15 years of key material.</p>
+</section>
+<section id="decision-175" class="level2">
+<h2 class="anchored" data-anchor-id="decision-175">Decision</h2>
+<pre><code>role                              notAfter       rotate every
+-----------------------------     ------------   ------------
+Root CA (private, offline key)    25 years       5 years, policy
+Intermediate CA                   3 years        1 year
+mTLS server + client (services)   90 days        &lt;=45 days
+WebTransport leaf                 14 days        &lt;=10 days
+Break-glass leaf (rare, gated)    2 years        on use, then revoke
+Break-glass CA (in 1P)            5 years        5 years</code></pre>
+<p>The root’s <code>notAfter</code> is 25 years because RFC 5280 §4.1.2.5 makes the field MANDATORY, not because rotation should wait that long. Offline root: tiny compromise surface, expensive downstream re-issuance. Rotation is a <strong>5-year policy commitment</strong>, enforced by <code>check_anti_entropy.py</code>, not by cert validation. Intermediates and leaves are the opposite: their <code>notAfter</code> IS the rotation gate.</p>
+<p><code>DETAILS.md</code> carries the citations (RFC 5280, Mozilla Root Store Policy, CA/B Forum SC-081v3, NCSC, NIST SP 800-57 Pt.1 §5.3.6) and the current-state audit.</p>
+</section>
+<section id="related-166" class="level2">
+<h2 class="anchored" data-anchor-id="related-166">Related</h2>
+<p>RFD 2134, 2141, 2142, 2144. Each carries a retraction pointing here.</p>
 
 
 </section>

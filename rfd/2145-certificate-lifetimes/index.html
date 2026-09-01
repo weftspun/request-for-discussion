@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>details – Taskweft — Manuals</title>
+<title>RFD 2145: Certificate lifetimes, from a risk-based ceiling – Taskweft — Manuals</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -289,142 +289,63 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#rfd-2142-details-pki-setup-and-service-onboarding" id="toc-rfd-2142-details-pki-setup-and-service-onboarding" class="nav-link active" data-scroll-target="#rfd-2142-details-pki-setup-and-service-onboarding">RFD 2142 details: PKI setup and service onboarding</a>
-  <ul class="collapse">
-  <li><a href="#why-a-standalone-root-ca-rather-than-an-intermediate" id="toc-why-a-standalone-root-ca-rather-than-an-intermediate" class="nav-link" data-scroll-target="#why-a-standalone-root-ca-rather-than-an-intermediate">Why a standalone root CA rather than an intermediate</a></li>
-  <li><a href="#enabling-the-pki-secrets-engine" id="toc-enabling-the-pki-secrets-engine" class="nav-link" data-scroll-target="#enabling-the-pki-secrets-engine">Enabling the PKI secrets engine</a></li>
-  <li><a href="#issuing-the-bao-listener-cert" id="toc-issuing-the-bao-listener-cert" class="nav-link" data-scroll-target="#issuing-the-bao-listener-cert">Issuing the bao listener cert</a></li>
-  <li><a href="#enabling-tls-on-the-listener" id="toc-enabling-tls-on-the-listener" class="nav-link" data-scroll-target="#enabling-tls-on-the-listener">Enabling TLS on the listener</a></li>
-  <li><a href="#tls-cert-auth-backend" id="toc-tls-cert-auth-backend" class="nav-link" data-scroll-target="#tls-cert-auth-backend">TLS cert auth backend</a></li>
-  <li><a href="#service-onboarding-spot-broker" id="toc-service-onboarding-spot-broker" class="nav-link" data-scroll-target="#service-onboarding-spot-broker">Service onboarding: spot-broker</a></li>
-  <li><a href="#the-gate" id="toc-the-gate" class="nav-link" data-scroll-target="#the-gate">The gate</a></li>
-  <li><a href="#the-1password-op-item-create-failure" id="toc-the-1password-op-item-create-failure" class="nav-link" data-scroll-target="#the-1password-op-item-create-failure">The 1Password <code>op item create</code> failure</a></li>
-  </ul></li>
+  <li><a href="#problem" id="toc-problem" class="nav-link active" data-scroll-target="#problem">Problem</a></li>
+  <li><a href="#decision" id="toc-decision" class="nav-link" data-scroll-target="#decision">Decision</a></li>
+  <li><a href="#related" id="toc-related" class="nav-link" data-scroll-target="#related">Related</a></li>
+  <li><a href="#details" id="toc-details" class="nav-link" data-scroll-target="#details">Details</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2142-bao-pki-zerotrust-service-tls/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2142-bao-pki-zerotrust-service-tls/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2145-certificate-lifetimes/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2145-certificate-lifetimes/index.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">RFD 2145: Certificate lifetimes, from a risk-based ceiling</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
 
 
-<section id="rfd-2142-details-pki-setup-and-service-onboarding" class="level1">
-<h1>RFD 2142 details: PKI setup and service onboarding</h1>
-<section id="why-a-standalone-root-ca-rather-than-an-intermediate" class="level2">
-<h2 class="anchored" data-anchor-id="why-a-standalone-root-ca-rather-than-an-intermediate">Why a standalone root CA rather than an intermediate</h2>
-<p>The FDB root CA key (<code>fdb-ca.chibifire.com</code>, SHA-256 fingerprint <code>89:20:69:EB:BF:AB:...</code>) was lost twice. The first loss is documented in RFD 2141. The second happened during this session: <code>op item create</code> returned item IDs that do not correspond to any persisted item. The <code>op item edit</code> path (updating an existing item) did persist. The failure mode is a biometric timeout that <code>op</code> reports as exit code 0 with an item ID in stdout.</p>
-<p>Chaining under the FDB CA would require the FDB CA key or another full cluster TLS rotation. Bao’s PKI engine generates and stores its own root key internally, so no external CA key is needed.</p>
-<p>The two trust domains are separate by design: the FDB CA gates cluster membership (verify-peers rule <code>S.CN&gt;=fdb-,S.CN&lt;=.chibifire.com</code>), and bao’s PKI gates service authentication to the secrets API.</p>
-</section>
-<section id="enabling-the-pki-secrets-engine" class="level2">
-<h2 class="anchored" data-anchor-id="enabling-the-pki-secrets-engine">Enabling the PKI secrets engine</h2>
-<p>Note: the <code>ttl=87600h</code> (10 years) and <code>max_ttl=8760h</code> (1 year) below were retracted by RFD 2145 on 2026-09-01. Current guidance: <code>ttl=26280h</code> (3 years) on intermediates, <code>max_ttl=2160h</code> (90 days) on service leaves. The old values are kept where they stand so a reader following an older link sees the change; new deploys use RFD 2145’s numbers.</p>
-<pre><code>bao secrets enable pki
-bao write pki/root/generate/internal \
-  common_name="svc-ca.chibifire.com" \
-  ttl=87600h   # 10 years
-bao write pki/config/urls \
-  issuing_certificates="https://weftspun-bao.internal:8200/v1/pki/ca" \
-  crl_distribution_points="https://weftspun-bao.internal:8200/v1/pki/crl"</code></pre>
-</section>
-<section id="issuing-the-bao-listener-cert" class="level2">
-<h2 class="anchored" data-anchor-id="issuing-the-bao-listener-cert">Issuing the bao listener cert</h2>
-<p>Create a role for the listener:</p>
-<pre><code>bao write pki/roles/bao-listener \
-  allowed_domains="weftspun-bao.internal" \
-  allow_bare_domains=true \
-  max_ttl=8760h   # 1 year</code></pre>
-<p>Issue the cert:</p>
-<pre><code>bao write pki/issue/bao-listener \
-  common_name="weftspun-bao.internal" \
-  ttl=8760h</code></pre>
-<p>The certificate, private key, and CA chain are returned in the response. Store the cert and key as Fly secrets <code>BAO_TLS_CERT_B64</code> and <code>BAO_TLS_KEY_B64</code>. Store the CA cert as <code>BAO_TLS_CA_B64</code> (needed by clients to verify the listener).</p>
-</section>
-<section id="enabling-tls-on-the-listener" class="level2">
-<h2 class="anchored" data-anchor-id="enabling-tls-on-the-listener">Enabling TLS on the listener</h2>
-<p>Update <code>config-fdb.hcl</code>:</p>
-<pre><code>listener "tcp" {
-  address         = "[::]:8200"
-  tls_disable     = false
-  tls_cert_file   = "/bao/data/tls/listener-cert.pem"
-  tls_key_file    = "/bao/data/tls/listener-key.pem"
-  tls_client_ca_file = "/bao/data/tls/svc-ca.pem"
-  tls_require_and_verify_client_cert = true
-}</code></pre>
-<p>The entrypoint decodes <code>BAO_TLS_CERT_B64</code>, <code>BAO_TLS_KEY_B64</code>, and <code>BAO_TLS_CA_B64</code> to disk before starting bao, alongside the existing FDB client TLS material.</p>
-</section>
-<section id="tls-cert-auth-backend" class="level2">
-<h2 class="anchored" data-anchor-id="tls-cert-auth-backend">TLS cert auth backend</h2>
-<pre><code>bao auth enable cert
-bao write auth/cert/certs/spot-broker \
-  display_name="spot-broker" \
-  policies="spot-broker" \
-  certificate=@svc-ca.pem \
-  allowed_common_names="spot-broker.chibifire.com"</code></pre>
-<p>Policy <code>spot-broker</code>:</p>
-<pre><code>path "secret/data/vastai/*" {
-  capabilities = ["read", "list"]
-}</code></pre>
-<p>A service presenting a client cert with CN=spot-broker.chibifire.com signed by bao’s PKI CA receives a token scoped to <code>secret/data/vastai/*</code> only. No root token leaves 1Password.</p>
-</section>
-<section id="service-onboarding-spot-broker" class="level2">
-<h2 class="anchored" data-anchor-id="service-onboarding-spot-broker">Service onboarding: spot-broker</h2>
-<ol type="1">
-<li><p>Issue a client cert:</p>
-<pre><code>bao write pki/roles/spot-broker \
-  allowed_domains="spot-broker.chibifire.com" \
-  allow_bare_domains=true \
-  max_ttl=8760h
-
-bao write pki/issue/spot-broker \
-  common_name="spot-broker.chibifire.com" \
-  ttl=8760h</code></pre></li>
-<li><p>Store cert/key as Fly secrets on spot-broker.</p></li>
-<li><p>The entrypoint authenticates to bao via TLS cert auth, receives a scoped token, reads <code>secret/data/vastai/api</code>, and exports <code>VAST_API_KEY</code>. The Elixir code is unchanged.</p></li>
-<li><p>Elixir services that need dynamic secret access (lease renewal, cert rotation) use <code>libvault</code> (hex.pm, 14k recent downloads). For a static bearer token like the Vast.ai key, an entrypoint curl is sufficient.</p></li>
-</ol>
-</section>
-<section id="the-gate" class="level2">
-<h2 class="anchored" data-anchor-id="the-gate">The gate</h2>
-<p>The gate asserts two properties:</p>
-<ol type="1">
-<li>A plaintext HTTP request to <code>weftspun-bao.internal:8200</code> is rejected (connection reset or TLS handshake error, not HTTP 200).</li>
-<li>A TLS request without a client cert, or with an expired cert, returns 403 (not 200).</li>
-</ol>
-<p>Both are negative controls. A gate that only checks “valid cert gets 200” passes when TLS is disabled entirely.</p>
-</section>
-<section id="the-1password-op-item-create-failure" class="level2">
-<h2 class="anchored" data-anchor-id="the-1password-op-item-create-failure">The 1Password <code>op item create</code> failure</h2>
-<p>Three <code>op item create</code> calls during this session returned exit code 0 and printed item IDs:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>returned ID</th>
-<th>intended content</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>jw6rvt6zvfbb7hrxfkdwp5cdg4</td>
-<td>FDB CA private key</td>
-</tr>
-<tr class="even">
-<td>4jzyphsx2w64gvr2m475sm4f4q</td>
-<td>bao KV tls-anchor backup</td>
-</tr>
-<tr class="odd">
-<td>honp7pukafh4g62hycaa7anddm</td>
-<td>bao KV blobstore backup</td>
-</tr>
-</tbody>
-</table>
-<p>All three IDs return “isn’t an item in any vault” on subsequent <code>op item get</code>. The <code>op item edit</code> call to existing item <code>d7fx6rayd6o43sie5joxinfyte</code> did persist; the difference is that <code>edit</code> updates an existing record while <code>create</code> allocates a new one, and the allocation silently fails when biometric authentication times out.</p>
-<p>This is the second loss of the FDB CA key. The first (RFD 2141) was a scratchpad cleanup; the second is a credential store that reported success without persisting.</p>
+</header>
 
 
+<!-- generated by scripts/render_site.py; edit README.md instead -->
+<section id="problem" class="level2">
+<h2 class="anchored" data-anchor-id="problem">Problem</h2>
+<p>RFD 2134, 2141, 2142 landed with 10-year CAs and 1-to-2-year leaves. 2144 minted a 10-year WebTransport intermediate on the same pattern. The guidance predates CA/Browser Forum SC-081v3 (200 days now, 47 by 2029-03) and a Mozilla Root Store Policy that removes public trust after 15 years of key material.</p>
 </section>
+<section id="decision" class="level2">
+<h2 class="anchored" data-anchor-id="decision">Decision</h2>
+<pre><code>role                              notAfter       rotate every
+-----------------------------     ------------   ------------
+Root CA (private, offline key)    25 years       5 years, policy
+Intermediate CA                   3 years        1 year
+mTLS server + client (services)   90 days        &lt;=45 days
+WebTransport leaf                 14 days        &lt;=10 days
+Break-glass leaf (rare, gated)    2 years        on use, then revoke
+Break-glass CA (in 1P)            5 years        5 years</code></pre>
+<p>The root’s <code>notAfter</code> is 25 years because RFC 5280 §4.1.2.5 makes the field MANDATORY, not because rotation should wait that long. Offline root: tiny compromise surface, expensive downstream re-issuance. Rotation is a <strong>5-year policy commitment</strong>, enforced by <code>check_anti_entropy.py</code>, not by cert validation. Intermediates and leaves are the opposite: their <code>notAfter</code> IS the rotation gate.</p>
+<p><code>DETAILS.md</code> carries the citations (RFC 5280, Mozilla Root Store Policy, CA/B Forum SC-081v3, NCSC, NIST SP 800-57 Pt.1 §5.3.6) and the current-state audit.</p>
+</section>
+<section id="related" class="level2">
+<h2 class="anchored" data-anchor-id="related">Related</h2>
+<p>RFD 2134, 2141, 2142, 2144. Each carries a retraction pointing here.</p>
+</section>
+<section id="details" class="level2">
+<h2 class="anchored" data-anchor-id="details">Details</h2>
+<p><a href="../../rfd/2145-certificate-lifetimes/DETAILS.html">The measurements and the retractions</a></p>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -849,7 +770,7 @@ bao write pki/issue/spot-broker \
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2142-bao-pki-zerotrust-service-tls/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2142-bao-pki-zerotrust-service-tls/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2145-certificate-lifetimes/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2145-certificate-lifetimes/index.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">

@@ -1,1855 +1,1863 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://weftspun.github.io/request-for-discussion/rfd/2145-certificate-lifetimes/index.html</loc>
+    <lastmod>2026-09-01T17:20:04.018Z</lastmod>
+  </url>
+  <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2144-fdb-dr-runbook-first-run/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.751Z</lastmod>
+    <lastmod>2026-09-01T17:20:04.018Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2143-fdb-backup-fans-out-to-r2/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.751Z</lastmod>
+    <lastmod>2026-09-01T17:20:04.018Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2142-bao-pki-zerotrust-service-tls/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.751Z</lastmod>
+    <lastmod>2026-09-01T17:20:04.018Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2141-fdb-tls-rotation-without-data-loss/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.750Z</lastmod>
+    <lastmod>2026-09-01T17:20:04.018Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2140-openbao-on-foundationdb/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.750Z</lastmod>
+    <lastmod>2026-09-01T17:20:04.018Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2139-maskscore-qaft-budget/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.750Z</lastmod>
+    <lastmod>2026-09-01T17:20:04.017Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2138-interactor-shuttle-merges-spot-broker-and-uro/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.840Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.468Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2136-the-gacha-critical-path/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.750Z</lastmod>
+    <lastmod>2026-09-01T17:20:04.017Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2135-checks-run-where-the-credentials-already-are/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.840Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.468Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2134-cluster-tls-is-decided-before-data/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.840Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.468Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2133-the-pool-rents-from-the-spot-book/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.838Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2123-a-second-webtransport-implementation/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.838Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2121-amend-rfd-2111-against-the-tree/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.838Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2119-salvage-you-can-hold/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.838Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2117-retire-the-h2o-tier-record-set/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.837Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2115-a-planner-domain-document-is-a-cheap-layer-surface/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.837Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2113-foundationdb-on-windows-built-from-source/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.837Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2111-convert-the-deployment-words/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.837Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2109-two-tiers-with-foundationdb-as-the-store/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.837Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2107-janet-scripting-over-a-c-taskweft-core/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.837Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2105-archive-self-host-era-support-repos/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.837Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2092-rebac-gates-libriscv-guest-access/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.836Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.465Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2090-uro-burrito-release/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.835Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.464Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2087-avatar-ik-sinew-mocap-align-over-mink/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.835Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.464Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2085-the-gyre-mud-setting-on-the-loot-action-shell/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.835Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.464Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2083-zone-server-h2o-replaces-godot-fabriczone/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.835Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.464Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2081-three-layer-verification-strategy/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.834Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.464Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2079-sandboxed-godot-in-zone-server-h2o-via-raw-libriscv/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.834Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.464Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2077-pert-critical-path-zonefabric/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.834Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.464Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2075-fdb-over-cockroachdb-for-zone-state/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.834Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.463Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2073-async-fdb-callback-chain/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.834Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.463Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2070-loop-slice-telemetry-to-the-observability-collector/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.833Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.463Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2068-sccache-github-actions-cache-for-godot-builds/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.833Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.463Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2066-game-loop-cluster-sequence/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.833Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.463Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2064-kebab-case-repos-snake-case-local-checkouts/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.833Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.463Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2062-repository-and-capability-inventory/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.833Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.463Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2059-bad-news-reports-lead-with-the-bottom-line/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.833Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.463Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2057-vertical-slice-repository-map/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.832Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2052-http3-listener-session-findings/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.832Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2045-loot-action-core-loop-mvp-vertical-slice/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.832Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2040-hexagon-combat-core/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.832Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2033-core-contract-pure-reducer-byte-state/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.832Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2030-cicd-runners-as-queueing-system/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.831Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2027-umbrella-package-installs-all-components/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.831Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2025-tenseless-continuous-present-voice/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.831Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2023-webtransport-http3-transport/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.831Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2021-require-pr-and-merge-queue-on-main/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.831Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2019-gitassembly-tag-release/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.831Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2017-compiling-godot-engine/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2015-bounded-llm-steering-queue/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2013-archival-file-naming-convention/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2010-maglev-cycle-1-gateway-handshake/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2008-webtransport-over-quic-for-game-traffic/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2005-gltf-interactivity-value-type-taxonomy-correction/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2003-castspell-sandbox-package-and-manifest-encoding/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2001-zonefabric-roadmap-vs-mas-bandwidth-fps/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1174-publish-the-security-rules-against-soc2-and-iso27001/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.461Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1173-a-multimodal-diffusion-pipeline/MASKSCORE.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.461Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1172-a-diffusion-lm-does-not-land-on-the-npu/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.749Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.999Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1171-the-presence-loop-and-every-role-in-it/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.749Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.999Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1170-a-cleanroom-presence-loop/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.749Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.999Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1169-the-audio-tower-for-qwen3-vl/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.749Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.998Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1168-segmenting-the-3d-latent-with-rf-detr/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.749Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.998Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1167-the-ladder-and-where-each-model-stands/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.748Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.998Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1166-scoring-the-accelerator-candidates/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.748Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.998Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1165-finetuning-exhausts-the-desk-card/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.748Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.998Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1164-calibration-is-training-data/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.748Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.998Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1163-the-accelerator-in-the-loops/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.827Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.459Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1161-kimodo-edge-fit/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.748Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.998Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1159-trellis2-at-the-ceiling/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.748Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.998Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1157-editscore-merger-lora/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.747Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.998Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1155-gemma4-towers-not-decoder/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.747Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.998Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1154-pixal3d-at-four-bits/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.827Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.459Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1153-judging-matte-quality/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.827Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.459Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1152-background-removal-photographic-corpora/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.827Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.459Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1151-which-axes-the-survey-weights/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.826Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.459Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1150-shade-colour-solved-per-tone/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.826Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.459Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1149-mtoon-shades-against-the-key-light/SKILL.html</loc>
-    <lastmod>2026-09-01T16:44:13.826Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.459Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1148-the-runtime-that-reaches-the-device/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.746Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.997Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1147-what-editscore-costs-and-returns/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.746Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.997Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1146-latent-to-pixal3d/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.746Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.997Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1144-image-to-omnigen2/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.746Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.997Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1143-keypoints-to-anny/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.746Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.997Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1142-the-mac-against-the-ugen300/SKILL.html</loc>
-    <lastmod>2026-09-01T16:44:13.825Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.458Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1141-publishing-artifacts/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.745Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.997Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1141-publishing-artifacts/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.825Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.458Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1140-rented-gpus-on-runpod/SKILL.html</loc>
-    <lastmod>2026-09-01T16:44:13.825Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.458Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1139-conventions-are-measured/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.745Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.997Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1138-where-range-of-motion-comes-from/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.745Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.997Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1137-encoding-a-frame-set/SKILL.html</loc>
-    <lastmod>2026-09-01T16:44:13.824Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.457Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1136-camera-vocabulary-and-the-96-pose-grid/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.745Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.996Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1135-one-environment-per-elixir-app/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.745Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.996Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1134-notebooks-tested-in-the-browser/SKILL.html</loc>
-    <lastmod>2026-09-01T16:44:13.824Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.457Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1133-models-excluded-from-conversion/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.745Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.996Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1132-priority-list-of-converted-models/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.744Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.996Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1131-operator-emulation-for-the-accelerator/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.744Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.996Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1130-ugen300-throughput/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.744Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.996Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1130-ugen300-throughput/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.823Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.457Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1129-hailo-operator-coverage/SKILL.html</loc>
-    <lastmod>2026-09-01T16:44:13.823Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.457Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1128-four-bit-tolerance/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.744Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.996Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1128-four-bit-tolerance/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.823Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.456Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1126-feed-forward-for-the-edge/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.822Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.456Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1125-two-prose-gates/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.822Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.456Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1124-rfd-structure-gate/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.822Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.456Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1123-cineform-in-godot/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.821Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.456Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1122-the-wholebody-gap/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.821Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.455Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1121-layers-from-geometry-and-the-missing-categories/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.821Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.455Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1120-split-apps-into-own-repos/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.821Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.455Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1119-generic-hardware-not-dgx-or-android-xr-specific/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.820Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.455Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1118-xr-embody-locomotion-and-menu/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.820Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.455Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1116-tasks-panel-clear-and-collapse/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.743Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.995Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1115-vrm-animation-playback-invariants/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.820Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.455Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1114-app-chrome-layout-invariants/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.820Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.455Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1112-cursor-rules-kept-in-the-open/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.742Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.995Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1111-3daigc-api-reference-not-restated/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.742Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.995Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1110-reporesident-agent-harness/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.742Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.995Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1109-moat-payment-rails-and-phygital-registry/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.742Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.995Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1108-xr-mode-floor-anchoring-and-backgrounds/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.819Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.454Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1107-world-package/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.819Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.454Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1106-weftspun-moat-overview/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.819Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.454Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1105-webcam-avatar-control/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.819Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.454Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1104-vrm-upload-display-export/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.819Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.454Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1103-vercel-loot-assets/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.819Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.454Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1102-supported-3daigc-modules/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.818Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.454Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1101-ssh-host-names/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.818Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.453Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1100-spatial-fabric-integration/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.818Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.453Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1099-scripts-cheatsheet/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.818Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.453Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1098-public-deploy/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.818Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.453Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1096-openxr-face-tracking-android-xr/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.818Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.453Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1095-nvidia-xr-ai-integration/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.818Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.453Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1094-multi-image-splat-roadmap/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.817Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.453Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1093-loot-assets-setup/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.817Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.453Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1091-iwsdk-local-fork/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.739Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.994Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1090-iwsdk-integration/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.739Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.994Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1089-hyworld-image-to-world-scope/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.739Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.994Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1088-https-setup/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.739Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.993Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1087-gemini/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.739Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.993Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1086-dev-machine-topology/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.739Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.993Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1085-code-map/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.739Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.993Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1084-avatar-pipeline/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.738Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.993Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1083-api-avatar-rig-contract/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.738Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.993Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1082-android-studio-ai-brief/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.738Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.993Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1080-fly-deploy-cost/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.738Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.993Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1079-appsignal-observability/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.738Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.993Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1077-h2o-edge-cdn/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.738Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.993Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1076-usd-viewer-app-build-integration/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.737Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.993Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1075-github-oauth-admin-login/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.737Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.993Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1074-3d-billboard-labels/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.737Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.993Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1073-dataset-billboard-gallery/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.815Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.451Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1070-keep-options-open/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.815Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.451Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1067-cockroachdb-reranked-against-foundationdb/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.815Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.451Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1065-taskweft-domain-schema-in-etnf/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.737Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.992Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1064-character-concept-generator/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.736Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.992Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1063-ste-enforcement-moves-to-the-plugin/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.736Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.992Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1062-flyio-toplevel-4090-worker-split/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.736Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.992Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1061-glb-upload-prep-via-idtx-core/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.736Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.992Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1060-thirdparty-reset/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.736Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.992Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1059-continuous-integration/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.736Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.992Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1058-zero-trust-networking/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.736Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.992Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1057-open-work/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.736Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.992Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1056-develop-in-a-dev-container/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.735Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.992Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1055-beam-workers-local-first/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.735Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.992Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1054-headless-cms-on-taskweft/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.735Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.992Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1053-openusd-as-the-internal-format/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.735Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.992Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1052-triposplat-image-to-splat/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.735Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.991Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1051-worldmirror2-reconstruct/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.735Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.991Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1050-lingbot-map-environment-scan/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.735Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.991Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1049-weftspun-image-to-world/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.735Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.991Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1048-voxhammer-image-mesh-editing/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.734Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.991Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1047-voxhammer-text-mesh-editing/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.734Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.991Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1046-skintokens-auto-rig/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.734Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.991Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1045-kimodo-text-to-motion/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.734Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.991Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1044-seethrough-layer-decomposition/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.734Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.991Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1043-qwen-image-edit/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.734Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.991Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1042-krea2-turbo-text-to-image/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.734Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.991Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1041-p3sam-mesh-segmentation/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.734Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.991Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1040-pixal3d-image-to-textured-mesh/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.733Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.991Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1040-pixal3d-image-to-textured-mesh/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.810Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.448Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1039-trellis2-image-mesh-painting/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.810Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.448Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1038-trellis2-image-to-textured-mesh/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.810Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.448Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1037-composite-models-as-taskweft-domains/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.809Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.447Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1036-packaging-convention/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.809Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.447Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1035-legacy-model-identifiers/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.809Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.447Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1034-krea-memory-cross-check/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.809Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.447Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1033-geometric-algorithms/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.809Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.447Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1031-geometry-refinement-and-alpha-wrap/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.809Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.447Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1030-seethrough-component-models/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.809Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.447Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1029-foss-model-replacements/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.809Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.447Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1028-model-license-gate/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.809Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.447Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1027-gpu-residency-budget/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.809Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.447Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1026-bf16-memory-per-model/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.808Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.447Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1025-model-memory-arithmetic/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.808Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.447Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1023-ports-and-adapters-with-headless-cms-style/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.808Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.447Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1022-hexagonal-client/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.808Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.446Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1021-shared-hrr-library/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.808Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.446Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1020-cockroachdb-persistence/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.808Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.446Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1019-strangler-fig-studio-core/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.808Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.446Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1018-m3-documentation-removal/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.807Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.446Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1017-fork-rebrand-to-weftspun/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.807Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.446Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1016-deep-learning-model-inventory/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.807Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.446Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1014-batch-processing/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.730Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.989Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1012-wallet-minting-and-x402/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.730Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.989Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1010-webxr-and-iwsdk-lab/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.730Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.989Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1009-viewport-and-scene-rendering/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.807Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.445Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1007-motion-validation-kimodo/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.730Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.989Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1005-avatar-and-vrm-pipeline/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.729Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.989Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1004-aigc-task-catalog/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.729Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.989Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1003-task-manager-job-lifecycle/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.729Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.988Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1002-studio-pipeline-graph/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.806Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.445Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1000-conventions/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.729Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.988Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/pages/serials.html</loc>
-    <lastmod>2026-09-01T16:44:21.910Z</lastmod>
+    <lastmod>2026-09-01T17:20:04.125Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-rfd2144-dr-runbook-first-run.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-rfd2140-openbao-on-fdb.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-rfd2134-backup-through-the-sni-hop.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-rfd2133-vfs-embed-retracted.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-rfd1171-gemma-first-rerank.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-rfd1130-two-walls-to-a-hef.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-rfd1122-hailo-first-rerank.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-qwen3vl-vit-translate-walls.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-fourloops-first-runs.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-dfc-emulation-contexts-disagree.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-cineform-movie-writer.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-anny-phenotype-fit-retired.html</loc>
-    <lastmod>2026-09-01T16:44:13.803Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.443Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/changelog/2026/20260901-deck-log.html</loc>
-    <lastmod>2026-09-01T16:44:13.802Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.443Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/changelog/2026/20260807-deck-log.html</loc>
-    <lastmod>2026-09-01T16:44:13.802Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.443Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/changelog/2026/20260629-deck-log.html</loc>
-    <lastmod>2026-09-01T16:44:13.802Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.443Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/changelog/2026/20260612-deck-log.html</loc>
-    <lastmod>2026-09-01T16:44:13.802Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.443Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/changelog/2026/20260507-deck-log.html</loc>
-    <lastmod>2026-09-01T16:44:13.802Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.443Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/changelog/2026/20260425-deck-log.html</loc>
-    <lastmod>2026-09-01T16:44:13.802Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.443Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2136-the-gacha-critical-path/page.html</loc>
-    <lastmod>2026-09-01T16:44:13.840Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.468Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/pages/logbook.html</loc>
-    <lastmod>2026-09-01T16:44:13.805Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.445Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/book.html</loc>
-    <lastmod>2026-09-01T16:44:21.920Z</lastmod>
+    <lastmod>2026-09-01T17:20:04.131Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/pages/agreements.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/pages/rfd.html</loc>
-    <lastmod>2026-09-01T16:44:13.805Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.445Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/changelog/2026/20260421-deck-log.html</loc>
-    <lastmod>2026-09-01T16:44:13.802Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.443Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/changelog/2026/20260506-deck-log.html</loc>
-    <lastmod>2026-09-01T16:44:13.802Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.443Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/changelog/2026/20260606-deck-log.html</loc>
-    <lastmod>2026-09-01T16:44:13.802Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.443Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/changelog/2026/20260622-deck-log.html</loc>
-    <lastmod>2026-09-01T16:44:13.802Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.443Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/changelog/2026/20260630-deck-log.html</loc>
-    <lastmod>2026-09-01T16:44:13.802Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.443Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/changelog/2026/20260817-deck-log.html</loc>
-    <lastmod>2026-09-01T16:44:13.802Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.443Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/index.html</loc>
-    <lastmod>2026-09-01T16:44:13.803Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.443Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-blendshape-animation-and-tokenrig-first-light.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-comment-ladder.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-edge-npu-and-the-anny-forward.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-rfd1016-model-repos.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-rfd1122-t01-pose-check.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-rfd1142-neural-engine-against-the-ugen300.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-rfd2133-spot-broker-on-fly.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-rfd2133-weftspun-fdb-on-fly.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-rfd2135-two-checks-and-a-stopped-backup.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-rfd2142-bao-pki-zerotrust.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/logbook/logbook-soft-renderer-and-mitsuba.html</loc>
-    <lastmod>2026-09-01T16:44:13.804Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.444Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1000-conventions/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.806Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.445Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1001-app-shell-and-routing/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.729Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.988Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1002-studio-pipeline-graph/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.729Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.988Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1004-aigc-task-catalog/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.806Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.445Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1005-avatar-and-vrm-pipeline/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.807Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.445Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1006-layer-decomposition-see-through/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.729Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.989Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1008-appearance-trait-extraction-and-remix/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.730Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.989Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1009-viewport-and-scene-rendering/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.730Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.989Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1011-spatial-fabric-publish/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.730Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.989Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1013-public-demo-deploy/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.730Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.989Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1015-phygital-passport/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.731Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.989Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1016-deep-learning-model-inventory/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.731Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.989Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1017-fork-rebrand-to-weftspun/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.731Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.989Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1018-m3-documentation-removal/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.731Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.989Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1019-strangler-fig-studio-core/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.731Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.990Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1020-cockroachdb-persistence/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.731Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.990Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1021-shared-hrr-library/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.731Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.990Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1022-hexagonal-client/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.731Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.990Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1023-ports-and-adapters-with-headless-cms-style/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.732Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.990Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1025-model-memory-arithmetic/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.732Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.990Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1026-bf16-memory-per-model/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.732Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.990Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1027-gpu-residency-budget/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.732Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.990Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1028-model-license-gate/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.732Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.990Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1029-foss-model-replacements/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.732Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.990Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1030-seethrough-component-models/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.732Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.990Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1031-geometry-refinement-and-alpha-wrap/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.732Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.990Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1033-geometric-algorithms/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.733Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.990Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1034-krea-memory-cross-check/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.733Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.990Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1035-legacy-model-identifiers/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.733Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.990Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1036-packaging-convention/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.733Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.990Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1037-composite-models-as-taskweft-domains/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.733Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.991Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1038-trellis2-image-to-textured-mesh/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.733Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.991Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1039-trellis2-image-mesh-painting/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.733Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.991Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1040-pixal3d-image-to-textured-mesh/SKILL.html</loc>
-    <lastmod>2026-09-01T16:44:13.810Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.448Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1041-p3sam-mesh-segmentation/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.810Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.448Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1042-krea2-turbo-text-to-image/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.810Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.448Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1043-qwen-image-edit/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.811Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.448Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1044-seethrough-layer-decomposition/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.811Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.448Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1045-kimodo-text-to-motion/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.811Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.448Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1046-skintokens-auto-rig/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.811Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.449Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1047-voxhammer-text-mesh-editing/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.812Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.449Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1048-voxhammer-image-mesh-editing/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.812Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.449Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1049-weftspun-image-to-world/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.812Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.449Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1050-lingbot-map-environment-scan/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.812Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.449Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1051-worldmirror2-reconstruct/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.813Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.450Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1052-triposplat-image-to-splat/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.813Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.450Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1053-openusd-as-the-internal-format/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.813Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.450Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1054-headless-cms-on-taskweft/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.813Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.450Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1055-beam-workers-local-first/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.813Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.450Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1056-develop-in-a-dev-container/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.813Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.450Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1057-open-work/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.814Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.450Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1058-zero-trust-networking/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.814Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.450Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1059-continuous-integration/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.814Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.450Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1060-thirdparty-reset/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.814Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.450Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1061-glb-upload-prep-via-idtx-core/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.814Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.451Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1062-flyio-toplevel-4090-worker-split/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.814Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.451Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1063-ste-enforcement-moves-to-the-plugin/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.814Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.451Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1064-character-concept-generator/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.814Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.451Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1065-taskweft-domain-schema-in-etnf/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.815Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.451Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1066-differential-mamba-for-caption-encoding/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.737Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.992Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1067-cockroachdb-reranked-against-foundationdb/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.737Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.992Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1070-keep-options-open/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.737Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.992Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1073-dataset-billboard-gallery/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.737Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.993Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1075-github-oauth-admin-login/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.815Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.451Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1076-usd-viewer-app-build-integration/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.815Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.451Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1077-h2o-edge-cdn/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.816Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.452Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1078-h2o-fdb-game-state-server/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.738Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.993Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1080-fly-deploy-cost/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.816Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.452Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1082-android-studio-ai-brief/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.816Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.452Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1083-api-avatar-rig-contract/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.816Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.452Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1084-avatar-pipeline/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.816Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.452Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1085-code-map/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.816Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.452Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1086-dev-machine-topology/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.816Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.452Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1087-gemini/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.817Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.452Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1088-https-setup/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.817Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.452Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1089-hyworld-image-to-world-scope/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.817Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.452Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1090-iwsdk-integration/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.817Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.453Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1091-iwsdk-local-fork/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.817Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.453Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1092-kimodo-backend-integration/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.739Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.994Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1093-loot-assets-setup/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.740Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.994Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1094-multi-image-splat-roadmap/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.740Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.994Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1095-nvidia-xr-ai-integration/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.740Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.994Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1096-openxr-face-tracking-android-xr/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.740Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.994Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1098-public-deploy/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.740Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.994Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1099-scripts-cheatsheet/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.740Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.994Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1100-spatial-fabric-integration/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.740Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.994Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1101-ssh-host-names/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.741Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.994Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1102-supported-3daigc-modules/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.741Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.994Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1103-vercel-loot-assets/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.741Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.994Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1104-vrm-upload-display-export/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.741Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.994Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1105-webcam-avatar-control/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.741Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.995Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1106-weftspun-moat-overview/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.741Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.995Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1107-world-package/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.741Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.995Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1108-xr-mode-floor-anchoring-and-backgrounds/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.741Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.995Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1110-reporesident-agent-harness/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.819Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.454Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1111-3daigc-api-reference-not-restated/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.820Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.454Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1112-cursor-rules-kept-in-the-open/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.820Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.454Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1113-image-preview-vs-expand-sizing/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.742Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.995Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1114-app-chrome-layout-invariants/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.742Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.995Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1115-vrm-animation-playback-invariants/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.742Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.995Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1117-text-to-image-to-3d-chain/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.743Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.995Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1118-xr-embody-locomotion-and-menu/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.743Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.995Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1119-generic-hardware-not-dgx-or-android-xr-specific/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.743Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.996Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1120-split-apps-into-own-repos/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.743Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.996Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1121-layers-from-geometry-and-the-missing-categories/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.743Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.996Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1122-the-wholebody-gap/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.743Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.996Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1123-cineform-in-godot/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.743Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.996Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1124-rfd-structure-gate/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.744Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.996Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1125-two-prose-gates/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.744Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.996Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1126-feed-forward-for-the-edge/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.744Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.996Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1128-four-bit-tolerance/SKILL.html</loc>
-    <lastmod>2026-09-01T16:44:13.823Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.456Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1129-hailo-operator-coverage/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.823Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.456Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1129-hailo-operator-coverage/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.744Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.996Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1130-ugen300-throughput/SKILL.html</loc>
-    <lastmod>2026-09-01T16:44:13.823Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.457Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1131-operator-emulation-for-the-accelerator/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.823Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.457Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1132-priority-list-of-converted-models/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.823Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.457Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1133-models-excluded-from-conversion/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.823Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.457Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1134-notebooks-tested-in-the-browser/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.824Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.457Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1134-notebooks-tested-in-the-browser/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.745Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.996Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1136-camera-vocabulary-and-the-96-pose-grid/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.824Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.457Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1137-encoding-a-frame-set/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.824Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.457Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1137-encoding-a-frame-set/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.745Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.997Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1139-conventions-are-measured/SKILL.html</loc>
-    <lastmod>2026-09-01T16:44:13.825Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.458Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1140-rented-gpus-on-runpod/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.825Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.458Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1140-rented-gpus-on-runpod/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.745Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.997Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1141-publishing-artifacts/SKILL.html</loc>
-    <lastmod>2026-09-01T16:44:13.825Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.458Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1142-the-mac-against-the-ugen300/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.825Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.458Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1142-the-mac-against-the-ugen300/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.746Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.997Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1144-image-to-omnigen2/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.825Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.458Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1145-stylized-to-omnigen2/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.746Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.997Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1147-what-editscore-costs-and-returns/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.826Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.458Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1148-the-runtime-that-reaches-the-device/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.826Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.459Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1149-mtoon-shades-against-the-key-light/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.826Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.459Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1149-mtoon-shades-against-the-key-light/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.746Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.997Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1150-shade-colour-solved-per-tone/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.746Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.997Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1151-which-axes-the-survey-weights/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.747Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.997Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1152-background-removal-photographic-corpora/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.747Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.997Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1153-judging-matte-quality/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.747Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.997Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1154-pixal3d-at-four-bits/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.747Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.998Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1156-omnigen2-staged-residency/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.747Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.998Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1158-seethrough-layer-decomposition-edge/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.747Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.998Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1160-skintokens-edge-fit/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.748Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.998Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1162-voxhammer-zero-weights/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.748Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.998Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1163-the-accelerator-in-the-loops/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.748Z</lastmod>
+    <lastmod>2026-09-01T17:20:03.998Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1165-finetuning-exhausts-the-desk-card/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.828Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.460Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1166-scoring-the-accelerator-candidates/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.828Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.460Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1167-the-ladder-and-where-each-model-stands/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.828Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.460Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1168-segmenting-the-3d-latent-with-rf-detr/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.829Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.461Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1169-the-audio-tower-for-qwen3-vl/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.829Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.461Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1170-a-cleanroom-presence-loop/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.829Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.461Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1171-the-presence-loop-and-every-role-in-it/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.829Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.461Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1172-a-diffusion-lm-does-not-land-on-the-npu/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.461Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1173-a-multimodal-diffusion-pipeline/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.461Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1173-a-multimodal-diffusion-pipeline/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.749Z</lastmod>
+    <lastmod>2026-09-01T17:20:04.017Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/1174-publish-the-security-rules-against-soc2-and-iso27001/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.749Z</lastmod>
+    <lastmod>2026-09-01T17:20:04.017Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2002-taskweft-value-narrowing-primitives-and-refs/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2004-castspell-libgodot-sandbox-runtime-scope/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2006-cockroachdb-with-mtls-role-separation/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2009-ghcr-package-ownership-same-repo/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2012-amend-pr-before-it-enters-the-queue/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2014-art-game-loop-steel-thread/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2016-checking-sccache/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2018-feature-classification-poc-baseline-stretch/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.830Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2020-pin-engine-to-frozen-godot-4-7/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.831Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2022-spatial-audio-patched-resonance-audio/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.831Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2024-windows-background-services-nssm/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.831Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2026-commit-messages-sentence-case/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.831Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2028-hexagonal-core-ports-adapters/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.831Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2032-core-codegen-lean-slang/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.832Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2036-forward-renderer-baked-light/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.832Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2044-lean4-kernel-cores-flat-c-host-adapters/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.832Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2051-headless-openxr-testing-with-monado/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.832Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2053-integral-entity-transform-wire/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.832Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.462Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2058-webtransport-persistent-framed-stream/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.832Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.463Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2060-org-scoped-github-app-token-for-gh-access/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.833Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.463Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2063-repo-markdown-single-source-of-truth-for-project-state/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.833Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.463Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2065-fabric-platform-central-elixir-burrito-casync/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.833Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.463Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2067-release-tag-progression-dev-beta-rc/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.833Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.463Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2069-defer-loot-slice-hardening-until-needed/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.833Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.463Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2072-actor-lite-worker-pool/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.834Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.463Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2074-binary-value-encoding-for-fdb/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.834Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.463Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2076-macaroon-xdp-security/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.834Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.464Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2078-plausible-witness-dag-feature-ablation/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.834Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.464Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2080-slotmap-entity-storage/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.834Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.464Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2082-zonefabric-scaling/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.835Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.464Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2084-zstd-compression-for-zone-state/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.835Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.464Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2086-defer-nogod-gossip-zone-authority/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.835Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.464Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2089-flyio-over-podman-quadlets/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.835Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.464Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2091-the-gyre-mud-domain-and-mode-selector/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.835Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.464Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2093-compile-taskweft-to-linear-automata/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.836Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.465Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2106-split-the-archive-into-its-own-repo/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.837Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2108-local-cabi-guests-and-in-tick-fanout/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.837Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2110-h2o-libriscv-as-a-rivet-actor/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.837Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2112-lexical-for-the-slash-command-interface/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.837Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2114-prove-the-store-by-breaking-it/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.837Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2116-elixir-epoll-zone-server-in-the-h2o-style/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.837Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2118-a-baker-replaces-the-godot-editor/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.838Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2120-the-gyre-became-a-settlement-game/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.838Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2122-the-client-is-native/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.838Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2124-elixir-error-tuples-in-every-reply/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.838Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.466Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2133-the-pool-rents-from-the-spot-book/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.750Z</lastmod>
+    <lastmod>2026-09-01T17:20:04.017Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2134-cluster-tls-is-decided-before-data/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.750Z</lastmod>
+    <lastmod>2026-09-01T17:20:04.017Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2135-checks-run-where-the-credentials-already-are/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.750Z</lastmod>
+    <lastmod>2026-09-01T17:20:04.017Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2137-rfd-reports-share-one-sheet/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.750Z</lastmod>
+    <lastmod>2026-09-01T17:20:04.017Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2138-interactor-shuttle-merges-spot-broker-and-uro/index.html</loc>
-    <lastmod>2026-09-01T16:44:21.750Z</lastmod>
+    <lastmod>2026-09-01T17:20:04.017Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2140-openbao-on-foundationdb/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.840Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.468Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2141-fdb-tls-rotation-without-data-loss/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.841Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.469Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2142-bao-pki-zerotrust-service-tls/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.841Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.469Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2143-fdb-backup-fans-out-to-r2/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.841Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.469Z</lastmod>
   </url>
   <url>
     <loc>https://weftspun.github.io/request-for-discussion/rfd/2144-fdb-dr-runbook-first-run/DETAILS.html</loc>
-    <lastmod>2026-09-01T16:44:13.841Z</lastmod>
+    <lastmod>2026-09-01T17:19:59.469Z</lastmod>
+  </url>
+  <url>
+    <loc>https://weftspun.github.io/request-for-discussion/rfd/2145-certificate-lifetimes/DETAILS.html</loc>
+    <lastmod>2026-09-01T17:19:59.469Z</lastmod>
   </url>
 </urlset>

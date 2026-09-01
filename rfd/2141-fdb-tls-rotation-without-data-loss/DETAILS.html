@@ -336,6 +336,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="phase-1-dual-ca-trust-bundle" class="level3">
 <h3 class="anchored" data-anchor-id="phase-1-dual-ca-trust-bundle">Phase 1: dual-CA trust bundle</h3>
+<p>The <code>-days 3650</code> (10 years) on the CA below was retracted by RFD 2145 on 2026-09-01. Current guidance: 25-year <code>notAfter</code> on the offline root with 5-year policy rotation; run the command with <code>-days 9125</code> and schedule the ceremony date in the anti-entropy check. Kept in place because a reader working from the earlier text should see the change and where it went.</p>
 <p>Generate the new CA:</p>
 <pre><code>openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:4096 \
   -out new-ca.key

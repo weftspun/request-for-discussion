@@ -289,19 +289,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#rfd-2142-details-pki-setup-and-service-onboarding" id="toc-rfd-2142-details-pki-setup-and-service-onboarding" class="nav-link active" data-scroll-target="#rfd-2142-details-pki-setup-and-service-onboarding">RFD 2142 details: PKI setup and service onboarding</a>
+  <li><a href="#rfd-2145-details-citations-current-state-audit-exceptions" id="toc-rfd-2145-details-citations-current-state-audit-exceptions" class="nav-link active" data-scroll-target="#rfd-2145-details-citations-current-state-audit-exceptions">RFD 2145 details: citations, current-state audit, exceptions</a>
   <ul class="collapse">
-  <li><a href="#why-a-standalone-root-ca-rather-than-an-intermediate" id="toc-why-a-standalone-root-ca-rather-than-an-intermediate" class="nav-link" data-scroll-target="#why-a-standalone-root-ca-rather-than-an-intermediate">Why a standalone root CA rather than an intermediate</a></li>
-  <li><a href="#enabling-the-pki-secrets-engine" id="toc-enabling-the-pki-secrets-engine" class="nav-link" data-scroll-target="#enabling-the-pki-secrets-engine">Enabling the PKI secrets engine</a></li>
-  <li><a href="#issuing-the-bao-listener-cert" id="toc-issuing-the-bao-listener-cert" class="nav-link" data-scroll-target="#issuing-the-bao-listener-cert">Issuing the bao listener cert</a></li>
-  <li><a href="#enabling-tls-on-the-listener" id="toc-enabling-tls-on-the-listener" class="nav-link" data-scroll-target="#enabling-tls-on-the-listener">Enabling TLS on the listener</a></li>
-  <li><a href="#tls-cert-auth-backend" id="toc-tls-cert-auth-backend" class="nav-link" data-scroll-target="#tls-cert-auth-backend">TLS cert auth backend</a></li>
-  <li><a href="#service-onboarding-spot-broker" id="toc-service-onboarding-spot-broker" class="nav-link" data-scroll-target="#service-onboarding-spot-broker">Service onboarding: spot-broker</a></li>
-  <li><a href="#the-gate" id="toc-the-gate" class="nav-link" data-scroll-target="#the-gate">The gate</a></li>
-  <li><a href="#the-1password-op-item-create-failure" id="toc-the-1password-op-item-create-failure" class="nav-link" data-scroll-target="#the-1password-op-item-create-failure">The 1Password <code>op item create</code> failure</a></li>
+  <li><a href="#why-the-root-cert-has-an-expiry-at-all" id="toc-why-the-root-cert-has-an-expiry-at-all" class="nav-link" data-scroll-target="#why-the-root-cert-has-an-expiry-at-all">Why the root cert has an expiry at all</a></li>
+  <li><a href="#why-the-rotation-on-the-root-is-5-years-not-25" id="toc-why-the-rotation-on-the-root-is-5-years-not-25" class="nav-link" data-scroll-target="#why-the-rotation-on-the-root-is-5-years-not-25">Why the ROTATION on the root is 5 years, not 25</a></li>
+  <li><a href="#why-the-intermediates-get-3-years" id="toc-why-the-intermediates-get-3-years" class="nav-link" data-scroll-target="#why-the-intermediates-get-3-years">Why the intermediates get 3 years</a></li>
+  <li><a href="#why-the-leaves-get-90-days-14-days" id="toc-why-the-leaves-get-90-days-14-days" class="nav-link" data-scroll-target="#why-the-leaves-get-90-days-14-days">Why the leaves get 90 days / 14 days</a></li>
+  <li><a href="#current-state-2026-09-01" id="toc-current-state-2026-09-01" class="nav-link" data-scroll-target="#current-state-2026-09-01">Current state, 2026-09-01</a></li>
+  <li><a href="#exceptions-this-rule-does-not-cover" id="toc-exceptions-this-rule-does-not-cover" class="nav-link" data-scroll-target="#exceptions-this-rule-does-not-cover">Exceptions this rule does not cover</a></li>
+  <li><a href="#sources" id="toc-sources" class="nav-link" data-scroll-target="#sources">Sources</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2142-bao-pki-zerotrust-service-tls/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2142-bao-pki-zerotrust-service-tls/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2145-certificate-lifetimes/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2145-certificate-lifetimes/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
@@ -310,118 +309,77 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="rfd-2142-details-pki-setup-and-service-onboarding" class="level1">
-<h1>RFD 2142 details: PKI setup and service onboarding</h1>
-<section id="why-a-standalone-root-ca-rather-than-an-intermediate" class="level2">
-<h2 class="anchored" data-anchor-id="why-a-standalone-root-ca-rather-than-an-intermediate">Why a standalone root CA rather than an intermediate</h2>
-<p>The FDB root CA key (<code>fdb-ca.chibifire.com</code>, SHA-256 fingerprint <code>89:20:69:EB:BF:AB:...</code>) was lost twice. The first loss is documented in RFD 2141. The second happened during this session: <code>op item create</code> returned item IDs that do not correspond to any persisted item. The <code>op item edit</code> path (updating an existing item) did persist. The failure mode is a biometric timeout that <code>op</code> reports as exit code 0 with an item ID in stdout.</p>
-<p>Chaining under the FDB CA would require the FDB CA key or another full cluster TLS rotation. Bao’s PKI engine generates and stores its own root key internally, so no external CA key is needed.</p>
-<p>The two trust domains are separate by design: the FDB CA gates cluster membership (verify-peers rule <code>S.CN&gt;=fdb-,S.CN&lt;=.chibifire.com</code>), and bao’s PKI gates service authentication to the secrets API.</p>
+<section id="rfd-2145-details-citations-current-state-audit-exceptions" class="level1">
+<h1>RFD 2145 details: citations, current-state audit, exceptions</h1>
+<section id="why-the-root-cert-has-an-expiry-at-all" class="level2">
+<h2 class="anchored" data-anchor-id="why-the-root-cert-has-an-expiry-at-all">Why the root cert has an expiry at all</h2>
+<p><strong>RFC 5280 §4.1.2.5</strong> makes <code>notAfter</code> a MANDATORY field on every X.509 certificate. There is no valid X.509 leaf, intermediate, or root that carries no expiry. So the question is not “should the root have an expiry” but “how far out do we set the field that has to be there”.</p>
+<pre><code>The validity period for a certificate is the period of time from
+notBefore through notAfter, inclusive. […] To indicate that a
+certificate has no well-defined expiration date, the notAfter
+SHOULD be assigned the GeneralizedTime value of
+99991231235959Z.
+-- RFC 5280 §4.1.2.5</code></pre>
+<p>RFC 5280 <em>permits</em> the “never expires” sentinel (<code>99991231235959Z</code>) for certs the issuer treats as having no defined end date. Some private CAs use it. This RFD does not, because two things break at that sentinel: OpenSSL prints <code>notAfter=Dec 31 23:59:59 9999 GMT</code> and some X.509 parsers reject the year field as out of range (RFC 5280 requires UTCTime for years 1950-2049 and GeneralizedTime after, so pre-1994 parsers and some embedded stacks fail); and the intent — “this cert never expires, we rotate on schedule” — is invisible to anyone reading the cert. <strong>25 years is long enough that the field is not the rotation gate, and short enough that every stack we ship to handles it.</strong></p>
 </section>
-<section id="enabling-the-pki-secrets-engine" class="level2">
-<h2 class="anchored" data-anchor-id="enabling-the-pki-secrets-engine">Enabling the PKI secrets engine</h2>
-<p>Note: the <code>ttl=87600h</code> (10 years) and <code>max_ttl=8760h</code> (1 year) below were retracted by RFD 2145 on 2026-09-01. Current guidance: <code>ttl=26280h</code> (3 years) on intermediates, <code>max_ttl=2160h</code> (90 days) on service leaves. The old values are kept where they stand so a reader following an older link sees the change; new deploys use RFD 2145’s numbers.</p>
-<pre><code>bao secrets enable pki
-bao write pki/root/generate/internal \
-  common_name="svc-ca.chibifire.com" \
-  ttl=87600h   # 10 years
-bao write pki/config/urls \
-  issuing_certificates="https://weftspun-bao.internal:8200/v1/pki/ca" \
-  crl_distribution_points="https://weftspun-bao.internal:8200/v1/pki/crl"</code></pre>
+<section id="why-the-rotation-on-the-root-is-5-years-not-25" class="level2">
+<h2 class="anchored" data-anchor-id="why-the-rotation-on-the-root-is-5-years-not-25">Why the ROTATION on the root is 5 years, not 25</h2>
+<p>Three converging bodies of guidance land in the same window.</p>
+<p><strong>Mozilla Root Store Policy §7.1</strong> removes public-trust for a root CA whose key material is more than 15 years old:</p>
+<pre><code>For a Root CA certificate trusted for server authentication,
+Mozilla will remove the websites trust bit when the CA key
+material is more than 15 years old.
+-- Mozilla Root Store Policy v2.9, 2023-09</code></pre>
+<p>Our root is private, so Mozilla does not force our hand, but the industry consensus reflected in that number is that 15 years is the outer edge before cryptographic parameters and operational discipline drift enough to warrant re-mint.</p>
+<p><strong>NCSC in-house PKI principles: “keep certificate lifetimes as short as practical”.</strong> No fixed year on the root; the phrasing is deliberate — short as practical, taking rotation cost into account.</p>
+<pre><code>Certificates should have lifetimes that are as short as practical,
+while balancing the operational overhead of renewal.
+-- NCSC "In-house public key infrastructure — PKI principles"</code></pre>
+<p><strong>NIST SP 800-57 Part 1 §5.3.6 (key lifetimes).</strong> Recommends “originator usage period” and “recipient usage period” both bounded; public-key signing keys used to certify other keys are the highest- value keys in the system and thus have the tightest recommended cryptoperiod. Not a specific year, but a directional bound.</p>
+<p>Five years is the smallest rotation cadence at which the CA ceremony is a set-piece event we prepare for rather than an emergency. Half of that is the “start scheduling the next ceremony” trigger.</p>
 </section>
-<section id="issuing-the-bao-listener-cert" class="level2">
-<h2 class="anchored" data-anchor-id="issuing-the-bao-listener-cert">Issuing the bao listener cert</h2>
-<p>Create a role for the listener:</p>
-<pre><code>bao write pki/roles/bao-listener \
-  allowed_domains="weftspun-bao.internal" \
-  allow_bare_domains=true \
-  max_ttl=8760h   # 1 year</code></pre>
-<p>Issue the cert:</p>
-<pre><code>bao write pki/issue/bao-listener \
-  common_name="weftspun-bao.internal" \
-  ttl=8760h</code></pre>
-<p>The certificate, private key, and CA chain are returned in the response. Store the cert and key as Fly secrets <code>BAO_TLS_CERT_B64</code> and <code>BAO_TLS_KEY_B64</code>. Store the CA cert as <code>BAO_TLS_CA_B64</code> (needed by clients to verify the listener).</p>
+<section id="why-the-intermediates-get-3-years" class="level2">
+<h2 class="anchored" data-anchor-id="why-the-intermediates-get-3-years">Why the intermediates get 3 years</h2>
+<p>An intermediate CA is online (or at least reachable) whenever it signs a leaf. Its compromise surface is bigger than the root’s. Rotating it under 5 years is standard private-PKI practice, and 3 years keeps the cadence at “annual re-mint of a new one, run for a year, retire the older one” — a two-CA overlap window that costs nothing and lets the trust-store update propagate.</p>
+<p>CA/B Forum’s SC-081v3 vote (2025-04) sets public TLS leaf lifetimes on a schedule (200 days now, 100 by 2027-03, 47 by 2029-03); the <em>root and intermediate</em> lifetimes for publicly-trusted CAs are already 15 years (Mozilla). Our private intermediates run inside that number, at 1/5 of it, because we control the whole chain and can rotate cheaply.</p>
 </section>
-<section id="enabling-tls-on-the-listener" class="level2">
-<h2 class="anchored" data-anchor-id="enabling-tls-on-the-listener">Enabling TLS on the listener</h2>
-<p>Update <code>config-fdb.hcl</code>:</p>
-<pre><code>listener "tcp" {
-  address         = "[::]:8200"
-  tls_disable     = false
-  tls_cert_file   = "/bao/data/tls/listener-cert.pem"
-  tls_key_file    = "/bao/data/tls/listener-key.pem"
-  tls_client_ca_file = "/bao/data/tls/svc-ca.pem"
-  tls_require_and_verify_client_cert = true
-}</code></pre>
-<p>The entrypoint decodes <code>BAO_TLS_CERT_B64</code>, <code>BAO_TLS_KEY_B64</code>, and <code>BAO_TLS_CA_B64</code> to disk before starting bao, alongside the existing FDB client TLS material.</p>
+<section id="why-the-leaves-get-90-days-14-days" class="level2">
+<h2 class="anchored" data-anchor-id="why-the-leaves-get-90-days-14-days">Why the leaves get 90 days / 14 days</h2>
+<p><strong>mTLS server + client (services): 90 days.</strong> Aligns with the Let’s Encrypt cadence the industry has run for a decade without incident; matches CA/B Forum’s 2027 target for public TLS; short enough that a compromised leaf is a real cost to the attacker.</p>
+<p><strong>WebTransport leaf: 14 days.</strong> Chrome enforces 14 days as the maximum validity for a certificate cited in <code>serverCertificateHashes</code>. Longer and the browser refuses the QUIC handshake. Not a policy choice on our side; it is what the protocol accepts.</p>
 </section>
-<section id="tls-cert-auth-backend" class="level2">
-<h2 class="anchored" data-anchor-id="tls-cert-auth-backend">TLS cert auth backend</h2>
-<pre><code>bao auth enable cert
-bao write auth/cert/certs/spot-broker \
-  display_name="spot-broker" \
-  policies="spot-broker" \
-  certificate=@svc-ca.pem \
-  allowed_common_names="spot-broker.chibifire.com"</code></pre>
-<p>Policy <code>spot-broker</code>:</p>
-<pre><code>path "secret/data/vastai/*" {
-  capabilities = ["read", "list"]
-}</code></pre>
-<p>A service presenting a client cert with CN=spot-broker.chibifire.com signed by bao’s PKI CA receives a token scoped to <code>secret/data/vastai/*</code> only. No root token leaves 1Password.</p>
+<section id="current-state-2026-09-01" class="level2">
+<h2 class="anchored" data-anchor-id="current-state-2026-09-01">Current state, 2026-09-01</h2>
+<p>Every live cert in the workspace and how it stacks up against this RFD:</p>
+<pre><code>cert                                          notAfter        row of table
+------------------------------------------    -----------     -----------------
+chibifire.com Root CA                         2036-08-28      root: 10y set, 25y max. Fine, keep.
+chibifire.com Intermediate CA                 2031-08-30      intermediate: 5y set, 3y max. RETRACT; rotate.
+chibifire.com WebTransport Intermediate CA    2036-08-29      intermediate: 10y set, 3y max. RETRACT; re-mint at 3y.
+weftspun-fdb-ca (break-glass, in 1P)          2031-08-31      break-glass CA: 5y set, 5y max. Fine.
+Bao listener leaf                             2028-09-01      service leaf: 2y set, 90d max. RETRACT; re-mint at 90d.
+FDB machine leaves (Bao-issued)               ~2026-10-01     service leaf: 30d set, 90d max. Fine, keep.
+Admin client cert (DR-time)                   2026-10-01      break-glass leaf: 30d set, 2y max. Fine (deliberately short).
+wt-control-gate-v2 (test leaf)                2026-09-11      WebTransport: 10d set, 14d max. Fine.</code></pre>
+<p>Five items are out of compliance with the table (three certs, two missing gates); the followups list is in the changelog for 2026-09-01.</p>
 </section>
-<section id="service-onboarding-spot-broker" class="level2">
-<h2 class="anchored" data-anchor-id="service-onboarding-spot-broker">Service onboarding: spot-broker</h2>
-<ol type="1">
-<li><p>Issue a client cert:</p>
-<pre><code>bao write pki/roles/spot-broker \
-  allowed_domains="spot-broker.chibifire.com" \
-  allow_bare_domains=true \
-  max_ttl=8760h
-
-bao write pki/issue/spot-broker \
-  common_name="spot-broker.chibifire.com" \
-  ttl=8760h</code></pre></li>
-<li><p>Store cert/key as Fly secrets on spot-broker.</p></li>
-<li><p>The entrypoint authenticates to bao via TLS cert auth, receives a scoped token, reads <code>secret/data/vastai/api</code>, and exports <code>VAST_API_KEY</code>. The Elixir code is unchanged.</p></li>
-<li><p>Elixir services that need dynamic secret access (lease renewal, cert rotation) use <code>libvault</code> (hex.pm, 14k recent downloads). For a static bearer token like the Vast.ai key, an entrypoint curl is sufficient.</p></li>
-</ol>
+<section id="exceptions-this-rule-does-not-cover" class="level2">
+<h2 class="anchored" data-anchor-id="exceptions-this-rule-does-not-cover">Exceptions this rule does not cover</h2>
+<p><strong>Cross-signed certs during CA rotation.</strong> RFD 2141’s phases 2-3 mint a leaf that chains to both the old and new intermediate for the rotation window; that leaf’s <code>notAfter</code> is whichever chain is shorter, and the transition window is the specific case where two CAs overlap for a bounded time. Not covered here; RFD 2141 covers it.</p>
+<p><strong>External CAs.</strong> Nothing this RFD says binds a certificate issued by Let’s Encrypt, ZeroSSL, or a paid public CA. Those follow whatever their issuer says.</p>
+<p><strong>Client certs used only by machine identity (workload).</strong> SPIFFE-style short-lived (1 hour) X.509 SVIDs would sit under this row too if we adopted them; today we do not, so the row is not in the table.</p>
 </section>
-<section id="the-gate" class="level2">
-<h2 class="anchored" data-anchor-id="the-gate">The gate</h2>
-<p>The gate asserts two properties:</p>
-<ol type="1">
-<li>A plaintext HTTP request to <code>weftspun-bao.internal:8200</code> is rejected (connection reset or TLS handshake error, not HTTP 200).</li>
-<li>A TLS request without a client cert, or with an expired cert, returns 403 (not 200).</li>
-</ol>
-<p>Both are negative controls. A gate that only checks “valid cert gets 200” passes when TLS is disabled entirely.</p>
-</section>
-<section id="the-1password-op-item-create-failure" class="level2">
-<h2 class="anchored" data-anchor-id="the-1password-op-item-create-failure">The 1Password <code>op item create</code> failure</h2>
-<p>Three <code>op item create</code> calls during this session returned exit code 0 and printed item IDs:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>returned ID</th>
-<th>intended content</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>jw6rvt6zvfbb7hrxfkdwp5cdg4</td>
-<td>FDB CA private key</td>
-</tr>
-<tr class="even">
-<td>4jzyphsx2w64gvr2m475sm4f4q</td>
-<td>bao KV tls-anchor backup</td>
-</tr>
-<tr class="odd">
-<td>honp7pukafh4g62hycaa7anddm</td>
-<td>bao KV blobstore backup</td>
-</tr>
-</tbody>
-</table>
-<p>All three IDs return “isn’t an item in any vault” on subsequent <code>op item get</code>. The <code>op item edit</code> call to existing item <code>d7fx6rayd6o43sie5joxinfyte</code> did persist; the difference is that <code>edit</code> updates an existing record while <code>create</code> allocates a new one, and the allocation silently fails when biometric authentication times out.</p>
-<p>This is the second loss of the FDB CA key. The first (RFD 2141) was a scratchpad cleanup; the second is a credential store that reported success without persisting.</p>
+<section id="sources" class="level2">
+<h2 class="anchored" data-anchor-id="sources">Sources</h2>
+<p>Cited in <code>.cff</code> files alongside this document so a citation gate can walk them without parsing prose:</p>
+<ul>
+<li><code>references/10-rfc5280.cff</code> — mandatory <code>notAfter</code> (§4.1.2.5)</li>
+<li><code>references/20-mozilla-root-store-policy.cff</code> — 15-year public-trust cap</li>
+<li><code>references/30-cabforum-sc081v3.cff</code> — 200 → 100 → 47 day schedule</li>
+<li><code>references/40-ncsc-pki-principles.cff</code> — “as short as practical”</li>
+<li><code>references/50-nist-sp-800-57-part1.cff</code> — cryptoperiod framing</li>
+<li><code>references/60-webtransport-servercerthashes.cff</code> — 14-day WT ceiling</li>
+</ul>
 
 
 </section>
@@ -849,7 +807,7 @@ bao write pki/issue/spot-broker \
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2142-bao-pki-zerotrust-service-tls/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2142-bao-pki-zerotrust-service-tls/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2145-certificate-lifetimes/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2145-certificate-lifetimes/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">

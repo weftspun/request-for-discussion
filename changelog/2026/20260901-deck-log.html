@@ -294,6 +294,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#added" id="toc-added" class="nav-link" data-scroll-target="#added">Added</a></li>
   <li><a href="#changed" id="toc-changed" class="nav-link" data-scroll-target="#changed">Changed</a></li>
   <li><a href="#fixed" id="toc-fixed" class="nav-link" data-scroll-target="#fixed">Fixed</a></li>
+  <li><a href="#also-added" id="toc-also-added" class="nav-link" data-scroll-target="#also-added">Also added</a></li>
   <li><a href="#end-of-day-state" id="toc-end-of-day-state" class="nav-link" data-scroll-target="#end-of-day-state">End-of-day state</a></li>
   </ul></li>
   </ul>
@@ -334,6 +335,12 @@ ul.task-list li input[type="checkbox"] {
 <li><code>fdb-entrypoint.sh</code> in <code>6-datasource/store/fly/</code> gated the <code>[backup_agent]</code> config block on Tigris credentials being set. An R2-only setup — precisely the DR path — spawned no backup agent, so <code>fdbrestore</code> queued forever. Now gates on <code>$backup = 1 || $backup_r2 = 1</code>, picks <code>blob_credentials</code> from whichever destination is wired, and both agents in <code>[backup_agent]</code> and <code>[backup_agent.2]</code> are fine to start whenever either destination is wired.</li>
 <li>OpenBao’s Shamir <code>sys/rekey/init</code> and <code>sys/generate-root/attempt</code> endpoints return 405 / 404 by default; Vault registers them without a flag, OpenBao gates them on <code>disable_unauthed_rekey_endpoints = false</code> and <code>disable_unauthed_generate_root_endpoints = false</code> in the listener config (see <code>internal/http/handler.go</code> lines 174–192). <code>service-openbao/config-fdb.hcl</code> now sets both. <code>bao operator rekey</code> and <code>bao operator generate-root</code> now run.</li>
 <li>The <code>weftspun-bao root</code> 1P item is now the single source of truth: <code>password</code> CONCEALED holds the rotated root token, <code>unseal_key</code> CONCEALED holds the rekeyed unseal key, <code>notesPlain</code> carries a status note only (no secrets). The three stale unseal-key copies (init doc, prior CONCEALED, notesPlain) are noted as stale in the item’s note. Three orphan root token accessors accumulated during rotation attempts and were revoked once <code>generate-root</code> came online.</li>
+</ul>
+</section>
+<section id="also-added" class="level2">
+<h2 class="anchored" data-anchor-id="also-added">Also added</h2>
+<ul>
+<li><a href="https://weftspun.github.io/weftspun-manuals/rfd/2145-certificate-lifetimes/">RFD 2145</a>: certificate lifetimes, from a risk-based ceiling. Replaces the 10-year CAs and 1-to-2-year leaves RFDs 2134, 2141, 2142, 2144 landed with. New ceilings: <strong>25 years on the offline Root’s <code>notAfter</code> with 5-year policy rotation</strong> (X.509 makes <code>notAfter</code> mandatory per RFC 5280 §4.1.2.5, so the field must exist, but rotation is a policy commitment rather than a validation gate on an offline key that pays no rent), <strong>3 years on intermediates with 1-year rotation</strong>, <strong>90 days on mTLS service leaves with ≤45-day rotation</strong>, and <strong>14 days on WebTransport leaves</strong> (Chromium’s <code>serverCertificateHashes</code> maximum). Citations live as <code>.cff</code> files under <code>rfd/2145-certificate-lifetimes/references/</code> — RFC 5280, Mozilla Root Store Policy §7.1’s 15-year public-trust cap, CA/B Forum SC-081v3’s 200 → 100 → 47 day schedule, NCSC’s “as short as practical” principle, NIST SP 800-57 Part 1 §5.3.6 cryptoperiod framing, W3C WebTransport. RFDs 2134, 2141, 2142, 2144 carry in-place retractions pointing here for the specific numbers replaced. S2145 registered.</li>
 </ul>
 </section>
 <section id="end-of-day-state" class="level2">
