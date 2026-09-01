@@ -1363,6 +1363,18 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#decision-172" id="toc-decision-172" class="nav-link" data-scroll-target="#decision-172">Decision</a></li>
   <li><a href="#related-163" id="toc-related-163" class="nav-link" data-scroll-target="#related-163">Related</a></li>
   </ul></li>
+  <li><a href="#rfd-2143-fdb-backup-fans-out-to-r2-for-off-fly-durability" id="toc-rfd-2143-fdb-backup-fans-out-to-r2-for-off-fly-durability" class="nav-link" data-scroll-target="#rfd-2143-fdb-backup-fans-out-to-r2-for-off-fly-durability">RFD 2143: FDB backup fans out to R2 for off-Fly durability</a>
+  <ul class="collapse">
+  <li><a href="#problem-171" id="toc-problem-171" class="nav-link" data-scroll-target="#problem-171">Problem</a></li>
+  <li><a href="#decision-173" id="toc-decision-173" class="nav-link" data-scroll-target="#decision-173">Decision</a></li>
+  <li><a href="#related-164" id="toc-related-164" class="nav-link" data-scroll-target="#related-164">Related</a></li>
+  </ul></li>
+  <li><a href="#rfd-2144-the-dr-runbook-runs-and-the-ca-it-needed-lands" id="toc-rfd-2144-the-dr-runbook-runs-and-the-ca-it-needed-lands" class="nav-link" data-scroll-target="#rfd-2144-the-dr-runbook-runs-and-the-ca-it-needed-lands">RFD 2144: The DR runbook runs, and the CA it needed lands</a>
+  <ul class="collapse">
+  <li><a href="#problem-172" id="toc-problem-172" class="nav-link" data-scroll-target="#problem-172">Problem</a></li>
+  <li><a href="#decision-174" id="toc-decision-174" class="nav-link" data-scroll-target="#decision-174">Decision</a></li>
+  <li><a href="#related-165" id="toc-related-165" class="nav-link" data-scroll-target="#related-165">Related</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -5379,6 +5391,46 @@ scoring     MaskScore + EditScore      n/a           self-supervised reward</cod
 <section id="related-163" class="level2">
 <h2 class="anchored" data-anchor-id="related-163">Related</h2>
 <p>RFD 2140 (bao on FDB), RFD 2141 (FDB TLS rotation).</p>
+</section>
+</section>
+<section id="rfd-2143-fdb-backup-fans-out-to-r2-for-off-fly-durability" class="level1">
+<h1>RFD 2143: FDB backup fans out to R2 for off-Fly durability</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2143</code></p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> a second <code>fdbbackup</code> tag writes to R2 IA alongside the Tigris tag <strong>Scope:</strong> weftspun-fdb (3 machines)</p>
+<section id="problem-171" class="level2">
+<h2 class="anchored" data-anchor-id="problem-171">Problem</h2>
+<p>Today <code>fdbbackup</code> writes to Tigris (<code>fly.storage.tigris.dev</code>), Fly’s own object storage. A disaster naming “all Fly infra gone” takes the backup with the cluster. Beside it: Bao holds the FDB CA key as <code>type=internal</code>, and Bao’s storage backend is FDB, so the CA rides FDB backups. A restore that cannot read the backup cannot issue the machine leaves the restored cluster needs.</p>
+</section>
+<section id="decision-173" class="level2">
+<h2 class="anchored" data-anchor-id="decision-173">Decision</h2>
+<p>A second <code>fdbbackup</code> tag <code>dr</code> writes concurrently to R2 IA (<code>weftspun-fdb-dr</code>), reached via a second stunnel loopback listener that adds the SNI FoundationDB does not send. R2 IA carries a 30-day minimum storage duration and free egress. The <code>default</code> tag keeps writing to Tigris; two destinations, one cluster.</p>
+<p>R2 S3 credentials live in Bao at <code>secret/data/weftspun-fdb/r2-dr</code>, cached as Fly secrets on <code>weftspun-fdb</code> because Bao’s storage is FDB and FDB cannot read Bao at boot. The Cloudflare API bearer token stays in 1Password; the S3 keys are regenerated from it at DR time rather than restored, so no long-lived material sits outside Bao.</p>
+<p><strong>Gate:</strong> <code>fdbbackup status -t dr</code> reports restorable and R2’s newest <code>data/</code> object is younger than <code>WEFT_BACKUP_MAX_AGE</code>.</p>
+<p><strong>Negative control:</strong> a machine started without <code>R2_ACCESS_KEY_ID</code> runs <code>default</code> only, and the <code>dr</code> check reports critical rather than passing on nothing.</p>
+</section>
+<section id="related-164" class="level2">
+<h2 class="anchored" data-anchor-id="related-164">Related</h2>
+<p>RFD 2134, 2140, 2141, 2135. DR runbook in DETAILS.md.</p>
+</section>
+</section>
+<section id="rfd-2144-the-dr-runbook-runs-and-the-ca-it-needed-lands" class="level1">
+<h1>RFD 2144: The DR runbook runs, and the CA it needed lands</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2144</code></p>
+<p><strong>State:</strong> discussion <strong>Scope:</strong> weftspun-fdb, weftspun-bao, Personal 1Password vault</p>
+<section id="problem-172" class="level2">
+<h2 class="anchored" data-anchor-id="problem-172">Problem</h2>
+<p>RFD 2143 called its own DR runbook theatre because RFD 2141’s break-glass CA was not in 1Password. On 2026-09-01, <code>weftspun-fdb</code>, <code>weftspun-bao</code>, <code>spot-broker</code> and <code>chibifire-com</code> were gone from Fly. Tigris and R2 both survived — compute lost, storage kept — so the runbook had to run.</p>
+</section>
+<section id="decision-174" class="level2">
+<h2 class="anchored" data-anchor-id="decision-174">Decision</h2>
+<p>Mint the break-glass CA at DR-time, stash to <code>op://Personal/FDB-CA/</code>, execute the R2-primary restore, and land the follow-ups the run surfaces: Bao secret hygiene, R2 key rotation, Tigris fan-out refresh, scale to three at <code>double</code> redundancy. The CA in 1P closes RFD 2141’s prereq; the runbook stops being theatre.</p>
+<p>RFD 2141’s phases 2–3 rotate the machine leaves to certificates the restored Bao PKI mount signs, once Bao is unsealed against the restored FDB. Until then, the cluster runs on the break-glass CA.</p>
+<p><code>WEFT_FDB_CLUSTER_ID</code> was not stored, so a fresh one was minted and written to 1P as <code>weftspun-fdb cluster id</code>. Coordinator addresses change on a rebuild anyway, so the identity change rides along.</p>
+<p>Measurements — R2 snapshot age, <code>fdbrestore</code> timings, twelve inline defects the runbook did not name — move to <code>DETAILS.md</code>. <code>logbook-rfd2144-dr-runbook-first-run.md</code> records what was measured during the run itself.</p>
+</section>
+<section id="related-165" class="level2">
+<h2 class="anchored" data-anchor-id="related-165">Related</h2>
+<p>RFD 2134, 2135, 2140, 2141 (prereq landed here), 2143 (runbook executed).</p>
 
 
 </section>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Logbook – Taskweft — Manuals</title>
+<title>details – Taskweft — Manuals</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -29,29 +29,27 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f36f388c175c695e587c9d92b6af4f92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f36f388c175c695e587c9d92b6af4f92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -79,65 +77,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -310,7 +250,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Taskweft — Manuals</span>
     </a>
   </div>
@@ -321,15 +261,15 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../pages/rfd.html"> 
+    <a class="nav-link" href="../../pages/rfd.html"> 
 <span class="menu-text">RFDs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../pages/logbook.html" aria-current="page"> 
+    <a class="nav-link" href="../../pages/logbook.html"> 
 <span class="menu-text">Logbook</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../pages/serials.html"> 
+    <a class="nav-link" href="../../pages/serials.html"> 
 <span class="menu-text">Register</span></a>
   </li>  
 </ul>
@@ -344,321 +284,99 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#rfd-2144-details-what-running-the-rfd-2143-runbook-actually-measured" id="toc-rfd-2144-details-what-running-the-rfd-2143-runbook-actually-measured" class="nav-link active" data-scroll-target="#rfd-2144-details-what-running-the-rfd-2143-runbook-actually-measured">RFD 2144 details: what running the RFD 2143 runbook actually measured</a>
+  <ul class="collapse">
+  <li><a href="#the-disaster" id="toc-the-disaster" class="nav-link" data-scroll-target="#the-disaster">The disaster</a></li>
+  <li><a href="#the-r2-snapshot-described-from-the-recovered-machine" id="toc-the-r2-snapshot-described-from-the-recovered-machine" class="nav-link" data-scroll-target="#the-r2-snapshot-described-from-the-recovered-machine">The R2 snapshot, described from the recovered machine</a></li>
+  <li><a href="#the-runbook-and-what-it-hid" id="toc-the-runbook-and-what-it-hid" class="nav-link" data-scroll-target="#the-runbook-and-what-it-hid">The runbook and what it hid</a></li>
+  <li><a href="#the-break-glass-ca" id="toc-the-break-glass-ca" class="nav-link" data-scroll-target="#the-break-glass-ca">The break-glass CA</a></li>
+  <li><a href="#the-recovery-step-by-step" id="toc-the-recovery-step-by-step" class="nav-link" data-scroll-target="#the-recovery-step-by-step">The recovery, step by step</a></li>
+  <li><a href="#what-this-rfd-does-not-cover" id="toc-what-this-rfd-does-not-cover" class="nav-link" data-scroll-target="#what-this-rfd-does-not-cover">What this RFD does not cover</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2144-fdb-dr-runbook-first-run/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2144-fdb-dr-runbook-first-run/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Logbook</h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>Entries record what was <strong>measured</strong>, not what was intended, and clip enough of the experimental apparatus to re-run the test rather than merely its conclusion.</p>
-<p>These 145 entries were a separate repository until <code>weftspun/logbook</code> was archived. A decision and its measurement sat one repository apart; they no longer do. Entries kept their filenames, so an entry is still findable by the thing it measured rather than by where it used to live.</p>
-
-
-
-
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-      <option value="" disabled="" selected="" hidden="">Order By</option>
-      <option value="index" data-direction="asc">Default</option>
-      <option value="listing-date-sort" data-direction="asc">
-        Date - Oldest
-      </option>
-      <option value="listing-date-sort" data-direction="desc">
-        Date - Newest
-      </option>
-      <option value="listing-title-sort" data-direction="asc">
-        Title
-      </option>
-    </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
-</div>
-<table class="quarto-listing-table table">
-<thead>
-<tr>
-
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
-</th>
-
-<th>
-<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
-</th>
-
-</tr>
-</thead>
-<tbody class="list">
-
-<tr data-index="0" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="4" data-listing-word-count-sort="725" data-listing-title-sort="Blend-shape animation through the flow adapter, and TokenRig's first light" data-listing-filename-sort="logbook-blendshape-animation-and-tokenrig-first-light.md">
-<td>
-<a href="../logbook/logbook-blendshape-animation-and-tokenrig-first-light.html" class="title listing-title">Blend-shape animation through the flow adapter, and TokenRig’s first light</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="1" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="5" data-listing-word-count-sort="994" data-listing-title-sort="In-betweens, phenotype clips, and what pass-through means" data-listing-filename-sort="logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.md">
-<td>
-<a href="../logbook/logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.html" class="title listing-title">In-betweens, phenotype clips, and what pass-through means</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="2" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="8" data-listing-word-count-sort="1464" data-listing-title-sort="Logbook: CineForm in Godot, and what recording actually costs" data-listing-filename-sort="logbook-cineform-movie-writer.md">
-<td>
-<a href="../logbook/logbook-cineform-movie-writer.html" class="title listing-title">Logbook: CineForm in Godot, and what recording actually costs</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="3" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="4" data-listing-word-count-sort="660" data-listing-title-sort="Logbook: FDB VFS embed into ecto_sqlite3, retracted" data-listing-filename-sort="logbook-rfd2133-vfs-embed-retracted.md">
-<td>
-<a href="../logbook/logbook-rfd2133-vfs-embed-retracted.html" class="title listing-title">Logbook: FDB VFS embed into ecto_sqlite3, retracted</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="4" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="2" data-listing-word-count-sort="283" data-listing-title-sort="Logbook: OpenBao on FoundationDB" data-listing-filename-sort="logbook-rfd2140-openbao-on-fdb.md">
-<td>
-<a href="../logbook/logbook-rfd2140-openbao-on-fdb.html" class="title listing-title">Logbook: OpenBao on FoundationDB</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="5" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="31" data-listing-word-count-sort="6080" data-listing-title-sort="Logbook: RFD 1016 model-repo build-out" data-listing-filename-sort="logbook-rfd1016-model-repos.md">
-<td>
-<a href="../logbook/logbook-rfd1016-model-repos.html" class="title listing-title">Logbook: RFD 1016 model-repo build-out</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="6" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="11" data-listing-word-count-sort="2018" data-listing-title-sort="Logbook: RFD 1122 T01, the pose-library check" data-listing-filename-sort="logbook-rfd1122-t01-pose-check.md">
-<td>
-<a href="../logbook/logbook-rfd1122-t01-pose-check.html" class="title listing-title">Logbook: RFD 1122 T01, the pose-library check</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="7" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="4" data-listing-word-count-sort="639" data-listing-title-sort="Logbook: bao connected to FDB cluster, credential rotation, 1Password persistence failure" data-listing-filename-sort="logbook-rfd2142-bao-pki-zerotrust.md">
-<td>
-<a href="../logbook/logbook-rfd2142-bao-pki-zerotrust.html" class="title listing-title">Logbook: bao connected to FDB cluster, credential rotation, 1Password persistence failure</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="8" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="4" data-listing-word-count-sort="614" data-listing-title-sort="Logbook: minimum-double weftspun-fdb on Fly" data-listing-filename-sort="logbook-rfd2133-weftspun-fdb-on-fly.md">
-<td>
-<a href="../logbook/logbook-rfd2133-weftspun-fdb-on-fly.html" class="title listing-title">Logbook: minimum-double weftspun-fdb on Fly</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="9" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="18" data-listing-word-count-sort="3434" data-listing-title-sort="Logbook: one base, measured, and the rerank" data-listing-filename-sort="logbook-rfd1171-gemma-first-rerank.md">
-<td>
-<a href="../logbook/logbook-rfd1171-gemma-first-rerank.html" class="title listing-title">Logbook: one base, measured, and the rerank</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="10" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="3" data-listing-word-count-sort="474" data-listing-title-sort="Logbook: spot-broker on Fly" data-listing-filename-sort="logbook-rfd2133-spot-broker-on-fly.md">
-<td>
-<a href="../logbook/logbook-rfd2133-spot-broker-on-fly.html" class="title listing-title">Logbook: spot-broker on Fly</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="11" data-listing-file-modified-sort="1788281053803" data-listing-reading-time-sort="7" data-listing-word-count-sort="1241" data-listing-title-sort="Logbook: the ANNY fit that the corpus does not need" data-listing-filename-sort="logbook-anny-phenotype-fit-retired.md">
-<td>
-<a href="../logbook/logbook-anny-phenotype-fit-retired.html" class="title listing-title">Logbook: the ANNY fit that the corpus does not need</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="12" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="7" data-listing-word-count-sort="1299" data-listing-title-sort="Logbook: the DR runbook runs on the day the cluster is gone" data-listing-filename-sort="logbook-rfd2144-dr-runbook-first-run.md">
-<td>
-<a href="../logbook/logbook-rfd2144-dr-runbook-first-run.html" class="title listing-title">Logbook: the DR runbook runs on the day the cluster is gone</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="13" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="11" data-listing-word-count-sort="2026" data-listing-title-sort="Logbook: the Qwen3-VL vision tower against the Dataflow Compiler" data-listing-filename-sort="logbook-qwen3vl-vit-translate-walls.md">
-<td>
-<a href="../logbook/logbook-qwen3vl-vit-translate-walls.html" class="title listing-title">Logbook: the Qwen3-VL vision tower against the Dataflow Compiler</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="14" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="2" data-listing-word-count-sort="375" data-listing-title-sort="Logbook: the backup reaches Tigris through the SNI hop" data-listing-filename-sort="logbook-rfd2134-backup-through-the-sni-hop.md">
-<td>
-<a href="../logbook/logbook-rfd2134-backup-through-the-sni-hop.html" class="title listing-title">Logbook: the backup reaches Tigris through the SNI hop</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="15" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="6" data-listing-word-count-sort="1171" data-listing-title-sort="Logbook: the first four-loop rounds on the desk card" data-listing-filename-sort="logbook-fourloops-first-runs.md">
-<td>
-<a href="../logbook/logbook-fourloops-first-runs.html" class="title listing-title">Logbook: the first four-loop rounds on the desk card</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="16" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="5" data-listing-word-count-sort="992" data-listing-title-sort="Logbook: the soft renderer's three constants, and Mitsuba" data-listing-filename-sort="logbook-soft-renderer-and-mitsuba.md">
-<td>
-<a href="../logbook/logbook-soft-renderer-and-mitsuba.html" class="title listing-title">Logbook: the soft renderer’s three constants, and Mitsuba</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="17" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="9" data-listing-word-count-sort="1605" data-listing-title-sort="Logbook: two DFC emulation contexts disagree by six orders of magnitude" data-listing-filename-sort="logbook-dfc-emulation-contexts-disagree.md">
-<td>
-<a href="../logbook/logbook-dfc-emulation-contexts-disagree.html" class="title listing-title">Logbook: two DFC emulation contexts disagree by six orders of magnitude</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="18" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="3" data-listing-word-count-sort="486" data-listing-title-sort="Logbook: two checks, a stopped backup, and curl's signing limits" data-listing-filename-sort="logbook-rfd2135-two-checks-and-a-stopped-backup.md">
-<td>
-<a href="../logbook/logbook-rfd2135-two-checks-and-a-stopped-backup.html" class="title listing-title">Logbook: two checks, a stopped backup, and curl’s signing limits</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="19" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="6" data-listing-word-count-sort="1163" data-listing-title-sort="Logbook: two walls between a translated graph and a HEF" data-listing-filename-sort="logbook-rfd1130-two-walls-to-a-hef.md">
-<td>
-<a href="../logbook/logbook-rfd1130-two-walls-to-a-hef.html" class="title listing-title">Logbook: two walls between a translated graph and a HEF</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="20" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="11" data-listing-word-count-sort="2074" data-listing-title-sort="Logbook: what an edge NPU takes, and what the ANNY forward will not export" data-listing-filename-sort="logbook-edge-npu-and-the-anny-forward.md">
-<td>
-<a href="../logbook/logbook-edge-npu-and-the-anny-forward.html" class="title listing-title">Logbook: what an edge NPU takes, and what the ANNY forward will not export</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="21" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="12" data-listing-word-count-sort="2261" data-listing-title-sort="Logbook: what the Neural Engine reaches, and what it holds" data-listing-filename-sort="logbook-rfd1142-neural-engine-against-the-ugen300.md">
-<td>
-<a href="../logbook/logbook-rfd1142-neural-engine-against-the-ugen300.html" class="title listing-title">Logbook: what the Neural Engine reaches, and what it holds</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="22" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="14" data-listing-word-count-sort="2799" data-listing-title-sort="Logbook: what the plan costs once the durations are real, and the card is a 3090" data-listing-filename-sort="logbook-rfd1122-hailo-first-rerank.md">
-<td>
-<a href="../logbook/logbook-rfd1122-hailo-first-rerank.html" class="title listing-title">Logbook: what the plan costs once the durations are real, and the card is a 3090</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="23" data-listing-file-modified-sort="1788281053804" data-listing-reading-time-sort="6" data-listing-word-count-sort="1157" data-listing-title-sort="The comment ladder" data-listing-filename-sort="logbook-comment-ladder.md">
-<td>
-<a href="../logbook/logbook-comment-ladder.html" class="title listing-title">The comment ladder</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-</tbody>
-</table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+
+<section id="rfd-2144-details-what-running-the-rfd-2143-runbook-actually-measured" class="level1">
+<h1>RFD 2144 details: what running the RFD 2143 runbook actually measured</h1>
+<section id="the-disaster" class="level2">
+<h2 class="anchored" data-anchor-id="the-disaster">The disaster</h2>
+<p>On 2026-09-01, <code>fly apps list</code> for <code>personal</code> returned one row: <code>artifacts-mmo-mcp</code>. The four apps the working agreements name as placed — <code>weftspun-fdb</code>, <code>weftspun-bao</code>, <code>spot-broker</code>, <code>chibifire-com</code> — were gone. Tigris <code>weftspun-fdb-blob</code> and R2 <code>weftspun-fdb-dr</code> both survived, so the disaster matched RFD 2143’s premise partially: compute lost, object storage kept. The <code>personal</code> org’s <code>weftspun-fdb-blob</code> bucket showed in <code>fly storage list</code>; the R2 bucket showed as <code>Restorable: true</code> under <code>fdbbackup describe</code>.</p>
+</section>
+<section id="the-r2-snapshot-described-from-the-recovered-machine" class="level2">
+<h2 class="anchored" data-anchor-id="the-r2-snapshot-described-from-the-recovered-machine">The R2 snapshot, described from the recovered machine</h2>
+<pre><code>URL: blobstore://&lt;key&gt;@814b5215273d5479adb116d1fe1af696.r2.cloudflarestorage.com:8444/weft?bucket=weftspun-fdb-dr&amp;region=auto&amp;sc=0
+Restorable: true
+Snapshot:  startVersion=102067065919 (maxLogEnd -0.19 days)
+           endVersion=102067092357  (maxLogEnd -0.19 days)
+           totalBytes=99644  restorable=true  expiredPct=0.00
+ContiguousLogEndVersion: 118325089882 (maxLogEnd -0.00 days)
+MaxRestorableVersion:    118325089881 (maxLogEnd -0.00 days)</code></pre>
+<p>99 644 bytes of snapshot. RFD 2143’s measurement on 2026-08-31 was <code>Sum of key-value sizes = 0 MB</code>, and this snapshot’s size agrees: the cluster held Bao’s PKI mount metadata and little else. The recovered data is Bao’s state at the moment the last log flushed, 0.19 days before the describe (about four and a half hours before the run).</p>
+</section>
+<section id="the-runbook-and-what-it-hid" class="level2">
+<h2 class="anchored" data-anchor-id="the-runbook-and-what-it-hid">The runbook and what it hid</h2>
+<p>Twelve defects surfaced during the run that the RFD 2143 runbook did not name. They are named here so a second run does not rediscover them.</p>
+<p><strong>1. <code>WEFT_FDB_CLUSTER_ID</code> had no home.</strong> The entrypoint requires it, the fly.toml deliberately does not default it, and no 1P item held it. A fresh one was minted (<code>openssl rand -hex 8</code>) and stored to 1P as <code>weftspun-fdb cluster id</code>. Clients’ cluster files change to the new <code>weft:&lt;newid&gt;@&lt;newcoords&gt;</code> — because coordinator addresses change on a rebuild anyway, the identity change costs nothing extra. Every future DR needs to either mint fresh or restore this from somewhere, and the runbook is now updated to say so.</p>
+<p><strong>2. Bao root token and unseal key were in <code>notesPlain</code>.</strong> The <code>weftspun-bao root</code> login item stored both as free-text notes rather than in CONCEALED fields. A routine <code>op item get --format=json</code> walk that concealed only <code>CONCEALED</code>-typed fields printed both into the DR session’s transcript. Rotation moved to end-of-DR (<code>bao token revoke -self</code>, <code>bao operator rekey</code>), and the notes field is empty afterward.</p>
+<p><strong>3. <code>fly storage create --name &lt;existing&gt;</code> refuses to reattach.</strong> The error is <code>Name has already been taken</code>. There is no CLI flag for the attach case, and no other subcommand does it. The recovery got its Tigris keys by way of the Tigris console (<code>fly storage dashboard weftspun-fdb-blob</code>) and pasted them into <code>fly secrets set --stage</code> from the operator’s own terminal. A followup is a script that walks this dance rather than a paragraph in the runbook.</p>
+<p><strong>4. Health checks fail closed during initial deploy.</strong> <code>backup_fresh</code> and <code>backup_fresh_dr</code> publish a file only when the backup agents are running and their newest object is fresh. On a fresh cluster with no backup started, the files never appear, and the checks stay critical past their grace periods. <code>--strategy immediate</code> is what makes the deploy return anyway. Once the cluster is up and the DR-tag backup starts, the checks recover on the next poll.</p>
+<p><strong>5. <code>zsh</code> <code>read -p</code> never fires in the AI session’s <code>!</code> context.</strong> The prompt is written to <code>/dev/tty</code> and the tool captures stdout, so the user sees nothing, <code>read</code> returns an empty string, and the following <code>fly secrets set</code> runs with empty values and rejects them. The credentials pipeline switched to <code>op read | fly secrets set</code> via shell substitution, which puts no value in the transcript regardless of the shell.</p>
+<p><strong>6. The entrypoint spawns no <code>backup_agent</code> for R2-only setups.</strong> <code>fdb-entrypoint.sh</code> gates the <code>[backup_agent]</code> config block on <code>$backup = 1</code>, which is set only inside the AWS/Tigris credentials block. R2-only bring-up — which is precisely the DR case — writes an <code>fdbmonitor</code> config with no agents, and <code>fdbrestore</code> queues with no worker to pick it up. The DR run’s restore stayed in state <code>queued</code> with 0 blocks progressing over twenty polls before the cause was found. Workaround: start <code>backup_agent</code> by hand over SSH under mTLS. Filed as followup: gate the block on <code>$backup = 1 || $backup_r2 = 1</code> and pick <code>blob_credentials</code> from whichever file exists.</p>
+<p><strong>7. <code>weftspun/service-openbao</code> is not in <code>default.xml</code>.</strong> The DR runbook needs the deployment config for <code>weftspun-bao</code>, and the config lives in a repo that is not one of the manifest’s 135 projects. The run cloned the repo by hand into scratchpad. Add it to the goal manifest, or the next DR discovers this the same way. RFD 2140 references the repo but does not require it to be checked out.</p>
+<p><strong>8. <code>openssl genpkey -algorithm EC</code> produces params Go rejects.</strong> The Bao listener refused to start with <code>x509: invalid ECDSA parameters</code>. <code>openssl genpkey</code> with <code>-pkeyopt ec_paramgen_curve:P-256</code> default-encodes the key in PKCS#8 with explicit ECDSA parameters, which OpenSSL and CGO consumers (including the FoundationDB Go binding) accept but Go’s stdlib <code>crypto/x509</code> refuses. The fix is <code>openssl ecparam -name prime256v1 -genkey -noout</code>, which writes the traditional SEC1 <code>EC PRIVATE KEY</code> PEM with a named-curve OID that Go accepts. <code>mint-fdb-leaf.sh</code> used the failing form and stayed that way because its consumers are all CGO. Any key destined for a Go stdlib TLS listener needs the SEC1 form. The break-glass CA generator has the same defect on P-384; the Bao boot CA had to be minted in a second scratchpad slot rather than reusing the FDB CA.</p>
+<p><strong>9. Three different unseal keys in 1P, only one worked.</strong> The canonical <code>openbao-fdb-ca-init.json</code> in the OpenBao document, the <code>unseal_key</code> CONCEALED field on the <code>weftspun-bao root</code> login, and the base64 line under <code>Unseal key (base64):</code> in that login’s <code>notesPlain</code> all held different 44-character strings. The first two failed unseal with <code>cipher: message authentication failed</code> (AES-GCM auth tag mismatch = wrong key); the notes value succeeded. The rekey history clearly outran the 1P hygiene — every rekey wrote one place, and the two other slots kept their pre-rekey values. The end-of-DR pass rewrote <code>unseal_key</code> (CONCEALED) with the working value, cleared <code>notesPlain</code> of the leaked keys, and left a note naming the stale init doc — the source of truth is now one field.</p>
+<p><strong>10. OpenBao’s <code>sys/rekey/init</code> returns 405 unsupported operation, until enabled by a listener flag.</strong> Vault registers the unauthenticated Shamir rekey endpoints by default; OpenBao gates them on <code>disable_unauthed_rekey_endpoints = false</code> inside the <code>listener "tcp"</code> block. Without the flag, <code>internal/http/handler.go</code> skips <code>mux.Handle("/v1/sys/rekey/init", ...)</code> and the endpoint returns 405. The fix landed in <code>service-openbao/config-fdb.hcl</code> during the DR; <code>bao operator rekey</code> then completed and the new unseal key is what <code>op://Personal/weftspun-bao root/unseal_key</code> holds. <strong>Verified:</strong> <code>bao operator seal</code> followed by <code>bao operator unseal &lt;new-key&gt;</code> cycles without error.</p>
+<p><strong>11. <code>sys/generate-root-token/attempt</code> returns 403; the unauthenticated <code>sys/generate-root/attempt</code> is behind the same listener flag.</strong> OpenBao’s authenticated variant (with <code>-token</code> in the path) always returns <code>permission denied</code> to callers presenting a client cert; the CLI hits this one by default. The unauthenticated variant (Vault’s original path, without <code>-token</code>) is only registered when <code>disable_unauthed_generate_root_endpoints = false</code>. Same flag as #10, filed the same way. The CLI’s <code>-decode</code> operation itself calls the authenticated status endpoint before decoding, so on this build the decode step fails even after the endpoint is enabled — decode was done locally in Python (XOR of the OTP against <code>base64.RawStdEncoding</code> of the encoded token, per <code>sdk/helper/roottoken/decode.go</code>). The recovered token was used to revoke three orphan root accessors this DR had accumulated during rotation attempts; the new root token is what <code>op://Personal/weftspun-bao root/password</code> holds. <strong>Verified:</strong> <code>bao token lookup</code> under the new token reports <code>policies=[root]</code>, <code>orphan=true</code>; only three accessors remain (was five).</p>
+<p><strong>12. <code>awk -F=</code> truncates the trailing <code>=</code> in base64 values.</strong> A 44-char base64-encoded 32-byte unseal key stored as 43 chars in 1P during rekey capture, because <code>awk -F= '/^uk=/{print $2}'</code> splits on <code>=</code> characters and returns only the field between the first two, dropping any padding <code>=</code> at the end. Base64 decode of the 43-char form still gave the correct 32 bytes (padding is optional in <code>RawStdEncoding</code> and forgiving in most decoders), so the cluster survived; the stored value was rewritten with the padding restored for canonical hygiene. Fix: use <code>cut -d= -f2-</code> (which keeps everything after the first <code>=</code>) or <code>sed 's/^uk=//'</code>.</p>
+</section>
+<section id="the-break-glass-ca" class="level2">
+<h2 class="anchored" data-anchor-id="the-break-glass-ca">The break-glass CA</h2>
+<p>Minted P-384 self-signed root, five-year validity:</p>
+<pre><code>fingerprint  71:D6:EE:B6:E1:93:78:F6:70:05:72:1D:F4:BD:24:3A:B7:C3:9A:91:28:FE:A2:D2:60:E5:B8:8F:0F:1E:0F:15
+subject      CN=weftspun-fdb-ca, O=chibifire
+algorithm    ECDSA P-384</code></pre>
+<p>Stored to 1Password: <code>FDB-CA cert</code> (uuid <code>iwkxxgvlszvnidwfscr6asctpm</code>), <code>FDB-CA key</code> (uuid <code>nkrahus5ruqycjqa2i3jsswd5y</code>). The leaves the run mints are P-256, two-year, CN <code>fdb-&lt;machine_id&gt;.chibifire.com</code>, matching <code>WEFT_FDB_TLS_VERIFY</code> (<code>S.CN&gt;=fdb-,S.CN&lt;=.chibifire.com</code>).</p>
+<p>The break-glass CA does not become the cluster CA. Once Bao is unsealed against the restored FDB, RFD 2141’s phases 2–3 rotate every leaf to a certificate signed by the CA Bao’s PKI mount holds, and <code>FDB_TLS_CA_B64</code> drops the break-glass anchor. The break-glass CA in 1P stays as a break-glass CA, for the next DR.</p>
+</section>
+<section id="the-recovery-step-by-step" class="level2">
+<h2 class="anchored" data-anchor-id="the-recovery-step-by-step">The recovery, step by step</h2>
+<pre><code>T+0     fly apps create weftspun-fdb --org personal
+T+2m    fly secrets set --stage: R2_* (from op://), WEFT_FDB_CLUSTER_ID
+T+3m    First deploy: WEFT_FDB_MACHINES=1, WEFT_FDB_RESET=1, no TLS
+        → machine 8d1d2ebed71158 allocated
+T+8m    Mint leaf for 8d1d2ebed71158 under break-glass CA
+        fly secrets set --stage: FDB_TLS_CA_B64, FDB_TLS_CERT_*, FDB_TLS_KEY_*
+        Second deploy: same env, TLS secrets active → cluster reforms mTLS
+T+9m    fdbcli status: "The database is available."
+T+10m   fdbbackup describe -d $R2_URL: Restorable: true
+T+10m   fdbrestore start -w -r $R2_URL</code></pre>
+<p>The full T+ timeline for the rest — Bao restore, cert rotation, scale to three, key rotation — lands as it happens in <code>logbook-rfd2144-dr-runbook-first-run.md</code>.</p>
+</section>
+<section id="what-this-rfd-does-not-cover" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-rfd-does-not-cover">What this RFD does not cover</h2>
+<ul>
+<li><strong>A second DR without a running desk.</strong> This run had a laptop with <code>op</code>, <code>fly</code>, and <code>openssl</code>. A DR where the laptop is also gone needs a break-glass laptop image, and RFD 2143’s cross-region point holds.</li>
+<li><strong>Backup encryption at rest.</strong> RFD 2143 named this as future work and it stays so. R2’s copy of Bao’s mount metadata is unencrypted.</li>
+<li><strong>Recovering <code>chibifire-com</code>.</strong> The domain and cert setup was not part of this run; recreating it is a separate task.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -1080,7 +798,7 @@ window.Quarto = {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/pages/logbook.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/pages/logbook.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2144-fdb-dr-runbook-first-run/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2144-fdb-dr-runbook-first-run/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">

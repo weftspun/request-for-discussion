@@ -14,6 +14,7 @@
       "/logbook/logbook-rfd1171-gemma-first-rerank.html",
       "/logbook/logbook-rfd2133-spot-broker-on-fly.html",
       "/logbook/logbook-anny-phenotype-fit-retired.html",
+      "/logbook/logbook-rfd2144-dr-runbook-first-run.html",
       "/logbook/logbook-qwen3vl-vit-translate-walls.html",
       "/logbook/logbook-rfd2134-backup-through-the-sni-hop.html",
       "/logbook/logbook-fourloops-first-runs.html",
@@ -30,6 +31,8 @@
   {
     "listing": "/pages/rfd.html",
     "items": [
+      "/rfd/2144-fdb-dr-runbook-first-run/index.html",
+      "/rfd/2143-fdb-backup-fans-out-to-r2/index.html",
       "/rfd/2142-bao-pki-zerotrust-service-tls/index.html",
       "/rfd/2141-fdb-tls-rotation-without-data-loss/index.html",
       "/rfd/2140-openbao-on-foundationdb/index.html",
