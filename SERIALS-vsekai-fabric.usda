@@ -586,6 +586,14 @@ def Scope "Serials"
                 {
                     custom string slug = "bao-pki-zerotrust-service-tls"
                 }
+                def "S2143"
+                {
+                    custom string slug = "fdb-backup-fans-out-to-r2"
+                }
+                def "S2144"
+                {
+                    custom string slug = "fdb-dr-runbook-first-run"
+                }
             }
         }
     }
