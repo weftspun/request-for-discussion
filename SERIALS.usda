@@ -690,6 +690,10 @@ def Scope "Serials"
                 {
                     custom string slug = "a-multimodal-diffusion-pipeline"
                 }
+                def "S1174"
+                {
+                    custom string slug = "publish-the-security-rules-against-soc2-and-iso27001"
+                }
             }
         }
 
