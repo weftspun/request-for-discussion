@@ -1,40 +1,40 @@
 # RFD 2146: Bao is the secret store, cert-auth is the fence
 
 **State:** discussion
-**Scope:** weftspun-bao PKI + KV, every consumer that holds a
-chibifire.com Intermediate CA v2 leaf.
+**Scope:** the workspace's Bao instance and every consumer that
+already presents a per-identity TLS leaf.
 
 ## Problem
 
-Task 19 moved four secrets from 1P into Bao, but the only way to
-read them still went through the root token (in 1P). The chain was
-"1P -> root token -> Bao -> secret -> API". Disconnecting 1P broke
-DNS edits.
-
-Meanwhile the workspace already has per-service TLS leaves under
-`chibifire.com Intermediate CA v2` (RFD 2144 + RFD 2145), so every
-identity that talks to Bao is already presenting a cert with a
-distinctive CN. Nothing was using that identity for authorization.
+Every service ends up with three identity questions: what secrets
+can it read, what actions can it take, and how does it prove it is
+what it claims to be. Left alone, each answer accretes its own
+credential: a shared bearer for reads, a root token for writes, a
+network ACL as an identity substitute. Every one becomes a rotation
+problem and a leak surface. When the store sits behind mTLS, the
+client already presents a per-identity cert at the TLS handshake,
+and the API layer above ignores it and re-asks with a token.
 
 ## Decision
 
-Enable Bao's `cert` auth backend and bind each service's Bao-issued
-leaf to a role whose policies grant the minimum it needs. No more
-tokens in code, no more root token in a config file, and 1P holds
-only Bao's own bootstrap material (unseal key + root token as a
-break-glass copy). Bao is the secret store; the cert is the fence.
+The cert is the answer. Bao's cert auth backend accepts each
+identity's per-service leaf as the login credential, mints a scoped
+token bound to that identity's role's policies, and returns it. No
+shared bearers, no root token in service code, no network ACL as an
+identity substitute. The cert is already the fence at TLS; this RFD
+extends it up the stack.
 
-Policies and roles are the whole design; both live in
-`DETAILS.md` alongside a walkthrough of the DNS-edit path with
-1P disconnected (the check that proved the fence works).
+Two axes carry the design. **Policies** shape `<verb>-<scope>`:
+verb in {read, write, admin, issue}; scope is a KV subtree, a PKI
+mount, or `*` for sudo. **Roles** bind one identity's leaf (or a
+small exact-match CN allow-list, no globs) to a set of policies
+with a short-session TTL. New app: one policy, one role. New
+capability: one policy against an existing scope.
 
-RFD 2144 defect #11's "orphan root token cannot be enumerated"
-becomes less painful under this scheme: routine work does not use
-the root token at all, so an orphan is a break-glass artifact only.
+The store becomes the source of truth for every secret; 1P retains
+the material as an offline mirror. Role table, walkthrough, negative
+controls in `DETAILS.md`.
 
 ## Related
 
-RFD 2140 (Bao on FDB), 2142 (bao-pki-zerotrust-service-tls, which
-this RFD's role table implements), 2144 (DR — issued the leaves
-this RFD binds), 2145 (cert lifetimes — the leaves rotate on the
-90-day cadence this RFD depends on).
+RFD 2140, 2142 (implemented here), 2144, 2145.
