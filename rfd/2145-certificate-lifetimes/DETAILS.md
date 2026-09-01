@@ -60,6 +60,26 @@ Five years is the smallest rotation cadence at which the CA ceremony
 is a set-piece event we prepare for rather than an emergency. Half of
 that is the "start scheduling the next ceremony" trigger.
 
+## Why the break-glass CA gets the SAME numbers as the root
+
+The break-glass CA sits in 1P beside the operator's other credentials
+and comes out on the day the primary root is unusable. That day is a
+disaster with a fixed script. The break-glass root immediately signs
+a new set of intermediates and every downstream leaf. If the
+break-glass has less validity remaining than the primary rotation
+cadence, the swap-in re-mints twice (once to swap, once to reach the
+next scheduled ceremony). That is the class of error a DR runbook
+cannot afford.
+
+So the break-glass CA carries the SAME `notAfter` as the primary
+root (25 years) and the SAME policy rotation window (5 years). It
+also carries a bigger compromise surface than the primary root
+because 1P is warmer storage than an offline HSM ceremony. Its
+audit expectation is stricter: `op` reads are logged, the 1P item
+is CONCEALED-only (RFD 2144 defect #12 was moving the key from
+`notesPlain` to CONCEALED), and any pull of the private key is
+followed by a `shred -u` of the scratch file.
+
 ## Why the intermediates get 3 years
 
 An intermediate CA is online (or at least reachable) whenever it signs
@@ -96,7 +116,7 @@ Every live cert in the workspace and how it stacks up against this RFD:
     chibifire.com Root CA                         2036-08-28      root: 10y set, 25y max. Fine, keep.
     chibifire.com Intermediate CA                 2031-08-30      intermediate: 5y set, 3y max. RETRACT; rotate.
     chibifire.com WebTransport Intermediate CA    2036-08-29      intermediate: 10y set, 3y max. RETRACT; re-mint at 3y.
-    weftspun-fdb-ca (break-glass, in 1P)          2031-08-31      break-glass CA: 5y set, 5y max. Fine.
+    weftspun-fdb-ca (break-glass, in 1P)          2031-08-31      break-glass CA: 5y set, 25y max. RETRACT, re-mint at 25y to match Root.
     Bao listener leaf                             2028-09-01      service leaf: 2y set, 90d max. RETRACT; re-mint at 90d.
     FDB machine leaves (Bao-issued)               ~2026-10-01     service leaf: 30d set, 90d max. Fine, keep.
     Admin client cert (DR-time)                   2026-10-01      break-glass leaf: 30d set, 2y max. Fine (deliberately short).
