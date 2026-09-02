@@ -1,6 +1,6 @@
 # RFD 1163: The flow rents a card, the accelerator stays on the desk
 
-**State:** ideation
+**State:** abandoned
 **Feature:** where each half of the loop runs
 **Scope:** `7-service/service-livebook`, `3-interactor/rf-detr-cpp`
 

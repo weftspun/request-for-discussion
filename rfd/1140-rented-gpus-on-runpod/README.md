@@ -1,6 +1,6 @@
 # RFD 1140: Rented GPUs on RunPod
 
-**State:** discussion
+**State:** abandoned
 **Feature:** rented compute
 **Scope:** work that does not fit the desk card
 
