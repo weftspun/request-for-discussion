@@ -1,6 +1,9 @@
 # RFD 2162: MaskScore Video-stub USDZ skinning + 15-edit emit
 
-**State:** discussion
+**State:** parked
+**Parked 2026-09-02:** 2162.1 (104-joint ANNY skeleton in USDZ) shipped
+in weftspun/anny-render-corpus#34. 2162.2 (mesh 15-edit expansion) needs
+render capacity currently unbudgeted; unpark when local GPU frees.
 **Feature:** proper 78-joint skin bindings inside the Video-stub USDZ,
 plus emit coverage of the 5 pose edits added alongside the 10 face
 edits under RFD 1173.

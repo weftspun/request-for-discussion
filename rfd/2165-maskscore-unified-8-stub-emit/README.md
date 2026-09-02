@@ -1,6 +1,9 @@
 # RFD 2165: MaskScore unified 8-stub emit refactor
 
-**State:** discussion
+**State:** parked
+**Parked 2026-09-02:** 2165.1 (schema, #33) and 2165.2 (port 5 shipped
+stubs, #35) shipped; 2165.3 (speech+text+video port) and 2165.4 (HF
+republish) remain. Unpark when time returns.
 **Feature:** one emit script covering all 8 MaskScore stubs (mesh,
 depth, pose, keypoints, multimodal, text, speech, video) at 10 ranks
 per candidate per edit, ETNF three-parquet form.
@@ -31,8 +34,6 @@ tables. Consumers join on row_key to sweep across modalities.
 ## Related
 
 Spine: urn:oid:1.3.6.1.4.1.66606.1.1.1173 (MaskScore).
-Depends on urn:oid:1.3.6.1.4.1.66606.1.2.2162,
-urn:oid:1.3.6.1.4.1.66606.1.2.2163,
-urn:oid:1.3.6.1.4.1.66606.1.2.2164 landing first.
+Depends on urn:oid:1.3.6.1.4.1.66606.1.2.{2162,2163,2164} landing first.
 
 This RFD was drafted by an AI and read by a human before it shipped.
