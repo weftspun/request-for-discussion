@@ -1,6 +1,6 @@
 # RFD 2155: GDScript <-> IEC 61131-3 FBD transpiler
 
-**State:** prediscussion; reader half (FBD -> GDScript) landed
+**State:** prediscussion
 **Feature:** bidirectional transpile between GDScript and PLCopen FBD
 (RFD 2150): Godot users author in a familiar language, taskweft renders
 RECTGTN-produced FBD back as GDScript for humans
