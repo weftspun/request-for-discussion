@@ -107,6 +107,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # --changed <base> reads git diff base...HEAD, so a shallow clone
+          # cannot see the base. Same reason rfd-serials + comment-ladder
+          # already pull with depth 0.
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
