@@ -682,6 +682,10 @@ def Scope "Serials"
                 {
                     custom string slug = "maskscore-cineform-mkv-bundle"
                 }
+                def "S2167"
+                {
+                    custom string slug = "maskscore-voice-reward-distillation"
+                }
             }
         }
     }
