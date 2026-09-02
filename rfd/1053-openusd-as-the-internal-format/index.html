@@ -330,10 +330,11 @@ ul.task-list li input[type="checkbox"] {
 <p>OpenUSD is the internal format. Every stage reads a stage and writes a layer. glTF, VRM, and KHR avatar stay the transmission formats, and the pipeline converts to them at the edge.</p>
 <p>USD is to this pipeline what <code>.blend</code> is to Blender. It is the working file, and it never reaches a browser.</p>
 <p>See <code>DETAILS.md</code> for why layers beat a flat mesh format, the internal/transmission boundary, the shared runtime, and what every model image must return.</p>
+<p>Committed 2026-09-02: CLAUDE.md ratifies the choice as a hard constraint (OpenUSD <code>.usda</code> for text-editable, ZStandard parquet for bulk; zip and gzip banned; usdz exempt). RFD 2169 abandoned the Elixir studio core; the <code>fabric-stage-runtime</code> Hex package still ships OpenUSD to every consumer.</p>
 </section>
 <section id="related" class="level2">
 <h2 class="anchored" data-anchor-id="related">Related</h2>
-<p>RFD 1036 gives the model image convention. RFD 1019 records the Elixir core that links this runtime. RFD 1002 records the pipeline stages that become layers.</p>
+<p>RFD 1036 gives the model image convention. <code>fabric-stage-runtime</code> (Hex) links this runtime to every stage. RFD 1002 records the pipeline stages that become layers.</p>
 </section>
 <section id="details" class="level2">
 <h2 class="anchored" data-anchor-id="details">Details</h2>
