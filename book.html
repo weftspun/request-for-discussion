@@ -48,9 +48,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-ebf6027466d64ce25e353d53063d38f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -1544,6 +1544,24 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#problem-198" id="toc-problem-198" class="nav-link" data-scroll-target="#problem-198">Problem</a></li>
   <li><a href="#decision-201" id="toc-decision-201" class="nav-link" data-scroll-target="#decision-201">Decision</a></li>
   <li><a href="#related-180" id="toc-related-180" class="nav-link" data-scroll-target="#related-180">Related</a></li>
+  </ul></li>
+  <li><a href="#rfd-2173-qwen3-vl-to-gemma-4-12b-migration-index" id="toc-rfd-2173-qwen3-vl-to-gemma-4-12b-migration-index" class="nav-link" data-scroll-target="#rfd-2173-qwen3-vl-to-gemma-4-12b-migration-index">RFD 2173: Qwen3-VL to Gemma-4-12B migration index</a>
+  <ul class="collapse">
+  <li><a href="#problem-199" id="toc-problem-199" class="nav-link" data-scroll-target="#problem-199">Problem</a></li>
+  <li><a href="#decision-202" id="toc-decision-202" class="nav-link" data-scroll-target="#decision-202">Decision</a></li>
+  <li><a href="#related-181" id="toc-related-181" class="nav-link" data-scroll-target="#related-181">Related</a></li>
+  </ul></li>
+  <li><a href="#rfd-2174-index-of-open-rfds-citing-abandoned-rfds" id="toc-rfd-2174-index-of-open-rfds-citing-abandoned-rfds" class="nav-link" data-scroll-target="#rfd-2174-index-of-open-rfds-citing-abandoned-rfds">RFD 2174: Index of open RFDs citing abandoned RFDs</a>
+  <ul class="collapse">
+  <li><a href="#problem-200" id="toc-problem-200" class="nav-link" data-scroll-target="#problem-200">Problem</a></li>
+  <li><a href="#decision-203" id="toc-decision-203" class="nav-link" data-scroll-target="#decision-203">Decision</a></li>
+  <li><a href="#related-182" id="toc-related-182" class="nav-link" data-scroll-target="#related-182">Related</a></li>
+  </ul></li>
+  <li><a href="#rfd-2175-abandon-rfds-whose-decision-uses-blocklisted-rented-compute" id="toc-rfd-2175-abandon-rfds-whose-decision-uses-blocklisted-rented-compute" class="nav-link" data-scroll-target="#rfd-2175-abandon-rfds-whose-decision-uses-blocklisted-rented-compute">RFD 2175: Abandon RFDs whose decision uses blocklisted rented compute</a>
+  <ul class="collapse">
+  <li><a href="#problem-201" id="toc-problem-201" class="nav-link" data-scroll-target="#problem-201">Problem</a></li>
+  <li><a href="#decision-204" id="toc-decision-204" class="nav-link" data-scroll-target="#decision-204">Decision</a></li>
+  <li><a href="#related-183" id="toc-related-183" class="nav-link" data-scroll-target="#related-183">Related</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
@@ -4094,7 +4112,7 @@ weight GB    = parameters in billions x 2</code></pre>
 <section id="rfd-1132-priority-list-of-converted-models" class="level1">
 <h1>RFD 1132: Priority list of converted models</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.1.1132</code></p>
-<p><strong>State:</strong> discussion <strong>Feature:</strong> model conversion order</p>
+<p><strong>State:</strong> abandoned <strong>Feature:</strong> model conversion order</p>
 <section id="problem-118" class="level2">
 <h2 class="anchored" data-anchor-id="problem-118">Problem</h2>
 <p>RFD 1016 inventories fifteen deep learning models. Nothing says which to convert for the accelerator first, so the order is decided by whoever picks one up.</p>
@@ -4260,7 +4278,7 @@ weight GB    = parameters in billions x 2</code></pre>
 <section id="rfd-1140-rented-gpus-on-runpod" class="level1">
 <h1>RFD 1140: Rented GPUs on RunPod</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.1.1140</code></p>
-<p><strong>State:</strong> discussion <strong>Feature:</strong> rented compute <strong>Scope:</strong> work that does not fit the desk card</p>
+<p><strong>State:</strong> abandoned <strong>Feature:</strong> rented compute <strong>Scope:</strong> work that does not fit the desk card</p>
 <section id="problem-126" class="level2">
 <h2 class="anchored" data-anchor-id="problem-126">Problem</h2>
 <p>The desk card is one RTX 3090 with 24 GiB. An OmniGen2 LoRA trains here at 256 square in 22 minutes for 200 steps, and does not finish one step in twelve minutes at 512 square. Neither run reports an error. Windows pages into shared memory instead of failing, so the only symptom is a run that stops being fast. Pixal3D dies one stage short of geometry, because NATTEN has no sm_86 kernel and every stage after the first reaches it.</p>
@@ -4772,7 +4790,7 @@ ggml                    reaches neither Hailo nor Cloud TPU</code></pre>
 <section id="rfd-1163-the-flow-rents-a-card-the-accelerator-stays-on-the-desk" class="level1">
 <h1>RFD 1163: The flow rents a card, the accelerator stays on the desk</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.1.1163</code></p>
-<p><strong>State:</strong> ideation <strong>Feature:</strong> where each half of the loop runs <strong>Scope:</strong> <code>7-service/service-livebook</code>, <code>3-interactor/rf-detr-cpp</code></p>
+<p><strong>State:</strong> abandoned <strong>Feature:</strong> where each half of the loop runs <strong>Scope:</strong> <code>7-service/service-livebook</code>, <code>3-interactor/rf-detr-cpp</code></p>
 <section id="problem-149" class="level2">
 <h2 class="anchored" data-anchor-id="problem-149">Problem</h2>
 <p>The four loops run on the desk card, and RFD 1140 recorded what that costs: one RTX 3090 at 24 GiB, where OmniGen2 pages into shared memory rather than failing, so the symptom is a run that stops being fast.</p>
@@ -5022,8 +5040,8 @@ image gen   Wan-VACE                    Apache 2.0   text/image → image
 audio in    Qwen3-ASR-1.7B              Apache 2.0   waveform → text (RFD 1170)
 audio out   Qwen3-TTS-12Hz-CustomVoice  Apache 2.0   text → waveform (RFD 1170)
 scoring     MaskScore + EditScore       n/a          self-supervised reward</code></pre>
-<p>MaskScore constructs edit triples by masking, reconstructing, and scoring on decoded outputs. The reward model RL fine-tunes generators via EditScore.</p>
-<p>Reasoning-core swap 2026-09-02: earlier drafts named Qwen3-VL; RFD 2169 walked that back to Gemma-4-12B (what the workspace runs today per RFDs 2164, 2167). RFD 1157 updates in a follow-on.</p>
+<p>MaskScore constructs edit triples by masking, reconstructing, and scoring decoded outputs. The reward model RL fine-tunes generators via EditScore.</p>
+<p>Reasoning-core swap 2026-09-02: earlier drafts named Qwen3-VL; RFD 2169 walked that back to Gemma-4-12B. VRAM budget in <a href="DETAILS.md">DETAILS.md</a>; the eight dataset stubs in <a href="MASKSCORE.md">MASKSCORE.md</a>.</p>
 </section>
 <section id="related-157" class="level2">
 <h2 class="anchored" data-anchor-id="related-157">Related</h2>
@@ -5059,7 +5077,7 @@ scoring     MaskScore + EditScore       n/a          self-supervised reward</cod
 <section id="rfd-2133-the-pool-rents-from-the-spot-book-gated-on-requirements-first" class="level1">
 <h1>RFD 2133: The pool rents from the spot book, gated on requirements first</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2133</code></p>
-<p><strong>State:</strong> discussion <strong>Feature:</strong> where pool generation runs, and how a card is chosen <strong>Scope:</strong> the gacha demo’s pool activity; <code>scratchpad</code> tooling pending a home</p>
+<p><strong>State:</strong> abandoned <strong>Feature:</strong> where pool generation runs, and how a card is chosen <strong>Scope:</strong> the gacha demo’s pool activity; <code>scratchpad</code> tooling pending a home</p>
 <section id="problem-161" class="level2">
 <h2 class="anchored" data-anchor-id="problem-161">Problem</h2>
 <p>Pool generation wants days of GPU that the desk card should not give up: the 3090 is the interactive seat for rigging and judging, and a batch that owns it for two days stalls the critical path it feeds.</p>
@@ -5173,7 +5191,7 @@ scoring     MaskScore + EditScore       n/a          self-supervised reward</cod
 <section id="rfd-2138-interactor-shuttle-merges-spot-broker-and-uro" class="level1">
 <h1>RFD 2138: interactor-shuttle merges spot-broker and uro</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2138</code></p>
-<p><strong>State:</strong> discussion <strong>Feature:</strong> the single interactor a user signs into for spend, users, and content <strong>Scope:</strong> spot-broker (weftspun) and uro (v-sekai) become one service under the sides convention</p>
+<p><strong>State:</strong> abandoned <strong>Feature:</strong> the single interactor a user signs into for spend, users, and content <strong>Scope:</strong> spot-broker (weftspun) and uro (v-sekai) become one service under the sides convention</p>
 <section id="problem-166" class="level2">
 <h2 class="anchored" data-anchor-id="problem-166">Problem</h2>
 <p>uro held V-Sekai users and served content; spot-broker held the vast.ai key and posted double-entry entries for spend. Both needed GitHub sign-in, both wanted the same TigerBeetle-shaped ledger, and neither could hand a stranger a downloadable VRM without the other: two GitHub OAuth apps, two Fly apps, two deploy pipelines, one user story.</p>
@@ -5781,7 +5799,7 @@ void  grafcet_static_free(char *buf);</code></pre>
 <section id="rfd-2152-or-divergence-emit-in-plcopen-sfc" class="level1">
 <h1>RFD 2152: OR-divergence emit in PLCopen SFC</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2152</code></p>
-<p><strong>State:</strong> parked <strong>Feature:</strong> extend <code>Taskweft.OpenPLC.PLCopen.emit/1</code> to cover <code>|&gt;</code> and <code>|&lt;</code> markers from the compact GRAFCET DSL <strong>Scope:</strong> taskweft (<code>lib/taskweft/openplc/plcopen.ex</code>)</p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> extend <code>Taskweft.OpenPLC.PLCopen.emit/1</code> to cover <code>|&gt;</code> and <code>|&lt;</code> markers from the compact GRAFCET DSL <strong>Scope:</strong> taskweft (<code>lib/taskweft/openplc/plcopen.ex</code>)</p>
 <section id="problem-180" class="level2">
 <h2 class="anchored" data-anchor-id="problem-180">Problem</h2>
 <p>RFD 2148’s compact GRAFCET carries <code>|&gt;</code> (OR-divergence) and <code>|&lt;</code> (OR-convergence) markers; <code>Taskweft.Grafcet.lower/1</code> already lowers them to a synthesised chooser method (RFD 2148 stage 1). The PLCopen SFC emitter refuses them today with <code>RuntimeError</code> pointing here.</p>
@@ -5858,7 +5876,7 @@ void  grafcet_static_free(char *buf);</code></pre>
 <section id="rfd-2155-gdscript---iec-61131-3-fbd-transpiler" class="level1">
 <h1>RFD 2155: GDScript &lt;-&gt; IEC 61131-3 FBD transpiler</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2155</code></p>
-<p><strong>State:</strong> prediscussion; reader half (FBD -&gt; GDScript) landed <strong>Feature:</strong> bidirectional transpile between GDScript and PLCopen FBD (RFD 2150): Godot users author in a familiar language, taskweft renders RECTGTN-produced FBD back as GDScript for humans <strong>Scope:</strong> taskweft, new sibling <code>taskweft-gdscript-fbd</code></p>
+<p><strong>State:</strong> prediscussion <strong>Feature:</strong> bidirectional transpile between GDScript and PLCopen FBD (RFD 2150): Godot users author in a familiar language, taskweft renders RECTGTN-produced FBD back as GDScript for humans <strong>Scope:</strong> taskweft, new sibling <code>taskweft-gdscript-fbd</code></p>
 <section id="problem-183" class="level2">
 <h2 class="anchored" data-anchor-id="problem-183">Problem</h2>
 <p>RFD 2150’s target is PLCopen FBD. Godot devs author in GDScript. The gap is what Merlin’s <strong>UdonSharp</strong> solved for VRChat: Udon is a node graph, C# is a familiar language, UdonSharp compiles C# to Udon so the author never sees the graph unless they want to. Taskweft has the same shape:</p>
@@ -5885,7 +5903,7 @@ void  grafcet_static_free(char *buf);</code></pre>
 <section id="rfd-2156-safegdscript-compile-step-for-rectgtn-gdscript-output" class="level1">
 <h1>RFD 2156: SafeGDScript compile step for RECTGTN GDScript output</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2156</code></p>
-<p><strong>State:</strong> parked <strong>Feature:</strong> compile taskweft-emitted GDScript (RFD 2155) into a RISC-V ELF the Godot Sandbox (RFD 2154) loads <strong>Scope:</strong> taskweft (a <code>mix openplc.gd-compile</code> task) or a sidecar</p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> compile taskweft-emitted GDScript (RFD 2155) into a RISC-V ELF the Godot Sandbox (RFD 2154) loads <strong>Scope:</strong> taskweft (a <code>mix openplc.gd-compile</code> task) or a sidecar</p>
 <section id="problem-184" class="level2">
 <h2 class="anchored" data-anchor-id="problem-184">Problem</h2>
 <p>RFD 2155 stage 1 emits <code>.gd</code> that mirrors the state machine <code>Taskweft.OpenPLC.PLCopen.emit/1</code> encodes as FBD. RFD 2154’s Godot Sandbox loads RISC-V ELFs. Between them: <strong>SafeGDScript</strong>, godot- sandbox’s GDScript-to-RISC-V compiler (Dec 2025 “42 demo projects” milestone hit feature parity). Nothing today invokes it from taskweft’s build.</p>
@@ -6055,11 +6073,11 @@ void  grafcet_static_free(char *buf);</code></pre>
 <section id="rfd-2162-maskscore-video-stub-usdz-skinning-15-edit-emit" class="level1">
 <h1>RFD 2162: MaskScore Video-stub USDZ skinning + 15-edit emit</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2162</code></p>
-<p><strong>State:</strong> discussion <strong>Feature:</strong> proper 78-joint skin bindings inside the Video-stub USDZ, plus emit coverage of the 5 pose edits added alongside the 10 face edits under RFD 1173. <strong>Scope:</strong> <code>6-datasource/anny-render-corpus</code></p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> proper 104-joint skin bindings inside the Video-stub USDZ, plus emit coverage of the 5 pose edits added alongside the 10 face edits under RFD 1173. <strong>Scope:</strong> <code>6-datasource/anny-render-corpus</code></p>
 <p>Shelved 2026-09-02: 2162.1 (104-joint ANNY skeleton in USDZ) shipped in weftspun/anny-render-corpus#34. 2162.2 (mesh 15-edit expansion) needs render capacity currently unbudgeted; resume when local GPU frees.</p>
 <section id="problem-189" class="level2">
 <h2 class="anchored" data-anchor-id="problem-189">Problem</h2>
-<p>The Video-stub USDZ shipped in the Rung 1.5 first pass writes a dummy 1-joint skeleton. The 10 face edits animate correctly because their work happens in <code>SkelAnimation.blendShapeWeights</code>. The 5 pose edits (head_tilt, head_nod, head_turn, jaw_open_bone, shoulders_up) added next need <code>SkelAnimation.jointTransforms</code> time samples over the real 78-joint hierarchy, and skin weights per vertex, or the animation plays back as a rest pose.</p>
+<p>The Video-stub USDZ shipped in the Rung 1.5 first pass writes a dummy 1-joint skeleton. The 10 face edits animate correctly because their work happens in <code>SkelAnimation.blendShapeWeights</code>. The 5 pose edits (head_tilt, head_nod, head_turn, jaw_open_bone, shoulders_up) added next need <code>SkelAnimation.jointTransforms</code> time samples over the real 104-joint hierarchy (ANNY total; SOMA canonical pose is 78 of those), and skin weights per vertex, or the animation plays back as a rest pose.</p>
 </section>
 <section id="decision-191" class="level2">
 <h2 class="anchored" data-anchor-id="decision-191">Decision</h2>
@@ -6281,6 +6299,66 @@ void  grafcet_static_free(char *buf);</code></pre>
 <section id="related-180" class="level2">
 <h2 class="anchored" data-anchor-id="related-180">Related</h2>
 <p>Promotes: RFD 2025 (sinew tenseless-continuous-present-voice ADR). Companion to RFD 1125 (two prose gates) and CLAUDE.md’s trope-density check.</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2173-qwen3-vl-to-gemma-4-12b-migration-index" class="level1">
+<h1>RFD 2173: Qwen3-VL to Gemma-4-12B migration index</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2173</code></p>
+<p><strong>State:</strong> committed <strong>Feature:</strong> documentation index for the reasoning-core swap <strong>Scope:</strong> every open RFD that names Qwen3-VL as the reasoning core</p>
+<section id="problem-199" class="level2">
+<h2 class="anchored" data-anchor-id="problem-199">Problem</h2>
+<p>RFD 2169 abandoned RFD 1019’s studio-core plan and named Gemma-4-12B (QAT Q4_0) as the reasoning core the workspace actually runs. RFD 1173 (PR #179) followed with the substrate table swap. Ten open RFDs still name Qwen3-VL, but not all of those mentions are drift – some are load-bearing references to real artifacts.</p>
+<p>Three classes of mention: aspirational future-intent (drift, fix), shipped-artifact facts (keep – EditScore’s published LoRA is over Qwen3-VL-8B), and measured runs (keep – RFD 2161 measured Qwen3-VL-4B MLX at 0.9 s load / 1.9 s first token). Bulk-swap erases the last two.</p>
+</section>
+<section id="decision-202" class="level2">
+<h2 class="anchored" data-anchor-id="decision-202">Decision</h2>
+<p>This RFD is the citable index for the swap. Ten open RFDs mention Qwen3-VL. Per-RFD annotations sit in <a href="DETAILS.md">DETAILS.md</a>; each RFD retains its current text until otherwise edited. This RFD provides the citable pointer – a reader hitting a stale Qwen3-VL mention gets the reason without a rewrite pass across ten RFDs.</p>
+<p>The migration lands per RFD as follow-on when each is next touched. RFD 1157 leads: its analysis of the Hailo HEF projector-drop against Qwen3-VL’s mm_* tensor shape rewrites against Gemma’s projector shape.</p>
+</section>
+<section id="related-181" class="level2">
+<h2 class="anchored" data-anchor-id="related-181">Related</h2>
+<p>Spine: urn:oid:1.3.6.1.4.1.66606.1.1.1173 (multimodal pipeline). Anchor: urn:oid:1.3.6.1.4.1.66606.1.2.2169 (studio-core abandonment that carried the reasoning-core swap). Applies to: RFDs 1089, 1157, 1163, 1167, 1168, 1169, 1170, 1171, 2161, 2167 (see DETAILS.md for per-RFD annotations).</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2174-index-of-open-rfds-citing-abandoned-rfds" class="level1">
+<h1>RFD 2174: Index of open RFDs citing abandoned RFDs</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2174</code></p>
+<p><strong>State:</strong> committed <strong>Feature:</strong> documentation index for stale citations to abandoned RFDs <strong>Scope:</strong> every open RFD that cites an abandoned or moved RFD</p>
+<section id="problem-200" class="level2">
+<h2 class="anchored" data-anchor-id="problem-200">Problem</h2>
+<p>An audit found 32 pairs of (open RFD, abandoned RFD it cites). Not all are drift – a retraction chain legitimately cites what it walks back, and RFDs 2168 and 2169 do exactly this. The class of concern is open RFDs that lean on an abandoned RFD’s decision as if it still holds, without knowing the citation went stale.</p>
+<p>Concentrations: <strong>RFD 1122</strong> (abandoned by 2168, bespoke wholebody detector) cited by 11 open RFDs; <strong>RFD 1166</strong> (See-Through scoring plan) cited by 7; <strong>RFDs 1049-1052</strong> (abandoned model images) cited by 1133 and 1171; <strong>RFD 1019</strong> (abandoned by 2169, strangler-fig studio core) cited by 4.</p>
+</section>
+<section id="decision-203" class="level2">
+<h2 class="anchored" data-anchor-id="decision-203">Decision</h2>
+<p>This RFD is the citable index for stale-citation drift. The full pair list sits in <a href="DETAILS.md">DETAILS.md</a>; each pair is annotated with what the citing RFD’s claim depends on and where the successor lives. Individual RFDs migrate their citations when next touched.</p>
+<p>Cheaper than 32 amendments; provides one URN to cite when a reader hits a stale reference and needs the successor without a rewrite pass.</p>
+<p>Pattern established by RFD 2173 for the Qwen3-VL swap.</p>
+</section>
+<section id="related-182" class="level2">
+<h2 class="anchored" data-anchor-id="related-182">Related</h2>
+<p>Spine: urn:oid:1.3.6.1.4.1.66606.1.1.1000 (RFD conventions). Applies to: 30-plus open RFDs; see DETAILS.md for the full list.</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2175-abandon-rfds-whose-decision-uses-blocklisted-rented-compute" class="level1">
+<h1>RFD 2175: Abandon RFDs whose decision uses blocklisted rented compute</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2175</code></p>
+<p><strong>State:</strong> published <strong>Feature:</strong> documentation retraction <strong>Scope:</strong> RFDs 1132, 1140, 1163, 2133, 2138</p>
+<section id="problem-201" class="level2">
+<h2 class="anchored" data-anchor-id="problem-201">Problem</h2>
+<p>CLAUDE.md’s hard constraint is “the local desktop GPU is the only compute; RunPod and Vast.ai blocklisted”. Five open RFDs still name rented compute as their decision – the RFD’s whole reason for existing contradicts the blocklist.</p>
+</section>
+<section id="decision-204" class="level2">
+<h2 class="anchored" data-anchor-id="decision-204">Decision</h2>
+<p>Abandon each of these RFDs. They move to <code>abandoned</code> alongside this document landing. The RFDs themselves stay in the register for citation, per CLAUDE.md’s “retractions stay in place next to what they retract”.</p>
+<p>RFD 1140 Rented GPUs on RunPod – decision ‘rented GPU work runs on RunPod’ contradicts CLAUDE.md’s RunPod blocklist. RFD 1132 Priority list of converted models – RunPod as serving interactor. Same contradiction. RFD 1163 The accelerator in the loops – ‘flow runs on RunPod’. RFD 2133 The pool rents from the spot book – ‘Rent single RTX 4090s from the vast.ai book’. RFD 2138 interactor-shuttle – merges the spot-broker whose whole reason was renting vast.ai. Abandoned with 2133.</p>
+</section>
+<section id="related-183" class="level2">
+<h2 class="anchored" data-anchor-id="related-183">Related</h2>
+<p>Retracts: urn:oid:1.3.6.1.4.1.66606.1.1.{1132,1140,1163}, urn:oid:1.3.6.1.4.1.66606.1.2.{2133,2138} Anchor: CLAUDE.md’s Compute hard constraint and the RunPod, Vast.ai blocklist rows. Companion: RFD 2169 (studio-core abandonment, same class of walk-back).</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 

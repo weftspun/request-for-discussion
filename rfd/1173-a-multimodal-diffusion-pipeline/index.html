@@ -47,9 +47,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-ebf6027466d64ce25e353d53063d38f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -333,8 +333,8 @@ image gen   Wan-VACE                    Apache 2.0   text/image → image
 audio in    Qwen3-ASR-1.7B              Apache 2.0   waveform → text (RFD 1170)
 audio out   Qwen3-TTS-12Hz-CustomVoice  Apache 2.0   text → waveform (RFD 1170)
 scoring     MaskScore + EditScore       n/a          self-supervised reward</code></pre>
-<p>MaskScore constructs edit triples by masking, reconstructing, and scoring on decoded outputs. The reward model RL fine-tunes generators via EditScore.</p>
-<p>Reasoning-core swap 2026-09-02: earlier drafts named Qwen3-VL; RFD 2169 walked that back to Gemma-4-12B (what the workspace runs today per RFDs 2164, 2167). RFD 1157 updates in a follow-on.</p>
+<p>MaskScore constructs edit triples by masking, reconstructing, and scoring decoded outputs. The reward model RL fine-tunes generators via EditScore.</p>
+<p>Reasoning-core swap 2026-09-02: earlier drafts named Qwen3-VL; RFD 2169 walked that back to Gemma-4-12B. VRAM budget in <a href="../../rfd/1173-a-multimodal-diffusion-pipeline/DETAILS.html">DETAILS.md</a>; the eight dataset stubs in <a href="../../rfd/1173-a-multimodal-diffusion-pipeline/MASKSCORE.html">MASKSCORE.md</a>.</p>
 </section>
 <section id="related" class="level2">
 <h2 class="anchored" data-anchor-id="related">Related</h2>
