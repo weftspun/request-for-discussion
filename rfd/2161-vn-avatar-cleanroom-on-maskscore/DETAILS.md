@@ -165,7 +165,8 @@ The implementer side must not open any other file in that space.
              |
              +-> BusNif -> iox2 (RFD's 2-contract/bus)
              |             |
-             |             +-> Qwen3-Omni worker (Python, thinker + talker)
+             |             +-> Qwen3-VL worker    (Python, EditScore LoRA reward + text)
+             |             +-> Qwen3-TTS-12Hz worker (Python, RFD 1170)
              |             +-> Wan-VACE worker    (Python, background gen)
              |
              +-> LibGodot NIF (RFD 2154's lib_godot_connector 4.5.1)
@@ -208,7 +209,7 @@ Binary frames downstream (server -> browser), one per Godot frame:
     payload len bytes
 
 Image frames carry a WebP-encoded 1024x1024 render of the SubViewport.
-Audio frames carry Opus-encoded 20 ms Qwen3-Omni talker output.
+Audio frames carry Opus-encoded 20 ms Qwen3-TTS-12Hz output (RFD 1170).
 Text frames carry the current dialog line (redundant with audio, for
 captioning). Done frames end a turn.
 
@@ -231,7 +232,7 @@ Row shape:
 | key | string | subject id (SpeakingFaces "s0001".."s0142") |
 | anny_identity | list[float] | ANNY identity params |
 | soma_pose | list[float] | 78x3 + 3, canonical neutral |
-| voice_tokens | list[int] | Qwen3-Omni talker conditioning |
+| voice_tokens | list[int] | Qwen3-TTS-12Hz CustomVoice conditioning (RFD 1170) |
 | persona_grafcet | string | path into the same repo |
 | license | string | CC-BY-4.0 attribution to issai/Speaking_Faces |
 
@@ -244,10 +245,10 @@ Each VN turn produces one row per modality (text, audio, video):
 | key | string | session_id + turn_index |
 | instruction | string | player's prompt |
 | persona | string | subject id |
-| output_text | string | Qwen3-Omni line |
+| output_text | string | Qwen3-VL line |
 | output_audio | string | .opus path |
 | output_video | string | .webp sequence path |
-| scores | list[float] | OmniScore per dimension |
+| scores | list[float] | reward-model score per dimension |
 | task_type | string | dialog_reply | scene_transition | expression_change |
 | dimension | string | instruction_following | consistency | overall |
 
@@ -273,15 +274,16 @@ Each VN turn produces one row per modality (text, audio, video):
       1-transport/weftspun-studio ; do ...; done
 
     # 3. Fetch SpeakingFaces (huggingface_hub, CC-BY-4.0), download
-    #    Qwen3-Omni-30B-A3B-Instruct at NF4 (11.9 GiB), download
-    #    Wan-VACE NF4 (8.7 GiB). Total < 24 GiB with swap.
+    #    Qwen3-VL-4B-Instruct at fp16 (8.9 GiB) + EditScore LoRA
+    #    (270 MB), download Wan-VACE NF4 (8.7 GiB). Total < 24 GiB
+    #    with swap; no QAFT round required (per RFD 1173).
 
     # 4. mix vn_avatar.build_personas --subjects 8   (MVP corpus: 8 subjects)
     #    ~30 min on the 3090.
 
     # 5. mix vn_avatar.smoke                        (one turn end to end)
     #    Asserts: WebSocket receives >=1 image frame + >=1 audio frame,
-    #    trace row lands with a non-nil OmniScore.
+    #    trace row lands with a non-nil reward-model score.
 
     # 6. COMMIT AND PUSH before tear down. Everything not in a git
     #    repo goes with the machine (CLAUDE.md).
@@ -291,10 +293,11 @@ Each VN turn produces one row per modality (text, audio, video):
 ## MVP smoke, in one sentence
 
 Player types "hello" into the browser, one WebSocket message goes
-up, one Qwen3-Omni line comes back, the anny-in-godot mouth moves,
+up, one Qwen3-VL line comes back, the anny-in-godot mouth moves,
 the SubViewport streams five WebP frames, one MaskScore trace row
-lands with `task_type = dialog_reply` and a non-nil OmniScore, one
-`.usda` records the scene. Everything after that is expansion.
+lands with `task_type = dialog_reply` and a non-nil reward-model
+score, one `.usda` records the scene. Everything after that is
+expansion.
 
 ## What is not here (deferred to follow-on RFDs)
 
