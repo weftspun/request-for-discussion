@@ -25,7 +25,7 @@ from markdown_it import MarkdownIt
 MD = MarkdownIt("commonmark")
 
 ORG = "1"
-DIR_RE = re.compile(r"^(1[0-9]{3})-[a-z0-9-]+$")
+DIR_RE = re.compile(r"^([12][0-9]{3})-[a-z0-9-]+$")
 RFD_ROOT = "rfd"
 TITLE_RE = re.compile(r"^RFD ([0-9]{4}): (\S.*)$")
 DETAILS_TITLE_RE = re.compile(r"^RFD ([0-9]{4}) details: (\S.*)$")
@@ -141,9 +141,14 @@ def known_numbers(root, dirs):
     numbers exist.
     """
     nums = {d[:4] for d in dirs}
-    p = os.path.join(root, "SERIALS.usda")
-    if os.path.exists(p):
-        with open(p, encoding="utf-8") as fh:
+    # Every SERIALS*.usda register in the repo root contributes: SERIALS.usda
+    # holds the site-1 (documents) 1xxx series, SERIALS-vsekai-fabric.usda
+    # holds the site-2 2xxx series reactivated 2026-08-31 per CLAUDE.md.
+    for entry in sorted(os.listdir(root)):
+        if not (entry == "SERIALS.usda" or (entry.startswith("SERIALS-")
+                                             and entry.endswith(".usda"))):
+            continue
+        with open(os.path.join(root, entry), encoding="utf-8") as fh:
             allocated, deleted = _serials.read(fh.read())
         nums |= set(allocated) | set(deleted)
     return nums
@@ -472,6 +477,8 @@ def self_test():
          {"readme": GOOD_README.replace("**State:** published\n**Feature:** a feature\n\n", "")}, True),
         ("a state RFD 1000 does not list",
          {"readme": GOOD_README.replace("published", "in-progress")}, True),
+        ("a state RFD 1000 does not list, planted as 'parked'",
+         {"readme": GOOD_README.replace("published", "parked")}, True),
         ("Scope written before Feature",
          {"readme": GOOD_README.replace("**Feature:** a feature", "**Scope:** x\n**Feature:** y")}, True),
         ("an unknown metadata field",

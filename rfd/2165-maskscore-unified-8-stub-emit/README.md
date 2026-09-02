@@ -1,13 +1,14 @@
 # RFD 2165: MaskScore unified 8-stub emit refactor
 
-**State:** parked
-**Parked 2026-09-02:** 2165.1 (schema, #33) and 2165.2 (port 5 shipped
-stubs, #35) shipped; 2165.3 (speech+text+video port) and 2165.4 (HF
-republish) remain. Unpark when time returns.
+**State:** discussion
 **Feature:** one emit script covering all 8 MaskScore stubs (mesh,
 depth, pose, keypoints, multimodal, text, speech, video) at 10 ranks
 per candidate per edit, ETNF three-parquet form.
 **Scope:** `6-datasource/anny-render-corpus`
+
+Shelved 2026-09-02: 2165.1 (schema, #33) and 2165.2 (port 5 shipped
+stubs, #35) shipped; 2165.3 (speech+text+video port) and 2165.4 (HF
+republish) remain.
 
 ## Problem
 
