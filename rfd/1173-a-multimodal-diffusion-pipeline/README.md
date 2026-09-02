@@ -2,7 +2,7 @@
 
 **State:** discussion
 **Feature:** omni-modal MaskScore construction and real-time avatar
-**Scope:** Qwen3-VL, Wan-VACE, MaskScore, Pixal3D/VoxHammer, EditScore
+**Scope:** Gemma-4-12B, Wan-VACE, MaskScore, Pixal3D/VoxHammer, EditScore
 
 ## Problem
 
@@ -14,13 +14,13 @@ modality.
 
 ## Decision
 
-Qwen3-VL is the shared VLM: it serves both the avatar's text+image
-reasoning path and, as EditScore's own base with a LoRA (RFD 1157),
-the reward model that scores its own generations. Wan-VACE fills the
-image-generation slot Qwen3-VL leaves open. Audio arrives from RFD
-1170's presence loop.
+Gemma-4-12B (QAT Q4_0, Apache-2.0) is the shared VLM: it serves both
+the avatar's text+image reasoning path and, as EditScore's fine-tune
+base (RFD 1157), the reward model that scores its own generations.
+Wan-VACE fills the image-generation slot Gemma leaves open. Audio
+arrives from RFD 1170's presence loop.
 
-    vlm         Qwen3-VL                    Apache 2.0   text + image → text
+    vlm         Gemma-4-12B (QAT Q4_0)      Apache 2.0   text + image → text
     image gen   Wan-VACE                    Apache 2.0   text/image → image
     3D stage    Pixal3D → VoxHammer         Apache 2.0   image → mesh
     audio in    Qwen3-ASR-1.7B              Apache 2.0   waveform → text (RFD 1170)
@@ -28,13 +28,13 @@ image-generation slot Qwen3-VL leaves open. Audio arrives from RFD
     scoring     MaskScore + EditScore       n/a          self-supervised reward
 
 MaskScore constructs edit triples by masking, reconstructing, and
-scoring on decoded outputs. The reward model RL fine-tunes the
-generators via EditScore.
+scoring on decoded outputs. The reward model RL fine-tunes generators
+via EditScore.
 
-VRAM budget, sweep results, and the LLaDA retraction are in
-[DETAILS.md](DETAILS.md). The eight MaskScore dataset stubs are in
-[MASKSCORE.md](MASKSCORE.md).
+Reasoning-core swap 2026-09-02: earlier drafts named Qwen3-VL; RFD
+2169 walked that back to Gemma-4-12B (what the workspace runs today
+per RFDs 2164, 2167). RFD 1157 updates in a follow-on.
 
 ## Related
 
-RFD 1157, RFD 1166, RFD 1169, RFD 1170, RFD 1171, RFD 1172.
+RFD 1157, RFD 1166, RFD 1169, RFD 1170, RFD 1171, RFD 1172, RFD 2169.
