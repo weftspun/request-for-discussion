@@ -332,17 +332,6 @@ repos:
   # file types, and a hook that reformats somebody else's is a hook that
   # widens without being asked.
 
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v6.0.0
-    hooks:
-      - id: trailing-whitespace
-        files: '\.md$'
-        args: [--markdown-linebreak-ext=md]
-      - id: end-of-file-fixer
-        files: '\.md$'
-      - id: mixed-line-ending
-        files: '\.md$'
-        args: [--fix=lf]
 
       - id: asset-prefix
         name: asset filenames carry a typed prefix and PascalCase name
@@ -357,3 +346,15 @@ repos:
         language: python
         pass_filenames: false
         always_run: true
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        files: '\.md$'
+        args: [--markdown-linebreak-ext=md]
+      - id: end-of-file-fixer
+        files: '\.md$'
+      - id: mixed-line-ending
+        files: '\.md$'
+        args: [--fix=lf]
