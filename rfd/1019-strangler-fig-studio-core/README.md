@@ -1,6 +1,6 @@
 # RFD 1019: Strangler fig for the studio core
 
-**State:** discussion
+**State:** abandoned
 **Scope:** `weftspun_studio/`
 
 ## Problem
