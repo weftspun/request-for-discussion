@@ -299,9 +299,10 @@ second needs measuring against what it replaced.
 
 Apache-2.0 in base and weights alike, and that is not the problem. It is 20.43B
 parameters, 57.7 GB on disk, needing roughly 38 GB at bf16 against a 24 GB card.
-So it runs here at NF4 or not at all, and generated-synthetic condition 5 says
-quantised weights do not produce corpus data. That alone closes it as a corpus
-generator on this hardware.
+So it runs here at NF4 or not at all, and at NF4 it corrupts (the measurement
+that follows is the reason). Condition 5, which had also blocked the NF4 fit
+as a matter of policy, was retracted 2026-09-02; that retraction does not
+save this row, because the measurement of NF4 corruption stands on its own.
 
 What makes it a blocklist entry rather than a hardware note is that the
 quantised path is also measurably broken. At NF4 it peaks at 11.9 GiB and
@@ -344,7 +345,8 @@ ground.
 **Not blocked for hardware that can hold it.** A card with 48 GB or more runs
 the published bf16 path, which nothing here has tested and nothing here impugns.
 The entry says something narrower: on this desk the only runnable mode is the
-one condition 5 forbids, and it is broken as well as forbidden.
+one that corrupts, and the retraction of Condition 5 on 2026-09-02 (which had
+also forbidden it as policy) does not change the corruption.
 
 OmniGen2 is the replacement and needs no exception — 7.8B, Apache-2.0, 17.3 GiB
 at bf16, clean output on the same input.
@@ -391,10 +393,13 @@ resolved rather than carried.
 
 **The second reason is newer and independent.** RFD 1016's plan for it was the
 Q4_K_M GGUF set: 33.8 GB bf16 down to 9.30 GB quantised, because that is what
-fits. Generated-synthetic condition 5 now says quantised weights do not produce
-corpus data, so the deployment shape that made the model affordable is the one
-that disqualifies its output. Even with the licence resolved, the plan on file
-would not have produced usable corpus.
+fits. GGUF is blocklisted as a model format (see the ggml row above), and the
+Q4_K_M path is exactly what GGUF's blocklist entry addresses. So even with the
+licence resolved, the deployment shape RFD 1016 planned is closed by the GGUF
+row rather than by the licence row. Condition 5, which had also blocked the
+quantised path on precision grounds, was retracted 2026-09-02; the retraction
+does not open Krea 2 either, because the licence row still bars it and the
+GGUF row still bars the Q4_K_M plan.
 
 Neither reason depends on the other. A permissive re-licence would leave the Q4
 problem, and a 48 GB card running bf16 would leave the revenue gate.
@@ -1122,34 +1127,6 @@ The blocklist covers figures that are published: RFD pages, logbook
 entries, artifact reports. A throwaway sketch in a PR description or
 an issue comment is not a published figure and is not covered.
 
-### The RTX 3090 is blocklisted as a corpus generation host, and 24 GiB is why
-
-**Measured, on rung 0, 2026-08-30.** OmniGen2 at bf16 does not fit resident in
-the 3090's 24 GiB, so the first end-to-end invocation ran with sequential CPU
-offload: 30 denoising steps averaged 29.3 s each, 14 min 40 s wall for one
-1024 px image. Per-step time wandered between 24 and 39 s as layers shuttled
-over the bus, so the average is representative rather than a bad draw.
-
-**Condition 5 closes the obvious exit.** The quantised model fits in VRAM, and
-it does not matter, because quantised weights do not produce corpus data. That
-condition was decided rather than derived, and this row is the price of the
-decision landing on this desk: the only precision permitted for corpus work is
-the one the card cannot hold without offload.
-
-**What the rate means at corpus scale.** Regenerating the 95-image render
-corpus at this speed is about 23 hours; a thousand-image corpus is ten days of
-the desk GPU doing nothing else. Corpus generation runs on rented GPUs with the
-VRAM to hold bf16 resident, which also puts it back behind the tear-down
-forcing function the hard constraints say the local GPU lacks.
-
-**WHAT IS BLOCKED IS THE ROLE, NOT THE CARD.** The hard constraint stands: the
-local desktop GPU is available for compute. Training fits -- the rank-8 camera
-LoRA ran 200 steps in 22 minutes entirely in VRAM -- and single smoke
-invocations are exempt; rung 0 itself is the exemption that produced this
-row's measurement, one image proving the pipeline rather than entering a
-corpus. What is blocked is pointing the 3090 at a generation loop whose output
-is destined for a corpus.
-
 ### LLaDA is blocklisted — block diffusion is 25x too slow for real-time avatar
 
 **Measured, 2026-08-31, RTX 3090.** LLaDA-o NF4 on the 3090 produced 64 tokens
@@ -1202,11 +1179,11 @@ production hygiene.
 model serving, or any interactor path. The `transport-runpod` interactor
 (v-sekai-fabric) is archived alongside this row.
 
-**What replaces it.** The local desktop GPU (RTX 3090) for smoke tests,
-training, and interaction. Corpus generation waits until a machine the
-operator owns can carry it, or until Condition 5 of the data-hygiene rule
-is revisited to permit NF4 corpus generation on the 3090 (a decision, not
-a measurement, that would need its own retraction here).
+**What replaces it.** The local desktop GPU (RTX 3090). Since Condition 5
+was retracted 2026-09-02, corpus generation lands here too: small models
+at fp16 (Qwen3-VL-4B fits with room to spare), large models at NF4
+(Wan-VACE, VoxHammer). Speed is a measurement question now, not a policy
+one.
 
 `spot-broker` (managed Vast/RunPod deploys) is archived alongside this
 row.
@@ -1226,9 +1203,10 @@ per-second billing but still money the workspace does not have.
 **What is blocked.** Vast.ai as an execution target for corpus
 generation, model serving, or any interactor path.
 
-**What replaces it.** Same as RunPod above: local desktop GPU only.
-Corpus generation is the load-bearing gap; it waits for owned compute
-or a revised precision policy.
+**What replaces it.** Same as RunPod above: local desktop GPU only. The
+precision-policy retraction (Condition 5 gone 2026-09-02) makes corpus
+generation on the 3090 real; the funding constraint on rented compute
+stays regardless.
 
 `spot-broker` and `vast-market-snapshots` are archived alongside this
 row. The HF dataset `chibifire/vast-market-snapshots` stays as

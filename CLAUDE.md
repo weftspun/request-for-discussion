@@ -89,30 +89,23 @@ corpus only when all four hold:
    mediocre on the world;
 4. Evaluation uses real or constructed data only. A model measured on its own
    generation distribution has not been measured.
-5. The generator runs at its published precision. **Quantized weights do not
-   produce corpus data**, whatever they cost to run.
 
-Condition 5 is a decision rather than a measurement, and the measurement first
-offered for it has been withdrawn. That is stated first because the earlier
-wording of this paragraph said the opposite, and it shipped.
-
-Holding the prompt fixed reverses it:
-
-    precision   negative prompt      photographic silhouette agreement
-    bf16        upstream's default   0.776
-    bf16        empty                0.305
-    NF4         empty                0.328
-    NF4         upstream's default   0.825
-
-At four bits with the negative prompt the pose survives better than the figure
-originally cited for `bf16`. The prompt moved the result; precision did not
-measurably move it.
-
-The condition stays because it was decided, not derived: quantised generators do
-not produce corpus data here. Labelling it a decision is the honest form. A rule
-that cites a retracted measurement invites the next reader to re-derive it,
-reach the opposite answer, and quietly drop the rule; one that says "decided"
-gets revisited deliberately instead.
+**Retracted 2026-09-02: Condition 5 (quantised weights do not produce corpus
+data) is gone.** The condition read: _"The generator runs at its published
+precision. Quantized weights do not produce corpus data, whatever they cost
+to run."_ It was carried as a decision rather than a measurement — the
+prompt-fixed table (bf16-empty 0.305 vs NF4-upstream-default 0.825) showed
+precision did not measurably move the result. The condition was kept anyway
+on the argument that it was decided rather than derived. That argument no
+longer holds: the funding constraint has closed rented compute, and forcing
+corpus generation to run at published precision on the 3090 (14.7 min per
+1024 px image via sequential CPU offload) makes corpus construction
+uneconomic under owned compute too. The four surviving conditions above
+still handle the actual failure mode Condition 5 was thought to address —
+distribution collapse (condition 3), evaluation contamination (condition 4),
+and provenance loss (condition 1). Precision as such is not a corpus hazard.
+The retraction also closes the "RTX 3090 blocked as corpus generation host"
+row that leaned on it.
 
 The old blanket ban read "generative-model outputs never enter training
 corpora". It was too coarse: it forbade legitimate distillation while saying
@@ -447,45 +440,44 @@ exempt list inline in the script.
 
 Sources excluded from corpora, with the reason:
 
-| source                                             | reason                                                                                                                                                           |
-| -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| CMU mocap                                          | provenance                                                                                                                                                       |
-| Mixamo animation packs                             | licensing                                                                                                                                                        |
-| posemaniacs                                        | third-party pose scraping                                                                                                                                        |
-| CC-BY-SA                                           | share-alike exposure                                                                                                                                             |
-| **OpenRAIL-M** as a _generator_                    | use-restrictions propagate into anything trained on the output — **passthrough use is exempt**, see below                                                        |
-| **FLUX.1**                                         | the conditionable half is non-commercial; the permissive half cannot be conditioned — see below                                                                  |
-| generators with no licence-clean **depth** control | HiDream-I1, SANA — see below                                                                                                                                     |
-| **hosted-API generators** as a corpus source       | Nano-banana / Gemini and any API-only model — condition 1 cannot be satisfied without a checkpoint, see below                                                    |
-| DeepFashion                                        | re-export of a research-only corpus                                                                                                                              |
-| AddBiomechanics `.b3d` as an identity source       | lab volunteers — narrow and inequitable population                                                                                                               |
-| `caldata_*_jc.parquet`                             | pre-cut derivatives; use originals                                                                                                                               |
-| EasyDiffusion outputs, seethrough PSDs             | secondary generation                                                                                                                                             |
-| **Blender**                                        | renders are not reproducible across versions — see below                                                                                                         |
-| **Qwen-Image-Edit** (2509/2511)                    | 20.4B: runs here only quantised, and quantised it corrupts — see below                                                                                           |
-| **P3-SAM / Hunyuan3D-Part**                        | territory-restricted licence: excludes EU, UK and South Korea — see below                                                                                        |
-| **Krea 2 / krea2-turbo**                           | revenue-gated licence, and the planned deployment was Q4 — see below                                                                                             |
-| **BRIA RMBG**                                      | gated and non-commercial — see below                                                                                                                             |
-| **abliterated weights**                            | refusal removal by weight edit, unmeasured elsewhere — see below                                                                                                 |
-| `alfredplpl/anime-with-caption-cc0`                | hand quality — **images** blocked, captions permitted                                                                                                            |
-| **git submodules**                                 | a second dependency mechanism `repo status` cannot see — use `default.xml`, see below                                                                            |
-| **`uv` for project environments**                  | an environment nothing declares and nobody can rebuild — use `pixi`; **an embedded interpreter pinning its deps in source is exempt**, see below                 |
-| **tinygrad NVIDIA eGPU** (TinyGPU dext) as compute | one device init per power cycle, and no software recovery — see below                                                                                            |
-| **onnxruntime GPU providers on macOS**             | CoreML EP is the same Metal path Core ML gives; WebGPU EP measured 0.27x of it — see below                                                                       |
-| **Apple Neural Engine** as an execution target     | 2 GiB weight ceiling at 2^31 bytes, against Metal's 8 GiB+ on the same part — see below                                                                          |
-| `weftspun/rf-detr-keypoint-data`                   | **val2017-derived** — carries the whole blinded holdout, and 78% of it is licence-dirty. Validation only, never training. See below                              |
-| **ggml** and GGUF as a model format                | GGUF carries no graph to convert out of — **a vendor's own runtime and an on-device single binary are exempt**, see below                                        |
-| **IREE** as a build target                         | a compiler rather than an execution provider, and it is not XLA — see below                                                                                      |
-| `24yearsold/metricdepth3d_tmp`                     | gated: HTTP 401, no readable licence and no model card — see below                                                                                               |
-| **See-Through checkpoints**                        | every one states no licence, and the depth one derives from OpenRAIL++-M — see below                                                                             |
-| **SMPL and every variant** as a body model         | non-commercial without an MPG licence; SOMA-X to ANNY is the sanctioned bypass — see below                                                                       |
-| **AMD XDNA NPU** as an execution target            | a second accelerator toolchain, nothing measured and no runtime installed — see below                                                                            |
-| **the CPU** as a model execution target            | orchestration and the **DFC runtime** are exempt; a silent DirectML fallback is the trap — see below                                                             |
-| **Mermaid** as a published-figure format           | the layout solver owns the picture and the house sheet cannot reach it — hand-authored inline SVG instead, see below                                             |
-| **the RTX 3090** as a corpus generation host       | 24 GiB forces sequential offload at published precision, 14.7 min per image, and condition 5 bars the quantised fit — smoke tests and training exempt, see below |
-| **LLaDA** (LLaDA-o, iLLaDA, LLaDA-1.5)             | block diffusion measured 5.76s / 64 tokens — 25x too slow for real-time avatar; RFD 1170 presence loop targets sub-500 ms — see below                            |
-| **RunPod** as rented compute                       | no budget for per-invocation billing; `spot-broker` and `transport-runpod` archived alongside this row — see below                                               |
-| **Vast.ai** as rented compute                      | no budget for per-hour billing; `spot-broker` and `vast-market-snapshots` archived alongside this row — see below                                                |
+| source                                             | reason                                                                                                                                           |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| CMU mocap                                          | provenance                                                                                                                                       |
+| Mixamo animation packs                             | licensing                                                                                                                                        |
+| posemaniacs                                        | third-party pose scraping                                                                                                                        |
+| CC-BY-SA                                           | share-alike exposure                                                                                                                             |
+| **OpenRAIL-M** as a _generator_                    | use-restrictions propagate into anything trained on the output — **passthrough use is exempt**, see below                                        |
+| **FLUX.1**                                         | the conditionable half is non-commercial; the permissive half cannot be conditioned — see below                                                  |
+| generators with no licence-clean **depth** control | HiDream-I1, SANA — see below                                                                                                                     |
+| **hosted-API generators** as a corpus source       | Nano-banana / Gemini and any API-only model — condition 1 cannot be satisfied without a checkpoint, see below                                    |
+| DeepFashion                                        | re-export of a research-only corpus                                                                                                              |
+| AddBiomechanics `.b3d` as an identity source       | lab volunteers — narrow and inequitable population                                                                                               |
+| `caldata_*_jc.parquet`                             | pre-cut derivatives; use originals                                                                                                               |
+| EasyDiffusion outputs, seethrough PSDs             | secondary generation                                                                                                                             |
+| **Blender**                                        | renders are not reproducible across versions — see below                                                                                         |
+| **Qwen-Image-Edit** (2509/2511)                    | 20.4B: runs here only quantised, and quantised it corrupts — see below                                                                           |
+| **P3-SAM / Hunyuan3D-Part**                        | territory-restricted licence: excludes EU, UK and South Korea — see below                                                                        |
+| **Krea 2 / krea2-turbo**                           | revenue-gated licence, and the planned deployment was Q4 — see below                                                                             |
+| **BRIA RMBG**                                      | gated and non-commercial — see below                                                                                                             |
+| **abliterated weights**                            | refusal removal by weight edit, unmeasured elsewhere — see below                                                                                 |
+| `alfredplpl/anime-with-caption-cc0`                | hand quality — **images** blocked, captions permitted                                                                                            |
+| **git submodules**                                 | a second dependency mechanism `repo status` cannot see — use `default.xml`, see below                                                            |
+| **`uv` for project environments**                  | an environment nothing declares and nobody can rebuild — use `pixi`; **an embedded interpreter pinning its deps in source is exempt**, see below |
+| **tinygrad NVIDIA eGPU** (TinyGPU dext) as compute | one device init per power cycle, and no software recovery — see below                                                                            |
+| **onnxruntime GPU providers on macOS**             | CoreML EP is the same Metal path Core ML gives; WebGPU EP measured 0.27x of it — see below                                                       |
+| **Apple Neural Engine** as an execution target     | 2 GiB weight ceiling at 2^31 bytes, against Metal's 8 GiB+ on the same part — see below                                                          |
+| `weftspun/rf-detr-keypoint-data`                   | **val2017-derived** — carries the whole blinded holdout, and 78% of it is licence-dirty. Validation only, never training. See below              |
+| **ggml** and GGUF as a model format                | GGUF carries no graph to convert out of — **a vendor's own runtime and an on-device single binary are exempt**, see below                        |
+| **IREE** as a build target                         | a compiler rather than an execution provider, and it is not XLA — see below                                                                      |
+| `24yearsold/metricdepth3d_tmp`                     | gated: HTTP 401, no readable licence and no model card — see below                                                                               |
+| **See-Through checkpoints**                        | every one states no licence, and the depth one derives from OpenRAIL++-M — see below                                                             |
+| **SMPL and every variant** as a body model         | non-commercial without an MPG licence; SOMA-X to ANNY is the sanctioned bypass — see below                                                       |
+| **AMD XDNA NPU** as an execution target            | a second accelerator toolchain, nothing measured and no runtime installed — see below                                                            |
+| **the CPU** as a model execution target            | orchestration and the **DFC runtime** are exempt; a silent DirectML fallback is the trap — see below                                             |
+| **Mermaid** as a published-figure format           | the layout solver owns the picture and the house sheet cannot reach it — hand-authored inline SVG instead, see below                             |
+| **LLaDA** (LLaDA-o, iLLaDA, LLaDA-1.5)             | block diffusion measured 5.76s / 64 tokens — 25x too slow for real-time avatar; RFD 1170 presence loop targets sub-500 ms — see below            |
+| **RunPod** as rented compute                       | no budget for per-invocation billing; `spot-broker` and `transport-runpod` archived alongside this row — see below                               |
+| **Vast.ai** as rented compute                      | no budget for per-hour billing; `spot-broker` and `vast-market-snapshots` archived alongside this row — see below                                |
 
 The cosplay photo library may be used for **validation only**, never training.
 
