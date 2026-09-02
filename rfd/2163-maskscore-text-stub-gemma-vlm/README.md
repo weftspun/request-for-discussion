@@ -1,13 +1,14 @@
 # RFD 2163: MaskScore Text-stub emit via Gemma VLM on frame pairs
 
-**State:** parked
-**Parked 2026-09-02:** no VLM inference budget this cycle for 15 A/B
-render pairs through Gemma-4-12B; unpark when local compute frees.
+**State:** discussion
 **Feature:** MaskScore Text stub filled by prompting Gemma-4-12B on
 each (frame_a, frame_b) render pair. The instruction column becomes a
 model-devised description of the observed edit, ranked into 10
 candidates per the RFD 1173 gradient scheme.
 **Scope:** `6-datasource/anny-render-corpus`
+
+Shelved 2026-09-02: no VLM inference budget this cycle for 15 A/B
+render pairs through Gemma-4-12B; resume when local compute frees.
 
 ## Problem
 

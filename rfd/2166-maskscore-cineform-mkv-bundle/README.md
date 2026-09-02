@@ -1,13 +1,14 @@
 # RFD 2166: MaskScore Cineform MKV bundle per RFD 1137
 
-**State:** parked
-**Parked 2026-09-02:** no encoding time budget this cycle to build the
-video-delivery bundle; unpark when local capacity frees.
+**State:** discussion
 **Feature:** one Cineform MKV per edit bundling the video frames,
 audio, and the 12-track WebVTT ASR panel, produced through the
 service-cineform pair per RFD 1137.
 **Scope:** `6-datasource/anny-render-corpus`, `7-service/service-cineform`,
 `3-interactor/interactor-cineform`, `1-transport/transport-cineform-tui`
+
+Shelved 2026-09-02: no encoding time budget this cycle to build the
+video-delivery bundle; resume when local capacity frees.
 
 ## Problem
 
