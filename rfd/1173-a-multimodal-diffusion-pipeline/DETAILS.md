@@ -1,5 +1,7 @@
 # RFD 1173 details: a multimodal avatar pipeline
 
+This RFD was drafted by an AI and read by a human before it shipped.
+
 The target is Qwen3-VL as the shared VLM. Two roles sit on the same
 weights: the avatar's text+image reasoning core, and the reward model
 that scores the model's own generations via the EditScore LoRA (RFD
