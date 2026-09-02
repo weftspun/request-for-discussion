@@ -606,6 +606,62 @@ def Scope "Serials"
                 {
                     custom string slug = "bao-is-critical-infrastructure"
                 }
+                def "S2148"
+                {
+                    custom string slug = "grafcet-as-taskwefts-authoring-surface"
+                }
+                def "S2149"
+                {
+                    custom string slug = "grafcet-static-analysis-in-lean4"
+                }
+                def "S2150"
+                {
+                    custom string slug = "rectgtn-on-openplc4-over-coap-oscore"
+                }
+                def "S2151"
+                {
+                    custom string slug = "coap-oscore-nif-for-taskweft"
+                }
+                def "S2152"
+                {
+                    custom string slug = "or-divergence-plcopen-emit"
+                }
+                def "S2153"
+                {
+                    custom string slug = "fbd-to-nodegraph-converters"
+                }
+                def "S2154"
+                {
+                    custom string slug = "openplc4-to-godot-sandbox"
+                }
+                def "S2155"
+                {
+                    custom string slug = "gdscript-fbd-transpiler"
+                }
+                def "S2156"
+                {
+                    custom string slug = "safegdscript-compile-step"
+                }
+                def "S2157"
+                {
+                    custom string slug = "fbd-to-elf-compiler-in-lean4"
+                }
+                def "S2158"
+                {
+                    custom string slug = "lean4-fbd-compiler-self-hosted-on-riscv"
+                }
+                def "S2159"
+                {
+                    custom string slug = "fbd-compiler-two-implementations"
+                }
+                def "S2160"
+                {
+                    custom string slug = "openusd-as-taskweft-intermediate"
+                }
+                def "S2161"
+                {
+                    custom string slug = "vn-avatar-cleanroom-on-maskscore"
+                }
             }
         }
     }
