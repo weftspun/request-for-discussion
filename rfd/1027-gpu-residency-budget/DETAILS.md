@@ -2,25 +2,43 @@
 
 ## Tier per model
 
-A tier must hold the weights and the activations together. The Peak
-column is the resident weight set, which is smaller than the total for
-a model that runs in stages.
+A tier must hold the weights and the activations together. Format is
+QAFT 4-bit where upstream ships one; bf16 otherwise. Peak is the
+resident weight set, which is smaller than total for staged models.
 
-| Model                           |  Weights |     Peak | Tier  |
-| ------------------------------- | -------: | -------: | ----- |
-| qwen_q4_k_m_image_edit          | 14.85 GB | 14.85 GB | 24 GB |
-| pixal3d_image_to_textured_mesh  | 24.05 GB |  6.50 GB | 24 GB |
-| krea2_turbo_text_to_image       |  9.30 GB |  9.30 GB | 24 GB |
-| seethrough_layer_decomposition  |  9.82 GB |  5.13 GB | 24 GB |
-| trellis2_image_to_textured_mesh |  8.00 GB |  8.00 GB | 24 GB |
-| worldmirror2_reconstruct        |  2.40 GB |  2.40 GB | 24 GB |
-| triposplat_image_to_splat       |  2.20 GB |  2.20 GB | 24 GB |
-| skintokens_auto_rig             |  1.00 GB |  1.00 GB | 24 GB |
-| p3sam_mesh_segmentation         |  0.80 GB |  0.80 GB | 24 GB |
-| kimodo_text_to_motion           |  0.60 GB |  0.60 GB | 24 GB |
+| Model                                | Format | Weights |    Peak | Tier  |
+| ------------------------------------ | :----: | ------: | ------: | ----- |
+| Gemma-4-12B (reasoning core)         |  Q4_0  |  6.6 GB |  6.6 GB | 24 GB |
+| Qwen3-TTS-12Hz-1.7B-Base             |  bf16  |  3.4 GB |  3.4 GB | 24 GB |
+| pixal3d_image_to_textured_mesh       |  bf16  | 24.0 GB |  6.5 GB | 24 GB |
+| trellis2_image_to_textured_mesh      |  bf16  |  8.0 GB |  8.0 GB | 24 GB |
+| voxhammer_image_mesh_editing         |  n/a   |  0.0 GB |  0.0 GB | 24 GB |
+| skintokens_auto_rig                  |  bf16  |  1.0 GB |  1.0 GB | 24 GB |
+| kimodo_text_to_motion                |  bf16  |  0.6 GB |  0.6 GB | 24 GB |
+| ASR panel (Voxtral, Whisper, ...)    |  bf16  |  ~3 GB  |  ~3 GB  | 24 GB |
 
-Every model reaches a 24 GB card. That is the finding, and it is the
-opposite of what this RFD first recorded.
+Removed rows relative to the earlier draft: `qwen_q4_k_m_image_edit`
+(Qwen-Image-Edit blocklisted); `krea2_turbo_text_to_image` (Krea 2
+blocklisted); `seethrough_layer_decomposition` (See-Through checkpoints
+blocklisted); `worldmirror2_reconstruct` + `triposplat_image_to_splat`
+(RFDs 1051/1052 abandoned); `p3sam_mesh_segmentation` (P3-SAM
+blocklisted, replaced by rf-detr-Seg per RFD 1168). VoxHammer's 0.0 GB
+row is per RFD 1162 -- it holds no weights and inherits placement.
+
+Every surviving model reaches a 24 GB card. That is the finding, and
+it is the opposite of what this RFD first recorded.
+
+## QAFT-first is the rule
+
+QAFT 4-bit (quantization-aware fine-tuning) is preferred where
+upstream ships one. Only Gemma ships true QAFT for the current stack;
+Wan-VACE, Pixal3D, VoxHammer, MoGe-3 do not, per RFD 2139's 2026-09-01
+survey. Those run at published precision (bf16) with staged loading.
+
+CLAUDE.md's 2026-09-02 retraction of Condition 5 lifts the earlier
+ban on quantised weights producing corpus data; PTQ (AWQ, GPTQ, NF4)
+is now permitted where a QAFT release is not available, subject to
+the four surviving conditions on generated synthetic.
 
 ## Staging is what makes the tier
 
@@ -35,16 +53,14 @@ a planning result.
 A model image that loads every stage at once pays for a larger card every
 second it runs.
 
-## Quantization is now a cost choice
+## Quantization is standardized, not a cost choice
 
-On one shared device, quantization decided what fit. On Replicate it
-decides what a second costs.
-
-Qwen at 54.0 GB in bf16 needs an 80 GB card. At 14.85 GB in Q4_K_M it
-needs 24 GB. Both run, and the tiers differ in price.
-
-Measure the quality cost before the catalog depends on it. RFD 1043
-records that no such measurement exists yet.
+An earlier draft framed quantization as a per-request cost knob
+against Replicate pricing. Retracted: the workspace uses the local
+desktop GPU only (CLAUDE.md; Replicate is not a host here), so there
+is no per-second price signal to trade against quality. The
+standardization is QAFT 4-bit where upstream publishes one, bf16
+otherwise. See the QAFT-first rule above.
 
 ## What to do
 
