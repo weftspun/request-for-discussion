@@ -662,6 +662,26 @@ def Scope "Serials"
                 {
                     custom string slug = "vn-avatar-cleanroom-on-maskscore"
                 }
+                def "S2162"
+                {
+                    custom string slug = "maskscore-usdz-skinning-and-15-edit-emit"
+                }
+                def "S2163"
+                {
+                    custom string slug = "maskscore-text-stub-gemma-vlm"
+                }
+                def "S2164"
+                {
+                    custom string slug = "maskscore-speech-stub-panel-and-cloning"
+                }
+                def "S2165"
+                {
+                    custom string slug = "maskscore-unified-8-stub-emit"
+                }
+                def "S2166"
+                {
+                    custom string slug = "maskscore-cineform-mkv-bundle"
+                }
             }
         }
     }
