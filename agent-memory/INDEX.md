@@ -1,0 +1,8 @@
+- [OpenBao address](openbao-address.md) — fly app `weftspun-bao`, mTLS via cert-auth as `vast-buyer`, tunnel via `fly proxy 8200:8200`
+- [Weights live on Hugging Face](weights-live-on-huggingface.md) — code on GitHub (`weftspun`), weights + datasets on HF (`chibifire`). Manifest already has both remotes.
+- [Asset-prefix naming](asset-prefix-convention.md) — assets under 5-repository/6-datasource carry a typed prefix (T_, DA_, SM_, S_, ...) + PascalCase, enforced by `scripts/check_asset_prefix.py` (PR #154)
+- [Hardware pivot 2026-09-01](hardware-pivot-2026-09-01.md) — Mac mini M2 Pro + zero rental → Windows 11 + RTX 3090; QAFT-LoRA training reopens, Wan-VACE 14B fits
+- [EditScore Qwen3-VL MLX works](editscore-qwen3vl-mlx-works.md) — reward-model role runs Mac-mini-native at 3.4 GB, no training needed; `EditScore/EditScore-Qwen3-VL-4B-Instruct` LoRA + `mlx-community/Qwen3-VL-4B-Instruct-4bit`
+- [Vast API notes](vast-api-notes.md) — HTTP `q={"field":{"eq":v}}` filter syntax; 4090 wins Pareto ($0.00128/dlperf-hour); ETNF snapshots at `chibifire/vast-market-snapshots` on HF
+- [RFD 2156 retraction trail](rfd-2156-retraction-trail.md) — five dead bets from 2026-09-01; do not reopen; scaffold renamed to `editscore-lora-qwen3vl-4b`
+- [PR #150 serial collision](pr-150-serial-collision.md) — resolved via PR #150 + #151 + #152 + #153; RFDs live at S2148-S2161
