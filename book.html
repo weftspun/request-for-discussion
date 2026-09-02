@@ -1515,6 +1515,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#decision-196" id="toc-decision-196" class="nav-link" data-scroll-target="#decision-196">Decision</a></li>
   <li><a href="#related-175" id="toc-related-175" class="nav-link" data-scroll-target="#related-175">Related</a></li>
   </ul></li>
+  <li><a href="#rfd-2168-retract-rfd-1122s-bespoke-wholebody-detector-keep-the-renderer" id="toc-rfd-2168-retract-rfd-1122s-bespoke-wholebody-detector-keep-the-renderer" class="nav-link" data-scroll-target="#rfd-2168-retract-rfd-1122s-bespoke-wholebody-detector-keep-the-renderer">RFD 2168: Retract RFD 1122’s bespoke wholebody detector; keep the renderer</a>
+  <ul class="collapse">
+  <li><a href="#problem-194" id="toc-problem-194" class="nav-link" data-scroll-target="#problem-194">Problem</a></li>
+  <li><a href="#decision-197" id="toc-decision-197" class="nav-link" data-scroll-target="#decision-197">Decision</a></li>
+  <li><a href="#related-176" id="toc-related-176" class="nav-link" data-scroll-target="#related-176">Related</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -3855,7 +3861,7 @@ weight GB    = parameters in billions x 2</code></pre>
 <section id="rfd-1122-the-wholebody-gap-and-the-renderer-that-closes-it" class="level1">
 <h1>RFD 1122: The wholebody gap, and the renderer that closes it</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.1.1122</code></p>
-<p><strong>State:</strong> discussion <strong>Feature:</strong> wholebody keypoint detection, and the corpus that trains it <strong>Scope:</strong> <code>3-interactor/rf-detr-cpp</code>, <code>6-datasource/rf-detr-keypoint-data</code>, <code>6-datasource/dataflow-coco-gemx</code>, <code>3-interactor/pose-consensus</code>, <code>3-interactor/pixal3d-image-to-textured-mesh</code>, <code>4-entities/anny-pose-retarget-work</code></p>
+<p><strong>State:</strong> abandoned <strong>Feature:</strong> wholebody keypoint detection, and the corpus that trains it <strong>Scope:</strong> <code>3-interactor/rf-detr-cpp</code>, <code>6-datasource/rf-detr-keypoint-data</code>, <code>6-datasource/dataflow-coco-gemx</code>, <code>3-interactor/pose-consensus</code>, <code>3-interactor/pixal3d-image-to-textured-mesh</code>, <code>4-entities/anny-pose-retarget-work</code></p>
 <section id="problem-109" class="level2">
 <h2 class="anchored" data-anchor-id="problem-109">Problem</h2>
 <p>We need a model that finds 104 body points in a picture. We have one that finds 17. Nobody sells a licence-clean upgrade, so we train it, and training needs pictures with the 104 points already marked. Those do not exist either. A renderer makes pictures with the answers already on them.</p>
@@ -6137,6 +6143,30 @@ void  grafcet_static_free(char *buf);</code></pre>
 <section id="related-175" class="level2">
 <h2 class="anchored" data-anchor-id="related-175">Related</h2>
 <p>Spine: urn:oid:1.3.6.1.4.1.66606.1.1.1173 (MaskScore). Consumes: urn:oid:1.3.6.1.4.1.66606.1.2.2164.</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2168-retract-rfd-1122s-bespoke-wholebody-detector-keep-the-renderer" class="level1">
+<h1>RFD 2168: Retract RFD 1122’s bespoke wholebody detector; keep the renderer</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2168</code></p>
+<p><strong>State:</strong> published <strong>Feature:</strong> documentation retraction <strong>Scope:</strong> <code>rfd/1122-the-wholebody-gap</code></p>
+<section id="problem-194" class="level2">
+<h2 class="anchored" data-anchor-id="problem-194">Problem</h2>
+<p>RFD 1122 proposed rendering ANNY to train a 104-point keypoint detector, then deploying it. Later RFDs (1143 published, 1168 ideation, 1173 discussion) settled the deployment differently, and 1122’s <code>discussion</code> state stopped tracking reality.</p>
+</section>
+<section id="decision-197" class="level2">
+<h2 class="anchored" data-anchor-id="decision-197">Decision</h2>
+<p>Retract the bespoke detector-training path. RFD 1122 moves to <code>abandoned</code> alongside this document landing. What survives, by reference into the successor RFDs:</p>
+<ul>
+<li><strong>Renderer-first (RFD 1122 rule 1).</strong> ANNY is posed and photographed; joints come out of camera arithmetic. RFD 1143 uses this as the render leg of its propose loop.</li>
+<li><strong>Two-scorer discipline.</strong> RFD 1143 committed EditScore + Referee, because a fit that looks right while the joints are wrong passes the first alone.</li>
+<li><strong>Renderer as comparison, not detector target.</strong> RFD 1173’s MaskScore construction scores generations by comparing renders to targets. No 104-point head trains on the renders.</li>
+</ul>
+<p>Retracted: train a 104-point head on rendered ANNY (RFD 1168 moves layer segmentation into the 3D latent via rf-detr-Seg), and the wholebody-detector deployment premise (ANNY is the pose primitive throughout, propose through score).</p>
+</section>
+<section id="related-176" class="level2">
+<h2 class="anchored" data-anchor-id="related-176">Related</h2>
+<p>Retracts: urn:oid:1.3.6.1.4.1.66606.1.1.1122 Superseded by: urn:oid:1.3.6.1.4.1.66606.1.1.{1143,1168,1173}</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 
