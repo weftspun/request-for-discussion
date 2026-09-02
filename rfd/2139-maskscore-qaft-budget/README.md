@@ -1,8 +1,32 @@
 # RFD 2139: MaskScore QAFT and extraction budget
 
-**State:** discussion
+**State:** abandoned
 **Feature:** QAFT quantization and dataset extraction for MaskScore
 **Scope:** Qwen3-Omni, Wan-VACE, Pixal3D, VoxHammer, MoGe-3, Vast.ai budget
+
+## Retracted 2026-09-02: superseded by RFD 1173's Qwen3-VL alignment
+
+Two facts landed after this RFD:
+
+1. **RFD 1173 no longer names Qwen3-Omni.** The pipeline runs on
+   Qwen3-VL-4B (EditScore's own base under a LoRA per RFD 1157).
+   Qwen3-VL-4B fp16 (~8.9 GiB) fits the 3090 without quantization,
+   so the QAFT rung this RFD is built on is unnecessary for the
+   VLM slot.
+2. **No true-QAFT 4-bit checkpoints exist upstream for the remaining
+   pipeline models** (Wan-VACE 14B, Pixal3D, VoxHammer, MoGe-3),
+   surveyed 2026-09-01 per RFD 2161. QAFT training we do not have
+   compute for; PTQ (AWQ, GPTQ, AutoRound, bitsandbytes NF4) does
+   not satisfy condition 5 of the data-hygiene rule for corpus
+   generation.
+
+The budget arithmetic below assumes Qwen3-Omni as the VLM and QAFT'd
+NF4 weights for the whole stack; neither holds. A follow-on RFD will
+address extraction on the reduced stack (Qwen3-VL-4B fp16 + published-
+precision inference on rented A100 or similar) or accept that
+extraction runs at published precision on machines with enough VRAM.
+
+The `chibifire/qwen3-omni` fork this RFD planned was never created.
 
 ## Problem
 

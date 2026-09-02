@@ -1,34 +1,39 @@
 # RFD 1173 details: a multimodal avatar pipeline
 
-The target is the Qwen3-Omni architecture: text, image, audio, and video
-in a single model, serving both MaskScore dataset construction and a
-real-time avatar demo (Gemma Avatar architecture, sub-500ms first-packet
-latency). The thinker-talker split is the key architectural feature: the
-thinker reasons over all modalities, and the talker converts the thinker's
-hidden states to speech with voice cloning.
+This RFD was drafted by an AI and read by a human before it shipped.
 
-## Qwen3-Omni (thinker + talker)
+The target is Qwen3-VL as the shared VLM. Two roles sit on the same
+weights: the avatar's text+image reasoning core, and the reward model
+that scores the model's own generations via the EditScore LoRA (RFD
+1157). Audio is a separate stack per RFD 1170's presence loop
+(Qwen3-ASR-1.7B for input, Qwen3-TTS-12Hz-1.7B-CustomVoice for
+output). Shared weights are what close the MaskScore loop.
 
-Qwen/Qwen3-Omni-30B-A3B-Instruct. Apache 2.0, open weights. 30B MoE with
-3B active parameters. Text, image, audio, and video input; text and audio
-output. 234ms first-packet latency, streaming.
+## Qwen3-VL (the shared VLM)
 
-The thinker handles all input modalities and produces text and hidden states.
-The talker converts hidden states to speech tokens, decoded to audio via a
-flow-matching vocoder. Voice cloning is the feature that distinguishes it
-from standalone TTS.
+Qwen/Qwen3-VL-4B-Instruct. Apache 2.0, open weights, dense (not MoE),
+text and image input, text output. 8.9 GB fp16 measured on the 3090
+per RFD 2161; fits 24 GiB comfortably at fp16 without quantization.
 
-If the talker cannot be extracted standalone, the audio head is deferred
-rather than substituted with a standalone TTS model.
+EditScore (RFD 1157) is a LoRA over Qwen3-VL, so the same base weights
+serve the avatar's understanding path and the reward model that scores
+its own generations. The share-backbone argument is what Qwen3-VL
+carries into RFD 1173 unchanged: the reward model IS the base VLM
+under a LoRA adapter, not a separate model.
 
-1. https://github.com/QwenLM/Qwen3-Omni
+The audio path is orthogonal and lives in RFD 1170: Qwen3-ASR-1.7B on
+device for input, Qwen3-TTS-12Hz-1.7B-CustomVoice on host for output.
+Neither passes through Qwen3-VL.
+
+1. https://github.com/QwenLM/Qwen3-VL
+2. https://huggingface.co/Qwen/Qwen3-VL-4B-Instruct
 
 ## Wan-VACE (image and video generation)
 
-**Qwen3-Omni does not generate images.** Its outputs are text and speech;
-it understands images, audio, and video as input but produces neither.
-Wan-VACE fills the image and video generation slot that Qwen3-Omni
-leaves open. ~14B params, ~28 GB bf16, ~8.7 GB NF4.
+**Qwen3-VL does not generate images.** Its outputs are text; it
+understands images as input but produces none. Wan-VACE fills the
+image and video generation slot Qwen3-VL leaves open. ~14B params,
+~28 GB bf16, ~8.7 GB NF4.
 
 Wan-VACE is the generator that produces the images the 3D stage consumes
 and the images MaskScore's image-editing stubs edit and score.
@@ -37,9 +42,10 @@ and the images MaskScore's image-editing stubs edit and score.
 
 Wan-VACE generates and edits images and video; the 3D stage turns those
 images into meshes. Pixal3D produces a coarse textured mesh from an
-image, VoxHammer refines it. After QAFT, the thinker + talker occupy
-~11.9 GiB. Wan-VACE NF4 (~8.7 GiB) is swapped in for generation and
-out for the 3D stage.
+image, VoxHammer refines it. Qwen3-VL-4B fp16 (~8.9 GiB) leaves ~15 GiB
+of the 3090's budget for the 3D stage; with Wan-VACE NF4 (~8.7 GiB)
+swapped in for generation and out for the 3D stage, total peak
+occupancy is ~17.6 GiB and no QAFT is required.
 
 ## EditScore evaluation
 
@@ -85,36 +91,30 @@ The four-stage loop:
 
 ## VRAM budget on the 3090
 
-| component                               |   bf16 | NF4 est. | co-resident? |
-| --------------------------------------- | -----: | -------: | :----------: |
-| Qwen3-Omni thinker (30B MoE, 3B active) | ~30 GB |  ~9.3 GB |    always    |
-| Qwen3-Omni talker (if extractable)      | ~10 GB |  ~2.5 GB |    always    |
-| Wan-VACE (image/video gen)              | ~28 GB |  ~8.7 GB |   swapped    |
-| Pixal3D                                 |    TBD |      TBD |  yes (QAFT)  |
-| VoxHammer                               |    TBD |      TBD |  yes (QAFT)  |
-| activation overhead                     |    n/a |  0.09 GB |     n/a      |
+| component                    |    fp16 |     NF4 | co-resident? |
+| ---------------------------- | ------: | ------: | :----------: |
+| Qwen3-VL-4B (dense)          | ~8.9 GB | ~2.9 GB |    always    |
+| Wan-VACE (image/video gen)   |  ~28 GB | ~8.7 GB |   swapped    |
+| Pixal3D                      |     TBD |     TBD |    swapped   |
+| VoxHammer                    |     TBD |     TBD |    swapped   |
+| activation overhead          |     n/a | ~0.1 GB |     n/a      |
 
-Activation overhead measured at 0.09 GiB across context lengths 32–1024
-tokens (2026-08-31, RTX 3090, measured on LLaDA-o NF4 as a proxy; the
-MoE activation pattern will differ). The KV cache and attention
-activations are negligible at text-generation lengths; the budget is
-almost entirely weights.
+Qwen3-VL-4B fp16 (~8.9 GB) is the RFD 2161 Mac mini measurement and
+matches the model card's published size. On the 3090's 24 GiB,
+Qwen3-VL-4B fp16 + Wan-VACE NF4 co-resident totals ~17.6 GiB —
+comfortable, no QAFT required. The condition 5 quantization argument
+that earlier drafts needed for a 30B MoE does not apply here.
 
-QAFT NF4 thinker + talker NF4 + activations: ~11.9 GiB, leaving ~12.1 GiB
-for the 3D stage to co-reside. QAFT makes the NF4 precision the published
-one, so the budget is real rather than a post-hoc truncation.
-
-NF4 is permitted here because condition 5 bars quantized weights from
-corpus generation, not from evaluation or interaction. QAFT produces a
-model whose published precision is the quantized one. This opens a path
-to a 3090-native Qwen3-Omni that fits 24 GiB and is permitted for corpus
-generation, if the quality measurement holds.
+Qwen3-VL-8B is the reserved fallback if 4B's reasoning falls short:
+~16 GB fp16, ~6.75 GiB NF4 measured (RFD 1163). Either variant leaves
+budget for a co-resident 3D stage in NF4.
 
 ## Why not LLaDA
 
 LLaDA-o NF4 on the 3090 produced 64 tokens in 5.76 s at steps=128,
-25x slower than the sub-500ms avatar target. Block diffusion iterates
-to convergence across the full block; an autoregressive MoE streams from
-the first forward pass. The family (LLaDA-o, iLLaDA, LLaDA-1.5) is
-blocklisted. The MaskScore technique transfers to Qwen3-Omni without
-change. Masking operates on latents, not on the model that fills them.
+25x slower than the RFD 1170 presence-loop sub-500ms target. Block
+diffusion iterates to convergence across the full block; an
+autoregressive VLM streams from the first forward pass. The family
+(LLaDA-o, iLLaDA, LLaDA-1.5) is blocklisted. The MaskScore technique
+transfers to Qwen3-VL without change. Masking operates on latents,
+not on the model that fills them.

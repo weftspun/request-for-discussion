@@ -24,10 +24,11 @@ the original asset IS the ground truth.
 ### Stage 1: edit, then score (self-supervised pretraining)
 
 Each model edits in its native way. Flow-matching models
-(Wan-VACE, Pixal3D, VoxHammer, talker) noise a region and
-denoise. Qwen3-Omni edits text via instruction-following
-generation. The training signal is reconstruction loss against
-the original. No labels.
+(Wan-VACE, Pixal3D, VoxHammer) noise a region and denoise.
+Qwen3-VL edits text via instruction-following generation.
+The audio path is a separate stack per RFD 1170 (Qwen3-TTS-12Hz
+for output, Qwen3-ASR-1.7B for input). The training signal is
+reconstruction loss against the original. No labels.
 
 ### Stage 2: construct reward signal (self-supervised scoring)
 
@@ -50,8 +51,10 @@ frame B", "repose the eyebrow"). This is supervised learning, but the
 labels come from automated render-and-compare, not humans.
 
 The reward model replaces the raw metric. EditScore did exactly this
-for images. The reward model here IS Qwen3-Omni, which scores its
-own generations during training (OmniScore). No separate VLM.
+for images. The reward model here IS Qwen3-VL under the EditScore LoRA
+(RFD 1157) — the same base weights that serve the avatar's understanding
+path. Text and image outputs score natively through the VLM; audio and
+geometric outputs score via the render-and-compare stages 1-2 describe.
 
 ### Stage 4: RL fine-tuning with the reward model
 
@@ -80,8 +83,8 @@ path that reaches the ANNY mesh for scoring. Discriminative models
 | Depth      | Pixal3D      | flow-matching on SLATs        | mesh, render to depth via Mitsuba  |
 | Keypoints  | Pixal3D      | flow-matching on SLATs        | mesh, read surface vertices        |
 | Pose       | Pixal3D      | flow-matching on SLAT sequence| mesh sequence, ANNY IK to bones    |
-| Speech     | Talker       | flow-matching vocoder         | decode to waveform                 |
-| Text       | Qwen3-Omni   | autoregressive generation     | instruction-following edit         |
+| Speech     | TTS-12Hz     | autoregressive vocoder        | decode to waveform (RFD 1170)      |
+| Text       | Qwen3-VL     | autoregressive generation     | instruction-following edit         |
 
 Pixal3D has three distinct latents: sparse structure
 `(B, C, R, R, R)`, shape SLAT (SparseTensor geometry), and texture
@@ -199,8 +202,8 @@ corresponding vertices/bones/pixels/audio span.
 
 | dataset              | rows   | purpose                               | EditScore analogue     |
 | -------------------- | ------ | ------------------------------------- | ---------------------- |
-| maskscore-bench      | ~2,890 | evaluates OmniScore                   | EditReward-Bench       |
-| maskscore-reward-train | ~97k | trains OmniScore (the reward model)   | EditScore-Reward-Data  |
+| maskscore-bench      | ~2,890 | evaluates the reward model            | EditReward-Bench       |
+| maskscore-reward-train | ~97k | trains the reward model (EditScore LoRA over Qwen3-VL) | EditScore-Reward-Data  |
 | maskscore-rl-train   | ~110k  | trains generators via RL              | EditScore-RL-Data      |
 
 All three share the same schema and task type vocabulary. The bench
@@ -414,13 +417,23 @@ that accepts Kimodo output without running Kimodo itself.
 | task_type          | string            | one of the 13 task types                 |
 | dimension          | string            | instruction_following, consistency, overall |
 
-## Reward model: OmniScore
+## Reward model: EditScore over Qwen3-VL
 
-Qwen3-Omni is the reward model for all eight stubs (OmniScore).
-It handles text, image, audio, and video natively. For geometric
-modalities (mesh, keypoints, pose, depth), it scores multi-view
-Mitsuba 3 renders. The thinker scores its own generations during
-training, so the reward model and the generator share weights.
+The reward model is Qwen3-VL under the EditScore LoRA (RFD 1157) —
+the same base weights that serve the avatar's understanding path.
+
+- Text and image outputs: Qwen3-VL scores directly.
+- Mesh, keypoints, pose, depth: Qwen3-VL scores multi-view Mitsuba 3
+  renders (`sphere_hammersley_sequence` views).
+- Audio: SOMA face bone rotation agreement (per the SpeechEditReward
+  stub), not Qwen3-VL. Qwen3-VL has no native audio path.
+- Video: per-frame render-and-compare, then Qwen3-VL scores the
+  scored frames.
+
+Reward and generator share weights only on the modalities Qwen3-VL
+covers natively (text, image). The geometric and audio stubs already
+score via render-and-compare, so the share-weights claim is not
+required for them.
 
 ## Construction status
 
