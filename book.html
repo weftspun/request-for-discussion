@@ -1331,6 +1331,7 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#rfd-2139-maskscore-qaft-and-extraction-budget" id="toc-rfd-2139-maskscore-qaft-and-extraction-budget" class="nav-link" data-scroll-target="#rfd-2139-maskscore-qaft-and-extraction-budget">RFD 2139: MaskScore QAFT and extraction budget</a>
   <ul class="collapse">
+  <li><a href="#retracted-2026-09-02-superseded-by-rfd-1173s-qwen3-vl-alignment" id="toc-retracted-2026-09-02-superseded-by-rfd-1173s-qwen3-vl-alignment" class="nav-link" data-scroll-target="#retracted-2026-09-02-superseded-by-rfd-1173s-qwen3-vl-alignment">Retracted 2026-09-02: superseded by RFD 1173’s Qwen3-VL alignment</a></li>
   <li><a href="#problem-167" id="toc-problem-167" class="nav-link" data-scroll-target="#problem-167">Problem</a></li>
   <li><a href="#decision-169" id="toc-decision-169" class="nav-link" data-scroll-target="#decision-169">Decision</a>
   <ul class="collapse">
@@ -4941,26 +4942,26 @@ be it   a person supplies motion  friend   a model supplies it</code></pre>
 <section id="rfd-1173-a-multimodal-avatar-pipeline" class="level1">
 <h1>RFD 1173: A multimodal avatar pipeline</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.1.1173</code></p>
-<p><strong>State:</strong> discussion <strong>Feature:</strong> omni-modal MaskScore construction and real-time avatar <strong>Scope:</strong> Qwen3-Omni, Wan-VACE, MaskScore, Pixal3D/VoxHammer, EditScore</p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> omni-modal MaskScore construction and real-time avatar <strong>Scope:</strong> Qwen3-VL, Wan-VACE, MaskScore, Pixal3D/VoxHammer, EditScore</p>
 <section id="problem-159" class="level2">
 <h2 class="anchored" data-anchor-id="problem-159">Problem</h2>
-<p>A real-time avatar demo (Gemma Avatar architecture, 9k+ robots) needs sub-500ms first-packet latency with text + image + audio. MaskScore (self-supervised edit scoring) needs models that handle all modalities to construct training data.</p>
-<p>EditScore is functionally complete in the NAND-gate sense: every generation task reduces to an edit. One reward covers every modality.</p>
+<p>A real-time avatar needs a text+image reasoning core that doubles as the reward model for its own outputs. The audio path is separate per RFD 1170. EditScore is functionally complete in the NAND-gate sense: every generation task reduces to an edit, so one reward covers every modality.</p>
 </section>
 <section id="decision-161" class="level2">
 <h2 class="anchored" data-anchor-id="decision-161">Decision</h2>
-<p>Qwen3-Omni for understanding, text, and speech. Wan-VACE for image generation and editing. Qwen3-Omni outputs text and audio only; it does not generate images.</p>
-<pre><code>thinker     Qwen3-Omni thinker         Apache 2.0   text + image + audio + video → text
-talker      Qwen3-Omni talker          Apache 2.0   voice-cloning speech
-image gen   Wan-VACE                   Apache 2.0   text/image → image
-3D stage    Pixal3D → VoxHammer        Apache 2.0   image → mesh
-scoring     MaskScore + EditScore      n/a           self-supervised reward</code></pre>
+<p>Qwen3-VL is the shared VLM: it serves both the avatar’s text+image reasoning path and, as EditScore’s own base with a LoRA (RFD 1157), the reward model that scores its own generations. Wan-VACE fills the image-generation slot Qwen3-VL leaves open. Audio arrives from RFD 1170’s presence loop.</p>
+<pre><code>vlm         Qwen3-VL                    Apache 2.0   text + image → text
+image gen   Wan-VACE                    Apache 2.0   text/image → image
+3D stage    Pixal3D → VoxHammer         Apache 2.0   image → mesh
+audio in    Qwen3-ASR-1.7B              Apache 2.0   waveform → text (RFD 1170)
+audio out   Qwen3-TTS-12Hz-CustomVoice  Apache 2.0   text → waveform (RFD 1170)
+scoring     MaskScore + EditScore       n/a          self-supervised reward</code></pre>
 <p>MaskScore constructs edit triples by masking, reconstructing, and scoring on decoded outputs. The reward model RL fine-tunes the generators via EditScore.</p>
 <p>VRAM budget, sweep results, and the LLaDA retraction are in <a href="DETAILS.md">DETAILS.md</a>. The eight MaskScore dataset stubs are in <a href="MASKSCORE.md">MASKSCORE.md</a>.</p>
 </section>
 <section id="related-157" class="level2">
 <h2 class="anchored" data-anchor-id="related-157">Related</h2>
-<p>RFD 1172, RFD 1166, RFD 1170.</p>
+<p>RFD 1157, RFD 1166, RFD 1169, RFD 1170, RFD 1171, RFD 1172.</p>
 </section>
 </section>
 <section id="rfd-1174-publish-the-security-rules-against-soc-2-and-iso-27001" class="level1">
@@ -5124,7 +5125,17 @@ scoring     MaskScore + EditScore      n/a           self-supervised reward</cod
 <section id="rfd-2139-maskscore-qaft-and-extraction-budget" class="level1">
 <h1>RFD 2139: MaskScore QAFT and extraction budget</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2139</code></p>
-<p><strong>State:</strong> discussion <strong>Feature:</strong> QAFT quantization and dataset extraction for MaskScore <strong>Scope:</strong> Qwen3-Omni, Wan-VACE, Pixal3D, VoxHammer, MoGe-3, Vast.ai budget</p>
+<p><strong>State:</strong> abandoned <strong>Feature:</strong> QAFT quantization and dataset extraction for MaskScore <strong>Scope:</strong> Qwen3-Omni, Wan-VACE, Pixal3D, VoxHammer, MoGe-3, Vast.ai budget</p>
+<section id="retracted-2026-09-02-superseded-by-rfd-1173s-qwen3-vl-alignment" class="level2">
+<h2 class="anchored" data-anchor-id="retracted-2026-09-02-superseded-by-rfd-1173s-qwen3-vl-alignment">Retracted 2026-09-02: superseded by RFD 1173’s Qwen3-VL alignment</h2>
+<p>Two facts landed after this RFD:</p>
+<ol type="1">
+<li><strong>RFD 1173 no longer names Qwen3-Omni.</strong> The pipeline runs on Qwen3-VL-4B (EditScore’s own base under a LoRA per RFD 1157). Qwen3-VL-4B fp16 (~8.9 GiB) fits the 3090 without quantization, so the QAFT rung this RFD is built on is unnecessary for the VLM slot.</li>
+<li><strong>No true-QAFT 4-bit checkpoints exist upstream for the remaining pipeline models</strong> (Wan-VACE 14B, Pixal3D, VoxHammer, MoGe-3), surveyed 2026-09-01 per RFD 2161. QAFT training we do not have compute for; PTQ (AWQ, GPTQ, AutoRound, bitsandbytes NF4) does not satisfy condition 5 of the data-hygiene rule for corpus generation.</li>
+</ol>
+<p>The budget arithmetic below assumes Qwen3-Omni as the VLM and QAFT’d NF4 weights for the whole stack; neither holds. A follow-on RFD will address extraction on the reduced stack (Qwen3-VL-4B fp16 + published- precision inference on rented A100 or similar) or accept that extraction runs at published precision on machines with enough VRAM.</p>
+<p>The <code>chibifire/qwen3-omni</code> fork this RFD planned was never created.</p>
+</section>
 <section id="problem-167" class="level2">
 <h2 class="anchored" data-anchor-id="problem-167">Problem</h2>
 <p>The MaskScore extraction pipeline (RFD 1173) needs seven models co-resident on GPU. At published precision (bf16), VoxHammer alone requires 40 GB. QAFT to NF4 is required before extraction can begin. Condition 5 permits this: QAFT makes NF4 the published precision.</p>

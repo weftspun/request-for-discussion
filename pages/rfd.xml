@@ -10,7 +10,7 @@
 <atom:link href="https://weftspun.github.io/request-for-discussion/pages/rfd.xml" rel="self" type="application/rss+xml"/>
 <description>Request-for-Discussion documents, the serial register, and the logbook.</description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Wed, 02 Sep 2026 04:34:54 GMT</lastBuildDate>
+<lastBuildDate>Wed, 02 Sep 2026 05:46:43 GMT</lastBuildDate>
 <item>
   <title>RFD 2161: Cleanroom Gemma-Avatar as a visual novel, on MaskScore</title>
   <link>https://weftspun.github.io/request-for-discussion/rfd/2161-vn-avatar-cleanroom-on-maskscore/</link>
@@ -57,7 +57,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2161-vn-avatar-cleanroom-on-maskscore/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2160: OpenUSD .usda as taskweft’s intermediate</title>
@@ -93,7 +93,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2160-openusd-as-taskweft-intermediate/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2159: Two .elf implementations of the Lean 4 FBD spec</title>
@@ -134,7 +134,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2159-fbd-compiler-two-implementations/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2158: Self-host the Lean 4 FBD compiler on RISC-V; abandoned</title>
@@ -179,7 +179,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2158-lean4-fbd-compiler-self-hosted-on-riscv/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2157: Lean 4 FBD -&gt; RISC-V ELF compiler</title>
@@ -226,7 +226,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2157-fbd-to-elf-compiler-in-lean4/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2156: SafeGDScript compile step for RECTGTN GDScript output</title>
@@ -265,7 +265,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2156-safegdscript-compile-step/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2155: GDScript &lt;-&gt; IEC 61131-3 FBD transpiler</title>
@@ -305,7 +305,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2155-gdscript-fbd-transpiler/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2154: OpenPLC v4 into Godot Sandbox, from Elixir</title>
@@ -351,7 +351,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2154-openplc4-to-godot-sandbox/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2153: PLCopen FBD to VRChat Udon assembly</title>
@@ -389,7 +389,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2153-fbd-to-nodegraph-converters/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2152: OR-divergence emit in PLCopen SFC</title>
@@ -429,7 +429,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2152-or-divergence-plcopen-emit/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2151: CoAP + OSCORE NIF for taskweft</title>
@@ -469,7 +469,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2151-coap-oscore-nif-for-taskweft/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2150: RECTGTN as FBD, on OpenPLC v4 and node-graph editors</title>
@@ -509,7 +509,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2150-rectgtn-on-openplc4-over-coap-oscore/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2149: GRAFCET static analysis in Lean 4, from Elixir</title>
@@ -551,7 +551,7 @@ void  grafcet_static_free(char *buf);</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2149-grafcet-static-analysis-in-lean4/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2148: GRAFCET as taskweft’s authoring surface</title>
@@ -591,7 +591,7 @@ void  grafcet_static_free(char *buf);</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2148-grafcet-as-taskwefts-authoring-surface/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2147: Bao is critical infrastructure now</title>
@@ -631,7 +631,7 @@ void  grafcet_static_free(char *buf);</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2147-bao-is-critical-infrastructure/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2146: Bao is the secret store, cert-auth is the fence</title>
@@ -667,7 +667,7 @@ void  grafcet_static_free(char *buf);</code></pre>
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2146-bao-is-the-secret-store/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2145: Certificate lifetimes, from a risk-based ceiling</title>
@@ -709,7 +709,7 @@ Break-glass leaf (rare, gated)    2 years        on use, then revoke</code></pre
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2145-certificate-lifetimes/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2144: The DR runbook runs, and the CA it needed lands</title>
@@ -745,7 +745,7 @@ Break-glass leaf (rare, gated)    2 years        on use, then revoke</code></pre
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2144-fdb-dr-runbook-first-run/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2143: FDB backup fans out to R2 for off-Fly durability</title>
@@ -781,7 +781,7 @@ Break-glass leaf (rare, gated)    2 years        on use, then revoke</code></pre
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2143-fdb-backup-fans-out-to-r2/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2142: Zero-trust service TLS via OpenBao PKI</title>
@@ -822,7 +822,7 @@ Break-glass leaf (rare, gated)    2 years        on use, then revoke</code></pre
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2142-bao-pki-zerotrust-service-tls/</guid>
-  <pubDate>Wed, 02 Sep 2026 04:34:54 GMT</pubDate>
+  <pubDate>Wed, 02 Sep 2026 05:46:43 GMT</pubDate>
 </item>
 </channel>
 </rss>

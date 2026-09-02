@@ -317,7 +317,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#videoeditreward" id="toc-videoeditreward" class="nav-link" data-scroll-target="#videoeditreward">7. VideoEditReward</a></li>
   <li><a href="#poseeditreward" id="toc-poseeditreward" class="nav-link" data-scroll-target="#poseeditreward">8. PoseEditReward</a></li>
   </ul></li>
-  <li><a href="#reward-model-omniscore" id="toc-reward-model-omniscore" class="nav-link" data-scroll-target="#reward-model-omniscore">Reward model: OmniScore</a></li>
+  <li><a href="#reward-model-editscore-over-qwen3-vl" id="toc-reward-model-editscore-over-qwen3-vl" class="nav-link" data-scroll-target="#reward-model-editscore-over-qwen3-vl">Reward model: EditScore over Qwen3-VL</a></li>
   <li><a href="#construction-status" id="toc-construction-status" class="nav-link" data-scroll-target="#construction-status">Construction status</a></li>
   </ul></li>
   </ul>
@@ -339,7 +339,7 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>MaskScore</strong> is the codename for this technique: mask a region of a latent, reconstruct with the stage’s denoiser, decode to the output domain, score the decoded reconstruction against the decoded original. It parallels EditScore (which scores image edits via a VLM) but operates across all modalities and needs no human annotation, because the original asset IS the ground truth.</p>
 <section id="stage-1-edit-then-score-self-supervised-pretraining" class="level3">
 <h3 class="anchored" data-anchor-id="stage-1-edit-then-score-self-supervised-pretraining">Stage 1: edit, then score (self-supervised pretraining)</h3>
-<p>Each model edits in its native way. Flow-matching models (Wan-VACE, Pixal3D, VoxHammer, talker) noise a region and denoise. Qwen3-Omni edits text via instruction-following generation. The training signal is reconstruction loss against the original. No labels.</p>
+<p>Each model edits in its native way. Flow-matching models (Wan-VACE, Pixal3D, VoxHammer) noise a region and denoise. Qwen3-VL edits text via instruction-following generation. The audio path is a separate stack per RFD 1170 (Qwen3-TTS-12Hz for output, Qwen3-ASR-1.7B for input). The training signal is reconstruction loss against the original. No labels.</p>
 </section>
 <section id="stage-2-construct-reward-signal-self-supervised-scoring" class="level3">
 <h3 class="anchored" data-anchor-id="stage-2-construct-reward-signal-self-supervised-scoring">Stage 2: construct reward signal (self-supervised scoring)</h3>
@@ -349,7 +349,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="stage-3-train-a-reward-model-on-self-supervised-scores" class="level3">
 <h3 class="anchored" data-anchor-id="stage-3-train-a-reward-model-on-self-supervised-scores">Stage 3: train a reward model on self-supervised scores</h3>
 <p>Collect (input, instruction, candidates, scores) tuples from stage 2. Train a reward model to predict the score from the (input, output, instruction) triple, where the “instruction” is a natural-language edit using the See-Through part vocabulary (“edit the mouth to match frame B”, “repose the eyebrow”). This is supervised learning, but the labels come from automated render-and-compare, not humans.</p>
-<p>The reward model replaces the raw metric. EditScore did exactly this for images. The reward model here IS Qwen3-Omni, which scores its own generations during training (OmniScore). No separate VLM.</p>
+<p>The reward model replaces the raw metric. EditScore did exactly this for images. The reward model here IS Qwen3-VL under the EditScore LoRA (RFD 1157) — the same base weights that serve the avatar’s understanding path. Text and image outputs score natively through the VLM; audio and geometric outputs score via the render-and-compare stages 1-2 describe.</p>
 </section>
 <section id="stage-4-rl-fine-tuning-with-the-reward-model" class="level3">
 <h3 class="anchored" data-anchor-id="stage-4-rl-fine-tuning-with-the-reward-model">Stage 4: RL fine-tuning with the reward model</h3>
@@ -414,13 +414,13 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td>Speech</td>
-<td>Talker</td>
-<td>flow-matching vocoder</td>
-<td>decode to waveform</td>
+<td>TTS-12Hz</td>
+<td>autoregressive vocoder</td>
+<td>decode to waveform (RFD 1170)</td>
 </tr>
 <tr class="even">
 <td>Text</td>
-<td>Qwen3-Omni</td>
+<td>Qwen3-VL</td>
 <td>autoregressive generation</td>
 <td>instruction-following edit</td>
 </tr>
@@ -584,13 +584,13 @@ footwear, tail, wings, objects</code></pre>
 <tr class="odd">
 <td>maskscore-bench</td>
 <td>~2,890</td>
-<td>evaluates OmniScore</td>
+<td>evaluates the reward model</td>
 <td>EditReward-Bench</td>
 </tr>
 <tr class="even">
 <td>maskscore-reward-train</td>
 <td>~97k</td>
-<td>trains OmniScore (the reward model)</td>
+<td>trains the reward model (EditScore LoRA over Qwen3-VL)</td>
 <td>EditScore-Reward-Data</td>
 </tr>
 <tr class="odd">
@@ -1178,9 +1178,16 @@ footwear, tail, wings, objects</code></pre>
 </table>
 </section>
 </section>
-<section id="reward-model-omniscore" class="level2">
-<h2 class="anchored" data-anchor-id="reward-model-omniscore">Reward model: OmniScore</h2>
-<p>Qwen3-Omni is the reward model for all eight stubs (OmniScore). It handles text, image, audio, and video natively. For geometric modalities (mesh, keypoints, pose, depth), it scores multi-view Mitsuba 3 renders. The thinker scores its own generations during training, so the reward model and the generator share weights.</p>
+<section id="reward-model-editscore-over-qwen3-vl" class="level2">
+<h2 class="anchored" data-anchor-id="reward-model-editscore-over-qwen3-vl">Reward model: EditScore over Qwen3-VL</h2>
+<p>The reward model is Qwen3-VL under the EditScore LoRA (RFD 1157) — the same base weights that serve the avatar’s understanding path.</p>
+<ul>
+<li>Text and image outputs: Qwen3-VL scores directly.</li>
+<li>Mesh, keypoints, pose, depth: Qwen3-VL scores multi-view Mitsuba 3 renders (<code>sphere_hammersley_sequence</code> views).</li>
+<li>Audio: SOMA face bone rotation agreement (per the SpeechEditReward stub), not Qwen3-VL. Qwen3-VL has no native audio path.</li>
+<li>Video: per-frame render-and-compare, then Qwen3-VL scores the scored frames.</li>
+</ul>
+<p>Reward and generator share weights only on the modalities Qwen3-VL covers natively (text, image). The geometric and audio stubs already score via render-and-compare, so the share-weights claim is not required for them.</p>
 </section>
 <section id="construction-status" class="level2">
 <h2 class="anchored" data-anchor-id="construction-status">Construction status</h2>

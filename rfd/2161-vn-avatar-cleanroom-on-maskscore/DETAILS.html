@@ -547,7 +547,8 @@ ul.task-list li input[type="checkbox"] {
          |
          +-&gt; BusNif -&gt; iox2 (RFD's 2-contract/bus)
          |             |
-         |             +-&gt; Qwen3-Omni worker (Python, thinker + talker)
+         |             +-&gt; Qwen3-VL worker    (Python, EditScore LoRA reward + text)
+         |             +-&gt; Qwen3-TTS-12Hz worker (Python, RFD 1170)
          |             +-&gt; Wan-VACE worker    (Python, background gen)
          |
          +-&gt; LibGodot NIF (RFD 2154's lib_godot_connector 4.5.1)
@@ -584,7 +585,7 @@ kind   u8  = 1 image, 2 audio, 3 text, 4 done
 ts     u64 microseconds since session start
 len    u32 payload bytes
 payload len bytes</code></pre>
-<p>Image frames carry a WebP-encoded 1024x1024 render of the SubViewport. Audio frames carry Opus-encoded 20 ms Qwen3-Omni talker output. Text frames carry the current dialog line (redundant with audio, for captioning). Done frames end a turn.</p>
+<p>Image frames carry a WebP-encoded 1024x1024 render of the SubViewport. Audio frames carry Opus-encoded 20 ms Qwen3-TTS-12Hz output (RFD 1170). Text frames carry the current dialog line (redundant with audio, for captioning). Done frames end a turn.</p>
 </section>
 <section id="speakingfaces---vn-avatar-personas-construction" class="level2">
 <h2 class="anchored" data-anchor-id="speakingfaces---vn-avatar-personas-construction">SpeakingFaces -&gt; vn-avatar-personas construction</h2>
@@ -598,6 +599,11 @@ payload len bytes</code></pre>
     for the MVP; later, generated from the transcript vocabulary)</code></pre>
 <p>Row shape:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>column</th>
@@ -624,7 +630,7 @@ payload len bytes</code></pre>
 <tr class="even">
 <td>voice_tokens</td>
 <td>list[int]</td>
-<td>Qwen3-Omni talker conditioning</td>
+<td>Qwen3-TTS-12Hz CustomVoice conditioning (RFD 1170)</td>
 </tr>
 <tr class="odd">
 <td>persona_grafcet</td>
@@ -669,7 +675,7 @@ payload len bytes</code></pre>
 <tr class="even">
 <td>output_text</td>
 <td>string</td>
-<td>Qwen3-Omni line</td>
+<td>Qwen3-VL line</td>
 </tr>
 <tr class="odd">
 <td>output_audio</td>
@@ -684,7 +690,7 @@ payload len bytes</code></pre>
 <tr class="odd">
 <td>scores</td>
 <td>list[float]</td>
-<td>OmniScore per dimension</td>
+<td>reward-model score per dimension</td>
 </tr>
 <tr class="even">
 <td>task_type</td>
@@ -721,15 +727,16 @@ for r in \
   1-transport/weftspun-studio ; do ...; done
 
 # 3. Fetch SpeakingFaces (huggingface_hub, CC-BY-4.0), download
-#    Qwen3-Omni-30B-A3B-Instruct at NF4 (11.9 GiB), download
-#    Wan-VACE NF4 (8.7 GiB). Total &lt; 24 GiB with swap.
+#    Qwen3-VL-4B-Instruct at fp16 (8.9 GiB) + EditScore LoRA
+#    (270 MB), download Wan-VACE NF4 (8.7 GiB). Total &lt; 24 GiB
+#    with swap; no QAFT round required (per RFD 1173).
 
 # 4. mix vn_avatar.build_personas --subjects 8   (MVP corpus: 8 subjects)
 #    ~30 min on the 3090.
 
 # 5. mix vn_avatar.smoke                        (one turn end to end)
 #    Asserts: WebSocket receives &gt;=1 image frame + &gt;=1 audio frame,
-#    trace row lands with a non-nil OmniScore.
+#    trace row lands with a non-nil reward-model score.
 
 # 6. COMMIT AND PUSH before tear down. Everything not in a git
 #    repo goes with the machine (CLAUDE.md).
@@ -738,7 +745,7 @@ for r in \
 </section>
 <section id="mvp-smoke-in-one-sentence" class="level2">
 <h2 class="anchored" data-anchor-id="mvp-smoke-in-one-sentence">MVP smoke, in one sentence</h2>
-<p>Player types “hello” into the browser, one WebSocket message goes up, one Qwen3-Omni line comes back, the anny-in-godot mouth moves, the SubViewport streams five WebP frames, one MaskScore trace row lands with <code>task_type = dialog_reply</code> and a non-nil OmniScore, one <code>.usda</code> records the scene. Everything after that is expansion.</p>
+<p>Player types “hello” into the browser, one WebSocket message goes up, one Qwen3-VL line comes back, the anny-in-godot mouth moves, the SubViewport streams five WebP frames, one MaskScore trace row lands with <code>task_type = dialog_reply</code> and a non-nil reward-model score, one <code>.usda</code> records the scene. Everything after that is expansion.</p>
 </section>
 <section id="what-is-not-here-deferred-to-follow-on-rfds" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-not-here-deferred-to-follow-on-rfds">What is not here (deferred to follow-on RFDs)</h2>
