@@ -694,6 +694,10 @@ def Scope "Serials"
                 {
                     custom string slug = "abandon-strangler-fig-studio-core"
                 }
+                def "S2170"
+                {
+                    custom string slug = "allosaurus-squad-localization-langs"
+                }
             }
         }
     }
