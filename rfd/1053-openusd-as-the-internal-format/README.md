@@ -1,6 +1,6 @@
 # RFD 1053: OpenUSD as the internal format
 
-**State:** discussion
+**State:** committed
 **Feature:** asset interchange
 
 ## Problem
@@ -25,8 +25,14 @@ See `DETAILS.md` for why layers beat a flat mesh format, the
 internal/transmission boundary, the shared runtime, and what every
 model image must return.
 
+Committed 2026-09-02: CLAUDE.md ratifies the choice as a hard
+constraint (OpenUSD `.usda` for text-editable, ZStandard parquet for
+bulk; zip and gzip banned; usdz exempt). RFD 2169 abandoned the
+Elixir studio core; the `fabric-stage-runtime` Hex package still
+ships OpenUSD to every consumer.
+
 ## Related
 
-RFD 1036 gives the model image convention. RFD 1019 records the Elixir
-core that links this runtime. RFD 1002 records the pipeline stages that
-become layers.
+RFD 1036 gives the model image convention. `fabric-stage-runtime`
+(Hex) links this runtime to every stage. RFD 1002 records the
+pipeline stages that become layers.

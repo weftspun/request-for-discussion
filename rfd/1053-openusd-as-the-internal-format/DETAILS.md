@@ -32,8 +32,11 @@ throws away the composition this RFD exists to keep.
 ## The runtime
 
 `fabric-stage-runtime` ships OpenUSD 26.5.0 as an Elixir Hex package.
-It exposes `include_dir/0`, `lib_dir/0`, and `target/0`, thus the
-Elixir core from RFD 1019 links the same USD build the model images write.
+It exposes `include_dir/0`, `lib_dir/0`, and `target/0`, thus every
+consumer links the same USD build the model images write. (An
+earlier draft named "the Elixir core from RFD 1019" as the consumer;
+RFD 2169 abandoned that plan, and the Hex package survives without
+the studio-core wrapper.)
 
 One USD version across the pipeline matters. A layer written by a
 newer build may not open in an older one.
