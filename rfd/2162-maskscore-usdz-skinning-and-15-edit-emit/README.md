@@ -1,7 +1,7 @@
 # RFD 2162: MaskScore Video-stub USDZ skinning + 15-edit emit
 
 **State:** discussion
-**Feature:** proper 78-joint skin bindings inside the Video-stub USDZ,
+**Feature:** proper 104-joint skin bindings inside the Video-stub USDZ,
 plus emit coverage of the 5 pose edits added alongside the 10 face
 edits under RFD 1173.
 **Scope:** `6-datasource/anny-render-corpus`
@@ -17,8 +17,8 @@ The Video-stub USDZ shipped in the Rung 1.5 first pass writes a dummy
 work happens in `SkelAnimation.blendShapeWeights`. The 5 pose edits
 (head_tilt, head_nod, head_turn, jaw_open_bone, shoulders_up) added
 next need `SkelAnimation.jointTransforms` time samples over the real
-78-joint hierarchy, and skin weights per vertex, or the animation
-plays back as a rest pose.
+104-joint hierarchy (ANNY total; SOMA canonical pose is 78 of those),
+and skin weights per vertex, or the animation plays back as a rest pose.
 
 ## Decision
 

@@ -1,6 +1,6 @@
 # RFD 2152: OR-divergence emit in PLCopen SFC
 
-**State:** parked
+**State:** discussion
 **Feature:** extend `Taskweft.OpenPLC.PLCopen.emit/1` to cover `|>`
 and `|<` markers from the compact GRAFCET DSL
 **Scope:** taskweft (`lib/taskweft/openplc/plcopen.ex`)

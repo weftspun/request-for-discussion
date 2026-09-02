@@ -1,6 +1,6 @@
 # RFD 2156: SafeGDScript compile step for RECTGTN GDScript output
 
-**State:** parked
+**State:** discussion
 **Feature:** compile taskweft-emitted GDScript (RFD 2155) into a
 RISC-V ELF the Godot Sandbox (RFD 2154) loads
 **Scope:** taskweft (a `mix openplc.gd-compile` task) or a sidecar

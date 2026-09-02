@@ -28,12 +28,12 @@ arrives from RFD 1170's presence loop.
     scoring     MaskScore + EditScore       n/a          self-supervised reward
 
 MaskScore constructs edit triples by masking, reconstructing, and
-scoring on decoded outputs. The reward model RL fine-tunes generators
-via EditScore.
+scoring decoded outputs. The reward model RL fine-tunes generators via EditScore.
 
 Reasoning-core swap 2026-09-02: earlier drafts named Qwen3-VL; RFD
-2169 walked that back to Gemma-4-12B (what the workspace runs today
-per RFDs 2164, 2167). RFD 1157 updates in a follow-on.
+2169 walked that back to Gemma-4-12B. VRAM budget in
+[DETAILS.md](DETAILS.md); the eight dataset stubs in
+[MASKSCORE.md](MASKSCORE.md).
 
 ## Related
 
