@@ -718,6 +718,10 @@ def Scope "Serials"
                 {
                     custom string slug = "abandon-rented-compute-rfds"
                 }
+                def "S2176"
+                {
+                    custom string slug = "committed-cites-terminal-index"
+                }
             }
         }
     }
