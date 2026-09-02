@@ -114,7 +114,7 @@ jobs:
       # is pinned. RFD 1124 says why the AST is worth it.
       - run: pip install -r scripts/requirements.txt
       - run: python scripts/check-rfd-structure.py --self-test
-      - run: python scripts/check-rfd-structure.py
+      - run: python scripts/check-rfd-structure.py --changed origin/${{ github.event.pull_request.base.ref || 'main' }}
 
   # THE SITE PAGES ARE GENERATED, so nothing here checks that they are committed --
   # it checks that regenerating them changes nothing. A README edited without the

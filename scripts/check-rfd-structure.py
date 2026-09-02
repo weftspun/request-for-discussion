@@ -524,10 +524,45 @@ def self_test():
     return 0 if ok else 1
 
 
+def _changed_rfd_prefixes(root, base):
+    """RFD directory basenames (`<num>-<slug>`) touched between `base` and HEAD.
+
+    Used by CI to enforce the gate on what a PR modified rather than the
+    whole tree. The full-tree sweep still runs from `check_anti_entropy.py`,
+    so nothing that used to be seen goes unseen; a pre-existing finding just
+    stops blocking every subsequent PR that did not introduce it.
+    """
+    import subprocess
+    try:
+        r = subprocess.run(["git", "-C", root, "diff", "--name-only",
+                            f"{base}...HEAD"],
+                           capture_output=True, text=True, check=True)
+    except subprocess.CalledProcessError:
+        return None
+    prefixes = set()
+    for path in r.stdout.splitlines():
+        if not path.startswith("rfd/"):
+            continue
+        segs = path.split("/")
+        if len(segs) >= 2 and DIR_RE.match(segs[1]):
+            prefixes.add(segs[1])
+    return prefixes
+
+
 if __name__ == "__main__":
     if "--self-test" in sys.argv:
         sys.exit(self_test())
-    found = check(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    found = check(root)
+    if "--changed" in sys.argv:
+        base = sys.argv[sys.argv.index("--changed") + 1]
+        touched = _changed_rfd_prefixes(root, base)
+        if touched is None:
+            print(f"cannot compute changed set against {base!r}; running full check")
+        else:
+            found = [line for line in found
+                     if any(line.startswith(f"{d}/") for d in touched)]
+            print(f"scoped to {len(touched)} changed RFD(s): {sorted(touched)}")
     for line in found:
         print(line)
     print(f"{len(found)} problems")
