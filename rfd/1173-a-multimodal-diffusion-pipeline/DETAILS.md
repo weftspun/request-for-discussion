@@ -1,12 +1,11 @@
 # RFD 1173 details: a multimodal avatar pipeline
 
-The target is Qwen3-VL as the shared VLM: the avatar's text+image
-reasoning core, and — via the EditScore LoRA that RFD 1157 records —
-the reward model that scores its own generations. Audio is a separate
-stack per RFD 1170's presence loop (Qwen3-ASR-1.7B for input,
-Qwen3-TTS-12Hz-1.7B-CustomVoice for output). The shared-backbone
-argument is what closes the MaskScore loop: reward and generator sit
-on the same weights.
+The target is Qwen3-VL as the shared VLM. Two roles sit on the same
+weights: the avatar's text+image reasoning core, and the reward model
+that scores the model's own generations via the EditScore LoRA (RFD
+1157). Audio is a separate stack per RFD 1170's presence loop
+(Qwen3-ASR-1.7B for input, Qwen3-TTS-12Hz-1.7B-CustomVoice for
+output). Shared weights are what close the MaskScore loop.
 
 ## Qwen3-VL (the shared VLM)
 
