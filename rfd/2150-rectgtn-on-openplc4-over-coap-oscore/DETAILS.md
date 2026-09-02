@@ -167,39 +167,39 @@ runtime rather than sharing a static one.
 
 The stage-1 emitter, `Taskweft.OpenPLC.PLCopen`, covers:
 
-- sequential chains of `Step`s linked by transitions
-- AND-divergence + AND-convergence
-- boolean internal variables (from `V` in the compact GRAFCET)
-- `stored` actions setting an internal variable
-- time-delayed transitions (`t/X_i/PT1H` → SFC's `TIME` receptivity)
+1. sequential chains of `Step`s linked by transitions
+2. AND-divergence + AND-convergence
+3. boolean internal variables (from `V` in the compact GRAFCET)
+4. `stored` actions setting an internal variable
+5. time-delayed transitions (`t/X_i/PT1H` → SFC's `TIME` receptivity)
 
 Constructs staged for later, matching RFD 2148's own staging:
 
-- OR-divergence (needs a translation to SFC's simultaneous-divergence
+1. OR-divergence (needs a translation to SFC's simultaneous-divergence
   with mutually-exclusive receptivities)
-- MacroStep and EnclosingStep
-- ForcingOrder (SFC hierarchy jumps; supported by IEC 61131-3 but
+2. MacroStep and EnclosingStep
+3. ForcingOrder (SFC hierarchy jumps; supported by IEC 61131-3 but
   not every runtime)
 
 ## Verification
 
-- Round-trip: a compact GRAFCET fixture lowers to PLCopen XML, that
+1. Round-trip: a compact GRAFCET fixture lowers to PLCopen XML, that
   XML validates against the PLCopen TC6 schema, and the compiled
   program runs on a headless OpenPLC v4 producing the same trace the
   Lean analyser predicted (reachable steps in the order the RECTGTN
   planner would have visited them).
-- Analyser gate (RFD 2149): the compact GRAFCET passes the reachable
+2. Analyser gate (RFD 2149): the compact GRAFCET passes the reachable
   + concurrent-pair check *before* it reaches the emitter; an
   unreachable step fails the load rather than compiling into dead
   code.
-- CoAP+OSCORE: the coordinator publishes a program with a fresh key,
+3. CoAP+OSCORE: the coordinator publishes a program with a fresh key,
   runs it, reads state, stops it; a replayed message with an old
   sequence number is rejected by OSCORE at the runtime side.
 
 ## What is deliberately not here
 
-- A hard dependency on any specific OSCORE library. libcoap-oscore,
+1. A hard dependency on any specific OSCORE library. libcoap-oscore,
   `libocore`, and mbedTLS-OSCORE are all candidates; the RFD closes
   the pattern, not the choice.
-- EDHOC key exchange (staged; static keys today).
-- Compiled program versioning / rollback semantics on the runtime.
+2. EDHOC key exchange (staged; static keys today).
+3. Compiled program versioning / rollback semantics on the runtime.

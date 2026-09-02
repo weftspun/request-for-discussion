@@ -31,9 +31,9 @@ the spec-to-impl obligation table.
 
 ## References
 
-- RFD 2157 (Lean spec), RFD 2158 (self-host blockers)
-- godot-sandbox CI:
+1. RFD 2157 (Lean spec), RFD 2158 (self-host blockers)
+2. godot-sandbox CI:
   `libriscv/godot-sandbox/.github/workflows/build_gdscript_elf.yml`
-- Rust riscv64 target: platform-support docs
+3. Rust riscv64 target: platform-support docs
 
 This RFD was drafted by an AI and read by a human before it shipped.

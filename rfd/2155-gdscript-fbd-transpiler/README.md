@@ -33,8 +33,8 @@ carries the UdonSharp study and the GDScript subset covered stage 1.
 
 ## References
 
-- UdonSharp: https://github.com/vrchat-community/UdonSharp
-- SafeGDScript: https://libriscv.no/blog/godot-sandbox-fortytwo/
-- RFD 2148, 2145, 2149
+1. UdonSharp: https://github.com/vrchat-community/UdonSharp
+2. SafeGDScript: https://libriscv.no/blog/godot-sandbox-fortytwo/
+3. RFD 2148, 2145, 2149
 
 This RFD was drafted by an AI and read by a human before it shipped.

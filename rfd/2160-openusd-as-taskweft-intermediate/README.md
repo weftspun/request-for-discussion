@@ -23,8 +23,8 @@ asset refs for binary payloads.
 
 Prim shape per plan: `/Plan/{Domain, Problem, Network, Deliveries,
 Provenance}`. Under `/Deliveries`, two platforms only:
-- **Godot**: `ElfCpp` / `ElfRust` (asset refs, RFD 2159 cross-check)
-- **VRChat**: `UdonAsm` (inline Udon assembly)
+1. **Godot**: `ElfCpp` / `ElfRust` (asset refs, RFD 2159 cross-check)
+2. **VRChat**: `UdonAsm` (inline Udon assembly)
 Plus `PLCopenXML` (inline XML, source of truth) and optional
 `GDScript` (inline `.gd`). `/Provenance`: emitter versions, hashes,
 timestamps.
@@ -35,7 +35,7 @@ become USD writers; all consumers USD readers.
 
 ## References
 
-- CLAUDE.md archive-format rule + blocklist
-- RFDs 2150, 2148, 2149, 2150, 2152, 2154
+1. CLAUDE.md archive-format rule + blocklist
+2. RFDs 2150, 2148, 2149, 2150, 2152, 2154
 
 This RFD was drafted by an AI and read by a human before it shipped.

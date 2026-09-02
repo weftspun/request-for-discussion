@@ -16,12 +16,12 @@ here; Mixamo is CLAUDE.md-blocklisted.
 **Two-team cleanroom, role per model** (retracted from "one Qwen3-Omni
 does everything"):
 
-- LLM + visual reward -> Qwen3-VL-4B MLX 4-bit + EditScore LoRA
-- TTS voice-clone -> ResembleAI/chatterbox
-- STT -> whisper-small (MLX); VAD -> silero
-- Viseme -> cleanroom small classifier
-- Renderer -> libgodot in BEAM (RFD 2154); Body -> ANNY + SOMA
-- Locations -> `6-datasource/{kenney,thebasemesh,quaternius}-stage`
+1. LLM + visual reward -> Qwen3-VL-4B MLX 4-bit + EditScore LoRA
+2. TTS voice-clone -> ResembleAI/chatterbox
+3. STT -> whisper-small (MLX); VAD -> silero
+4. Viseme -> cleanroom small classifier
+5. Renderer -> libgodot in BEAM (RFD 2154); Body -> ANNY + SOMA
+6. Locations -> `6-datasource/{kenney,thebasemesh,quaternius}-stage`
 
 Full retraction trail, stack table, Mac-mini smoke in `DETAILS.md`.
 

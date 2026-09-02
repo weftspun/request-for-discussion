@@ -78,13 +78,13 @@ HTN, so this RFD does not touch `lower/1`. The two lower directions
 
 ## Verification
 
-- `blocks_get_or.grafcet.jsonld` under `test/fixtures/grafcet/`
+1. `blocks_get_or.grafcet.jsonld` under `test/fixtures/grafcet/`
   emits an SFC with two mutually exclusive transitions out of `find`,
   two convergence transitions into `mark_done`, and no `<ST>` /
   `<LD>` / `<IL>` bodies (the BLOCKLIST rows still hold).
-- A hand-authored non-exclusive fixture is refused by the emitter
+2. A hand-authored non-exclusive fixture is refused by the emitter
   with the offending pair cited.
-- The emitted XML validates against the PLCopen TC6 schema.
+3. The emitted XML validates against the PLCopen TC6 schema.
 
 ## Staging within this RFD
 

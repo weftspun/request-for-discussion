@@ -101,9 +101,9 @@ CLAUDE.md's "one live goal manifest" rule.
 
 ## Verification
 
-- `lake build` in `3-interactor/taskweft-grafcet-static` builds the
+1. `lake build` in `3-interactor/taskweft-grafcet-static` builds the
   Lean library and the smoke-test executable.
-- `./.lake/build/bin/grafcet_static` runs the blocks_get_or fixture
+2. `./.lake/build/bin/grafcet_static` runs the blocks_get_or fixture
   (RFD 2148's OR-divergence worked example) and prints:
 
       reachable: [init, find, pickup_from_table, unstack, mark_done]
@@ -112,7 +112,7 @@ CLAUDE.md's "one live goal manifest" rule.
   The concurrent pair correctly flags that the two OR branches share
   the same receptivity; an author-visible symptom of a chart where
   the AGRAFE tool would say "not mutually exclusive".
-- When the Lean-produced shared library lands, the Elixir NIF's
+1. When the Lean-produced shared library lands, the Elixir NIF's
   `analyse/1` returns the same JSON, wired into taskweft's loader
   gate.
 

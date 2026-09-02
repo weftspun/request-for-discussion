@@ -34,7 +34,7 @@ Coordination rides linking: Elixir NIF → LibGodot → Godot Sandbox
 
 ## References
 
-- OpenPLC Runtime v4 (MIT), Godot Sandbox (`libriscv/godot-sandbox`)
-- RFD 2148, 2144, 2146 (parked), 2149
+1. OpenPLC Runtime v4 (MIT), Godot Sandbox (`libriscv/godot-sandbox`)
+2. RFD 2148, 2144, 2146 (parked), 2149
 
 This RFD was drafted by an AI and read by a human before it shipped.
