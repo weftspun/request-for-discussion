@@ -1533,6 +1533,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#decision-199" id="toc-decision-199" class="nav-link" data-scroll-target="#decision-199">Decision</a></li>
   <li><a href="#related-178" id="toc-related-178" class="nav-link" data-scroll-target="#related-178">Related</a></li>
   </ul></li>
+  <li><a href="#rfd-2171-the-atelier-workshop-shuttle-vocabulary" id="toc-rfd-2171-the-atelier-workshop-shuttle-vocabulary" class="nav-link" data-scroll-target="#rfd-2171-the-atelier-workshop-shuttle-vocabulary">RFD 2171: The atelier-workshop / shuttle vocabulary</a>
+  <ul class="collapse">
+  <li><a href="#problem-197" id="toc-problem-197" class="nav-link" data-scroll-target="#problem-197">Problem</a></li>
+  <li><a href="#decision-200" id="toc-decision-200" class="nav-link" data-scroll-target="#decision-200">Decision</a></li>
+  <li><a href="#related-179" id="toc-related-179" class="nav-link" data-scroll-target="#related-179">Related</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -6221,6 +6227,29 @@ void  grafcet_static_free(char *buf);</code></pre>
 <section id="related-178" class="level2">
 <h2 class="anchored" data-anchor-id="related-178">Related</h2>
 <p>Spine: urn:oid:1.3.6.1.4.1.66606.1.1.1173 (MaskScore). Applies to: urn:oid:1.3.6.1.4.1.66606.1.2.2164 (Speech stub). Squad Steam page: https://store.steampowered.com/app/393380/Squad/ Squad Wiki translation portal: https://squad.fandom.com/wiki/Squad_Wiki:Translation_portal</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2171-the-atelier-workshop-shuttle-vocabulary" class="level1">
+<h1>RFD 2171: The atelier-workshop / shuttle vocabulary</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2171</code></p>
+<p><strong>State:</strong> committed <strong>Feature:</strong> naming the pipeline and the deliverable <strong>Scope:</strong> public-facing prose, RFD titles, changelog entries</p>
+<section id="problem-197" class="level2">
+<h2 class="anchored" data-anchor-id="problem-197">Problem</h2>
+<p>The public tagline names two things: the pipeline that makes characters and the deliverable that leaves it. “Workshop” alone was doing both jobs and reads as generic. <code>nx-shuttle</code> already uses “shuttle” (carrying a graph across to another runtime, weft-across- warp). Without a settled vocabulary, prose drifts between studio, pipeline, workshop, atelier.</p>
+</section>
+<section id="decision-200" class="level2">
+<h2 class="anchored" data-anchor-id="decision-200">Decision</h2>
+<p>Two words, one each:</p>
+<ul>
+<li><strong>atelier-workshop</strong> names the pipeline. The compound keeps the elegance of the French loanword for readers who know it, and the plain-English gloss for those who don’t. Used in RFD titles, changelogs, and public prose whenever the process is meant. RFD 2136’s 10-rung gacha ladder is the concrete atelier-workshop.</li>
+<li><strong>shuttle</strong> names what leaves it – a portable VRM (rung 6 of RFD 2136). Retained without change; <code>nx-shuttle</code> already uses it for the same weft-across-warp metaphor. The two uses do not conflict: one shuttles a character out, the other shuttles a graph across.</li>
+</ul>
+<p>Never use “atelier” alone in shipping prose (loanword, pretentious without the gloss). “Workshop” alone is permitted where context already fixes it (the 2021 <code>character-workshop</code> decision doc stays).</p>
+</section>
+<section id="related-179" class="level2">
+<h2 class="anchored" data-anchor-id="related-179">Related</h2>
+<p>Spine: chibifire.com public tagline; RFD 2136 (gacha critical path). Applies to: this file and every subsequent public README.</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 

@@ -32,6 +32,7 @@
   {
     "listing": "/pages/rfd.html",
     "items": [
+      "/rfd/2171-atelier-workshop-shuttle-vocabulary/index.html",
       "/rfd/2170-allosaurus-squad-localization-langs/index.html",
       "/rfd/2169-abandon-strangler-fig-studio-core/index.html",
       "/rfd/2168-retract-wholebody-detector-keep-renderer/index.html",
