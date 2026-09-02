@@ -5002,26 +5002,26 @@ be it   a person supplies motion  friend   a model supplies it</code></pre>
 <section id="rfd-1173-a-multimodal-avatar-pipeline" class="level1">
 <h1>RFD 1173: A multimodal avatar pipeline</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.1.1173</code></p>
-<p><strong>State:</strong> discussion <strong>Feature:</strong> omni-modal MaskScore construction and real-time avatar <strong>Scope:</strong> Qwen3-VL, Wan-VACE, MaskScore, Pixal3D/VoxHammer, EditScore</p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> omni-modal MaskScore construction and real-time avatar <strong>Scope:</strong> Gemma-4-12B, Wan-VACE, MaskScore, Pixal3D/VoxHammer, EditScore</p>
 <section id="problem-159" class="level2">
 <h2 class="anchored" data-anchor-id="problem-159">Problem</h2>
 <p>A real-time avatar needs a text+image reasoning core that doubles as the reward model for its own outputs. The audio path is separate per RFD 1170. EditScore is functionally complete in the NAND-gate sense: every generation task reduces to an edit, so one reward covers every modality.</p>
 </section>
 <section id="decision-161" class="level2">
 <h2 class="anchored" data-anchor-id="decision-161">Decision</h2>
-<p>Qwen3-VL is the shared VLM: it serves both the avatar’s text+image reasoning path and, as EditScore’s own base with a LoRA (RFD 1157), the reward model that scores its own generations. Wan-VACE fills the image-generation slot Qwen3-VL leaves open. Audio arrives from RFD 1170’s presence loop.</p>
-<pre><code>vlm         Qwen3-VL                    Apache 2.0   text + image → text
+<p>Gemma-4-12B (QAT Q4_0, Apache-2.0) is the shared VLM: it serves both the avatar’s text+image reasoning path and, as EditScore’s fine-tune base (RFD 1157), the reward model that scores its own generations. Wan-VACE fills the image-generation slot Gemma leaves open. Audio arrives from RFD 1170’s presence loop.</p>
+<pre><code>vlm         Gemma-4-12B (QAT Q4_0)      Apache 2.0   text + image → text
 image gen   Wan-VACE                    Apache 2.0   text/image → image
 3D stage    Pixal3D → VoxHammer         Apache 2.0   image → mesh
 audio in    Qwen3-ASR-1.7B              Apache 2.0   waveform → text (RFD 1170)
 audio out   Qwen3-TTS-12Hz-CustomVoice  Apache 2.0   text → waveform (RFD 1170)
 scoring     MaskScore + EditScore       n/a          self-supervised reward</code></pre>
-<p>MaskScore constructs edit triples by masking, reconstructing, and scoring on decoded outputs. The reward model RL fine-tunes the generators via EditScore.</p>
-<p>VRAM budget, sweep results, and the LLaDA retraction are in <a href="DETAILS.md">DETAILS.md</a>. The eight MaskScore dataset stubs are in <a href="MASKSCORE.md">MASKSCORE.md</a>.</p>
+<p>MaskScore constructs edit triples by masking, reconstructing, and scoring on decoded outputs. The reward model RL fine-tunes generators via EditScore.</p>
+<p>Reasoning-core swap 2026-09-02: earlier drafts named Qwen3-VL; RFD 2169 walked that back to Gemma-4-12B (what the workspace runs today per RFDs 2164, 2167). RFD 1157 updates in a follow-on.</p>
 </section>
 <section id="related-157" class="level2">
 <h2 class="anchored" data-anchor-id="related-157">Related</h2>
-<p>RFD 1157, RFD 1166, RFD 1169, RFD 1170, RFD 1171, RFD 1172.</p>
+<p>RFD 1157, RFD 1166, RFD 1169, RFD 1170, RFD 1171, RFD 1172, RFD 2169.</p>
 </section>
 </section>
 <section id="rfd-1174-publish-the-security-rules-against-soc-2-and-iso-27001" class="level1">

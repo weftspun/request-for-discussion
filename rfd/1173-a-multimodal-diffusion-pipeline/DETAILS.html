@@ -291,7 +291,7 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#rfd-1173-details-a-multimodal-avatar-pipeline" id="toc-rfd-1173-details-a-multimodal-avatar-pipeline" class="nav-link active" data-scroll-target="#rfd-1173-details-a-multimodal-avatar-pipeline">RFD 1173 details: a multimodal avatar pipeline</a>
   <ul class="collapse">
-  <li><a href="#qwen3-vl-the-shared-vlm" id="toc-qwen3-vl-the-shared-vlm" class="nav-link" data-scroll-target="#qwen3-vl-the-shared-vlm">Qwen3-VL (the shared VLM)</a></li>
+  <li><a href="#gemma-4-12b-the-shared-vlm" id="toc-gemma-4-12b-the-shared-vlm" class="nav-link" data-scroll-target="#gemma-4-12b-the-shared-vlm">Gemma-4-12B (the shared VLM)</a></li>
   <li><a href="#wan-vace-image-and-video-generation" id="toc-wan-vace-image-and-video-generation" class="nav-link" data-scroll-target="#wan-vace-image-and-video-generation">Wan-VACE (image and video generation)</a></li>
   <li><a href="#pixal3dvoxhammer-the-3d-stage" id="toc-pixal3dvoxhammer-the-3d-stage" class="nav-link" data-scroll-target="#pixal3dvoxhammer-the-3d-stage">Pixal3D→VoxHammer (the 3D stage)</a></li>
   <li><a href="#editscore-evaluation" id="toc-editscore-evaluation" class="nav-link" data-scroll-target="#editscore-evaluation">EditScore evaluation</a></li>
@@ -312,25 +312,25 @@ ul.task-list li input[type="checkbox"] {
 <section id="rfd-1173-details-a-multimodal-avatar-pipeline" class="level1">
 <h1>RFD 1173 details: a multimodal avatar pipeline</h1>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
-<p>The target is Qwen3-VL as the shared VLM. Two roles sit on the same weights: the avatar’s text+image reasoning core, and the reward model that scores the model’s own generations via the EditScore LoRA (RFD 1157). Audio is a separate stack per RFD 1170’s presence loop (Qwen3-ASR-1.7B for input, Qwen3-TTS-12Hz-1.7B-CustomVoice for output). Shared weights are what close the MaskScore loop.</p>
-<section id="qwen3-vl-the-shared-vlm" class="level2">
-<h2 class="anchored" data-anchor-id="qwen3-vl-the-shared-vlm">Qwen3-VL (the shared VLM)</h2>
-<p>Qwen/Qwen3-VL-4B-Instruct. Apache 2.0, open weights, dense (not MoE), text and image input, text output. 8.9 GB fp16 measured on the 3090 per RFD 2161; fits 24 GiB comfortably at fp16 without quantization.</p>
-<p>EditScore (RFD 1157) is a LoRA over Qwen3-VL, so the same base weights serve the avatar’s understanding path and the reward model that scores its own generations. The share-backbone argument is what Qwen3-VL carries into RFD 1173 unchanged: the reward model IS the base VLM under a LoRA adapter, not a separate model.</p>
-<p>The audio path is orthogonal and lives in RFD 1170: Qwen3-ASR-1.7B on device for input, Qwen3-TTS-12Hz-1.7B-CustomVoice on host for output. Neither passes through Qwen3-VL.</p>
+<p>The target is Gemma-4-12B as the shared VLM. Two roles sit on the same weights: the avatar’s text+image reasoning core, and the reward model that scores the model’s own generations via the EditScore fine-tune (RFD 1157). Audio is a separate stack per RFD 1170’s presence loop (Qwen3-ASR-1.7B for input, Qwen3-TTS-12Hz-1.7B- CustomVoice for output). Shared weights are what close the MaskScore loop.</p>
+<section id="gemma-4-12b-the-shared-vlm" class="level2">
+<h2 class="anchored" data-anchor-id="gemma-4-12b-the-shared-vlm">Gemma-4-12B (the shared VLM)</h2>
+<p>google/gemma-4-12B-it-qat-q4_0-gguf. Apache 2.0, open weights, dense (not MoE), text and image input, text output. Ships as a true QAT Q4_0 checkpoint (~7 GB) directly from Google, so QAFT is upstream rather than something this workspace has to produce (RFD 1027’s QAFT-first rule; RFD 2139’s survey established Gemma is the only current-stack model with a true QAFT release). Fits 24 GiB with plenty of activation headroom.</p>
+<p>EditScore (RFD 1157) fine-tunes on top of Gemma, so the same base weights serve the avatar’s understanding path and the reward model that scores its own generations. The share-backbone argument survives the Qwen3-VL -&gt; Gemma-4-12B swap because it turns on share-backbone, not on which backbone: the reward model IS the base VLM under a fine-tune, not a separate model.</p>
+<p>The audio path is orthogonal and lives in RFD 1170: Qwen3-ASR-1.7B on device for input, Qwen3-TTS-12Hz-1.7B-CustomVoice on host for output. Neither passes through the VLM.</p>
 <ol type="1">
-<li>https://github.com/QwenLM/Qwen3-VL</li>
-<li>https://huggingface.co/Qwen/Qwen3-VL-4B-Instruct</li>
+<li>https://huggingface.co/google/gemma-4-12B-it-qat-q4_0-gguf</li>
+<li>https://github.com/QwenLM/Qwen3-VL (the retracted earlier choice)</li>
 </ol>
 </section>
 <section id="wan-vace-image-and-video-generation" class="level2">
 <h2 class="anchored" data-anchor-id="wan-vace-image-and-video-generation">Wan-VACE (image and video generation)</h2>
-<p><strong>Qwen3-VL does not generate images.</strong> Its outputs are text; it understands images as input but produces none. Wan-VACE fills the image and video generation slot Qwen3-VL leaves open. ~14B params, ~28 GB bf16, ~8.7 GB NF4.</p>
+<p><strong>Gemma-4-12B does not generate images.</strong> Its outputs are text; it takes images as input but produces none. Wan-VACE fills the image and video generation slot Gemma leaves open. ~14B params, ~28 GB bf16, ~8.7 GB NF4.</p>
 <p>Wan-VACE is the generator that produces the images the 3D stage consumes and the images MaskScore’s image-editing stubs edit and score.</p>
 </section>
 <section id="pixal3dvoxhammer-the-3d-stage" class="level2">
 <h2 class="anchored" data-anchor-id="pixal3dvoxhammer-the-3d-stage">Pixal3D→VoxHammer (the 3D stage)</h2>
-<p>Wan-VACE generates and edits images and video; the 3D stage turns those images into meshes. Pixal3D produces a coarse textured mesh from an image, VoxHammer refines it. Qwen3-VL-4B fp16 (~8.9 GiB) leaves ~15 GiB of the 3090’s budget for the 3D stage; with Wan-VACE NF4 (~8.7 GiB) swapped in for generation and out for the 3D stage, total peak occupancy is ~17.6 GiB and no QAFT is required.</p>
+<p>Wan-VACE generates and edits images and video; the 3D stage turns those images into meshes. Pixal3D produces a coarse textured mesh from an image, VoxHammer refines it. Gemma-4-12B Q4_0 (~7 GB) leaves ~17 GiB of the 3090’s budget for the 3D stage; with Wan-VACE NF4 (~8.7 GiB) swapped in for generation and out for the 3D stage, total peak occupancy is ~15.7 GiB.</p>
 </section>
 <section id="editscore-evaluation" class="level2">
 <h2 class="anchored" data-anchor-id="editscore-evaluation">EditScore evaluation</h2>
@@ -360,16 +360,16 @@ ul.task-list li input[type="checkbox"] {
 <thead>
 <tr class="header">
 <th>component</th>
-<th style="text-align: right;">fp16</th>
-<th style="text-align: right;">NF4</th>
+<th style="text-align: right;">bf16</th>
+<th style="text-align: right;">Q4/NF4</th>
 <th style="text-align: center;">co-resident?</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Qwen3-VL-4B (dense)</td>
-<td style="text-align: right;">~8.9 GB</td>
-<td style="text-align: right;">~2.9 GB</td>
+<td>Gemma-4-12B (VLM)</td>
+<td style="text-align: right;">~24 GB</td>
+<td style="text-align: right;">~7 GB</td>
 <td style="text-align: center;">always</td>
 </tr>
 <tr class="even">
@@ -380,14 +380,14 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td>Pixal3D</td>
-<td style="text-align: right;">TBD</td>
-<td style="text-align: right;">TBD</td>
+<td style="text-align: right;">24.0 GB</td>
+<td style="text-align: right;">n/a</td>
 <td style="text-align: center;">swapped</td>
 </tr>
 <tr class="even">
 <td>VoxHammer</td>
-<td style="text-align: right;">TBD</td>
-<td style="text-align: right;">TBD</td>
+<td style="text-align: right;">0.0 GB</td>
+<td style="text-align: right;">n/a</td>
 <td style="text-align: center;">swapped</td>
 </tr>
 <tr class="odd">
@@ -398,12 +398,12 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<p>Qwen3-VL-4B fp16 (~8.9 GB) is the RFD 2161 Mac mini measurement and matches the model card’s published size. On the 3090’s 24 GiB, Qwen3-VL-4B fp16 + Wan-VACE NF4 co-resident totals ~17.6 GiB — comfortable, no QAFT required. The condition 5 quantization argument that earlier drafts needed for a 30B MoE does not apply here.</p>
-<p>Qwen3-VL-8B is the reserved fallback if 4B’s reasoning falls short: ~16 GB fp16, ~6.75 GiB NF4 measured (RFD 1163). Either variant leaves budget for a co-resident 3D stage in NF4.</p>
+<p>Gemma-4-12B Q4_0 (~7 GB) is Google’s own QAT release. On the 3090’s 24 GiB, Gemma-4-12B Q4_0 + Wan-VACE NF4 co-resident totals ~15.7 GiB – comfortable, no workspace-side quantization required.</p>
+<p>An earlier draft named Qwen3-VL-4B (fp16 ~8.9 GB) as the VLM; the Qwen3-VL-8B fp16 fallback (~16 GB) was also on the shortlist. Both retracted per RFD 2169. The reason is not tier – Qwen3-VL fits – it is that Gemma-4-12B has a true upstream QAFT release and Qwen does not, and the workspace standardized on QAFT-first (RFD 1027).</p>
 </section>
 <section id="why-not-llada" class="level2">
 <h2 class="anchored" data-anchor-id="why-not-llada">Why not LLaDA</h2>
-<p>LLaDA-o NF4 on the 3090 produced 64 tokens in 5.76 s at steps=128, 25x slower than the RFD 1170 presence-loop sub-500ms target. Block diffusion iterates to convergence across the full block; an autoregressive VLM streams from the first forward pass. The family (LLaDA-o, iLLaDA, LLaDA-1.5) is blocklisted. The MaskScore technique transfers to Qwen3-VL without change. Masking operates on latents, not on the model that fills them.</p>
+<p>LLaDA-o NF4 on the 3090 produced 64 tokens in 5.76 s at steps=128, 25x slower than the RFD 1170 presence-loop sub-500ms target. Block diffusion iterates to convergence across the full block; an autoregressive VLM streams from the first forward pass. The family (LLaDA-o, iLLaDA, LLaDA-1.5) is blocklisted. The MaskScore technique transfers to Gemma-4-12B (or any VLM) without change. Masking operates on latents, not on the model that fills them.</p>
 
 
 </section>
