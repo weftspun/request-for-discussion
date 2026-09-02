@@ -1184,3 +1184,54 @@ change — the masking operates on latents, not on the model that fills them.
 `sweep_quality_lladao.py`, and `measure_context_vram.py` stay in
 `llada-diffusion-lm` as the evidence behind this row. The numbers they produced
 are the reason LLaDA is here.
+
+### RunPod is blocklisted as rented compute — no budget
+
+The operator does not have money for per-invocation or per-second GPU
+billing. RunPod Serverless is capable technically (endpoint-queue-based,
+cold-start-per-request, matches the shape a batched MaskScore corpus
+scoring pass would take), and its 72B EditScore fit was priced at ~$150-250
+for the full three-dataset pass. That is money the workspace does not have.
+
+The credential path is also stalled: the RunPod-token → OpenBao migration
+cannot complete without a client cert signed by "chibifire.com Intermediate
+CA v2" that nobody has minted. So even a small trial run cannot land under
+production hygiene.
+
+**What is blocked.** RunPod as an execution target for corpus generation,
+model serving, or any interactor path. The `transport-runpod` interactor
+(v-sekai-fabric) is archived alongside this row.
+
+**What replaces it.** The local desktop GPU (RTX 3090) for smoke tests,
+training, and interaction. Corpus generation waits until a machine the
+operator owns can carry it, or until Condition 5 of the data-hygiene rule
+is revisited to permit NF4 corpus generation on the 3090 (a decision, not
+a measurement, that would need its own retraction here).
+
+`spot-broker` (managed Vast/RunPod deploys) is archived alongside this
+row.
+
+### Vast.ai is blocklisted as rented compute — no budget
+
+Same reason. The operator does not have money for per-hour spot rentals.
+Vast.ai was the workspace's active rented-compute path (`spot-broker`
+service, `vast-market-snapshots` corpus of pricing data, three ETNF
+Parquet snapshots recording ~40% churn per ~12 min at the hot
+$0.18-0.22 band). Neither survives the funding constraint.
+
+The Vast.ai pass this row retracts was estimated at ~$60-115 for a 115
+GPU-hour EditScore-72B corpus scoring run — cheaper than RunPod's
+per-second billing but still money the workspace does not have.
+
+**What is blocked.** Vast.ai as an execution target for corpus
+generation, model serving, or any interactor path.
+
+**What replaces it.** Same as RunPod above: local desktop GPU only.
+Corpus generation is the load-bearing gap; it waits for owned compute
+or a revised precision policy.
+
+`spot-broker` and `vast-market-snapshots` are archived alongside this
+row. The HF dataset `chibifire/vast-market-snapshots` stays as
+historical record of Vast pricing during the period the workspace
+observed it — the numbers stopped being actionable when the funding
+did.

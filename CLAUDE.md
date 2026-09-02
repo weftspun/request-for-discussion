@@ -37,20 +37,16 @@ recurring failure modes and the guards that catch them).
 
 ## Hard Constraints
 
-**Compute.** The local desktop GPU is available for compute.
+**Compute.** The local desktop GPU is the only compute. Rented GPU providers
+are blocklisted (see the RunPod and Vast.ai rows below): no budget for per-hour
+or per-invocation billing, and no way to run corpora on machines the operator
+does not own.
 
-Rented GPU work runs on Vast.ai: please tear down after use, then
-**double-check** the tear down, because anything not in a git repo goes with the
-machine — so if it matters, it is committed and pushed before tear down.
-
-Tear down was not only a cost control; it was a **forcing function for
-committing**. A rented box that disappears at the end of the day makes "push
-before you stop" automatic. A local GPU never disappears, so results can sit
-uncommitted on one desk indefinitely and nothing reports it.
-
-So the commit discipline now stands on its own rather than being enforced by the
-hardware going away: work that matters is pushed when it is produced, not when
-the machine is about to vanish.
+The commit discipline the earlier rented-compute paragraph rested on — push
+before you stop, because the box vanishes — still holds. It stands on its own
+now rather than being enforced by hardware going away: work that matters is
+pushed when it is produced, not when the machine is about to vanish. Nothing
+reports uncommitted results on a local GPU.
 
 **Archive formats.** OpenUSD `.usda` if we want to remain text editable and ZStandard
 parquet for bulk storage. **zip is not acceptable**, and neither is gzip;
@@ -488,6 +484,8 @@ Sources excluded from corpora, with the reason:
 | **Mermaid** as a published-figure format           | the layout solver owns the picture and the house sheet cannot reach it — hand-authored inline SVG instead, see below                                             |
 | **the RTX 3090** as a corpus generation host       | 24 GiB forces sequential offload at published precision, 14.7 min per image, and condition 5 bars the quantised fit — smoke tests and training exempt, see below |
 | **LLaDA** (LLaDA-o, iLLaDA, LLaDA-1.5)             | block diffusion measured 5.76s / 64 tokens — 25x too slow for real-time avatar; RFD 1170 presence loop targets sub-500 ms — see below                            |
+| **RunPod** as rented compute                       | no budget for per-invocation billing; `spot-broker` and `transport-runpod` archived alongside this row — see below                                               |
+| **Vast.ai** as rented compute                      | no budget for per-hour billing; `spot-broker` and `vast-market-snapshots` archived alongside this row — see below                                                |
 
 The cosplay photo library may be used for **validation only**, never training.
 
