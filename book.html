@@ -48,9 +48,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-ebf6027466d64ce25e353d53063d38f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -2204,18 +2204,18 @@ weight GB    = parameters in billions x 2</code></pre>
 <section id="rfd-1027-gpu-tier-per-model" class="level1">
 <h1>RFD 1027: GPU tier per model</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.1.1027</code></p>
-<p><strong>State:</strong> discussion <strong>Feature:</strong> capacity planning</p>
+<p><strong>State:</strong> committed <strong>Feature:</strong> capacity planning</p>
 <section id="problem-23" class="level2">
 <h2 class="anchored" data-anchor-id="problem-23">Problem</h2>
 <p>This RFD first asked whether every model fits one device at once. It summed 116.45 GB against a 128 GB DGX Spark, found about 10 GB of headroom, and called the margin too small.</p>
-<p>That question came from hardware this project does not have. There is no DGX. Replicate runs each model in its own container on its own GPU, thus two models never compete for one device.</p>
-<p>The old finding was an artifact. This RFD replaces it.</p>
+<p>That question came from hardware this project does not have. CLAUDE.md now names the local desktop GPU as the only compute; each model runs in its own container per RFD 1036, so two never compete for one device. The old finding was an artifact.</p>
 </section>
 <section id="decision-26" class="level2">
 <h2 class="anchored" data-anchor-id="decision-26">Decision</h2>
 <p>Size each model on its own. The question is which GPU tier one model needs, and not whether a set of models co-resides.</p>
 <p>Two numbers decide the tier: the weights RFD 1026 gives per model, and the activation peak, which depends on the resolution and the batch size.</p>
-<p>Every model in the catalog reaches a 24 GB card, once staged loading frees each stage’s weights before the next stage loads. An RTX 4090 is a real, supported 24 GB tier, not only a hypothetical one. See <code>DETAILS.md</code> for the tier table, the staging reasoning, the quantization cost tradeoff, and the resulting checklist.</p>
+<p>Every model in the catalog reaches a 24 GB card. The workspace standardizes on <strong>QAFT 4-bit</strong> as the default weights format where upstream ships one (Gemma-4-12B QAT Q4_0 is the canonical example and reasoning core per RFD 2169). Models without a QAFT release run at published precision (bf16) with staged loading. See <code>DETAILS.md</code>.</p>
+<p>Committed 2026-09-02: 24-GB tier and QAFT-first rule settled. CLAUDE.md retracted Condition 5 the same day (precision is not a corpus hazard), so quantised weights are permitted for corpus generation, not only inference.</p>
 </section>
 <section id="related-22" class="level2">
 <h2 class="anchored" data-anchor-id="related-22">Related</h2>
@@ -2353,23 +2353,23 @@ weight GB    = parameters in billions x 2</code></pre>
 <section id="rfd-1036-model-packaging-convention" class="level1">
 <h1>RFD 1036: Model packaging convention</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.1.1036</code></p>
-<p><strong>State:</strong> discussion <strong>Feature:</strong> model packaging</p>
+<p><strong>State:</strong> committed <strong>Feature:</strong> model packaging</p>
 <section id="problem-31" class="level2">
 <h2 class="anchored" data-anchor-id="problem-31">Problem</h2>
-<p>The DGX API ran each model through its own adapter. Each adapter carried its own weight loader, its own CUDA pin, and its own output writer. There is no DGX now, and none of those adapters run anywhere.</p>
-<p>This RFD first selected Replicate Cog, and <code>DETAILS.md</code> records why that choice was withdrawn.</p>
+<p>The DGX API ran each model through its own adapter, each with its own weight loader, CUDA pin, and output writer. There is no DGX now. This RFD first selected Cog; <code>DETAILS.md</code> records why it was withdrawn.</p>
 </section>
 <section id="decision-34" class="level2">
 <h2 class="anchored" data-anchor-id="decision-34">Decision</h2>
 <p>Package each model as a plain Docker image that serves HTTP.</p>
-<p>No Cog. Cog wraps a <code>Predictor</code> class and builds an image around it, and that image expects Replicate’s own runtime. Neither this box’s own worker nor a vast.ai instance needs that. Each one starts a container and maps a port, and nothing more.</p>
+<p>No Cog. Cog wraps a <code>Predictor</code> class and builds an image around it, and that image expects Replicate’s own runtime. The local worker starts a container and maps a port, and nothing more.</p>
 <p>Each model gets a folder under <code>decisions/</code>, and each folder holds this RFD, a <code>Dockerfile</code>, a <code>server.py</code>, and a <code>test_input.json</code>.</p>
 <p>Name the folder for its model, and never for a package format. A format is a decision this RFD already changed once. A folder name that carries one goes stale on the next change.</p>
-<p>See <code>DETAILS.md</code> for the target hardware, the packaging rules, the two-stage Dockerfile, the file list, the composite-model convention, and which folders are not converted yet.</p>
+<p>See <code>DETAILS.md</code> for target, rules, the two-stage Dockerfile, files, composites, and unconverted folders.</p>
+<p>Committed 2026-09-02: the convention has been in force for months; CLAUDE.md closes compute (local desktop GPU only; RunPod/Vast.ai blocklisted). Earlier rental-target framing retracted in DETAILS.md.</p>
 </section>
 <section id="related-30" class="level2">
 <h2 class="anchored" data-anchor-id="related-30">Related</h2>
-<p>RFD 1016 lists the models. RFD 1026 gives the memory. RFD 1027 gives the GPU tier. RFD 1037 gives the composite convention. RFD 1053 gives the asset format. RFD 1028 gates the license.</p>
+<p>RFD 1016 lists the models. RFD 1026 gives the memory. RFD 1027 the GPU tier. RFD 1037 the composite convention. RFD 1053 the asset format. RFD 1028 gates the license.</p>
 </section>
 </section>
 <section id="rfd-1037-composite-models-as-taskweft-domains" class="level1">

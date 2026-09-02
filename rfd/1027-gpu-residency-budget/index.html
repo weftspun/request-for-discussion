@@ -47,9 +47,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-ebf6027466d64ce25e353d53063d38f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -323,14 +323,14 @@ ul.task-list li input[type="checkbox"] {
 <section id="problem" class="level2">
 <h2 class="anchored" data-anchor-id="problem">Problem</h2>
 <p>This RFD first asked whether every model fits one device at once. It summed 116.45 GB against a 128 GB DGX Spark, found about 10 GB of headroom, and called the margin too small.</p>
-<p>That question came from hardware this project does not have. There is no DGX. Replicate runs each model in its own container on its own GPU, thus two models never compete for one device.</p>
-<p>The old finding was an artifact. This RFD replaces it.</p>
+<p>That question came from hardware this project does not have. CLAUDE.md now names the local desktop GPU as the only compute; each model runs in its own container per RFD 1036, so two never compete for one device. The old finding was an artifact.</p>
 </section>
 <section id="decision" class="level2">
 <h2 class="anchored" data-anchor-id="decision">Decision</h2>
 <p>Size each model on its own. The question is which GPU tier one model needs, and not whether a set of models co-resides.</p>
 <p>Two numbers decide the tier: the weights RFD 1026 gives per model, and the activation peak, which depends on the resolution and the batch size.</p>
-<p>Every model in the catalog reaches a 24 GB card, once staged loading frees each stage’s weights before the next stage loads. An RTX 4090 is a real, supported 24 GB tier, not only a hypothetical one. See <code>DETAILS.md</code> for the tier table, the staging reasoning, the quantization cost tradeoff, and the resulting checklist.</p>
+<p>Every model in the catalog reaches a 24 GB card. The workspace standardizes on <strong>QAFT 4-bit</strong> as the default weights format where upstream ships one (Gemma-4-12B QAT Q4_0 is the canonical example and reasoning core per RFD 2169). Models without a QAFT release run at published precision (bf16) with staged loading. See <code>DETAILS.md</code>.</p>
+<p>Committed 2026-09-02: 24-GB tier and QAFT-first rule settled. CLAUDE.md retracted Condition 5 the same day (precision is not a corpus hazard), so quantised weights are permitted for corpus generation, not only inference.</p>
 </section>
 <section id="related" class="level2">
 <h2 class="anchored" data-anchor-id="related">Related</h2>
