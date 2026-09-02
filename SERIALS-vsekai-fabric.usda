@@ -686,6 +686,10 @@ def Scope "Serials"
                 {
                     custom string slug = "maskscore-voice-reward-distillation"
                 }
+                def "S2168"
+                {
+                    custom string slug = "retract-wholebody-detector-keep-renderer"
+                }
             }
         }
     }
