@@ -698,6 +698,10 @@ def Scope "Serials"
                 {
                     custom string slug = "allosaurus-squad-localization-langs"
                 }
+                def "S2171"
+                {
+                    custom string slug = "atelier-workshop-shuttle-vocabulary"
+                }
             }
         }
     }
