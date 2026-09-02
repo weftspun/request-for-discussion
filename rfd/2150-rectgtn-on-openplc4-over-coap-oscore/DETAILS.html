@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Logbook – Taskweft — Manuals</title>
+<title>details – Taskweft — Manuals</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -29,29 +29,27 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f36f388c175c695e587c9d92b6af4f92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f36f388c175c695e587c9d92b6af4f92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -79,65 +77,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -310,7 +250,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Taskweft — Manuals</span>
     </a>
   </div>
@@ -321,15 +261,15 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../pages/rfd.html"> 
+    <a class="nav-link" href="../../pages/rfd.html"> 
 <span class="menu-text">RFDs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../pages/logbook.html" aria-current="page"> 
+    <a class="nav-link" href="../../pages/logbook.html"> 
 <span class="menu-text">Logbook</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../pages/serials.html"> 
+    <a class="nav-link" href="../../pages/serials.html"> 
 <span class="menu-text">Register</span></a>
   </li>  
 </ul>
@@ -344,331 +284,258 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#details-rectgtn-on-openplc-v4-over-coap-oscore" id="toc-details-rectgtn-on-openplc-v4-over-coap-oscore" class="nav-link active" data-scroll-target="#details-rectgtn-on-openplc-v4-over-coap-oscore">DETAILS: RECTGTN on OpenPLC v4, over CoAP + OSCORE</a>
+  <ul class="collapse">
+  <li><a href="#language-ranking-with-the-argument-behind-each-row" id="toc-language-ranking-with-the-argument-behind-each-row" class="nav-link" data-scroll-target="#language-ranking-with-the-argument-behind-each-row">Language ranking, with the argument behind each row</a></li>
+  <li><a href="#the-translation-pipeline-and-where-taskweft-stops" id="toc-the-translation-pipeline-and-where-taskweft-stops" class="nav-link" data-scroll-target="#the-translation-pipeline-and-where-taskweft-stops">The translation pipeline, and where taskweft stops</a></li>
+  <li><a href="#plcopen-xml-sfc-skeleton-with-fbd-inline-bodies" id="toc-plcopen-xml-sfc-skeleton-with-fbd-inline-bodies" class="nav-link" data-scroll-target="#plcopen-xml-sfc-skeleton-with-fbd-inline-bodies">PLCopen XML SFC skeleton, with FBD inline bodies</a></li>
+  <li><a href="#coap-oscore-resource-model" id="toc-coap-oscore-resource-model" class="nav-link" data-scroll-target="#coap-oscore-resource-model">CoAP + OSCORE resource model</a></li>
+  <li><a href="#the-openplc-v4-plugin" id="toc-the-openplc-v4-plugin" class="nav-link" data-scroll-target="#the-openplc-v4-plugin">The OpenPLC v4 plugin</a></li>
+  <li><a href="#elixir-side" id="toc-elixir-side" class="nav-link" data-scroll-target="#elixir-side">Elixir side</a></li>
+  <li><a href="#translator-scope-for-stage-1" id="toc-translator-scope-for-stage-1" class="nav-link" data-scroll-target="#translator-scope-for-stage-1">Translator scope for stage 1</a></li>
+  <li><a href="#verification" id="toc-verification" class="nav-link" data-scroll-target="#verification">Verification</a></li>
+  <li><a href="#what-is-deliberately-not-here" id="toc-what-is-deliberately-not-here" class="nav-link" data-scroll-target="#what-is-deliberately-not-here">What is deliberately not here</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2150-rectgtn-on-openplc4-over-coap-oscore/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2150-rectgtn-on-openplc4-over-coap-oscore/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Logbook</h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>Entries record what was <strong>measured</strong>, not what was intended, and clip enough of the experimental apparatus to re-run the test rather than merely its conclusion.</p>
-<p>These 145 entries were a separate repository until <code>weftspun/logbook</code> was archived. A decision and its measurement sat one repository apart; they no longer do. Entries kept their filenames, so an entry is still findable by the thing it measured rather than by where it used to live.</p>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-      <option value="" disabled="" selected="" hidden="">Order By</option>
-      <option value="index" data-direction="asc">Default</option>
-      <option value="listing-date-sort" data-direction="asc">
-        Date - Oldest
-      </option>
-      <option value="listing-date-sort" data-direction="desc">
-        Date - Newest
-      </option>
-      <option value="listing-title-sort" data-direction="asc">
-        Title
-      </option>
-    </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
-</div>
-<table class="quarto-listing-table table">
+
+<section id="details-rectgtn-on-openplc-v4-over-coap-oscore" class="level1">
+<h1>DETAILS: RECTGTN on OpenPLC v4, over CoAP + OSCORE</h1>
+<section id="language-ranking-with-the-argument-behind-each-row" class="level2">
+<h2 class="anchored" data-anchor-id="language-ranking-with-the-argument-behind-each-row">Language ranking, with the argument behind each row</h2>
+<p>OpenPLC v4’s toolchain (MATIEC-derived) supports the five IEC 61131-3 languages. Two survive the workspace’s blocklist as RECTGTN targets; the other three are blocklisted or deprecated.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
 <thead>
-<tr>
-
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
-</th>
-
-<th>
-<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
-</th>
-
+<tr class="header">
+<th>rank</th>
+<th>lang</th>
+<th>verdict</th>
+<th>why</th>
 </tr>
 </thead>
-<tbody class="list">
-
-<tr data-index="0" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="4" data-listing-word-count-sort="725" data-listing-title-sort="Blend-shape animation through the flow adapter, and TokenRig's first light" data-listing-filename-sort="logbook-blendshape-animation-and-tokenrig-first-light.md">
-<td>
-<a href="../logbook/logbook-blendshape-animation-and-tokenrig-first-light.html" class="title listing-title">Blend-shape animation through the flow adapter, and TokenRig’s first light</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><strong>FBD</strong></td>
+<td>the only target</td>
+<td>State machine encoded as <code>SR_L</code> flip-flops (one per step) + <code>AND</code> gates (one per transition) + <code>MOVE</code> blocks (one per action). Every downstream consumer; OpenPLC v4, glTF Interactivity, VRChat Udon, UE Blueprint, Resonite ProtoFlux, Godot Sandbox loading OpenPLC’s compiled binary; speaks this shape. RFD 2149’s Lean analyser reads the compact GRAFCET <em>input</em> to the emitter, not the FBD output, so verification is unaffected.</td>
 </tr>
-
-<tr data-index="1" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="5" data-listing-word-count-sort="994" data-listing-title-sort="In-betweens, phenotype clips, and what pass-through means" data-listing-filename-sort="logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.md">
-<td>
-<a href="../logbook/logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.html" class="title listing-title">In-betweens, phenotype clips, and what pass-through means</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>;</td>
+<td><del>SFC</del></td>
+<td><strong>blocklisted</strong></td>
+<td>Every downstream target speaks FBD-shape; none speaks SFC-shape natively. Shipping SFC as a second output would be drift-shaped (SFC as “pretty FBD”) and every consumer would re-encode it into flip-flops anyway. Full argument in <code>BLOCKLIST.md</code>.</td>
 </tr>
-
-<tr data-index="2" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="8" data-listing-word-count-sort="1464" data-listing-title-sort="Logbook: CineForm in Godot, and what recording actually costs" data-listing-filename-sort="logbook-cineform-movie-writer.md">
-<td>
-<a href="../logbook/logbook-cineform-movie-writer.html" class="title listing-title">Logbook: CineForm in Godot, and what recording actually costs</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>;</td>
+<td><del>ST</del></td>
+<td><strong>blocklisted</strong></td>
+<td>Textual imperative subset adds a second parser the Lean analyser has to see through. FBD stays graph-shaped. <code>BLOCKLIST.md</code>.</td>
 </tr>
-
-<tr data-index="3" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="4" data-listing-word-count-sort="660" data-listing-title-sort="Logbook: FDB VFS embed into ecto_sqlite3, retracted" data-listing-filename-sort="logbook-rfd2133-vfs-embed-retracted.md">
-<td>
-<a href="../logbook/logbook-rfd2133-vfs-embed-retracted.html" class="title listing-title">Logbook: FDB VFS embed into ecto_sqlite3, retracted</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>;</td>
+<td><del>LD</del></td>
+<td><strong>blocklisted</strong></td>
+<td>Relay logic carries simple bool combinational + timers/counters; RECTGTN’s ETNF tuple state does not survive the projection. <code>BLOCKLIST.md</code>.</td>
 </tr>
-
-<tr data-index="4" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="2" data-listing-word-count-sort="283" data-listing-title-sort="Logbook: OpenBao on FoundationDB" data-listing-filename-sort="logbook-rfd2140-openbao-on-fdb.md">
-<td>
-<a href="../logbook/logbook-rfd2140-openbao-on-fdb.html" class="title listing-title">Logbook: OpenBao on FoundationDB</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>;</td>
+<td><del>IL</del></td>
+<td>deprecated</td>
+<td>IEC 61131-3 Ed. 3 (2013) withdrew it. Never a target; needs no blocklist row.</td>
 </tr>
-
-<tr data-index="5" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="31" data-listing-word-count-sort="6080" data-listing-title-sort="Logbook: RFD 1016 model-repo build-out" data-listing-filename-sort="logbook-rfd1016-model-repos.md">
-<td>
-<a href="../logbook/logbook-rfd1016-model-repos.html" class="title listing-title">Logbook: RFD 1016 model-repo build-out</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="6" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="11" data-listing-word-count-sort="2018" data-listing-title-sort="Logbook: RFD 1122 T01, the pose-library check" data-listing-filename-sort="logbook-rfd1122-t01-pose-check.md">
-<td>
-<a href="../logbook/logbook-rfd1122-t01-pose-check.html" class="title listing-title">Logbook: RFD 1122 T01, the pose-library check</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="7" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="4" data-listing-word-count-sort="639" data-listing-title-sort="Logbook: bao connected to FDB cluster, credential rotation, 1Password persistence failure" data-listing-filename-sort="logbook-rfd2142-bao-pki-zerotrust.md">
-<td>
-<a href="../logbook/logbook-rfd2142-bao-pki-zerotrust.html" class="title listing-title">Logbook: bao connected to FDB cluster, credential rotation, 1Password persistence failure</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="8" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="3" data-listing-word-count-sort="480" data-listing-title-sort="Logbook: cert-auth on Bao, and the DNS edit that ran without 1P" data-listing-filename-sort="logbook-rfd2146-zerotrust-roles-first-run.md">
-<td>
-<a href="../logbook/logbook-rfd2146-zerotrust-roles-first-run.html" class="title listing-title">Logbook: cert-auth on Bao, and the DNS edit that ran without 1P</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="9" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="4" data-listing-word-count-sort="614" data-listing-title-sort="Logbook: minimum-double weftspun-fdb on Fly" data-listing-filename-sort="logbook-rfd2133-weftspun-fdb-on-fly.md">
-<td>
-<a href="../logbook/logbook-rfd2133-weftspun-fdb-on-fly.html" class="title listing-title">Logbook: minimum-double weftspun-fdb on Fly</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="10" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="18" data-listing-word-count-sort="3434" data-listing-title-sort="Logbook: one base, measured, and the rerank" data-listing-filename-sort="logbook-rfd1171-gemma-first-rerank.md">
-<td>
-<a href="../logbook/logbook-rfd1171-gemma-first-rerank.html" class="title listing-title">Logbook: one base, measured, and the rerank</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="11" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="3" data-listing-word-count-sort="474" data-listing-title-sort="Logbook: spot-broker on Fly" data-listing-filename-sort="logbook-rfd2133-spot-broker-on-fly.md">
-<td>
-<a href="../logbook/logbook-rfd2133-spot-broker-on-fly.html" class="title listing-title">Logbook: spot-broker on Fly</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="12" data-listing-file-modified-sort="1788319454847" data-listing-reading-time-sort="7" data-listing-word-count-sort="1241" data-listing-title-sort="Logbook: the ANNY fit that the corpus does not need" data-listing-filename-sort="logbook-anny-phenotype-fit-retired.md">
-<td>
-<a href="../logbook/logbook-anny-phenotype-fit-retired.html" class="title listing-title">Logbook: the ANNY fit that the corpus does not need</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="13" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="7" data-listing-word-count-sort="1299" data-listing-title-sort="Logbook: the DR runbook runs on the day the cluster is gone" data-listing-filename-sort="logbook-rfd2144-dr-runbook-first-run.md">
-<td>
-<a href="../logbook/logbook-rfd2144-dr-runbook-first-run.html" class="title listing-title">Logbook: the DR runbook runs on the day the cluster is gone</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="14" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="11" data-listing-word-count-sort="2026" data-listing-title-sort="Logbook: the Qwen3-VL vision tower against the Dataflow Compiler" data-listing-filename-sort="logbook-qwen3vl-vit-translate-walls.md">
-<td>
-<a href="../logbook/logbook-qwen3vl-vit-translate-walls.html" class="title listing-title">Logbook: the Qwen3-VL vision tower against the Dataflow Compiler</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="15" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="2" data-listing-word-count-sort="375" data-listing-title-sort="Logbook: the backup reaches Tigris through the SNI hop" data-listing-filename-sort="logbook-rfd2134-backup-through-the-sni-hop.md">
-<td>
-<a href="../logbook/logbook-rfd2134-backup-through-the-sni-hop.html" class="title listing-title">Logbook: the backup reaches Tigris through the SNI hop</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="16" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="6" data-listing-word-count-sort="1171" data-listing-title-sort="Logbook: the first four-loop rounds on the desk card" data-listing-filename-sort="logbook-fourloops-first-runs.md">
-<td>
-<a href="../logbook/logbook-fourloops-first-runs.html" class="title listing-title">Logbook: the first four-loop rounds on the desk card</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="17" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="5" data-listing-word-count-sort="992" data-listing-title-sort="Logbook: the soft renderer's three constants, and Mitsuba" data-listing-filename-sort="logbook-soft-renderer-and-mitsuba.md">
-<td>
-<a href="../logbook/logbook-soft-renderer-and-mitsuba.html" class="title listing-title">Logbook: the soft renderer’s three constants, and Mitsuba</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="18" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="9" data-listing-word-count-sort="1605" data-listing-title-sort="Logbook: two DFC emulation contexts disagree by six orders of magnitude" data-listing-filename-sort="logbook-dfc-emulation-contexts-disagree.md">
-<td>
-<a href="../logbook/logbook-dfc-emulation-contexts-disagree.html" class="title listing-title">Logbook: two DFC emulation contexts disagree by six orders of magnitude</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="19" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="3" data-listing-word-count-sort="486" data-listing-title-sort="Logbook: two checks, a stopped backup, and curl's signing limits" data-listing-filename-sort="logbook-rfd2135-two-checks-and-a-stopped-backup.md">
-<td>
-<a href="../logbook/logbook-rfd2135-two-checks-and-a-stopped-backup.html" class="title listing-title">Logbook: two checks, a stopped backup, and curl’s signing limits</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="20" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="6" data-listing-word-count-sort="1163" data-listing-title-sort="Logbook: two walls between a translated graph and a HEF" data-listing-filename-sort="logbook-rfd1130-two-walls-to-a-hef.md">
-<td>
-<a href="../logbook/logbook-rfd1130-two-walls-to-a-hef.html" class="title listing-title">Logbook: two walls between a translated graph and a HEF</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="21" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="11" data-listing-word-count-sort="2074" data-listing-title-sort="Logbook: what an edge NPU takes, and what the ANNY forward will not export" data-listing-filename-sort="logbook-edge-npu-and-the-anny-forward.md">
-<td>
-<a href="../logbook/logbook-edge-npu-and-the-anny-forward.html" class="title listing-title">Logbook: what an edge NPU takes, and what the ANNY forward will not export</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="22" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="12" data-listing-word-count-sort="2261" data-listing-title-sort="Logbook: what the Neural Engine reaches, and what it holds" data-listing-filename-sort="logbook-rfd1142-neural-engine-against-the-ugen300.md">
-<td>
-<a href="../logbook/logbook-rfd1142-neural-engine-against-the-ugen300.html" class="title listing-title">Logbook: what the Neural Engine reaches, and what it holds</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="23" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="14" data-listing-word-count-sort="2799" data-listing-title-sort="Logbook: what the plan costs once the durations are real, and the card is a 3090" data-listing-filename-sort="logbook-rfd1122-hailo-first-rerank.md">
-<td>
-<a href="../logbook/logbook-rfd1122-hailo-first-rerank.html" class="title listing-title">Logbook: what the plan costs once the durations are real, and the card is a 3090</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="24" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="6" data-listing-word-count-sort="1157" data-listing-title-sort="The comment ladder" data-listing-filename-sort="logbook-comment-ladder.md">
-<td>
-<a href="../logbook/logbook-comment-ladder.html" class="title listing-title">The comment ladder</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
 </tbody>
 </table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+<p>The emitter refuses to produce ST, LD, or IL bodies and errors out naming the row above. A silent skip on a bad target reads exactly like a pass (CLAUDE.md rule 3); this is that rule applied here.</p>
+</section>
+<section id="the-translation-pipeline-and-where-taskweft-stops" class="level2">
+<h2 class="anchored" data-anchor-id="the-translation-pipeline-and-where-taskweft-stops">The translation pipeline, and where taskweft stops</h2>
+<pre><code>RECTGTN JSON-LD                           taskweft's HTN shape
+  |
+  | Taskweft.Grafcet.to_grafcet/1         RFD 2148
+  v
+compact GRAFCET JSON-LD                   IEC 60848 SFC, RFD 2148 profile
+  |                                       │
+  |                                       └── verified by RFD 2149
+  |                                           (reachability, concurrent pairs)
+  | Taskweft.OpenPLC.PLCopen.emit/1
+  v
+plcopen.xml                               ── taskweft's OUTPUT boundary ──
+  |
+  | openplc-cli compile                   OpenPLC Editor v4 (GPL-3.0), the
+  | (invoked by the operator,             one tool in the ecosystem that
+  | not by taskweft)                      accepts PLCopen XML and produces
+  v                                       the runtime's expected shape
+program.zip
+  |
+  | REST upload                           OpenPLC Runtime v4 (MIT)
+  v
+running program on the target</code></pre>
+<p><strong>taskweft ships PLCopen XML.</strong> The downstream compile step (<code>openplc-cli compile</code>, part of the OpenPLC Editor v4 distribution) is invoked by the operator, in their environment, against their target board. That step’s GPL-3.0 licence attaches to the Editor itself, not to the XML we hand it and not to the compiled program the runtime loads (OpenPLC Runtime v4 is MIT, and its <code>strucpp</code> runtime library ships a GCC-style runtime exception explicitly permitting this).</p>
+<p><strong>Two gates precede the boundary.</strong> RFD 2149’s Lean analyser reads the compact GRAFCET (before emit) and refuses charts with unreachable steps or unintended concurrent pairs; RFD 2150 stage 1’s emitter is gated by its own tests to produce only FBD inline bodies (ST and LD blocklisted, structurally, per the <del>struck</del> rows above). What crosses the boundary is <em>verified</em> PLCopen XML.</p>
+<p><strong>One gate follows the boundary, downstream.</strong> <code>openplc-cli compile</code> fails on any XML the Editor’s compiler cannot reduce; a failure there is a bug either in the emitter or in a downstream ecosystem change, and the operator surfaces it back to us on the XML with the same compact GRAFCET input, which reproduces deterministically.</p>
+<p><strong>What is not in scope here.</strong> Running <code>openplc-cli</code> inside taskweft’s build, or bundling the Editor with taskweft. Both would pull GPL-3.0 into the taskweft build graph, which the workspace does not want. The Editor is a <em>tool</em> the operator holds, like <code>gcc</code> or <code>git</code>; the aggregation is a shell invocation, not a link edge.</p>
+</section>
+<section id="plcopen-xml-sfc-skeleton-with-fbd-inline-bodies" class="level2">
+<h2 class="anchored" data-anchor-id="plcopen-xml-sfc-skeleton-with-fbd-inline-bodies">PLCopen XML SFC skeleton, with FBD inline bodies</h2>
+<p>The XML the emitter produces, for one SFC POU. Actions and guards are FBD networks (no ST), matching the blocklist row above.</p>
+<pre><code>&lt;pou name="rectgtn_plan" pouType="program"&gt;
+  &lt;interface&gt;
+    &lt;localVars&gt;
+      &lt;variable name="done_lake"&gt;&lt;type&gt;&lt;BOOL/&gt;&lt;/type&gt;
+        &lt;initialValue&gt;&lt;simpleValue value="FALSE"/&gt;&lt;/initialValue&gt;
+      &lt;/variable&gt;
+      ...
+    &lt;/localVars&gt;
+  &lt;/interface&gt;
+  &lt;body&gt;
+    &lt;SFC&gt;
+      &lt;step name="lake" localId="10" initialStep="true"&gt;
+        &lt;action qualifier="S"&gt;
+          &lt;inline&gt;
+            &lt;FBD&gt;
+              &lt;inVariable localId="1"&gt;&lt;expression&gt;TRUE&lt;/expression&gt;&lt;/inVariable&gt;
+              &lt;outVariable localId="2"&gt;&lt;expression&gt;done_lake&lt;/expression&gt;
+                &lt;connectionPointIn&gt;&lt;connection refLocalId="1"/&gt;&lt;/connectionPointIn&gt;
+              &lt;/outVariable&gt;
+            &lt;/FBD&gt;
+          &lt;/inline&gt;
+        &lt;/action&gt;
+      &lt;/step&gt;
+      &lt;transition localId="11"&gt;
+        &lt;connectionPointIn refLocalId="10"/&gt;
+        &lt;connectionPointOut refLocalId="20"/&gt;
+        &lt;condition&gt;
+          &lt;inline&gt;
+            &lt;FBD&gt;
+              &lt;inVariable localId="1"&gt;&lt;expression&gt;done_lake&lt;/expression&gt;&lt;/inVariable&gt;
+            &lt;/FBD&gt;
+          &lt;/inline&gt;
+        &lt;/condition&gt;
+      &lt;/transition&gt;
+      &lt;step name="ingest" localId="20"&gt;...&lt;/step&gt;
+    &lt;/SFC&gt;
+  &lt;/body&gt;
+&lt;/pou&gt;</code></pre>
+<p>A conjunction guard (<code>done_lake AND done_render</code>) inserts a chain of <code>&lt;block typeName="AND"&gt;</code> between the input variables and the condition’s output. A time-delayed transition (<code>t/X_i/PT1H</code>) inserts a <code>&lt;block typeName="TON"&gt;</code> with its <code>PT</code> bound to <code>T#1h</code> and its <code>Q</code> carrying to the condition output. Every RECTGTN construct the emitter supports today has an FBD network; a construct that would require an ST body raises with a pointer at the ranking above.</p>
+</section>
+<section id="coap-oscore-resource-model" class="level2">
+<h2 class="anchored" data-anchor-id="coap-oscore-resource-model">CoAP + OSCORE resource model</h2>
+<p>Constrained networks: UDP, small MTU, no session state. CoAP (RFC 7252) is REST over UDP; OSCORE (RFC 8613) supplies end-to-end message security independent of the underlying transport, so an intermediary CoAP proxy in the shop-floor network cannot read or forge payloads.</p>
+<p>The runtime exposes four CoAP resources, each OSCORE-protected:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>method</th>
+<th>path</th>
+<th>body</th>
+<th>reply</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PUT</td>
+<td><code>/rectgtn/program</code></td>
+<td>PLCopen XML</td>
+<td>2.04 Changed on success</td>
+</tr>
+<tr class="even">
+<td>POST</td>
+<td><code>/rectgtn/run</code></td>
+<td>(empty)</td>
+<td>2.05 Content, running program name</td>
+</tr>
+<tr class="odd">
+<td>GET</td>
+<td><code>/rectgtn/state</code></td>
+<td></td>
+<td>2.05 Content, CBOR-encoded variable snapshot</td>
+</tr>
+<tr class="even">
+<td>POST</td>
+<td><code>/rectgtn/stop</code></td>
+<td>(empty)</td>
+<td>2.04 Changed</td>
+</tr>
+</tbody>
+</table>
+<p>CBOR (RFC 8949) on state replies matches the workspace’s existing wire encoding on <code>2-contract/bus</code>. Payloads that would exceed CoAP’s block boundary use CoAP’s Block-Wise transfer (RFC 7959); this is a transport-level concern the OpenPLC plugin handles, not something the program emitter reasons about.</p>
+</section>
+<section id="the-openplc-v4-plugin" class="level2">
+<h2 class="anchored" data-anchor-id="the-openplc-v4-plugin">The OpenPLC v4 plugin</h2>
+<p>OpenPLC v4 has a plugin system for I/O drivers and transports. The CoAP plugin links against libcoap (BSD/MIT) and libcoap-oscore (or <code>libocore</code>; TBD depending on which permissive CoAP OSCORE library lands first), registers the four resources, and bridges CoAP requests into OpenPLC’s internal program-management API. The plugin lives in its own repository, <code>taskweft-openplc-coap</code>, so an OpenPLC user who doesn’t need the CoAP surface can build without it.</p>
+</section>
+<section id="elixir-side" class="level2">
+<h2 class="anchored" data-anchor-id="elixir-side">Elixir side</h2>
+<p><code>Taskweft.OpenPLC.CoAP</code>; a new module in taskweft that wraps a NIF over libcoap. The NIF’s shape mirrors <code>weft_bus_nif.cpp</code> (request-response, reply carries a request-id, poll-until-match). OSCORE key material comes from a <code>Taskweft.OpenPLC.CoAP.Keyset</code> struct configured at start; a key-exchange step (EDHOC, RFC 9528) is the follow-on that lets the coordinator provision a fresh keyset per runtime rather than sharing a static one.</p>
+</section>
+<section id="translator-scope-for-stage-1" class="level2">
+<h2 class="anchored" data-anchor-id="translator-scope-for-stage-1">Translator scope for stage 1</h2>
+<p>The stage-1 emitter, <code>Taskweft.OpenPLC.PLCopen</code>, covers:</p>
+<ol type="1">
+<li>sequential chains of <code>Step</code>s linked by transitions</li>
+<li>AND-divergence + AND-convergence</li>
+<li>boolean internal variables (from <code>V</code> in the compact GRAFCET)</li>
+<li><code>stored</code> actions setting an internal variable</li>
+<li>time-delayed transitions (<code>t/X_i/PT1H</code> → SFC’s <code>TIME</code> receptivity)</li>
+</ol>
+<p>Constructs staged for later, matching RFD 2148’s own staging:</p>
+<ol type="1">
+<li>OR-divergence (needs a translation to SFC’s simultaneous-divergence with mutually-exclusive receptivities)</li>
+<li>MacroStep and EnclosingStep</li>
+<li>ForcingOrder (SFC hierarchy jumps; supported by IEC 61131-3 but not every runtime)</li>
+</ol>
+</section>
+<section id="verification" class="level2">
+<h2 class="anchored" data-anchor-id="verification">Verification</h2>
+<ol type="1">
+<li>Round-trip: a compact GRAFCET fixture lowers to PLCopen XML, that XML validates against the PLCopen TC6 schema, and the compiled program runs on a headless OpenPLC v4 producing the same trace the Lean analyser predicted (reachable steps in the order the RECTGTN planner would have visited them).</li>
+<li>Analyser gate (RFD 2149): the compact GRAFCET passes the reachable</li>
+</ol>
+<ul>
+<li>concurrent-pair check <em>before</em> it reaches the emitter; an unreachable step fails the load rather than compiling into dead code.</li>
+</ul>
+<ol start="3" type="1">
+<li>CoAP+OSCORE: the coordinator publishes a program with a fresh key, runs it, reads state, stops it; a replayed message with an old sequence number is rejected by OSCORE at the runtime side.</li>
+</ol>
+</section>
+<section id="what-is-deliberately-not-here" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-deliberately-not-here">What is deliberately not here</h2>
+<ol type="1">
+<li>A hard dependency on any specific OSCORE library. libcoap-oscore, <code>libocore</code>, and mbedTLS-OSCORE are all candidates; the RFD closes the pattern, not the choice.</li>
+<li>EDHOC key exchange (staged; static keys today).</li>
+<li>Compiled program versioning / rollback semantics on the runtime.</li>
+</ol>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -1090,7 +957,7 @@ window.Quarto = {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/pages/logbook.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/pages/logbook.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2150-rectgtn-on-openplc4-over-coap-oscore/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2150-rectgtn-on-openplc4-over-coap-oscore/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">

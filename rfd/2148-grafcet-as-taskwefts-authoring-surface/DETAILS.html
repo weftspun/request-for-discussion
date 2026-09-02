@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Logbook – Taskweft — Manuals</title>
+<title>details – Taskweft — Manuals</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -29,29 +29,27 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f36f388c175c695e587c9d92b6af4f92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f36f388c175c695e587c9d92b6af4f92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -79,65 +77,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -310,7 +250,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Taskweft — Manuals</span>
     </a>
   </div>
@@ -321,15 +261,15 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../pages/rfd.html"> 
+    <a class="nav-link" href="../../pages/rfd.html"> 
 <span class="menu-text">RFDs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../pages/logbook.html" aria-current="page"> 
+    <a class="nav-link" href="../../pages/logbook.html"> 
 <span class="menu-text">Logbook</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../pages/serials.html"> 
+    <a class="nav-link" href="../../pages/serials.html"> 
 <span class="menu-text">Register</span></a>
   </li>  
 </ul>
@@ -344,331 +284,255 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#details-grafcet-as-taskwefts-authoring-surface" id="toc-details-grafcet-as-taskwefts-authoring-surface" class="nav-link active" data-scroll-target="#details-grafcet-as-taskwefts-authoring-surface">DETAILS: GRAFCET as taskweft’s authoring surface</a>
+  <ul class="collapse">
+  <li><a href="#the-compact-profile" id="toc-the-compact-profile" class="nav-link" data-scroll-target="#the-compact-profile">The compact profile</a></li>
+  <li><a href="#the-mapping-table-in-full" id="toc-the-mapping-table-in-full" class="nav-link" data-scroll-target="#the-mapping-table-in-full">The mapping table, in full</a></li>
+  <li><a href="#round-trip-semantics" id="toc-round-trip-semantics" class="nav-link" data-scroll-target="#round-trip-semantics">Round-trip semantics</a></li>
+  <li><a href="#transport-2-contractbus-cbor-zstd" id="toc-transport-2-contractbus-cbor-zstd" class="nav-link" data-scroll-target="#transport-2-contractbus-cbor-zstd">Transport: <code>2-contract/bus</code> + CBOR + zstd</a></li>
+  <li><a href="#continuous-time-scheduling" id="toc-continuous-time-scheduling" class="nav-link" data-scroll-target="#continuous-time-scheduling">Continuous-time scheduling</a></li>
+  <li><a href="#maskscore-row-shape" id="toc-maskscore-row-shape" class="nav-link" data-scroll-target="#maskscore-row-shape">MaskScore row shape</a></li>
+  <li><a href="#the-three-personas" id="toc-the-three-personas" class="nav-link" data-scroll-target="#the-three-personas">The three personas</a></li>
+  <li><a href="#the-higher-level-constructs-are-in-scope" id="toc-the-higher-level-constructs-are-in-scope" class="nav-link" data-scroll-target="#the-higher-level-constructs-are-in-scope">The higher-level constructs are in scope</a></li>
+  <li><a href="#what-is-deliberately-not-here" id="toc-what-is-deliberately-not-here" class="nav-link" data-scroll-target="#what-is-deliberately-not-here">What is deliberately not here</a></li>
+  <li><a href="#verification" id="toc-verification" class="nav-link" data-scroll-target="#verification">Verification</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2148-grafcet-as-taskwefts-authoring-surface/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2148-grafcet-as-taskwefts-authoring-surface/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Logbook</h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>Entries record what was <strong>measured</strong>, not what was intended, and clip enough of the experimental apparatus to re-run the test rather than merely its conclusion.</p>
-<p>These 145 entries were a separate repository until <code>weftspun/logbook</code> was archived. A decision and its measurement sat one repository apart; they no longer do. Entries kept their filenames, so an entry is still findable by the thing it measured rather than by where it used to live.</p>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-      <option value="" disabled="" selected="" hidden="">Order By</option>
-      <option value="index" data-direction="asc">Default</option>
-      <option value="listing-date-sort" data-direction="asc">
-        Date - Oldest
-      </option>
-      <option value="listing-date-sort" data-direction="desc">
-        Date - Newest
-      </option>
-      <option value="listing-title-sort" data-direction="asc">
-        Title
-      </option>
-    </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
-</div>
-<table class="quarto-listing-table table">
+
+<section id="details-grafcet-as-taskwefts-authoring-surface" class="level1">
+<h1>DETAILS: GRAFCET as taskweft’s authoring surface</h1>
+<section id="the-compact-profile" class="level2">
+<h2 class="anchored" data-anchor-id="the-compact-profile">The compact profile</h2>
+<p>Every construct is a 60848 element under a short local name, expanded by JSON-LD <code>@context</code> to the AGRAFE IRIs so the same file round-trips into their model without a second document.</p>
+<p>Steps are entries in an ordered <code>S</code> array; position implies a <code>Link</code> to the next entry unless a divergence intervenes. Sigils at position zero mark the step kind: <code>""</code> or omitted = <code>Step</code>, <code>^</code> = <code>InitialStep</code>, <code>%</code> = <code>MacroStep</code>, <code>#</code> = <code>EnclosingStep</code>. Divergence markers are their own entries: <code>&amp;&gt;</code> opens an <code>AndDivergence</code> to the named siblings, <code>&amp;&lt;</code> closes an <code>AndConvergence</code> from the named steps into the next entry; <code>|&gt;</code> / <code>|&lt;</code> are the OR forms; <code>!&gt;</code> is a <code>ForcingOrder</code> writing another chart’s marking. Per step: <code>[name, when, do, t]</code>; <code>when</code> is the transition’s <code>Receptivity</code> (boolean expression over <code>X.&lt;step&gt;</code> step activities and <code>V.&lt;var&gt;</code> internal variables), <code>do</code> is a stored <code>Action</code> (assignment or emit), <code>t</code> is the transition’s time delay.</p>
+<p>The reference file, <code>.github/plans/weftspun-build.grafcet.jsonld</code>, is 13 lines of <code>S</code> against the 38 lines of hand-authored HTN it lowers to.</p>
+</section>
+<section id="the-mapping-table-in-full" class="level2">
+<h2 class="anchored" data-anchor-id="the-mapping-table-in-full">The mapping table, in full</h2>
+<p>Every taskweft feature lands on one 60848 construct. Nothing on the right extends the standard.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
-<tr>
-
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
-</th>
-
-<th>
-<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
-</th>
-
+<tr class="header">
+<th>taskweft feature</th>
+<th>IEC 60848 construct</th>
 </tr>
 </thead>
-<tbody class="list">
-
-<tr data-index="0" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="4" data-listing-word-count-sort="725" data-listing-title-sort="Blend-shape animation through the flow adapter, and TokenRig's first light" data-listing-filename-sort="logbook-blendshape-animation-and-tokenrig-first-light.md">
-<td>
-<a href="../logbook/logbook-blendshape-animation-and-tokenrig-first-light.html" class="title listing-title">Blend-shape animation through the flow adapter, and TokenRig’s first light</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tbody>
+<tr class="odd">
+<td>boolean state flag</td>
+<td>step activity <code>X_i</code> or internal boolean</td>
 </tr>
-
-<tr data-index="1" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="5" data-listing-word-count-sort="994" data-listing-title-sort="In-betweens, phenotype clips, and what pass-through means" data-listing-filename-sort="logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.md">
-<td>
-<a href="../logbook/logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.html" class="title listing-title">In-betweens, phenotype clips, and what pass-through means</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>action’s <code>pointer/set</code> on a flag</td>
+<td><code>Step</code> with <code>stored</code> action</td>
 </tr>
-
-<tr data-index="2" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="8" data-listing-word-count-sort="1464" data-listing-title-sort="Logbook: CineForm in Godot, and what recording actually costs" data-listing-filename-sort="logbook-cineform-movie-writer.md">
-<td>
-<a href="../logbook/logbook-cineform-movie-writer.html" class="title listing-title">Logbook: CineForm in Godot, and what recording actually costs</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>guard <code>math/eq</code> over a flag</td>
+<td><code>Receptivity</code> on the upstream transition</td>
 </tr>
-
-<tr data-index="3" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="4" data-listing-word-count-sort="660" data-listing-title-sort="Logbook: FDB VFS embed into ecto_sqlite3, retracted" data-listing-filename-sort="logbook-rfd2133-vfs-embed-retracted.md">
-<td>
-<a href="../logbook/logbook-rfd2133-vfs-embed-retracted.html" class="title listing-title">Logbook: FDB VFS embed into ecto_sqlite3, retracted</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>sequential subtasks</td>
+<td><code>Link</code> chain</td>
 </tr>
-
-<tr data-index="4" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="2" data-listing-word-count-sort="283" data-listing-title-sort="Logbook: OpenBao on FoundationDB" data-listing-filename-sort="logbook-rfd2140-openbao-on-fdb.md">
-<td>
-<a href="../logbook/logbook-rfd2140-openbao-on-fdb.html" class="title listing-title">Logbook: OpenBao on FoundationDB</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>fan-in / fan-out</td>
+<td>AND-convergence / AND-divergence</td>
 </tr>
-
-<tr data-index="5" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="31" data-listing-word-count-sort="6080" data-listing-title-sort="Logbook: RFD 1016 model-repo build-out" data-listing-filename-sort="logbook-rfd1016-model-repos.md">
-<td>
-<a href="../logbook/logbook-rfd1016-model-repos.html" class="title listing-title">Logbook: RFD 1016 model-repo build-out</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td><code>duration: "PT1H"</code> on an action</td>
+<td><code>timeDelayed</code> receptivity <code>t/X_i/1h</code></td>
 </tr>
-
-<tr data-index="6" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="11" data-listing-word-count-sort="2018" data-listing-title-sort="Logbook: RFD 1122 T01, the pose-library check" data-listing-filename-sort="logbook-rfd1122-t01-pose-check.md">
-<td>
-<a href="../logbook/logbook-rfd1122-t01-pose-check.html" class="title listing-title">Logbook: RFD 1122 T01, the pose-library check</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>single-alternative skip-if-done method</td>
+<td>subsumed by step activity</td>
 </tr>
-
-<tr data-index="7" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="4" data-listing-word-count-sort="639" data-listing-title-sort="Logbook: bao connected to FDB cluster, credential rotation, 1Password persistence failure" data-listing-filename-sort="logbook-rfd2142-bao-pki-zerotrust.md">
-<td>
-<a href="../logbook/logbook-rfd2142-bao-pki-zerotrust.html" class="title listing-title">Logbook: bao connected to FDB cluster, credential rotation, 1Password persistence failure</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>parameterised action, finite static domain</td>
+<td>grounded via <code>MacroStep</code> template with <code>for</code> field</td>
 </tr>
-
-<tr data-index="8" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="3" data-listing-word-count-sort="480" data-listing-title-sort="Logbook: cert-auth on Bao, and the DNS edit that ran without 1P" data-listing-filename-sort="logbook-rfd2146-zerotrust-roles-first-run.md">
-<td>
-<a href="../logbook/logbook-rfd2146-zerotrust-roles-first-run.html" class="title listing-title">Logbook: cert-auth on Bao, and the DNS edit that ran without 1P</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>parameterised action, domain known at plan time</td>
+<td>internal variables + dispatch pattern</td>
 </tr>
-
-<tr data-index="9" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="4" data-listing-word-count-sort="614" data-listing-title-sort="Logbook: minimum-double weftspun-fdb on Fly" data-listing-filename-sort="logbook-rfd2133-weftspun-fdb-on-fly.md">
-<td>
-<a href="../logbook/logbook-rfd2133-weftspun-fdb-on-fly.html" class="title listing-title">Logbook: minimum-double weftspun-fdb on Fly</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>method with N receptivity-selected alternatives</td>
+<td><code>OrDivergence</code> with N exclusive receptivities</td>
 </tr>
-
-<tr data-index="10" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="18" data-listing-word-count-sort="3434" data-listing-title-sort="Logbook: one base, measured, and the rerank" data-listing-filename-sort="logbook-rfd1171-gemma-first-rerank.md">
-<td>
-<a href="../logbook/logbook-rfd1171-gemma-first-rerank.html" class="title listing-title">Logbook: one base, measured, and the rerank</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>method with N search-selected alternatives</td>
+<td><code>ForcingOrder</code> rewinds the sub-chart on downstream failure</td>
 </tr>
-
-<tr data-index="11" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="3" data-listing-word-count-sort="474" data-listing-title-sort="Logbook: spot-broker on Fly" data-listing-filename-sort="logbook-rfd2133-spot-broker-on-fly.md">
-<td>
-<a href="../logbook/logbook-rfd2133-spot-broker-on-fly.html" class="title listing-title">Logbook: spot-broker on Fly</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>task-network goal</td>
+<td><code>InitialStep</code> marking + terminal <code>EnclosingStep</code></td>
 </tr>
-
-<tr data-index="12" data-listing-file-modified-sort="1788319454847" data-listing-reading-time-sort="7" data-listing-word-count-sort="1241" data-listing-title-sort="Logbook: the ANNY fit that the corpus does not need" data-listing-filename-sort="logbook-anny-phenotype-fit-retired.md">
-<td>
-<a href="../logbook/logbook-anny-phenotype-fit-retired.html" class="title listing-title">Logbook: the ANNY fit that the corpus does not need</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>HTN decomposition hierarchy</td>
+<td><code>MacroStep</code> per method</td>
 </tr>
-
-<tr data-index="13" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="7" data-listing-word-count-sort="1299" data-listing-title-sort="Logbook: the DR runbook runs on the day the cluster is gone" data-listing-filename-sort="logbook-rfd2144-dr-runbook-first-run.md">
-<td>
-<a href="../logbook/logbook-rfd2144-dr-runbook-first-run.html" class="title listing-title">Logbook: the DR runbook runs on the day the cluster is gone</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>ETNF tuple state, ref into <code>capabilities</code></td>
+<td>interned integer id in an internal variable</td>
 </tr>
-
-<tr data-index="14" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="11" data-listing-word-count-sort="2026" data-listing-title-sort="Logbook: the Qwen3-VL vision tower against the Dataflow Compiler" data-listing-filename-sort="logbook-qwen3vl-vit-translate-walls.md">
-<td>
-<a href="../logbook/logbook-qwen3vl-vit-translate-walls.html" class="title listing-title">Logbook: the Qwen3-VL vision tower against the Dataflow Compiler</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>plan trace with bindings</td>
+<td>firing trace with timestamps</td>
 </tr>
-
-<tr data-index="15" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="2" data-listing-word-count-sort="375" data-listing-title-sort="Logbook: the backup reaches Tigris through the SNI hop" data-listing-filename-sort="logbook-rfd2134-backup-through-the-sni-hop.md">
-<td>
-<a href="../logbook/logbook-rfd2134-backup-through-the-sni-hop.html" class="title listing-title">Logbook: the backup reaches Tigris through the SNI hop</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="16" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="6" data-listing-word-count-sort="1171" data-listing-title-sort="Logbook: the first four-loop rounds on the desk card" data-listing-filename-sort="logbook-fourloops-first-runs.md">
-<td>
-<a href="../logbook/logbook-fourloops-first-runs.html" class="title listing-title">Logbook: the first four-loop rounds on the desk card</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="17" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="5" data-listing-word-count-sort="992" data-listing-title-sort="Logbook: the soft renderer's three constants, and Mitsuba" data-listing-filename-sort="logbook-soft-renderer-and-mitsuba.md">
-<td>
-<a href="../logbook/logbook-soft-renderer-and-mitsuba.html" class="title listing-title">Logbook: the soft renderer’s three constants, and Mitsuba</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="18" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="9" data-listing-word-count-sort="1605" data-listing-title-sort="Logbook: two DFC emulation contexts disagree by six orders of magnitude" data-listing-filename-sort="logbook-dfc-emulation-contexts-disagree.md">
-<td>
-<a href="../logbook/logbook-dfc-emulation-contexts-disagree.html" class="title listing-title">Logbook: two DFC emulation contexts disagree by six orders of magnitude</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="19" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="3" data-listing-word-count-sort="486" data-listing-title-sort="Logbook: two checks, a stopped backup, and curl's signing limits" data-listing-filename-sort="logbook-rfd2135-two-checks-and-a-stopped-backup.md">
-<td>
-<a href="../logbook/logbook-rfd2135-two-checks-and-a-stopped-backup.html" class="title listing-title">Logbook: two checks, a stopped backup, and curl’s signing limits</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="20" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="6" data-listing-word-count-sort="1163" data-listing-title-sort="Logbook: two walls between a translated graph and a HEF" data-listing-filename-sort="logbook-rfd1130-two-walls-to-a-hef.md">
-<td>
-<a href="../logbook/logbook-rfd1130-two-walls-to-a-hef.html" class="title listing-title">Logbook: two walls between a translated graph and a HEF</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="21" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="11" data-listing-word-count-sort="2074" data-listing-title-sort="Logbook: what an edge NPU takes, and what the ANNY forward will not export" data-listing-filename-sort="logbook-edge-npu-and-the-anny-forward.md">
-<td>
-<a href="../logbook/logbook-edge-npu-and-the-anny-forward.html" class="title listing-title">Logbook: what an edge NPU takes, and what the ANNY forward will not export</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="22" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="12" data-listing-word-count-sort="2261" data-listing-title-sort="Logbook: what the Neural Engine reaches, and what it holds" data-listing-filename-sort="logbook-rfd1142-neural-engine-against-the-ugen300.md">
-<td>
-<a href="../logbook/logbook-rfd1142-neural-engine-against-the-ugen300.html" class="title listing-title">Logbook: what the Neural Engine reaches, and what it holds</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="23" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="14" data-listing-word-count-sort="2799" data-listing-title-sort="Logbook: what the plan costs once the durations are real, and the card is a 3090" data-listing-filename-sort="logbook-rfd1122-hailo-first-rerank.md">
-<td>
-<a href="../logbook/logbook-rfd1122-hailo-first-rerank.html" class="title listing-title">Logbook: what the plan costs once the durations are real, and the card is a 3090</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="24" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="6" data-listing-word-count-sort="1157" data-listing-title-sort="The comment ladder" data-listing-filename-sort="logbook-comment-ladder.md">
-<td>
-<a href="../logbook/logbook-comment-ladder.html" class="title listing-title">The comment ladder</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
 </tbody>
 </table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+<p>The <strong>grounding-scale gate</strong> in <code>Taskweft.Grafcet</code> refuses any lowering that would produce more than N ground steps for a <code>%macro</code>-with-<code>for</code>; the author moves it to the dispatch-variable pattern instead. This is what keeps “no HTN feature lost” from turning into “unreadable chart”.</p>
+</section>
+<section id="round-trip-semantics" class="level2">
+<h2 class="anchored" data-anchor-id="round-trip-semantics">Round-trip semantics</h2>
+<p><code>raise(lower(g)) == g</code> when <code>g</code> is canonical; <code>lower(raise(h))</code> is idempotent for any well-formed <code>h</code>. Canonicalisation drops transitively-redundant guards: the reference HTN gates <code>a_oracle</code> on <code>/done/lake</code> although <code>ingest</code>, <code>embedder</code>, and <code>slat</code> each already gate on <code>lake</code>. The compact form drops those inherited receptivities; the second pass is a fixed point. <code>mix test test/taskweft/grafcet_test.exs</code> under <code>3-interactor/taskweft</code> passes 4/4, exercising both directions.</p>
+</section>
+<section id="transport-2-contractbus-cbor-zstd" class="level2">
+<h2 class="anchored" data-anchor-id="transport-2-contractbus-cbor-zstd">Transport: <code>2-contract/bus</code> + CBOR + zstd</h2>
+<p>Stdio JSON is <strong>blocklisted</strong> for the Elixir↔︎Python wire when the peer is a language-external library (nmm2 here). The workspace’s canonical transport is <code>2-contract/bus</code>’s DYNAMIC byte-slice command bus (iceoryx2 shared memory, 8-byte request-id envelope). Python reuses <code>weft_harness.Bus</code>’s <code>serve</code> loop verbatim; Elixir speaks the same wire through a new NIF at <code>3-interactor/taskweft-nmm-personas/c_src/weft_bus_nif.cpp</code>, modelled on <code>spot_broker/c_src/store_bus_nif.cpp</code> + <code>bus/proof/command_publisher.cpp</code>.</p>
+<p>The bus caps at 128 KiB per message. The projected 128-agent nmm2 obs is 1,233,911 bytes as JSON, 433,346 as CBOR, and <strong>4,821 bytes as CBOR+zstd</strong>; 250× smaller than JSON, well under the ceiling. Both sides speak the same envelope: 1-byte tag (<code>Z</code> = zstd-compressed CBOR, <code>C</code> = plain CBOR) followed by the body. Python uses <code>cbor2</code> + <code>zstandard</code>; Elixir uses <code>:cbor</code> + <code>:ezstd</code>.</p>
+<p>An obs that outgrows even zstd should move to a Snapshot pub/sub on its own service, coordinated by the command bus. The bus README’s own recommendation for bulk payloads. Not needed yet.</p>
+</section>
+<section id="continuous-time-scheduling" class="level2">
+<h2 class="anchored" data-anchor-id="continuous-time-scheduling">Continuous-time scheduling</h2>
+<p>Personas run in real time, not turn-based. Two independent wall-clock loops via <code>TaskweftNmmPersonas.Scheduler</code>: <code>:timer.send_interval(persona_period_ms, :persona_tick)</code> refreshes each agent’s latest intended action into an ETS mailbox at <code>--persona-hz</code> Hz; a second timer at <code>--env-hz</code> reads the latest fragments and steps the env. Only the last intended action per agent between env steps is submitted. Both rates are fixed integer Hz. No elastic scheduling.</p>
+<p><code>persona_hz &gt;= 10</code> is a hard contract; the Scheduler raises <code>ArgumentError</code> below it. Effective rates are recorded per episode and per trace row (<code>wall_us</code> monotonic timestamp).</p>
+<p>Measured on a live 128-agent nmm2 episode, target 30/10 Hz:</p>
+<pre><code>persona 26.14 Hz (target 30), env 8.2 Hz (target 10), 1.951s</code></pre>
+<p>BEAM <code>send_interval</code> jitters ~10-20% under real work; target above the floor with headroom, not at it. Three <code>mix test</code> cases guard this: one asserts effective persona rate ≥10 Hz on a real episode, one asserts the Scheduler refuses <code>persona_hz &lt; 10</code>, one exercises the MaskScore row shape.</p>
+</section>
+<section id="maskscore-row-shape" class="level2">
+<h2 class="anchored" data-anchor-id="maskscore-row-shape">MaskScore row shape</h2>
+<p>One row per (persona, episode, dimension). Field names track the EditScore schema in RFD 1173’s MASKSCORE.md verbatim:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>field</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>key</code></td>
+<td><code>nmm2_{persona}_seed{S}_ep{N}_{hash}</code>; stable, dedup-safe</td>
+</tr>
+<tr class="even">
+<td><code>instruction</code></td>
+<td>“play Neural MMO 2 as a {persona} persona for N ticks”</td>
+</tr>
+<tr class="odd">
+<td><code>input_state</code></td>
+<td><code>seed={S}</code></td>
+</tr>
+<tr class="even">
+<td><code>conditioning_image</code></td>
+<td>null</td>
+</tr>
+<tr class="odd">
+<td><code>output_traces</code></td>
+<td>list of per-tick JSONL shard paths</td>
+</tr>
+<tr class="even">
+<td><code>scores</code></td>
+<td><code>[survival_fraction, avg_health_norm]</code></td>
+</tr>
+<tr class="odd">
+<td><code>task_type</code></td>
+<td><code>survive</code></td>
+</tr>
+<tr class="even">
+<td><code>dimension</code></td>
+<td><code>instruction_following</code> / <code>consistency</code> / <code>overall</code></td>
+</tr>
+</tbody>
+</table>
+<p>Scores are populated by game-native reductions of the trace itself, not by Mitsuba render-and-compare. The RFD 1173 metric doesn’t apply to a text-shaped game; the schema stays faithful (same fields, same three dimensions), the <em>content</em> of <code>scores</code> is the domain-specific reduction. A future generator that produces game-shaped outputs would plug directly into the same schema.</p>
+</section>
+<section id="the-three-personas" class="level2">
+<h2 class="anchored" data-anchor-id="the-three-personas">The three personas</h2>
+<p>Each persona is one <code>.grafcet.jsonld</code> file under <code>personas/</code>. Steps resolve to Elixir dispatch functions in <code>lib/taskweft_nmm_personas/persona.ex</code> that consume the current observation, mutate persona memory, and return an action fragment.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>persona</th>
+<th>step chain</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>forager</td>
+<td>sense → seek_water → gather_food → wander → end_turn</td>
+</tr>
+<tr class="even">
+<td>hunter</td>
+<td>sense → heal_or_flee → seek_target → attack_or_move → end_turn</td>
+</tr>
+<tr class="odd">
+<td>trader</td>
+<td>sense → sell_surplus → buy_cheap → wander → end_turn</td>
+</tr>
+</tbody>
+</table>
+<p>Persona differentiation lives entirely in the step list. Adding a persona is one new <code>*.grafcet.jsonld</code> file plus (if it introduces new step names) new entries in the dispatch table.</p>
+</section>
+<section id="the-higher-level-constructs-are-in-scope" class="level2">
+<h2 class="anchored" data-anchor-id="the-higher-level-constructs-are-in-scope">The higher-level constructs are in scope</h2>
+<p>Scope of the DSL is whatever taskweft’s HTN can express. Every construct taskweft uses today rounds-trips through the lowering compiler; anything else stays out of the DSL.</p>
+<p>taskweft’s HTN uses parameterised actions (<code>params: [:block]</code>), methods with N alternatives selected by <code>check</code> clauses, method decomposition, and task-network goals. Those land on the following 60848 constructs, staged by build order:</p>
+<ol type="1">
+<li><code>|&gt;</code> / <code>|&lt;</code> (<code>OrDivergence</code> / <code>OrConvergence</code>) for a method with N receptivity-selected alternatives. <strong>Implemented.</strong> Round-trip test in <code>taskweft/test/taskweft/grafcet_test.exs</code> exercises a two-alternative fixture.</li>
+<li><code>%macro</code> (<code>MacroStep</code>) for method decomposition and parameter grounding over a finite static domain. Staged next.</li>
+<li><code>#enclosing</code> (<code>EnclosingStep</code>) for a task-network goal or a macro-scoped sub-plan. Staged after <code>%macro</code>.</li>
+<li><code>!&gt;</code> (<code>ForcingOrder</code>) for HTN backtracking on downstream failure of a chosen alternative. Staged last; harder to make round-trip idempotent because the rewound branch can be authored two ways.</li>
+</ol>
+<p>Each staged construct ships with its own round-trip test and its own worked fixture. The grounding-scale gate applies to <code>%macro</code> with <code>for</code>.</p>
+</section>
+<section id="what-is-deliberately-not-here" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-deliberately-not-here">What is deliberately not here</h2>
+<ol type="1">
+<li>RL training. Personas are hand-authored SFCs; the traces populate a reward-model dataset, they do not train the personas.</li>
+<li>A wall-clock scheduler that varies the persona rate at runtime. The contract is stable Hz, no jitter.</li>
+<li>Bulk-payload transport. Obs stays under 128 KiB via CBOR+zstd; a Snapshot pub/sub is the next-step answer if that budget is ever exceeded.</li>
+</ol>
+</section>
+<section id="verification" class="level2">
+<h2 class="anchored" data-anchor-id="verification">Verification</h2>
+<ol type="1">
+<li><code>mix test</code> in <code>3-interactor/taskweft/</code>; 4/4, the compact GRAFCET round-trip on <code>weftspun-build.grafcet.jsonld</code> and canonicalisation on <code>weftspun-build.domain.jsonld</code>.</li>
+<li><code>mix test</code> in <code>3-interactor/taskweft-nmm-personas/</code>; 3/3, the MaskScore row count, the persona rate floor, the Scheduler refusal.</li>
+<li>Live episode over <code>2-contract/bus</code> with real 128-agent nmm2: <code>ep0 seed42: persona 26.14 Hz (target 30), env 8.2 Hz (target 10),   1.951s</code> and <code>9 MaskScore rows -&gt; traces/maskscore.jsonl</code>.</li>
+<li>The traces are <code>traces/maskscore.jsonl</code> + <code>traces/maskscore.parquet</code> (parquet via duckdb reading the JSONL sibling; no pyarrow dep).</li>
+</ol>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -1090,7 +954,7 @@ window.Quarto = {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/pages/logbook.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/pages/logbook.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2148-grafcet-as-taskwefts-authoring-surface/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2148-grafcet-as-taskwefts-authoring-surface/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">

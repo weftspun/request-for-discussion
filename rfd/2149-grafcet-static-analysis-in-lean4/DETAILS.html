@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Logbook – Taskweft — Manuals</title>
+<title>details – Taskweft — Manuals</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -29,29 +29,27 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f36f388c175c695e587c9d92b6af4f92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f36f388c175c695e587c9d92b6af4f92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -79,65 +77,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -310,7 +250,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Taskweft — Manuals</span>
     </a>
   </div>
@@ -321,15 +261,15 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../pages/rfd.html"> 
+    <a class="nav-link" href="../../pages/rfd.html"> 
 <span class="menu-text">RFDs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../pages/logbook.html" aria-current="page"> 
+    <a class="nav-link" href="../../pages/logbook.html"> 
 <span class="menu-text">Logbook</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../pages/serials.html"> 
+    <a class="nav-link" href="../../pages/serials.html"> 
 <span class="menu-text">Register</span></a>
   </li>  
 </ul>
@@ -344,331 +284,135 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#details-grafcet-static-analysis-in-lean-4" id="toc-details-grafcet-static-analysis-in-lean-4" class="nav-link active" data-scroll-target="#details-grafcet-static-analysis-in-lean-4">DETAILS: GRAFCET static analysis in Lean 4</a>
+  <ul class="collapse">
+  <li><a href="#two-analyses-now-one-later" id="toc-two-analyses-now-one-later" class="nav-link" data-scroll-target="#two-analyses-now-one-later">Two analyses now, one later</a></li>
+  <li><a href="#firing-semantics" id="toc-firing-semantics" class="nav-link" data-scroll-target="#firing-semantics">Firing semantics</a></li>
+  <li><a href="#why-lean" id="toc-why-lean" class="nav-link" data-scroll-target="#why-lean">Why Lean</a></li>
+  <li><a href="#the-c-abi" id="toc-the-c-abi" class="nav-link" data-scroll-target="#the-c-abi">The C ABI</a></li>
+  <li><a href="#elixir-nif" id="toc-elixir-nif" class="nav-link" data-scroll-target="#elixir-nif">Elixir NIF</a></li>
+  <li><a href="#repo-manifest" id="toc-repo-manifest" class="nav-link" data-scroll-target="#repo-manifest">Repo manifest</a></li>
+  <li><a href="#verification" id="toc-verification" class="nav-link" data-scroll-target="#verification">Verification</a></li>
+  <li><a href="#staging-table" id="toc-staging-table" class="nav-link" data-scroll-target="#staging-table">Staging table</a></li>
+  <li><a href="#unaffected-by-rfd-2150s-fbd-target-pivot" id="toc-unaffected-by-rfd-2150s-fbd-target-pivot" class="nav-link" data-scroll-target="#unaffected-by-rfd-2150s-fbd-target-pivot">Unaffected by RFD 2150’s FBD-target pivot</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2149-grafcet-static-analysis-in-lean4/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2149-grafcet-static-analysis-in-lean4/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Logbook</h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>Entries record what was <strong>measured</strong>, not what was intended, and clip enough of the experimental apparatus to re-run the test rather than merely its conclusion.</p>
-<p>These 145 entries were a separate repository until <code>weftspun/logbook</code> was archived. A decision and its measurement sat one repository apart; they no longer do. Entries kept their filenames, so an entry is still findable by the thing it measured rather than by where it used to live.</p>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-      <option value="" disabled="" selected="" hidden="">Order By</option>
-      <option value="index" data-direction="asc">Default</option>
-      <option value="listing-date-sort" data-direction="asc">
-        Date - Oldest
-      </option>
-      <option value="listing-date-sort" data-direction="desc">
-        Date - Newest
-      </option>
-      <option value="listing-title-sort" data-direction="asc">
-        Title
-      </option>
-    </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
-</div>
-<table class="quarto-listing-table table">
+
+<section id="details-grafcet-static-analysis-in-lean-4" class="level1">
+<h1>DETAILS: GRAFCET static analysis in Lean 4</h1>
+<section id="two-analyses-now-one-later" class="level2">
+<h2 class="anchored" data-anchor-id="two-analyses-now-one-later">Two analyses now, one later</h2>
+<p>AGRAFE’s tool ships three: structural (step reachability), structural (pairwise concurrency), and abstract interpretation of variable domains. This RFD closes the first two and stages the third.</p>
+<p><strong>Reachability.</strong> The set of step ids that appear in some marking reachable from the initial marking by simultaneous-firing IEC 60848 semantics. Implemented as a fuel-bounded BFS through the firing graph in <code>SFC.reachableSteps</code>. Fuel is a parameter; a real deployment supplies <code>2 ^ |steps|</code> as the state-space upper bound.</p>
+<p><strong>Pairwise concurrency.</strong> The set of <code>(a, b)</code> step-id pairs (ordered by name to avoid duplicates) that co-occur in some reachable marking. <code>SFC.concurrentPairs</code>. This is what surfaces an OR-divergence with non-exclusive receptivities: the two branches show up as a concurrent pair, which is a chart bug the author should see.</p>
+<p><strong>Abstract interpretation.</strong> Variable domain analysis over internal variables. Staged; the SFC types carry the fields (<code>Step.storedTarget</code>, receptivity <code>V.&lt;var&gt;</code> atoms), the analysis itself is empty. Landing this needs either a Lean port of an Apron-style domain library (interval, octagon, polyhedron) or a Z3 bridge; neither is a taskweft gate today, so the RFD closes on structural analysis and leaves the abstract-interpretation stage on the roadmap.</p>
+</section>
+<section id="firing-semantics" class="level2">
+<h2 class="anchored" data-anchor-id="firing-semantics">Firing semantics</h2>
+<p><code>Receptivity</code> has three constructors: <code>trueR</code>, <code>stepActive</code>, <code>andR</code>. That covers the compact GRAFCET DSL’s supported receptivity fragment (AND of step-activity atoms). <code>V.&lt;var&gt;</code> atoms are conservatively <code>true</code> in the current firing predicate; a sound over-approximation for reachability (a step reachable under unrestricted variables is reachable under any restriction). Abstract interpretation replaces this with a real domain check.</p>
+<p><code>SFC.fire</code> is simultaneous-firing IEC 60848: every enabled transition fires at once, sources come out of the marking, targets go in. The result is <code>eraseDups</code>ed because the union may put a step in twice (one transition adds it, another already had it there).</p>
+</section>
+<section id="why-lean" class="level2">
+<h2 class="anchored" data-anchor-id="why-lean">Why Lean</h2>
+<p>Two reasons over “just port to Elixir”.</p>
+<p><strong>Proof.</strong> The port opens the door to proving <code>reachableSteps</code> sound and complete against the semantics: <code>s ∈ SFC.reachableSteps sfc</code> iff there is a firing sequence from the initial marking that puts <code>s</code> in some marking. Those theorems land in <code>Theorems.lean</code>; they are the value-add over the Java tool, which asserts them rather than proving them.</p>
+<p><strong>C ABI, no runtime.</strong> Lean 4 compiles to C, links as a static or shared library, and imposes no runtime BEAM or JVM. That is the minimum interface a NIF can pull; the fully-linked NIF is one <code>.so</code>/<code>.dylib</code> and has no Apron and no Z3 in its transitive closure.</p>
+</section>
+<section id="the-c-abi" class="level2">
+<h2 class="anchored" data-anchor-id="the-c-abi">The C ABI</h2>
+<p><code>c_src/grafcet_static.h</code>:</p>
+<pre><code>char *grafcet_static_analyse(const char *sfc_json);
+void  grafcet_static_free(char *buf);</code></pre>
+<p>Ownership: caller frees. The reply is a null-terminated UTF-8 JSON string. Success shape:</p>
+<pre><code>{"reachable": ["init", "find", "pickup_from_table",
+               "unstack", "mark_done"],
+ "concurrent_pairs": [["pickup_from_table", "unstack"]]}</code></pre>
+<p>Error shape:</p>
+<pre><code>{"error": "reason"}</code></pre>
+<p>The stub returns <code>{"error":"stub","reason":"...","see":"rfd 2144"}</code> until the Lean-produced shared library replaces it.</p>
+</section>
+<section id="elixir-nif" class="level2">
+<h2 class="anchored" data-anchor-id="elixir-nif">Elixir NIF</h2>
+<p>Modelled on <code>3-interactor/taskweft-nmm-personas/c_src/weft_bus_nif.cpp</code> and <code>7-service/spot-broker/c_src/store_bus_nif.cpp</code>. Loads <code>libgrafcet_static.dylib</code>, calls <code>grafcet_static_analyse</code>, hands the JSON string back as an Elixir binary. Runs on a dirty CPU scheduler because the BFS is CPU-bound and unbounded in the fuel argument.</p>
+<p>Exposed at <code>Taskweft.Grafcet.Static.analyse/1</code> in the taskweft project; called from the loader when a <code>.grafcet.jsonld</code> document lands, so a chart with an unreachable step or an unintended concurrent pair refuses to load.</p>
+</section>
+<section id="repo-manifest" class="level2">
+<h2 class="anchored" data-anchor-id="repo-manifest">Repo manifest</h2>
+<p><code>taskweft-grafcet-static</code> is a first-class checkout, listed in <code>.repo/manifests/default.xml</code> at <code>3-interactor/taskweft-grafcet-static</code> alongside <code>taskweft</code> and <code>taskweft-nmm-personas</code>. Remote is <code>weftspun</code>. The three sit on the interactor side of the hexagon per CLAUDE.md’s “one live goal manifest” rule.</p>
+</section>
+<section id="verification" class="level2">
+<h2 class="anchored" data-anchor-id="verification">Verification</h2>
+<ol type="1">
+<li><p><code>lake build</code> in <code>3-interactor/taskweft-grafcet-static</code> builds the Lean library and the smoke-test executable.</p></li>
+<li><p><code>./.lake/build/bin/grafcet_static</code> runs the blocks_get_or fixture (RFD 2148’s OR-divergence worked example) and prints:</p>
+<p>reachable: [init, find, pickup_from_table, unstack, mark_done] concurrent pairs: [(pickup_from_table, unstack)]</p></li>
+</ol>
+<p>The concurrent pair correctly flags that the two OR branches share the same receptivity; an author-visible symptom of a chart where the AGRAFE tool would say “not mutually exclusive”. 1. When the Lean-produced shared library lands, the Elixir NIF’s <code>analyse/1</code> returns the same JSON, wired into taskweft’s loader gate.</p>
+</section>
+<section id="staging-table" class="level2">
+<h2 class="anchored" data-anchor-id="staging-table">Staging table</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
-<tr>
-
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
-</th>
-
-<th>
-<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
-</th>
-
+<tr class="header">
+<th>construct</th>
+<th>state</th>
 </tr>
 </thead>
-<tbody class="list">
-
-<tr data-index="0" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="4" data-listing-word-count-sort="725" data-listing-title-sort="Blend-shape animation through the flow adapter, and TokenRig's first light" data-listing-filename-sort="logbook-blendshape-animation-and-tokenrig-first-light.md">
-<td>
-<a href="../logbook/logbook-blendshape-animation-and-tokenrig-first-light.html" class="title listing-title">Blend-shape animation through the flow adapter, and TokenRig’s first light</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tbody>
+<tr class="odd">
+<td>Reachability</td>
+<td>landed in Lean, real C body wired via Lean <code>@[export]</code></td>
 </tr>
-
-<tr data-index="1" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="5" data-listing-word-count-sort="994" data-listing-title-sort="In-betweens, phenotype clips, and what pass-through means" data-listing-filename-sort="logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.md">
-<td>
-<a href="../logbook/logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.html" class="title listing-title">In-betweens, phenotype clips, and what pass-through means</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>Pairwise concurrency</td>
+<td>landed in Lean, real C body wired</td>
 </tr>
-
-<tr data-index="2" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="8" data-listing-word-count-sort="1464" data-listing-title-sort="Logbook: CineForm in Godot, and what recording actually costs" data-listing-filename-sort="logbook-cineform-movie-writer.md">
-<td>
-<a href="../logbook/logbook-cineform-movie-writer.html" class="title listing-title">Logbook: CineForm in Godot, and what recording actually costs</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>Elixir NIF</td>
+<td><code>Taskweft.Grafcet.Static.analyse/1</code> wired, 2/2 tests green</td>
 </tr>
-
-<tr data-index="3" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="4" data-listing-word-count-sort="660" data-listing-title-sort="Logbook: FDB VFS embed into ecto_sqlite3, retracted" data-listing-filename-sort="logbook-rfd2133-vfs-embed-retracted.md">
-<td>
-<a href="../logbook/logbook-rfd2133-vfs-embed-retracted.html" class="title listing-title">Logbook: FDB VFS embed into ecto_sqlite3, retracted</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>Abstract interpretation</td>
+<td>typed in the SFC, analysis empty; needs a Lean interval/octagon domain or a Z3 bridge</td>
 </tr>
-
-<tr data-index="4" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="2" data-listing-word-count-sort="283" data-listing-title-sort="Logbook: OpenBao on FoundationDB" data-listing-filename-sort="logbook-rfd2140-openbao-on-fdb.md">
-<td>
-<a href="../logbook/logbook-rfd2140-openbao-on-fdb.html" class="title listing-title">Logbook: OpenBao on FoundationDB</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>Soundness theorems</td>
+<td><code>Theorems.lean</code> empty; next stage</td>
 </tr>
-
-<tr data-index="5" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="31" data-listing-word-count-sort="6080" data-listing-title-sort="Logbook: RFD 1016 model-repo build-out" data-listing-filename-sort="logbook-rfd1016-model-repos.md">
-<td>
-<a href="../logbook/logbook-rfd1016-model-repos.html" class="title listing-title">Logbook: RFD 1016 model-repo build-out</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>Loader gate</td>
+<td>not wired; needs a <code>Taskweft.JSONLD.Loader</code> hook after the compact GRAFCET parse</td>
 </tr>
-
-<tr data-index="6" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="11" data-listing-word-count-sort="2018" data-listing-title-sort="Logbook: RFD 1122 T01, the pose-library check" data-listing-filename-sort="logbook-rfd1122-t01-pose-check.md">
-<td>
-<a href="../logbook/logbook-rfd1122-t01-pose-check.html" class="title listing-title">Logbook: RFD 1122 T01, the pose-library check</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="7" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="4" data-listing-word-count-sort="639" data-listing-title-sort="Logbook: bao connected to FDB cluster, credential rotation, 1Password persistence failure" data-listing-filename-sort="logbook-rfd2142-bao-pki-zerotrust.md">
-<td>
-<a href="../logbook/logbook-rfd2142-bao-pki-zerotrust.html" class="title listing-title">Logbook: bao connected to FDB cluster, credential rotation, 1Password persistence failure</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="8" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="3" data-listing-word-count-sort="480" data-listing-title-sort="Logbook: cert-auth on Bao, and the DNS edit that ran without 1P" data-listing-filename-sort="logbook-rfd2146-zerotrust-roles-first-run.md">
-<td>
-<a href="../logbook/logbook-rfd2146-zerotrust-roles-first-run.html" class="title listing-title">Logbook: cert-auth on Bao, and the DNS edit that ran without 1P</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="9" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="4" data-listing-word-count-sort="614" data-listing-title-sort="Logbook: minimum-double weftspun-fdb on Fly" data-listing-filename-sort="logbook-rfd2133-weftspun-fdb-on-fly.md">
-<td>
-<a href="../logbook/logbook-rfd2133-weftspun-fdb-on-fly.html" class="title listing-title">Logbook: minimum-double weftspun-fdb on Fly</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="10" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="18" data-listing-word-count-sort="3434" data-listing-title-sort="Logbook: one base, measured, and the rerank" data-listing-filename-sort="logbook-rfd1171-gemma-first-rerank.md">
-<td>
-<a href="../logbook/logbook-rfd1171-gemma-first-rerank.html" class="title listing-title">Logbook: one base, measured, and the rerank</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="11" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="3" data-listing-word-count-sort="474" data-listing-title-sort="Logbook: spot-broker on Fly" data-listing-filename-sort="logbook-rfd2133-spot-broker-on-fly.md">
-<td>
-<a href="../logbook/logbook-rfd2133-spot-broker-on-fly.html" class="title listing-title">Logbook: spot-broker on Fly</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="12" data-listing-file-modified-sort="1788319454847" data-listing-reading-time-sort="7" data-listing-word-count-sort="1241" data-listing-title-sort="Logbook: the ANNY fit that the corpus does not need" data-listing-filename-sort="logbook-anny-phenotype-fit-retired.md">
-<td>
-<a href="../logbook/logbook-anny-phenotype-fit-retired.html" class="title listing-title">Logbook: the ANNY fit that the corpus does not need</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="13" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="7" data-listing-word-count-sort="1299" data-listing-title-sort="Logbook: the DR runbook runs on the day the cluster is gone" data-listing-filename-sort="logbook-rfd2144-dr-runbook-first-run.md">
-<td>
-<a href="../logbook/logbook-rfd2144-dr-runbook-first-run.html" class="title listing-title">Logbook: the DR runbook runs on the day the cluster is gone</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="14" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="11" data-listing-word-count-sort="2026" data-listing-title-sort="Logbook: the Qwen3-VL vision tower against the Dataflow Compiler" data-listing-filename-sort="logbook-qwen3vl-vit-translate-walls.md">
-<td>
-<a href="../logbook/logbook-qwen3vl-vit-translate-walls.html" class="title listing-title">Logbook: the Qwen3-VL vision tower against the Dataflow Compiler</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="15" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="2" data-listing-word-count-sort="375" data-listing-title-sort="Logbook: the backup reaches Tigris through the SNI hop" data-listing-filename-sort="logbook-rfd2134-backup-through-the-sni-hop.md">
-<td>
-<a href="../logbook/logbook-rfd2134-backup-through-the-sni-hop.html" class="title listing-title">Logbook: the backup reaches Tigris through the SNI hop</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="16" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="6" data-listing-word-count-sort="1171" data-listing-title-sort="Logbook: the first four-loop rounds on the desk card" data-listing-filename-sort="logbook-fourloops-first-runs.md">
-<td>
-<a href="../logbook/logbook-fourloops-first-runs.html" class="title listing-title">Logbook: the first four-loop rounds on the desk card</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="17" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="5" data-listing-word-count-sort="992" data-listing-title-sort="Logbook: the soft renderer's three constants, and Mitsuba" data-listing-filename-sort="logbook-soft-renderer-and-mitsuba.md">
-<td>
-<a href="../logbook/logbook-soft-renderer-and-mitsuba.html" class="title listing-title">Logbook: the soft renderer’s three constants, and Mitsuba</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="18" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="9" data-listing-word-count-sort="1605" data-listing-title-sort="Logbook: two DFC emulation contexts disagree by six orders of magnitude" data-listing-filename-sort="logbook-dfc-emulation-contexts-disagree.md">
-<td>
-<a href="../logbook/logbook-dfc-emulation-contexts-disagree.html" class="title listing-title">Logbook: two DFC emulation contexts disagree by six orders of magnitude</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="19" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="3" data-listing-word-count-sort="486" data-listing-title-sort="Logbook: two checks, a stopped backup, and curl's signing limits" data-listing-filename-sort="logbook-rfd2135-two-checks-and-a-stopped-backup.md">
-<td>
-<a href="../logbook/logbook-rfd2135-two-checks-and-a-stopped-backup.html" class="title listing-title">Logbook: two checks, a stopped backup, and curl’s signing limits</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="20" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="6" data-listing-word-count-sort="1163" data-listing-title-sort="Logbook: two walls between a translated graph and a HEF" data-listing-filename-sort="logbook-rfd1130-two-walls-to-a-hef.md">
-<td>
-<a href="../logbook/logbook-rfd1130-two-walls-to-a-hef.html" class="title listing-title">Logbook: two walls between a translated graph and a HEF</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="21" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="11" data-listing-word-count-sort="2074" data-listing-title-sort="Logbook: what an edge NPU takes, and what the ANNY forward will not export" data-listing-filename-sort="logbook-edge-npu-and-the-anny-forward.md">
-<td>
-<a href="../logbook/logbook-edge-npu-and-the-anny-forward.html" class="title listing-title">Logbook: what an edge NPU takes, and what the ANNY forward will not export</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="22" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="12" data-listing-word-count-sort="2261" data-listing-title-sort="Logbook: what the Neural Engine reaches, and what it holds" data-listing-filename-sort="logbook-rfd1142-neural-engine-against-the-ugen300.md">
-<td>
-<a href="../logbook/logbook-rfd1142-neural-engine-against-the-ugen300.html" class="title listing-title">Logbook: what the Neural Engine reaches, and what it holds</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="23" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="14" data-listing-word-count-sort="2799" data-listing-title-sort="Logbook: what the plan costs once the durations are real, and the card is a 3090" data-listing-filename-sort="logbook-rfd1122-hailo-first-rerank.md">
-<td>
-<a href="../logbook/logbook-rfd1122-hailo-first-rerank.html" class="title listing-title">Logbook: what the plan costs once the durations are real, and the card is a 3090</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="24" data-listing-file-modified-sort="1788319454848" data-listing-reading-time-sort="6" data-listing-word-count-sort="1157" data-listing-title-sort="The comment ladder" data-listing-filename-sort="logbook-comment-ladder.md">
-<td>
-<a href="../logbook/logbook-comment-ladder.html" class="title listing-title">The comment ladder</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
 </tbody>
 </table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</section>
+<section id="unaffected-by-rfd-2150s-fbd-target-pivot" class="level2">
+<h2 class="anchored" data-anchor-id="unaffected-by-rfd-2150s-fbd-target-pivot">Unaffected by RFD 2150’s FBD-target pivot</h2>
+<p>RFD 2150 changed the <em>emitter’s target</em> from PLCopen SFC to PLCopen FBD (state machine encoded as SR flip-flops). This analyser reads the <em>compact GRAFCET input</em> to the emitter, not its output, so nothing here changes. Reachability and pairwise concurrency are graph queries on the SFC step/transition structure carried in the input JSON-LD; that structure is unchanged by whatever the emitter ships downstream.</p>
+<p>A separate analyser reading the FBD output (to catch defects introduced during the FBD encoding; a mis-wired reset input, a missing first-scan latch) is a follow-on. This one stays authoritative for the input side.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -1090,7 +834,7 @@ window.Quarto = {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/pages/logbook.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/pages/logbook.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2149-grafcet-static-analysis-in-lean4/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2149-grafcet-static-analysis-in-lean4/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
