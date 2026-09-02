@@ -15,11 +15,6 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 
 TELLS = {
-    # Em-dash-as-conjunction needs LITERAL SPACES around the dash, not any
-    # whitespace. Using \s here made the pattern match "\n- " -- standard
-    # CommonMark unordered-list markers -- and flag every bullet as an
-    # em-dash join. Existing RFDs on main happened to avoid bullets, so
-    # the false-positive never fired; the 2148-2161 chain surfaced it.
     "em_dash_join": re.compile(r" [-—][-—]? "),
     "counting_announcement": re.compile(
         r"\b(in|for|on)\s+(two|three|four|five|six)\s+(ways|reasons|counts|things|senses)\b",
