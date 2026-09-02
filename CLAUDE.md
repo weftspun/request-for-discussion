@@ -433,6 +433,20 @@ document, not who wrote the current line. A human who edits an AI-drafted
 RFD keeps the AI sentence in place because the drafting did happen; the
 byline separately stays where git records it.
 
+## How Project READMEs Are Bounded
+
+A project's README opens with the tagline a reader sees before scrolling.
+`scripts/check_project_readme_length.py` bounds the first non-blank line at
+144 characters. A tagline is small on purpose: it forces the writer to pick
+what the project is rather than hedge.
+
+Silent on projects with no README, counted so the skip does not read as a
+pass; forks are exempt (their first line is upstream's, not ours) with the
+exempt list inline in the script.
+
+    python scripts/check_project_readme_length.py
+    python scripts/check_project_readme_length.py --self-test
+
 ## Blocklists
 
 Sources excluded from corpora, with the reason:
