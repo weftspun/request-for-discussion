@@ -690,6 +690,10 @@ def Scope "Serials"
                 {
                     custom string slug = "retract-wholebody-detector-keep-renderer"
                 }
+                def "S2169"
+                {
+                    custom string slug = "abandon-strangler-fig-studio-core"
+                }
             }
         }
     }
