@@ -1,6 +1,6 @@
 # RFD 1122: The wholebody gap, and the renderer that closes it
 
-**State:** discussion
+**State:** abandoned
 **Feature:** wholebody keypoint detection, and the corpus that trains it
 **Scope:** `3-interactor/rf-detr-cpp`, `6-datasource/rf-detr-keypoint-data`,
 `6-datasource/dataflow-coco-gemx`, `3-interactor/pose-consensus`,
