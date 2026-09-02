@@ -2,50 +2,56 @@
 
 This RFD was drafted by an AI and read by a human before it shipped.
 
-The target is Qwen3-VL as the shared VLM. Two roles sit on the same
-weights: the avatar's text+image reasoning core, and the reward model
-that scores the model's own generations via the EditScore LoRA (RFD
-1157). Audio is a separate stack per RFD 1170's presence loop
-(Qwen3-ASR-1.7B for input, Qwen3-TTS-12Hz-1.7B-CustomVoice for
-output). Shared weights are what close the MaskScore loop.
+The target is Gemma-4-12B as the shared VLM. Two roles sit on the
+same weights: the avatar's text+image reasoning core, and the reward
+model that scores the model's own generations via the EditScore
+fine-tune (RFD 1157). Audio is a separate stack per RFD 1170's
+presence loop (Qwen3-ASR-1.7B for input, Qwen3-TTS-12Hz-1.7B-
+CustomVoice for output). Shared weights are what close the MaskScore
+loop.
 
-## Qwen3-VL (the shared VLM)
+## Gemma-4-12B (the shared VLM)
 
-Qwen/Qwen3-VL-4B-Instruct. Apache 2.0, open weights, dense (not MoE),
-text and image input, text output. 8.9 GB fp16 measured on the 3090
-per RFD 2161; fits 24 GiB comfortably at fp16 without quantization.
+google/gemma-4-12B-it-qat-q4_0-gguf. Apache 2.0, open weights, dense
+(not MoE), text and image input, text output. Ships as a true QAT
+Q4_0 checkpoint (~7 GB) directly from Google, so QAFT is upstream
+rather than something this workspace has to produce (RFD 1027's
+QAFT-first rule; RFD 2139's survey established Gemma is the only
+current-stack model with a true QAFT release). Fits 24 GiB with
+plenty of activation headroom.
 
-EditScore (RFD 1157) is a LoRA over Qwen3-VL, so the same base weights
-serve the avatar's understanding path and the reward model that scores
-its own generations. The share-backbone argument is what Qwen3-VL
-carries into RFD 1173 unchanged: the reward model IS the base VLM
-under a LoRA adapter, not a separate model.
+EditScore (RFD 1157) fine-tunes on top of Gemma, so the same base
+weights serve the avatar's understanding path and the reward model
+that scores its own generations. The share-backbone argument
+survives the Qwen3-VL -> Gemma-4-12B swap because it turns on
+share-backbone, not on which backbone: the reward model IS the base
+VLM under a fine-tune, not a separate model.
 
-The audio path is orthogonal and lives in RFD 1170: Qwen3-ASR-1.7B on
-device for input, Qwen3-TTS-12Hz-1.7B-CustomVoice on host for output.
-Neither passes through Qwen3-VL.
+The audio path is orthogonal and lives in RFD 1170: Qwen3-ASR-1.7B
+on device for input, Qwen3-TTS-12Hz-1.7B-CustomVoice on host for
+output. Neither passes through the VLM.
 
-1. https://github.com/QwenLM/Qwen3-VL
-2. https://huggingface.co/Qwen/Qwen3-VL-4B-Instruct
+1. https://huggingface.co/google/gemma-4-12B-it-qat-q4_0-gguf
+2. https://github.com/QwenLM/Qwen3-VL  (the retracted earlier choice)
 
 ## Wan-VACE (image and video generation)
 
-**Qwen3-VL does not generate images.** Its outputs are text; it
-understands images as input but produces none. Wan-VACE fills the
-image and video generation slot Qwen3-VL leaves open. ~14B params,
-~28 GB bf16, ~8.7 GB NF4.
+**Gemma-4-12B does not generate images.** Its outputs are text; it
+takes images as input but produces none. Wan-VACE fills the image
+and video generation slot Gemma leaves open. ~14B params, ~28 GB
+bf16, ~8.7 GB NF4.
 
 Wan-VACE is the generator that produces the images the 3D stage consumes
 and the images MaskScore's image-editing stubs edit and score.
 
 ## Pixal3D→VoxHammer (the 3D stage)
 
-Wan-VACE generates and edits images and video; the 3D stage turns those
-images into meshes. Pixal3D produces a coarse textured mesh from an
-image, VoxHammer refines it. Qwen3-VL-4B fp16 (~8.9 GiB) leaves ~15 GiB
-of the 3090's budget for the 3D stage; with Wan-VACE NF4 (~8.7 GiB)
-swapped in for generation and out for the 3D stage, total peak
-occupancy is ~17.6 GiB and no QAFT is required.
+Wan-VACE generates and edits images and video; the 3D stage turns
+those images into meshes. Pixal3D produces a coarse textured mesh
+from an image, VoxHammer refines it. Gemma-4-12B Q4_0 (~7 GB) leaves
+~17 GiB of the 3090's budget for the 3D stage; with Wan-VACE NF4
+(~8.7 GiB) swapped in for generation and out for the 3D stage, total
+peak occupancy is ~15.7 GiB.
 
 ## EditScore evaluation
 
@@ -91,23 +97,23 @@ The four-stage loop:
 
 ## VRAM budget on the 3090
 
-| component                    |    fp16 |     NF4 | co-resident? |
+| component                    |    bf16 | Q4/NF4  | co-resident? |
 | ---------------------------- | ------: | ------: | :----------: |
-| Qwen3-VL-4B (dense)          | ~8.9 GB | ~2.9 GB |    always    |
+| Gemma-4-12B (VLM)            | ~24 GB  |  ~7 GB  |    always    |
 | Wan-VACE (image/video gen)   |  ~28 GB | ~8.7 GB |   swapped    |
-| Pixal3D                      |     TBD |     TBD |    swapped   |
-| VoxHammer                    |     TBD |     TBD |    swapped   |
+| Pixal3D                      | 24.0 GB |    n/a  |   swapped    |
+| VoxHammer                    |  0.0 GB |    n/a  |   swapped    |
 | activation overhead          |     n/a | ~0.1 GB |     n/a      |
 
-Qwen3-VL-4B fp16 (~8.9 GB) is the RFD 2161 Mac mini measurement and
-matches the model card's published size. On the 3090's 24 GiB,
-Qwen3-VL-4B fp16 + Wan-VACE NF4 co-resident totals ~17.6 GiB —
-comfortable, no QAFT required. The condition 5 quantization argument
-that earlier drafts needed for a 30B MoE does not apply here.
+Gemma-4-12B Q4_0 (~7 GB) is Google's own QAT release. On the 3090's
+24 GiB, Gemma-4-12B Q4_0 + Wan-VACE NF4 co-resident totals ~15.7
+GiB -- comfortable, no workspace-side quantization required.
 
-Qwen3-VL-8B is the reserved fallback if 4B's reasoning falls short:
-~16 GB fp16, ~6.75 GiB NF4 measured (RFD 1163). Either variant leaves
-budget for a co-resident 3D stage in NF4.
+An earlier draft named Qwen3-VL-4B (fp16 ~8.9 GB) as the VLM; the
+Qwen3-VL-8B fp16 fallback (~16 GB) was also on the shortlist. Both
+retracted per RFD 2169. The reason is not tier -- Qwen3-VL fits --
+it is that Gemma-4-12B has a true upstream QAFT release and Qwen
+does not, and the workspace standardized on QAFT-first (RFD 1027).
 
 ## Why not LLaDA
 
@@ -115,6 +121,6 @@ LLaDA-o NF4 on the 3090 produced 64 tokens in 5.76 s at steps=128,
 25x slower than the RFD 1170 presence-loop sub-500ms target. Block
 diffusion iterates to convergence across the full block; an
 autoregressive VLM streams from the first forward pass. The family
-(LLaDA-o, iLLaDA, LLaDA-1.5) is blocklisted. The MaskScore technique
-transfers to Qwen3-VL without change. Masking operates on latents,
-not on the model that fills them.
+(LLaDA-o, iLLaDA, LLaDA-1.5) is blocklisted. The MaskScore technique transfers to Gemma-4-12B (or any VLM)
+without change. Masking operates on latents, not on the model that
+fills them.
