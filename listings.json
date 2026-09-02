@@ -32,6 +32,7 @@
   {
     "listing": "/pages/rfd.html",
     "items": [
+      "/rfd/2176-committed-cites-terminal-index/index.html",
       "/rfd/2175-abandon-rented-compute-rfds/index.html",
       "/rfd/2174-abandoned-citation-index/index.html",
       "/rfd/2173-qwen3-vl-to-gemma-migration-index/index.html",

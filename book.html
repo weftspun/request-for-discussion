@@ -1563,6 +1563,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#decision-204" id="toc-decision-204" class="nav-link" data-scroll-target="#decision-204">Decision</a></li>
   <li><a href="#related-183" id="toc-related-183" class="nav-link" data-scroll-target="#related-183">Related</a></li>
   </ul></li>
+  <li><a href="#rfd-2176-index-of-committedpublished-rfds-citing-terminal-rfds" id="toc-rfd-2176-index-of-committedpublished-rfds-citing-terminal-rfds" class="nav-link" data-scroll-target="#rfd-2176-index-of-committedpublished-rfds-citing-terminal-rfds">RFD 2176: Index of committed/published RFDs citing terminal RFDs</a>
+  <ul class="collapse">
+  <li><a href="#problem-202" id="toc-problem-202" class="nav-link" data-scroll-target="#problem-202">Problem</a></li>
+  <li><a href="#decision-205" id="toc-decision-205" class="nav-link" data-scroll-target="#decision-205">Decision</a></li>
+  <li><a href="#related-184" id="toc-related-184" class="nav-link" data-scroll-target="#related-184">Related</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -6359,6 +6365,29 @@ void  grafcet_static_free(char *buf);</code></pre>
 <section id="related-183" class="level2">
 <h2 class="anchored" data-anchor-id="related-183">Related</h2>
 <p>Retracts: urn:oid:1.3.6.1.4.1.66606.1.1.{1132,1140,1163}, urn:oid:1.3.6.1.4.1.66606.1.2.{2133,2138} Anchor: CLAUDE.md’s Compute hard constraint and the RunPod, Vast.ai blocklist rows. Companion: RFD 2169 (studio-core abandonment, same class of walk-back).</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2176-index-of-committedpublished-rfds-citing-terminal-rfds" class="level1">
+<h1>RFD 2176: Index of committed/published RFDs citing terminal RFDs</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2176</code></p>
+<p><strong>State:</strong> committed <strong>Feature:</strong> documentation index for stale citations from settled RFDs <strong>Scope:</strong> every <code>committed</code> or <code>published</code> RFD that cites an <code>abandoned</code> or <code>moved</code> RFD</p>
+<section id="problem-202" class="level2">
+<h2 class="anchored" data-anchor-id="problem-202">Problem</h2>
+<p>A Lean-verified audit found 39 pairs of (committed/published → terminal). Higher severity than RFD 2174’s open→abandoned class: settled decisions leaning on withdrawn ones read as authoritative.</p>
+<ul>
+<li><strong>14 retraction chains</strong> — the RFD is the retraction (2168-2175, 2159). Correct as-is.</li>
+<li><strong>14 historical framing</strong> in published loop-RFDs (1030, 1143-1147 cite RFD 1122; 1020-1060 cite the pre-MaskScore RFD 1019). Weakly stale; the framing was correct when written.</li>
+<li><strong>11 real drift</strong> — a settled decision references a terminal RFD without acknowledging the retraction chain. Per-pair successor annotations in <a href="DETAILS.md">DETAILS.md</a>.</li>
+</ul>
+</section>
+<section id="decision-205" class="level2">
+<h2 class="anchored" data-anchor-id="decision-205">Decision</h2>
+<p>Same pattern as RFD 2174: this RFD is the citable index. The 14 retraction chains need no action. The 14 historical-framing pairs stay as-is (retitling a published RFD to name a successor for a citation that describes a superseded problem framing does more damage than the drift). The 11 real-drift pairs migrate on next edit; DETAILS.md names each successor.</p>
+</section>
+<section id="related-184" class="level2">
+<h2 class="anchored" data-anchor-id="related-184">Related</h2>
+<p>Spine: urn:oid:1.3.6.1.4.1.66606.1.1.1000 (RFD conventions). Companion: urn:oid:1.3.6.1.4.1.66606.1.2.2174 (open→abandoned). Verified by: Lean 4 spec in <code>scratchpad/rfd_check/RfdSoundness.lean</code> (metatheorems typecheck; counterexamples printed by <code>Report.lean</code>).</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 
