@@ -89,30 +89,23 @@ corpus only when all four hold:
    mediocre on the world;
 4. Evaluation uses real or constructed data only. A model measured on its own
    generation distribution has not been measured.
-5. The generator runs at its published precision. **Quantized weights do not
-   produce corpus data**, whatever they cost to run.
 
-Condition 5 is a decision rather than a measurement, and the measurement first
-offered for it has been withdrawn. That is stated first because the earlier
-wording of this paragraph said the opposite, and it shipped.
-
-Holding the prompt fixed reverses it:
-
-    precision   negative prompt      photographic silhouette agreement
-    bf16        upstream's default   0.776
-    bf16        empty                0.305
-    NF4         empty                0.328
-    NF4         upstream's default   0.825
-
-At four bits with the negative prompt the pose survives better than the figure
-originally cited for `bf16`. The prompt moved the result; precision did not
-measurably move it.
-
-The condition stays because it was decided, not derived: quantised generators do
-not produce corpus data here. Labelling it a decision is the honest form. A rule
-that cites a retracted measurement invites the next reader to re-derive it,
-reach the opposite answer, and quietly drop the rule; one that says "decided"
-gets revisited deliberately instead.
+**Retracted 2026-09-02: Condition 5 (quantised weights do not produce corpus
+data) is gone.** The condition read: *"The generator runs at its published
+precision. Quantized weights do not produce corpus data, whatever they cost
+to run."* It was carried as a decision rather than a measurement — the
+prompt-fixed table (bf16-empty 0.305 vs NF4-upstream-default 0.825) showed
+precision did not measurably move the result. The condition was kept anyway
+on the argument that it was decided rather than derived. That argument no
+longer holds: the funding constraint has closed rented compute, and forcing
+corpus generation to run at published precision on the 3090 (14.7 min per
+1024 px image via sequential CPU offload) makes corpus construction
+uneconomic under owned compute too. The four surviving conditions above
+still handle the actual failure mode Condition 5 was thought to address —
+distribution collapse (condition 3), evaluation contamination (condition 4),
+and provenance loss (condition 1). Precision as such is not a corpus hazard.
+The retraction also closes the "RTX 3090 blocked as corpus generation host"
+row that leaned on it.
 
 The old blanket ban read "generative-model outputs never enter training
 corpora". It was too coarse: it forbade legitimate distillation while saying
@@ -482,7 +475,6 @@ Sources excluded from corpora, with the reason:
 | **AMD XDNA NPU** as an execution target            | a second accelerator toolchain, nothing measured and no runtime installed — see below                                                                            |
 | **the CPU** as a model execution target            | orchestration and the **DFC runtime** are exempt; a silent DirectML fallback is the trap — see below                                                             |
 | **Mermaid** as a published-figure format           | the layout solver owns the picture and the house sheet cannot reach it — hand-authored inline SVG instead, see below                                             |
-| **the RTX 3090** as a corpus generation host       | 24 GiB forces sequential offload at published precision, 14.7 min per image, and condition 5 bars the quantised fit — smoke tests and training exempt, see below |
 | **LLaDA** (LLaDA-o, iLLaDA, LLaDA-1.5)             | block diffusion measured 5.76s / 64 tokens — 25x too slow for real-time avatar; RFD 1170 presence loop targets sub-500 ms — see below                            |
 | **RunPod** as rented compute                       | no budget for per-invocation billing; `spot-broker` and `transport-runpod` archived alongside this row — see below                                               |
 | **Vast.ai** as rented compute                      | no budget for per-hour billing; `spot-broker` and `vast-market-snapshots` archived alongside this row — see below                                                |
