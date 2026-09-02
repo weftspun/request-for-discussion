@@ -1,6 +1,6 @@
 # RFD 2133: The pool rents from the spot book, gated on requirements first
 
-**State:** discussion
+**State:** abandoned
 **Feature:** where pool generation runs, and how a card is chosen
 **Scope:** the gacha demo's pool activity; `scratchpad` tooling pending a home
 

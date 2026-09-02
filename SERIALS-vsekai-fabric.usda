@@ -710,6 +710,14 @@ def Scope "Serials"
                 {
                     custom string slug = "qwen3-vl-to-gemma-migration-index"
                 }
+                def "S2174"
+                {
+                    custom string slug = "abandoned-citation-index"
+                }
+                def "S2175"
+                {
+                    custom string slug = "abandon-rented-compute-rfds"
+                }
             }
         }
     }

@@ -1,6 +1,6 @@
 # RFD 2138: interactor-shuttle merges spot-broker and uro
 
-**State:** discussion
+**State:** abandoned
 **Feature:** the single interactor a user signs into for spend, users, and content
 **Scope:** spot-broker (weftspun) and uro (v-sekai) become one service under the sides convention
 

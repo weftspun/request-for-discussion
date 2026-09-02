@@ -1,6 +1,6 @@
 # RFD 1132: Priority list of converted models
 
-**State:** discussion
+**State:** abandoned
 **Feature:** model conversion order
 
 ## Problem
