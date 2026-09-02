@@ -15,7 +15,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 
 TELLS = {
-    "em_dash_join": re.compile(r"\s[-—][-—]?\s"),
+    # Em-dash-as-conjunction needs LITERAL SPACES around the dash, not any
+    # whitespace. Using \s here made the pattern match "\n- " -- standard
+    # CommonMark unordered-list markers -- and flag every bullet as an
+    # em-dash join. Existing RFDs on main happened to avoid bullets, so
+    # the false-positive never fired; the 2148-2161 chain surfaced it.
+    "em_dash_join": re.compile(r" [-—][-—]? "),
     "counting_announcement": re.compile(
         r"\b(in|for|on)\s+(two|three|four|five|six)\s+(ways|reasons|counts|things|senses)\b",
         re.I,
@@ -127,6 +132,12 @@ def self_test() -> int:
     controls = [
         ("em-dash between clauses", "The gate ran — every control fired.", "em_dash_join", 1),
         ("hyphen range unchanged", "The window is day 11-14.", "em_dash_join", 0),
+        (
+            "markdown bullet is not a join",
+            "See the deployment notes:\n\n- first item\n- second item\n- third item\n",
+            "em_dash_join",
+            0,
+        ),
         ("counting announcement", "It shapes the checks in three ways.", "counting_announcement", 1),
         ("prose that mentions three ways", "Three ways lead there.", "counting_announcement", 0),
         ("reasoning leak", "The reason it holds is that quorum tolerates one down.", "reasoning_leak", 1),
