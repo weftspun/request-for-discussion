@@ -706,6 +706,10 @@ def Scope "Serials"
                 {
                     custom string slug = "tenseless-continuous-present-voice"
                 }
+                def "S2173"
+                {
+                    custom string slug = "qwen3-vl-to-gemma-migration-index"
+                }
             }
         }
     }
