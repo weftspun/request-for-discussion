@@ -33,7 +33,7 @@ runs in Godot Sandbox.
 
 ## References
 
-- SafeGDScript: https://libriscv.no/blog/godot-sandbox-fortytwo/
-- RFD 2150, RFD 2154, RFD 2155
+1. SafeGDScript: https://libriscv.no/blog/godot-sandbox-fortytwo/
+2. RFD 2150, RFD 2154, RFD 2155
 
 This RFD was drafted by an AI and read by a human before it shipped.

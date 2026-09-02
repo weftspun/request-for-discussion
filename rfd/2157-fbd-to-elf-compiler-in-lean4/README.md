@@ -33,8 +33,8 @@ AST, ABI, staging.
 
 ## References
 
-- godot-sandbox: https://github.com/libriscv/godot-sandbox
-- UdonSharp: https://github.com/vrchat-community/UdonSharp
-- RFD 2149, 2145, 2149, 2150, 2151
+1. godot-sandbox: https://github.com/libriscv/godot-sandbox
+2. UdonSharp: https://github.com/vrchat-community/UdonSharp
+3. RFD 2149, 2145, 2149, 2150, 2151
 
 This RFD was drafted by an AI and read by a human before it shipped.

@@ -33,8 +33,8 @@ closes this RFD. `DETAILS.md` carries semantics, staging, verification.
 
 ## References
 
-- `3-interactor/taskweft-grafcet-static/`; the port
-- Upstream: https://github.com/Project-AGRAFE/GRAFCET-static-analysis
-- RFD 2148: compact GRAFCET as taskweft's authoring surface
+1. `3-interactor/taskweft-grafcet-static/`; the port
+2. Upstream: https://github.com/Project-AGRAFE/GRAFCET-static-analysis
+3. RFD 2148: compact GRAFCET as taskweft's authoring surface
 
 This RFD was drafted by an AI and read by a human before it shipped.

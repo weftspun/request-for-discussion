@@ -32,8 +32,8 @@ the frame-tick contract, and verification.
 
 ## References
 
-- lib_godot_connector: https://hex.pm/packages/lib_godot_connector
-- Godot Sandbox: https://github.com/libriscv/godot-sandbox (MIT)
-- RFD 2148, 2144, 2145
+1. lib_godot_connector: https://hex.pm/packages/lib_godot_connector
+2. Godot Sandbox: https://github.com/libriscv/godot-sandbox (MIT)
+3. RFD 2148, 2144, 2145
 
 This RFD was drafted by an AI and read by a human before it shipped.

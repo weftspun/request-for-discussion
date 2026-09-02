@@ -22,9 +22,9 @@ language -> target ISA, no C++ intermediate). VRChat's creator
 feedback loop demos in-world without a compile-and-flash cycle.
 
 **Dropped (were parked previously):**
-- UE 4/5 Blueprint; out of scope for taskweft.
-- Resonite ProtoFlux; out of scope.
-- glTF Interactivity; out of scope.
+1. UE 4/5 Blueprint; out of scope for taskweft.
+2. Resonite ProtoFlux; out of scope.
+3. glTF Interactivity; out of scope.
 
 Udon assembly's opcode + directive surface lives at
 `taskweft-fbd-compiler/sigs/vrchat_udon_asm.sigs` (extracted from
@@ -37,8 +37,8 @@ against the `blocks_get_or` fixture.
 
 ## References
 
-- `sigs/vrchat_udon_asm.sigs`; the target instruction set
-- RFD 2150 FBD target, RFD 2160 USD intermediate
-- UdonSharp (source of truth for opcode set): vrchat-community/UdonSharp
+1. `sigs/vrchat_udon_asm.sigs`; the target instruction set
+2. RFD 2150 FBD target, RFD 2160 USD intermediate
+3. UdonSharp (source of truth for opcode set): vrchat-community/UdonSharp
 
 This RFD was drafted by an AI and read by a human before it shipped.

@@ -2,13 +2,13 @@
 
 ## The three MIT pieces the compiler stitches together
 
-- **PLCopen FBD XML** produced by `Taskweft.OpenPLC.PLCopen.emit/1`
+1. **PLCopen FBD XML** produced by `Taskweft.OpenPLC.PLCopen.emit/1`
   (RFD 2150). Full body inside a `<pou pouType="program">`, no `<SFC>`
   wrapper (blocklisted), no `<ST>` / `<LD>` (blocklisted).
-- **Lean 4 v4.34.0-rc1** (matches RFD 2149), stdlib only for stage 1.
+2. **Lean 4 v4.34.0-rc1** (matches RFD 2149), stdlib only for stage 1.
   `Std.Xml` supplies the XML parser; no mathlib fetch until the
   correctness theorem lands under its own RFD.
-- **`riscv64-elf-gcc`** already installed on this box (`brew install
+3. **`riscv64-elf-gcc`** already installed on this box (`brew install
   riscv64-elf-gcc`, RFD 2154 bootstrap). The Lean compiler emits
   `.s`, the toolchain runs `as` + `ld` to produce the `.elf`.
 
@@ -71,20 +71,20 @@ order.
 
 ## Verification
 
-- `lake build` in `3-interactor/taskweft-fbd-compiler/` succeeds in
+1. `lake build` in `3-interactor/taskweft-fbd-compiler/` succeeds in
   seconds; no external deps.
-- `./.lake/build/bin/taskweft_fbd_compiler` runs on
+2. `./.lake/build/bin/taskweft_fbd_compiler` runs on
   `weftspun-build.plcopen.xml` produced by `mix openplc.emit` and
   prints the AST's variable and step counts.
-- Workspace anti-entropy passes; no blocklist rows added; serial
+3. Workspace anti-entropy passes; no blocklist rows added; serial
   S2157 registered.
 
 ## What is deliberately not here
 
-- mathlib fetch + build (stage 3).
-- RECTGTN -> FBD mapping decision (its own RFD).
-- The RISC-V emitter body (stage 2).
-- Semantics + correctness theorem (stage 3).
-- GDScript companion module (stage 5).
-- Runtime performance profiling; real fbd -> elf -> sandbox tick
+1. mathlib fetch + build (stage 3).
+2. RECTGTN -> FBD mapping decision (its own RFD).
+3. The RISC-V emitter body (stage 2).
+4. Semantics + correctness theorem (stage 3).
+5. GDScript companion module (stage 5).
+6. Runtime performance profiling; real fbd -> elf -> sandbox tick
   timing lands with stage 2.

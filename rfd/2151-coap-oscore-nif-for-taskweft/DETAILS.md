@@ -89,17 +89,17 @@ IPv6 6LoWPAN is the wire.
 
 ## Staging
 
-- **now**; parked. Design frozen, no code.
-- **when needed**; a scenario names a constrained target; the NIF,
+1. **now**; parked. Design frozen, no code.
+2. **when needed**; a scenario names a constrained target; the NIF,
   the Elixir wrapper, and the OpenPLC plugin ship together.
-- **later**; EDHOC (RFC 9528) key exchange replaces static keysets.
+3. **later**; EDHOC (RFC 9528) key exchange replaces static keysets.
 
 ## What is deliberately not here
 
-- A blessing of a specific OSCORE-in-libcoap version. `libcoap` from
+1. A blessing of a specific OSCORE-in-libcoap version. `libcoap` from
   4.3.5 onwards ships OSCORE support; the exact version picks itself
   when the NIF lands.
-- A bridge to CoAP Group Communication (RFC 7390); the coordinator
+2. A bridge to CoAP Group Communication (RFC 7390); the coordinator
   addresses one runtime at a time, not a multicast group of them.
-- COSE crypto primitives (RFC 8152); libcoap's OSCORE module carries
+3. COSE crypto primitives (RFC 8152); libcoap's OSCORE module carries
   them and this NIF does not re-expose them.

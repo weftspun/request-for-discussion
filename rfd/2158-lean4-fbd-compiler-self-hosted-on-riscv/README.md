@@ -15,7 +15,7 @@ both cross-compile today using standard toolchains.
 
 ## What stays
 
-- **Stage 0-1 landed**: `TaskweftFbdCompiler.Elf` writes valid
+1. **Stage 0-1 landed**: `TaskweftFbdCompiler.Elf` writes valid
   RISC-V ELF bytes directly from Lean (no external assembler); the
   ELF loads into a live Godot Sandbox and Godot ticks clean.
   Evidence: `ladder/hello.elf`. That's the "Lean can emit ELF bytes"
@@ -23,9 +23,9 @@ both cross-compile today using standard toolchains.
 
 ## What was dropped
 
-- Stage 2: Lean-emitted C cross-compiling to RISC-V.
-- Stage 3: Full compiler running inside a Sandbox.
-- The trap-list around Lean runtime shims on libriscv.
+1. Stage 2: Lean-emitted C cross-compiling to RISC-V.
+2. Stage 3: Full compiler running inside a Sandbox.
+3. The trap-list around Lean runtime shims on libriscv.
 
 RFD 2159 is the successor; both C++ and Rust ELFs land using
 standard cross-compilers and cross-check byte-for-byte against the
@@ -34,7 +34,7 @@ paying the self-host cost.
 
 ## References
 
-- RFD 2157 (Lean spec), RFD 2159 (two-impl replacement)
-- `leanprover/lean4#12655` (upstream RFC, watched not blocked-on)
+1. RFD 2157 (Lean spec), RFD 2159 (two-impl replacement)
+2. `leanprover/lean4#12655` (upstream RFC, watched not blocked-on)
 
 This RFD was drafted by an AI and read by a human before it shipped.

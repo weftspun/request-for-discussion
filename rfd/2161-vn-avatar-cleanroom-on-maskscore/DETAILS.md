@@ -57,20 +57,20 @@ prompt. Wiring holds; real numbers arrive with real (image, edit) pairs.
 The operator is moving to Windows 11 with an RTX 3090 (24 GB). That
 changes what becomes viable, in dependency order:
 
-- **QAFT-LoRA training on Qwen3-VL-4B against `EditScore/EditScore-Reward-Data`
+1. **QAFT-LoRA training on Qwen3-VL-4B against `EditScore/EditScore-Reward-Data`
   (97,300 rows, 161.8 GB, apache-2.0)** returns to the table. The
   `3-interactor/editscore-lora-qwen3vl-4b/scripts/smoke.py` scaffold
   targets this exactly; needs `bitsandbytes` (already linux-64
   target-scoped in `pixi.toml`; add `win-64` when the Windows path is
   real). Model VRAM footprint: Qwen3-VL-4B fp16 ~8.9 GB + optimizer
   state + gradients fits 24 GB comfortably at LoRA rank 32.
-- **Larger reward candidates** (`EditScore/EditScore-Qwen3-VL-8B-Instruct`,
+2. **Larger reward candidates** (`EditScore/EditScore-Qwen3-VL-8B-Instruct`,
   `EditScore/EditScore-7B`, `EditScore/EditScore-32B`) become tractable
   at inference on the 3090. The 4B stays as the Mac-mini reference.
-- **Wan-VACE 14B NF4** (~8.7 GB) fits alongside the reward model on
+3. **Wan-VACE 14B NF4** (~8.7 GB) fits alongside the reward model on
   the 3090 with swap. Reopens the image-generation slot RFD 1173
   originally sized for.
-- **Hailo track** stays parked; 3090 does not change Linux/DFC gap.
+4. **Hailo track** stays parked; 3090 does not change Linux/DFC gap.
 
 ## Original substitution table (retained for the record)
 
@@ -147,9 +147,9 @@ because Sabomako's heretic variant is also PTQ (AWQ), not QAFT.
 
 ## What the spec side read (its only inputs)
 
-- `https://huggingface.co/spaces/victor/gemma-avatar/raw/main/README.md`
+1. `https://huggingface.co/spaces/victor/gemma-avatar/raw/main/README.md`
   (README only; the space's source tree was not opened).
-- The operator's VN twist: "visual novel style travel between
+2. The operator's VN twist: "visual novel style travel between
   different locations and pop up talking head interactions via
   prompts."
 
@@ -185,12 +185,12 @@ The implementer side must not open any other file in that space.
 
 ## Language boundaries
 
-- **Elixir**; Router, WebSocket, taskweft interpreter, MASKSCORE writer, USD writer.
-- **Python**; one file per model worker (`env_bus_server.py` shape).
-- **GDScript**; one file: `vn_bridge.gd`, reads viseme frames off
+1. **Elixir**; Router, WebSocket, taskweft interpreter, MASKSCORE writer, USD writer.
+2. **Python**; one file per model worker (`env_bus_server.py` shape).
+3. **GDScript**; one file: `vn_bridge.gd`, reads viseme frames off
   `set_program_variable`, writes SOMA facial-action weights onto the
   ANNY rig, publishes SubViewport texture bytes back.
-- **C++**; none new. The bus NIF from `taskweft-nmm-personas`
+4. **C++**; none new. The bus NIF from `taskweft-nmm-personas`
   handles iox2.
 
 Stdio JSON is blocklisted as an Elixir<->Python wire.
@@ -298,11 +298,11 @@ lands with `task_type = dialog_reply` and a non-nil OmniScore, one
 
 ## What is not here (deferred to follow-on RFDs)
 
-- Voice-in phase 2. Text-in is the MVP.
-- The full 142-subject corpus. MVP is 8.
-- 3D locations. MVP uses 2D Wan-VACE background stills.
-- The RL-train dataset construction. Bench + reward-train are the
+1. Voice-in phase 2. Text-in is the MVP.
+2. The full 142-subject corpus. MVP is 8.
+3. 3D locations. MVP uses 2D Wan-VACE background stills.
+4. The RL-train dataset construction. Bench + reward-train are the
   first two; RL-train follows once the reward model is on Hub.
-- The verifier RFD asserting our SpeechEditReward decode agrees
+5. The verifier RFD asserting our SpeechEditReward decode agrees
   with an independent lip-sync ground truth. That is the anti-
   entropy check the follow-on adds.

@@ -33,8 +33,8 @@ OSCORE key rotation model, and the OpenPLC-side plugin sketch.
 
 ## References
 
-- RFC 7252 (CoAP), RFC 8613 (OSCORE), RFC 9528 (EDHOC)
-- libcoap: https://libcoap.net/ (BSD-2-Clause)
-- RFD 2150 RECTGTN on OpenPLC v4; the caller
+1. RFC 7252 (CoAP), RFC 8613 (OSCORE), RFC 9528 (EDHOC)
+2. libcoap: https://libcoap.net/ (BSD-2-Clause)
+3. RFD 2150 RECTGTN on OpenPLC v4; the caller
 
 This RFD was drafted by an AI and read by a human before it shipped.

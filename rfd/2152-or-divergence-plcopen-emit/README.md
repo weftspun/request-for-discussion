@@ -32,7 +32,7 @@ interaction with RFD 2149, and multi-step branch semantics.
 
 ## References
 
-- RFD 2148 compact GRAFCET, RFD 2149 static analyser, RFD 2150 emit
-- `test/fixtures/grafcet/blocks_get_or.grafcet.jsonld`
+1. RFD 2148 compact GRAFCET, RFD 2149 static analyser, RFD 2150 emit
+2. `test/fixtures/grafcet/blocks_get_or.grafcet.jsonld`
 
 This RFD was drafted by an AI and read by a human before it shipped.

@@ -175,23 +175,23 @@ worked fixture. The grounding-scale gate applies to `%macro` with
 
 ## What is deliberately not here
 
-- RL training. Personas are hand-authored SFCs; the traces populate
+1. RL training. Personas are hand-authored SFCs; the traces populate
   a reward-model dataset, they do not train the personas.
-- A wall-clock scheduler that varies the persona rate at runtime. The
+2. A wall-clock scheduler that varies the persona rate at runtime. The
   contract is stable Hz, no jitter.
-- Bulk-payload transport. Obs stays under 128 KiB via CBOR+zstd; a
+3. Bulk-payload transport. Obs stays under 128 KiB via CBOR+zstd; a
   Snapshot pub/sub is the next-step answer if that budget is ever
   exceeded.
 
 ## Verification
 
-- `mix test` in `3-interactor/taskweft/`; 4/4, the compact GRAFCET
+1. `mix test` in `3-interactor/taskweft/`; 4/4, the compact GRAFCET
   round-trip on `weftspun-build.grafcet.jsonld` and canonicalisation
   on `weftspun-build.domain.jsonld`.
-- `mix test` in `3-interactor/taskweft-nmm-personas/`; 3/3, the
+2. `mix test` in `3-interactor/taskweft-nmm-personas/`; 3/3, the
   MaskScore row count, the persona rate floor, the Scheduler refusal.
-- Live episode over `2-contract/bus` with real 128-agent nmm2:
+3. Live episode over `2-contract/bus` with real 128-agent nmm2:
   `ep0 seed42: persona 26.14 Hz (target 30), env 8.2 Hz (target 10),
   1.951s` and `9 MaskScore rows -> traces/maskscore.jsonl`.
-- The traces are `traces/maskscore.jsonl` + `traces/maskscore.parquet`
+4. The traces are `traces/maskscore.jsonl` + `traces/maskscore.parquet`
   (parquet via duckdb reading the JSONL sibling; no pyarrow dep).

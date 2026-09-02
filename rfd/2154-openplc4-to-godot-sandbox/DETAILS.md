@@ -76,11 +76,11 @@ Boot order:
 Godot's `_process(delta)` fires at whatever the frame budget allows
 (60 Hz default headless). Each frame:
 
-- Godot Sandbox calls `on_tick(delta)` inside the RISC-V program.
-- Inside the program, `strucpp_run_task(0)` runs one scan of the FBD.
-- SR flip-flops update their `.Q`; `done_*` variables reflect the new
+1. Godot Sandbox calls `on_tick(delta)` inside the RISC-V program.
+2. Inside the program, `strucpp_run_task(0)` runs one scan of the FBD.
+3. SR flip-flops update their `.Q`; `done_*` variables reflect the new
   state.
-- BEAM optionally reads state via `LibGodot.call(...)`.
+4. BEAM optionally reads state via `LibGodot.call(...)`.
 
 **One scan per frame** matches an IEC 61131-3 scan cycle exactly.
 If the operator needs slower ticks (a plan whose steps take seconds),
@@ -89,13 +89,13 @@ and calling the sandbox from the timer's timeout signal.
 
 ## Verification
 
-- `weftspun-build.grafcet.jsonld` (RFD 2148 fixture) compiles to
+1. `weftspun-build.grafcet.jsonld` (RFD 2148 fixture) compiles to
   `plan.riscv`. `mix test` under `taskweft-godot-sandbox` starts a
   headless Godot via `lib_godot_connector`, ticks 100 frames, asserts
   `done_oracle` becomes `TRUE` and each upstream `done_*` also does.
-- The Sandbox addon's own tests (upstream) prove the RISC-V VM does
+2. The Sandbox addon's own tests (upstream) prove the RISC-V VM does
   not escape its sandbox. We inherit that guarantee for free.
-- RFD 2149's Lean analyser passes on the compact GRAFCET input
+3. RFD 2149's Lean analyser passes on the compact GRAFCET input
   before the emit, so an unreachable step in the source is caught
   before it becomes a step_*_Q that never rises inside the sandbox.
 
@@ -116,12 +116,12 @@ output the runtime loads carries no GPL obligation.
 
 ## What is deliberately not here
 
-- The RISC-V cross-toolchain installation. That is a developer-
+1. The RISC-V cross-toolchain installation. That is a developer-
   environment concern.
-- A `--target x86_64` alternative. Godot Sandbox is RISC-V-only; a
+2. A `--target x86_64` alternative. Godot Sandbox is RISC-V-only; a
   native-code path would use a different addon and a different RFD.
-- Live editing of the plan while the sandbox runs. Reloading the
+3. Live editing of the plan while the sandbox runs. Reloading the
   `.riscv` at runtime is possible (Godot Sandbox supports it), but
   the RFD leaves it as "restart the scene" for stage 1.
-- Any glTF / VRChat / Blueprint / ProtoFlux integration; those are
+4. Any glTF / VRChat / Blueprint / ProtoFlux integration; those are
   RFD 2153's job.

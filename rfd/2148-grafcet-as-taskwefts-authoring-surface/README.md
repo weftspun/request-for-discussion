@@ -35,8 +35,8 @@ on the wire, effective persona rate 26 Hz against a 10 Hz floor.
 
 ## References
 
-- `3-interactor/taskweft/lib/taskweft/grafcet.ex`; lower and raise
-- `3-interactor/taskweft-nmm-personas/`; reference implementation
-- RFD 1065, 2093, RFD 1173 MASKSCORE.md, Project-AGRAFE
+1. `3-interactor/taskweft/lib/taskweft/grafcet.ex`; lower and raise
+2. `3-interactor/taskweft-nmm-personas/`; reference implementation
+3. RFD 1065, 2093, RFD 1173 MASKSCORE.md, Project-AGRAFE
 
 This RFD was drafted by an AI and read by a human before it shipped.
