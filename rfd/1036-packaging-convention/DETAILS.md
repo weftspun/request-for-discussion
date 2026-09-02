@@ -13,11 +13,17 @@ finds a Cog reference elsewhere knows which way the decision went.
 
 ## The target
 
-An RTX 4090 with 24 GB, at about 0.35 to 0.37 US dollars per hour on
-demand, and 0.13 interruptible.
+The local desktop GPU is the only compute (CLAUDE.md hard
+constraint). Rented GPU providers are blocklisted (RunPod, Vast.ai
+rows). The convention still targets a 24 GB card so an image built
+here runs unchanged if the operator later stands up a peer machine
+with equivalent hardware; RFD 1027 records that every model in the
+catalog reaches a 24 GB card.
 
-RFD 1027 records that every model in the catalog reaches a 24 GB card.
-That is what makes one card type enough.
+An earlier draft named "RTX 4090 with 24 GB, at about 0.35 to 0.37
+US dollars per hour on demand, and 0.13 interruptible" as the target
+and Vast.ai as a future host. Retracted: no budget for
+per-hour/per-invocation billing this cycle.
 
 ## The rules
 
