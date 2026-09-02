@@ -343,3 +343,17 @@ repos:
       - id: mixed-line-ending
         files: '\.md$'
         args: [--fix=lf]
+
+      - id: asset-prefix
+        name: asset filenames carry a typed prefix and PascalCase name
+        entry: python scripts/check_asset_prefix.py
+        language: python
+        pass_filenames: true
+        files: ^(5-repository|6-datasource)/.*\.(png|jpg|jpeg|webp|exr|json|yaml|yml|glb|gltf|fbx|obj|wav|ogg|mp3|usdz|usdc)$
+
+      - id: asset-prefix-self-test
+        name: the asset-prefix gate still fires on planted-broken names
+        entry: python scripts/check_asset_prefix.py --self-test
+        language: python
+        pass_filenames: false
+        always_run: true
