@@ -1,9 +1,15 @@
 # RFD 2167: Voice-clone reward-model distillation
 
-**State:** discussion
+**State:** parked
 **Feature:** distill the wavlm_cos + voxtral_wer scoring signal from
 RFD 2164.3 into a fast reward model usable in RL fine-tuning of voice
 models. Parallels EditScore for image edits.
+
+**Parked 2026-09-02, no budget today.** Sub-rungs 2167.1 (pair set) and
+2167.2 (Bradley-Terry LoRA) need GPU time the workspace does not have
+this cycle; rented compute is blocklisted and the local GPU is on RFDs
+2165 and 2162. Unpark when local GPU frees. Nothing on the Rung 1 queue
+depends on this holding open.
 **Scope:** `6-datasource/anny-render-corpus`
 
 ## Problem
