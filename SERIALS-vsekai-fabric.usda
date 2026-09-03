@@ -748,6 +748,10 @@ def Scope "Serials"
                 {
                     custom string slug = "drop-gemma-auto"
                 }
+                def "S2181"
+                {
+                    custom string slug = "drop-allosaurus-rus"
+                }
             }
         }
     }
