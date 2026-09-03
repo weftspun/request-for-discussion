@@ -16,6 +16,8 @@ listing:
     title: "Title"
     state: "State"
     scope: "Scope"
+  exclude:
+    state: ["abandoned", "moved"]
   page-size: 50
   feed: true
 ---
