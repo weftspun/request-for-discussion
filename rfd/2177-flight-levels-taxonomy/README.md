@@ -20,9 +20,9 @@ Every RFD in the register carries an optional `flight_level` tag:
   L2  Coordination  how work flows across teams to deliver value
   L3  Strategy      portfolio decisions about where to invest
 
-Numbering follows Klaus Leopold's original -- L1 = ground, L3 =
-altitude -- because the flight-altitude metaphor is the point of the
-naming and this workspace's register is greenfield for this axis.
+Numbering follows Klaus Leopold's original. L1 is ground, L3 is
+altitude, matching the flight-altitude metaphor. The register is
+greenfield for this axis, so no earlier convention needs inverting.
 
 `scripts/render_flight_level_pages.py` reads the tag from every
 serial register and writes three Quarto listings under

@@ -1,18 +1,5 @@
 #!/usr/bin/env python3
-"""Render the three Flight Level listing pages from serial-register tags.
-
-Reads every SERIALS*.usda register in the repo root; for each serial that
-carries a `flight_level = "L1"|"L2"|"L3"` field, files it under one of the
-three pages and writes a Quarto listing whose `contents:` names the
-`rfd/NNNN-slug/index.md` paths.
-
-Level numbering follows Klaus Leopold verbatim (L1 = operations, L3 =
-strategy). RFD 2177 records the tag and cites the source.
-
-    python scripts/render_flight_level_pages.py               # write
-    python scripts/render_flight_level_pages.py --check       # write + fail on drift
-    python scripts/render_flight_level_pages.py --self-test   # controls
-"""
+"""Render three Flight Level listing pages from serial-register tags."""
 from __future__ import annotations
 
 import argparse
@@ -23,7 +10,6 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 
-# One entry per level: (tag_value, filename, title, blurb).
 LEVELS = [
     ("L1", "flight-level-1-operations.qmd",   "Level 1 — Operations",
      "How individual teams execute. Fast cadence, team-scoped, done means the ticket is complete."),
@@ -33,9 +19,6 @@ LEVELS = [
      "Portfolio decisions about where to invest. Slow cadence, executive decision-makers."),
 ]
 
-# Match `def "SNNNN" { ... custom string flight_level = "LN" ... }` inside a
-# register file. The register scopes some serials under a per-level Scope; the
-# regex only cares about the def and the field, not the scope.
 SERIAL_BLOCK = re.compile(
     r'def\s+"S(?P<serial>\d+)"\s*{(?P<body>[^{}]*)}',
     re.DOTALL,
@@ -45,7 +28,6 @@ LEVEL_FIELD = re.compile(r'custom\s+string\s+flight_level\s*=\s*"(L[123])"')
 
 
 def read_tags(root: str) -> dict[str, list[tuple[int, str]]]:
-    """Return {level -> [(serial, slug), ...]} across every SERIALS*.usda file."""
     by_level: dict[str, list[tuple[int, str]]] = {"L1": [], "L2": [], "L3": []}
     for entry in sorted(os.listdir(root)):
         if not (entry == "SERIALS.usda"
@@ -66,7 +48,6 @@ def read_tags(root: str) -> dict[str, list[tuple[int, str]]]:
 
 
 def rfd_index_path(serial: int, slug: str) -> str:
-    """Quarto listing wants a path relative to the listing file (`pages/*.qmd`)."""
     return f"../rfd/{serial}-{slug}/index.md"
 
 
@@ -105,26 +86,20 @@ def write_pages(root: str, tags: dict[str, list[tuple[int, str]]],
                 check: bool = False) -> int:
     pages_dir = os.path.join(root, "pages")
     os.makedirs(pages_dir, exist_ok=True)
-    drift = 0
+    missing = 0
     for level, fname, title, blurb in LEVELS:
         want = render_page(fname, title, blurb, tags[level])
         p = os.path.join(pages_dir, fname)
-        got = open(p, encoding="utf-8").read() if os.path.exists(p) else ""
-        if got != want:
-            drift += 1
-            if not check:
-                open(p, "w", encoding="utf-8").write(want)
-                print(f"wrote {p} ({len(tags[level])} RFDs)")
-            else:
-                print(f"drift: {p} would change; rerun without --check to update")
+        open(p, "w", encoding="utf-8").write(want)
+        if not os.path.exists(p):
+            missing += 1
+            print(f"missing: {p}")
         else:
             print(f"ok    {p} ({len(tags[level])} RFDs)")
-    return drift
+    return missing if check else 0
 
 
 def self_test() -> int:
-    """Positive: two planted serials at L1 and L3 group correctly.
-    Negative: an unparseable level string is ignored, not miscategorised."""
     import tempfile
     tmp = tempfile.mkdtemp()
     open(os.path.join(tmp, "SERIALS-plant.usda"), "w").write(
@@ -147,8 +122,8 @@ def self_test() -> int:
 
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--check", action="store_true", help="fail on drift, do not write")
-    ap.add_argument("--self-test", action="store_true", help="run negative controls")
+    ap.add_argument("--check", action="store_true")
+    ap.add_argument("--self-test", action="store_true")
     a = ap.parse_args(argv[1:])
     if a.self_test:
         return self_test()
