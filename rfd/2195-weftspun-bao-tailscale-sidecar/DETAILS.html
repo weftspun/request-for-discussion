@@ -351,6 +351,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#mtls-tailscale-acl-belt-and-suspenders" id="toc-mtls-tailscale-acl-belt-and-suspenders" class="nav-link" data-scroll-target="#mtls-tailscale-acl-belt-and-suspenders">7. mTLS + Tailscale ACL — belt and suspenders</a></li>
   <li><a href="#multi-machine-later" id="toc-multi-machine-later" class="nav-link" data-scroll-target="#multi-machine-later">8. Multi-machine (later)</a></li>
   <li><a href="#cheaper-dev-alternative-that-reuses-zero-fly-changes" id="toc-cheaper-dev-alternative-that-reuses-zero-fly-changes" class="nav-link" data-scroll-target="#cheaper-dev-alternative-that-reuses-zero-fly-changes">Cheaper “dev” alternative that reuses zero Fly changes</a></li>
+  <li><a href="#gotchas-that-cost-the-setup-an-hour-each" id="toc-gotchas-that-cost-the-setup-an-hour-each" class="nav-link" data-scroll-target="#gotchas-that-cost-the-setup-an-hour-each">Gotchas that cost the setup an hour each</a>
+  <ul class="collapse">
+  <li><a href="#client-cert-must-include-the-intermediate" id="toc-client-cert-must-include-the-intermediate" class="nav-link" data-scroll-target="#client-cert-must-include-the-intermediate">Client cert must include the intermediate</a></li>
+  <li><a href="#cert-auth-alias-name-is-the-full-cn-kv-keys-mirror-it" id="toc-cert-auth-alias-name-is-the-full-cn-kv-keys-mirror-it" class="nav-link" data-scroll-target="#cert-auth-alias-name-is-the-full-cn-kv-keys-mirror-it">Cert-auth alias name is the full CN; KV keys mirror it</a></li>
+  <li><a href="#named-grant-agentsdata-read-for-peer-visibility" id="toc-named-grant-agentsdata-read-for-peer-visibility" class="nav-link" data-scroll-target="#named-grant-agentsdata-read-for-peer-visibility">Named grant <code>agents/data/+ read</code> for peer visibility</a></li>
+  <li><a href="#flyctl-ssh-console--c-cat-file-head-truncates-on-sigpipe" id="toc-flyctl-ssh-console--c-cat-file-head-truncates-on-sigpipe" class="nav-link" data-scroll-target="#flyctl-ssh-console--c-cat-file-head-truncates-on-sigpipe"><code>flyctl ssh console -C "cat file" | head</code> truncates on SIGPIPE</a></li>
+  <li><a href="#openssl-req--subj-cn...-mangles-on-git-bash" id="toc-openssl-req--subj-cn...-mangles-on-git-bash" class="nav-link" data-scroll-target="#openssl-req--subj-cn...-mangles-on-git-bash"><code>openssl req -subj "/CN=..."</code> mangles on Git-Bash</a></li>
+  <li><a href="#rule-zero-every-live-session-gets-an-identity" id="toc-rule-zero-every-live-session-gets-an-identity" class="nav-link" data-scroll-target="#rule-zero-every-live-session-gets-an-identity">Rule zero: every live session gets an identity</a></li>
+  </ul></li>
+  <li><a href="#revocation" id="toc-revocation" class="nav-link" data-scroll-target="#revocation">Revocation</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2195-weftspun-bao-tailscale-sidecar/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2195-weftspun-bao-tailscale-sidecar/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
@@ -458,6 +468,60 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="cheaper-dev-alternative-that-reuses-zero-fly-changes" class="level2">
 <h2 class="anchored" data-anchor-id="cheaper-dev-alternative-that-reuses-zero-fly-changes">Cheaper “dev” alternative that reuses zero Fly changes</h2>
 <p>Skip everything above and use <code>flyctl proxy 8200:8200 -a weftspun-bao</code> while you develop. It forwards localhost:8200 through Fly’s WireGuard mesh — no public exposure, no container change. Only good for interactive use; a daemon that depends on it dies when you close the laptop.</p>
+</section>
+<section id="gotchas-that-cost-the-setup-an-hour-each" class="level2">
+<h2 class="anchored" data-anchor-id="gotchas-that-cost-the-setup-an-hour-each">Gotchas that cost the setup an hour each</h2>
+<p>Six backlog items from the first two agents running against this. Each is a one-line footgun that reads as an unrelated problem until you know it.</p>
+<section id="client-cert-must-include-the-intermediate" class="level3">
+<h3 class="anchored" data-anchor-id="client-cert-must-include-the-intermediate">Client cert must include the intermediate</h3>
+<p>Bao’s listener trusts only the Root CA. A client that presents only its leaf cert is rejected with <code>unknown certificate authority</code>, even though the leaf is validly signed. Bao expects the client to include the intermediate in its own chain.</p>
+<pre><code>cat leaf.pem intermediate.pem &gt; client-fullchain.pem
+export BAO_CLIENT_CERT=client-fullchain.pem</code></pre>
+<p>The same shape bites the listener the other way: full-chain the server cert too, or clients see the same error against your Bao.</p>
+</section>
+<section id="cert-auth-alias-name-is-the-full-cn-kv-keys-mirror-it" class="level3">
+<h3 class="anchored" data-anchor-id="cert-auth-alias-name-is-the-full-cn-kv-keys-mirror-it">Cert-auth alias name is the full CN; KV keys mirror it</h3>
+<p>The templated policy at <code>auth/cert/certs/agents-weftspun</code> uses <code>{{identity.entity.aliases.&lt;accessor&gt;.name}}</code>, and that resolves to the alias’s Name field, which cert-auth populates with the CN. Bao does not strip a trailing suffix. Two conventions have to line up:</p>
+<ul>
+<li>CN in the CSR is the full <code>&lt;short&gt;.agents.weftspun</code> form.</li>
+<li>KV keys under <code>agents/</code> use the same full-CN form (<code>agents/mps-45994b.agents.weftspun</code>), not the short form.</li>
+</ul>
+<p>Mixing shapes makes the templated write silently no-op — the policy resolves to <code>agents/mps-45994b.agents.weftspun</code> and your session’s write to <code>agents/mps-45994b</code> gets 403.</p>
+</section>
+<section id="named-grant-agentsdata-read-for-peer-visibility" class="level3">
+<h3 class="anchored" data-anchor-id="named-grant-agentsdata-read-for-peer-visibility">Named grant <code>agents/data/+ read</code> for peer visibility</h3>
+<p>Templated per-agent write isolates <em>writes</em> to your own row, but it also prevents you seeing peers’ rows. Add a separate grant to the same policy:</p>
+<pre><code>path "agents/data/+" { capabilities = ["read"] }
+path "agents/metadata" { capabilities = ["list"] }</code></pre>
+<p>Now every agent can see the coordination store; only its own row is writable.</p>
+</section>
+<section id="flyctl-ssh-console--c-cat-file-head-truncates-on-sigpipe" class="level3">
+<h3 class="anchored" data-anchor-id="flyctl-ssh-console--c-cat-file-head-truncates-on-sigpipe"><code>flyctl ssh console -C "cat file" | head</code> truncates on SIGPIPE</h3>
+<p><code>flyctl ssh console -C "cat /some/big/file" | tee copy | head -3</code> returns truncated stdout because the SSH stream races the pipe. The fix is write-then-read:</p>
+<pre><code>flyctl ssh console -C "cat /some/big/file" &gt; local.copy
+head -3 local.copy</code></pre>
+<p>Same for any long stdout through <code>flyctl ssh console -C</code>.</p>
+</section>
+<section id="openssl-req--subj-cn...-mangles-on-git-bash" class="level3">
+<h3 class="anchored" data-anchor-id="openssl-req--subj-cn...-mangles-on-git-bash"><code>openssl req -subj "/CN=..."</code> mangles on Git-Bash</h3>
+<p>MSYS silently rewrites <code>/CN=weftspun-bao</code> to a filesystem path when the argument starts with a single slash. The resulting cert has <code>CN= C:\...\CN=weftspun-bao</code> or similar. Escape with a double slash:</p>
+<pre><code>openssl req -new -key key.pem -subj "//CN=weftspun-bao.internal" ...</code></pre>
+<p>Same for every <code>-subj</code> on Git-Bash. Native shells (zsh, POSIX sh under WSL) do not need this.</p>
+</section>
+<section id="rule-zero-every-live-session-gets-an-identity" class="level3">
+<h3 class="anchored" data-anchor-id="rule-zero-every-live-session-gets-an-identity">Rule zero: every live session gets an identity</h3>
+<p>Formalised in <code>weftspun/dot-claude</code> PR #15’s <code>agent-sync.md</code> skill body. The rule: every session that appears in <code>ListAgents</code> gets a Bao client cert and a <code>agents/&lt;cn&gt;.agents.weftspun</code> KV row, minted by whichever session holds the admin policy (currently <code>mps-45994b</code> via <code>auth/cert/certs/mps-45994b</code>). Read-only policy is fine as a first grant; write is deferred until the operator or the session itself asks for it. The provisioning bundle lands in 1Password (<code>agent-cert &lt;cn&gt;</code> item) and the receiving session’s first action is <code>bao login</code> against it.</p>
+</section>
+</section>
+<section id="revocation" class="level2">
+<h2 class="anchored" data-anchor-id="revocation">Revocation</h2>
+<p>The Bao cert-auth method does not consult CRLs by default. <code>pki/revoke serial_number=&lt;X&gt;</code> records the revocation in the PKI store but does not gate access — a revoked cert still authenticates until you take one of these steps:</p>
+<ol type="1">
+<li><strong>Narrow the cert-auth entry’s <code>allowed_common_names</code></strong> to exclude the revoked CN. Immediate effect, no reload needed. Best for revoking one CN from a shared wildcard entry (e.g.&nbsp;change <code>*.agents.weftspun</code> to <code>cuda-a63415.agents.weftspun</code> when revoking mps-dataset).</li>
+<li><strong>Delete the cert-auth entry</strong> entirely (<code>bao delete auth/cert/certs/&lt;name&gt;</code>). Immediate effect. Best when revoking every identity that authed through that entry.</li>
+<li><strong>Enable CRL consultation</strong> via <code>auth/cert/crls/&lt;name&gt;</code> and reload the CRL after every revoke. Correct but higher operational load and the default intermediate here reports <code>error building CRLs: x509: issuer certificate doesn't contain a subject key identifier</code> — a re-issue of the intermediate is needed before this path works.</li>
+</ol>
+<p>Options 1 and 2 are what we use. The KV row also gets deleted (<code>bao kv metadata delete agents/&lt;cn&gt;.agents.weftspun</code>) so peers don’t see a stale identity. The 1Password item is annotated REVOKED with the reason and the cert body kept for audit.</p>
 
 
 </section>

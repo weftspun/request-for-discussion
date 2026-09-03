@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Level 3 — Strategy – Taskweft — Manuals</title>
+<title>logbook-bao-cert-revocation-cn-narrowing – Taskweft — Manuals</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -36,8 +36,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -79,65 +77,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-rfd','listing-title','listing-state','listing-scope',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -359,116 +299,64 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#logbook-revoking-a-bao-cert-auth-identity-when-the-entry-is-a-shared-wildcard" id="toc-logbook-revoking-a-bao-cert-auth-identity-when-the-entry-is-a-shared-wildcard" class="nav-link active" data-scroll-target="#logbook-revoking-a-bao-cert-auth-identity-when-the-entry-is-a-shared-wildcard">Logbook: revoking a Bao cert-auth identity when the entry is a shared wildcard</a>
+  <ul class="collapse">
+  <li><a href="#what-happened" id="toc-what-happened" class="nav-link" data-scroll-target="#what-happened">What happened</a></li>
+  <li><a href="#what-did-not-work" id="toc-what-did-not-work" class="nav-link" data-scroll-target="#what-did-not-work">What did not work</a></li>
+  <li><a href="#what-did" id="toc-what-did" class="nav-link" data-scroll-target="#what-did">What did</a></li>
+  <li><a href="#detection-floor" id="toc-detection-floor" class="nav-link" data-scroll-target="#detection-floor">Detection floor</a></li>
+  <li><a href="#verdict" id="toc-verdict" class="nav-link" data-scroll-target="#verdict">Verdict</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/logbook/logbook-bao-cert-revocation-cn-narrowing.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/logbook/logbook-bao-cert-revocation-cn-narrowing.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Level 3 — Strategy</h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<!-- generated by scripts/render_flight_level_pages.py -->
-<p>Portfolio decisions about where to invest. Slow cadence, executive decision-makers.</p>
-<p>RFDs tagged <code>flight_level = "L3"</code> in the serial register. RFD 2177 defines the scheme (Klaus Leopold, <code>Rethinking Agile</code>, LEANability, 2018).</p>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-      <option value="" disabled="" selected="" hidden="">Order By</option>
-      <option value="index" data-direction="asc">Default</option>
-      <option value="listing-title-sort" data-direction="asc">
-        Title
-      </option>
-    </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
-</div>
-<table class="quarto-listing-table table">
-<thead>
-<tr>
 
-<th>
-rfd
-</th>
+<section id="logbook-revoking-a-bao-cert-auth-identity-when-the-entry-is-a-shared-wildcard" class="level1">
+<h1>Logbook: revoking a Bao cert-auth identity when the entry is a shared wildcard</h1>
+<p><strong>Date:</strong> 2026-09-03 <strong>Session:</strong> MPS (<code>mps-45994b.agents.weftspun</code>) <strong>Related:</strong> RFD 2195 (Bao Tailscale sidecar; Revocation section)</p>
+<section id="what-happened" class="level2">
+<h2 class="anchored" data-anchor-id="what-happened">What happened</h2>
+<p>MPS-Dataset session (<code>mps-dataset-68764.agents.weftspun</code>) was revoked by operator instruction. Its cert authenticated through the shared <code>auth/cert/certs/agents-weftspun</code> entry, which had <code>allowed_common_names=*.agents.weftspun</code> and covered CUDA too. So the revocation had to remove one CN without dropping the entry.</p>
+</section>
+<section id="what-did-not-work" class="level2">
+<h2 class="anchored" data-anchor-id="what-did-not-work">What did not work</h2>
+<p><code>bao write pki/revoke serial_number=&lt;X&gt;</code> recorded the revocation in the PKI store and emitted <code>error building CRLs: x509: issuer certificate doesn't contain a subject key identifier</code> — a bao intermediate config issue, but also irrelevant here: the cert-auth method does not consult the CRL by default. A revoked cert still authenticates.</p>
+</section>
+<section id="what-did" class="level2">
+<h2 class="anchored" data-anchor-id="what-did">What did</h2>
+<p>Three steps, in this order:</p>
+<ol type="1">
+<li>Read the current <code>auth/cert/certs/agents-weftspun</code>, preserve the <code>certificate</code>, <code>token_policies</code>, <code>token_ttl</code>, <code>token_max_ttl</code>, <code>display_name</code> fields, replace <code>allowed_common_names</code> with an explicit list that excludes the revoked CN. Write it back.</li>
+<li><code>bao kv metadata delete agents/&lt;revoked-cn&gt;</code> — remove the coordination-store row so peers don’t see a stale identity.</li>
+<li>Update the 1Password item: annotate <code>REVOKED 2026-09-03</code> with the reason, keep the cert body for audit.</li>
+</ol>
+<p>Effective immediately. No CRL, no reload, no restart. <code>pki/revoke</code> on the serial(s) still runs alongside for the audit trail even though cert-auth ignores it.</p>
+</section>
+<section id="detection-floor" class="level2">
+<h2 class="anchored" data-anchor-id="detection-floor">Detection floor</h2>
+<p>The shared-wildcard case is the interesting one; the per-CN case is easier and covered in the RFD 2195 runbook. This entry exists to name the extra step the wildcard case adds: preserve the entry, narrow the CN list, versus delete the entry.</p>
+</section>
+<section id="verdict" class="level2">
+<h2 class="anchored" data-anchor-id="verdict">Verdict</h2>
+<p>Pattern shipped in RFD 2195 DETAILS’s Revocation section. Next revocation should follow that; this entry stays as the event that produced it.</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
-</th>
 
-<th>
-state
-</th>
+</section>
+</section>
 
-<th>
-scope
-</th>
-
-</tr>
-</thead>
-<tbody class="list">
-
-<tr data-index="0" data-listing-file-modified-sort="1788472415954" data-listing-reading-time-sort="2" data-listing-word-count-sort="314" data-listing-title-sort="RFD 2182: Identity triangle for operator, partner project, market" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">2182</span>
-</td>
-<td>
-<a href="../rfd/2182-identity-triangle-operator-market-customer/index.html" class="title listing-title">RFD 2182: Identity triangle for operator, partner project, market</a>
-</td>
-<td>
-<span class="listing-state">committed</span>
-</td>
-<td>
-<span class="listing-scope">RFD titles, public prose, README taglines, pitch material</span>
-</td>
-
-</tr>
-
-<tr data-index="1" data-listing-file-modified-sort="1788472415953" data-listing-reading-time-sort="2" data-listing-word-count-sort="248" data-listing-title-sort="RFD 2171: The atelier-workshop / shuttle vocabulary" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">2171</span>
-</td>
-<td>
-<a href="../rfd/2171-atelier-workshop-shuttle-vocabulary/index.html" class="title listing-title">RFD 2171: The atelier-workshop / shuttle vocabulary</a>
-</td>
-<td>
-<span class="listing-state">committed</span>
-</td>
-<td>
-<span class="listing-scope">public-facing prose, RFD titles, changelog entries</span>
-</td>
-
-</tr>
-
-</tbody>
-</table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -890,7 +778,7 @@ scope
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/pages/flight-level-3-strategy.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/pages/flight-level-3-strategy.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/logbook/logbook-bao-cert-revocation-cn-narrowing.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/logbook/logbook-bao-cert-revocation-cn-narrowing.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
