@@ -386,6 +386,26 @@ repos:
         pass_filenames: false
         always_run: true
 
+      # RFD 2188: one canonical ggml under 2-contract/ggml. A consumer bringing
+      # its own copy fails this gate. The two llama.cpp checkouts are exempt
+      # (vendor runtime, per CLAUDE.md's ggml row). Manual stage until Phase 2
+      # migrates the remaining consumers, so the framework can land without CI
+      # blocking on the drift it exists to remove.
+      - id: ggml-singleton
+        name: one canonical ggml source tree under 2-contract/ggml
+        entry: python scripts/check_ggml_singleton.py
+        language: python
+        stages: [manual]
+        pass_filenames: false
+        always_run: true
+
+      - id: ggml-singleton-self-test
+        name: the ggml-singleton gate still fails on a planted rogue ggml.h
+        entry: python scripts/check_ggml_singleton.py --self-test
+        language: python
+        files: ^scripts/check_ggml_singleton\.py$
+        pass_filenames: false
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
