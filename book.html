@@ -265,6 +265,25 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="./pages/rfd.html"> 
 <span class="menu-text">RFDs</span></a>
   </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-flight-levels" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Flight Levels</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-flight-levels">    
+        <li>
+    <a class="dropdown-item" href="./pages/flight-level-1-operations.qmd">
+ <span class="dropdown-text">L1 · Operations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pages/flight-level-2-coordination.qmd">
+ <span class="dropdown-text">L2 · Coordination</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pages/flight-level-3-strategy.qmd">
+ <span class="dropdown-text">L3 · Strategy</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="./pages/logbook.html"> 
 <span class="menu-text">Logbook</span></a>
@@ -1568,6 +1587,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#problem-202" id="toc-problem-202" class="nav-link" data-scroll-target="#problem-202">Problem</a></li>
   <li><a href="#decision-205" id="toc-decision-205" class="nav-link" data-scroll-target="#decision-205">Decision</a></li>
   <li><a href="#related-184" id="toc-related-184" class="nav-link" data-scroll-target="#related-184">Related</a></li>
+  </ul></li>
+  <li><a href="#rfd-2177-flight-levels-taxonomy-for-rfds" id="toc-rfd-2177-flight-levels-taxonomy-for-rfds" class="nav-link" data-scroll-target="#rfd-2177-flight-levels-taxonomy-for-rfds">RFD 2177: Flight Levels taxonomy for RFDs</a>
+  <ul class="collapse">
+  <li><a href="#problem-203" id="toc-problem-203" class="nav-link" data-scroll-target="#problem-203">Problem</a></li>
+  <li><a href="#decision-206" id="toc-decision-206" class="nav-link" data-scroll-target="#decision-206">Decision</a></li>
+  <li><a href="#related-185" id="toc-related-185" class="nav-link" data-scroll-target="#related-185">Related</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
@@ -6392,6 +6417,28 @@ void  grafcet_static_free(char *buf);</code></pre>
 <section id="related-184" class="level2">
 <h2 class="anchored" data-anchor-id="related-184">Related</h2>
 <p>Spine: urn:oid:1.3.6.1.4.1.66606.1.1.1000 (RFD conventions). Companion: urn:oid:1.3.6.1.4.1.66606.1.2.2174 (open→abandoned). Verified by: Lean 4 spec in <code>scratchpad/rfd_check/RfdSoundness.lean</code> (metatheorems typecheck; counterexamples printed by <code>Report.lean</code>).</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2177-flight-levels-taxonomy-for-rfds" class="level1">
+<h1>RFD 2177: Flight Levels taxonomy for RFDs</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2177</code></p>
+<p><strong>State:</strong> committed <strong>Feature:</strong> classify every RFD by which altitude of work it describes <strong>Scope:</strong> <code>SERIALS-*.usda</code> schema, <code>scripts/render_flight_level_pages.py</code>, <code>_quarto.yml</code> navbar, <code>pages/flight-level-*.qmd</code></p>
+<section id="problem-203" class="level2">
+<h2 class="anchored" data-anchor-id="problem-203">Problem</h2>
+<p>An RFD describes a decision at some altitude of work (portfolio bet, cross-team coordination, or a single team’s execution), but the register carries no field for that altitude. A reader wanting “all the strategy decisions” reads every RFD and infers.</p>
+</section>
+<section id="decision-206" class="level2">
+<h2 class="anchored" data-anchor-id="decision-206">Decision</h2>
+<p>Every RFD in the register carries an optional <code>flight_level</code> tag:</p>
+<p>L1 Operations how a single team executes; fast cadence L2 Coordination how work flows across teams to deliver value L3 Strategy portfolio decisions about where to invest</p>
+<p>Numbering follows Klaus Leopold’s original – L1 = ground, L3 = altitude – because the flight-altitude metaphor is the point of the naming and this workspace’s register is greenfield for this axis.</p>
+<p><code>scripts/render_flight_level_pages.py</code> reads the tag from every serial register and writes three Quarto listings under <code>pages/flight-level-{1,2,3}-*.qmd</code>. Navbar carries a Flight Levels dropdown. Untagged RFDs stay off the three pages; tagging is opt-in.</p>
+<p>See <code>DETAILS.md</code> for the tag schema, the render script’s shape, and the Klaus Leopold citation.</p>
+</section>
+<section id="related-185" class="level2">
+<h2 class="anchored" data-anchor-id="related-185">Related</h2>
+<p>RFD 1000 (conventions), RFD 1053 (OpenUSD internal format), RFD 2174 + 2176 (citation-drift indexes, same pattern of one document + tag).</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 
