@@ -740,6 +740,10 @@ def Scope "Serials"
                 {
                     custom string slug = "qaft-4bit-across-the-stack"
                 }
+                def "S2179"
+                {
+                    custom string slug = "drop-whisper-models"
+                }
             }
         }
     }
