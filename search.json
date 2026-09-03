@@ -11046,18 +11046,25 @@
     "text": "Entries record what was measured, not what was intended, and clip enough of the experimental apparatus to re-run the test rather than merely its conclusion.\nThese 145 entries were a separate repository until weftspun/logbook was archived. A decision and its measurement sat one repository apart; they no longer do. Entries kept their filenames, so an entry is still findable by the thing it measured rather than by where it used to live.\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n      \n        Title\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nDate\n\n\n\n\n\n\n\n\nBlend-shape animation through the flow adapter, and TokenRig’s first light\n\n\n \n\n\n\n\n\n\nIn-betweens, phenotype clips, and what pass-through means\n\n\n \n\n\n\n\n\n\nLogbook: CineForm in Godot, and what recording actually costs\n\n\n \n\n\n\n\n\n\nLogbook: FDB VFS embed into ecto_sqlite3, retracted\n\n\n \n\n\n\n\n\n\nLogbook: OpenBao on FoundationDB\n\n\n \n\n\n\n\n\n\nLogbook: RFD 1016 model-repo build-out\n\n\n \n\n\n\n\n\n\nLogbook: RFD 1122 T01, the pose-library check\n\n\n \n\n\n\n\n\n\nLogbook: RFD 2183 baseline against See-Through public test images\n\n\n \n\n\n\n\n\n\nLogbook: bao connected to FDB cluster, credential rotation, 1Password persistence failure\n\n\n \n\n\n\n\n\n\nLogbook: cert-auth on Bao, and the DNS edit that ran without 1P\n\n\n \n\n\n\n\n\n\nLogbook: minimum-double weftspun-fdb on Fly\n\n\n \n\n\n\n\n\n\nLogbook: one base, measured, and the rerank\n\n\n \n\n\n\n\n\n\nLogbook: spot-broker on Fly\n\n\n \n\n\n\n\n\n\nLogbook: the ANNY fit that the corpus does not need\n\n\n \n\n\n\n\n\n\nLogbook: the DR runbook runs on the day the cluster is gone\n\n\n \n\n\n\n\n\n\nLogbook: the Qwen3-VL vision tower against the Dataflow Compiler\n\n\n \n\n\n\n\n\n\nLogbook: the backup reaches Tigris through the SNI hop\n\n\n \n\n\n\n\n\n\nLogbook: the first four-loop rounds on the desk card\n\n\n \n\n\n\n\n\n\nLogbook: the soft renderer’s three constants, and Mitsuba\n\n\n \n\n\n\n\n\n\nLogbook: two DFC emulation contexts disagree by six orders of magnitude\n\n\n \n\n\n\n\n\n\nLogbook: two checks, a stopped backup, and curl’s signing limits\n\n\n \n\n\n\n\n\n\nLogbook: two walls between a translated graph and a HEF\n\n\n \n\n\n\n\n\n\nLogbook: what an edge NPU takes, and what the ANNY forward will not export\n\n\n \n\n\n\n\n\n\nLogbook: what the Neural Engine reaches, and what it holds\n\n\n \n\n\n\n\n\n\nLogbook: what the plan costs once the durations are real, and the card is a 3090\n\n\n \n\n\n\n\n\n\nThe comment ladder\n\n\n \n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Taskweft — Manuals",
+    "objectID": "pages/flight-level-2-coordination.html",
+    "href": "pages/flight-level-2-coordination.html",
+    "title": "Level 2 — Coordination",
     "section": "",
-    "text": "Taskweft builds a loop where a person makes a character, dresses it, and then either wears it or talks to it. This site is that project’s design record. It holds what was decided, what was measured, and what has since been withdrawn."
+    "text": "title: “Level 2 — Coordination” toc: true listing: filter-ui: true sort-ui: true type: table contents: - “../rfd/2172-tenseless-continuous-present-voice/index.md” - “../rfd/2170-allosaurus-squad-localization-langs/index.md” - “../rfd/1053-openusd-as-the-internal-format/index.md” - “../rfd/1036-packaging-convention/index.md” - “../rfd/1027-gpu-residency-budget/index.md” sort: - “rfd desc” fields: [rfd, title, state, scope] page-size: 50 —\nHow work flows across teams to reach a customer. Medium cadence, product and delivery leads.\nTag an RFD by adding custom string flight_level = \"LN\" to its serial-register entry, then rerun this script. RFD 2177 records the scheme and cites Klaus Leopold, Rethinking Agile (LEANability, 2018)."
   },
   {
-    "objectID": "index.html#start-here",
-    "href": "index.html#start-here",
-    "title": "Taskweft — Manuals",
-    "section": "Start here",
-    "text": "Start here\nNew to this? Read these three, in order. They take about fifteen minutes together.\n\nRFD 1171 — what the project is building, and which part every model plays.\nRFD 1000 — how to read any document here. The states, the numbering, the section order.\nWorking agreements — the standing constraints. What may enter a training corpus, and what may not."
+    "objectID": "pages/flight-level-2-coordination.html#section",
+    "href": "pages/flight-level-2-coordination.html#section",
+    "title": "Level 2 — Coordination",
+    "section": "",
+    "text": "title: “Level 2 — Coordination” toc: true listing: filter-ui: true sort-ui: true type: table contents: - “../rfd/2172-tenseless-continuous-present-voice/index.md” - “../rfd/2170-allosaurus-squad-localization-langs/index.md” - “../rfd/1053-openusd-as-the-internal-format/index.md” - “../rfd/1036-packaging-convention/index.md” - “../rfd/1027-gpu-residency-budget/index.md” sort: - “rfd desc” fields: [rfd, title, state, scope] page-size: 50 —\nHow work flows across teams to reach a customer. Medium cadence, product and delivery leads.\nTag an RFD by adding custom string flight_level = \"LN\" to its serial-register entry, then rerun this script. RFD 2177 records the scheme and cites Klaus Leopold, Rethinking Agile (LEANability, 2018)."
+  },
+  {
+    "objectID": "pages/agreements.html",
+    "href": "pages/agreements.html",
+    "title": "Working agreements",
+    "section": "",
+    "text": "This page moved. If your browser does not redirect, follow Register → Working agreements."
   },
   {
     "objectID": "book.html",
@@ -15904,11 +15911,46 @@
     "text": "Related\nRFD 2183 (layer-decomp pipeline; consumes this), RFD 2184 (EditScore three-signal training pattern), RFD 2186 (dressing overlay, parallel), RFD 2136 (gacha ladder; slots upstream of Rung 6).\nThis RFD was drafted by an AI and read by a human before it shipped."
   },
   {
-    "objectID": "pages/agreements.html",
-    "href": "pages/agreements.html",
-    "title": "Working agreements",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Taskweft — Manuals",
     "section": "",
-    "text": "This page moved. If your browser does not redirect, follow Register → Working agreements."
+    "text": "Taskweft builds a loop where a person makes a character, dresses it, and then either wears it or talks to it. This site is that project’s design record. It holds what was decided, what was measured, and what has since been withdrawn."
+  },
+  {
+    "objectID": "index.html#start-here",
+    "href": "index.html#start-here",
+    "title": "Taskweft — Manuals",
+    "section": "Start here",
+    "text": "Start here\nNew to this? Read these three, in order. They take about fifteen minutes together.\n\nRFD 1171 — what the project is building, and which part every model plays.\nRFD 1000 — how to read any document here. The states, the numbering, the section order.\nWorking agreements — the standing constraints. What may enter a training corpus, and what may not."
+  },
+  {
+    "objectID": "pages/flight-level-1-operations.html",
+    "href": "pages/flight-level-1-operations.html",
+    "title": "Level 1 — Operations",
+    "section": "",
+    "text": "title: “Level 1 — Operations” toc: true listing: filter-ui: true sort-ui: true type: table contents: - “../rfd/2168-retract-wholebody-detector-keep-renderer/index.md” - “../rfd/2167-maskscore-voice-reward-distillation/index.md” - “../rfd/2166-maskscore-cineform-mkv-bundle/index.md” - “../rfd/2165-maskscore-unified-8-stub-emit/index.md” - “../rfd/2164-maskscore-speech-stub-panel-and-cloning/index.md” - “../rfd/2163-maskscore-text-stub-gemma-vlm/index.md” - “../rfd/2162-maskscore-usdz-skinning-and-15-edit-emit/index.md” - “../rfd/1147-what-editscore-costs-and-returns/index.md” - “../rfd/1146-latent-to-pixal3d/index.md” - “../rfd/1145-stylized-to-omnigen2/index.md” - “../rfd/1144-image-to-omnigen2/index.md” - “../rfd/1143-keypoints-to-anny/index.md” sort: - “rfd desc” fields: [rfd, title, state, scope] page-size: 50 —\nHow individual teams execute. Fast cadence, team-scoped, done means the ticket is complete.\nTag an RFD by adding custom string flight_level = \"LN\" to its serial-register entry, then rerun this script. RFD 2177 records the scheme and cites Klaus Leopold, Rethinking Agile (LEANability, 2018)."
+  },
+  {
+    "objectID": "pages/flight-level-1-operations.html#section",
+    "href": "pages/flight-level-1-operations.html#section",
+    "title": "Level 1 — Operations",
+    "section": "",
+    "text": "title: “Level 1 — Operations” toc: true listing: filter-ui: true sort-ui: true type: table contents: - “../rfd/2168-retract-wholebody-detector-keep-renderer/index.md” - “../rfd/2167-maskscore-voice-reward-distillation/index.md” - “../rfd/2166-maskscore-cineform-mkv-bundle/index.md” - “../rfd/2165-maskscore-unified-8-stub-emit/index.md” - “../rfd/2164-maskscore-speech-stub-panel-and-cloning/index.md” - “../rfd/2163-maskscore-text-stub-gemma-vlm/index.md” - “../rfd/2162-maskscore-usdz-skinning-and-15-edit-emit/index.md” - “../rfd/1147-what-editscore-costs-and-returns/index.md” - “../rfd/1146-latent-to-pixal3d/index.md” - “../rfd/1145-stylized-to-omnigen2/index.md” - “../rfd/1144-image-to-omnigen2/index.md” - “../rfd/1143-keypoints-to-anny/index.md” sort: - “rfd desc” fields: [rfd, title, state, scope] page-size: 50 —\nHow individual teams execute. Fast cadence, team-scoped, done means the ticket is complete.\nTag an RFD by adding custom string flight_level = \"LN\" to its serial-register entry, then rerun this script. RFD 2177 records the scheme and cites Klaus Leopold, Rethinking Agile (LEANability, 2018)."
+  },
+  {
+    "objectID": "pages/flight-level-3-strategy.html",
+    "href": "pages/flight-level-3-strategy.html",
+    "title": "Level 3 — Strategy",
+    "section": "",
+    "text": "title: “Level 3 — Strategy” toc: true listing: filter-ui: true sort-ui: true type: table contents: - “../rfd/2182-identity-triangle-operator-market-customer/index.md” - “../rfd/2171-atelier-workshop-shuttle-vocabulary/index.md” sort: - “rfd desc” fields: [rfd, title, state, scope] page-size: 50 —\nPortfolio decisions about where to invest. Slow cadence, executive decision-makers.\nTag an RFD by adding custom string flight_level = \"LN\" to its serial-register entry, then rerun this script. RFD 2177 records the scheme and cites Klaus Leopold, Rethinking Agile (LEANability, 2018)."
+  },
+  {
+    "objectID": "pages/flight-level-3-strategy.html#section",
+    "href": "pages/flight-level-3-strategy.html#section",
+    "title": "Level 3 — Strategy",
+    "section": "",
+    "text": "title: “Level 3 — Strategy” toc: true listing: filter-ui: true sort-ui: true type: table contents: - “../rfd/2182-identity-triangle-operator-market-customer/index.md” - “../rfd/2171-atelier-workshop-shuttle-vocabulary/index.md” sort: - “rfd desc” fields: [rfd, title, state, scope] page-size: 50 —\nPortfolio decisions about where to invest. Slow cadence, executive decision-makers.\nTag an RFD by adding custom string flight_level = \"LN\" to its serial-register entry, then rerun this script. RFD 2177 records the scheme and cites Klaus Leopold, Rethinking Agile (LEANability, 2018)."
   },
   {
     "objectID": "pages/rfd.html",

@@ -31,6 +31,40 @@
     ]
   },
   {
+    "listing": "/pages/flight-level-2-coordination.html",
+    "items": [
+      "/rfd/2172-tenseless-continuous-present-voice/index.html",
+      "/rfd/2170-allosaurus-squad-localization-langs/index.html",
+      "/rfd/1053-openusd-as-the-internal-format/index.html",
+      "/rfd/1036-packaging-convention/index.html",
+      "/rfd/1027-gpu-residency-budget/index.html"
+    ]
+  },
+  {
+    "listing": "/pages/flight-level-1-operations.html",
+    "items": [
+      "/rfd/2168-retract-wholebody-detector-keep-renderer/index.html",
+      "/rfd/2167-maskscore-voice-reward-distillation/index.html",
+      "/rfd/2166-maskscore-cineform-mkv-bundle/index.html",
+      "/rfd/2165-maskscore-unified-8-stub-emit/index.html",
+      "/rfd/2164-maskscore-speech-stub-panel-and-cloning/index.html",
+      "/rfd/2163-maskscore-text-stub-gemma-vlm/index.html",
+      "/rfd/2162-maskscore-usdz-skinning-and-15-edit-emit/index.html",
+      "/rfd/1147-what-editscore-costs-and-returns/index.html",
+      "/rfd/1146-latent-to-pixal3d/index.html",
+      "/rfd/1145-stylized-to-omnigen2/index.html",
+      "/rfd/1144-image-to-omnigen2/index.html",
+      "/rfd/1143-keypoints-to-anny/index.html"
+    ]
+  },
+  {
+    "listing": "/pages/flight-level-3-strategy.html",
+    "items": [
+      "/rfd/2182-identity-triangle-operator-market-customer/index.html",
+      "/rfd/2171-atelier-workshop-shuttle-vocabulary/index.html"
+    ]
+  },
+  {
     "listing": "/pages/rfd.html",
     "items": [
       "/rfd/2187-identity-anny-via-omnigen2/index.html",
