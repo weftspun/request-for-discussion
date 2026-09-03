@@ -711,11 +711,20 @@ two tensors of identical (1, 256, 48, 48) shape, so it compared one reference
 against the other output and reported 2.5e+00 on every row. The CPU row is what
 exposed it: Core ML's own CPU cannot disagree with PyTorch by 2.5.
 
-### The tinygrad NVIDIA eGPU is dropped, and one init per power cycle is why
+### The tinygrad NVIDIA eGPU is unblocked, and the operational costs are why the record stays
+
+**Retracted 2026-09-03:** the compute rule in CLAUDE.md now reads "GPUs the
+operator owns are the only compute", covering Thunderbolt-attached owned
+eGPUs alongside the local desktop GPU. This row's decision to drop the eGPU
+is reversed on that basis alone; nothing below moved. The three failure
+modes still hold and are accepted as operational costs, and this section
+stays as the record of what those costs are, so the next reader knows what
+a crash of the daemon spends.
 
 An RTX 3090 in a Sonnet eGFX Breakaway Box reaches this Mac mini over
 Thunderbolt, driven by `org.tinygrad.tinygpu.driver2`, a DriverKit extension.
-It enumerates, it is `arch=sm_86`, and it works. It is dropped anyway.
+It enumerates, it is `arch=sm_86`, and it works. It was dropped in the
+first pass and is unblocked now.
 
 **The device takes one initialisation per power cycle.** `nvd.py`, the resident
 daemon written to hold that one init, states the consequence in its own
