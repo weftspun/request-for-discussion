@@ -30,12 +30,11 @@ QR + URL per rung 9.
 
 ## Problem
 
-Atelier-workshop has no shipped demonstrable artifact. Gist
-8c64c9f6 (fire + lito) committed to two demos.
+Atelier-workshop has no shipped demonstrable artifact.
 
 ## Related
 
-RFD 2136, RFD 2166 (Cineform bundle), RFD 2171 (vocabulary),
-RFD 2183, RFD 2186 + 2187 (parked), RFD 1102.
+RFD 2136 (gacha ladder rung 9), RFD 2166 (Cineform), RFD 2171
+(vocabulary), RFD 2183, RFD 2186 + 2187 (parked), RFD 1102.
 
 This RFD was drafted by an AI and read by a human before it shipped.
