@@ -700,7 +700,6 @@ def Scope "Serials"
                 def "S2169"
                 {
                     custom string slug = "abandon-strangler-fig-studio-core"
-                    custom string flight_level = "L2"
                 }
                 def "S2170"
                 {
@@ -720,12 +719,10 @@ def Scope "Serials"
                 def "S2173"
                 {
                     custom string slug = "qwen3-vl-to-gemma-migration-index"
-                    custom string flight_level = "L2"
                 }
                 def "S2174"
                 {
                     custom string slug = "abandoned-citation-index"
-                    custom string flight_level = "L2"
                 }
                 def "S2175"
                 {
@@ -734,12 +731,10 @@ def Scope "Serials"
                 def "S2176"
                 {
                     custom string slug = "committed-cites-terminal-index"
-                    custom string flight_level = "L2"
                 }
                 def "S2177"
                 {
                     custom string slug = "flight-levels-taxonomy"
-                    custom string flight_level = "L2"
                 }
             }
         }
