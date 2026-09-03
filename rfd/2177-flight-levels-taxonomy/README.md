@@ -1,3 +1,9 @@
+---
+name: rfd-2177-flight-levels-taxonomy
+description: When tagging an RFD's altitude, use the flight_level field on its serial-register entry. Values are L1 (operations, single-team execution), L2 (coordination, cross-team value flow), L3 (strategy, portfolio bet). Follow Klaus Leopold's numbering (L1 = ground, L3 = altitude). Tagging is opt-in.
+tools: Read, Edit
+---
+
 # RFD 2177: Flight Levels taxonomy for RFDs
 
 **State:** committed
