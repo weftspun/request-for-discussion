@@ -316,7 +316,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#d-rigging" id="toc-d-rigging" class="nav-link" data-scroll-target="#d-rigging">3D + rigging</a></li>
   <li><a href="#vision-heads" id="toc-vision-heads" class="nav-link" data-scroll-target="#vision-heads">Vision heads</a></li>
   <li><a href="#voice-tts" id="toc-voice-tts" class="nav-link" data-scroll-target="#voice-tts">Voice (TTS)</a></li>
-  <li><a href="#asr-panel-12-tracks-per-rfd-2164" id="toc-asr-panel-12-tracks-per-rfd-2164" class="nav-link" data-scroll-target="#asr-panel-12-tracks-per-rfd-2164">ASR panel (12 tracks per RFD 2164)</a></li>
+  <li><a href="#asr-panel-vram-panel-definition-per-rfd-1102-catalog" id="toc-asr-panel-vram-panel-definition-per-rfd-1102-catalog" class="nav-link" data-scroll-target="#asr-panel-vram-panel-definition-per-rfd-1102-catalog">ASR panel VRAM (panel definition per RFD 1102 catalog)</a></li>
   </ul></li>
   <li><a href="#qaft-first-is-the-rule" id="toc-qaft-first-is-the-rule" class="nav-link" data-scroll-target="#qaft-first-is-the-rule">QAFT-first is the rule</a></li>
   <li><a href="#staging-is-what-makes-the-tier" id="toc-staging-is-what-makes-the-tier" class="nav-link" data-scroll-target="#staging-is-what-makes-the-tier">Staging is what makes the tier</a></li>
@@ -509,8 +509,9 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </section>
-<section id="asr-panel-12-tracks-per-rfd-2164" class="level3">
-<h3 class="anchored" data-anchor-id="asr-panel-12-tracks-per-rfd-2164">ASR panel (12 tracks per RFD 2164)</h3>
+<section id="asr-panel-vram-panel-definition-per-rfd-1102-catalog" class="level3">
+<h3 class="anchored" data-anchor-id="asr-panel-vram-panel-definition-per-rfd-1102-catalog">ASR panel VRAM (panel definition per RFD 1102 catalog)</h3>
+<p>Rows carry per-track VRAM only; the panel roster is RFD 1102’s job. The panel narrowed from twelve tracks per RFD 2179 (Whisper drop), RFD 2180 (gemma-auto drop), RFD 2181 (allosaurus-rus drop); Whisper, ipa-whisper and allosaurus-rus rows are gone with them.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -530,49 +531,28 @@ ul.task-list li input[type="checkbox"] {
 <td>24 GB</td>
 </tr>
 <tr class="even">
-<td>Whisper large-v3</td>
-<td style="text-align: center;">bf16</td>
-<td style="text-align: right;">~3.0 GB</td>
-<td style="text-align: right;">~3.0 GB</td>
-<td>24 GB</td>
-</tr>
-<tr class="odd">
 <td>Parakeet TDT 0.6B v3</td>
 <td style="text-align: center;">bf16</td>
 <td style="text-align: right;">~1.2 GB</td>
 <td style="text-align: right;">~1.2 GB</td>
 <td>24 GB</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>wav2vec2-large-960h-lv60-self</td>
 <td style="text-align: center;">bf16</td>
 <td style="text-align: right;">~1.3 GB</td>
 <td style="text-align: right;">~1.3 GB</td>
 <td>24 GB</td>
 </tr>
-<tr class="odd">
-<td>ipa-whisper-small</td>
-<td style="text-align: center;">bf16</td>
-<td style="text-align: right;">~0.5 GB</td>
-<td style="text-align: right;">~0.5 GB</td>
-<td>24 GB</td>
-</tr>
 <tr class="even">
-<td>ipa-whisper-base</td>
-<td style="text-align: center;">bf16</td>
-<td style="text-align: right;">~0.2 GB</td>
-<td style="text-align: right;">~0.2 GB</td>
-<td>24 GB</td>
-</tr>
-<tr class="odd">
 <td>WavLM Base+ SV</td>
 <td style="text-align: center;">bf16</td>
 <td style="text-align: right;">~0.1 GB</td>
 <td style="text-align: right;">~0.1 GB</td>
 <td>24 GB</td>
 </tr>
-<tr class="even">
-<td>allosaurus (uni/eng/rus)</td>
+<tr class="odd">
+<td>allosaurus (universal + eng)</td>
 <td style="text-align: center;">bf16</td>
 <td style="text-align: right;">~0.1 GB</td>
 <td style="text-align: right;">~0.1 GB</td>
