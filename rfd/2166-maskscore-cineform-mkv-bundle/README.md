@@ -2,7 +2,7 @@
 
 **State:** discussion
 **Feature:** one Cineform MKV per edit bundling the video frames,
-audio, and the 12-track WebVTT ASR panel, produced through the
+audio, and the WebVTT ASR panel (per RFD 1102 task catalog), produced through the
 service-cineform pair per RFD 1137.
 **Scope:** `6-datasource/anny-render-corpus`, `7-service/service-cineform`,
 `3-interactor/interactor-cineform`, `1-transport/transport-cineform-tui`
@@ -24,7 +24,7 @@ the bus, encode one clip per edit at 8 fps with matte + card. Filename
 comes from the citation's title, lowercased with non-word runs
 hyphenated: `anny-mask-score-<edit>.mkv` + matching `.cff`.
 
-The 12-track transcripts from RFD 1173.2164.1 become S_TEXT/WEBVTT
+The ASR panel transcripts from RFD 1173.2164.1 become S_TEXT/WEBVTT
 subtitle tracks in the MKV, one per judge, tagged with LANGUAGE
 metadata (auto detect per Whisper for text tracks; ipa/phn-* for
 phoneme tracks).

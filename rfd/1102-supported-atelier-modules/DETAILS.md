@@ -22,7 +22,7 @@
 | ----------------------------- | ------------------------------------------ |
 | Voice cloning                 | Qwen3-TTS-12Hz-1.7B-Base                   |
 | ASR (canonical)               | Parakeet TDT 0.6B v3 (CC-BY-4.0)           |
-| ASR panel (12 tracks)         | Parakeet, Whisper large-v3, Voxtral Mini 3B, wav2vec2, Gemma-4-12B (auto + GBNF-IPA), Voxtral-IPA, ipa-whisper (s + b), allosaurus (universal + 27 commercial-localization langs per RFD 2170) |
+| ASR panel (7 tracks)          | text: Parakeet TDT 0.6B v3, Voxtral Mini 3B, wav2vec2; IPA: Voxtral-IPA, Gemma-4-12B GBNF-IPA; phone: allosaurus universal + eng. Panel narrowed from twelve tracks per RFD 2179 (Whisper drop), RFD 2180 (gemma-auto drop), RFD 2181 (allosaurus-rus drop). |
 | Speaker embedding             | Microsoft WavLM Base+ SV                   |
 
 ## Pipeline: MaskScore corpus construction (RFD 1173)
