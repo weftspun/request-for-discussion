@@ -1,4 +1,4 @@
-# In-betweens, phenotype clips, and what pass-through means
+# Logbook: in-betweens, phenotype clips, and what pass-through means
 
 The blend-shape work grew in-betweens, phenotype clips, and a stated
 pass-through rule today, and each one paid for itself by failing first
