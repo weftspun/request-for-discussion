@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Level 2 — Coordination – Taskweft — Manuals</title>
+<title>RFD 2193: EditScore as the constructed-synthetic reproducibility bar – Taskweft — Manuals</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -29,29 +29,27 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f36f388c175c695e587c9d92b6af4f92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-ebf6027466d64ce25e353d53063d38f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f36f388c175c695e587c9d92b6af4f92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-ebf6027466d64ce25e353d53063d38f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -79,65 +77,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-rfd','listing-title','listing-state','listing-scope',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -310,7 +250,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Taskweft — Manuals</span>
     </a>
   </div>
@@ -321,7 +261,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../pages/rfd.html"> 
+    <a class="nav-link" href="../../pages/rfd.html"> 
 <span class="menu-text">RFDs</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -330,25 +270,25 @@ window.Quarto = {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-flight-levels">    
         <li>
-    <a class="dropdown-item" href="../pages/flight-level-1-operations.html">
+    <a class="dropdown-item" href="../../pages/flight-level-1-operations.html">
  <span class="dropdown-text">L1 · Operations</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../pages/flight-level-2-coordination.html">
+    <a class="dropdown-item" href="../../pages/flight-level-2-coordination.html">
  <span class="dropdown-text">L2 · Coordination</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../pages/flight-level-3-strategy.html">
+    <a class="dropdown-item" href="../../pages/flight-level-3-strategy.html">
  <span class="dropdown-text">L3 · Strategy</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../pages/logbook.html"> 
+    <a class="nav-link" href="../../pages/logbook.html"> 
 <span class="menu-text">Logbook</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../pages/serials.html"> 
+    <a class="nav-link" href="../../pages/serials.html"> 
 <span class="menu-text">Register</span></a>
   </li>  
 </ul>
@@ -368,9 +308,12 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"><!-- generated by scripts/render_flight_level_pages.py --></a></li>
+  <li><a href="#decision" id="toc-decision" class="nav-link active" data-scroll-target="#decision">Decision</a></li>
+  <li><a href="#problem" id="toc-problem" class="nav-link" data-scroll-target="#problem">Problem</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <li><a href="#related" id="toc-related" class="nav-link" data-scroll-target="#related">Related</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/pages/flight-level-2-coordination.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/pages/flight-level-2-coordination.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2193-editscore-as-constructed-synthetic-reproducibility-bar/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2193-editscore-as-constructed-synthetic-reproducibility-bar/index.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -378,7 +321,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Level 2 — Coordination</h1>
+<h1 class="title">RFD 2193: EditScore as the constructed-synthetic reproducibility bar</h1>
 </div>
 
 
@@ -395,141 +338,30 @@ window.Quarto = {
 </header>
 
 
-<section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section"><!-- generated by scripts/render_flight_level_pages.py --></h2>
-<p>title: “Level 2 — Coordination” toc: true listing: filter-ui: true sort-ui: true type: table contents: - “../rfd/2172-tenseless-continuous-present-voice/index.md” - “../rfd/2170-allosaurus-squad-localization-langs/index.md” - “../rfd/1053-openusd-as-the-internal-format/index.md” - “../rfd/1036-packaging-convention/index.md” - “../rfd/1027-gpu-residency-budget/index.md” sort: - “rfd desc” fields: [rfd, title, state, scope] exclude: state: [“abandoned”, “moved”] page-size: 50 —</p>
-<p>How work flows across teams to reach a customer. Medium cadence, product and delivery leads.</p>
-<p>Tag an RFD by adding <code>custom string flight_level = "LN"</code> to its serial-register entry, then rerun this script. RFD 2177 records the scheme and cites Klaus Leopold, <code>Rethinking Agile</code> (LEANability, 2018).</p>
-
+<!-- generated by scripts/render_site.py; edit README.md instead -->
+<p>Shelved 2026-09-03: waiting on two blockers named below.</p>
+<section id="decision" class="level2">
+<h2 class="anchored" data-anchor-id="decision">Decision</h2>
+<p>Replace sha256 byte-equality with EditScore (RFD 1157 reward model) as the reproducibility judgment for constructed-synthetic corpus. Reuses an instrument the workspace has; permits Metal-fast rendering while keeping the bar honest.</p>
+</section>
+<section id="problem" class="level2">
+<h2 class="anchored" data-anchor-id="problem">Problem</h2>
+<p>Measured on M2 Pro against <code>render_view.py</code>’s film: CPU one-thread takes 32,592 ms per image, byte-identical; CPU default threads 4,364 ms and differs; Metal 545 ms and differs. Metal is sixty times faster; three seed-zero runs produced three digests, so divergence is GPU accumulation order.</p>
+<p>Two blockers. First, <code>feature.editscore</code> in <code>anny-render-corpus/pixi.toml</code> takes torch from a CUDA index with no Apple wheels; the verifier does not run where needed. Second, PITFALLS rule 2: the judge must separate a different render from a 1/255 dither, or it is a rubber stamp. CLAUDE.md’s 2026-09-02 condition-5 retraction permits a quantised verifier.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>Issue: <code>weftspun/weftspun-keypoint</code> 29; <code>anny-render-corpus/score_edits.py</code>.</p>
+</section>
+<section id="related" class="level2">
+<h2 class="anchored" data-anchor-id="related">Related</h2>
+<p>RFD 1157 (EditScore reward model), RFD 1173 (edit-reward corpus; MaskScore), CLAUDE.md constructed-synthetic reproducibility rule.</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 
 </section>
 
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-      <option value="" disabled="" selected="" hidden="">Order By</option>
-      <option value="index" data-direction="asc">Default</option>
-      <option value="listing-title-sort" data-direction="asc">
-        Title
-      </option>
-    </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
-</div>
-<table class="quarto-listing-table table">
-<thead>
-<tr>
-
-<th>
-rfd
-</th>
-
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
-</th>
-
-<th>
-state
-</th>
-
-<th>
-scope
-</th>
-
-</tr>
-</thead>
-<tbody class="list">
-
-<tr data-index="0" data-listing-file-modified-sort="1788447414096" data-listing-reading-time-sort="2" data-listing-word-count-sort="251" data-listing-title-sort="RFD 2172: Prose speaks in the tenseless continuous present" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">2172</span>
-</td>
-<td>
-<a href="../rfd/2172-tenseless-continuous-present-voice/index.html" class="title listing-title">RFD 2172: Prose speaks in the tenseless continuous present</a>
-</td>
-<td>
-<span class="listing-state">committed</span>
-</td>
-<td>
-<span class="listing-scope">every <code>.md</code>, <code>.qmd</code>, and code-comment file in the workspace</span>
-</td>
-
-</tr>
-
-<tr data-index="1" data-listing-file-modified-sort="1788447414096" data-listing-reading-time-sort="1" data-listing-word-count-sort="178" data-listing-title-sort="RFD 2170: allosaurus runs universal + a 27-language commercial localization set" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">2170</span>
-</td>
-<td>
-<a href="../rfd/2170-allosaurus-squad-localization-langs/index.html" class="title listing-title">RFD 2170: allosaurus runs universal + a 27-language commercial localization set</a>
-</td>
-<td>
-<span class="listing-state">committed</span>
-</td>
-<td>
-<span class="listing-scope">6-datasource/anny-render-corpus/emit_10track_panel.py`,</span>
-</td>
-
-</tr>
-
-<tr data-index="2" data-listing-file-modified-sort="1788447414077" data-listing-reading-time-sort="1" data-listing-word-count-sort="197" data-listing-title-sort="RFD 1053: OpenUSD as the internal format" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">1053</span>
-</td>
-<td>
-<a href="../rfd/1053-openusd-as-the-internal-format/index.html" class="title listing-title">RFD 1053: OpenUSD as the internal format</a>
-</td>
-<td>
-<span class="listing-state">committed</span>
-</td>
-<td>
-<span class="listing-scope">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="3" data-listing-file-modified-sort="1788447414075" data-listing-reading-time-sort="1" data-listing-word-count-sort="198" data-listing-title-sort="RFD 1036: Model packaging convention" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">1036</span>
-</td>
-<td>
-<a href="../rfd/1036-packaging-convention/index.html" class="title listing-title">RFD 1036: Model packaging convention</a>
-</td>
-<td>
-<span class="listing-state">committed</span>
-</td>
-<td>
-<span class="listing-scope">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="4" data-listing-file-modified-sort="1788447414074" data-listing-reading-time-sort="2" data-listing-word-count-sort="224" data-listing-title-sort="RFD 1027: GPU tier per model" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">1027</span>
-</td>
-<td>
-<a href="../rfd/1027-gpu-residency-budget/index.html" class="title listing-title">RFD 1027: GPU tier per model</a>
-</td>
-<td>
-<span class="listing-state">committed</span>
-</td>
-<td>
-<span class="listing-scope">&nbsp;</span>
-</td>
-
-</tr>
-
-</tbody>
-</table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -951,7 +783,7 @@ scope
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/pages/flight-level-2-coordination.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/pages/flight-level-2-coordination.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2193-editscore-as-constructed-synthetic-reproducibility-bar/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2193-editscore-as-constructed-synthetic-reproducibility-bar/index.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
