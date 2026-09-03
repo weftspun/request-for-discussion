@@ -23,9 +23,9 @@ language, no visual anime corpus needed.
 photorealistic-face licence-clean corpus not yet acquired.
 
 Motion: motion-bricks.cpp (RFD 1102 catalog) on hand-authored
-keyframes. FX: scale-punch, purple palette, particle bursts.
-Music: CC0 or CC-BY. No commissioned music, no licensed footage.
-10-second outro: QR + URL per rung 9.
+keyframes. FX: petal-drift particles sync'd to pose locks. Palette:
+peach, coral, blush, cream. Music: CC0 or CC-BY. No commissioned
+music, no licensed footage. 10-second outro: QR + URL per rung 9.
 
 ## Problem
 
