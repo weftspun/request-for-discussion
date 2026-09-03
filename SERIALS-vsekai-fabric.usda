@@ -803,7 +803,7 @@ def Scope "Serials"
                 }
                 def "S2194"
                 {
-                    custom string slug = "runway-demo-live-widget"
+                    custom string slug = "atelier-shuttle-portfolio-widget"
                 }
             }
         }
