@@ -1100,6 +1100,37 @@ COCO holdout cannot validate this task.
 RFD 1166 dropped See-Through from the candidate ranking on this basis, taking it from
 twelve rows to eleven.
 
+### AnimeGAN is blocklisted, and CycleGAN is the on-hand substitute
+
+Both AnimeGANv2 and AnimeGANv3 close both ways, same shape as See-Through.
+
+**Ask closed.** The licence reads verbatim: _"This repo is made freely available to
+academic and non-academic entities for non-commercial purposes such as academic
+research, teaching, scientific publications. Regarding the request for commercial use,
+please contact us via email to help you obtain the authorization letter."_ Non-commercial
+only, same bar RFD 1028 rejects for shipping.
+
+**Adapt closed.** The published checkpoints train on three named directors' theatrical
+work. Naming those directors in workspace docs would violate CLAUDE.md's "Trademarks
+Stay Out of Shipping Artifacts" rule, and retraining on the same source is the same
+provenance close. A retrain would need a licence-clean anime style corpus this workspace
+does not have.
+
+**The substitute we already own.** `3-interactor/cyclegan-style-transfer` (BSD-2 / BSD-3,
+CycleGAN by junyanz, 11.4M params per direction) plays the photo-to-stylized role
+AnimeGAN was chosen for. Pretrained `style_monet` and `style_ukiyoe` ship with it;
+`style_ukiyoe` is Japanese woodblock, adjacent to anime but not identical. Training a
+new photo-to-anime direction is tractable on the 3090 with an unpaired anime collection
+this workspace can source cleanly. The Sinew RFD 0036 packaging convention already
+wraps it.
+
+**Why this row exists.** RFD 2183 (MaskScore-driven layer decomposition on OmniGen2)
+and RFD 2187 (identity overlay on ANNY via OmniGen2) briefly considered AnimeGAN as
+the photo-to-anime stylizer that would produce identity-training anchors. The finding
+belongs next to the See-Through row because it is the same double-close pattern and the
+same recovery path (own substitute, train from clean data if the on-hand pretrained is
+not quite what is needed).
+
 ### Mermaid is blocklisted as a published-figure format, and the layout solver is why
 
 RFD 2136's network went through both formats in one day, so the

@@ -478,6 +478,7 @@ Sources excluded from corpora, with the reason:
 | **LLaDA** (LLaDA-o, iLLaDA, LLaDA-1.5)             | block diffusion measured 5.76s / 64 tokens — 25x too slow for real-time avatar; RFD 1170 presence loop targets sub-500 ms — see below            |
 | **RunPod** as rented compute                       | no budget for per-invocation billing; `spot-broker` and `transport-runpod` archived alongside this row — see below                               |
 | **Vast.ai** as rented compute                      | no budget for per-hour billing; `spot-broker` and `vast-market-snapshots` archived alongside this row — see below                                |
+| **AnimeGAN** (v2, v3) as a photo-to-anime stylizer | non-commercial licence; checkpoints trained on copyrighted films; CycleGAN is the on-hand substitute — see below                                 |
 
 The cosplay photo library may be used for **validation only**, never training.
 
