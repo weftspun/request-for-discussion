@@ -341,6 +341,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="decision" class="level2">
 <h2 class="anchored" data-anchor-id="decision">Decision</h2>
+<p>Udon is the only target.</p>
 <p><strong>Ship FBD -&gt; Udon assembly, direct.</strong> <strong>C# as an intermediate is blocklisted</strong>; UdonSharp adds Roslyn as a dep for one output format and duplicates verification outside RFD 2159’s C++/Rust cross-check. Direct mirrors godot-sandbox’s SafeGDScript pattern (source language -&gt; target ISA, no C++ intermediate). VRChat’s creator feedback loop demos in-world without a compile-and-flash cycle.</p>
 <p><strong>Dropped (were parked previously):</strong> 1. UE 4/5 Blueprint; out of scope for taskweft. 2. Resonite ProtoFlux; out of scope. 3. glTF Interactivity; out of scope.</p>
 <p>Udon assembly’s opcode + directive surface lives at <code>taskweft-fbd-compiler/sigs/vrchat_udon_asm.sigs</code> (extracted from UdonSharp’s own assembler, MIT). The FBD emitter walks each block and writes the corresponding uasm opcodes into the RFD 2160 USD plan’s <code>/Deliveries/UdonAsm</code> string.</p>
