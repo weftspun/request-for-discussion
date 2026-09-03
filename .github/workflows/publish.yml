@@ -28,6 +28,9 @@ jobs:
       - name: Render RFD pages and the serial register
         run: python scripts/render_site.py
 
+      - name: Render Flight Level pages (L1, L2, L3)
+        run: python scripts/render_flight_level_pages.py
+
       - uses: quarto-dev/quarto-actions/setup@v2
 
       - run: quarto render
