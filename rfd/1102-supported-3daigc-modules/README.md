@@ -1,35 +1,39 @@
-# RFD 1102: The supported 3DAIGC task catalog, one live source
+# RFD 1102: The supported task catalog, one live source
 
-**State:** published
-**Scope:** `TaskManager.jsx`, `src/library/aiModelsCatalog.js`
+**State:** committed
+**Scope:** RFDs 1036 (packaging), 1173 (pipeline), 2136 (gacha ladder)
 
 ## Problem
 
-The New Task panel's own task list, `3DAIGC-API`'s live model list,
-and this project's catalog file can drift from each other, and a
-reader had no single table naming which model backs which task
-today, or which task is client-only (no DGX call at all).
+The earlier draft named a browser New Task panel, `3DAIGC-API` on
+the DGX at port 7842, and a JS `aiModelsCatalog.js` as three sources
+of truth. Every premise was walked back: RFD 2169 abandoned the
+strangler-fig studio core the browser client fed; RFD 2175 abandoned
+rented compute; CLAUDE.md's hard constraint is the local desktop GPU
+only. Six of the fourteen catalog rows referenced blocklisted or
+abandoned models (P3-SAM, TripoSplat, WorldMirror 2.0,
+weftspun_image_to_world, LingBot-Map, Hunyuan3D-2.1).
 
 ## Decision
 
-`GET /api/v1/system/models` on `3DAIGC-API` (DGX, port 7842) is the
-live source; `src/library/aiModelsCatalog.js` mirrors it for the
-client. Fourteen task types are named in one table (text-to-3D
-through Avatar From Photo), each with its API feature key and a
-recommended model. Two tasks run with no `3DAIGC-API` call at all:
-"Avatar From Photo" (AvatarSDK, client-only) and the client-side
-avatar pipeline's own rig step. Three models are license-blocked on
-a commercial tier (PartField, PartPacker, FastMesh); "Part
-completion" exists only in legacy upstream docs, not in this UI.
+The task catalog is now the set of Docker images this workspace ships
+per RFD 1036 (plain HTTP, `/health` + `/predict`, weights at build
+time, one model per image), running on the local desktop GPU per
+CLAUDE.md, feeding the two pipelines the workspace actually operates:
 
-See `DETAILS.md` for the full task table, the Gaussian-splat
-capability matrix (shipped versus not yet done), the architecture
-diagram, and the full further-reading index this catalog page
-carried.
+- **MaskScore corpus construction** (RFD 1173): eight stubs across
+  mesh/depth/pose/keypoints/multimodal/speech/text/video. Five shipped
+  on HF (RFD 2164 speech + Rung 1 walking skeleton).
+- **The gacha critical path** (RFD 2136): ten-rung ladder from a
+  language prompt to a public roll-button-dispensed VRM.
+
+`DETAILS.md` carries the current per-task table, the pipeline
+diagrams, and the retraction record for the browser-client + DGX
+catalog this RFD used to describe.
 
 ## Related
 
-RFD 1004 (weftspun-3d-studio's own `decisions/`) gives the AIGC task
-catalog's own original design. RFD 1094 gives the multi-image
-routing this catalog's splat and avatar tasks both use. RFD 1100
-gives the spatial-fabric publish path a completed mesh task reaches.
+RFD 1036 (Docker packaging), RFD 1053 (OpenUSD internal + glTF/VRM at
+edge), RFD 1027 (GPU tier), RFD 1173 (multimodal pipeline), RFD 2136
+(gacha ladder), RFD 2164 (Speech stub shipped), RFD 2169 (studio-core
+abandonment), RFD 2175 (rented compute abandoned).
