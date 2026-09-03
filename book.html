@@ -49,9 +49,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-ebf6027466d64ce25e353d53063d38f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -1670,6 +1670,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#decision-216" id="toc-decision-216" class="nav-link" data-scroll-target="#decision-216">Decision</a></li>
   <li><a href="#problem-213" id="toc-problem-213" class="nav-link" data-scroll-target="#problem-213">Problem</a></li>
   <li><a href="#related-195" id="toc-related-195" class="nav-link" data-scroll-target="#related-195">Related</a></li>
+  </ul></li>
+  <li><a href="#rfd-2188-one-ggml-across-the-workspace" id="toc-rfd-2188-one-ggml-across-the-workspace" class="nav-link" data-scroll-target="#rfd-2188-one-ggml-across-the-workspace">RFD 2188: One GGML across the workspace</a>
+  <ul class="collapse">
+  <li><a href="#decision-217" id="toc-decision-217" class="nav-link" data-scroll-target="#decision-217">Decision</a></li>
+  <li><a href="#problem-214" id="toc-problem-214" class="nav-link" data-scroll-target="#problem-214">Problem</a></li>
+  <li><a href="#related-196" id="toc-related-196" class="nav-link" data-scroll-target="#related-196">Related</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
@@ -6806,6 +6812,27 @@ void  grafcet_static_free(char *buf);</code></pre>
 <section id="related-195" class="level2">
 <h2 class="anchored" data-anchor-id="related-195">Related</h2>
 <p>RFD 2183 (layer-decomp pipeline; consumes this), RFD 2184 (EditScore three-signal training pattern), RFD 2186 (dressing overlay, parallel), RFD 2136 (gacha ladder; slots upstream of Rung 6).</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2188-one-ggml-across-the-workspace" class="level1">
+<h1>RFD 2188: One GGML across the workspace</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2188</code></p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> a single canonical GGML source tree the whole workspace consumes <strong>Scope:</strong> every C/C++ project in <code>3-interactor</code> that links a tensor runtime</p>
+<section id="decision-217" class="level2">
+<h2 class="anchored" data-anchor-id="decision-217">Decision</h2>
+<p><code>weftspun/ggml</code> is the one canonical GGML source in this workspace. Every consumer references it through the manifest; vendored copies are deleted; a prek gate refuses any new consumer that brings its own.</p>
+<p>Manifest points at branch <code>weftspun-consolidated</code>, seeded from <code>ggml-seethrough</code> HEAD (<code>3404c951</code>, 2026-08-29) — the richest tip, carrying 14+ custom backends. <code>upstream-tracking</code> branch was pushed at <code>ggml-org/ggml master</code> (2026-08-30) as a future rebase base.</p>
+<p>Placed at <code>2-contract/ggml</code>: the tensor runtime is a contract every interactor consumes. There is no <code>0-shared</code> hexagon side.</p>
+</section>
+<section id="problem-214" class="level2">
+<h2 class="anchored" data-anchor-id="problem-214">Problem</h2>
+<p>Discovery found six divergent copies, two with conflicting-SHA manifest entries under the same project name (drift alive at the moment of writing). See DETAILS.md for the table and the skipped-cherry-pick list.</p>
+<p>Phase 1 lands the framework: canonical repo, manifest change, singleton gate, RFD. Phase 2 migrates the remaining consumers one PR at a time, resolving the two Metal cherry-pick conflicts by hand against the newer backend surface.</p>
+</section>
+<section id="related-196" class="level2">
+<h2 class="anchored" data-anchor-id="related-196">Related</h2>
+<p>RFD 1000 (hexagon-side placement rule), RFD 1102 (task catalog gacha pipeline consumes ggml through skin-tokens.cpp and motion-bricks.cpp), CLAUDE.md’s ggml/GGUF blocklist row (the vendor’s own runtime is exempt — this RFD is that exemption’s canonical form).</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 
