@@ -26,9 +26,13 @@ Three anchors, each named once:
 - **Market**: avatar-first social VR. Generic vocabulary per CLAUDE.md's trademark rule; do not name any specific third-party social-VR platform in shipping prose.
 
 The atelier-workshop-shuttle vocabulary (RFD 2171) plus this
-triangle gives every public-facing sentence a full anchor: chibifire
-runs the atelier-workshop that ships a shuttle into V-Sekai in the
-avatar-first social-VR market.
+triangle gives one canonical positioning sentence:
+
+> chibifire operates an atelier-workshop that shuttles the
+> character-avatars into V-Sekai in the avatar-first social-VR
+> market.
+
+"shuttle" reads as a verb here; "character-avatars" is the object.
 
 ## Related
 
