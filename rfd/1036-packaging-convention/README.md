@@ -3,12 +3,6 @@
 **State:** committed
 **Feature:** model packaging
 
-## Problem
-
-The DGX API ran each model through its own adapter, each with its
-own weight loader, CUDA pin, and output writer. There is no DGX now.
-This RFD first selected Cog; `DETAILS.md` records why it was withdrawn.
-
 ## Decision
 
 Package each model as a plain Docker image that serves HTTP.
@@ -30,6 +24,12 @@ composites, and unconverted folders.
 Committed 2026-09-02: the convention has been in force for months;
 CLAUDE.md closes compute (local desktop GPU only; RunPod/Vast.ai
 blocklisted). Earlier rental-target framing retracted in DETAILS.md.
+
+## Problem
+
+The DGX API ran each model through its own adapter, each with its
+own weight loader, CUDA pin, and output writer. There is no DGX now.
+This RFD first selected Cog; `DETAILS.md` records why it was withdrawn.
 
 ## Related
 

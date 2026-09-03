@@ -3,12 +3,6 @@
 **State:** published
 **Scope:** the Vite dev server, `certs/`
 
-## Problem
-
-WebXR needs HTTPS. A plain `npm run dev` over HTTP cannot open an
-AR or VR session at all, on a desktop browser or on a Galaxy XR
-headset over the LAN.
-
 ## Decision
 
 Generate a local certificate into `certs/`, and let Vite pick it up
@@ -22,6 +16,12 @@ local development.
 
 See `DETAILS.md` for every option's exact commands, the headset
 network-access steps, and troubleshooting.
+
+## Problem
+
+WebXR needs HTTPS. A plain `npm run dev` over HTTP cannot open an
+AR or VR session at all, on a desktop browser or on a Galaxy XR
+headset over the LAN.
 
 ## Related
 

@@ -3,16 +3,6 @@
 **State:** published
 **Scope:** the repository
 
-## Problem
-
-This branch changed the host, the packaging, the backend, and the
-planner. Some of that work is complete, some is measured but not
-built, and some is written but never run.
-
-A reader who returns to this cannot tell those apart from the RFDs
-alone. Each RFD records its own decision, and none records what is
-still owed.
-
 ## Decision
 
 Keep one list of open work, in `DETAILS.md`. Each entry names the
@@ -22,6 +12,16 @@ closes, so that file shrinks and never grows a history section.
 `DETAILS.md` holds five sections: verified and running, written and
 never run, measured and not built, unknown and blocking a number, and
 decided but waiting.
+
+## Problem
+
+This branch changed the host, the packaging, the backend, and the
+planner. Some of that work is complete, some is measured but not
+built, and some is written but never run.
+
+A reader who returns to this cannot tell those apart from the RFDs
+alone. Each RFD records its own decision, and none records what is
+still owed.
 
 ## Related
 

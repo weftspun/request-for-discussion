@@ -3,13 +3,6 @@
 **State:** published
 **Scope:** `public/loot-assets/`, `scripts/loot-assets-paths.mjs`, `scripts/ensure-loot-assets.mjs`
 
-## Problem
-
-Loot asset binaries have no place in this project's own git
-history. `github.com/m3-org/loot-assets` already holds them as the
-source of truth; committing a second copy here would duplicate that
-data and drift from it.
-
 ## Decision
 
 Never commit the binaries. `npm run get-assets` clones
@@ -23,6 +16,13 @@ App code reads `/loot-assets/…` with no import-path change
 
 See `DETAILS.md` for the local layout, the quick-start commands, and
 the CDN alternative for a bundle-free Vercel build.
+
+## Problem
+
+Loot asset binaries have no place in this project's own git
+history. `github.com/m3-org/loot-assets` already holds them as the
+source of truth; committing a second copy here would duplicate that
+data and drift from it.
 
 ## Related
 

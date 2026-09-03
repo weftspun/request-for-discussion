@@ -3,11 +3,6 @@
 **State:** published
 **Feature:** avatar pipeline
 
-## Problem
-
-A user wants an animated avatar from a photo or a trait selection.
-The result must meet the rig contract and export as VRM.
-
 ## Decision
 
 Support two avatar creation paths.
@@ -24,6 +19,11 @@ Export paths include GLB download, VRM build, avatar pipeline VRM,
 and GLB compression with gltf-transform.
 
 See `DETAILS.md` for file references.
+
+## Problem
+
+A user wants an animated avatar from a photo or a trait selection.
+The result must meet the rig contract and export as VRM.
 
 ## Related
 

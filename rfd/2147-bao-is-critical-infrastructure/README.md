@@ -3,15 +3,6 @@
 **State:** discussion
 **Scope:** weftspun-bao, its consumers, its DR runbook.
 
-## Problem
-
-Bao was one machine, Shamir seal single share, operator+1P recovery
-per restart. RFD 2140's `ha_enabled = "false"` fit that framing. RFD
-2146 then moved every routine credential read, coordination write,
-and policy check onto Bao. Every consumer now depends on Bao being
-up, and RFD 2140's reliability budget is smaller than what routes
-through Bao now needs.
-
 ## Decision
 
 Bao's availability class rises to match its consumers'. Recovery
@@ -32,6 +23,15 @@ becomes hands-off, not operator-with-1P.
    DNS-only; edge cache, if needed, is Fly-side or origin-side.
 
 Details, sub-decisions, migration in `DETAILS.md`. S2147.
+
+## Problem
+
+Bao was one machine, Shamir seal single share, operator+1P recovery
+per restart. RFD 2140's `ha_enabled = "false"` fit that framing. RFD
+2146 then moved every routine credential read, coordination write,
+and policy check onto Bao. Every consumer now depends on Bao being
+up, and RFD 2140's reliability budget is smaller than what routes
+through Bao now needs.
 
 ## Related
 

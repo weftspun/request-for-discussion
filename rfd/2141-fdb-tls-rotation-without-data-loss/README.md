@@ -4,13 +4,6 @@
 **Feature:** rotate the private CA and all leaf certificates on the live cluster
 **Scope:** weftspun-fdb (3 machines, double), weftspun-bao (FDB client)
 
-## Problem
-
-The CA private key from RFD 2134 is not recoverable, so no new leaf
-can be issued. bao needs a client cert, and the machine certs expire
-in two years. RFD 2134's reset path wipes data, which was acceptable
-at initial setup and is not acceptable now.
-
 ## Decision
 
 A three-phase rolling rotation using FDB's automatic TLS certificate
@@ -34,6 +27,13 @@ coordinator reset is needed.
 The rotation tool is an Elixir TUI in weft-warp-burrito, packaged
 via Burrito. It walks the phases, gates each on cluster health, and
 stores the CA key on completion. The procedure is in DETAILS.md.
+
+## Problem
+
+The CA private key from RFD 2134 is not recoverable, so no new leaf
+can be issued. bao needs a client cert, and the machine certs expire
+in two years. RFD 2134's reset path wipes data, which was acceptable
+at initial setup and is not acceptable now.
 
 ## Related
 

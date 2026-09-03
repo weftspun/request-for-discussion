@@ -4,16 +4,6 @@
 **Feature:** naming camera directions, and a grid of them as training data
 **Scope:** `7-service/service-livebook/priv/python/weft_loop.py`
 
-## Problem
-
-This workspace named views in degrees. "Pitch -90, yaw 0" says nothing
-about what a picture shows, and a reader has to hold the up axis and the
-rotation order in their head to find out.
-
-The cost was not cosmetic. Loop 1 scored view 0 of its sequence for three
-rounds and got 0.0 each time. View 0 is a camera directly beneath a
-standing figure. The degrees were on the page the whole time.
-
 ## Decision
 
 Name a view in the vocabulary fal's Multiple-Angles LoRA is conditioned
@@ -33,6 +23,16 @@ found the front view's band wrapping through zero.
 
 Only the phrase table is used. Qwen-Image-Edit is blocklisted and those
 weights are gated, so neither is loaded. `logbook/CITATION.cff` cites it.
+
+## Problem
+
+This workspace named views in degrees. "Pitch -90, yaw 0" says nothing
+about what a picture shows, and a reader has to hold the up axis and the
+rotation order in their head to find out.
+
+The cost was not cosmetic. Loop 1 scored view 0 of its sequence for three
+rounds and got 0.0 each time. View 0 is a camera directly beneath a
+standing figure. The degrees were on the page the whole time.
 
 ## Related
 

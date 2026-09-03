@@ -4,14 +4,6 @@
 **Feature:** where operational monitoring lives, and what it may not live in
 **Scope:** weftspun-fdb's machine checks; any later production check
 
-## Problem
-
-The weftspun-fdb backup needed a staleness gate, and the two obvious
-homes were both wrong. CI has no production access, and granting it
-some means a new credential with a new blast radius. The spot-broker
-keeper holds spend authority, and an admin service that accumulates
-monitoring scripts becomes the home of every capability.
-
 ## Decision
 
 A production check runs on the machine being checked, because that is
@@ -31,6 +23,14 @@ directions, and an unreadable signal always reads as failure. The
 measurements behind both checks, including the two backups that
 silently self-completed and the curl signing limits that reshaped the
 probe, are in DETAILS.md and the logbook.
+
+## Problem
+
+The weftspun-fdb backup needed a staleness gate, and the two obvious
+homes were both wrong. CI has no production access, and granting it
+some means a new credential with a new blast radius. The spot-broker
+keeper holds spend authority, and an admin service that accumulates
+monitoring scripts becomes the home of every capability.
 
 ## Verification
 

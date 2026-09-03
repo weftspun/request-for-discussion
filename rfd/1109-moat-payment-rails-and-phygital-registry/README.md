@@ -3,6 +3,15 @@
 **State:** abandoned
 **Scope:** RFD 1106's own proprietary-area table
 
+## Decision
+
+Extracted out of RFD 1106's own table, into this RFD, and marked
+abandoned here too, matching RFD 1012 and RFD 1015 exactly. No code
+implements either area today. A fork gains nothing by their absence,
+since neither ships; RFD 1106's remaining three areas (trademark,
+hosted AI, marketplace/personalization) are the real, current
+proprietary boundary.
+
 ## Problem
 
 RFD 1106's source document (this project's own moat overview)
@@ -14,15 +23,6 @@ RFD 1012 and RFD 1015, and both were fully stripped from the
 codebase before RFD 1106 was written. Carrying them forward as
 "proprietary moat" restated a decision this project already
 reversed.
-
-## Decision
-
-Extracted out of RFD 1106's own table, into this RFD, and marked
-abandoned here too, matching RFD 1012 and RFD 1015 exactly. No code
-implements either area today. A fork gains nothing by their absence,
-since neither ships; RFD 1106's remaining three areas (trademark,
-hosted AI, marketplace/personalization) are the real, current
-proprietary boundary.
 
 ## Related
 

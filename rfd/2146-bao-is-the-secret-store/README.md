@@ -4,17 +4,6 @@
 **Scope:** the workspace's Bao instance and every consumer that
 already presents a per-identity TLS leaf.
 
-## Problem
-
-Every service ends up with three identity questions: what secrets
-can it read, what actions can it take, and how does it prove it is
-what it claims to be. Left alone, each answer accretes its own
-credential: a shared bearer for reads, a root token for writes, a
-network ACL as an identity substitute. Every one becomes a rotation
-problem and a leak surface. When the store sits behind mTLS, the
-client already presents a per-identity cert at the TLS handshake,
-and the API layer above ignores it and re-asks with a token.
-
 ## Decision
 
 The cert is the answer. Bao's cert auth backend accepts each
@@ -34,6 +23,17 @@ capability: one policy against an existing scope.
 The store becomes the source of truth for every secret; 1P retains
 the material as an offline mirror. Role table, walkthrough, negative
 controls in `DETAILS.md`.
+
+## Problem
+
+Every service ends up with three identity questions: what secrets
+can it read, what actions can it take, and how does it prove it is
+what it claims to be. Left alone, each answer accretes its own
+credential: a shared bearer for reads, a root token for writes, a
+network ACL as an identity substitute. Every one becomes a rotation
+problem and a leak surface. When the store sits behind mTLS, the
+client already presents a per-identity cert at the TLS handshake,
+and the API layer above ignores it and re-asks with a token.
 
 ## Related
 

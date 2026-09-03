@@ -5,13 +5,6 @@
 and `|<` markers from the compact GRAFCET DSL
 **Scope:** taskweft (`lib/taskweft/openplc/plcopen.ex`)
 
-## Problem
-
-RFD 2148's compact GRAFCET carries `|>` (OR-divergence) and `|<`
-(OR-convergence) markers; `Taskweft.Grafcet.lower/1` already lowers
-them to a synthesised chooser method (RFD 2148 stage 1). The PLCopen
-SFC emitter refuses them today with `RuntimeError` pointing here.
-
 ## Decision
 
 Cover the single-branch OR case first (the blocks_world `get:
@@ -29,6 +22,13 @@ target today. The lower/raise pair already covers OR on the HTN side
 
 `DETAILS.md` carries the PLCopen XML shape, the exclusivity gate, the
 interaction with RFD 2149, and multi-step branch semantics.
+
+## Problem
+
+RFD 2148's compact GRAFCET carries `|>` (OR-divergence) and `|<`
+(OR-convergence) markers; `Taskweft.Grafcet.lower/1` already lowers
+them to a synthesised chooser method (RFD 2148 stage 1). The PLCopen
+SFC emitter refuses them today with `RuntimeError` pointing here.
 
 ## References
 

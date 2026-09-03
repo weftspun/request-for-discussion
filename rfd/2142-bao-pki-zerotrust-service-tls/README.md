@@ -4,18 +4,6 @@
 **Feature:** mTLS on the bao listener and cert-based service auth
 **Scope:** weftspun-bao, spot-broker, weft-warp-burrito
 
-## Problem
-
-Services on 6PN read secrets from bao over plaintext HTTP. The root
-token in 1Password is for emergencies; sharing it with services is
-the credential distribution problem bao exists to solve. Any 6PN
-neighbor can observe or modify traffic to the listener.
-
-The FDB root CA key is lost a second time (the replacement from RFD
-2141 was stored via `op item create`, which returned an item ID but
-did not persist the item). Chaining under that CA is not possible
-without rotating FDB again.
-
 ## Decision
 
 Implemented 2026-09-01; see RFD 2146 for the role/policy map.
@@ -34,6 +22,18 @@ cluster mutual TLS.
 **Gate:** bao rejects a plaintext request to `:8200`.
 **Negative control:** a request with no client cert, or with an
 expired cert, returns 403.
+
+## Problem
+
+Services on 6PN read secrets from bao over plaintext HTTP. The root
+token in 1Password is for emergencies; sharing it with services is
+the credential distribution problem bao exists to solve. Any 6PN
+neighbor can observe or modify traffic to the listener.
+
+The FDB root CA key is lost a second time (the replacement from RFD
+2141 was stored via `op item create`, which returned an item ID but
+did not persist the item). Chaining under that CA is not possible
+without rotating FDB again.
 
 ## Related
 

@@ -3,20 +3,6 @@
 **State:** discussion
 **Scope:** `rules/`
 
-## Problem
-
-`rules/` held 34 raw `.mdc` files, moved unfiltered from
-weftspun-3d-studio's own `.cursor/rules/` directory. No RFD covered
-the set. RFD 1000's DRY policy says an RFD points to its source and
-does not copy it. Each of these files was itself already a copy,
-kept in sync by hand with the file of the same name in the app
-repository. Twenty files remain, after the guard rules converted.
-
-One file, `weftspun-moat-protected.mdc`, restates RFD 1106 in a more
-raw form, and names revenue mechanisms RFD 1106 leaves out on
-purpose. A second file, `dgx-sync-reminder.mdc`, names a private
-machine's local IP address and file paths.
-
 ## Decision
 
 A guard rule's design belongs in an RFD, not a raw `.mdc` file. Each
@@ -32,6 +18,20 @@ transparency. `weftspun-moat-protected.mdc` and
 public-safe summary of the first, and this file gives the working
 detail behind it, kept by the same transparency choice. See
 `DETAILS.md` for the current per-file table.
+
+## Problem
+
+`rules/` held 34 raw `.mdc` files, moved unfiltered from
+weftspun-3d-studio's own `.cursor/rules/` directory. No RFD covered
+the set. RFD 1000's DRY policy says an RFD points to its source and
+does not copy it. Each of these files was itself already a copy,
+kept in sync by hand with the file of the same name in the app
+repository. Twenty files remain, after the guard rules converted.
+
+One file, `weftspun-moat-protected.mdc`, restates RFD 1106 in a more
+raw form, and names revenue mechanisms RFD 1106 leaves out on
+purpose. A second file, `dgx-sync-reminder.mdc`, names a private
+machine's local IP address and file paths.
 
 ## Related
 

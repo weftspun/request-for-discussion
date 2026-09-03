@@ -3,6 +3,17 @@
 **State:** discussion
 **Scope:** `thirdparty/3d_studio/src/library/glbCompress.js`, `thirdparty/fabric-flow-adapters/`
 
+## Decision
+
+The upload-prep job belongs on `idtx_core`'s USD-native transport,
+not on a second bespoke GLB pipeline in JavaScript.
+`thirdparty/fabric-flow-adapters/flow/` already carries what that
+job needs, and this repository's browser compression does not.
+
+None of that is reachable from a browser today. See `DETAILS.md` for
+what `idtx_core` carries, the three steps to reach it, the interim
+stopgap in `glbCompress.js`, and a bug that stopgap's tests surfaced.
+
 ## Problem
 
 `__tests__/prepareGlbForApiUpload.test.js` tested two functions,
@@ -20,17 +31,6 @@ and WebP. RFD 1053 makes OpenUSD the internal format, the way
 transmission format, converted at the boundary. GLB, Draco, and WebP
 belong at that boundary. They do not belong as the mesh-prep
 pipeline itself, which is what `compressGlbBuffer` is today.
-
-## Decision
-
-The upload-prep job belongs on `idtx_core`'s USD-native transport,
-not on a second bespoke GLB pipeline in JavaScript.
-`thirdparty/fabric-flow-adapters/flow/` already carries what that
-job needs, and this repository's browser compression does not.
-
-None of that is reachable from a browser today. See `DETAILS.md` for
-what `idtx_core` carries, the three steps to reach it, the interim
-stopgap in `glbCompress.js`, and a bug that stopgap's tests surfaced.
 
 ## Related
 

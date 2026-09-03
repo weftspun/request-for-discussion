@@ -4,14 +4,6 @@
 **Scope:** `App.jsx`, `App.css`, `TaskProgressBar.{jsx,css}`,
 `src/pages/Appearance*`, `BottomDisplayMenu.jsx`
 
-## Problem
-
-The header, the task-progress bar, and the two side rails share one
-coordinate space. Three regressions kept recurring: a fixed task bar
-drifting over the header, an asymmetric collapsed-rail icon column,
-and a side panel raised above the header in z-index instead of
-repositioned.
-
 ## Decision
 
 The task-progress bar stays in document flow, after
@@ -32,6 +24,14 @@ z-index raise past 998.
 
 See `DETAILS.md` for the full token table, the forbidden-change
 list, and the visual-check steps each rule's own checklist named.
+
+## Problem
+
+The header, the task-progress bar, and the two side rails share one
+coordinate space. Three regressions kept recurring: a fixed task bar
+drifting over the header, an asymmetric collapsed-rail icon column,
+and a side panel raised above the header in z-index instead of
+repositioned.
 
 ## Related
 

@@ -4,14 +4,6 @@
 **Feature:** running the whole keypoint graph on the accelerator, with no host cut
 **Scope:** `3-interactor/rf-detr-cpp`, `2-contract/lean-deform-exact`, `5-repository/hailo-model-zoo`
 
-## Problem
-
-A dataflow accelerator refuses to compute an address from the data. That rules out
-`GridSample`, `ScatterND`, `GatherElements` and `TopK` — the whole indexing family the
-DETR decoder is built from. The accepted answer is to cut the graph and run the decoder
-on the host, which is what Hailo's own DETR does and what 50 of its 127 zoo configs do.
-A cut costs a USB round trip per frame and a host pipeline that has to exist.
-
 ## Decision
 
 Emulate them. One kernel does all four: bilinear interpolation is a tent that vanishes
@@ -33,6 +25,14 @@ objection; the arithmetic never was.
 Measured: four rewrites accepted for `hailo10h`, exact to float64 roundoff, 1,549 layers
 against the backbone's 336. Whether that beats the cut is unanswered — layers are not
 cycles, and saying so is the finding rather than a caveat.
+
+## Problem
+
+A dataflow accelerator refuses to compute an address from the data. That rules out
+`GridSample`, `ScatterND`, `GatherElements` and `TopK` — the whole indexing family the
+DETR decoder is built from. The accepted answer is to cut the graph and run the decoder
+on the host, which is what Hailo's own DETR does and what 50 of its 127 zoo configs do.
+A cut costs a USB round trip per frame and a host pipeline that has to exist.
 
 ## Related
 

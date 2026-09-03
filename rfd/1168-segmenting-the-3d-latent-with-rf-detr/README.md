@@ -4,12 +4,6 @@
 **Feature:** layer decomposition without See-Through
 **Scope:** `3-interactor/rf-detr-cpp`, `3-interactor/voxhammer-upstream`
 
-## Problem
-
-RFD 1166 dropped See-Through, so layer decomposition has no model. The
-obvious 3D replacement is gone too: P3-SAM / Hunyuan3D-Part is
-blocklisted on a territory-restricted licence.
-
 ## Decision
 
 Segment in 3D, from parts already held. RF-DETR-Seg has a
@@ -34,6 +28,12 @@ no Fourier operator is in `DEVICE_OPS`. CycleGAN is the opposite trade.
 **Unbuilt.** `DETAILS.md` bounds the COCO classes and the resolution,
 supplies the corpus from corrupt-clean render pairs, and gives two
 tests costing no training.
+
+## Problem
+
+RFD 1166 dropped See-Through, so layer decomposition has no model. The
+obvious 3D replacement is gone too: P3-SAM / Hunyuan3D-Part is
+blocklisted on a territory-restricted licence.
 
 ## Related
 

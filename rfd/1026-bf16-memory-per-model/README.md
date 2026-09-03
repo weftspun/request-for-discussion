@@ -3,11 +3,6 @@
 **State:** published
 **Feature:** capacity planning
 
-## Problem
-
-The backend must decide which models stay resident. That decision
-needs a number per model.
-
 ## Decision
 
 Apply the rule from RFD 1025 to each catalog model. Treat the
@@ -26,6 +21,11 @@ yet.
 Prefer `measured` over every other source, and prefer bf16 over fp16
 where a checkpoint offers both. The two formats cost the same memory,
 and bf16 carries the wider exponent range.
+
+## Problem
+
+The backend must decide which models stay resident. That decision
+needs a number per model.
 
 ## Related
 

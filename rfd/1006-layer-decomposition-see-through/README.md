@@ -3,12 +3,6 @@
 **State:** discussion
 **Feature:** image-to-layers
 
-## Problem
-
-An anime illustration is one flat image. A user wants to edit the
-hair, the face, and the clothing separately. Image to 3D also works
-better with a clean subject.
-
 ## Decision
 
 Add a layer decomposition stage between text to image and image to
@@ -18,6 +12,12 @@ The task decomposes one image into RGBA body-part layers. It returns
 a layers zip, a PSD, a composite URL, and a layer count. The Studio
 pipeline stores the artifacts on the layer_decomposition node.
 Image to 3D prefers the composite image as its input.
+
+## Problem
+
+An anime illustration is one flat image. A user wants to edit the
+hair, the face, and the clothing separately. Image to 3D also works
+better with a clean subject.
 
 ## References
 

@@ -10,16 +10,6 @@ Shelved 2026-09-02: 2162.1 (104-joint ANNY skeleton in USDZ) shipped in
 weftspun/anny-render-corpus#34. 2162.2 (mesh 15-edit expansion) needs
 render capacity currently unbudgeted; resume when local GPU frees.
 
-## Problem
-
-The Video-stub USDZ shipped in the Rung 1.5 first pass writes a dummy
-1-joint skeleton. The 10 face edits animate correctly because their
-work happens in `SkelAnimation.blendShapeWeights`. The 5 pose edits
-(head_tilt, head_nod, head_turn, jaw_open_bone, shoulders_up) added
-next need `SkelAnimation.jointTransforms` time samples over the real
-104-joint hierarchy (ANNY total; SOMA canonical pose is 78 of those),
-and skin weights per vertex, or the animation plays back as a rest pose.
-
 ## Decision
 
 Extend `compute_blendshape_targets.py` to also emit the joint bind
@@ -31,6 +21,16 @@ writes them under the mesh's `SkelBindingAPI` and populates
 Also update `maskscore_rung_1_stubs.py` to include the 5 pose edits in
 the 5-stub (mesh/depth/pose/keypoints/multimodal) emit so all 15 edits
 appear in the ETNF parquets.
+
+## Problem
+
+The Video-stub USDZ shipped in the Rung 1.5 first pass writes a dummy
+1-joint skeleton. The 10 face edits animate correctly because their
+work happens in `SkelAnimation.blendShapeWeights`. The 5 pose edits
+(head_tilt, head_nod, head_turn, jaw_open_bone, shoulders_up) added
+next need `SkelAnimation.jointTransforms` time samples over the real
+104-joint hierarchy (ANNY total; SOMA canonical pose is 78 of those),
+and skin weights per vertex, or the animation plays back as a rest pose.
 
 ## Related
 

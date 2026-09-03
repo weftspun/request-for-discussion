@@ -3,14 +3,6 @@
 **State:** abandoned
 **Feature:** model packaging
 
-## Problem
-
-TripoSplat turns one photo into a Gaussian splat. It is the
-single-photo path, and RFD 1051 is the multi-photo path.
-
-It is also half of RFD 1049, which builds an explorable world. That
-makes it two callers with different needs from one model image.
-
 ## Decision
 
 Do not package this model image. Abandon this line of work.
@@ -21,6 +13,14 @@ and RFD 1049, its would-be caller, are abandoned for the same reason.
 
 See `DETAILS.md` for the model's memory and the `predict()`
 interface this RFD sketched before the pivot.
+
+## Problem
+
+TripoSplat turns one photo into a Gaussian splat. It is the
+single-photo path, and RFD 1051 is the multi-photo path.
+
+It is also half of RFD 1049, which builds an explorable world. That
+makes it two callers with different needs from one model image.
 
 ## Related
 

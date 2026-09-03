@@ -3,16 +3,6 @@
 **State:** discussion
 **Scope:** the backend GPU host, the XR headset target
 
-## Problem
-
-Several RFDs name one specific machine, the DGX Spark, and one
-specific headset line, Android XR (Galaxy XR), as if the project
-needed that exact hardware. Neither dependency is real. The backend
-needs a CUDA GPU with enough VRAM for the loaded models. The client
-needs a WebXR-capable browser. A reader who owns a 4090 desktop, a
-Quest 3, or an Apple Vision Pro should not read those RFDs as
-requirements they fail to meet.
-
 ## Decision
 
 The backend (`3DAIGC-API`) runs on any machine with a CUDA GPU. The
@@ -29,6 +19,16 @@ anchoring, and the WebXR-native `expression-tracking` feature where
 the browser grants it.
 
 See `DETAILS.md` for the affected RFDs.
+
+## Problem
+
+Several RFDs name one specific machine, the DGX Spark, and one
+specific headset line, Android XR (Galaxy XR), as if the project
+needed that exact hardware. Neither dependency is real. The backend
+needs a CUDA GPU with enough VRAM for the loaded models. The client
+needs a WebXR-capable browser. A reader who owns a 4090 desktop, a
+Quest 3, or an Apple Vision Pro should not read those RFDs as
+requirements they fail to meet.
 
 ## Related
 

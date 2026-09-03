@@ -4,15 +4,6 @@
 **Scope:** the Krea 2 Turbo completed row, the Image-to-3D form,
 `3DAIGC-API`'s DINOv3 adapter
 
-## Problem
-
-A completed `krea2_turbo_text_to_image` row offers "Use for Image to
-3D," chaining straight into `trellis2_image_to_textured_mesh`. Two
-regressions kept recurring: a browser fetch reading a filesystem
-path (`outputs/images/...`) instead of the job's own download URL,
-and a duplicate DINOv3 feature-extractor class drifting from the
-shared one.
-
 ## Decision
 
 `resolveTextToImageDownloadUrl(task)` is the one URL resolver, for
@@ -30,6 +21,15 @@ extractor class. YAML `init_params` metadata passes through
 `_filter_init_params` before reaching an adapter's `__init__`. A
 pip or TRELLIS.2 edit runs `verify_hf_conditioning.py`, then
 `restart_services.sh`, before merge.
+
+## Problem
+
+A completed `krea2_turbo_text_to_image` row offers "Use for Image to
+3D," chaining straight into `trellis2_image_to_textured_mesh`. Two
+regressions kept recurring: a browser fetch reading a filesystem
+path (`outputs/images/...`) instead of the job's own download URL,
+and a duplicate DINOv3 feature-extractor class drifting from the
+shared one.
 
 ## Related
 

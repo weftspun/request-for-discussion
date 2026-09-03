@@ -3,12 +3,6 @@
 **State:** discussion
 **Feature:** motion validation
 
-## Problem
-
-The old flow ended with a publish step. Publishing validates the
-package, not the avatar rig. The user needs a terminal check that
-the rig works. The motion clip also feeds the companion runtime.
-
 ## Decision
 
 Replace the publish validation with a Kimodo motion validation
@@ -21,6 +15,12 @@ the skeleton. A completed job proves the rig works.
 The stage stores the motion URL on the motion_validation node. The
 export node carries the mesh URL and the motion URL. The companion
 runtime consumes the motion for talk to your VRM.
+
+## Problem
+
+The old flow ended with a publish step. Publishing validates the
+package, not the avatar rig. The user needs a terminal check that
+the rig works. The motion clip also feeds the companion runtime.
 
 ## References
 

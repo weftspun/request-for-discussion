@@ -3,6 +3,19 @@
 **State:** discussion
 **Scope:** `weftspun_studio/`, every model image
 
+## Decision
+
+Blocklist Replicate. Run the worker on this box's own 4090 first, in
+plain Docker images, on RFD 1058's existing Quadlets. vast.ai stays
+priced and ready, the next tier once this box stops being enough, per
+RFD 1062's Gall's law, not the immediate plan.
+
+The BEAM owns the queue, the retries, and the state, no Python
+involved, whichever host runs it.
+
+See `DETAILS.md` for the providers priced for later, the host tiers,
+the two phases, and what stays unresolved.
+
 ## Problem
 
 Replicate runs each model as a serverless Cog. That model costs more
@@ -20,19 +33,6 @@ as Replicate's own terms say, not RFD 1058's zero-trust design.
 **The boundary leaked into the repository.** It produced a duplicate
 application in `cms/`, and a passthrough whose model map was empty,
 thus every job answered 400.
-
-## Decision
-
-Blocklist Replicate. Run the worker on this box's own 4090 first, in
-plain Docker images, on RFD 1058's existing Quadlets. vast.ai stays
-priced and ready, the next tier once this box stops being enough, per
-RFD 1062's Gall's law, not the immediate plan.
-
-The BEAM owns the queue, the retries, and the state, no Python
-involved, whichever host runs it.
-
-See `DETAILS.md` for the providers priced for later, the host tiers,
-the two phases, and what stays unresolved.
 
 ## Related
 

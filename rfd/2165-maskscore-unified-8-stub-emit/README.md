@@ -10,14 +10,6 @@ Shelved 2026-09-02: 2165.1 (schema, #33) and 2165.2 (port 5 shipped
 stubs, #35) shipped; 2165.3 (speech+text+video port) and 2165.4 (HF
 republish) remain.
 
-## Problem
-
-The Rung 1.5 5-stub emit and each new stub's separate emit script
-share the same shape and could drift. Text (RFD 2163), speech (RFD
-2164) and video (part of RFD 2162) each land their own parquets.
-Cross-stub joins require a stable row_key convention and matching
-candidate-satellite schemas.
-
 ## Decision
 
 Extend `maskscore_rung_1_stubs.py` with an unified schema:
@@ -31,6 +23,14 @@ Extend `maskscore_rung_1_stubs.py` with an unified schema:
 `metric_name` is an interned vocabulary (depth_l1, normal_l1,
 normal_dot, wavlm_cos, wer, vlm_score). All 8 stubs share these three
 tables. Consumers join on row_key to sweep across modalities.
+
+## Problem
+
+The Rung 1.5 5-stub emit and each new stub's separate emit script
+share the same shape and could drift. Text (RFD 2163), speech (RFD
+2164) and video (part of RFD 2162) each land their own parquets.
+Cross-stub joins require a stable row_key convention and matching
+candidate-satellite schemas.
 
 ## Related
 

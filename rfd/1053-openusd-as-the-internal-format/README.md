@@ -3,15 +3,6 @@
 **State:** committed
 **Feature:** asset interchange
 
-## Problem
-
-Each pipeline stage reads a GLB and writes a GLB. A rig stage rewrites
-the whole file to add bones. A texture stage rewrites it again.
-
-Every rewrite loses what came before. glTF holds one flat result, thus
-a stage cannot add an opinion without erasing the previous author.
-When a mesh is wrong, no record says which stage made it wrong.
-
 ## Decision
 
 OpenUSD is the internal format. Every stage reads a stage and writes a
@@ -30,6 +21,15 @@ constraint (OpenUSD `.usda` for text-editable, ZStandard parquet for
 bulk; zip and gzip banned; usdz exempt). RFD 2169 abandoned the
 Elixir studio core; the `fabric-stage-runtime` Hex package still
 ships OpenUSD to every consumer.
+
+## Problem
+
+Each pipeline stage reads a GLB and writes a GLB. A rig stage rewrites
+the whole file to add bones. A texture stage rewrites it again.
+
+Every rewrite loses what came before. glTF holds one flat result, thus
+a stage cannot add an opinion without erasing the previous author.
+When a mesh is wrong, no record says which stage made it wrong.
 
 ## Related
 

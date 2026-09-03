@@ -3,12 +3,6 @@
 **State:** published
 **Feature:** batch processing
 
-## Problem
-
-One avatar at a time is slow. A user with many VRM files wants to
-process them in one run. The app must accept a manifest and produce
-many results.
-
 ## Decision
 
 Add batch processing with manifest files.
@@ -19,6 +13,12 @@ Add batch processing with manifest files.
 
 The pipeline also renders VRM thumbnails, spritesheets, and LoRA
 training data from the same manifests.
+
+## Problem
+
+One avatar at a time is slow. A user with many VRM files wants to
+process them in one run. The app must accept a manifest and produce
+many results.
 
 ## References
 

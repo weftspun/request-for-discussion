@@ -3,15 +3,6 @@
 **State:** committed
 **Scope:** `sceneManagerXr*.js`
 
-## Problem
-
-Inside the main app's XR session (not the `/xr` IWSDK lab), the
-headset controls three things: whether the camera rides the avatar
-(embody) or floats free (third-person), whether Move drives the
-avatar or the free viewpoint, and an in-headset menu. Left X and the
-stick click must toggle view and Move at any time, menu open or
-closed; a regression kept gating both behind an open menu instead.
-
 ## Decision
 
 On XR spawn, `alignXrLocomotionRigToViewport` runs on the first
@@ -33,6 +24,15 @@ controller grip; it does not float roughly 0.5 m ahead of it.
 `bash scripts/verify_xr_avatar_view_locomotion.sh` runs before a
 merge touching this file. See `DETAILS.md` for the changes this RFD
 forbids without an explicit user request.
+
+## Problem
+
+Inside the main app's XR session (not the `/xr` IWSDK lab), the
+headset controls three things: whether the camera rides the avatar
+(embody) or floats free (third-person), whether Move drives the
+avatar or the free viewpoint, and an in-headset menu. Left X and the
+stick click must toggle view and Move at any time, menu open or
+closed; a regression kept gating both behind an open menu instead.
 
 ## Related
 

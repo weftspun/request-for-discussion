@@ -4,14 +4,6 @@
 **Feature:** encoding a render sweep for review and delivery
 **Scope:** `7-service/service-cineform`, `1-transport/transport-cineform-tui`
 
-## Problem
-
-A 96-pose sweep left 192 files in a directory. Nobody reviews 96 PNGs,
-and a directory carries no title, no licence and no statement of what
-made it. The deliverables rule asks for a video intermediate with a
-`.cff` beside it. The encoder for one was in the workspace and had never
-been built, and the first attempt reached for a tool that is LGPL.
-
 ## Decision
 
 The pair that exists does the work: `transport-cineform-tui` sends the
@@ -33,6 +25,14 @@ citation's title, which must name what varies.
 Measured here: 96 frames of 1024 by 1024, 402.7 MB of raw RGBA in, 23.4
 MiB out, 554 ms in the encoder, about 173 frames per second, which is a
 rounding error beside the render.
+
+## Problem
+
+A 96-pose sweep left 192 files in a directory. Nobody reviews 96 PNGs,
+and a directory carries no title, no licence and no statement of what
+made it. The deliverables rule asks for a video intermediate with a
+`.cff` beside it. The encoder for one was in the workspace and had never
+been built, and the first attempt reached for a tool that is LGPL.
 
 ## Related
 

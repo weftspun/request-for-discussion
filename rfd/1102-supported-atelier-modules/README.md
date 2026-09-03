@@ -3,17 +3,6 @@
 **State:** committed
 **Scope:** RFDs 1036 (packaging), 1173 (pipeline), 2136 (gacha ladder)
 
-## Problem
-
-The earlier draft named a browser New Task panel, `3DAIGC-API` on
-the DGX at port 7842, and a JS `aiModelsCatalog.js` as three sources
-of truth. Every premise was walked back: RFD 2169 abandoned the
-strangler-fig studio core the browser client fed; RFD 2175 abandoned
-rented compute; CLAUDE.md's hard constraint is the local desktop GPU
-only. Six of the fourteen catalog rows referenced blocklisted or
-abandoned models (P3-SAM, TripoSplat, WorldMirror 2.0,
-weftspun_image_to_world, LingBot-Map, Hunyuan3D-2.1).
-
 ## Decision
 
 The task catalog is now the set of Docker images this workspace ships
@@ -30,6 +19,17 @@ CLAUDE.md, feeding the two pipelines the workspace actually operates:
 `DETAILS.md` carries the current per-task table, the pipeline
 diagrams, and the retraction record for the browser-client + DGX
 catalog this RFD used to describe.
+
+## Problem
+
+The earlier draft named a browser New Task panel, `3DAIGC-API` on
+the DGX at port 7842, and a JS `aiModelsCatalog.js` as three sources
+of truth. Every premise was walked back: RFD 2169 abandoned the
+strangler-fig studio core the browser client fed; RFD 2175 abandoned
+rented compute; CLAUDE.md's hard constraint is the local desktop GPU
+only. Six of the fourteen catalog rows referenced blocklisted or
+abandoned models (P3-SAM, TripoSplat, WorldMirror 2.0,
+weftspun_image_to_world, LingBot-Map, Hunyuan3D-2.1).
 
 ## Related
 

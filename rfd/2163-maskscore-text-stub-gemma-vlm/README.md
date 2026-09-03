@@ -10,14 +10,6 @@ candidates per the RFD 1173 gradient scheme.
 Shelved 2026-09-02: no VLM inference budget this cycle for 15 A/B
 render pairs through Gemma-4-12B; resume when local compute frees.
 
-## Problem
-
-The Rung 1.5 five-stub emit left the Text stub unfilled. The initial
-plan used a fixed part vocabulary from See-Through's
-`bodytags_v3.json`. That was retracted in favour of a
-model-devised taxonomy: Gemma looks at the render pair and describes
-the change in its own words. No fixed part vocabulary is applied.
-
 ## Decision
 
 Loop `llama-mtmd-cli` from RFD 1173.2164's build against both
@@ -30,6 +22,14 @@ Emit 10 rank candidates per edit as in RFD 1173.2164:
   rank2..6  paraphrase gradient (Gemma-generated distortion prompts)
   rank7..8  describes wrong part (weak/strong)
   rank9..10  describes different edit or nonsense
+
+## Problem
+
+The Rung 1.5 five-stub emit left the Text stub unfilled. The initial
+plan used a fixed part vocabulary from See-Through's
+`bodytags_v3.json`. That was retracted in favour of a
+model-devised taxonomy: Gemma looks at the render pair and describes
+the change in its own words. No fixed part vocabulary is applied.
 
 ## Related
 

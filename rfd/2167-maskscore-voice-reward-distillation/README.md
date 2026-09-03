@@ -9,15 +9,6 @@ models. Parallels EditScore for image edits.
 compute is blocklisted. Nothing on the Rung 1 queue depends on this.
 **Scope:** `6-datasource/anny-render-corpus`
 
-## Problem
-
-The 10-rank voice-clone ladder from RFD 2164.2 has a real gradient
-(measured: identity 0.92 -> pitch-shift 0.70 -> wrong subject 0.75 on
-wavlm_cos; canonical 0.07 WER -> wrong text 1.94), but the scoring
-path is too slow to serve as an RL reward. Voxtral inference takes
-5-10s per candidate on MPS; standard RL loops want ~10k rollouts per
-epoch, or >24 hours per epoch just for reward computation.
-
 ## Decision
 
 Train a small reward model that predicts our composite score from
@@ -31,6 +22,15 @@ raw audio, then freeze it as the reward signal for RL fine-tuning.
 
 Same Gemma serves image + voice reward roles (subsumes the parked
 Qwen3-VL -> Gemma swap).
+
+## Problem
+
+The 10-rank voice-clone ladder from RFD 2164.2 has a real gradient
+(measured: identity 0.92 -> pitch-shift 0.70 -> wrong subject 0.75 on
+wavlm_cos; canonical 0.07 WER -> wrong text 1.94), but the scoring
+path is too slow to serve as an RL reward. Voxtral inference takes
+5-10s per candidate on MPS; standard RL loops want ~10k rollouts per
+epoch, or >24 hours per epoch just for reward computation.
 
 ## Related
 

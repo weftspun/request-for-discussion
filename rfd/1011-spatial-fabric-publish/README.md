@@ -3,12 +3,6 @@
 **State:** published
 **Feature:** spatial fabric
 
-## Problem
-
-A completed mesh task should reach shared worlds. The app needs a
-publish path to the spatial fabric. The fabric needs a valid
-manifest and a scene assembler.
-
 ## Decision
 
 Add a publish flow for completed tasks.
@@ -18,6 +12,12 @@ Add a publish flow for completed tasks.
 
 The flow opens the Scene Assembler in a new tab. The spatial
 fabric adapter checks the manifest and the tier presets.
+
+## Problem
+
+A completed mesh task should reach shared worlds. The app needs a
+publish path to the spatial fabric. The fabric needs a valid
+manifest and a scene assembler.
 
 ## References
 

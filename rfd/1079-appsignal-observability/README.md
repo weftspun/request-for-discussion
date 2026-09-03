@@ -3,16 +3,6 @@
 **State:** published
 **Scope:** `apps/weftspun_studio/`
 
-## Problem
-
-`weftspun_studio` ran with no request tracing or error reporting at
-all. A failing deploy, or a slow request, left no trail beyond
-`flyctl logs`. Separately, RFD 1073's `versitygw` (RFD 1058's
-S3-API gateway) sat unused: RFD 1073 (weftspun/request-for-discussion)
-and RFD 1077 already decided Tigris replaces it, and RFD 1076 split
-`apps/usd_viewer_app/` onto its own Fly machine, which cannot reach
-`versitygw`'s loopback-only bind at all.
-
 ## Decision
 
 `Appsignal.Plug`, not raw OpenTelemetry, per the user's own
@@ -32,6 +22,16 @@ in `Dockerfile.fly`, no more process in
 unset as Fly secrets. It cost nothing extra to run, colocated inside
 the already-billed machine, so removing it changes no bill, only
 dead code and a credential surface nothing reads anymore.
+
+## Problem
+
+`weftspun_studio` ran with no request tracing or error reporting at
+all. A failing deploy, or a slow request, left no trail beyond
+`flyctl logs`. Separately, RFD 1073's `versitygw` (RFD 1058's
+S3-API gateway) sat unused: RFD 1073 (weftspun/request-for-discussion)
+and RFD 1077 already decided Tigris replaces it, and RFD 1076 split
+`apps/usd_viewer_app/` onto its own Fly machine, which cannot reach
+`versitygw`'s loopback-only bind at all.
 
 ## Related
 

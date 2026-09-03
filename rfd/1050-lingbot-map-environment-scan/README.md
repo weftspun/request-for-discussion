@@ -3,15 +3,6 @@
 **State:** abandoned
 **Feature:** model packaging
 
-## Problem
-
-LingBot-Map turns a walk video into a 1:1 metric twin of a room. It
-runs two phases, and RFD 1026 marks its parameter count `unknown`.
-
-The scale is the product. A twin that is 3 percent small is not a
-twin. Every other model in the catalog may be wrong by a scale factor
-and still be useful. This one may not.
-
 ## Decision
 
 Do not package this model image. Abandon this line of work.
@@ -31,6 +22,15 @@ listed it open and abandoned the work before asking.
 The scope inverted too: RFD 1171's presence loop makes the scan a
 character tool, because the static room is what a moving person is
 separated from. RFD 1171 takes it and the manifest places it.
+
+## Problem
+
+LingBot-Map turns a walk video into a 1:1 metric twin of a room. It
+runs two phases, and RFD 1026 marks its parameter count `unknown`.
+
+The scale is the product. A twin that is 3 percent small is not a
+twin. Every other model in the catalog may be wrong by a scale factor
+and still be useful. This one may not.
 
 ## Related
 

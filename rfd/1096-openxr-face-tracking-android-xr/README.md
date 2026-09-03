@@ -3,14 +3,6 @@
 **State:** discussion
 **Scope:** `src/library/xrExpressionTrackingDriver.js`, `openxrFaceParameterMap.js`, `native/android-xr-face-bridge/`
 
-## Problem
-
-Two separate paths can drive a VRM's face on Android XR: a browser's
-own draft WebXR `expression-tracking` feature, and native OpenXR's
-`XR_ANDROID_face_tracking`. Neither this project's code nor its
-prior notes named the canonical API references, the exact payload
-shape between the two, or which one wins when both are active.
-
 ## Decision
 
 Prefer the Khronos online man pages over any bundled PDF; the PDFs
@@ -28,6 +20,14 @@ is Android-only by name; a Quest 3 or Vision Pro session runs the
 native bridge involved. See `DETAILS.md` for every canonical
 reference link, the payload contract in both its shapes, and the
 mapping-fidelity caveats.
+
+## Problem
+
+Two separate paths can drive a VRM's face on Android XR: a browser's
+own draft WebXR `expression-tracking` feature, and native OpenXR's
+`XR_ANDROID_face_tracking`. Neither this project's code nor its
+prior notes named the canonical API references, the exact payload
+shape between the two, or which one wins when both are active.
 
 ## Related
 

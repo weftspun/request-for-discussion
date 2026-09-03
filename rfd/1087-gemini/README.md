@@ -3,15 +3,6 @@
 **State:** abandoned
 **Scope:** `.brain/MEMORY.md`, `.brain/SESSION.md`, `.brain/LOG.md`, `.brain/SHARED.md`
 
-## Problem
-
-An AI coding session that starts with no memory of a prior session
-repeats questions the user already answered, and a session that
-only writes memory at the end loses everything if it ends without
-warning. This project adopted MindLink for persistent memory, and
-its protocol needed a written contract, not tribal knowledge in an
-assistant's own instructions file.
-
 ## Decision
 
 Read before doing anything else, and write as the session goes, not
@@ -28,6 +19,15 @@ into `.brain/MEMORY.md` immediately, not "I'll remember that."
 
 See `DETAILS.md` for the full file map, the trigger categories that
 require a write, and the end-of-session checklist.
+
+## Problem
+
+An AI coding session that starts with no memory of a prior session
+repeats questions the user already answered, and a session that
+only writes memory at the end loses everything if it ends without
+warning. This project adopted MindLink for persistent memory, and
+its protocol needed a written contract, not tribal knowledge in an
+assistant's own instructions file.
 
 ## Related
 

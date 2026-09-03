@@ -3,12 +3,6 @@
 **State:** published
 **Scope:** `decisions/`
 
-## Problem
-
-This repository wrote down three RFDs for a build nobody started.
-Each carried a reading cost, a cross-reference to keep current, and
-an index row, for an option nobody had exercised.
-
 ## Decision
 
 Do not open an RFD for a build this project has not committed to.
@@ -23,6 +17,12 @@ reach back into one already running.
 
 See `DETAILS.md` for the three RFDs this rule removed, what made each
 speculative, and what the rule left in place.
+
+## Problem
+
+This repository wrote down three RFDs for a build nobody started.
+Each carried a reading cost, a cross-reference to keep current, and
+an index row, for an option nobody had exercised.
 
 ## References
 

@@ -3,18 +3,6 @@
 **State:** published
 **Scope:** an editor workstation, a CUDA-capable GPU host, `scripts/sync-*`
 
-## Problem
-
-Two machines, an editor workstation and a headless GPU host, each
-hold a copy of this repository, synced by `scp`, not by git.
-Reading `logs/remote-log.txt`, planning a headset test, or resolving
-a sync conflict all need to know which machine owns `src/` at any
-given moment. Nothing about this split needs one specific machine or
-headset; RFD 1119 gives the real requirement, a CUDA GPU and a
-WebXR browser. This RFD's own examples name a Windows Surface, an
-NVIDIA DGX Spark, and a Galaxy XR headset, this team's own reference
-pair and test device.
-
 ## Decision
 
 One rule: one machine owns `src/` at a time. Normal development and
@@ -28,6 +16,18 @@ time; a `.sync-lock-dgx` file mid-sync means stop, not force.
 
 See `DETAILS.md` for the machine-role table, the log-reading fields,
 the file-ownership table, and the full sync command reference.
+
+## Problem
+
+Two machines, an editor workstation and a headless GPU host, each
+hold a copy of this repository, synced by `scp`, not by git.
+Reading `logs/remote-log.txt`, planning a headset test, or resolving
+a sync conflict all need to know which machine owns `src/` at any
+given moment. Nothing about this split needs one specific machine or
+headset; RFD 1119 gives the real requirement, a CUDA GPU and a
+WebXR browser. This RFD's own examples name a Windows Surface, an
+NVIDIA DGX Spark, and a Galaxy XR headset, this team's own reference
+pair and test device.
 
 ## Related
 

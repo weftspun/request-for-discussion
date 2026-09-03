@@ -3,12 +3,6 @@
 **State:** published
 **Feature:** viewport
 
-## Problem
-
-The app needs one viewport for meshes, VRM avatars, and splat
-worlds. The viewport must also run in WebXR. The renderer must
-fall back when WebGPU is absent.
-
 ## Decision
 
 Use SceneManager as the single viewport owner. It uses Three.js
@@ -17,6 +11,12 @@ with WebGPU when available and WebGL as a fallback.
 The viewport supports render modes, three-point lighting,
 post-processing, tone mapping, and Spark.js splats in one scene.
 One scene keeps WebXR and state consistent.
+
+## Problem
+
+The app needs one viewport for meshes, VRM avatars, and splat
+worlds. The viewport must also run in WebXR. The renderer must
+fall back when WebGPU is absent.
 
 ## References
 

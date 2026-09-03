@@ -28,14 +28,6 @@ extraction runs at published precision on machines with enough VRAM.
 
 The `chibifire/qwen3-omni` fork this RFD planned was never created.
 
-## Problem
-
-The MaskScore extraction pipeline (RFD 1173) needs seven models
-co-resident on GPU. At published precision (bf16), VoxHammer
-alone requires 40 GB. QAFT to NF4 is required before extraction
-can begin. Condition 5 permits this: QAFT makes NF4 the published
-precision.
-
 ## Decision
 
 QAFT all seven pipeline models to NF4. Fork each upstream model
@@ -118,6 +110,14 @@ at most one batch, not the full run.
 
 * SpeakingFaces download (already on local compute)
 * The reward model training itself (rung 5 produces data, not a model)
+
+## Problem
+
+The MaskScore extraction pipeline (RFD 1173) needs seven models
+co-resident on GPU. At published precision (bf16), VoxHammer
+alone requires 40 GB. QAFT to NF4 is required before extraction
+can begin. Condition 5 permits this: QAFT makes NF4 the published
+precision.
 
 ## Related
 

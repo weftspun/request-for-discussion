@@ -4,18 +4,6 @@
 **Feature:** how an Elixir app reaches Python
 **Scope:** `7-service/service-livebook`
 
-## Problem
-
-`service-livebook` embeds a Python interpreter with `pythonx`. Its setup
-cell names the packages and the pins travel in the notebook file. Beside
-that, a helper shelled into five environments in another repository. The
-notebook described three packages while the loop depended on five
-environments it never names, so it ran on one desk and nowhere else.
-
-The failure was not theoretical. Loop 1 stopped with `No module named
-'drjit'`, because it called the `anny` environment for a renderer that
-only the default environment carries. The notebook cannot show that.
-
 ## Decision
 
 An Elixir app reaches Python through pythonx and through nothing else.
@@ -33,6 +21,18 @@ torch 2.6.0+cu124 and EditScore pins cu128, and no interpreter holds
 both. That separation stays, as apps beside each other rather than
 environments inside one app. The corpus repository keeps its own
 environments, and what is forbidden is this app calling into them.
+
+## Problem
+
+`service-livebook` embeds a Python interpreter with `pythonx`. Its setup
+cell names the packages and the pins travel in the notebook file. Beside
+that, a helper shelled into five environments in another repository. The
+notebook described three packages while the loop depended on five
+environments it never names, so it ran on one desk and nowhere else.
+
+The failure was not theoretical. Loop 1 stopped with `No module named
+'drjit'`, because it called the `anny` environment for a renderer that
+only the default environment carries. The notebook cannot show that.
 
 ## Related
 

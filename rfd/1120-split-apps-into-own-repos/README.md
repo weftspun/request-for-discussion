@@ -3,16 +3,6 @@
 **State:** committed
 **Scope:** `weftspun-3d-studio`'s `apps/`, `deploy/`, `scripts/`, and `thirdparty/`
 
-## Problem
-
-`weftspun-3d-studio` held three independently deployed apps
-(`weftspun_studio`, `character_taxonomy`, `usd_viewer_app`) under one
-`apps/` directory (RFD 1076), plus a large vendored browser client
-and a companion APK under `thirdparty/`. A monorepo checkout, one
-`scripts/ci.sh` building all three, and one shared self-hosted
-deploy script no longer matched three apps with three separate Fly
-deploy targets and no code sharing between them.
-
 ## Decision
 
 Each app moved to its own repository, with history preserved by
@@ -31,6 +21,16 @@ browser client and the companion APK only.
 
 See `DETAILS.md` for the exact path changes, the new
 `/opt/weftspun/<repo>/` deploy convention, and open follow-up work.
+
+## Problem
+
+`weftspun-3d-studio` held three independently deployed apps
+(`weftspun_studio`, `character_taxonomy`, `usd_viewer_app`) under one
+`apps/` directory (RFD 1076), plus a large vendored browser client
+and a companion APK under `thirdparty/`. A monorepo checkout, one
+`scripts/ci.sh` building all three, and one shared self-hosted
+deploy script no longer matched three apps with three separate Fly
+deploy targets and no code sharing between them.
 
 ## Related
 

@@ -3,17 +3,6 @@
 **State:** committed
 **Feature:** capacity planning
 
-## Problem
-
-This RFD first asked whether every model fits one device at once. It
-summed 116.45 GB against a 128 GB DGX Spark, found about 10 GB of
-headroom, and called the margin too small.
-
-That question came from hardware this project does not have. CLAUDE.md
-now names the local desktop GPU as the only compute; each model runs
-in its own container per RFD 1036, so two never compete for one
-device. The old finding was an artifact.
-
 ## Decision
 
 Size each model on its own. The question is which GPU tier one model
@@ -33,6 +22,17 @@ Committed 2026-09-02: 24-GB tier and QAFT-first rule settled.
 CLAUDE.md retracted Condition 5 the same day (precision is not a
 corpus hazard), so quantised weights are permitted for corpus
 generation, not only inference.
+
+## Problem
+
+This RFD first asked whether every model fits one device at once. It
+summed 116.45 GB against a 128 GB DGX Spark, found about 10 GB of
+headroom, and called the margin too small.
+
+That question came from hardware this project does not have. CLAUDE.md
+now names the local desktop GPU as the only compute; each model runs
+in its own container per RFD 1036, so two never compete for one
+device. The old finding was an artifact.
 
 ## Related
 

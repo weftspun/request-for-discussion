@@ -3,11 +3,6 @@
 **State:** published
 **Feature:** task lifecycle
 
-## Problem
-
-AI jobs run on a remote API. The API returns a job id and completes
-later. The UI must poll, retry, and show progress.
-
 ## Decision
 
 Use one task lifecycle for all job types.
@@ -22,6 +17,11 @@ to React. The taskStore keeps the rows in memory.
 
 Long jobs poll with a 3 second interval. The upload path falls back
 from file id to base64 when the upload endpoint is unavailable.
+
+## Problem
+
+AI jobs run on a remote API. The API returns a job id and completes
+later. The UI must poll, retry, and show progress.
 
 ## References
 

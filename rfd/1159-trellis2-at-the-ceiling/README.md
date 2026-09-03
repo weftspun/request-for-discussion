@@ -4,6 +4,16 @@
 **Feature:** edge acceleration candidate
 **Scope:** `3-interactor/trellis2-image-to-textured-mesh`
 
+## Decision
+
+Abandoned on 2026-08-28. The accelerator work is scoped to
+rf-detr keypoint and RFD 1157, and this scored 12 of 25 against RFD 1157's 18.
+
+Record eight bits as this model's ceiling and stop treating bf16 as
+an option. Do not attempt a path through trellis2cpp: BLOCKLIST.md
+settles that ggml carries no graph and the gap is structural. Any
+revival exports the upstream torch model fresh.
+
 ## Problem
 
 TRELLIS.2 is 4.0 B parameters, which is 8.0 GB at bf16 against a
@@ -21,16 +31,6 @@ The graph is the harder half. `3-interactor/trellis2cpp` carries the
 model as 3420 lines of hand-written ggml across 79 distinct
 operators, which is the form that reaches no accelerator. What would
 compile is the torch model both descend from, not the port.
-
-## Decision
-
-Abandoned on 2026-08-28. The accelerator work is scoped to
-rf-detr keypoint and RFD 1157, and this scored 12 of 25 against RFD 1157's 18.
-
-Record eight bits as this model's ceiling and stop treating bf16 as
-an option. Do not attempt a path through trellis2cpp: BLOCKLIST.md
-settles that ggml carries no graph and the gap is structural. Any
-revival exports the upstream torch model fresh.
 
 ## Related
 

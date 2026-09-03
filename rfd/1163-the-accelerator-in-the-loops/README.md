@@ -4,6 +4,19 @@
 **Feature:** where each half of the loop runs
 **Scope:** `7-service/service-livebook`, `3-interactor/rf-detr-cpp`
 
+## Decision
+
+The flow runs on RunPod and the accelerator runs on the desk, and
+the HEF is the only thing that crosses. RunPod takes OmniGen2 with `anny-camera-lora`, EditScore, and the
+Dataflow Compiler; the desk keeps `hailortcli` and `usb/004:013`.
+RFD 1140's order governs the renting: push before, tear down after,
+check the tear down.
+
+Loop 1's `detect_keypoints` goes first, because RF-DETR is the one
+graph already through translate: 825 nodes, 22 operators, and the
+compiler agreeing with the allowlist. EditScore is second and
+bounded; `DETAILS.md` has the measurement that bounds it.
+
 ## Problem
 
 The four loops run on the desk card, and RFD 1140 recorded what that
@@ -20,19 +33,6 @@ Renting answers the first and cannot answer the second: a pod has no
 USB, so no rented card runs a HEF. The compiler needs no device at
 all -- `gate_dfc_parse.py` says so in its own docstring -- and that
 splits the work rather than blocking it.
-
-## Decision
-
-The flow runs on RunPod and the accelerator runs on the desk, and
-the HEF is the only thing that crosses. RunPod takes OmniGen2 with `anny-camera-lora`, EditScore, and the
-Dataflow Compiler; the desk keeps `hailortcli` and `usb/004:013`.
-RFD 1140's order governs the renting: push before, tear down after,
-check the tear down.
-
-Loop 1's `detect_keypoints` goes first, because RF-DETR is the one
-graph already through translate: 825 nodes, 22 operators, and the
-compiler agreeing with the allowlist. EditScore is second and
-bounded; `DETAILS.md` has the measurement that bounds it.
 
 ## Related
 

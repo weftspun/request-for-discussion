@@ -3,15 +3,6 @@
 **State:** abandoned
 **Feature:** model packaging
 
-## Problem
-
-This entry builds an explorable world from one image. It runs
-TripoSplat for the environment, and TRELLIS.2 for the props. RFD 1026
-records its own parameter count as 0, because it owns no weights.
-
-The two halves make different things. A splat is a radiance field, and
-a prop is a mesh. One output file cannot hold both well.
-
 ## Decision
 
 Do not package this model image. Abandon this line of work.
@@ -23,6 +14,15 @@ again only if the world-building scope returns.
 
 See `DETAILS.md` for the per-part memory and the `predict()`
 interface this RFD sketched before the pivot.
+
+## Problem
+
+This entry builds an explorable world from one image. It runs
+TripoSplat for the environment, and TRELLIS.2 for the props. RFD 1026
+records its own parameter count as 0, because it owns no weights.
+
+The two halves make different things. A splat is a radiance field, and
+a prop is a mesh. One output file cannot hold both well.
 
 ## Related
 

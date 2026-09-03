@@ -3,6 +3,17 @@
 **State:** discussion
 **Scope:** `src/core/`
 
+## Decision
+
+Grow a hexagonal core inside `src/core/`. It takes the same ports
+and adapters split the Elixir side uses: a `domain/` of pure rules,
+`ports/` of contracts, and `adapters/` one per data source.
+
+The client keeps every other file. This is a strangler fig, as RFD
+1019 records. Nothing moves until a port covers it.
+
+See `DETAILS.md` for the full shape, why a port is a contract test,
+the first port this RFD builds, the method, and the risks.
 ## Problem
 
 RFD 1019 makes the studio core an API server. The browser client
@@ -22,15 +33,3 @@ holds a fixed list of 28 models. The Elixir core holds the same
 list, from RFD 1016. The two already drifted once:
 `qwen_q4_k_m_image_edit` reached the inventory and never reached the
 client.
-
-## Decision
-
-Grow a hexagonal core inside `src/core/`. It takes the same ports
-and adapters split the Elixir side uses: a `domain/` of pure rules,
-`ports/` of contracts, and `adapters/` one per data source.
-
-The client keeps every other file. This is a strangler fig, as RFD
-1019 records. Nothing moves until a port covers it.
-
-See `DETAILS.md` for the full shape, why a port is a contract test,
-the first port this RFD builds, the method, and the risks.

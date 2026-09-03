@@ -5,17 +5,6 @@
 `kimodoMotionLoader.js`, `vrmMixamoPlaybackGuard.js`,
 `viewportExpressionVrm.js`, `studioAnimations.js`
 
-## Problem
-
-A Mixamo FBX preset and a Kimodo motion clip both drive the same
-VRM, through retargeted humanoid bone tracks. Two failure modes kept
-recurring: an orphan FBX mixer layering under the VRM mixer, and a
-mixer track written against a raw skeleton bone name instead of a
-normalized humanoid one. The second failure is silent: the mixer
-time advances, the console logs a loaded clip, and the avatar stays
-frozen, since `humanoid.update()` never sees a bone it does not
-recognize.
-
 ## Decision
 
 An `AnimationMixer` track targets a normalized humanoid bone name,
@@ -33,6 +22,17 @@ shoulder tracks alone twists the arms.
 
 See `DETAILS.md` for the forbidden-change list, the protected files,
 and the pre-merge test commands.
+
+## Problem
+
+A Mixamo FBX preset and a Kimodo motion clip both drive the same
+VRM, through retargeted humanoid bone tracks. Two failure modes kept
+recurring: an orphan FBX mixer layering under the VRM mixer, and a
+mixer track written against a raw skeleton bone name instead of a
+normalized humanoid one. The second failure is silent: the mixer
+time advances, the console logs a loaded clip, and the avatar stays
+frozen, since `humanoid.update()` never sees a bone it does not
+recognize.
 
 ## Related
 

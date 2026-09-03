@@ -3,15 +3,6 @@
 **State:** published
 **Feature:** matte evaluation
 
-## Problem
-
-Background removal produced three candidate mattes per image and no way to say
-which was broken. The available proxy -- soft-alpha pixels per silhouette
-perimeter -- ranks model families but cannot judge one matte. Two attempts with
-EditScore failed: whole images flattened onto grey scored near-constant within
-each image, so the judge was reading the photograph rather than the cutout, and a
-twin panel of cutout beside alpha returned exactly 8.00 for all eighteen.
-
 ## Decision
 
 Judging follows the field's standard benchmark. Rhemann et al., *A Perceptually
@@ -32,6 +23,15 @@ three backends; misconfigured it inverts it. It cannot pick between them on one
 image, because it scores *edits* and three mattes of a photograph are
 near-identical as edits. Use it where candidates differ semantically, and alpha
 error where they differ by pixels of silhouette. `DETAILS.md` derives this.
+
+## Problem
+
+Background removal produced three candidate mattes per image and no way to say
+which was broken. The available proxy -- soft-alpha pixels per silhouette
+perimeter -- ranks model families but cannot judge one matte. Two attempts with
+EditScore failed: whole images flattened onto grey scored near-constant within
+each image, so the judge was reading the photograph rather than the cutout, and a
+twin panel of cutout beside alpha returned exactly 8.00 for all eighteen.
 
 ## Related
 

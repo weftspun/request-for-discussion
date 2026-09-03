@@ -4,17 +4,6 @@
 **Feature:** loop 1 of the four-loop plan
 **Scope:** `fourloops-plan.usda`
 
-## Problem
-
-`fourloops-plan.usda` carries four loops as prims, each with its
-stages, its artifact and one line of hazard. A prim holds the wiring
-and cannot hold the argument, so the reason a loop is shaped this way
-lived in a logbook entry that the plan named as a source.
-
-All four loops are wanted. What was missing is a document per loop:
-the plan holds the wiring for four, and one logbook entry held the
-argument for all of them. This RFD is loop 1's own.
-
 ## Decision
 
 Propose with Keypoints, AnnyFit and Render; score with EditScore and
@@ -30,6 +19,17 @@ that looks right while the joints are wrong passes the first alone.
 the render asset emits 23. A comparison across those two takes an
 explicit subset, or it compares different things and reports a number
 for it. RFD 1122 records the same gap for the wholebody chain.
+
+## Problem
+
+`fourloops-plan.usda` carries four loops as prims, each with its
+stages, its artifact and one line of hazard. A prim holds the wiring
+and cannot hold the argument, so the reason a loop is shaped this way
+lived in a logbook entry that the plan named as a source.
+
+All four loops are wanted. What was missing is a document per loop:
+the plan holds the wiring for four, and one logbook entry held the
+argument for all of them. This RFD is loop 1's own.
 
 ## Related
 

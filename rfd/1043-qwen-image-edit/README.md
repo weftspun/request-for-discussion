@@ -3,15 +3,6 @@
 **State:** discussion
 **Feature:** model packaging
 
-## Problem
-
-Qwen image edit is the largest model in the catalog at 27.0 B
-parameters. In bf16 it needs 54.0 GB, which is 46 percent of the whole
-catalog on its own.
-
-The model id already names the format. It ships Q4_K_M, and the
-catalog entry records that choice in its name.
-
 ## Decision
 
 Ship Q4_K_M only. Never build a bf16 variant of this model image.
@@ -22,6 +13,15 @@ single saving in the catalog.
 
 See `DETAILS.md` for the model's memory and license, the `predict()`
 interface, and the open question on quantization quality.
+
+## Problem
+
+Qwen image edit is the largest model in the catalog at 27.0 B
+parameters. In bf16 it needs 54.0 GB, which is 46 percent of the whole
+catalog on its own.
+
+The model id already names the format. It ships Q4_K_M, and the
+catalog entry records that choice in its name.
 
 ## Related
 

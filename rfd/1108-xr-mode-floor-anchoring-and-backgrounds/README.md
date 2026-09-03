@@ -3,15 +3,6 @@
 **State:** committed
 **Scope:** `src/library/sceneManager.js`, `enableVR()`, `initialize()`
 
-## Problem
-
-AR needs a transparent renderer so the camera feed shows through;
-VR needs an opaque sky. Both need the same model bottom-aligned to
-the physical or virtual floor, at the same wrapper position. A
-texture loader re-applying a stored sky to `scene.background` during
-AR, or a runtime reporting `floorAlignmentY: 1` instead of near
-zero, are the two regressions this area kept reintroducing.
-
 ## Decision
 
 One unified `renderer.xr.setSession` override in `enableVR()`
@@ -31,6 +22,15 @@ before any session starts, restores exactly on AR exit.
 See `DETAILS.md` for the exact wrapper math, the snapshot fields,
 wrapper re-centering (including the long-press software recenter
 gesture), and the troubleshooting checklist.
+
+## Problem
+
+AR needs a transparent renderer so the camera feed shows through;
+VR needs an opaque sky. Both need the same model bottom-aligned to
+the physical or virtual floor, at the same wrapper position. A
+texture loader re-applying a stored sky to `scene.background` during
+AR, or a runtime reporting `floorAlignmentY: 1` instead of near
+zero, are the two regressions this area kept reintroducing.
 
 ## Related
 

@@ -3,14 +3,6 @@
 **State:** published
 **Scope:** `src/library/avatarPipelineCatalog.js`, `taskManager.js`, `avatarPipelineExport.js`
 
-## Problem
-
-"Avatar from Image" chains two API jobs (mesh generation, then
-template rigging) and a client-side export step. Nothing stated the
-chain in one place, so "does VRM export upload anywhere" and "why
-does the rig look backward" were open questions each time someone
-hit them.
-
 ## Decision
 
 State the chain once: a photo goes to `3DAIGC-API`'s mesh-generation
@@ -26,6 +18,14 @@ client-side patch.
 
 See `DETAILS.md` for the task-type table, the blend-shape source
 table, and the key files.
+
+## Problem
+
+"Avatar from Image" chains two API jobs (mesh generation, then
+template rigging) and a client-side export step. Nothing stated the
+chain in one place, so "does VRM export upload anywhere" and "why
+does the rig look backward" were open questions each time someone
+hit them.
 
 ## Related
 

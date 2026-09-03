@@ -3,14 +3,6 @@
 **State:** discussion
 **Feature:** model packaging
 
-## Problem
-
-This is the image variant of RFD 1047. It edits a mesh region from a
-reference image, and not from a sentence.
-
-The two variants share every stage except the conditioning. Two
-domains would drift, and a drifted guard is a moved vertex.
-
 ## Decision
 
 Share the domain with RFD 1047. `voxhammer_mesh_editing` in
@@ -20,6 +12,14 @@ Share the domain with RFD 1047. `voxhammer_mesh_editing` in
 See `DETAILS.md` for the mode branch, the model's shared-weight cost,
 the `predict()` interface, and why the same preserve-outside guard
 applies here too.
+
+## Problem
+
+This is the image variant of RFD 1047. It edits a mesh region from a
+reference image, and not from a sentence.
+
+The two variants share every stage except the conditioning. Two
+domains would drift, and a drifted guard is a moved vertex.
 
 ## Related
 

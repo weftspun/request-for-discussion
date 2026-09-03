@@ -3,15 +3,6 @@
 **State:** discussion
 **Feature:** model packaging
 
-## Problem
-
-Five catalog entries name one task and run several networks.
-`seethrough_layer_decomposition` runs nine. A Python script that calls
-them in order hides the order, the guards, and the failure points.
-
-A script also cannot replan. When a stage fails, the caller repeats
-the whole job.
-
 ## Decision
 
 Model each composite as a taskweft domain and a paired problem.
@@ -29,6 +20,15 @@ order lives in the domain, and not in the Python.
 See `DETAILS.md` for the domain shape and the type rules. It also
 covers why the solved plan is a checked-in file, why replanning is
 the payoff, and the table of all five composites.
+
+## Problem
+
+Five catalog entries name one task and run several networks.
+`seethrough_layer_decomposition` runs nine. A Python script that calls
+them in order hides the order, the guards, and the failure points.
+
+A script also cannot replan. When a stage fails, the caller repeats
+the whole job.
 
 ## Related
 

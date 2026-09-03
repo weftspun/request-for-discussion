@@ -4,13 +4,6 @@
 **Feature:** an outside reader verifies the workspace's security posture
 **Scope:** `CLAUDE.md`, `BLOCKLIST.md`, a new `SECURITY-CONTROLS.md`
 
-## Problem
-
-The workspace's rules live in `CLAUDE.md` and `BLOCKLIST.md`. An outside
-reader who asks "do you meet SOC 2?" or "which ISO 27001 controls apply?"
-receives a paragraph, not a control identifier. Coverage the rules already
-give reads as absent.
-
 ## Decision
 
 Publish the rules against two known frames: SOC 2 (2017 Trust Services
@@ -28,6 +21,13 @@ verify every identifier against a machine-readable register beside the
 mapping, fail on either miss, negative control included. `DETAILS.md`
 carries the coverage table, the gap list, and the argument for two frames
 rather than one.
+
+## Problem
+
+The workspace's rules live in `CLAUDE.md` and `BLOCKLIST.md`. An outside
+reader who asks "do you meet SOC 2?" or "which ISO 27001 controls apply?"
+receives a paragraph, not a control identifier. Coverage the rules already
+give reads as absent.
 
 ## References
 

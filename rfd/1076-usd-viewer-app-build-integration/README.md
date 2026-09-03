@@ -5,14 +5,6 @@
 `lib/weftspun_studio/adapters/http_gallery.ex`, `lib/weftspun_studio/router.ex`,
 `deploy/quadlet/`, `Dockerfile`, `Dockerfile.fly`
 
-## Problem
-
-`priv/static/gallery/`, what `router.ex` served at `/gallery`, was a
-hand-copied snapshot of `usd_viewer_app/`, kept in sync by no
-script. No Dockerfile ran `npm`, and the copy carried a real,
-unrecorded fix to the `usd-viewer` npm package. `usd_viewer_app`
-itself had no deploy of its own.
-
 ## Decision
 
 `usd_viewer_app` becomes its own deployed app, the separation
@@ -30,6 +22,14 @@ unchanged path; `GALLERY_URL` (env) names the deployed app.
 The `usd-viewer` fix stays as a `patch-package` patch, applied by
 `npm ci`'s own `postinstall`. See `DETAILS.md` for the fix, a Vite
 base-path bug Playwright caught live, and what verified end to end.
+
+## Problem
+
+`priv/static/gallery/`, what `router.ex` served at `/gallery`, was a
+hand-copied snapshot of `usd_viewer_app/`, kept in sync by no
+script. No Dockerfile ran `npm`, and the copy carried a real,
+unrecorded fix to the `usd-viewer` npm package. `usd_viewer_app`
+itself had no deploy of its own.
 
 ## Related
 

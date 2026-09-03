@@ -3,14 +3,6 @@
 **State:** discussion
 **Feature:** model packaging
 
-## Problem
-
-P3-SAM segments a mesh into parts. It replaces PartField, which
-RFD 1028 removed for a non-commercial weight license.
-
-The model is small at 0.8 GB in bf16. The packaging risk is not the
-memory. It is the output shape.
-
 ## Decision
 
 Return the labels as data, and return the split meshes as files. A
@@ -18,6 +10,14 @@ caller that only needs the label array must not pay for a mesh split.
 
 See `DETAILS.md` for the model's memory and license, the `predict()`
 interface, the output shape, and why the label array leads.
+
+## Problem
+
+P3-SAM segments a mesh into parts. It replaces PartField, which
+RFD 1028 removed for a non-commercial weight license.
+
+The model is small at 0.8 GB in bf16. The packaging risk is not the
+memory. It is the output shape.
 
 ## Related
 

@@ -4,14 +4,6 @@
 **Feature:** Elixir NIF over libcoap for CoAP RFC 7252 + OSCORE RFC 8613
 **Scope:** taskweft (`Taskweft.OpenPLC.CoAP`), OpenPLC v4 CoAP plugin
 
-## Problem
-
-RFD 2150 puts an OpenPLC v4 runtime on the far side of a constrained
-UDP link, reached over CoAP+OSCORE. Elixir has no first-class CoAP
-client, and no first-class OSCORE library. Building the whole
-transport as an Elixir library would take much longer than wrapping a
-C library that already ships it.
-
 ## Decision
 
 Wrap **libcoap** (BSD-2-Clause, MIT-compatible) with a NIF, modelled
@@ -30,6 +22,14 @@ constrained-UDP target Godot itself does not reach.
 
 `DETAILS.md` carries the C ABI the NIF wraps, the resource shape, the
 OSCORE key rotation model, and the OpenPLC-side plugin sketch.
+
+## Problem
+
+RFD 2150 puts an OpenPLC v4 runtime on the far side of a constrained
+UDP link, reached over CoAP+OSCORE. Elixir has no first-class CoAP
+client, and no first-class OSCORE library. Building the whole
+transport as an Elixir library would take much longer than wrapping a
+C library that already ships it.
 
 ## References
 

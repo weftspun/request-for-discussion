@@ -3,13 +3,6 @@
 **State:** published
 **Scope:** `vercel.json`, `src/library/lootAssetsConfig.js`
 
-## Problem
-
-RFD 1093's default asset fetch clones the full `m3-org/loot-assets`
-repository at build time. A public Vercel deploy does not need every
-asset bundled; it needs a small, fast build and a runtime source for
-the rest.
-
 ## Decision
 
 Read assets from `m3-org.github.io/loot-assets/` (GitHub Pages)
@@ -24,6 +17,13 @@ bundled, full-clone mode RFD 1093 gives.
 See `DETAILS.md` for the dashboard setup steps, the CDN URL layout,
 the post-deploy verification steps, and the secret-variable audit
 this mode still needs.
+
+## Problem
+
+RFD 1093's default asset fetch clones the full `m3-org/loot-assets`
+repository at build time. A public Vercel deploy does not need every
+asset bundled; it needs a small, fast build and a runtime source for
+the rest.
 
 ## Related
 

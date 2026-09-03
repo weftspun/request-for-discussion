@@ -3,14 +3,6 @@
 **State:** prediscussion
 **Scope:** `weftspun_studio`, the upload-admin routes
 
-## Problem
-
-Uploads need an admin, a real person, organized under a real
-identity, not an open, anonymous route. The user asked for a way to
-verify someone's GitHub identity and their `weftspun` org
-membership, so only real org members can admin and organize
-uploads.
-
 ## Decision
 
 An OAuth App, not a GitHub App. The user needs to log in as
@@ -26,6 +18,14 @@ callback `https://weftspun-studio.fly.dev/auth/github/callback`.
 See `DETAILS.md` for the exact registration values, the login flow
 `weftspun_studio` needs to add, and the org-membership check that
 makes this a real gate, not only a login button.
+
+## Problem
+
+Uploads need an admin, a real person, organized under a real
+identity, not an open, anonymous route. The user asked for a way to
+verify someone's GitHub identity and their `weftspun` org
+membership, so only real org members can admin and organize
+uploads.
 
 ## Related
 

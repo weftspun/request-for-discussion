@@ -5,18 +5,6 @@
 `scripts/requirements.txt`, `.pre-commit-config.yaml`,
 `.github/workflows/checks.yml`
 
-## Problem
-
-This repository held 116 RFDs and one gate. That gate checked numbers.
-Nothing checked the shape of a document, so the shape stayed an
-agreement each writer kept from memory.
-
-A measurement over all 116 found nine kinds of defect. The largest was
-37 citations still in the old decimal form. The number gate looked for
-those and reported 3. An RFD wraps its prose at about 72 columns, so a
-citation splits across a line break, and a scan of the bytes cannot see
-it. That gate measured the file. The rule is about the sentence.
-
 ## Decision
 
 `scripts/check-rfd-structure.py` parses each `README.md` and `DETAILS.md`
@@ -29,6 +17,18 @@ needed an exception did not ship. The gate reads both its state list and
 its README line limit out of RFD 1000, so document and gate cannot drift
 apart. It takes one dependency, `markdown-it-py`, pinned. The number
 gate keeps numbering only, and its weaker citation scan moved here.
+
+## Problem
+
+This repository held 116 RFDs and one gate. That gate checked numbers.
+Nothing checked the shape of a document, so the shape stayed an
+agreement each writer kept from memory.
+
+A measurement over all 116 found nine kinds of defect. The largest was
+37 citations still in the old decimal form. The number gate looked for
+those and reported 3. An RFD wraps its prose at about 72 columns, so a
+citation splits across a line break, and a scan of the bytes cannot see
+it. That gate measured the file. The rule is about the sentence.
 
 ## Related
 

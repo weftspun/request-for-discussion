@@ -5,15 +5,6 @@
 RISC-V ELF the Godot Sandbox (RFD 2154) loads
 **Scope:** taskweft (a `mix openplc.gd-compile` task) or a sidecar
 
-## Problem
-
-RFD 2155 stage 1 emits `.gd` that mirrors the state machine
-`Taskweft.OpenPLC.PLCopen.emit/1` encodes as FBD. RFD 2154's Godot
-Sandbox loads RISC-V ELFs. Between them: **SafeGDScript**, godot-
-sandbox's GDScript-to-RISC-V compiler (Dec 2025 "42 demo projects"
-milestone hit feature parity). Nothing today invokes it from
-taskweft's build.
-
 ## Decision
 
 **Parked.** Two candidate routes, both preserving RFD 2150's FBD
@@ -30,6 +21,15 @@ authoring and RFD 2154's in-process linking:
 Route 1 is smaller; route 2 is standard tool-shape and unlocks
 compile-time verification. Lands when the first RECTGTN-authored plan
 runs in Godot Sandbox.
+
+## Problem
+
+RFD 2155 stage 1 emits `.gd` that mirrors the state machine
+`Taskweft.OpenPLC.PLCopen.emit/1` encodes as FBD. RFD 2154's Godot
+Sandbox loads RISC-V ELFs. Between them: **SafeGDScript**, godot-
+sandbox's GDScript-to-RISC-V compiler (Dec 2025 "42 demo projects"
+milestone hit feature parity). Nothing today invokes it from
+taskweft's build.
 
 ## References
 

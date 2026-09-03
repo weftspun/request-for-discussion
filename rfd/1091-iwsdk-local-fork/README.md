@@ -3,13 +3,6 @@
 **State:** abandoned
 **Scope:** `AlfaOmegaGrafx/immersive-web-sdk`, this project's own `package.json`
 
-## Problem
-
-The upstream `@iwsdk/*` npm packages, pinned at `^0.4.2`, do not
-carry a fix this project needs. Publishing a patched fork to npm, or
-vendoring its source directly into this repository, are both real
-options, and both are heavier than the gap needs.
-
 ## Decision
 
 Consume local builds from a sibling clone of
@@ -21,6 +14,13 @@ Reverting to the npm release needs only restoring the `^0.4.2` range
 in `package.json` and reinstalling.
 
 See `DETAILS.md` for the sibling-clone layout and the package table.
+
+## Problem
+
+The upstream `@iwsdk/*` npm packages, pinned at `^0.4.2`, do not
+carry a fix this project needs. Publishing a patched fork to npm, or
+vendoring its source directly into this repository, are both real
+options, and both are heavier than the gap needs.
 
 ## Related
 

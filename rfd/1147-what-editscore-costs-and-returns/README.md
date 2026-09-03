@@ -4,16 +4,6 @@
 **Feature:** the scorer shared by all four loops
 **Scope:** `fourloops-plan.usda`
 
-## Problem
-
-EditScore is the `score` stage of every loop in `fourloops-plan.usda`.
-Loops 1 through 4 each name it, and loop 1 pairs it with the Referee.
-
-Its measurements were written into RFD 1144 because loop 2 is the
-smallest loop that exercises it. That put a figure belonging to four
-loops inside the document for one of them, so a reader of loop 3 had to
-know to look in loop 2 for what the scorer costs.
-
 ## Decision
 
 Give the scorer its own RFD, and let the loops cite it.
@@ -32,6 +22,16 @@ real edit would mean nothing.
 `logbook-fourloops-first-runs.md` keeps the apparatus, and this RFD
 keeps the result. The entry says how the runs were made, which is what
 lets somebody make them again.
+
+## Problem
+
+EditScore is the `score` stage of every loop in `fourloops-plan.usda`.
+Loops 1 through 4 each name it, and loop 1 pairs it with the Referee.
+
+Its measurements were written into RFD 1144 because loop 2 is the
+smallest loop that exercises it. That put a figure belonging to four
+loops inside the document for one of them, so a reader of loop 3 had to
+know to look in loop 2 for what the scorer costs.
 
 ## Related
 

@@ -3,16 +3,6 @@
 **State:** discussion
 **Feature:** model packaging
 
-## Problem
-
-Krea 2 Turbo is the largest model in the catalog that the project
-runs. It needs 33.8 GB in bf16, which is 29 percent of the whole
-catalog.
-
-It is also four models in one folder: a backbone, two text encoders, and
-a VAE. A model image that loads all four at once wastes memory, because
-the text encoders finish before the backbone starts.
-
 ## Decision
 
 Package it as one model image, and stage the loads. The text encoders
@@ -23,6 +13,16 @@ text-to-image models, and it drops this one from 33.8 GB to 9.30 GB.
 
 See `DETAILS.md` for the model's per-part memory, the `predict()`
 interface, and the disk-size trap in the weight folder.
+
+## Problem
+
+Krea 2 Turbo is the largest model in the catalog that the project
+runs. It needs 33.8 GB in bf16, which is 29 percent of the whole
+catalog.
+
+It is also four models in one folder: a backbone, two text encoders, and
+a VAE. A model image that loads all four at once wastes memory, because
+the text encoders finish before the backbone starts.
 
 ## Related
 

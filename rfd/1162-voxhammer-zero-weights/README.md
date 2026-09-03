@@ -5,6 +5,19 @@
 **Scope:** `3-interactor/voxhammer-image-mesh-editing`,
 `3-interactor/voxhammer-text-mesh-editing`
 
+## Decision
+
+Abandoned on 2026-08-28. The accelerator work is scoped to
+rf-detr keypoint and RFD 1157, and it was never scorable.
+
+Do not rank VoxHammer as an acceleration candidate. Rank the
+generator it edits, and let VoxHammer follow that placement.
+
+Record the dependency rather than the size. An entry whose cost is
+another entry's cost needs a named base, and RFD 1026's zero says
+nothing about which. Name the generator, and VoxHammer's answer is
+already written wherever that generator's answer is.
+
 ## Problem
 
 Both VoxHammer entries carry 0 parameters in RFD 1026, and that is
@@ -19,19 +32,6 @@ is whichever generator it edits.
 
 `weftspun_image_to_world` is composite in the same way and inherits
 the same reasoning.
-
-## Decision
-
-Abandoned on 2026-08-28. The accelerator work is scoped to
-rf-detr keypoint and RFD 1157, and it was never scorable.
-
-Do not rank VoxHammer as an acceleration candidate. Rank the
-generator it edits, and let VoxHammer follow that placement.
-
-Record the dependency rather than the size. An entry whose cost is
-another entry's cost needs a named base, and RFD 1026's zero says
-nothing about which. Name the generator, and VoxHammer's answer is
-already written wherever that generator's answer is.
 
 ## Related
 
