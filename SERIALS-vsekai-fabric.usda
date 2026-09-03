@@ -757,6 +757,10 @@ def Scope "Serials"
                     custom string slug = "identity-triangle-operator-market-customer"
                     custom string flight_level = "L3"
                 }
+                def "S2183"
+                {
+                    custom string slug = "retrain-omnigen-for-layer-decomposition"
+                }
             }
         }
     }
