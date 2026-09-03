@@ -270,14 +270,21 @@
     "href": "rfd/2172-tenseless-continuous-present-voice/index.html",
     "title": "RFD 2172: Prose speaks in the tenseless continuous present",
     "section": "",
-    "text": "Comments and prose drift out of sync with code as the system changes. A comment written as history (“added a cache”, “we removed the old path”) or as a plan (“will solve this”, “TODO: wire X”) describes a moment that has passed or has not yet arrived; a reader cannot check it against the code in front of them. RFD 2025 (sinew ADR, migrated) settled the rule; this RFD promotes it to a workspace convention."
+    "text": "name: rfd-2172-tenseless-continuous-present-voice description: When writing prose (code comment, RFD, changelog, README, PR description) in this workspace, state what is currently true of the system. Rule out past-tense edit narration, future or imperative planning, and aging temporal qualifiers. tools: Read, Write, Edit —"
+  },
+  {
+    "objectID": "rfd/2172-tenseless-continuous-present-voice/index.html#section",
+    "href": "rfd/2172-tenseless-continuous-present-voice/index.html#section",
+    "title": "RFD 2172: Prose speaks in the tenseless continuous present",
+    "section": "",
+    "text": "name: rfd-2172-tenseless-continuous-present-voice description: When writing prose (code comment, RFD, changelog, README, PR description) in this workspace, state what is currently true of the system. Rule out past-tense edit narration, future or imperative planning, and aging temporal qualifiers. tools: Read, Write, Edit —"
   },
   {
     "objectID": "rfd/2172-tenseless-continuous-present-voice/index.html#problem",
     "href": "rfd/2172-tenseless-continuous-present-voice/index.html#problem",
     "title": "RFD 2172: Prose speaks in the tenseless continuous present",
-    "section": "",
-    "text": "Comments and prose drift out of sync with code as the system changes. A comment written as history (“added a cache”, “we removed the old path”) or as a plan (“will solve this”, “TODO: wire X”) describes a moment that has passed or has not yet arrived; a reader cannot check it against the code in front of them. RFD 2025 (sinew ADR, migrated) settled the rule; this RFD promotes it to a workspace convention."
+    "section": "Problem",
+    "text": "Problem\nComments and prose drift out of sync with code as the system changes. A comment written as history (“added a cache”, “we removed the old path”) or as a plan (“will solve this”, “TODO: wire X”) describes a moment that has passed or has not yet arrived; a reader cannot check it against the code in front of them. RFD 2025 (sinew ADR, migrated) settled the rule; this RFD promotes it to a workspace convention."
   },
   {
     "objectID": "rfd/2172-tenseless-continuous-present-voice/index.html#decision",
@@ -25820,14 +25827,21 @@
     "href": "rfd/2171-atelier-workshop-shuttle-vocabulary/index.html",
     "title": "RFD 2171: The atelier-workshop / shuttle vocabulary",
     "section": "",
-    "text": "The public tagline names two things: the pipeline that makes characters and the deliverable that leaves it. “Workshop” alone was doing both jobs and reads as generic. nx-shuttle already uses “shuttle” (carrying a graph across to another runtime, weft-across- warp). Without a settled vocabulary, prose drifts between studio, pipeline, workshop, atelier."
+    "text": "name: rfd-2171-atelier-workshop-shuttle-vocabulary description: When naming what the workspace makes (the pipeline) and what leaves it (the deliverable), use “atelier-workshop” and “shuttle”. Never “atelier” alone. Never rename the shuttle after nx-shuttle’s separate use of the same word. tools: Read, Write, Edit —"
+  },
+  {
+    "objectID": "rfd/2171-atelier-workshop-shuttle-vocabulary/index.html#section",
+    "href": "rfd/2171-atelier-workshop-shuttle-vocabulary/index.html#section",
+    "title": "RFD 2171: The atelier-workshop / shuttle vocabulary",
+    "section": "",
+    "text": "name: rfd-2171-atelier-workshop-shuttle-vocabulary description: When naming what the workspace makes (the pipeline) and what leaves it (the deliverable), use “atelier-workshop” and “shuttle”. Never “atelier” alone. Never rename the shuttle after nx-shuttle’s separate use of the same word. tools: Read, Write, Edit —"
   },
   {
     "objectID": "rfd/2171-atelier-workshop-shuttle-vocabulary/index.html#problem",
     "href": "rfd/2171-atelier-workshop-shuttle-vocabulary/index.html#problem",
     "title": "RFD 2171: The atelier-workshop / shuttle vocabulary",
-    "section": "",
-    "text": "The public tagline names two things: the pipeline that makes characters and the deliverable that leaves it. “Workshop” alone was doing both jobs and reads as generic. nx-shuttle already uses “shuttle” (carrying a graph across to another runtime, weft-across- warp). Without a settled vocabulary, prose drifts between studio, pipeline, workshop, atelier."
+    "section": "Problem",
+    "text": "Problem\nThe public tagline names two things: the pipeline that makes characters and the deliverable that leaves it. “Workshop” alone was doing both jobs and reads as generic. nx-shuttle already uses “shuttle” (carrying a graph across to another runtime, weft-across- warp). Without a settled vocabulary, prose drifts between studio, pipeline, workshop, atelier."
   },
   {
     "objectID": "rfd/2171-atelier-workshop-shuttle-vocabulary/index.html#decision",
@@ -25988,7 +26002,14 @@
     "href": "rfd/2177-flight-levels-taxonomy/index.html",
     "title": "RFD 2177: Flight Levels taxonomy for RFDs",
     "section": "",
-    "text": "_quarto.yml navbar, pages/flight-level-*.qmd"
+    "text": "name: rfd-2177-flight-levels-taxonomy description: When tagging an RFD’s altitude, use the flight_level field on its serial-register entry. Values are L1 (operations, single-team execution), L2 (coordination, cross-team value flow), L3 (strategy, portfolio bet). Follow Klaus Leopold’s numbering (L1 = ground, L3 = altitude). Tagging is opt-in. tools: Read, Edit —\n_quarto.yml navbar, pages/flight-level-*.qmd"
+  },
+  {
+    "objectID": "rfd/2177-flight-levels-taxonomy/index.html#section",
+    "href": "rfd/2177-flight-levels-taxonomy/index.html#section",
+    "title": "RFD 2177: Flight Levels taxonomy for RFDs",
+    "section": "",
+    "text": "name: rfd-2177-flight-levels-taxonomy description: When tagging an RFD’s altitude, use the flight_level field on its serial-register entry. Values are L1 (operations, single-team execution), L2 (coordination, cross-team value flow), L3 (strategy, portfolio bet). Follow Klaus Leopold’s numbering (L1 = ground, L3 = altitude). Tagging is opt-in. tools: Read, Edit —\n_quarto.yml navbar, pages/flight-level-*.qmd"
   },
   {
     "objectID": "rfd/2177-flight-levels-taxonomy/index.html#problem",
