@@ -137,6 +137,7 @@ def Scope "Serials"
                 def "S1027"
                 {
                     custom string slug = "gpu-residency-budget"
+                    custom string flight_level = "L2"
                 }
                 def "S1028"
                 {
@@ -169,6 +170,7 @@ def Scope "Serials"
                 def "S1036"
                 {
                     custom string slug = "packaging-convention"
+                    custom string flight_level = "L2"
                 }
                 def "S1037"
                 {
@@ -237,6 +239,7 @@ def Scope "Serials"
                 def "S1053"
                 {
                     custom string slug = "openusd-as-the-internal-format"
+                    custom string flight_level = "L2"
                 }
                 def "S1054"
                 {
@@ -410,6 +413,7 @@ def Scope "Serials"
                 def "S1102"
                 {
                     custom string slug = "supported-3daigc-modules"
+                    custom string flight_level = "L2"
                 }
                 def "S1103"
                 {
