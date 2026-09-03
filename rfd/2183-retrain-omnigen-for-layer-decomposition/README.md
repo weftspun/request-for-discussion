@@ -34,7 +34,7 @@ cannot reconstruct hidden-layer content from surrounding pixels.
 ## Related
 
 RFD 1168 (segmentation kept, LaMa superseded), RFD 1173 (edit-reward
-corpus), RFD 1102 (task catalog), RFD 2136 (gacha ladder),
-BLOCKLIST.md See-Through row.
+corpus), RFD 1102 (task catalog), RFD 2136 (gacha ladder), RFD 2196
+(HF dataset viewer rules), BLOCKLIST.md See-Through row.
 
 This RFD was drafted by an AI and read by a human before it shipped.

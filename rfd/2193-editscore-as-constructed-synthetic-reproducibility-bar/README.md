@@ -34,7 +34,7 @@ Issue: `weftspun/weftspun-keypoint` 29; `anny-render-corpus/score_edits.py`.
 
 ## Related
 
-RFD 1157 (EditScore reward model), RFD 1173 (edit-reward corpus;
-MaskScore), CLAUDE.md constructed-synthetic reproducibility rule.
+RFD 1157 (EditScore reward), RFD 1173 (edit-reward corpus; MaskScore),
+RFD 2196 (HF viewer rules), CLAUDE.md constructed-synthetic rule.
 
 This RFD was drafted by an AI and read by a human before it shipped.
