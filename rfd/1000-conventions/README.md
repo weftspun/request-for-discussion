@@ -19,12 +19,11 @@ records durable decisions. The docs tree holds detailed designs.
 An RFD points to its source. It does not copy the source.
 
 Each RFD's `README.md` stays at 40 lines or fewer. It states the
-problem and the decision, in the fewest lines that keep both true.
-A measurement, a verification log, a deep walkthrough, or a code
-sample does not fit. Move it to a sibling file, such as
-`DETAILS.md`, in the same RFD folder, and name that file in one
-line. A retraction moves with the rest, and stays next to what it
-retracts, which after the move is the detail it corrects.
+decision first, then the problem, in the fewest lines that keep
+both true. The `draft-readable-rfd` skill has the BLUF rules.
+Measurement, verification log, deep walkthrough, or code sample
+moves to a sibling `DETAILS.md` named in one line. Retractions
+move with the rest, and stay next to what they retract.
 
 ## References
 
