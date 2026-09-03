@@ -765,6 +765,10 @@ def Scope "Serials"
                 {
                     custom string slug = "editscore-omnigen-bootstrap-for-unmapped-parts"
                 }
+                def "S2185"
+                {
+                    custom string slug = "hierarchical-oid-part-registry"
+                }
             }
         }
     }
