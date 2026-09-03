@@ -53,7 +53,9 @@ _serials = _ilu.module_from_spec(_spec)
 _spec.loader.exec_module(_serials)
 
 # The order these carry when present. Extra headings may sit between them.
-SPINE = ("Problem", "Decision", "References", "Related")
+# Decision comes first per the draft-readable-rfd skill's BLUF-first rule:
+# a reader who reads only the first section has read the answer.
+SPINE = ("Decision", "Problem", "References", "Related")
 # A retracted decision renames its own heading, so the match is a prefix.
 # RFD 1067's "Decision, as published and now retracted" is the case.
 REQUIRED = "Decision"
@@ -425,13 +427,13 @@ GOOD_README = """# RFD 1001: A title
 **State:** published
 **Feature:** a feature
 
-## Problem
-
-A problem. RFD 1002 is the neighbour.
-
 ## Decision
 
 A decision.
+
+## Problem
+
+A problem. RFD 1002 is the neighbour.
 
 ## Related
 
@@ -494,8 +496,9 @@ def self_test():
          {"readme": GOOD_README.replace("**Feature:** a feature", "**Owner:** somebody")}, True),
         ("no Decision section",
          {"readme": GOOD_README.replace("## Decision\n\nA decision.\n\n", "")}, True),
-        ("Decision written before Problem",
-         {"readme": GOOD_README.replace("## Problem", "## Zzz").replace("## Related", "## Problem")}, True),
+        ("Problem written before Decision",
+         {"readme": GOOD_README.replace("## Decision\n\nA decision.\n\n## Problem\n\nA problem. RFD 1002 is the neighbour.\n\n",
+                                        "## Problem\n\nA problem. RFD 1002 is the neighbour.\n\n## Decision\n\nA decision.\n\n")}, True),
         ("a decimal citation split across a line break", {"readme": wrapped}, True),
         ("a citation that resolves nowhere",
          {"readme": GOOD_README.replace("RFD 1002", "RFD 1153")}, True),

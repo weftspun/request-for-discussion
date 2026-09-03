@@ -19,7 +19,8 @@ records durable decisions. The docs tree holds detailed designs.
 An RFD points to its source. It does not copy the source.
 
 Each RFD's `README.md` stays at 40 lines or fewer. It states the
-problem and the decision, in the fewest lines that keep both true.
+decision first, then the problem, in the fewest lines that keep
+both true. BLUF: the `draft-readable-rfd` skill has the rules.
 A measurement, a verification log, a deep walkthrough, or a code
 sample does not fit. Move it to a sibling file, such as
 `DETAILS.md`, in the same RFD folder, and name that file in one
