@@ -153,6 +153,68 @@ same seeded (image, instruction) pair.**
   ready-made ggml-stack image editors but blocked, which is precisely
   why the OmniGen2 port is warranted rather than a substitution.
 
+## Scope revision after milestone-1 discovery (2026-09-03)
+
+The initial draft above estimated "2-4 weeks" on the assumption that the
+Lumina2 block family had to be added to stable-diffusion.cpp from scratch.
+Landing milestone 1 revealed that sdcpp **already ships two Lumina2-family
+model heads**: `src/model/diffusion/z_image.hpp` (which explicitly references
+`Alpha-VLLM/Lumina-Image-2.0` in a source comment) and
+`src/model/diffusion/boogu.hpp`, an image-edit model with an even closer
+match to OmniGen2's config:
+
+| Field | Boogu | OmniGen2 | Match? |
+|---|---|---|---|
+| `axes_dim` | `{40, 40, 40}` | `[40, 40, 40]` | **yes** |
+| `num_layers` | 32 | 32 | **yes** |
+| `num_kv_heads` | 7 | 7 | **yes** |
+| `patch_size` | 2 | 2 | **yes** |
+| `norm_eps` | 1e-5 | 1e-5 | **yes** |
+| `timestep_scale` | 1000.0f | 1000.0 | **yes** |
+| `multiple_of` | 256 | 256 | **yes** |
+| `hidden_size` | 3360 | 2520 | different, config-only |
+| `num_double_stream_layers` | 8 | (n/a in OmniGen2 config) | needs check |
+| mllm text encoder | qwen_image | Qwen2.5-VL slice | different integration |
+
+So the LOAD-BEARING work — `LuminaRMSNormZero`, `LuminaFeedForward`,
+3D RoPE with `axes_dim = {40, 40, 40}`, AdaLN modulation — is already
+implemented and shipping. The port is **adapt Boogu's implementation to
+OmniGen2's config + integrate OmniGen2's specific text-encoder path**,
+not build the Lumina2 blocks from scratch.
+
+**Revised milestone map:**
+
+- **Milestones 2, 3, 4:** superseded by existing Boogu/ZImage code. No
+  new ggml blocks needed. Lean4 specs of the shared primitives still
+  worthwhile as documentation, but not blocking.
+- **Milestone 5 (composite block):** reduces to "instantiate Boogu's
+  `DoubleStreamBlock`/`SingleStreamBlock` with OmniGen2's `hidden_size`
+  = 2520 and check double-stream layer count from OmniGen2's config."
+- **Milestone 6 (full model):** likewise a config-value port, plus
+  OmniGen2's text-encoder path. The novel work is the mllm integration
+  (Qwen2.5-VL vs qwen_image), not the DiT.
+- **Milestone 7 (GGUF loader):** same scope as before. Weight-name
+  remap from calcuis's Q4_K_M to stable-diffusion.cpp's tensor names.
+- **Milestone 8 (CLI):** likely inherits from Boogu's CLI path with
+  minimal changes.
+
+**Revised calendar estimate: days, not weeks.** Milestones 5-8 as
+config-value/weight-remap work land in ~1-3 days of focused effort each.
+Milestone 9 (upstream PR) may be as small as "wire OmniGen2 into the
+existing Boogu code path with OmniGen2's config struct."
+
+**Load-bearing question that decides the revision:** does Boogu's
+`DoubleStreamBlock` layout with OmniGen2's `hidden_size=2520` produce
+numerically-identical outputs to `OmniGen2TransformerBlock.forward()` in
+the diffusers reference, given the same weights? If yes, the port is
+config-mostly. If no, some Boogu-specific choice (adaLN split, gating,
+residual placement) differs from OmniGen2 and warrants a per-difference
+audit — still much less work than a from-scratch block family.
+
+The Lumina2 upstream benchmark (`Alpha-VLLM/Lumina-Image-2.0`, fired
+2026-09-03 as `bu8k6yvbc`) will settle the reference-speed baseline that
+milestones 6 and 7 must meet.
+
 ## What is NOT in this RFD
 
 - The MaskScore image pilot's tonight-scoped fallback (bf16 +
