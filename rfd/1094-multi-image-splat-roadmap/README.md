@@ -1,4 +1,4 @@
-# RFD 1094: Multiple photos, routed by count, not by user choice
+# RFD 1094: Multi-image splat roadmap
 
 **State:** abandoned
 **Scope:** `image-to-splat`, `image-to-world`, avatar mesh generation

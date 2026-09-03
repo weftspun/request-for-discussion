@@ -1,4 +1,4 @@
-# RFD 1089: HY-World 2.0, a quality path beside the fast one
+# RFD 1089: HYWorld image-to-world scope
 
 **State:** abandoned
 **Scope:** `config/models.yaml`, a new `hyworld2_image_to_world_adapter.py`
