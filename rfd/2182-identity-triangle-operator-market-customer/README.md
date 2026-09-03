@@ -28,11 +28,11 @@ Three anchors, each named once:
 The atelier-workshop-shuttle vocabulary (RFD 2171) plus this
 triangle gives one canonical positioning sentence:
 
-> chibifire operates an atelier-workshop that shuttles characters
-> into V-Sekai in the avatar-first social-VR market.
+> chibifire's atelier-workshop shuttles characters into
+> avatar-first social VR.
 
-"shuttle" reads as a verb; "characters" is the object per RFD 2171.
-"avatar" is left to the market tail rather than doubled.
+Customer (V-Sekai) drops out of the one-liner and lives in the
+Decision list above; it is one destination inside the named market.
 
 ## Related
 
