@@ -256,7 +256,6 @@ def Scope "Serials"
                 def "S1057"
                 {
                     custom string slug = "open-work"
-                    custom string flight_level = "L2"
                 }
                 def "S1058"
                 {
@@ -413,7 +412,6 @@ def Scope "Serials"
                 def "S1102"
                 {
                     custom string slug = "supported-3daigc-modules"
-                    custom string flight_level = "L2"
                 }
                 def "S1103"
                 {
@@ -430,7 +428,6 @@ def Scope "Serials"
                 def "S1106"
                 {
                     custom string slug = "weftspun-moat-overview"
-                    custom string flight_level = "L2"
                 }
                 def "S1107"
                 {
