@@ -1,3 +1,9 @@
+---
+name: rfd-2172-tenseless-continuous-present-voice
+description: When writing prose (code comment, RFD, changelog, README, PR description) in this workspace, state what is currently true of the system. Rule out past-tense edit narration, future or imperative planning, and aging temporal qualifiers.
+tools: Read, Write, Edit
+---
+
 # RFD 2172: Prose speaks in the tenseless continuous present
 
 **State:** committed

@@ -352,9 +352,18 @@ def check(root):
             continue
         with open(readme, encoding="utf-8") as fh:
             source = fh.read()
-        toks = MD.parse(source)
+        # Skip a leading YAML frontmatter block if present; a README doubling as a
+        # Claude Code skill carries `---\n<yaml>\n---` before the RFD title. The
+        # frontmatter is skill metadata for the harness; the RFD title, preamble
+        # and sections start after it. Same skip on the length count.
+        stripped = source
+        if source.startswith("---\n"):
+            end = source.find("\n---\n", 4)
+            if end >= 0:
+                stripped = source[end + 5:]
+        toks = MD.parse(stripped)
         name = f"{d}/README.md"
-        problems += check_length(name, source, limit)
+        problems += check_length(name, stripped, limit)
         problems += check_title(name, num, toks, TITLE_RE, "RFD <num>: <title>")
         pre, state = check_preamble(name, toks, states)
         problems += pre

@@ -1,3 +1,9 @@
+---
+name: rfd-2171-atelier-workshop-shuttle-vocabulary
+description: When naming what the workspace makes (the pipeline) and what leaves it (the deliverable), use "atelier-workshop" and "shuttle". Never "atelier" alone. Never rename the shuttle after nx-shuttle's separate use of the same word.
+tools: Read, Write, Edit
+---
+
 # RFD 2171: The atelier-workshop / shuttle vocabulary
 
 **State:** committed
