@@ -1,6 +1,6 @@
 # RFD 2142: Zero-trust service TLS via OpenBao PKI
 
-**State:** discussion (implemented 2026-09-01; see RFD 2146 for the role/policy map)
+**State:** discussion
 **Feature:** mTLS on the bao listener and cert-based service auth
 **Scope:** weftspun-bao, spot-broker, weft-warp-burrito
 
@@ -17,6 +17,8 @@ did not persist the item). Chaining under that CA is not possible
 without rotating FDB again.
 
 ## Decision
+
+Implemented 2026-09-01; see RFD 2146 for the role/policy map.
 
 Bao's PKI secrets engine becomes a standalone root CA for service
 auth. The FDB CA (`fdb-ca.chibifire.com`) stays separate for
