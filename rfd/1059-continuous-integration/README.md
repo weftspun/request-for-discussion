@@ -3,16 +3,6 @@
 **State:** published
 **Scope:** `scripts/ci.sh`, `.github/workflows/main.yml`
 
-## Problem
-
-`.github/workflows/main.yml` ran `npm run test:anim-regression`.
-`package.json` never defined that script. Every run of this job
-failed at that line. CI stayed red, or silently skipped, since
-whenever that step was added.
-
-It also tested one of three parts of this repository. `weftspun_studio/`
-had no CI at all, and neither did the two Podman images RFD 1058 adds.
-
 ## Decision
 
 Follow Martin Fowler's ["Continuous
@@ -32,6 +22,16 @@ committing, and an integration machine runs the identical command.
 See `DETAILS.md` for the three steps in order, why one script beats
 three CI steps, why the GitHub workflow is deleted for now, and what
 this deliberately does not cover.
+
+## Problem
+
+`.github/workflows/main.yml` ran `npm run test:anim-regression`.
+`package.json` never defined that script. Every run of this job
+failed at that line. CI stayed red, or silently skipped, since
+whenever that step was added.
+
+It also tested one of three parts of this repository. `weftspun_studio/`
+had no CI at all, and neither did the two Podman images RFD 1058 adds.
 
 ## Related
 

@@ -3,14 +3,6 @@
 **State:** published
 **Scope:** all files
 
-## Problem
-
-Upstream reserves the names "Space-Time" and "OpenNexus3DStudio".
-Upstream also reserves the orbital clock logo artwork. The upstream
-terms require a rebrand for each fork. A fork must remove the
-upstream names, logos, and trade dress. A fork must then take a
-unique name.
-
 ## Decision
 
 This repository takes the name Weftspun 3D Studio. The code token is
@@ -31,6 +23,14 @@ affiliation.
 
 See `DETAILS.md` for the compatibility fallbacks, the known risks,
 and file references.
+
+## Problem
+
+Upstream reserves the names "Space-Time" and "OpenNexus3DStudio".
+Upstream also reserves the orbital clock logo artwork. The upstream
+terms require a rebrand for each fork. A fork must remove the
+upstream names, logos, and trade dress. A fork must then take a
+unique name.
 
 ## Related
 

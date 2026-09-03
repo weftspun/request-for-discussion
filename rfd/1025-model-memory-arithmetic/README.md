@@ -3,15 +3,15 @@
 **State:** published
 **Feature:** capacity planning
 
-## Problem
-
-RFD 1016 says what each model is. It does not say what each model
-costs. A reader cannot size a machine from the inventory alone.
-
 ## Decision
 
 Compute the memory from the parameter count. RFD 1026 records the
 result per model.
+
+## Problem
+
+RFD 1016 says what each model is. It does not say what each model
+costs. A reader cannot size a machine from the inventory alone.
 
 ## The rule
 

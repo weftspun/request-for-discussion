@@ -4,17 +4,6 @@
 **Feature:** quantisation tolerance for edge deployment
 **Scope:** `3-interactor/pixal3d-image-to-textured-mesh`
 
-## Problem
-
-The ASUS UGen300 is a Hailo-10H with 8 GB, specified for 4-bit
-weights. Pixal3D's checkpoints are 24.045 GB in bf16, three times the
-device. At four bits they are about 6 GB, which fits.
-
-So the arithmetic permits it and nothing says the model survives it. A
-1.3B diffusion transformer at four bits may produce a mesh nobody can
-tell from the original, or a worse one, or a broken one. RFD 1043
-records the same open question for another model.
-
 ## Decision
 
 Measure tolerance first, because a failure here makes RFD 1129's
@@ -33,6 +22,17 @@ Quantise with the Dataflow Compiler: bitsandbytes measures a four-bit,
 and the DFC's host emulator runs the device's.
 
 See `DETAILS.md` for the apparatus, and `SKILL.md` for the order.
+
+## Problem
+
+The ASUS UGen300 is a Hailo-10H with 8 GB, specified for 4-bit
+weights. Pixal3D's checkpoints are 24.045 GB in bf16, three times the
+device. At four bits they are about 6 GB, which fits.
+
+So the arithmetic permits it and nothing says the model survives it. A
+1.3B diffusion transformer at four bits may produce a mesh nobody can
+tell from the original, or a worse one, or a broken one. RFD 1043
+records the same open question for another model.
 
 ## Related
 

@@ -3,15 +3,6 @@
 **State:** discussion
 **Feature:** model packaging
 
-## Problem
-
-SkinTokens is the default auto rig. It writes a skeleton and skin
-weights for a mesh that has neither.
-
-A rig is the clearest case for RFD 1053. The rig is an opinion about
-an existing mesh, and a flat file forces the rig stage to rewrite the
-mesh to carry it.
-
 ## Decision
 
 Write the rig as a USD layer over the mesh layer. `UsdSkel` holds the
@@ -23,6 +14,15 @@ Emit VRM beside it, because the client needs VRM humanoid tracks.
 See `DETAILS.md` for the model's memory, the `predict()` interface,
 why `UsdSkel` beats a GLB skin, and the joint order trap between VRM
 and USD.
+
+## Problem
+
+SkinTokens is the default auto rig. It writes a skeleton and skin
+weights for a mesh that has neither.
+
+A rig is the clearest case for RFD 1053. The rig is an opinion about
+an existing mesh, and a flat file forces the rig stage to rewrite the
+mesh to carry it.
 
 ## Related
 

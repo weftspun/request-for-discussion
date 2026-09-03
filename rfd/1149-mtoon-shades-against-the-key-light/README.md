@@ -5,6 +5,17 @@
 **Scope:** `6-datasource/anny-render-corpus/mtoon.py`,
 `mtoon_forward.py`, `mtoon.slang`, `check_mtoon_reference.py`
 
+## Decision
+
+The model is `VRMC_materials_mtoon-1.0`, rendered by a forward
+integrator that shades every hit against the key light with a shadow
+ray. In Dr.Jit ops it widens under `llvm_ad_rgb`, so the forward path
+is both correct and faster than the deferred one it replaced: 40.6 ns
+per pixel against 62.2, with shadows the deferred path had dropped.
+
+The port is held against `@pixiv/three-vrm` pixel for pixel rather
+than trusted because it was transcribed from the spec.
+
 ## Problem
 
 The corpus needs an anime material beside its photographic one, and
@@ -17,17 +28,6 @@ horizon. Its ramp reads THE key light rather than each sampled
 direction, which exceeds what a BSDF interface expresses. Rendering
 `lit == shade` and `lit != shade` gave matching images, which settled
 it by measurement rather than by argument.
-
-## Decision
-
-The model is `VRMC_materials_mtoon-1.0`, rendered by a forward
-integrator that shades every hit against the key light with a shadow
-ray. In Dr.Jit ops it widens under `llvm_ad_rgb`, so the forward path
-is both correct and faster than the deferred one it replaced: 40.6 ns
-per pixel against 62.2, with shadows the deferred path had dropped.
-
-The port is held against `@pixiv/three-vrm` pixel for pixel rather
-than trusted because it was transcribed from the spec.
 
 ## References
 

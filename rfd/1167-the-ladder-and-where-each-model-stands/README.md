@@ -4,16 +4,6 @@
 **Feature:** where the accelerator work actually stands
 **Scope:** `2-contract/manuals-weftspun`
 
-## Problem
-
-RFD 1166 ranks what is worth doing and not what has been done. The two
-are read as one: a model near the top looks advanced when it may never
-have been exported, and one near the bottom may be further along than
-anything above it.
-
-A rank is a judgment and a rung is a fact. One table for both lets an
-opinion about value borrow the authority of a measurement.
-
 ## Decision
 
 Six rungs, each a thing that either happened or did not:
@@ -33,6 +23,16 @@ failure is where it sits: reaching 2 and failing 3 is rung 2.
 candidates have never been exported, so the ranking beside them was
 built from reading rather than running. RFD 1129's skill gives the
 procedure for climbing and its order is this order.
+
+## Problem
+
+RFD 1166 ranks what is worth doing and not what has been done. The two
+are read as one: a model near the top looks advanced when it may never
+have been exported, and one near the bottom may be further along than
+anything above it.
+
+A rank is a judgment and a rung is a fact. One table for both lets an
+opinion about value borrow the authority of a measurement.
 
 ## Related
 

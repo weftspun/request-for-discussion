@@ -4,12 +4,6 @@
 **Feature:** where pool generation runs, and how a card is chosen
 **Scope:** the gacha demo's pool activity; `scratchpad` tooling pending a home
 
-## Problem
-
-Pool generation wants days of GPU that the desk card should not give
-up: the 3090 is the interactive seat for rigging and judging, and a
-batch that owns it for two days stalls the critical path it feeds.
-
 ## Decision
 
 Rent single RTX 4090s from the vast.ai book, requirements before
@@ -30,6 +24,12 @@ The RunPod teardown rule applies unchanged: results are pushed when
 produced, the instance is destroyed after use, and the destruction is
 double-checked. The API key lives in the user environment, read from
 the password manager, never in a repository or a transcript.
+
+## Problem
+
+Pool generation wants days of GPU that the desk card should not give
+up: the 3090 is the interactive seat for rigging and judging, and a
+batch that owns it for two days stalls the critical path it feeds.
 
 ## Related
 

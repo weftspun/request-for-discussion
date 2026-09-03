@@ -3,6 +3,18 @@
 **State:** discussion
 **Scope:** `decisions/`, `scripts/ci.sh`, `.pre-commit-config.yaml`
 
+## Decision
+
+Delete `scripts/ste-lint-decisions.py`. Delete its `npm run lint:ste`
+entry in `thirdparty/3d_studio/package.json`. Delete its step in
+`scripts/ci.sh`, and its hook in `.pre-commit-config.yaml`. STE
+enforcement now runs once, in the plugin's `Stop` hook, at write
+time.
+
+See `DETAILS.md` for what moved to the plugin, including three new
+checks this repository contributed upstream. It also names what the
+deleted script's aggregate score this repository does not gain back.
+
 ## Problem
 
 RFD 1000 named `scripts/ste-lint-decisions.py` as this repository's
@@ -17,18 +29,6 @@ reaches a file, and it asks for a rewrite. The old script
 caught a violation only after a commit already held it. Two
 enforcement points for one rule is the DRY policy's own complaint,
 turned on this repository's own tooling.
-
-## Decision
-
-Delete `scripts/ste-lint-decisions.py`. Delete its `npm run lint:ste`
-entry in `thirdparty/3d_studio/package.json`. Delete its step in
-`scripts/ci.sh`, and its hook in `.pre-commit-config.yaml`. STE
-enforcement now runs once, in the plugin's `Stop` hook, at write
-time.
-
-See `DETAILS.md` for what moved to the plugin, including three new
-checks this repository contributed upstream. It also names what the
-deleted script's aggregate score this repository does not gain back.
 
 ## Related
 

@@ -3,17 +3,6 @@
 **State:** abandoned
 **Scope:** `weftspun_studio/`
 
-## Problem
-
-The browser client holds the studio logic: the model catalog, the
-job lifecycle, and the pipeline graph. A browser tab owns state that
-outlives the tab, and a page refresh drops that state. The client
-calls the DGX API with no server between them, and each new task
-type adds more client code.
-
-A full rewrite carries risk. The client works today, and a rewrite
-would stop the work for a long time.
-
 ## Decision
 
 Grow an Elixir application beside the client, an API server the
@@ -25,6 +14,17 @@ catalog stays authoritative, as RFD 1016 states.
 
 See `DETAILS.md` for the end shape, the later phases, the compute
 backend, the port shape, the packaging, and known risks.
+
+## Problem
+
+The browser client holds the studio logic: the model catalog, the
+job lifecycle, and the pipeline graph. A browser tab owns state that
+outlives the tab, and a page refresh drops that state. The client
+calls the DGX API with no server between them, and each new task
+type adds more client code.
+
+A full rewrite carries risk. The client works today, and a rewrite
+would stop the work for a long time.
 
 ## Related
 

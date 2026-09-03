@@ -4,15 +4,6 @@
 **Feature:** a second `fdbbackup` tag writes to R2 IA alongside the Tigris tag
 **Scope:** weftspun-fdb (3 machines)
 
-## Problem
-
-Today `fdbbackup` writes to Tigris (`fly.storage.tigris.dev`), Fly's
-own object storage. A disaster naming "all Fly infra gone" takes the
-backup with the cluster. Beside it: Bao holds the FDB CA key as
-`type=internal`, and Bao's storage backend is FDB, so the CA rides
-FDB backups. A restore that cannot read the backup cannot issue the
-machine leaves the restored cluster needs.
-
 ## Decision
 
 A second `fdbbackup` tag `dr` writes concurrently to R2 IA
@@ -33,6 +24,15 @@ rather than restored, so no long-lived material sits outside Bao.
 **Negative control:** a machine started without `R2_ACCESS_KEY_ID`
 runs `default` only, and the `dr` check reports critical rather than
 passing on nothing.
+
+## Problem
+
+Today `fdbbackup` writes to Tigris (`fly.storage.tigris.dev`), Fly's
+own object storage. A disaster naming "all Fly infra gone" takes the
+backup with the cluster. Beside it: Bao holds the FDB CA key as
+`type=internal`, and Bao's storage backend is FDB, so the CA rides
+FDB backups. A restore that cannot read the backup cannot issue the
+machine leaves the restored cluster needs.
 
 ## Related
 

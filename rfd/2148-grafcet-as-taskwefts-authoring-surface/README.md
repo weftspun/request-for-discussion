@@ -6,14 +6,6 @@ lowered to HTN at load, driven over `2-contract/bus`
 **Scope:** taskweft, taskweft-nmm-personas, and any future planner
 domain that fits the propositional-with-parameters class
 
-## Problem
-
-A taskweft HTN domain is a hand-authored 40+ line JSON-LD block of
-`variables / actions / methods / tasks / pointer/get / pointer/set /
-math/eq`. Each action carries redundant preconditions the author
-keeps in sync by hand. No model checker consumes the shape. Two
-hazards follow: the file drifts against itself, and no gate reads it.
-
 ## Decision
 
 Author domains as compact IEC 60848 GRAFCET (SFC-shaped notation) in
@@ -32,6 +24,14 @@ The reference implementation and proof is
 `3-interactor/taskweft-nmm-personas`: three GRAFCET personas play a
 128-agent Neural MMO 2 episode over `2-contract/bus` with CBOR+zstd
 on the wire, effective persona rate 26 Hz against a 10 Hz floor.
+
+## Problem
+
+A taskweft HTN domain is a hand-authored 40+ line JSON-LD block of
+`variables / actions / methods / tasks / pointer/get / pointer/set /
+math/eq`. Each action carries redundant preconditions the author
+keeps in sync by hand. No model checker consumes the shape. Two
+hazards follow: the file drifts against itself, and no gate reads it.
 
 ## References
 

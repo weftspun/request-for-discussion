@@ -4,13 +4,6 @@
 **Feature:** mutual TLS on the weftspun-fdb cluster, and the client identity a service presents
 **Scope:** weftspun-fdb on Fly; spot-broker as the first client; any later FDB client
 
-## Problem
-
-The weftspun-fdb cluster came up plaintext, and its backup could not
-reach the blob store: FoundationDB uses one TLS policy for peers and
-for S3, so a cluster with no trust store cannot speak HTTPS to Tigris.
-Turning TLS on after the fact hit two walls, one known and one new.
-
 ## Decision
 
 Mutual TLS from a private CA, per-machine certificates named by Fly
@@ -31,6 +24,13 @@ A client is a TLS peer like any other: it presents its own leaf
 (`CN=fdb-spot-broker.chibifire.com`) through the `FDB_TLS_*` env vars
 libfdb_c reads, and verifies the cluster with the same rule the
 cluster uses (`Check.Valid=1,S.CN>=fdb-,S.CN<=.chibifire.com`).
+
+## Problem
+
+The weftspun-fdb cluster came up plaintext, and its backup could not
+reach the blob store: FoundationDB uses one TLS policy for peers and
+for S3, so a cluster with no trust store cannot speak HTTPS to Tigris.
+Turning TLS on after the fact hit two walls, one known and one new.
 
 ## Verification
 

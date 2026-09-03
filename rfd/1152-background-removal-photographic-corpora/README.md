@@ -3,6 +3,19 @@
 **State:** published
 **Feature:** background removal
 
+## Decision
+
+Background removal uses a photo-trained dichotomous matting model, not a union of
+semantic part masks. `ZhengPeng7/BiRefNet_HR-matting` is the default. It has no
+vocabulary to fall outside of, so it cannot lose a garment for not knowing what
+the garment is.
+
+See-Through is retained for what transfers -- geometry -- and not for what does
+not -- semantics. Its part masks may be used as regions, never as labels for what
+covers what.
+
+`DETAILS.md` carries the ground-truth ranking and the dtype it depends on.
+
 ## Problem
 
 See-Through decomposes a character into semantic layers, and the union of its
@@ -20,19 +33,6 @@ union grows from 0.50 to 0.56 of the frame while `headwear` stays empty.
 The same measurement showed the clothing classes fire on body region rather than
 on cloth: a nude torso is labelled `topwear`, and mask-derived coverage reads
 0.81 to 0.93 on images that are largely bare skin.
-
-## Decision
-
-Background removal uses a photo-trained dichotomous matting model, not a union of
-semantic part masks. `ZhengPeng7/BiRefNet_HR-matting` is the default. It has no
-vocabulary to fall outside of, so it cannot lose a garment for not knowing what
-the garment is.
-
-See-Through is retained for what transfers -- geometry -- and not for what does
-not -- semantics. Its part masks may be used as regions, never as labels for what
-covers what.
-
-`DETAILS.md` carries the ground-truth ranking and the dtype it depends on.
 
 ## Related
 

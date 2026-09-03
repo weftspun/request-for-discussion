@@ -4,12 +4,6 @@
 **Feature:** people present to each other
 **Scope:** `3-interactor/anny`, `3-interactor/llama-cpp-npu-vision-upstream`
 
-## Problem
-
-`victor/gemma-avatar` runs the loop this workspace wants — speak, be
-understood, be answered by a lip-syncing face — and states **no
-licence**. Its integration code cannot be taken.
-
 ## Decision
 
 Study it, take nothing, rebuild from the components it names — cheap,
@@ -34,6 +28,12 @@ encoder inside `DEVICE_OPS`. Gemma 4 is Apache-2.0 — RFD 1155 abandoned
 it on shape, not licence — but 31 B does not fit 8 GB and a hosted API
 cannot be a corpus source. **The lip-sync is the part we lack**, and
 `DETAILS.md` carries what TalkingHead does and what is unknown.
+
+## Problem
+
+`victor/gemma-avatar` runs the loop this workspace wants — speak, be
+understood, be answered by a lip-syncing face — and states **no
+licence**. Its integration code cannot be taken.
 
 ## Related
 

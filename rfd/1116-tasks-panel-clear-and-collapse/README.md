@@ -3,15 +3,6 @@
 **State:** committed
 **Scope:** Tasks panel toolbar, the completed-task list
 
-## Problem
-
-The Tasks panel carries two controls a rewrite kept conflating: a
-collapse toggle on the completed-task list, and a Clear action.
-Clear must unload the viewport model, matching the Worlds panel's
-own Clear. A rewrite twice narrowed Clear back down to clearing the
-task list alone, and once dropped the completed-list collapse
-control outright.
-
 ## Decision
 
 The completed-task list collapses through `expand-icon-button` and
@@ -23,6 +14,15 @@ outside the completed rows survives a viewport Clear.
 
 `bash scripts/verify_tasks_panel_ui.sh` runs before a merge touching
 this toolbar.
+
+## Problem
+
+The Tasks panel carries two controls a rewrite kept conflating: a
+collapse toggle on the completed-task list, and a Clear action.
+Clear must unload the viewport model, matching the Worlds panel's
+own Clear. A rewrite twice narrowed Clear back down to clearing the
+task list alone, and once dropped the completed-list collapse
+control outright.
 
 ## Related
 

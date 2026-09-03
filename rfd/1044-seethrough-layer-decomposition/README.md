@@ -3,15 +3,6 @@
 **State:** discussion
 **Feature:** model packaging
 
-## Problem
-
-This entry names one task and runs nine networks. RFD 1030 lists them.
-A Python script that calls them in order hides the order, the guards,
-and the point where a failure happened.
-
-Nine networks need 9.82 GB together in bf16. They do not all need to
-be resident, because a text encoder finishes before the UNet starts.
-
 ## Decision
 
 Model the pipeline as a taskweft domain, and let the planner pick the
@@ -30,6 +21,15 @@ actions and their guards, and how one domain covers both runtimes.
 dropped See-Through from the candidate ranking; its checkpoints state no
 licence and the depth one is an OpenRAIL++-M derivative. The layer
 taxonomy is what this workspace keeps.
+
+## Problem
+
+This entry names one task and runs nine networks. RFD 1030 lists them.
+A Python script that calls them in order hides the order, the guards,
+and the point where a failure happened.
+
+Nine networks need 9.82 GB together in bf16. They do not all need to
+be resident, because a text encoder finishes before the UNet starts.
 
 ## Related
 

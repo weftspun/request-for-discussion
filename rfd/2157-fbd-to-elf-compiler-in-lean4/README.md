@@ -5,13 +5,6 @@
 godot-sandbox loads. Spirit of UdonSharp and SafeGDScript.
 **Scope:** new `3-interactor/taskweft-fbd-compiler` (Lean 4)
 
-## Problem
-
-RFDs 2154-2151 reach godot-sandbox through GDScript. There's no
-compiler for the direct path: FBD in, ELF out. A verified compiler
-in Lean 4 would carry proofs the ELF's state graph matches the
-FBD's own, not just tests.
-
 ## Decision
 
 New repo `taskweft-fbd-compiler`, Lean 4 v4.34.0-rc1 (matches RFD
@@ -30,6 +23,13 @@ New repo `taskweft-fbd-compiler`, Lean 4 v4.34.0-rc1 (matches RFD
 
 RFD 2156 is the parallel GDScript-side path. `DETAILS.md` carries
 AST, ABI, staging.
+
+## Problem
+
+RFDs 2154-2151 reach godot-sandbox through GDScript. There's no
+compiler for the direct path: FBD in, ELF out. A verified compiler
+in Lean 4 would carry proofs the ELF's state graph matches the
+FBD's own, not just tests.
 
 ## References
 

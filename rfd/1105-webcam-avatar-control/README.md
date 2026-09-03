@@ -3,13 +3,6 @@
 **State:** published
 **Scope:** `src/library/webcamAvatarDriver.js`, `xrExpressionTrackingDriver.js`
 
-## Problem
-
-A webcam can drive the current VRM's face and head, using Kalidokit
-plus MediaPipe Holistic, the same approach XR Animator and Kalidoface
-use. That driver must never fight a headset's own tracking once a
-WebXR session presents.
-
 ## Decision
 
 The webcam driver does not run while WebXR is presenting. Entering
@@ -23,6 +16,13 @@ a user agent grants it. Neither driver touches `enableVR()`,
 
 See `DETAILS.md` for the feature list, the Android XR native-bridge
 path, and remote-logging setup for headset debugging.
+
+## Problem
+
+A webcam can drive the current VRM's face and head, using Kalidokit
+plus MediaPipe Holistic, the same approach XR Animator and Kalidoface
+use. That driver must never fight a headset's own tracking once a
+WebXR session presents.
 
 ## Related
 

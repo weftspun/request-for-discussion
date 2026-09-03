@@ -4,13 +4,6 @@
 **Feature:** the single interactor a user signs into for spend, users, and content
 **Scope:** spot-broker (weftspun) and uro (v-sekai) become one service under the sides convention
 
-## Problem
-
-uro held V-Sekai users and served content; spot-broker held the vast.ai key and posted
-double-entry entries for spend. Both needed GitHub sign-in, both wanted the same
-TigerBeetle-shaped ledger, and neither could hand a stranger a downloadable VRM without
-the other: two GitHub OAuth apps, two Fly apps, two deploy pipelines, one user story.
-
 ## Decision
 
 They merge as **interactor-shuttle** at `3-interactor/interactor-shuttle`. Interactor
@@ -26,6 +19,13 @@ singleton-with-hysteresis (RFD 2133); mutual-TLS FoundationDB cluster plus Tigri
 backup (RFDs 2134-2135); TigerBeetle-shaped Account and Transfer tables, sum-to-zero by
 construction; GitHub OAuth via oauth_mcp_bridge with a **new** SH_GH_* credential set,
 so spot-broker's SB_GH_* credentials rotate out with the rename.
+
+## Problem
+
+uro held V-Sekai users and served content; spot-broker held the vast.ai key and posted
+double-entry entries for spend. Both needed GitHub sign-in, both wanted the same
+TigerBeetle-shaped ledger, and neither could hand a stranger a downloadable VRM without
+the other: two GitHub OAuth apps, two Fly apps, two deploy pipelines, one user story.
 
 ## Operator questions and verification
 

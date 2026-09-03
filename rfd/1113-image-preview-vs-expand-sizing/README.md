@@ -4,15 +4,6 @@
 **Scope:** `src/components/expandedImagePreview.css`,
 `ImagePanelPreview.{css,jsx}`, `TextureExtractor.css`
 
-## Problem
-
-An in-panel image preview (a Krea task-row thumbnail, or a Texture
-Extractor grid tile) and its click-to-expand modal share one visual
-job, showing the same image larger. A single CSS variable once
-served both, so a fix to one size regressed the other. The user
-confirmed the current split on 2026-06-30, per
-`rules/image-preview-sizing-protected.mdc`.
-
 ## Decision
 
 Two variables, two jobs, never merged. `--panel-image-preview-height`
@@ -28,6 +19,15 @@ The in-panel preview does not grow on hover. It expands only on a
 click, into the modal. A change to one context's size, without an
 explicit user request naming both, must not touch the other
 context's variable.
+
+## Problem
+
+An in-panel image preview (a Krea task-row thumbnail, or a Texture
+Extractor grid tile) and its click-to-expand modal share one visual
+job, showing the same image larger. A single CSS variable once
+served both, so a fix to one size regressed the other. The user
+confirmed the current split on 2026-06-30, per
+`rules/image-preview-sizing-protected.mdc`.
 
 ## Related
 

@@ -3,14 +3,6 @@
 **State:** prediscussion
 **Scope:** the deploy target, `apps/weftspun_studio/`, `apps/usd_viewer_app/`
 
-## Problem
-
-The gallery's proxy chain (RFD 1076) sets no `Cache-Control`
-anywhere. Every asset, including the multi-megabyte `emHdBindings.wasm`
-and `.data` files, refetches on every request, through two Fly
-machines, both in `sjc`. The user asked for "a fast CDN," and named
-`h2o-bench-tpcc`'s own `libh2o` dependency as the mechanism.
-
 ## Decision
 
 Not yet, and not that repo. See `DETAILS.md`'s RED step: `h2o-bench-tpcc`
@@ -27,6 +19,14 @@ found no load that needs more than this. If load ever does, the
 REFACTOR step names Tigris, Fly's own S3-compatible object storage
 with automatic edge replication, not H2O — see `DETAILS.md` for the
 full RED/GREEN/REFACTOR account.
+
+## Problem
+
+The gallery's proxy chain (RFD 1076) sets no `Cache-Control`
+anywhere. Every asset, including the multi-megabyte `emHdBindings.wasm`
+and `.data` files, refetches on every request, through two Fly
+machines, both in `sjc`. The user asked for "a fast CDN," and named
+`h2o-bench-tpcc`'s own `libh2o` dependency as the mechanism.
 
 ## Related
 

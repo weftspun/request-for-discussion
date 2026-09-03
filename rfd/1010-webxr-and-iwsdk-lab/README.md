@@ -3,12 +3,6 @@
 **State:** published
 **Feature:** WebXR
 
-## Problem
-
-The app targets XR headsets. Users need VR and AR modes with floor
-anchoring. The main app must also support expression tracking for
-avatar faces.
-
 ## Decision
 
 Use WebXR in the main viewport. Two session modes exist.
@@ -24,6 +18,12 @@ face data from a companion APK.
 A separate /xr route hosts the IWSDK lab. It experiments with grab
 and locomotion. The main app also runs IWSDK distance grab and
 thumbstick locomotion.
+
+## Problem
+
+The app targets XR headsets. Users need VR and AR modes with floor
+anchoring. The main app must also support expression tracking for
+avatar faces.
 
 ## References
 

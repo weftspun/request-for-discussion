@@ -4,13 +4,6 @@
 **Feature:** FoundationDB as the storage backend for the secrets manager
 **Scope:** weftspun-bao on Fly.io; the OpenBao fork at weftspun/openbao
 
-## Problem
-
-OpenBao dropped every storage plugin when it forked from Vault
-v1.14.x. The weftspun-fdb cluster already runs three machines with
-double redundancy, TLS, and backup, and raft on a single shared-cpu
-machine has no replication path.
-
 ## Decision
 
 Restore the FoundationDB backend from Vault v1.14.8 (last MPL-2.0
@@ -24,6 +17,13 @@ Deployment files in weftspun/service-openbao. The bao machine carries
 only the FDB client library and connects to the cluster via a TLS
 client certificate. Interface details and deploy measurements are
 in DETAILS.md.
+
+## Problem
+
+OpenBao dropped every storage plugin when it forked from Vault
+v1.14.x. The weftspun-fdb cluster already runs three machines with
+double redundancy, TLS, and backup, and raft on a single shared-cpu
+machine has no replication path.
 
 ## Verification
 

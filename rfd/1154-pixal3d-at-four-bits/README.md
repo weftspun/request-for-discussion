@@ -4,19 +4,6 @@
 **Feature:** edge acceleration candidate
 **Scope:** `3-interactor/pixal3d-image-to-textured-mesh`
 
-## Problem
-
-Pixal3D is 12.02 B parameters: 24.05 GB at bf16 and 12.02 GB at eight
-bits against 8 GB of device memory, fitting only at four bits and
-6.61 GB. One precision reaches it, so RFD 1128 was a precondition.
-
-**THAT IS THE WRONG UNIT, AND THE ABANDONMENT WAS DECIDED ON IT.**
-Pixal3D is four stages. The sparse structure stage is
-`ss_flow_img_dit_1_3B_*` at **1.3 B**: 2.6 GB at bf16, 0.72 GB at
-four, fitting at every precision and never meeting RFD 1128. It is
-also the only stage that runs here, its two configs being the only
-ones without `use_naf_upsample`, so they never reach NATTEN.
-
 ## Decision
 
 **THE PREDICTION THAT REPLACED IT WAS ALSO WRONG.** This RFD said
@@ -34,6 +21,19 @@ dies in `_add_input_layers`: the parser wants each input image-shaped,
 and this stage takes a voxel grid, a timestep and two conditioning
 tensors. `Cos`, `Sin` and `ReduceL2` stay unjudged; `DETAILS.md` has
 the ladder.
+
+## Problem
+
+Pixal3D is 12.02 B parameters: 24.05 GB at bf16 and 12.02 GB at eight
+bits against 8 GB of device memory, fitting only at four bits and
+6.61 GB. One precision reaches it, so RFD 1128 was a precondition.
+
+**THAT IS THE WRONG UNIT, AND THE ABANDONMENT WAS DECIDED ON IT.**
+Pixal3D is four stages. The sparse structure stage is
+`ss_flow_img_dit_1_3B_*` at **1.3 B**: 2.6 GB at bf16, 0.72 GB at
+four, fitting at every precision and never meeting RFD 1128. It is
+also the only stage that runs here, its two configs being the only
+ones without `use_naf_upsample`, so they never reach NATTEN.
 
 ## Related
 

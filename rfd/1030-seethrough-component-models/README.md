@@ -3,11 +3,6 @@
 **State:** published
 **Feature:** layer decomposition
 
-## Problem
-
-The `seethrough_layer_decomposition` entry names one task. The task
-runs nine models. One catalog row hides that fact.
-
 ## Decision
 
 Name each component here. Record its base model, its role, and its
@@ -21,6 +16,11 @@ RFD 1166 dropped See-Through from the candidate ranking on licensing:
 the checkpoints named below state no licence, and the depth component
 derives from an OpenRAIL++-M model. The table remains accurate about
 what the project is made of and is no longer a plan to run it.
+
+## Problem
+
+The `seethrough_layer_decomposition` entry names one task. The task
+runs nine models. One catalog row hides that fact.
 
 ## Related
 

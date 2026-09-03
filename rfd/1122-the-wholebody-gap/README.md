@@ -6,14 +6,6 @@
 `6-datasource/dataflow-coco-gemx`, `3-interactor/pose-consensus`,
 `3-interactor/pixal3d-image-to-textured-mesh`, `4-entities/anny-pose-retarget-work`
 
-## Problem
-
-We need a model that finds 104 body points in a picture. We have one that finds 17. Nobody sells
-a licence-clean upgrade, so we train it, and training needs pictures with the 104 points already
-marked. Those do not exist either. A renderer makes pictures with the answers already on them.
-
-> TL;DR: I'm using AI tools to turn regular 2D pictures into 3D digital models or full-body pose skeletons, then training the system to make smart edits using a scoring system.
-
 ## Decision
 
 The pose-library check has run and redirected the plan. All twenty sampled clips are upright
@@ -34,6 +26,14 @@ space — bone lengths agree to a stacked penny. The renderer is now first, unde
    by an estimate differ in pose alone, so the difference is ground truth and AD gives its gradient.
 7. **The mesh is rung one, not the destination.** The ladder ends at a clothed character, and
    garment layers come from geometry rather than inference. See `DETAILS.md` and RFD 1121.
+
+## Problem
+
+We need a model that finds 104 body points in a picture. We have one that finds 17. Nobody sells
+a licence-clean upgrade, so we train it, and training needs pictures with the 104 points already
+marked. Those do not exist either. A renderer makes pictures with the answers already on them.
+
+> TL;DR: I'm using AI tools to turn regular 2D pictures into 3D digital models or full-body pose skeletons, then training the system to make smart edits using a scoring system.
 
 ## Related
 

@@ -3,15 +3,6 @@
 **State:** published
 **Scope:** every operator script under `scripts/`, on both the Surface and the DGX
 
-## Problem
-
-Two machines, two roles, and roughly twenty separate operational
-areas (sync, the dev server, the DGX API, model smoke tests, XR
-logging, the spatial fabric, and more) each carry their own start,
-stop, and verify commands. An agent or a developer needs one place
-naming which machine, which folder, and which exact command, not a
-memory of which of a dozen scripts is current.
-
 ## Decision
 
 One file, kept in sync both ways: DGX edits push to the Surface with
@@ -28,6 +19,15 @@ or local MCP config.
 See `DETAILS.md` for the full inventory, all 22 sections, from repo
 paths and SSH through the spatial fabric, the Sneeze engine, and
 deprecated commands.
+
+## Problem
+
+Two machines, two roles, and roughly twenty separate operational
+areas (sync, the dev server, the DGX API, model smoke tests, XR
+logging, the spatial fabric, and more) each carry their own start,
+stop, and verify commands. An agent or a developer needs one place
+naming which machine, which folder, and which exact command, not a
+memory of which of a dozen scripts is current.
 
 ## Related
 

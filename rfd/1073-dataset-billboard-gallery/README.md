@@ -3,13 +3,6 @@
 **State:** prediscussion
 **Scope:** RFD 1064's dataset, `apps/usd_viewer_app/`
 
-## Problem
-
-RFD 1064's dataset holds about 15,000 anime images and captions, on
-disk, unused until step 1 writes a `problem.ex` per row. Nothing
-shows what the dataset actually contains today. A person cannot see
-it without writing code to open a parquet shard.
-
 ## Decision
 
 Wrap every dataset image as a flat billboard card, per the technique
@@ -23,6 +16,13 @@ mechanism first: extract, downscale, author, package, verify it
 opens, verify it renders. Every later shard runs the same script.
 See `DETAILS.md` for the exact scope shipped today, the file-size
 reasoning, and what running the remaining 41 shards needs.
+
+## Problem
+
+RFD 1064's dataset holds about 15,000 anime images and captions, on
+disk, unused until step 1 writes a `problem.ex` per row. Nothing
+shows what the dataset actually contains today. A person cannot see
+it without writing code to open a parquet shard.
 
 ## Related
 

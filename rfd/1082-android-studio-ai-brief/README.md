@@ -3,15 +3,6 @@
 **State:** discussion
 **Scope:** `native/android-xr-face-bridge/`, `com.weftspun.xrfacebridge`
 
-## Problem
-
-Chrome on Android XR does not grant WebXR's `expression-tracking`
-feature, so `XRFrame.expressions` never reaches the web app inside
-an immersive session, and a VRM avatar's face cannot follow the
-user's own face in AR or VR through Chrome alone. This gap is
-specific to Android XR's own Chrome build; a headset whose browser
-grants `expression-tracking` needs no bridge at all.
-
 ## Decision
 
 A companion APK, `com.weftspun.xrfacebridge`, runs native face
@@ -26,6 +17,15 @@ host instead.
 
 See `DETAILS.md` for the end-to-end data flow, the implementation
 status table, the platform constraints, and the test steps.
+
+## Problem
+
+Chrome on Android XR does not grant WebXR's `expression-tracking`
+feature, so `XRFrame.expressions` never reaches the web app inside
+an immersive session, and a VRM avatar's face cannot follow the
+user's own face in AR or VR through Chrome alone. This gap is
+specific to Android XR's own Chrome build; a headset whose browser
+grants `expression-tracking` needs no bridge at all.
 
 ## Related
 

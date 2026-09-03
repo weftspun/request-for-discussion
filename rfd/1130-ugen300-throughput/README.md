@@ -4,17 +4,6 @@
 **Feature:** edge throughput measurement
 **Scope:** `3-interactor/rf-detr-cpp`
 
-## Problem
-
-The ASUS UGen300 is a Hailo-10H behind USB 3.1 Gen2. Two numbers are
-published and neither is the one that matters: the accelerator's
-compute, and the bus at 10 Gbps, about 1.2 GB/s.
-
-What a pipeline gets is neither, because a USB accelerator pays for
-every crossing. Resident weights cost nothing per frame and streaming
-weights cost everything, and which happens depends on whether the
-model fits 8 GB after quantisation. No measurement here has said.
-
 ## Decision
 
 Measure the device, once the two questions before it have answers.
@@ -33,6 +22,17 @@ but what the accelerator costs and buys.
 
 See `DETAILS.md` for the rig and the confounds. `SKILL.md` gives the
 procedure.
+
+## Problem
+
+The ASUS UGen300 is a Hailo-10H behind USB 3.1 Gen2. Two numbers are
+published and neither is the one that matters: the accelerator's
+compute, and the bus at 10 Gbps, about 1.2 GB/s.
+
+What a pipeline gets is neither, because a USB accelerator pays for
+every crossing. Resident weights cost nothing per frame and streaming
+weights cost everything, and which happens depends on whether the
+model fits 8 GB after quantisation. No measurement here has said.
 
 ## Related
 

@@ -4,6 +4,19 @@
 **Feature:** where results go
 **Scope:** anything produced that outlives the machine that made it
 
+## Decision
+
+Artifacts go to Hugging Face. Code stays on GitHub, and each names the
+other. A dataset repository holds corpora; a model repository holds
+weights, in safetensors, carrying only the tensors that were trained.
+
+Every artifact repository carries a `CITATION.cff` naming its title,
+its licence, and every source it derives from. An artifact without one
+cannot answer what it is made of, which is condition 1.
+
+The name matches the source repository, and the README names the side
+it sits on, so a reader who finds the artifact first reaches the code.
+
 ## Problem
 
 Code goes to GitHub, and the goal manifest places every repository on a
@@ -17,19 +30,6 @@ history nobody can shrink again.
 A checkpoint also lies about its own size: the trainer writes the whole
 model, so a 19.5 MiB adapter arrives as 14.8 GiB of mostly somebody
 else's Apache-2.0 base weights.
-
-## Decision
-
-Artifacts go to Hugging Face. Code stays on GitHub, and each names the
-other. A dataset repository holds corpora; a model repository holds
-weights, in safetensors, carrying only the tensors that were trained.
-
-Every artifact repository carries a `CITATION.cff` naming its title,
-its licence, and every source it derives from. An artifact without one
-cannot answer what it is made of, which is condition 1.
-
-The name matches the source repository, and the README names the side
-it sits on, so a reader who finds the artifact first reaches the code.
 
 ## References
 

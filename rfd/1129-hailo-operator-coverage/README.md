@@ -4,18 +4,6 @@
 **Feature:** operator coverage for edge deployment
 **Scope:** `3-interactor/rf-detr-cpp`
 
-## Problem
-
-A model reaches the ASUS UGen300 through the Dataflow Compiler, which
-takes a graph and rejects operators it cannot map. Two stages of the
-mesh pipeline are built from operators with no portable form at all.
-
-Sparse submanifold convolution runs on `flex_gemm` and `o_voxel`, CUDA
-kernels over sparse voxel grids, and ONNX has no operator for it.
-Neighborhood attention runs on natten, whose fused CUTLASS kernels are
-compiled per NVIDIA architecture. Neither is a quantisation question.
-Both ask whether the graph exists outside CUDA at all.
-
 ## Decision
 
 Answer by compiling, not by reading documentation. The compiler is the
@@ -33,6 +21,18 @@ names an operator at any size, and a small graph fails in seconds.
 The keypoint detector still ships; this asks what else could.
 
 See `DETAILS.md` for the two stages. `SKILL.md` gives the procedure.
+
+## Problem
+
+A model reaches the ASUS UGen300 through the Dataflow Compiler, which
+takes a graph and rejects operators it cannot map. Two stages of the
+mesh pipeline are built from operators with no portable form at all.
+
+Sparse submanifold convolution runs on `flex_gemm` and `o_voxel`, CUDA
+kernels over sparse voxel grids, and ONNX has no operator for it.
+Neighborhood attention runs on natten, whose fused CUTLASS kernels are
+compiled per NVIDIA architecture. Neither is a quantisation question.
+Both ask whether the graph exists outside CUDA at all.
 
 ## Related
 

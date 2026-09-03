@@ -3,13 +3,6 @@
 **State:** published
 **Scope:** the deploy target
 
-## Problem
-
-`weftspun-studio`, `weftspun-character-taxonomy`, and
-`weftspun-usd-viewer` all run as real, billed Fly Machines and
-Volumes now. No record states what that costs, hourly, monthly, or
-yearly.
-
 ## Decision
 
 Record it, from Fly's own published pricing page, against this
@@ -24,6 +17,13 @@ Volume, and a 1GB Volume.
 Not included: outbound bandwidth (usage-based, has a free tier
 before per-GB billing), and any future Tigris usage RFD 1073's
 still-open fetch-path work would add.
+
+## Problem
+
+`weftspun-studio`, `weftspun-character-taxonomy`, and
+`weftspun-usd-viewer` all run as real, billed Fly Machines and
+Volumes now. No record states what that costs, hourly, monthly, or
+yearly.
 
 ## Related
 

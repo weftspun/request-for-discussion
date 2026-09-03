@@ -7,14 +7,6 @@ that Godot from Elixir via the `lib_godot_connector` NIF
 **Scope:** taskweft compile chain, new `taskweft-godot-sandbox`
 project (Elixir + Godot scene + Godot Sandbox addon)
 
-## Problem
-
-RFD 2150 names Godot Sandbox as one runtime host for OpenPLC v4's
-compiled binary. The compile lives in OpenPLC v4's toolchain (MIT
-runtime, GCC-style runtime exception on the compiler). The load-
-and-execute lives in a Godot process. Elixir owns the coordinator.
-This RFD is the wire.
-
 ## Decision
 
 Reuse three MIT pieces:
@@ -29,6 +21,14 @@ BEAM embeds that Godot via lib_godot_connector`.
 
 `DETAILS.md` carries the Godot scene shape, the Sandbox addon config,
 the frame-tick contract, and verification.
+
+## Problem
+
+RFD 2150 names Godot Sandbox as one runtime host for OpenPLC v4's
+compiled binary. The compile lives in OpenPLC v4's toolchain (MIT
+runtime, GCC-style runtime exception on the compiler). The load-
+and-execute lives in a Godot process. Elixir owns the coordinator.
+This RFD is the wire.
 
 ## References
 

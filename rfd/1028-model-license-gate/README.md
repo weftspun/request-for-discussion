@@ -3,12 +3,6 @@
 **State:** published
 **Feature:** model licensing
 
-## Problem
-
-Some model weights permit non-commercial use only. Some carry
-territory rules and user-count rules. The catalog must not ship them
-to paying users.
-
 ## Decision
 
 Any model shipped to paying users must clear commercial use. The gate
@@ -17,6 +11,12 @@ FOSS blocklist for permissive licenses only.
 
 See `DETAILS.md` for the deleted models and the blocklisted models,
 each with its license and its replacement.
+
+## Problem
+
+Some model weights permit non-commercial use only. Some carry
+territory rules and user-count rules. The catalog must not ship them
+to paying users.
 
 ## Related
 

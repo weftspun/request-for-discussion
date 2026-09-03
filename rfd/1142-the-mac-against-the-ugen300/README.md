@@ -4,15 +4,6 @@
 **Feature:** accelerator comparison for edge deployment
 **Scope:** `scripts/ane_bench.py`
 
-## Problem
-
-RFD 1130 sequences the plan around the UGen300, an 8 GiB Hailo-10H
-behind USB, and the Mac was written off as the weak node on a figure
-that could not support it: `rfd1122-plan.usda` recorded
-`neuralEngineUsefulForBackbone = 0` from an ONNX Runtime CoreML run
-that partitions per operator and logged no placement. Which engine the
-Mac would even use went unasked.
-
 ## Decision
 
 **Metal is the Mac's engine here, and the Neural Engine is blocklisted.**
@@ -33,6 +24,15 @@ The Neural Engine wins on a synthetic convolution stack, 13.58 TFLOP/s
 against 6.98, and loses on the shipped graph, so both are reported.
 
 `DETAILS.md` has the apparatus, `SKILL.md` the order.
+
+## Problem
+
+RFD 1130 sequences the plan around the UGen300, an 8 GiB Hailo-10H
+behind USB, and the Mac was written off as the weak node on a figure
+that could not support it: `rfd1122-plan.usda` recorded
+`neuralEngineUsefulForBackbone = 0` from an ONNX Runtime CoreML run
+that partitions per operator and logged no placement. Which engine the
+Mac would even use went unasked.
 
 ## Related
 

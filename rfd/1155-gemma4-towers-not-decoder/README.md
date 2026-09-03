@@ -4,18 +4,6 @@
 **Feature:** edge acceleration candidate
 **Scope:** `3-interactor/gemma4-composer`
 
-## Problem
-
-Gemma 4 is wanted for language, vision and sound in one model. At
-12 B it is 6.60 GB at four bits and does not fit at any other
-precision, so it inherits RFD 1128's open question.
-
-Two things stop it that memory does not see. The checked-out
-artifact is GGUF, which carries no graph, so nothing converts. And
-autoregressive decode grows its sequence and cache every token while
-a dataflow part compiles fixed shapes, which is the obstacle RFD
-1126 names: control flow rather than precision.
-
 ## Decision
 
 Abandoned on 2026-08-28. The accelerator work is scoped to rf-detr
@@ -32,6 +20,18 @@ What Qwen3-VL does not carry is sound. If audio is a requirement it
 does not replace Gemma 4, and no Hailo reference for an audio model
 is known here. If Gemma 4 returns, plan the towers and not the
 decoder.
+
+## Problem
+
+Gemma 4 is wanted for language, vision and sound in one model. At
+12 B it is 6.60 GB at four bits and does not fit at any other
+precision, so it inherits RFD 1128's open question.
+
+Two things stop it that memory does not see. The checked-out
+artifact is GGUF, which carries no graph, so nothing converts. And
+autoregressive decode grows its sequence and cache every token while
+a dataflow part compiles fixed shapes, which is the obstacle RFD
+1126 names: control flow rather than precision.
 
 ## Related
 

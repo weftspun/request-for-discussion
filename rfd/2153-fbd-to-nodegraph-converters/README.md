@@ -5,13 +5,6 @@
 Udon assembly for VRChat
 **Scope:** taskweft (`Taskweft.OpenPLC.Udon`)
 
-## Problem
-
-RFD 2150 makes PLCopen FBD the one runtime target. The two platforms
-taskweft ships to are **godot-sandbox** (RFD 2154, C++ + Rust ELFs
-via RFD 2159) and **VRChat Udon**. Udon has its own native
-assembly language; FBD needs a direct compiler into it.
-
 ## Decision
 
 Udon is the only target.
@@ -36,6 +29,13 @@ plan's `/Deliveries/UdonAsm` string.
 
 `DETAILS.md` carries the block-to-uasm mapping and the round-trip
 against the `blocks_get_or` fixture.
+
+## Problem
+
+RFD 2150 makes PLCopen FBD the one runtime target. The two platforms
+taskweft ships to are **godot-sandbox** (RFD 2154, C++ + Rust ELFs
+via RFD 2159) and **VRChat Udon**. Udon has its own native
+assembly language; FBD needs a direct compiler into it.
 
 ## References
 

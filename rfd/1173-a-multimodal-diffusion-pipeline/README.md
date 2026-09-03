@@ -4,14 +4,6 @@
 **Feature:** omni-modal MaskScore construction and real-time avatar
 **Scope:** Gemma-4-12B, Wan-VACE, MaskScore, Pixal3D/VoxHammer, EditScore
 
-## Problem
-
-A real-time avatar needs a text+image reasoning core that doubles as
-the reward model for its own outputs. The audio path is separate per
-RFD 1170. EditScore is functionally complete in the NAND-gate sense:
-every generation task reduces to an edit, so one reward covers every
-modality.
-
 ## Decision
 
 Gemma-4-12B (QAT Q4_0, Apache-2.0) is the shared VLM: it serves both
@@ -34,6 +26,14 @@ Reasoning-core swap 2026-09-02: earlier drafts named Qwen3-VL; RFD
 2169 walked that back to Gemma-4-12B. VRAM budget in
 [DETAILS.md](DETAILS.md); the eight dataset stubs in
 [MASKSCORE.md](MASKSCORE.md).
+
+## Problem
+
+A real-time avatar needs a text+image reasoning core that doubles as
+the reward model for its own outputs. The audio path is separate per
+RFD 1170. EditScore is functionally complete in the NAND-gate sense:
+every generation task reduces to an edit, so one reward covers every
+modality.
 
 ## Related
 

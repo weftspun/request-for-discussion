@@ -4,12 +4,6 @@
 **Feature:** make a persona, dress it, be it, make a friend
 **Scope:** `3-interactor`
 
-## Problem
-
-RFD 1166 ranked twelve models against each other and never says **what
-any of them is for**, so a reader cannot tell which stage is missing.
-Ranking stages of one pipeline against each other was the error.
-
 ## Decision
 
 One loop, four movements, and each runs both ways:
@@ -34,6 +28,12 @@ person's outline and the camera both project through. What lies between
 is worn — no taxonomy-aware segmenter, so no labelled corpus.
 `contour.py` makes either a fixed ring. `DETAILS.md` places every
 candidate and names the empty stages.
+
+## Problem
+
+RFD 1166 ranked twelve models against each other and never says **what
+any of them is for**, so a reader cannot tell which stage is missing.
+Ranking stages of one pipeline against each other was the error.
 
 ## Related
 

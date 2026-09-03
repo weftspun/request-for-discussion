@@ -4,15 +4,6 @@
 **Feature:** the plan of record for the public roll button, as a ladder of small working systems
 **Scope:** the gacha demo; `page.qmd` beside this file carries the figure
 
-## Problem
-
-The prior draft of this RFD ran a PERT network with a chain
-A → I → D → E → G, and I → D skipped every step that turns a text prompt
-into a mesh good enough to skin: no image-to-3D via Pixal3D, no
-EditScore judge, no repair loop. A pull is not a gacha item without
-those, so the network was drawing a schedule around a pipeline that
-did not yet exist end to end.
-
 ## Decision
 
 Rebuild the plan as a ladder, in Gall's Law's sense: each rung is a
@@ -60,6 +51,15 @@ Each rung is a demo you can show. A rung is "done" when it produces
 its output from the previous rung's output, and a control run on a
 known-broken input fails. The order stays fixed: skipping a rung is
 the failure mode this RFD replaces.
+
+## Problem
+
+The prior draft of this RFD ran a PERT network with a chain
+A → I → D → E → G, and I → D skipped every step that turns a text prompt
+into a mesh good enough to skin: no image-to-3D via Pixal3D, no
+EditScore judge, no repair loop. A pull is not a gacha item without
+those, so the network was drawing a schedule around a pipeline that
+did not yet exist end to end.
 
 ## Verification
 

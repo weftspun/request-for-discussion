@@ -5,14 +5,6 @@
 to Lean 4 with a plain C ABI, called from Elixir via a C NIF
 **Scope:** taskweft-grafcet-static (new repo), taskweft (NIF module)
 
-## Problem
-
-RFD 2148 puts compact IEC 60848 GRAFCET at the front of taskweft, but
-provides no verifier. AGRAFE ship a static analyser (step reachability,
-pairwise concurrency, abstract interpretation of variable domains) as
-an Eclipse plugin in Java, with hard build dependencies on Apron and
-Z3. Not something a taskweft loader can call.
-
 ## Decision
 
 Port the two structural analyses to Lean 4. The port is a first-class
@@ -30,6 +22,14 @@ domain or a Z3 bridge.
 A stub in `c_src/grafcet_static_stub.c` returns `{"error":"stub"}` so
 the NIF links today; swapping the stub for the Lean-produced library
 closes this RFD. `DETAILS.md` carries semantics, staging, verification.
+
+## Problem
+
+RFD 2148 puts compact IEC 60848 GRAFCET at the front of taskweft, but
+provides no verifier. AGRAFE ship a static analyser (step reachability,
+pairwise concurrency, abstract interpretation of variable domains) as
+an Eclipse plugin in Java, with hard build dependencies on Apron and
+Z3. Not something a taskweft loader can call.
 
 ## References
 

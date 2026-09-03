@@ -5,14 +5,6 @@
 **Scope:** `entities-godot/modules/cineform`, `6-datasource/dataflow-coco-gemx`,
 `3-interactor/pose-consensus`
 
-## Problem
-
-We write depth as CineForm video in Matroska and Godot cannot read it. Godot 4 ships one video
-codec, Theora, which is 8 bit where our depth needs 12. An 8 bit depth map has 256 steps across
-the body, 6.3 mm per step, about four stacked credit cards, and the renderer measures to better
-than 1 mm. The corpus is 800,000 frames, too many to hold loose: 12 bit CineForm at 1024 by 1024
-costs 127 MB for every 1000 frames, and 16 bit PNG costs about ten times more.
-
 ## Decision
 
 Decode and encode CineForm inside Godot, with the GoPro CineForm SDK and not FFmpeg.
@@ -32,6 +24,14 @@ Decode and encode CineForm inside Godot, with the GoPro CineForm SDK and not FFm
 
 See `DETAILS.md` for the licence argument, 12 bit against 10 bit, the retracted free-codec claim,
 the alternatives, the interfaces, the chunk manifest, and what shipped instead of a GDExtension.
+
+## Problem
+
+We write depth as CineForm video in Matroska and Godot cannot read it. Godot 4 ships one video
+codec, Theora, which is 8 bit where our depth needs 12. An 8 bit depth map has 256 steps across
+the body, 6.3 mm per step, about four stacked credit cards, and the renderer measures to better
+than 1 mm. The corpus is 800,000 frames, too many to hold loose: 12 bit CineForm at 1024 by 1024
+costs 127 MB for every 1000 frames, and 16 bit PNG costs about ten times more.
 
 ## Related
 

@@ -3,15 +3,6 @@
 **State:** discussion
 **Feature:** model packaging
 
-## Problem
-
-Pixal3D is the image to 3D path in daily use. It writes a metal map
-and a roughness map, which TRELLIS.2 does not.
-
-This RFD first recorded its parameter count and its license as
-unknown, and it asked for a measurement on the DGX. There is no DGX.
-The measurement came from the published checkpoints instead.
-
 ## Decision
 
 Package Pixal3D as the primary image to 3D worker. Upstream is
@@ -26,6 +17,15 @@ A copy here would drift from the commit this image pins.
 See `DETAILS.md` for the Docker contract-stage test, the checkpoint
 measurement, and the format choice. It also gives the `predict()`
 interface, the build-time downloads, and what this RFD corrects.
+
+## Problem
+
+Pixal3D is the image to 3D path in daily use. It writes a metal map
+and a roughness map, which TRELLIS.2 does not.
+
+This RFD first recorded its parameter count and its license as
+unknown, and it asked for a measurement on the DGX. There is no DGX.
+The measurement came from the published checkpoints instead.
 
 ## Related
 

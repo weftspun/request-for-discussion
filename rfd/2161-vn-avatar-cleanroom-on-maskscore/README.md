@@ -5,12 +5,6 @@
 interactions, cleanroom-rebuilt on the RFD 1173 stack
 **Scope:** taskweft, taskweft-godot-sandbox, weftspun-studio
 
-## Problem
-
-Target uses Gemma + Cerebras + parakeet + Qwen3-TTS + MFCC-viseme +
-Ready Player Me + Mixamo + three.js. Every piece has a substitute
-here; Mixamo is CLAUDE.md-blocklisted.
-
 ## Decision
 
 **Two-team cleanroom, role per model** (retracted from "one Qwen3-Omni
@@ -24,6 +18,12 @@ does everything"):
 6. Locations -> `6-datasource/{kenney,thebasemesh,quaternius}-stage`
 
 Full retraction trail, stack table, Mac-mini smoke in `DETAILS.md`.
+
+## Problem
+
+Target uses Gemma + Cerebras + parakeet + Qwen3-TTS + MFCC-viseme +
+Ready Player Me + Mixamo + three.js. Every piece has a substitute
+here; Mixamo is CLAUDE.md-blocklisted.
 
 ## Compute
 

@@ -3,11 +3,6 @@
 **State:** published
 **Feature:** app shell
 
-## Problem
-
-The app ships one viewport and many tools. Tools need separate
-routes. The shell must keep one scene session.
-
 ## Decision
 
 Use React Router with three routes.
@@ -21,6 +16,11 @@ panels. The Studio page and the XR lab load lazily.
 
 The shell inits the native face bridge and the remote log client.
 Init errors do not block the viewport.
+
+## Problem
+
+The app ships one viewport and many tools. Tools need separate
+routes. The shell must keep one scene session.
 
 ## References
 

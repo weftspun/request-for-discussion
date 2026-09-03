@@ -3,14 +3,6 @@
 **State:** abandoned
 **Scope:** `vercel.json`, `scripts/verify-public-build-env.mjs`
 
-## Problem
-
-A public demo build must show the viewport, VRM upload, and traits
-UI, with no AI backend reachable and no server or LAN secret in the
-shipped bundle. Any `VITE_*` variable set at build time gets inlined
-into the browser bundle, so a wrong environment variable on Vercel
-is a real leak, not a configuration typo.
-
 ## Decision
 
 Two modes: local development, with `.env` (gitignored) pointing at
@@ -24,6 +16,14 @@ a live DGX iframe.
 
 See `DETAILS.md` for the exact forbidden-variable table, the
 optional public-only variables, and the local verify command.
+
+## Problem
+
+A public demo build must show the viewport, VRM upload, and traits
+UI, with no AI backend reachable and no server or LAN secret in the
+shipped bundle. Any `VITE_*` variable set at build time gets inlined
+into the browser bundle, so a wrong environment variable on Vercel
+is a real leak, not a configuration typo.
 
 ## Related
 

@@ -3,12 +3,6 @@
 **State:** abandoned
 **Scope:** `spatialFabricAdapter.js`, `useSpatialFabric.js`, `3DAIGC-API`'s `/api/v1/spatial-fabric/*`
 
-## Problem
-
-A finished mesh job, or a viewport export, has no path into the
-Open Metaverse Browser's shared spatial fabric (RP1/OMB), a
-separate system from this project's own in-app world packages (RFD 1107) and the `/xr` IWSDK lab.
-
 ## Decision
 
 Route every publish through `3DAIGC-API` on the DGX, not directly
@@ -24,6 +18,12 @@ spatial-fabric env change.
 See `DETAILS.md` for the architecture diagram, the endpoint table,
 the DGX/Surface environment-variable mapping, and the Task
 Manager/World Library publish distinction.
+
+## Problem
+
+A finished mesh job, or a viewport export, has no path into the
+Open Metaverse Browser's shared spatial fabric (RP1/OMB), a
+separate system from this project's own in-app world packages (RFD 1107) and the `/xr` IWSDK lab.
 
 ## Related
 

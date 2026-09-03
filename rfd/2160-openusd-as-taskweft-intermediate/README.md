@@ -6,13 +6,6 @@ FBD, every derived artefact (`.gd`, Udon asm, `.elf`, `.uasset`),
 and provenance to round-trip between them
 **Scope:** taskweft, taskweft-fbd-compiler, all emitters, taskweft-godot-sandbox
 
-## Problem
-
-Each emitter reads PLCopen FBD XML and writes its own format.
-Nothing carries all of them side-by-side. RFD 2159's differential
-(C++ vs Rust ELFs) needs a place to store both outputs alongside
-the input FBD so a checker cross-verifies.
-
 ## Decision
 
 Adopt **OpenUSD `.usda`** as the plan's canonical form. CLAUDE.md
@@ -32,6 +25,13 @@ timestamps.
 RFD 2159's differential reads `ElfCpp` and `ElfRust` and diffs.
 RFD 2153 writes `UdonAsm`. RFD 2154 loads `ElfCpp`. All emitters
 become USD writers; all consumers USD readers.
+
+## Problem
+
+Each emitter reads PLCopen FBD XML and writes its own format.
+Nothing carries all of them side-by-side. RFD 2159's differential
+(C++ vs Rust ELFs) needs a place to store both outputs alongside
+the input FBD so a checker cross-verifies.
 
 ## References
 

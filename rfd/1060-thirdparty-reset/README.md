@@ -3,19 +3,6 @@
 **State:** committed
 **Scope:** the repository root
 
-## Problem
-
-`src/library/` held 139 files and 56,376 lines. It predates RFD
-1019's strangler fig and RFD 1023's `src/core/` split. 108 files
-outside it still imported from it. RFD 1023's per-file move rule
-gave no place to put those 108 files a port did not cover yet.
-
-The repository root carried the same problem at a larger scale.
-`weftspun_studio/` sat as a subdirectory of the browser client's
-tree, even though RFD 1019 makes it the API server the client is one
-consumer of. The end-shape system was the guest. The system it
-replaces was the host.
-
 ## Decision
 
 Two moves, one after the other. First, `src/library/` to
@@ -29,6 +16,19 @@ dependency, not the workspace.
 
 `DETAILS.md` also gives why this was a real move, and not an import
 rewrite, plus every path the move touched and the verified results.
+
+## Problem
+
+`src/library/` held 139 files and 56,376 lines. It predates RFD
+1019's strangler fig and RFD 1023's `src/core/` split. 108 files
+outside it still imported from it. RFD 1023's per-file move rule
+gave no place to put those 108 files a port did not cover yet.
+
+The repository root carried the same problem at a larger scale.
+`weftspun_studio/` sat as a subdirectory of the browser client's
+tree, even though RFD 1019 makes it the API server the client is one
+consumer of. The end-shape system was the guest. The system it
+replaces was the host.
 
 ## Related
 

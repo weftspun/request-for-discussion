@@ -3,17 +3,6 @@
 **State:** abandoned
 **Feature:** model conversion order
 
-## Problem
-
-RFD 1016 inventories fifteen deep learning models. Nothing says
-which to convert for the accelerator first, so the order is decided
-by whoever picks one up.
-
-Ten ids are excluded rather than ranked, and RFD 1133 says what
-excludes each: three by the agreements, four by an abandoned scope,
-three by nothing found. One model has been measured. An order built
-from guesses reads the same as one built from evidence.
-
 ## Decision
 
 Rank by evidence, and say which rank rests on what.
@@ -30,6 +19,17 @@ unranked pending a census, and the gate that produces one exists.
 
 `DETAILS.md` gives the table, the measurement behind the first
 entry, and what each remaining model needs before it can be ordered.
+
+## Problem
+
+RFD 1016 inventories fifteen deep learning models. Nothing says
+which to convert for the accelerator first, so the order is decided
+by whoever picks one up.
+
+Ten ids are excluded rather than ranked, and RFD 1133 says what
+excludes each: three by the agreements, four by an abandoned scope,
+three by nothing found. One model has been measured. An order built
+from guesses reads the same as one built from evidence.
 
 ## Related
 

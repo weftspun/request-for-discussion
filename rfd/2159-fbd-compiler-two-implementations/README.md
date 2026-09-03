@@ -6,13 +6,6 @@ compiler RFD 2157 formalises in Lean 4. Outputs cross-check on the
 same fixtures; both are graded against the spec.
 **Scope:** two sibling repos + a differential harness
 
-## Problem
-
-RFD 2157's Lean formalisation is the ground truth. RFD 2158 blocks
-Lean-emitted ELF today (upstream RFC 12655 open). Trusting one
-backend makes soundness a hope; two agreeing backends give the
-property `compile_correct` alone cannot.
-
 ## Decision
 
 Green-lit; C++ and Rust both to ship.
@@ -30,6 +23,13 @@ whichever impl differs from the Lean spec's reference output.
 
 `DETAILS.md` carries the differential harness, fixture format, and
 the spec-to-impl obligation table.
+
+## Problem
+
+RFD 2157's Lean formalisation is the ground truth. RFD 2158 blocks
+Lean-emitted ELF today (upstream RFC 12655 open). Trusting one
+backend makes soundness a hope; two agreeing backends give the
+property `compile_correct` alone cannot.
 
 ## References
 

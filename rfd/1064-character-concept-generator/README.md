@@ -3,12 +3,6 @@
 **State:** prediscussion
 **Scope:** To be determined
 
-## Problem
-
-Gall's law asks for the smallest working piece of character
-authoring, with appearance traits, animation, and export to an
-OpenUSD intermediate format.
-
 ## Decision
 
 Encode useful combinations of character concepts into taskweft, and
@@ -30,6 +24,12 @@ run it on Fly.io with Nx, with no GPU acceleration.
 8. Postpone research into RFD 1045 (Kimodo) to generate a body, if
    clothing, accessories, and objects need separation from the
    Soma-X body.
+
+## Problem
+
+Gall's law asks for the smallest working piece of character
+authoring, with appearance traits, animation, and export to an
+OpenUSD intermediate format.
 
 ## Related
 

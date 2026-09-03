@@ -3,14 +3,6 @@
 **State:** abandoned
 **Scope:** `@iwsdk/*`, `src/pages/IwsdkImmersive.jsx`, `src/library/iwsdkWorld.js`
 
-## Problem
-
-Immersive Web SDK gives locomotion, grab, and spatial UI that this
-project's own `SceneManager` does not build itself. Wiring it needed
-a clear line between the existing authoring app and a new immersive
-mode, and a rule for what counts as "verified": a PC emulator alone
-is not proof a Galaxy XR session works.
-
 ## Decision
 
 `/xr` is an IWSDK-only lab (`IwsdkImmersive.jsx`, bootstrapped by
@@ -26,6 +18,14 @@ directly, not copied into `src/`.
 
 See `DETAILS.md` for the installed-package table, the AI dev-tooling
 setup, the headset control map, and the recommended order of work.
+
+## Problem
+
+Immersive Web SDK gives locomotion, grab, and spatial UI that this
+project's own `SceneManager` does not build itself. Wiring it needed
+a clear line between the existing authoring app and a new immersive
+mode, and a rule for what counts as "verified": a PC emulator alone
+is not proof a Galaxy XR session works.
 
 ## Related
 

@@ -3,13 +3,6 @@
 **State:** discussion
 **Scope:** RFD 1064's `domain.ex` and its 15,000 `problem.ex` files
 
-## Problem
-
-RFD 1064 asks Claude to inspect 15,000 dataset rows and write one
-`problem.ex` per row. Many rows share the same hair color, eye
-color, and pose, worded in different ways. A fixed trait list misses
-new values, and free text per row repeats the same fact many times.
-
 ## Decision
 
 Design the `domain.ex`/`problem.ex` schema per essential tuple normal
@@ -32,6 +25,13 @@ follow.
 Rule 2 and rule 3 remove the redundancy together. A functional
 dependency anchored on the capability id, a superkey, blocks the
 redundant tuple that ETNF targets, with no fixed enum to maintain.
+
+## Problem
+
+RFD 1064 asks Claude to inspect 15,000 dataset rows and write one
+`problem.ex` per row. Many rows share the same hair color, eye
+color, and pose, worded in different ways. A fixed trait list misses
+new values, and free text per row repeats the same fact many times.
 
 ## Related
 

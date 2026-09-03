@@ -3,13 +3,6 @@
 **State:** published
 **Scope:** licensing, trademark, the hosted service boundary
 
-## Problem
-
-The client source is open. A fork could read that as an invitation
-to run as "Weftspun," or reuse the hosted AI and registry backends.
-Nothing public states where the open license ends and the
-proprietary service begins.
-
 ## Decision
 
 Publish one page stating the split, with no pricing, revenue
@@ -21,6 +14,13 @@ marketplace/personalization services built on it.
 
 See `DETAILS.md` for the architecture split diagram and the
 per-area table.
+
+## Problem
+
+The client source is open. A fork could read that as an invitation
+to run as "Weftspun," or reuse the hosted AI and registry backends.
+Nothing public states where the open license ends and the
+proprietary service begins.
 
 ## Related
 

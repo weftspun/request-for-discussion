@@ -3,13 +3,6 @@
 **State:** published
 **Scope:** `/home/sifr/xr-ai`, `3DAIGC-API/mcp` (DGX-only)
 
-## Problem
-
-Task Manager already drives `3DAIGC-API` through REST, but a
-headset user with hands full, or wanting a spoken "make a 3D model
-of this," has no voice-and-camera path to the same inference
-backend.
-
 ## Decision
 
 Wire NVIDIA's `xr-ai` stack, running on the CUDA GPU host, to
@@ -28,6 +21,13 @@ RFD 1119 gives the general requirement.
 
 See `DETAILS.md` for the full port table, the start and monitor
 scripts, the MCP tool flow, and the troubleshooting table.
+
+## Problem
+
+Task Manager already drives `3DAIGC-API` through REST, but a
+headset user with hands full, or wanting a spoken "make a 3D model
+of this," has no voice-and-camera path to the same inference
+backend.
 
 ## Related
 

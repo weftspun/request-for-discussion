@@ -4,13 +4,6 @@
 **Feature:** sound, without returning to Gemma 4
 **Scope:** `3-interactor/llama-cpp-npu-vision-upstream`
 
-## Problem
-
-RFD 1155 abandoned Gemma 4 and left one thing open: what Qwen3-VL does
-not carry is sound. An AuT encoder with an MLP projector, taking
-128-bin log-mel into the decoder's 4096 space, closes that — the
-pattern RFD 1157 established for vision.
-
 ## Decision
 
 **The tower is a plausible device half.** A Whisper-shaped encoder is
@@ -34,6 +27,13 @@ our base, 2.04 GB at eight bits.
 autoregressive stage is RFD 1126's obstacle and runs on the host — at
 12 Hz, 120 steps for ten seconds of speech. `DETAILS.md` has the
 widths, the dates and the fixed window.
+
+## Problem
+
+RFD 1155 abandoned Gemma 4 and left one thing open: what Qwen3-VL does
+not carry is sound. An AuT encoder with an MLP projector, taking
+128-bin log-mel into the decoder's 4096 space, closes that — the
+pattern RFD 1157 established for vision.
 
 ## Related
 

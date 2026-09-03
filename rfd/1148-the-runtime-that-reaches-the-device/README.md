@@ -4,13 +4,6 @@
 **Feature:** one inference runtime for the Mac GPU and the Hailo part
 **Scope:** `pixi.toml`, `3-interactor/litert-upstream`
 
-## Problem
-
-RFD 1142 chose Metal as the Mac's engine, RFD 1129 asks whether the
-operators compile, and nothing asked which runtime reaches **both** this
-GPU and the edge device. Candidates were excluded one at a time, so the
-elimination existed only as a scatter of rows.
-
 ## Decision
 
 **LiteRT, and the argument is reach rather than speed.**
@@ -33,6 +26,13 @@ those, and a format that cannot reach the hardware cannot be the format.
 builds from the public tree, so the wheel decides the menu: Metal on
 macOS, Dawn elsewhere. The cost is ggml's single static executable for
 three platforms, which nothing restores.
+
+## Problem
+
+RFD 1142 chose Metal as the Mac's engine, RFD 1129 asks whether the
+operators compile, and nothing asked which runtime reaches **both** this
+GPU and the edge device. Candidates were excluded one at a time, so the
+elimination existed only as a scatter of rows.
 
 ## Related
 

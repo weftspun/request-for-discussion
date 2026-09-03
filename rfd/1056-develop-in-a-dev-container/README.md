@@ -3,17 +3,6 @@
 **State:** discussion
 **Scope:** `.devcontainer/`
 
-## Problem
-
-Two dependencies do not build on Windows, and both are required. XLA
-publishes no Windows archive, so EXLA can never resolve there. The
-V-Sekai CockroachDB release does ship a Windows zip, and the
-database tests need a running node either way.
-
-Work on Windows therefore either skips those parts or replaces them.
-This branch already did both, and neither workaround is the answer.
-See `DETAILS.md` for why.
-
 ## Decision
 
 Develop in a dev container. It runs Debian, thus EXLA builds and the
@@ -32,6 +21,17 @@ through the bind mount this RFD already sets.
 
 See `DETAILS.md` for what the container carries, why it uses named
 volumes instead of bind mounts, and what it deliberately does not do.
+
+## Problem
+
+Two dependencies do not build on Windows, and both are required. XLA
+publishes no Windows archive, so EXLA can never resolve there. The
+V-Sekai CockroachDB release does ship a Windows zip, and the
+database tests need a running node either way.
+
+Work on Windows therefore either skips those parts or replaces them.
+This branch already did both, and neither workaround is the answer.
+See `DETAILS.md` for why.
 
 ## Related
 

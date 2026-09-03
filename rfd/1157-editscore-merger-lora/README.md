@@ -4,6 +4,14 @@
 **Feature:** edge acceleration candidate
 **Scope:** `3-interactor/editscore`
 
+## Decision
+
+EditScore requires an encoder built with its merger LoRA merged; a
+downloaded artifact is wrong in a way no shape check catches. Time
+encode against decode first: RFD 1163 measures a score at 28-36 s
+against a 163 s round, and the encoder is a fraction of that. This
+ranks second at 18 of 25 with `value` 2 of the 18.
+
 ## Problem
 
 EditScore is not a model. It is a LoRA over Qwen3-VL, and
@@ -26,14 +34,6 @@ The projector is inside the artifact and the GGUF's `mm_*` tensors
 are never read, so a stock encoder carries stock mergers and
 EditScore's 12 are never applied. The failure is silent: a score
 comes back from a model missing that adaptation.
-
-## Decision
-
-EditScore requires an encoder built with its merger LoRA merged; a
-downloaded artifact is wrong in a way no shape check catches. Time
-encode against decode first: RFD 1163 measures a score at 28-36 s
-against a 163 s round, and the encoder is a fraction of that. This
-ranks second at 18 of 25 with `value` 2 of the 18.
 
 ## Related
 

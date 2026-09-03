@@ -4,16 +4,6 @@
 **Feature:** loop 4 of the four-loop plan
 **Scope:** `fourloops-plan.usda`
 
-## Problem
-
-Loop 4 is the only one that leaves the image plane. Pixal3D proposes a
-latent state, then views, then a glb; EditScore scores; and the repair
-arm forks between VoxHammer and OmniGen2. At size XL it is the largest
-of the four, and it is the only loop with a router.
-
-The router decides which repair arm runs, and it decides on a statistic
-nobody has calibrated.
-
 ## Decision
 
 Build it, and treat the router as uncalibrated until measured.
@@ -28,6 +18,16 @@ VoxHammer raises `NotImplementedError` outside stub mode, and it takes
 a mesh where the loop carries a latent. So the arm passes through
 `/extract` first, and a route that skips that step fails inside the
 tool rather than at the boundary.
+
+## Problem
+
+Loop 4 is the only one that leaves the image plane. Pixal3D proposes a
+latent state, then views, then a glb; EditScore scores; and the repair
+arm forks between VoxHammer and OmniGen2. At size XL it is the largest
+of the four, and it is the only loop with a router.
+
+The router decides which repair arm runs, and it decides on a statistic
+nobody has calibrated.
 
 ## Related
 

@@ -3,13 +3,6 @@
 **State:** discussion
 **Scope:** weftspun-fdb, weftspun-bao, Personal 1Password vault
 
-## Problem
-
-RFD 2143 called its own DR runbook theatre because RFD 2141's break-glass
-CA was not in 1Password. On 2026-09-01, `weftspun-fdb`, `weftspun-bao`,
-`spot-broker` and `chibifire-com` were gone from Fly. Tigris and R2 both
-survived — compute lost, storage kept — so the runbook had to run.
-
 ## Decision
 
 Mint the break-glass CA at DR-time, stash to `op://Personal/FDB-CA/`,
@@ -30,6 +23,13 @@ Measurements — R2 snapshot age, `fdbrestore` timings, twelve inline
 defects the runbook did not name — move to `DETAILS.md`.
 `logbook-rfd2144-dr-runbook-first-run.md` records what was measured
 during the run itself.
+
+## Problem
+
+RFD 2143 called its own DR runbook theatre because RFD 2141's break-glass
+CA was not in 1Password. On 2026-09-01, `weftspun-fdb`, `weftspun-bao`,
+`spot-broker` and `chibifire-com` were gone from Fly. Tigris and R2 both
+survived — compute lost, storage kept — so the runbook had to run.
 
 ## Related
 

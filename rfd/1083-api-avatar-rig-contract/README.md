@@ -3,14 +3,6 @@
 **State:** committed
 **Scope:** `src/library/aigcRigContract.js`, `3DAIGC-API/core/utils/aigc_rig_contract.py`
 
-## Problem
-
-An upside-down rig, a backward-facing character, and a rig
-floating at the hips were real, repeated regressions from the
-Blender export path. Two sides, the client and the DGX API, each
-validated a rigged GLB independently, with no shared spec, so a fix
-on one side could still drift from the other.
-
 ## Decision
 
 One canonical spec, this document (mirrored at
@@ -27,6 +19,14 @@ VRM upload and an AIGC rig follow deliberately separate paths (RFD
 See `DETAILS.md` for the coordinate system, the full requirement and
 failure-code tables, the Blender export steps, and the retest
 procedure.
+
+## Problem
+
+An upside-down rig, a backward-facing character, and a rig
+floating at the hips were real, repeated regressions from the
+Blender export path. Two sides, the client and the DGX API, each
+validated a rigged GLB independently, with no shared spec, so a fix
+on one side could still drift from the other.
 
 ## Related
 

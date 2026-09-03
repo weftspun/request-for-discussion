@@ -4,14 +4,6 @@
 **Feature:** the page template an RFD report is published from
 **Scope:** any RFD published as a page; the PERT sheet's design system
 
-## Problem
-
-RFD reports published as pages have no shared shape: each one
-reinvents its header, its tables, and its palette, and the working
-agreements the documents encode (retractions in place, baselines
-beside numbers, controls named) have no slot a page reminds an author
-to fill.
-
 ## Decision
 
 One template, `template.html` in this directory, in the PERT sheet's
@@ -33,6 +25,14 @@ The layout encodes the agreements rather than describing them:
 - the provenance foot points at the logbook, the PRs, and the
   command to re-run, and pairs physical measurements with a
   household-object equivalent.
+
+## Problem
+
+RFD reports published as pages have no shared shape: each one
+reinvents its header, its tables, and its palette, and the working
+agreements the documents encode (retractions in place, baselines
+beside numbers, controls named) have no slot a page reminds an author
+to fill.
 
 ## Verification
 

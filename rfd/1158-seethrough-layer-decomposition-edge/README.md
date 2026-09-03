@@ -4,6 +4,17 @@
 **Feature:** edge acceleration candidate
 **Scope:** `3-interactor/seethrough-layerdiff`
 
+## Decision
+
+Abandoned on 2026-08-28. The accelerator work is scoped to
+rf-detr keypoint and RFD 1157, and this scored 15 of 25 against RFD 1157's 18.
+
+It ranked first among the abandoned candidates, on headroom.
+
+**LICENSING NOW, NOT FIT.** RFD 1166 dropped See-Through entirely: no
+checkpoint it loads carries a grant, so the headroom above measures a
+model that cannot be used.
+
 ## Problem
 
 See-Through layer decomposition is 4.9 B parameters: 9.8 GB at
@@ -22,17 +33,6 @@ the task, and which components it counts is not recorded.
 Its output is layers, and no real photograph carries a ground-truth
 front-hair and back-hair split. So the blinded holdout validates the
 pose pipeline and not this one.
-
-## Decision
-
-Abandoned on 2026-08-28. The accelerator work is scoped to
-rf-detr keypoint and RFD 1157, and this scored 15 of 25 against RFD 1157's 18.
-
-It ranked first among the abandoned candidates, on headroom.
-
-**LICENSING NOW, NOT FIT.** RFD 1166 dropped See-Through entirely: no
-checkpoint it loads carries a grant, so the headroom above measures a
-model that cannot be used.
 
 ## Related
 

@@ -6,6 +6,12 @@
 RECTGTN-produced FBD back as GDScript for humans
 **Scope:** taskweft, new sibling `taskweft-gdscript-fbd`
 
+## Decision
+
+**Parked.** Design frozen against UdonSharp's pattern. Lands when
+the first taskweft user names a GDScript-authored domain. `DETAILS.md`
+carries the UdonSharp study and the GDScript subset covered stage 1.
+
 ## Problem
 
 RFD 2150's target is PLCopen FBD. Godot devs author in GDScript.
@@ -24,12 +30,6 @@ compiler; Dec 2025 "42 demo projects" milestone landed feature
 parity). SafeGDScript is the second half: transpiler emits GDScript,
 SafeGDScript compiles to RISC-V, Godot Sandbox loads it. No OpenPLC
 Editor needed for GDScript-authored plans.
-
-## Decision
-
-**Parked.** Design frozen against UdonSharp's pattern. Lands when
-the first taskweft user names a GDScript-authored domain. `DETAILS.md`
-carries the UdonSharp study and the GDScript subset covered stage 1.
 
 ## References
 

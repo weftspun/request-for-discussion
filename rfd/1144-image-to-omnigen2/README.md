@@ -4,16 +4,6 @@
 **Feature:** loop 2 of the four-loop plan
 **Scope:** `fourloops-plan.usda`
 
-## Problem
-
-Loop 2 is the smallest complete loop: OmniGen2 proposes an edited png,
-EditScore scores it, OmniGen2 repairs. One propose stage, one scorer,
-one repair arm, size M, and it runs second because the harness is the
-only thing it waits on.
-
-Being smallest makes it the one that measures the two components every
-other loop also uses, so its numbers are the plan's numbers.
-
 ## Decision
 
 Run loop 2 first among the four, and let it carry the measurements.
@@ -29,6 +19,16 @@ for an instruction the edit actually matched. `fourloops-plan.usda` and
 `fourloops-etnf.usda` both name that file as a source, so a quantity in
 either layer is checked against a measurement rather than against a
 recollection.
+
+## Problem
+
+Loop 2 is the smallest complete loop: OmniGen2 proposes an edited png,
+EditScore scores it, OmniGen2 repairs. One propose stage, one scorer,
+one repair arm, size M, and it runs second because the harness is the
+only thing it waits on.
+
+Being smallest makes it the one that measures the two components every
+other loop also uses, so its numbers are the plan's numbers.
 
 ## Related
 

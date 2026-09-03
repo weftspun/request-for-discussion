@@ -3,13 +3,6 @@
 **State:** abandoned
 **Scope:** `~/.ssh/config`, `~/.ssh/config-cursor`, `scripts/*-dgx-*`
 
-## Problem
-
-The DGX Spark shows up under more than one name across NVIDIA Sync
-and an SSH client: `DGX-Local`, `DGX-Remote`, and the raw hostname
-`dgx-spark.local`, which reads as a third machine if the naming
-rule is not written down anywhere.
-
 ## Decision
 
 Exactly two SSH hosts: `DGX-Local` (`dgx-spark.local`, at home) and
@@ -23,6 +16,13 @@ or deletes a host itself.
 
 See `DETAILS.md` for every repair script, what each one touches, and
 the reverse-SSH setup from the DGX back to the Surface.
+
+## Problem
+
+The DGX Spark shows up under more than one name across NVIDIA Sync
+and an SSH client: `DGX-Local`, `DGX-Remote`, and the raw hostname
+`dgx-spark.local`, which reads as a third machine if the naming
+rule is not written down anywhere.
 
 ## Related
 

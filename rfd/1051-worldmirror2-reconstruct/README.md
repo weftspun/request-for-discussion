@@ -3,14 +3,6 @@
 **State:** abandoned
 **Feature:** model packaging
 
-## Problem
-
-WorldMirror 2.0 turns two or more photos into a Gaussian splat. It is
-the multi-photo path, and RFD 1052 is the single-photo path.
-
-`resolveSplatModelForPhotos` in src/library/aiModelsCatalog.js picks
-between them by photo count. Two or more photos select this model.
-
 ## Decision
 
 Do not package this model image. Abandon this line of work.
@@ -21,6 +13,14 @@ is abandoned for the same reason.
 
 See `DETAILS.md` for the model's memory and the `predict()`
 interface this RFD sketched before the pivot.
+
+## Problem
+
+WorldMirror 2.0 turns two or more photos into a Gaussian splat. It is
+the multi-photo path, and RFD 1052 is the single-photo path.
+
+`resolveSplatModelForPhotos` in src/library/aiModelsCatalog.js picks
+between them by photo count. Two or more photos select this model.
 
 ## Related
 
