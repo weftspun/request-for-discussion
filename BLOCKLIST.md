@@ -1047,6 +1047,7 @@ scripts actually load is hosted separately and carries no grant:
 | checkpoint                                    | state                |
 | --------------------------------------------- | -------------------- |
 | `layerdifforg/seethroughv0.0.1_marigold`      | no licence stated    |
+| `layerdifforg/seethroughv0.0.2_layerdiff3d`   | labels apache-2.0, but SDXL fine-tune -- RAIL++-M propagates (see below) |
 | `24yearsold/l2d_sam_iter2`                    | no licence stated    |
 | `24yearsold/seethroughv0.0.2_layerdiff3d_nf4` | no licence stated    |
 | `24yearsold/metricdepth3d_tmp`                | HTTP 401, unreadable |

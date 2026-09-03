@@ -1,40 +1,45 @@
-# RFD 2183: Retrain OmniGen for layer decomposition
+# RFD 2183: MaskScore-driven layer-decomposition model on OmniGen2
 
 **State:** discussion
-**Feature:** replace rf-detr-Seg + LaMa with a retrained OmniGen
+**Feature:** OmniGen2 (Apache-2.0) base + MaskScore reward = layer model
 **Scope:** layer decomposition rung of the gacha ladder
 
 ## Decision
 
-Retrain OmniGen (MIT-licensed unified image generator) on
-multi-view renders of atelier-workshop-passed VRMs for layer
-decomposition. Replaces the rf-detr-Seg + LaMa plan in RFD 1168
-(See-Through blocklist substitute).
+Train new model weights on OmniGen2 (Apache-2.0 unified image
+generator, Qwen-VL-2.5 foundation, both Apache-2.0) as the base,
+driven by MaskScore (RFD 1173 edit-reward corpus) as the training
+signal, on multi-view renders of atelier-workshop-passed VRMs.
+Replaces LayerDiff3D (See-Through's role) and the rf-detr-Seg +
+LaMa substitute in RFD 1168.
 
-Corpus: VRMs shipped by the pipeline, rendered under
-`sphere_hammersley_sequence` (per CLAUDE.md), paired as (composite
-image, layered ground truth). Constructed synthetic: labels true
-by construction, seed reproducible, no learned-distribution
-sampling.
+Depth stays with MoGe-3 (MIT, feed-forward) per RFD 1102 (task
+catalog). Corpus: VRMs shipped by the pipeline, rendered under
+`sphere_hammersley_sequence` (per CLAUDE.md); labels true by
+construction. Constructed synthetic.
+
+MaskScore's edit-and-reconstruct loop (mask a layer, reconstruct
+from the composite, score against ground truth) fits layer
+decomposition natively: each layer IS a mask over the composite,
+so training reward and evaluation reward are the same signal.
 
 ## Problem
 
-LaMa is a patch inpainter; it fills a hole with pixels resembling
-its surround. Layer decomposition needs semantic reconstruction of
-the hidden layer (back hair behind front hair, arm behind sleeve).
-Nothing behind the mask exists in the composite to copy from, so
-LaMa produces a plausible surface, not a plausible back layer.
-rf-detr-Seg gets the mask; LaMa cannot supply what belongs behind
-it. OmniGen retrained on (composite -> layers) pairs learns the
-mapping the task actually needs.
+See-Through's LayerDiff3D is closed both ways per BLOCKLIST.md.
+`ask` closed: weights carry no grant, and the new
+`seethroughv0.0.2_layerdiff3d` labels apache-2.0 but a diffusion
+fine-tune does not cure its base's licence; SDXL's CreativeML
+Open RAIL++-M propagates. `adapt` closed: retraining on SDXL
+inherits the same restrictions.
+
+LaMa (RFD 1168's substitute) is a patch inpainter; layer
+decomposition needs semantic reconstruction of the hidden layer,
+which LaMa cannot supply.
 
 ## Related
 
-RFD 1168 (rf-detr-Seg substitute; superseded),
-RFD 1173 (edit-reward corpus),
-RFD 2136 (gacha ladder),
-RFD 2178 (QAFT-4bit across the stack; OmniGen inherits),
-RFD 1102 (task catalog; layer-decomp row points here),
-CLAUDE.md blocklist row for See-Through.
+RFD 1168 (rf-detr-Seg substitute; superseded), RFD 1173
+(edit-reward corpus), RFD 1102 (task catalog), RFD 2136 (gacha
+ladder), RFD 2178 (QAFT across stack), BLOCKLIST.md See-Through row.
 
 This RFD was drafted by an AI and read by a human before it shipped.
