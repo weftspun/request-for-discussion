@@ -710,7 +710,7 @@ def Scope "Serials"
                 def "S2171"
                 {
                     custom string slug = "atelier-workshop-shuttle-vocabulary"
-                    custom string flight_level = "L2"
+                    custom string flight_level = "L3"
                 }
                 def "S2172"
                 {
