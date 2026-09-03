@@ -1897,6 +1897,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#problem-251" id="toc-problem-251" class="nav-link" data-scroll-target="#problem-251">Problem</a></li>
   <li><a href="#related-253" id="toc-related-253" class="nav-link" data-scroll-target="#related-253">Related</a></li>
   </ul></li>
+  <li><a href="#rfd-2196-huggingface-dataset-viewer-rules" id="toc-rfd-2196-huggingface-dataset-viewer-rules" class="nav-link" data-scroll-target="#rfd-2196-huggingface-dataset-viewer-rules">RFD 2196: HuggingFace dataset viewer rules</a>
+  <ul class="collapse">
+  <li><a href="#decision-259" id="toc-decision-259" class="nav-link" data-scroll-target="#decision-259">Decision</a></li>
+  <li><a href="#problem-252" id="toc-problem-252" class="nav-link" data-scroll-target="#problem-252">Problem</a></li>
+  <li><a href="#related-254" id="toc-related-254" class="nav-link" data-scroll-target="#related-254">Related</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -7075,7 +7081,7 @@ scoring     MaskScore + EditScore       n/a          self-supervised reward</cod
 </section>
 <section id="related-241" class="level2">
 <h2 class="anchored" data-anchor-id="related-241">Related</h2>
-<p>RFD 1168 (segmentation kept, LaMa superseded), RFD 1173 (edit-reward corpus), RFD 1102 (task catalog), RFD 2136 (gacha ladder), BLOCKLIST.md See-Through row.</p>
+<p>RFD 1168 (segmentation kept, LaMa superseded), RFD 1173 (edit-reward corpus), RFD 1102 (task catalog), RFD 2136 (gacha ladder), RFD 2196 (HF dataset viewer rules), BLOCKLIST.md See-Through row.</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 </section>
 </section>
@@ -7293,7 +7299,7 @@ scoring     MaskScore + EditScore       n/a          self-supervised reward</cod
 </section>
 <section id="related-251" class="level2">
 <h2 class="anchored" data-anchor-id="related-251">Related</h2>
-<p>RFD 1157 (EditScore reward model), RFD 1173 (edit-reward corpus; MaskScore), CLAUDE.md constructed-synthetic reproducibility rule.</p>
+<p>RFD 1157 (EditScore reward), RFD 1173 (edit-reward corpus; MaskScore), RFD 2196 (HF viewer rules), CLAUDE.md constructed-synthetic rule.</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 </section>
 </section>
@@ -7335,6 +7341,25 @@ scoring     MaskScore + EditScore       n/a          self-supervised reward</cod
 <section id="related-253" class="level2">
 <h2 class="anchored" data-anchor-id="related-253">Related</h2>
 <p><code>weftspun-bao</code> Fly app (state summarised in DETAILS.md), <code>weftspun-fdb</code> (FoundationDB backend), RFD 2142 (bao PKI zerotrust service TLS), RFD 2146 (zerotrust roles first run).</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2196-huggingface-dataset-viewer-rules" class="level1">
+<h1>RFD 2196: HuggingFace dataset viewer rules</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2196</code></p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> authoring rules for HuggingFace dataset repos so the viewer renders <strong>Scope:</strong> any dataset published under <code>huggingface.co/datasets/chibifire/*</code></p>
+<section id="decision-259" class="level2">
+<h2 class="anchored" data-anchor-id="decision-259">Decision</h2>
+<p>Publish HuggingFace datasets as zstd-compressed parquet shards under <code>data/</code>, one wide denormalized row per logical example, with row groups &lt;= 300 MB and images embedded as <code>struct&lt;bytes:binary, path:string&gt;</code>. Skip ETNF/6NF normalization for anything destined for HF. Push with LFS + <code>hf_transfer</code>, not xet, whose finalize call times out on multi-GB commits.</p>
+<p>The viewer’s contract is enforced silently by an auto-indexer that either succeeds or falls back to a “Preview” badge. The five rules and the errors each surfaces are in <code>DETAILS.md</code>, one section per rule.</p>
+</section>
+<section id="problem-252" class="level2">
+<h2 class="anchored" data-anchor-id="problem-252">Problem</h2>
+<p>Three rebuilds on 2026-09-03 (<code>chibifire/editreward-bench</code>, <code>chibifire/editscore-rl-train</code>, <code>chibifire/editscore-reward-train</code>) each failed a different silent gate: too-big <code>.arrow</code> shards crashed the auto-viewer, xet finalize stalled at 6 KB/s and timed out twice, and one dataset silently dropped every 2-image row because shared image paths collided. Landing a dataset that renders needs each of the five rules matched at author time, not fixed after the push has happened.</p>
+</section>
+<section id="related-254" class="level2">
+<h2 class="anchored" data-anchor-id="related-254">Related</h2>
+<p>Companion skills <code>hf-datasets-no-etnf</code>, <code>hf-parquet-image-column</code>, <code>hf-upload-large</code>, <code>hf-download-streaming</code> are the single-page how-to per rule. RFD 2183 (OmniGen layer decomp) and RFD 2193 (editscore reproducibility bar) both consume datasets published under these rules.</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 

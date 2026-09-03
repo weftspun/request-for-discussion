@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>RFD 2183: MaskScore-driven layer decomposition on OmniGen2 – Taskweft — Manuals</title>
+<title>details – Taskweft — Manuals</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,6 +25,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -304,58 +339,197 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#decision" id="toc-decision" class="nav-link active" data-scroll-target="#decision">Decision</a></li>
-  <li><a href="#problem" id="toc-problem" class="nav-link" data-scroll-target="#problem">Problem</a></li>
-  <li><a href="#related" id="toc-related" class="nav-link" data-scroll-target="#related">Related</a></li>
+  <li><a href="#huggingface-dataset-viewer-rules-how-to-author-how-to-fix" id="toc-huggingface-dataset-viewer-rules-how-to-author-how-to-fix" class="nav-link active" data-scroll-target="#huggingface-dataset-viewer-rules-how-to-author-how-to-fix">HuggingFace dataset viewer rules — how to author, how to fix</a>
+  <ul class="collapse">
+  <li><a href="#the-viewers-contract-verbatim-from-what-it-enforces" id="toc-the-viewers-contract-verbatim-from-what-it-enforces" class="nav-link" data-scroll-target="#the-viewers-contract-verbatim-from-what-it-enforces">The viewer’s contract, verbatim from what it enforces</a></li>
+  <li><a href="#rule-1-one-wide-row-per-example-denormalize" id="toc-rule-1-one-wide-row-per-example-denormalize" class="nav-link" data-scroll-target="#rule-1-one-wide-row-per-example-denormalize">Rule 1 — one wide row per example (denormalize)</a></li>
+  <li><a href="#rule-2-row-groups-300-mb" id="toc-rule-2-row-groups-300-mb" class="nav-link" data-scroll-target="#rule-2-row-groups-300-mb">Rule 2 — row groups ≤ 300 MB</a></li>
+  <li><a href="#rule-3-shards-500-mb-named-datatrain-xxxxx-of-yyyyy.parquet" id="toc-rule-3-shards-500-mb-named-datatrain-xxxxx-of-yyyyy.parquet" class="nav-link" data-scroll-target="#rule-3-shards-500-mb-named-datatrain-xxxxx-of-yyyyy.parquet">Rule 3 — shards ~500 MB, named <code>data/train-XXXXX-of-YYYYY.parquet</code></a></li>
+  <li><a href="#rule-4-image-column-structbytesbinary-pathstring" id="toc-rule-4-image-column-structbytesbinary-pathstring" class="nav-link" data-scroll-target="#rule-4-image-column-structbytesbinary-pathstring">Rule 4 — image column = <code>struct&lt;bytes:binary, path:string&gt;</code></a></li>
+  <li><a href="#rule-5-lfs-hf_transfer-for-large-pushes" id="toc-rule-5-lfs-hf_transfer-for-large-pushes" class="nav-link" data-scroll-target="#rule-5-lfs-hf_transfer-for-large-pushes">Rule 5 — LFS + hf_transfer for large pushes</a></li>
+  <li><a href="#streaming-download-without-doubling-disk" id="toc-streaming-download-without-doubling-disk" class="nav-link" data-scroll-target="#streaming-download-without-doubling-disk">Streaming download without doubling disk</a></li>
+  <li><a href="#pitfall-shared-images-across-rows" id="toc-pitfall-shared-images-across-rows" class="nav-link" data-scroll-target="#pitfall-shared-images-across-rows">Pitfall — shared images across rows</a></li>
+  <li><a href="#pitfall-auto-viewer-job-crash-on-legacy-.arrow-shards" id="toc-pitfall-auto-viewer-job-crash-on-legacy-.arrow-shards" class="nav-link" data-scroll-target="#pitfall-auto-viewer-job-crash-on-legacy-.arrow-shards">Pitfall — auto-viewer job crash on legacy <code>.arrow</code> shards</a></li>
+  <li><a href="#non-goals-for-this-rfd" id="toc-non-goals-for-this-rfd" class="nav-link" data-scroll-target="#non-goals-for-this-rfd">Non-goals for this RFD</a></li>
+  <li><a href="#related-rfds" id="toc-related-rfds" class="nav-link" data-scroll-target="#related-rfds">Related RFDs</a></li>
+  <li><a href="#reference-commit-set" id="toc-reference-commit-set" class="nav-link" data-scroll-target="#reference-commit-set">Reference commit set</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2183-retrain-omnigen-for-layer-decomposition/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2183-retrain-omnigen-for-layer-decomposition/index.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2196-huggingface-dataset-viewer-rules/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2196-huggingface-dataset-viewer-rules/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">RFD 2183: MaskScore-driven layer decomposition on OmniGen2</h1>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
 
 
-</header>
-
-
-<!-- generated by scripts/render_site.py; edit README.md instead -->
-<section id="decision" class="level2">
-<h2 class="anchored" data-anchor-id="decision">Decision</h2>
-<p>Three license-clean, purpose-built steps:</p>
+<section id="huggingface-dataset-viewer-rules-how-to-author-how-to-fix" class="level1">
+<h1>HuggingFace dataset viewer rules — how to author, how to fix</h1>
+<section id="the-viewers-contract-verbatim-from-what-it-enforces" class="level2">
+<h2 class="anchored" data-anchor-id="the-viewers-contract-verbatim-from-what-it-enforces">The viewer’s contract, verbatim from what it enforces</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Rule</th>
+<th>What breaks if you skip it</th>
+<th>Error surface</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Row group ≤ 300 MB</td>
+<td>Scan limit exceeded</td>
+<td><code>Parquet error: Scan size limit exceeded: attempted to read &lt;N&gt; bytes, limit is 300000000 bytes</code></td>
+</tr>
+<tr class="even">
+<td>One row shape per split</td>
+<td>Viewer picks arbitrary schema</td>
+<td>Missing columns, silent NULLs</td>
+</tr>
+<tr class="odd">
+<td>Image column = <code>struct&lt;bytes:binary, path:string&gt;</code></td>
+<td>No thumbnails</td>
+<td>Column shows as a struct blob</td>
+</tr>
+<tr class="even">
+<td>Shards under <code>data/</code> with <code>train-XXXXX-of-YYYYY.parquet</code></td>
+<td>Auto-indexer skips them</td>
+<td>“Preview” badge, no viewer</td>
+</tr>
+<tr class="odd">
+<td>Whole-commit under HF’s job limits</td>
+<td>Auto-convert job dies</td>
+<td><code>JobManagerCrashedError</code></td>
+</tr>
+<tr class="even">
+<td>LFS-backed for &gt;10 GB pushes</td>
+<td>Xet finalize times out</td>
+<td><code>RuntimeError: Internal error: timed out reading request body</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rule-1-one-wide-row-per-example-denormalize" class="level2">
+<h2 class="anchored" data-anchor-id="rule-1-one-wide-row-per-example-denormalize">Rule 1 — one wide row per example (denormalize)</h2>
+<p>The HF viewer paginates one wide table per split. Split into satellite tables (Hermes / ETNF / 6NF style) and the viewer’s <code>train[0..N]</code> browsing collapses. Rules:</p>
 <ul>
-<li>Mask: SAM2 or rf-detr-Seg (both Apache-2.0) from the composite.</li>
-<li>Reconstruction: new weights on OmniGen2 (Apache-2.0, Qwen-VL-2.5), MaskScore-driven (RFD 1173 edit-reward corpus), trained on multi-view renders of atelier-workshop-passed VRMs.</li>
-<li>Depth: MoGe-3 (MIT) per RFD 1102 (task catalog).</li>
+<li>One row per logical example. NULLs are fine.</li>
+<li>Nested lists and structs are fine (multiple images per row, conversation turns) — one row per example still.</li>
+<li>Do NOT emit <code>entity</code>, <code>entity_score</code>, <code>entity_conversation</code> as separate parquet files thinking the viewer will join them.</li>
 </ul>
-<p>Replaces LayerDiff3D (See-Through’s role) and RFD 1168’s LaMa half; rf-detr-Seg stays as segmentation. MaskScore’s mask-reconstruct-score loop fits natively: each layer IS a mask.</p>
-<p>Corpus VRMs from the pipeline, <code>sphere_hammersley_sequence</code> (CLAUDE.md); labels true by construction.</p>
+<p>Companion skill: <code>hf-datasets-no-etnf</code>.</p>
 </section>
-<section id="problem" class="level2">
-<h2 class="anchored" data-anchor-id="problem">Problem</h2>
-<p>See-Through’s LayerDiff3D is closed both ways per BLOCKLIST.md. <code>ask</code>: no grant on any weight; the new <code>seethroughv0.0.2_layerdiff3d</code> labels apache-2.0 but a diffusion fine-tune does not cure SDXL’s CreativeML Open RAIL++-M. <code>adapt</code>: retraining on SDXL inherits it.</p>
-<p>LaMa (RFD 1168’s reconstruction substitute) is a patch inpainter and cannot reconstruct hidden-layer content from surrounding pixels.</p>
+<section id="rule-2-row-groups-300-mb" class="level2">
+<h2 class="anchored" data-anchor-id="rule-2-row-groups-300-mb">Rule 2 — row groups ≤ 300 MB</h2>
+<p>The viewer scans one row group at a time when the reader requests a page. Above 300 MB it hard-fails. With images embedded (~1 MB each), a 1000-row shard is one 1 GB row group by pyarrow default — always oversized.</p>
+<p>Write with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pq.write_table(tbl, path,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>               compression<span class="op">=</span><span class="st">"zstd"</span>, compression_level<span class="op">=</span><span class="dv">9</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>               row_group_size<span class="op">=</span><span class="dv">100</span>)   <span class="co"># 100 rows × ~1 MB = ~100 MB</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>row_group_size</code> is the maximum number of rows per group. Set it so <code>rows_per_group × avg_row_bytes &lt; 200 MB</code> (30 % safety margin).</p>
+<p>For an already-published shard, rewrite in place — no re-extraction needed:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="op">=</span> pq.read_table(path)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>pq.write_table(tbl, path_tmp, compression<span class="op">=</span><span class="st">"zstd"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>               compression_level<span class="op">=</span><span class="dv">9</span>, row_group_size<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>path_tmp.replace(path)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="related" class="level2">
-<h2 class="anchored" data-anchor-id="related">Related</h2>
-<p>RFD 1168 (segmentation kept, LaMa superseded), RFD 1173 (edit-reward corpus), RFD 1102 (task catalog), RFD 2136 (gacha ladder), RFD 2196 (HF dataset viewer rules), BLOCKLIST.md See-Through row.</p>
-<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+<section id="rule-3-shards-500-mb-named-datatrain-xxxxx-of-yyyyy.parquet" class="level2">
+<h2 class="anchored" data-anchor-id="rule-3-shards-500-mb-named-datatrain-xxxxx-of-yyyyy.parquet">Rule 3 — shards ~500 MB, named <code>data/train-XXXXX-of-YYYYY.parquet</code></h2>
+<p>The auto-indexer scans <code>data/</code> for files matching that name pattern and groups them into splits. Bigger shards (up to ~1 GB) work but slow the viewer’s first paint. Aim for ~500 MB for image-embedded data.</p>
+<p>Layout examples:</p>
+<pre><code>data/train-00000-of-00110.parquet     # single split
+data/train-...  data/validation-...   # multiple splits, same config
+default/train-... other/train-...     # multiple configs (put configs at top)</code></pre>
+</section>
+<section id="rule-4-image-column-structbytesbinary-pathstring" class="level2">
+<h2 class="anchored" data-anchor-id="rule-4-image-column-structbytesbinary-pathstring">Rule 4 — image column = <code>struct&lt;bytes:binary, path:string&gt;</code></h2>
+<p>Exact Arrow type:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyarrow <span class="im">as</span> pa</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>image_type <span class="op">=</span> pa.struct([(<span class="st">"bytes"</span>, pa.binary()), (<span class="st">"path"</span>, pa.string())])</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># single image per row</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>schema <span class="op">=</span> pa.schema([..., (<span class="st">"image"</span>,  image_type)])</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># multiple images per row (viewer renders a gallery)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>schema <span class="op">=</span> pa.schema([..., (<span class="st">"images"</span>, pa.list_(image_type))])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Row shape:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>{<span class="st">"bytes"</span>: <span class="op">&lt;</span>raw png<span class="op">/</span>jpg <span class="bu">bytes</span><span class="op">&gt;</span>, <span class="st">"path"</span>: <span class="st">"images/whatever.png"</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>What does NOT work: - <code>pa.binary()</code> alone (no thumbnail rendering) - <code>{"path": "images/x.png"}</code> referencing a file elsewhere in the repo - gzipping/zstd-ing the image bytes yourself (parquet’s zstd handles it)</p>
+</section>
+<section id="rule-5-lfs-hf_transfer-for-large-pushes" class="level2">
+<h2 class="anchored" data-anchor-id="rule-5-lfs-hf_transfer-for-large-pushes">Rule 5 — LFS + hf_transfer for large pushes</h2>
+<p><code>huggingface_hub</code>’s default xet path stalls on multi-GB commits: the CDN endpoint sits ESTABLISHED but transmits nothing, then the client raises <code>RuntimeError: Internal error: timed out reading request body</code> on the finalize call. Observed at 94 GB / 110 shards. Multiple retries did not help; batching into 15-file commits did not help.</p>
+<p>Reliable recipe:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install hf_transfer</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="va">HF_HUB_DISABLE_XET</span><span class="op">=</span>1 <span class="dt">\</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="va">HF_HUB_ENABLE_HF_TRANSFER</span><span class="op">=</span>1 <span class="dt">\</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">hf</span> upload-large-folder <span class="dt">\</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--repo-type</span> dataset <span class="dt">\</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  REPO_ID LOCAL_DIR <span class="dt">\</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--num-workers</span> 8</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Notes: - <code>upload-large-folder</code> doesn’t accept <code>--path-in-repo</code>. Structure <code>LOCAL_DIR</code> so its tree already matches the repo (put parquet under <code>LOCAL_DIR/data/</code>) and pass <code>LOCAL_DIR</code> itself. - Symlinks are not followed — move or copy real files in. - Per-file resume state is in <code>LOCAL_DIR/.cache/huggingface/</code>. An interrupted run resumes without re-hashing. - Do NOT run two <code>upload-large-folder</code> processes against the same <code>LOCAL_DIR</code>. - Deletes and small commits work fine over the standard <code>HfApi().create_commit</code> path; only large adds need the LFS+hf_transfer route.</p>
+<p>Companion skill: <code>hf-upload-large</code>.</p>
+</section>
+<section id="streaming-download-without-doubling-disk" class="level2">
+<h2 class="anchored" data-anchor-id="streaming-download-without-doubling-disk">Streaming download without doubling disk</h2>
+<p><code>hf_hub_download(..., local_dir=…)</code> and <code>hf download --local-dir</code> write the file to BOTH <code>~/.cache/huggingface/hub/…/blobs/</code> AND the requested <code>local_dir</code> (on macOS the intended hardlink often becomes a copy). Cost observed: 86 GB target dir → 170 GB actual disk.</p>
+<p>For one-shot streaming pipelines, bypass the cache with direct HTTPS:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, requests</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> huggingface_hub <span class="im">import</span> HfApi</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>TOKEN <span class="op">=</span> HfApi().token <span class="kw">or</span> os.environ[<span class="st">"HF_TOKEN"</span>]</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>S <span class="op">=</span> requests.Session()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>S.headers[<span class="st">"Authorization"</span>] <span class="op">=</span> <span class="ss">f"Bearer </span><span class="sc">{</span>TOKEN<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="ss">f"https://huggingface.co/datasets/</span><span class="sc">{</span>REPO<span class="sc">}</span><span class="ss">/resolve/main/</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> S.get(url, stream<span class="op">=</span><span class="va">True</span>) <span class="im">as</span> r:</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    r.raise_for_status()</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(local_path, <span class="st">"wb"</span>) <span class="im">as</span> f:</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> chunk <span class="kw">in</span> r.iter_content(<span class="dv">1</span> <span class="op">&lt;&lt;</span> <span class="dv">22</span>):</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>            f.write(chunk)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># process...</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>local_path.unlink()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For repeated reads, let the cache do its job — the doubling pays for retry and dedup.</p>
+<p>Companion skill: <code>hf-download-streaming</code>.</p>
+</section>
+<section id="pitfall-shared-images-across-rows" class="level2">
+<h2 class="anchored" data-anchor-id="pitfall-shared-images-across-rows">Pitfall — shared images across rows</h2>
+<p>If your metadata references the same image path from multiple rows (observed in <code>chibifire/editscore-reward-train</code>: <code>images/0_0.png</code> referenced by 7 different rows), a naive <code>img2row: dict[str, int]</code> maps each path to only the LAST row that claimed it. When the tar stream delivers that image, all other claiming rows are orphaned and dropped silently at the end.</p>
+<p>Fix: <code>img2rows: dict[str, list[int]]</code> with <code>defaultdict(list)</code>, and on each tar member deliver the bytes to every interested row. Bytes are shared by reference — no memory blowup.</p>
+</section>
+<section id="pitfall-auto-viewer-job-crash-on-legacy-.arrow-shards" class="level2">
+<h2 class="anchored" data-anchor-id="pitfall-auto-viewer-job-crash-on-legacy-.arrow-shards">Pitfall — auto-viewer job crash on legacy <code>.arrow</code> shards</h2>
+<p>A dataset saved with <code>datasets.save_to_disk</code> publishes as <code>.arrow</code> shards plus <code>dataset_info.json</code> / <code>state.json</code>. HF tries to auto-convert those to parquet in a job that has resource limits — it died with <code>JobManagerCrashedError</code> on the ~5 GB <code>chibifire/editreward-bench</code> input, leaving the viewer stuck as “Preview”. Fix: convert to parquet yourself, push under <code>data/</code>, and delete the <code>.arrow</code> shards and <code>dataset_info.json</code> / <code>state.json</code> in the same commit.</p>
+</section>
+<section id="non-goals-for-this-rfd" class="level2">
+<h2 class="anchored" data-anchor-id="non-goals-for-this-rfd">Non-goals for this RFD</h2>
+<ul>
+<li><strong>Dataset card / README frontmatter</strong> (task category, language, licence tags).</li>
+<li><strong>PII gating</strong> — HF’s access-control settings are per-repo, out of scope here.</li>
+<li><strong>Splits &amp; configs directory conventions</strong> — the auto-detector handles the common cases; a dedicated RFD if we hit an ambiguous layout.</li>
+<li><strong><code>datasets.Features</code> explicit definition</strong> — unnecessary when the Arrow schema is unambiguous (it is, for our columns).</li>
+</ul>
+</section>
+<section id="related-rfds" class="level2">
+<h2 class="anchored" data-anchor-id="related-rfds">Related RFDs</h2>
+<ul>
+<li>RFD 2183 — retrain OmniGen for layer decomposition (consumer of these datasets)</li>
+<li>RFD 2193 — editscore as reproducibility bar (consumer)</li>
+</ul>
+</section>
+<section id="reference-commit-set" class="level2">
+<h2 class="anchored" data-anchor-id="reference-commit-set">Reference commit set</h2>
+<ul>
+<li><code>chibifire/editreward-bench</code> — commit <code>057671b9…</code>, <code>.arrow</code> → parquet, viewer restored.</li>
+<li><code>chibifire/editscore-rl-train</code> — post-fix commit (row_group_size=100), 110 shards under <code>data/</code>.</li>
+<li><code>chibifire/editscore-reward-train</code> — post-fix commit, 97,256 rows written, no silent drops.</li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -780,7 +954,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2183-retrain-omnigen-for-layer-decomposition/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2183-retrain-omnigen-for-layer-decomposition/index.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2196-huggingface-dataset-viewer-rules/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2196-huggingface-dataset-viewer-rules/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">

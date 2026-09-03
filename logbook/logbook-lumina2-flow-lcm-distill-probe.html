@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>RFD 2183: MaskScore-driven layer decomposition on OmniGen2 – Taskweft — Manuals</title>
+<title>logbook-lumina2-flow-lcm-distill-probe – Taskweft — Manuals</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -29,27 +29,27 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f36f388c175c695e587c9d92b6af4f92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f36f388c175c695e587c9d92b6af4f92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -250,7 +250,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Taskweft — Manuals</span>
     </a>
   </div>
@@ -266,25 +266,25 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-flight-levels">    
         <li>
-    <a class="dropdown-item" href="../../pages/flight-level-1-operations.html">
+    <a class="dropdown-item" href="../pages/flight-level-1-operations.html">
  <span class="dropdown-text">L1 · Operations</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../pages/flight-level-2-coordination.html">
+    <a class="dropdown-item" href="../pages/flight-level-2-coordination.html">
  <span class="dropdown-text">L2 · Coordination</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../pages/flight-level-3-strategy.html">
+    <a class="dropdown-item" href="../pages/flight-level-3-strategy.html">
  <span class="dropdown-text">L3 · Strategy</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../pages/logbook.html"> 
+    <a class="nav-link" href="../pages/logbook.html"> 
 <span class="menu-text">Logbook</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../pages/serials.html"> 
+    <a class="nav-link" href="../pages/serials.html"> 
 <span class="menu-text">Register</span></a>
   </li>  
 </ul>
@@ -304,58 +304,64 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#decision" id="toc-decision" class="nav-link active" data-scroll-target="#decision">Decision</a></li>
-  <li><a href="#problem" id="toc-problem" class="nav-link" data-scroll-target="#problem">Problem</a></li>
-  <li><a href="#related" id="toc-related" class="nav-link" data-scroll-target="#related">Related</a></li>
+  <li><a href="#logbook-flow-lcm-teacher-lora-at-4-step-sdedit-distillation-from-lumina2-nf4" id="toc-logbook-flow-lcm-teacher-lora-at-4-step-sdedit-distillation-from-lumina2-nf4" class="nav-link active" data-scroll-target="#logbook-flow-lcm-teacher-lora-at-4-step-sdedit-distillation-from-lumina2-nf4">Logbook: Flow-LCM + teacher LoRA at 4-step SDEdit distillation from Lumina2 nf4</a>
+  <ul class="collapse">
+  <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a></li>
+  <li><a href="#apparatus" id="toc-apparatus" class="nav-link" data-scroll-target="#apparatus">Apparatus</a></li>
+  <li><a href="#result-at-n10" id="toc-result-at-n10" class="nav-link" data-scroll-target="#result-at-n10">Result at n=10</a></li>
+  <li><a href="#verdict" id="toc-verdict" class="nav-link" data-scroll-target="#verdict">Verdict</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2183-retrain-omnigen-for-layer-decomposition/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2183-retrain-omnigen-for-layer-decomposition/index.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/logbook/logbook-lumina2-flow-lcm-distill-probe.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/logbook/logbook-lumina2-flow-lcm-distill-probe.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">RFD 2183: MaskScore-driven layer decomposition on OmniGen2</h1>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
 
 
-</header>
-
-
-<!-- generated by scripts/render_site.py; edit README.md instead -->
-<section id="decision" class="level2">
-<h2 class="anchored" data-anchor-id="decision">Decision</h2>
-<p>Three license-clean, purpose-built steps:</p>
+<section id="logbook-flow-lcm-teacher-lora-at-4-step-sdedit-distillation-from-lumina2-nf4" class="level1">
+<h1>Logbook: Flow-LCM + teacher LoRA at 4-step SDEdit distillation from Lumina2 nf4</h1>
+<p><strong>Session:</strong> CUDA agent (<code>cuda-a63415</code>) on the RFD-2186 branch <strong>Date:</strong> 2026-09-03 <strong>Related:</strong> RFD 2183 (layer-decomp pipeline), RFD 2186 (dressing overlay, parked)</p>
+<section id="question" class="level2">
+<h2 class="anchored" data-anchor-id="question">Question</h2>
+<p>Can a distilled 4-step SDEdit pass on Lumina2 nf4 stand in for OmniGen2 at RFD 2186’s dressing-overlay stage, and at what cost to EditScore?</p>
+</section>
+<section id="apparatus" class="level2">
+<h2 class="anchored" data-anchor-id="apparatus">Apparatus</h2>
 <ul>
-<li>Mask: SAM2 or rf-detr-Seg (both Apache-2.0) from the composite.</li>
-<li>Reconstruction: new weights on OmniGen2 (Apache-2.0, Qwen-VL-2.5), MaskScore-driven (RFD 1173 edit-reward corpus), trained on multi-view renders of atelier-workshop-passed VRMs.</li>
-<li>Depth: MoGe-3 (MIT) per RFD 1102 (task catalog).</li>
+<li><code>3-interactor/omnigen2/artifacts/lumina2-distill/train_flow_lcm_i2i_probe.py</code></li>
+<li><code>3-interactor/omnigen2/artifacts/lumina2-distill/ladder_gate.py</code></li>
+<li>Branch: RFD-2186</li>
+<li>Base: Lumina2, nf4 quantised</li>
+<li>Adapter: Flow-LCM + teacher LoRA, rank-64, targets <code>to_q/to_k/to_v/to_out.0</code></li>
+<li>Training: 100 epochs, 706 s wall on a 3090; loss cap 5.3 to 0.036, con to 0.013 (99% reduction)</li>
+<li>Sampler: 4-step SDEdit, linear sigmas from strength to 0, Euler step v-parameterized</li>
+<li>Resolution 512, strength 0.5, seed 20260903</li>
+<li>Prompt: <code>Replace the therapist with a nurse.</code> Single-pair ladder, not aggregate.</li>
+<li>OmniGen2 baseline: same instruction, published-precision inference</li>
 </ul>
-<p>Replaces LayerDiff3D (See-Through’s role) and RFD 1168’s LaMa half; rf-detr-Seg stays as segmentation. MaskScore’s mask-reconstruct-score loop fits natively: each layer IS a mask.</p>
-<p>Corpus VRMs from the pipeline, <code>sphere_hammersley_sequence</code> (CLAUDE.md); labels true by construction.</p>
 </section>
-<section id="problem" class="level2">
-<h2 class="anchored" data-anchor-id="problem">Problem</h2>
-<p>See-Through’s LayerDiff3D is closed both ways per BLOCKLIST.md. <code>ask</code>: no grant on any weight; the new <code>seethroughv0.0.2_layerdiff3d</code> labels apache-2.0 but a diffusion fine-tune does not cure SDXL’s CreativeML Open RAIL++-M. <code>adapt</code>: retraining on SDXL inherits it.</p>
-<p>LaMa (RFD 1168’s reconstruction substitute) is a patch inpainter and cannot reconstruct hidden-layer content from surrounding pixels.</p>
+<section id="result-at-n10" class="level2">
+<h2 class="anchored" data-anchor-id="result-at-n10">Result at n=10</h2>
+<p>EditScore <code>overall</code> on a 0-25 scale, one source across the 2/4/6/8/10-step ladder:</p>
+<ul>
+<li>No-LoRA arm (Lumina2 + SDEdit, no adapter): 2.00 across every rung. The LoRA-less base does not follow the instruction at any step count.</li>
+<li>LoRA arm: 7.20 at steps 4, 8, 10 (identical across those three rungs; the LoRA generalises past its trained regime).</li>
+<li>Ratio: 7.20 / 2.00 = 3.6x on the ladder.</li>
+</ul>
+<p>Wall-clock: 1.5 s per edit at 4 steps with LoRA on the 3090; 12 min per edit for OmniGen2 at the same instruction. 480x speed-up.</p>
+<p><strong>The one source used in the ladder was also in the n=10 training set, so 7.20 is a train-set score, not a held-out one.</strong> The immediate follow-up is a held-out ladder on rows the LoRA did not see, runnable today from shard 00 without waiting on the shard 01-15 X-Linked-ETag issue (uploader-side, not Bao-side).</p>
 </section>
-<section id="related" class="level2">
-<h2 class="anchored" data-anchor-id="related">Related</h2>
-<p>RFD 1168 (segmentation kept, LaMa superseded), RFD 1173 (edit-reward corpus), RFD 1102 (task catalog), RFD 2136 (gacha ladder), RFD 2196 (HF dataset viewer rules), BLOCKLIST.md See-Through row.</p>
+<section id="verdict" class="level2">
+<h2 class="anchored" data-anchor-id="verdict">Verdict</h2>
+<p>Candidate primary generator for RFD 2186’s dressing-overlay stage, pending scale-up. The 7.20 was measured on training data and the swap into RFD 2183 / RFD 2194 stays off the table until a held-out ladder holds and n&gt;=1000 confirms it.</p>
+<p>Left to the operator to make the actual generator swap in the downstream RFDs when scale-up completes.</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -780,7 +786,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2183-retrain-omnigen-for-layer-decomposition/index.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2183-retrain-omnigen-for-layer-decomposition/index.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/logbook/logbook-lumina2-flow-lcm-distill-probe.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/logbook/logbook-lumina2-flow-lcm-distill-probe.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
