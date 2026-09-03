@@ -411,7 +411,7 @@ def Scope "Serials"
                 }
                 def "S1102"
                 {
-                    custom string slug = "supported-3daigc-modules"
+                    custom string slug = "supported-atelier-modules"
                 }
                 def "S1103"
                 {
