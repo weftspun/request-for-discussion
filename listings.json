@@ -33,6 +33,10 @@
   {
     "listing": "/pages/rfd.html",
     "items": [
+      "/rfd/2187-identity-anny-via-omnigen2/index.html",
+      "/rfd/2186-dress-anny-via-omnigen2/index.html",
+      "/rfd/2185-hierarchical-oid-part-registry/index.html",
+      "/rfd/2184-editscore-omnigen-bootstrap-for-unmapped-parts/index.html",
       "/rfd/2183-retrain-omnigen-for-layer-decomposition/index.html",
       "/rfd/2182-identity-triangle-operator-market-customer/index.html",
       "/rfd/2181-drop-allosaurus-rus/index.html",

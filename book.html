@@ -1647,6 +1647,30 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#problem-209" id="toc-problem-209" class="nav-link" data-scroll-target="#problem-209">Problem</a></li>
   <li><a href="#related-191" id="toc-related-191" class="nav-link" data-scroll-target="#related-191">Related</a></li>
   </ul></li>
+  <li><a href="#rfd-2184-editscore-guided-omnigen-bootstrap-for-unmapped-parts" id="toc-rfd-2184-editscore-guided-omnigen-bootstrap-for-unmapped-parts" class="nav-link" data-scroll-target="#rfd-2184-editscore-guided-omnigen-bootstrap-for-unmapped-parts">RFD 2184: EditScore-guided OmniGen bootstrap for unmapped parts</a>
+  <ul class="collapse">
+  <li><a href="#decision-213" id="toc-decision-213" class="nav-link" data-scroll-target="#decision-213">Decision</a></li>
+  <li><a href="#problem-210" id="toc-problem-210" class="nav-link" data-scroll-target="#problem-210">Problem</a></li>
+  <li><a href="#related-192" id="toc-related-192" class="nav-link" data-scroll-target="#related-192">Related</a></li>
+  </ul></li>
+  <li><a href="#rfd-2185-hierarchical-oid-part-registry-under-pen" id="toc-rfd-2185-hierarchical-oid-part-registry-under-pen" class="nav-link" data-scroll-target="#rfd-2185-hierarchical-oid-part-registry-under-pen">RFD 2185: Hierarchical OID part registry under PEN</a>
+  <ul class="collapse">
+  <li><a href="#decision-214" id="toc-decision-214" class="nav-link" data-scroll-target="#decision-214">Decision</a></li>
+  <li><a href="#problem-211" id="toc-problem-211" class="nav-link" data-scroll-target="#problem-211">Problem</a></li>
+  <li><a href="#related-193" id="toc-related-193" class="nav-link" data-scroll-target="#related-193">Related</a></li>
+  </ul></li>
+  <li><a href="#rfd-2186-dress-anny-via-omnigen2" id="toc-rfd-2186-dress-anny-via-omnigen2" class="nav-link" data-scroll-target="#rfd-2186-dress-anny-via-omnigen2">RFD 2186: Dress ANNY via OmniGen2</a>
+  <ul class="collapse">
+  <li><a href="#decision-215" id="toc-decision-215" class="nav-link" data-scroll-target="#decision-215">Decision</a></li>
+  <li><a href="#problem-212" id="toc-problem-212" class="nav-link" data-scroll-target="#problem-212">Problem</a></li>
+  <li><a href="#related-194" id="toc-related-194" class="nav-link" data-scroll-target="#related-194">Related</a></li>
+  </ul></li>
+  <li><a href="#rfd-2187-identity-anny-via-omnigen2" id="toc-rfd-2187-identity-anny-via-omnigen2" class="nav-link" data-scroll-target="#rfd-2187-identity-anny-via-omnigen2">RFD 2187: Identity ANNY via OmniGen2</a>
+  <ul class="collapse">
+  <li><a href="#decision-216" id="toc-decision-216" class="nav-link" data-scroll-target="#decision-216">Decision</a></li>
+  <li><a href="#problem-213" id="toc-problem-213" class="nav-link" data-scroll-target="#problem-213">Problem</a></li>
+  <li><a href="#related-195" id="toc-related-195" class="nav-link" data-scroll-target="#related-195">Related</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -6694,6 +6718,91 @@ void  grafcet_static_free(char *buf);</code></pre>
 <section id="related-191" class="level2">
 <h2 class="anchored" data-anchor-id="related-191">Related</h2>
 <p>RFD 1168 (segmentation kept, LaMa superseded), RFD 1173 (edit-reward corpus), RFD 1102 (task catalog), RFD 2136 (gacha ladder), BLOCKLIST.md See-Through row.</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2184-editscore-guided-omnigen-bootstrap-for-unmapped-parts" class="level1">
+<h1>RFD 2184: EditScore-guided OmniGen bootstrap for unmapped parts</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2184</code></p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> train OmniGen2 on V3 parts ANNY joints do not cover <strong>Scope:</strong> RFD 2183 (layer-decomp pipeline) middle step, part-label training</p>
+<section id="decision-213" class="level2">
+<h2 class="anchored" data-anchor-id="decision-213">Decision</h2>
+<p>Train OmniGen2 (RFD 2183 reconstruction stage) on the 13 See-Through V3 parts ANNY joints do not cover (front-hair, back-hair, iris, eyewhite, eyebrow, eyelash, mouth, ear, torso-back, footwear, handwear, accessory, background) under two combined signals:</p>
+<ol type="1">
+<li>EditScore (RFD 1157 reward model) for semantic quality.</li>
+<li>Cross-view consistency on multi-view <code>sphere_hammersley_sequence</code> renders: same VRM from N angles must produce geometrically consistent per-part generations. This is a physical constraint, not a learned reward, and it stops EditScore from being gamed.</li>
+</ol>
+<p>Mix the 10 joint-covered parts (<code>anny_v3_face_groups.py</code> in anny-render-corpus) into every batch as ground-truth anchor.</p>
+</section>
+<section id="problem-210" class="level2">
+<h2 class="anchored" data-anchor-id="problem-210">Problem</h2>
+<p>10 of 23 V3 parts are covered by nearest-joint clustering on ANNY; 13 need training pairs OmniGen2 has never seen. Pure EditScore-only training reward-hacks; pure generation gives no signal. Combined EditScore + cross-view + anchor gives one physical signal, one learned signal, one ground-truth anchor: CLAUDE.md’s four conditions added up.</p>
+</section>
+<section id="related-192" class="level2">
+<h2 class="anchored" data-anchor-id="related-192">Related</h2>
+<p>RFD 2183 (layer-decomp pipeline), RFD 1157 (EditScore reward model), RFD 1173 (edit-reward corpus), RFD 2136 (gacha ladder), CLAUDE.md generated-synthetic clause, <code>anny_v3_face_groups.py</code> in anny-render-corpus.</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2185-hierarchical-oid-part-registry-under-pen" class="level1">
+<h1>RFD 2185: Hierarchical OID part registry under PEN</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2185</code></p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> stable OID identity for every body/clothing/accessory part <strong>Scope:</strong> shared taxonomy for layer decomposition, segmentation, retargeting</p>
+<p>Shelved 2026-09-02: waiting for measurement showing See-Through V3 (23 parts, RFD 2183 stopgap via <code>anny_v3_face_groups.py</code>) is a bottleneck. Resume when a task lands that V3 cannot label.</p>
+<section id="decision-214" class="level2">
+<h2 class="anchored" data-anchor-id="decision-214">Decision</h2>
+<p>Every part gets a stable OID under <code>1.3.6.1.4.1.66606.&lt;arc&gt;.parts.&lt;hierarchy&gt;</code>. Hierarchical addressing: <code>body/head/hair/front-fringe</code>, so a v4 addition is a new child, not a schema break.</p>
+<p>Four leaf alias sets pointing at the same OID hierarchy: See-Through V3 (RFD 2183 stopgap), ANNY 104 joints (RFD 1122 topology), PASCAL-Part (public benchmark interop), VRM 1.0 humanoid bones (deployment interop). Ingest maps any leaf alias to the canonical OID; storage is OID, not string, so v3-&gt;v4 never rewrites a corpus.</p>
+</section>
+<section id="problem-211" class="level2">
+<h2 class="anchored" data-anchor-id="problem-211">Problem</h2>
+<p>V3 (23 parts, RFD 2183 stopgap) covers 10 today. Finer tasks (skin/makeup, cloth sub-parts, multi-character, hair sub-strands) break a flat schema. String labels lose meaning across versions; OIDs do not. RFD 1122 (AlternativeTopology) is the precedent shape.</p>
+</section>
+<section id="related-193" class="level2">
+<h2 class="anchored" data-anchor-id="related-193">Related</h2>
+<p>RFD 2183 (layer-decomp pipeline; V3 stopgap sits under this), RFD 2184 (EditScore bootstrap for unmapped parts), RFD 1122 (AlternativeTopology; reference precedent), RFD 1000 (RFD conventions; OID arc rules).</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2186-dress-anny-via-omnigen2" class="level1">
+<h1>RFD 2186: Dress ANNY via OmniGen2</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2186</code></p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> clothing/accessory overlay on the ANNY base mesh <strong>Scope:</strong> dressing stage of the atelier-workshop, upstream of RFD 2183</p>
+<p>Shelved 2026-09-02: waiting for RFD 2183 (layer-decomp pipeline) baseline from CUDA and for training compute on the 3090.</p>
+<section id="decision-215" class="level2">
+<h2 class="anchored" data-anchor-id="decision-215">Decision</h2>
+<p>OmniGen2 (Apache-2.0 on Qwen-VL-2.5) generates clothing, footwear, handwear, and accessory overlays on the ANNY base mesh, per-scene (changes across frames unlike identity, which is frozen per character in RFD 2187).</p>
+<p>Owns V3 parts (See-Through’s taxonomy, RFD 2183 stopgap): <code>footwear</code>, <code>handwear</code>, <code>torso-back</code> (cloth surface), <code>accessory</code>.</p>
+<p>Trained under RFD 2184’s three-signal pattern: EditScore (RFD 1157 reward model) for semantic quality, cross-view consistency on <code>sphere_hammersley_sequence</code> renders for anti-hacking, and constructed anchor data (real fashion / commercial-cleared cloth assets, or Live2D clothing drawables where available).</p>
+</section>
+<section id="problem-212" class="level2">
+<h2 class="anchored" data-anchor-id="problem-212">Problem</h2>
+<p>ANNY is undressed. RFD 2183’s layer-decomp pipeline assumes a dressed composite; without this stage, footwear/handwear/accessory training pairs cannot exist and RFD 2184’s bootstrap has nothing to score for those V3 parts.</p>
+</section>
+<section id="related-194" class="level2">
+<h2 class="anchored" data-anchor-id="related-194">Related</h2>
+<p>RFD 2183 (layer-decomp pipeline; consumes this), RFD 2184 (EditScore three-signal training pattern), RFD 2187 (identity overlay, parallel), RFD 2136 (gacha ladder; slots upstream of Rung 6).</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2187-identity-anny-via-omnigen2" class="level1">
+<h1>RFD 2187: Identity ANNY via OmniGen2</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2187</code></p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> hair/eyes/skin/face overlay on the ANNY base mesh <strong>Scope:</strong> identity stage of the atelier-workshop, upstream of RFD 2183</p>
+<p>Shelved 2026-09-02: waiting for RFD 2183 (layer-decomp pipeline) baseline from CUDA and for training compute on the 3090.</p>
+<section id="decision-216" class="level2">
+<h2 class="anchored" data-anchor-id="decision-216">Decision</h2>
+<p>OmniGen2 (Apache-2.0 on Qwen-VL-2.5) generates hair, eye, skin, and face-detail overlays on the ANNY base mesh, once per character (frozen across scenes, unlike dressing in RFD 2186 which changes per frame).</p>
+<p>Owns V3 parts (See-Through’s taxonomy, RFD 2183 stopgap): <code>front-hair</code>, <code>back-hair</code>, <code>iris</code>, <code>eyewhite</code>, <code>eyebrow</code>, <code>eyelash</code>, <code>mouth</code>, <code>ear</code>.</p>
+<p>Trained under RFD 2184’s three-signal pattern: EditScore (RFD 1157 reward model) for semantic quality, cross-view consistency on <code>sphere_hammersley_sequence</code> renders for anti-hacking, and constructed anchor data (real anime character reference, licence-clean corpus TBD).</p>
+</section>
+<section id="problem-213" class="level2">
+<h2 class="anchored" data-anchor-id="problem-213">Problem</h2>
+<p>ANNY is a template mesh, not a character. No hair, no iris colour, no eyelash, no eyebrow, no skin detail, no mouth painting. RFD 2183’s layer-decomp pipeline assumes an identified character; those V3 training pairs cannot exist without this stage.</p>
+</section>
+<section id="related-195" class="level2">
+<h2 class="anchored" data-anchor-id="related-195">Related</h2>
+<p>RFD 2183 (layer-decomp pipeline; consumes this), RFD 2184 (EditScore three-signal training pattern), RFD 2186 (dressing overlay, parallel), RFD 2136 (gacha ladder; slots upstream of Rung 6).</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 
