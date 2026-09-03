@@ -752,6 +752,11 @@ def Scope "Serials"
                 {
                     custom string slug = "drop-allosaurus-rus"
                 }
+                def "S2182"
+                {
+                    custom string slug = "identity-triangle-operator-market-customer"
+                    custom string flight_level = "L3"
+                }
             }
         }
     }
