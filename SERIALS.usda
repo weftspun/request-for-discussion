@@ -412,6 +412,7 @@ def Scope "Serials"
                 def "S1102"
                 {
                     custom string slug = "supported-atelier-modules"
+                    custom string flight_level = "L2"
                 }
                 def "S1103"
                 {
