@@ -35,6 +35,7 @@
     "items": [
       "/rfd/2172-tenseless-continuous-present-voice/index.html",
       "/rfd/2170-allosaurus-squad-localization-langs/index.html",
+      "/rfd/1102-supported-atelier-modules/index.html",
       "/rfd/1053-openusd-as-the-internal-format/index.html",
       "/rfd/1036-packaging-convention/index.html",
       "/rfd/1027-gpu-residency-budget/index.html"

@@ -10,7 +10,7 @@
 <atom:link href="https://weftspun.github.io/request-for-discussion/pages/rfd.xml" rel="self" type="application/rss+xml"/>
 <description>Request-for-Discussion documents, the serial register, and the logbook.</description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Thu, 03 Sep 2026 15:43:23 GMT</lastBuildDate>
+<lastBuildDate>Thu, 03 Sep 2026 15:48:05 GMT</lastBuildDate>
 <item>
   <title>RFD 2194: Atelier shuttle portfolio widget</title>
   <link>https://weftspun.github.io/request-for-discussion/rfd/2194-atelier-shuttle-portfolio-widget/</link>
@@ -42,7 +42,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2194-atelier-shuttle-portfolio-widget/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2193: EditScore as the constructed-synthetic reproducibility bar</title>
@@ -78,7 +78,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2193-editscore-as-constructed-synthetic-reproducibility-bar/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2192: rfdetr keypoint weights licence verification</title>
@@ -112,7 +112,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2192-rfdetr-keypoint-weights-licence-verification/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2191: Unrolled solver residual measurement</title>
@@ -146,7 +146,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2191-unrolled-solver-residual-measurement/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2190: Multi-camera rig extrinsics calibration</title>
@@ -180,7 +180,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2190-multi-camera-rig-extrinsics-calibration/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2189: Stick-figure sanity check for the pose corpus</title>
@@ -214,7 +214,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2189-stick-figure-sanity-check-for-pose-corpus/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2188: One GGML across the workspace</title>
@@ -251,7 +251,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2188-one-ggml-across-workspace/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2187: Identity ANNY via OmniGen2</title>
@@ -284,7 +284,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2187-identity-anny-via-omnigen2/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2186: Dress ANNY via OmniGen2</title>
@@ -317,7 +317,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2186-dress-anny-via-omnigen2/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2185: Hierarchical OID part registry under PEN</title>
@@ -349,7 +349,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2185-hierarchical-oid-part-registry/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2184: EditScore-guided OmniGen bootstrap for unmapped parts</title>
@@ -384,7 +384,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2184-editscore-omnigen-bootstrap-for-unmapped-parts/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2183: MaskScore-driven layer decomposition on OmniGen2</title>
@@ -422,7 +422,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2183-retrain-omnigen-for-layer-decomposition/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2182: Identity triangle for operator, partner project, market</title>
@@ -474,7 +474,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2182-identity-triangle-operator-market-customer/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2181: Drop the allosaurus-rus phone-inventory control</title>
@@ -511,7 +511,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2181-drop-allosaurus-rus/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2180: Drop the gemma-auto ASR track (bug fixed, drop confirmed)</title>
@@ -553,7 +553,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2180-drop-gemma-auto/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2179: Drop all Whisper models from the ASR panel</title>
@@ -594,7 +594,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2179-drop-whisper-models/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2178: QAFT 4-bit across the model stack</title>
@@ -638,7 +638,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2178-qaft-4bit-across-the-stack/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2177: Flight Levels taxonomy for RFDs</title>
@@ -683,7 +683,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2177-flight-levels-taxonomy/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2176: Index of committed/published RFDs citing terminal RFDs</title>
@@ -728,7 +728,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2176-committed-cites-terminal-index/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2175: Abandon RFDs whose decision uses blocklisted rented compute</title>
@@ -762,7 +762,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2175-abandon-rented-compute-rfds/</guid>
-  <pubDate>Thu, 03 Sep 2026 15:43:23 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 15:48:05 GMT</pubDate>
 </item>
 </channel>
 </rss>
