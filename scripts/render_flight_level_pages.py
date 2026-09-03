@@ -64,6 +64,8 @@ def render_page(fname: str, title: str, blurb: str,
             "  sort:\n"
             "    - \"rfd desc\"\n"
             "  fields: [rfd, title, state, scope]\n"
+            "  exclude:\n"
+            "    state: [\"abandoned\", \"moved\"]\n"
             "  page-size: 50\n"
         )
     else:
