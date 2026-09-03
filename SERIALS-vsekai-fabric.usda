@@ -761,6 +761,10 @@ def Scope "Serials"
                 {
                     custom string slug = "retrain-omnigen-for-layer-decomposition"
                 }
+                def "S2184"
+                {
+                    custom string slug = "editscore-omnigen-bootstrap-for-unmapped-parts"
+                }
             }
         }
     }
