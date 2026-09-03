@@ -801,6 +801,10 @@ def Scope "Serials"
                 {
                     custom string slug = "editscore-as-constructed-synthetic-reproducibility-bar"
                 }
+                def "S2194"
+                {
+                    custom string slug = "runway-demo-live-widget"
+                }
             }
         }
     }
