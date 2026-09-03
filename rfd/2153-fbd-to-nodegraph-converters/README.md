@@ -1,6 +1,6 @@
 # RFD 2153: PLCopen FBD to VRChat Udon assembly
 
-**State:** prediscussion (Udon is the only target)
+**State:** prediscussion
 **Feature:** convert taskweft's PLCopen FBD (RFD 2150) directly into
 Udon assembly for VRChat
 **Scope:** taskweft (`Taskweft.OpenPLC.Udon`)
@@ -13,6 +13,8 @@ via RFD 2159) and **VRChat Udon**. Udon has its own native
 assembly language; FBD needs a direct compiler into it.
 
 ## Decision
+
+Udon is the only target.
 
 **Ship FBD -> Udon assembly, direct.** **C# as an intermediate is
 blocklisted**; UdonSharp adds Roslyn as a dep for one output format

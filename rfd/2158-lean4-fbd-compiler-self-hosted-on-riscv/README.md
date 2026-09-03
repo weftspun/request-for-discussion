@@ -1,11 +1,13 @@
 # RFD 2158: Self-host the Lean 4 FBD compiler on RISC-V; abandoned
 
-**State:** abandoned (stage 0-1 kept as evidence)
+**State:** abandoned
 **Feature:** cross-compile RFD 2157's Lean 4 FBD compiler to RISC-V
 so it runs inside godot-sandbox
 **Scope:** was `taskweft-fbd-compiler` build target; superseded
 
 ## Why abandoned
+
+Stage 0-1 kept as evidence.
 
 Upstream RFC `leanprover/lean4#12655` open with no pickup. Local port
 of Lean's ~50 runtime `.cpp` files is speculative work with no

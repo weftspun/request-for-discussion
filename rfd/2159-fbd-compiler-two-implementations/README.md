@@ -1,6 +1,6 @@
 # RFD 2159: Two `.elf` implementations of the Lean 4 FBD spec
 
-**State:** committed (green-lit; C++ and Rust both to ship)
+**State:** committed
 **Feature:** ship two independent RISC-V ELF implementations of the
 compiler RFD 2157 formalises in Lean 4. Outputs cross-check on the
 same fixtures; both are graded against the spec.
@@ -14,6 +14,8 @@ backend makes soundness a hope; two agreeing backends give the
 property `compile_correct` alone cannot.
 
 ## Decision
+
+Green-lit; C++ and Rust both to ship.
 
 Ship two `.elf` implementations, both cross-compiling today, both
 loading into godot-sandbox unchanged.
