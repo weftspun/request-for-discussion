@@ -665,30 +665,37 @@ def Scope "Serials"
                 def "S2162"
                 {
                     custom string slug = "maskscore-usdz-skinning-and-15-edit-emit"
+                    custom string flight_level = "L1"
                 }
                 def "S2163"
                 {
                     custom string slug = "maskscore-text-stub-gemma-vlm"
+                    custom string flight_level = "L1"
                 }
                 def "S2164"
                 {
                     custom string slug = "maskscore-speech-stub-panel-and-cloning"
+                    custom string flight_level = "L1"
                 }
                 def "S2165"
                 {
                     custom string slug = "maskscore-unified-8-stub-emit"
+                    custom string flight_level = "L1"
                 }
                 def "S2166"
                 {
                     custom string slug = "maskscore-cineform-mkv-bundle"
+                    custom string flight_level = "L1"
                 }
                 def "S2167"
                 {
                     custom string slug = "maskscore-voice-reward-distillation"
+                    custom string flight_level = "L1"
                 }
                 def "S2168"
                 {
                     custom string slug = "retract-wholebody-detector-keep-renderer"
+                    custom string flight_level = "L1"
                 }
                 def "S2169"
                 {

@@ -575,22 +575,27 @@ def Scope "Serials"
                 def "S1143"
                 {
                     custom string slug = "keypoints-to-anny"
+                    custom string flight_level = "L1"
                 }
                 def "S1144"
                 {
                     custom string slug = "image-to-omnigen2"
+                    custom string flight_level = "L1"
                 }
                 def "S1145"
                 {
                     custom string slug = "stylized-to-omnigen2"
+                    custom string flight_level = "L1"
                 }
                 def "S1146"
                 {
                     custom string slug = "latent-to-pixal3d"
+                    custom string flight_level = "L1"
                 }
                 def "S1147"
                 {
                     custom string slug = "what-editscore-costs-and-returns"
+                    custom string flight_level = "L1"
                 }
                 def "S1148"
                 {
