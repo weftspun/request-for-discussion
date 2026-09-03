@@ -2,8 +2,7 @@
 
 **State:** committed
 **Feature:** phone-inventory controls for the ASR panel
-**Scope:** `6-datasource/anny-render-corpus/emit_10track_panel.py`,
-`6-datasource/anny-render-corpus/add_allosaurus_control.py`
+**Scope:** `6-datasource/anny-render-corpus/emit_10track_panel.py`, `6-datasource/anny-render-corpus/add_allosaurus_control.py`
 
 ## Decision
 
