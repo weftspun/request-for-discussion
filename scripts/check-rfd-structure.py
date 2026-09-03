@@ -53,8 +53,6 @@ _serials = _ilu.module_from_spec(_spec)
 _spec.loader.exec_module(_serials)
 
 # The order these carry when present. Extra headings may sit between them.
-# Decision comes first per the draft-readable-rfd skill's BLUF-first rule:
-# a reader who reads only the first section has read the answer.
 SPINE = ("Decision", "Problem", "References", "Related")
 # A retracted decision renames its own heading, so the match is a prefix.
 # RFD 1067's "Decision, as published and now retracted" is the case.
