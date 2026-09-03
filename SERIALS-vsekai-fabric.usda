@@ -739,7 +739,7 @@ def Scope "Serials"
                 def "S2177"
                 {
                     custom string slug = "flight-levels-taxonomy"
-                    custom string flight_level = "L3"
+                    custom string flight_level = "L2"
                 }
             }
         }
