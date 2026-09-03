@@ -135,6 +135,8 @@ jobs:
       - run: pip install usd-core==26.8
       - run: python scripts/render_site.py --self-test
       - run: python scripts/render_site.py --check
+      - run: python scripts/render_flight_level_pages.py --self-test
+      - run: python scripts/render_flight_level_pages.py --check
 
   # THE COMMENT LADDER, A JOB RATHER THAN A prek HOOK ALONE, AND THE REASON IS THE BASE.
   #
