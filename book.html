@@ -1606,6 +1606,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#decision-208" id="toc-decision-208" class="nav-link" data-scroll-target="#decision-208">Decision</a></li>
   <li><a href="#related-187" id="toc-related-187" class="nav-link" data-scroll-target="#related-187">Related</a></li>
   </ul></li>
+  <li><a href="#rfd-2180-drop-the-gemma-auto-asr-track-bug-fixed-drop-confirmed" id="toc-rfd-2180-drop-the-gemma-auto-asr-track-bug-fixed-drop-confirmed" class="nav-link" data-scroll-target="#rfd-2180-drop-the-gemma-auto-asr-track-bug-fixed-drop-confirmed">RFD 2180: Drop the gemma-auto ASR track (bug fixed, drop confirmed)</a>
+  <ul class="collapse">
+  <li><a href="#problem-206" id="toc-problem-206" class="nav-link" data-scroll-target="#problem-206">Problem</a></li>
+  <li><a href="#decision-209" id="toc-decision-209" class="nav-link" data-scroll-target="#decision-209">Decision</a></li>
+  <li><a href="#related-188" id="toc-related-188" class="nav-link" data-scroll-target="#related-188">Related</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -6494,6 +6500,28 @@ void  grafcet_static_free(char *buf);</code></pre>
 <section id="related-187" class="level2">
 <h2 class="anchored" data-anchor-id="related-187">Related</h2>
 <p>Retracts three rows from RFD 2164; amends RFD 2178 (three Class B rungs go).</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2180-drop-the-gemma-auto-asr-track-bug-fixed-drop-confirmed" class="level1">
+<h1>RFD 2180: Drop the gemma-auto ASR track (bug fixed, drop confirmed)</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2180</code></p>
+<p><strong>State:</strong> published <strong>Feature:</strong> documentation retraction with investigation record <strong>Scope:</strong> RFDs 2164, 2179; <code>emit_10track_panel.py</code>; <code>CITATION.cff</code></p>
+<section id="problem-206" class="level2">
+<h2 class="anchored" data-anchor-id="problem-206">Problem</h2>
+<p>RFD 2179 flagged gemma-auto shipping empty transcripts across all 15 clips (WER 1.000, .vtt files carried only the WEBVTT header). Follow-up was fix-or-drop.</p>
+<p>Investigation (DETAILS.md): <code>gemma_cli_run</code> used prompt “Transcribe this audio verbatim” with <code>-n 200</code>. Gemma-4-12B heard the audio as spoken user input, reasoned about how to respond as an AI assistant, and expired the token budget inside chain-of-thought without reaching the final channel. Empty output.</p>
+</section>
+<section id="decision-209" class="level2">
+<h2 class="anchored" data-anchor-id="decision-209">Decision</h2>
+<p>Bug is fixable but the track’s quality after the fix is worst in the surviving panel. Drop the track. Fix (for the record): firmer ASR-only prompt plus <code>-n 400</code>. 15-clip WER pass with the fix: 0.690 mean (6 exact, 3 accent-mishears, 6 still truncated mid-reasoning). Voxtral runs the same clips at 0.000 sub-second. Gemma-auto’s several-seconds-per-clip latency plus 0.690 WER matches the speed-plus-quality argument RFD 2179 used for Whisper.</p>
+<p>Panel drops 9 tracks (post-2179) to 8:</p>
+<p>text-track Parakeet TDT 0.6B v3, Voxtral Mini 3B, wav2vec2 IPA-track Voxtral-IPA, Gemma-4-12B GBNF-IPA phone-track allosaurus (universal + eng + rus)</p>
+<p>Gemma-IPA stays: the GBNF constraint pins output to IPA characters and forces short completions; neither failure mode appears on that track.</p>
+</section>
+<section id="related-188" class="level2">
+<h2 class="anchored" data-anchor-id="related-188">Related</h2>
+<p>Extends RFD 2179 (Whisper drop). DETAILS.md holds the 15-clip WER table with the fix applied and the exact prompt + argv.</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 

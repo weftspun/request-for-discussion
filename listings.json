@@ -32,6 +32,7 @@
   {
     "listing": "/pages/rfd.html",
     "items": [
+      "/rfd/2180-drop-gemma-auto/index.html",
       "/rfd/2179-drop-whisper-models/index.html",
       "/rfd/2178-qaft-4bit-across-the-stack/index.html",
       "/rfd/2177-flight-levels-taxonomy/index.html",
