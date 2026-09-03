@@ -26,12 +26,10 @@ not string, so V3 v3->v4 upgrades never rewrite a corpus.
 
 ## Problem
 
-RFD 2183's `anny_v3_face_groups.py` (See-Through V3 stopgap) covers
-10 of 23 parts today. Any future task with finer parts (skin/makeup,
-cloth sub-parts, multi-character, hair sub-strands) breaks a flat
-23-label schema. String labels lose their meaning when v3 becomes
-v4; OIDs do not. RFD 1122 (AlternativeTopology) is the same shape
-for joint schemas and shows the pattern works.
+V3 (23 parts, RFD 2183 stopgap) covers 10 today. Finer tasks
+(skin/makeup, cloth sub-parts, multi-character, hair sub-strands)
+break a flat schema. String labels lose meaning across versions;
+OIDs do not. RFD 1122 (AlternativeTopology) is the precedent shape.
 
 ## Related
 
