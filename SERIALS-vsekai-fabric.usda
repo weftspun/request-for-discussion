@@ -698,22 +698,27 @@ def Scope "Serials"
                 def "S2170"
                 {
                     custom string slug = "allosaurus-squad-localization-langs"
+                    custom string flight_level = "L2"
                 }
                 def "S2171"
                 {
                     custom string slug = "atelier-workshop-shuttle-vocabulary"
+                    custom string flight_level = "L2"
                 }
                 def "S2172"
                 {
                     custom string slug = "tenseless-continuous-present-voice"
+                    custom string flight_level = "L2"
                 }
                 def "S2173"
                 {
                     custom string slug = "qwen3-vl-to-gemma-migration-index"
+                    custom string flight_level = "L2"
                 }
                 def "S2174"
                 {
                     custom string slug = "abandoned-citation-index"
+                    custom string flight_level = "L2"
                 }
                 def "S2175"
                 {
@@ -722,6 +727,7 @@ def Scope "Serials"
                 def "S2176"
                 {
                     custom string slug = "committed-cites-terminal-index"
+                    custom string flight_level = "L2"
                 }
                 def "S2177"
                 {
