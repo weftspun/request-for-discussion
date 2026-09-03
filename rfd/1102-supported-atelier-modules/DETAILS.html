@@ -446,17 +446,21 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="pipeline-gacha-critical-path-rfd-2136">Pipeline: Gacha critical path (RFD 2136)</h2>
 <p>Ten rungs, each producing an output the next rung consumes:</p>
 <ol start="0" type="1">
-<li>Language prompt → image (OmniGen2)</li>
+<li>Language prompt → image (OmniGen2, NF4 + Flow LCM LoRA)</li>
 <li>Image → mesh (Pixal3D)</li>
 <li>Mesh → judged (EditScore)</li>
 <li>Judged → repaired (VoxHammer, N-attempt bound)</li>
-<li>Repaired → skinned (SkinTokens against ANNY)</li>
-<li>Skinned → tagged (rf-detr-Seg + LaMa)</li>
+<li>Repaired → skinned (skin-tokens.cpp against ANNY)</li>
+<li>Skinned → tagged (SAM2 or rf-detr-Seg + OmniGen2 per RFD 2183)</li>
 <li>Tagged → VRM (portable character)</li>
 <li>Prompt list → pool (~50 VRMs, judged, seed-reproducible)</li>
 <li>Pool → roll button (web page)</li>
 <li>Public (hosted with sponsor link)</li>
 </ol>
+<p>Rung 0 NF4 quantisation is permitted after CLAUDE.md’s 2026-09-02 retraction of condition 5. Flow LCM LoRA cuts OmniGen2 sampling steps for the 3090 latency budget.</p>
+<p>Rung 4 skin-tokens.cpp is the C++23 / GGML port of the SkinTokens auto-rig (Apache-2.0 code, MIT upstream, GGUF weight bundles). skin-tokens.cpp is a vendor’s own runtime, so it is exempt from CLAUDE.md’s GGUF blocklist row per the exemption stated there.</p>
+<p>Rung 5 pivots from RFD 1168 (rf-detr-Seg + LaMa) to RFD 2183’s three-step pipeline: SAM2 or rf-detr-Seg for masking, OmniGen2 with MaskScore-driven weights for layer reconstruction. See-Through is closed both ways (BLOCKLIST.md).</p>
+<p>Runtime motion: motion-bricks.cpp (C++23 / GGML port of NVIDIA MotionBricks) generates keyframe-driven animation from the shipped VRM. Apache-2.0 code, NVIDIA Open Model License on weights (same license class already accepted for Kimodo-SOMA-* per RFD 1028). 183M params. Runs alongside rungs 7-9 as the animation source for the pool preview and hosted roll page.</p>
 </section>
 <section id="retraction-record" class="level2">
 <h2 class="anchored" data-anchor-id="retraction-record">Retraction record</h2>
