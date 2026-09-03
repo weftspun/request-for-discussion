@@ -43,16 +43,37 @@
 
 Ten rungs, each producing an output the next rung consumes:
 
-  0. Language prompt → image           (OmniGen2)
+  0. Language prompt → image           (OmniGen2, NF4 + Flow LCM LoRA)
   1. Image → mesh                      (Pixal3D)
   2. Mesh → judged                     (EditScore)
   3. Judged → repaired                 (VoxHammer, N-attempt bound)
-  4. Repaired → skinned                (SkinTokens against ANNY)
-  5. Skinned → tagged                  (rf-detr-Seg + LaMa)
+  4. Repaired → skinned                (skin-tokens.cpp against ANNY)
+  5. Skinned → tagged                  (SAM2 or rf-detr-Seg + OmniGen2 per RFD 2183)
   6. Tagged → VRM                      (portable character)
   7. Prompt list → pool                (~50 VRMs, judged, seed-reproducible)
   8. Pool → roll button                (web page)
   9. Public                            (hosted with sponsor link)
+
+Rung 0 NF4 quantisation is permitted after CLAUDE.md's 2026-09-02
+retraction of condition 5. Flow LCM LoRA cuts OmniGen2 sampling
+steps for the 3090 latency budget.
+
+Rung 4 skin-tokens.cpp is the C++23 / GGML port of the SkinTokens
+auto-rig (Apache-2.0 code, MIT upstream, GGUF weight bundles).
+skin-tokens.cpp is a vendor's own runtime, so it is exempt from
+CLAUDE.md's GGUF blocklist row per the exemption stated there.
+
+Rung 5 pivots from RFD 1168 (rf-detr-Seg + LaMa) to RFD 2183's
+three-step pipeline: SAM2 or rf-detr-Seg for masking, OmniGen2 with
+MaskScore-driven weights for layer reconstruction. See-Through is
+closed both ways (BLOCKLIST.md).
+
+Runtime motion: motion-bricks.cpp (C++23 / GGML port of NVIDIA
+MotionBricks) generates keyframe-driven animation from the shipped
+VRM. Apache-2.0 code, NVIDIA Open Model License on weights (same
+license class already accepted for Kimodo-SOMA-* per RFD 1028).
+183M params. Runs alongside rungs 7-9 as the animation source for
+the pool preview and hosted roll page.
 
 ## Retraction record
 
