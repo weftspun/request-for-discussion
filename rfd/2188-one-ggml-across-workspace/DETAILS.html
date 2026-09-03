@@ -484,7 +484,9 @@ ul.task-list li input[type="checkbox"] {
 <section id="b9cba-resolution" class="level3">
 <h3 class="anchored" data-anchor-id="b9cba-resolution">331b9cba resolution</h3>
 <p>The first close-out claimed the template mechanism had been restructured and dk16/dk56 could not be added. That was wrong. The template shape on consolidated matches sam3 exactly; adding two head-dim slots was a mechanical change once the vec dispatch was ruled out.</p>
-<p>PR https://github.com/weftspun/ggml/pull/1 adds 16 template instantiations (dk16, dk56 × 8 K/V dtypes) plus 2 entries in the head-size whitelist in supports_op. Vec templates omitted because <code>ggml_metal_op_flash_attn_ext_use_vec</code> gates on <code>ne00 % 32 == 0</code>, which excludes 16 and 56.</p>
+<p>PR https://github.com/weftspun/ggml/pull/1 adds 16 template instantiations (dk16, dk56 × 8 K/V dtypes) plus 2 entries in the head-size whitelist in supports_op. Vec templates omitted because <code>ggml_metal_op_flash_attn_ext_use_vec</code> gates on <code>ne00 % 32 == 0</code>, which excludes 16 and 56. <strong>Merged 2026-09-03.</strong></p>
+<p><strong>Verified on Apple M2 Pro.</strong> <code>test-backend-ops</code>’s default FLASH_ATTN_EXT generator loops hsk over <code>{ 40, 64, 72, 80, 96, 128, 192, 256, 320, 512, 576 }</code> — no 16 and no 56. With 16 added test cases enumerating hsk=16 and hsk=56 across all 8 K/V dtypes and <code>-b MTL0</code>: <strong>4768/4768 tests passed</strong> against the CPU reference (baseline 4752 + 16 new = 4768), and the Metal pipeline compile log confirmed the new kernels were actually reached: <code>kernel_flash_attn_ext_{f16,f32,bf16}_dk{16,56}_dv{16,56}</code>. Wall clock 49 s.</p>
+<p>Household anchor: this is a build+test on the same M2 Pro that runs the rest of the desk. The “no Metal build+run capability” caveat that appeared in the first PR body was wrong and has been retracted from the PR body it stood in.</p>
 <p>The <code>sam3-metal-ops</code> branch stays for archaeology.</p>
 </section>
 <section id="correction-the-record-keeps" class="level3">
