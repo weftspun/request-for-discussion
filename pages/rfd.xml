@@ -10,7 +10,7 @@
 <atom:link href="https://weftspun.github.io/request-for-discussion/pages/rfd.xml" rel="self" type="application/rss+xml"/>
 <description>Request-for-Discussion documents, the serial register, and the logbook.</description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Thu, 03 Sep 2026 04:38:39 GMT</lastBuildDate>
+<lastBuildDate>Thu, 03 Sep 2026 04:43:38 GMT</lastBuildDate>
 <item>
   <title>RFD 2182: Identity triangle for operator, partner project, market</title>
   <link>https://weftspun.github.io/request-for-discussion/rfd/2182-identity-triangle-operator-market-customer/</link>
@@ -61,7 +61,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2182-identity-triangle-operator-market-customer/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2181: Drop the allosaurus-rus phone-inventory control</title>
@@ -98,7 +98,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2181-drop-allosaurus-rus/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2180: Drop the gemma-auto ASR track (bug fixed, drop confirmed)</title>
@@ -140,7 +140,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2180-drop-gemma-auto/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2179: Drop all Whisper models from the ASR panel</title>
@@ -181,7 +181,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2179-drop-whisper-models/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2178: QAFT 4-bit across the model stack</title>
@@ -225,7 +225,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2178-qaft-4bit-across-the-stack/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2177: Flight Levels taxonomy for RFDs</title>
@@ -270,7 +270,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2177-flight-levels-taxonomy/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2176: Index of committed/published RFDs citing terminal RFDs</title>
@@ -315,7 +315,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2176-committed-cites-terminal-index/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2175: Abandon RFDs whose decision uses blocklisted rented compute</title>
@@ -349,7 +349,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2175-abandon-rented-compute-rfds/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2174: Index of open RFDs citing abandoned RFDs</title>
@@ -388,7 +388,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2174-abandoned-citation-index/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2173: Qwen3-VL to Gemma-4-12B migration index</title>
@@ -428,7 +428,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2173-qwen3-vl-to-gemma-migration-index/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2172: Prose speaks in the tenseless continuous present</title>
@@ -470,7 +470,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2172-tenseless-continuous-present-voice/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2171: The atelier-workshop / shuttle vocabulary</title>
@@ -511,7 +511,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2171-atelier-workshop-shuttle-vocabulary/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2170: allosaurus runs universal + a 27-language commercial localization set</title>
@@ -548,7 +548,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2170-allosaurus-squad-localization-langs/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2169: Abandon the strangler-fig studio core; the ladder is MaskScore</title>
@@ -584,7 +584,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2169-abandon-strangler-fig-studio-core/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2168: Retract RFD 1122’s bespoke wholebody detector; keep the renderer</title>
@@ -623,7 +623,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2168-retract-wholebody-detector-keep-renderer/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2167: Voice-clone reward-model distillation</title>
@@ -657,7 +657,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2167-maskscore-voice-reward-distillation/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2166: MaskScore Cineform MKV bundle per RFD 1137</title>
@@ -690,7 +690,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2166-maskscore-cineform-mkv-bundle/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2165: MaskScore unified 8-stub emit refactor</title>
@@ -724,7 +724,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2165-maskscore-unified-8-stub-emit/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2164: MaskScore Speech-stub 12-track ASR panel + 10-rank voice cloning</title>
@@ -753,7 +753,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2164-maskscore-speech-stub-panel-and-cloning/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2163: MaskScore Text-stub emit via Gemma VLM on frame pairs</title>
@@ -787,7 +787,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2163-maskscore-text-stub-gemma-vlm/</guid>
-  <pubDate>Thu, 03 Sep 2026 04:38:39 GMT</pubDate>
+  <pubDate>Thu, 03 Sep 2026 04:43:38 GMT</pubDate>
 </item>
 </channel>
 </rss>
