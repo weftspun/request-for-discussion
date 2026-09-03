@@ -805,6 +805,10 @@ def Scope "Serials"
                 {
                     custom string slug = "atelier-shuttle-portfolio-widget"
                 }
+                def "S2195"
+                {
+                    custom string slug = "weftspun-bao-tailscale-sidecar"
+                }
             }
         }
     }
