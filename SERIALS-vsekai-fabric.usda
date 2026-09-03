@@ -769,6 +769,14 @@ def Scope "Serials"
                 {
                     custom string slug = "hierarchical-oid-part-registry"
                 }
+                def "S2186"
+                {
+                    custom string slug = "dress-anny-via-omnigen2"
+                }
+                def "S2187"
+                {
+                    custom string slug = "identity-anny-via-omnigen2"
+                }
             }
         }
     }
