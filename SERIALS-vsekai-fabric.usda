@@ -777,6 +777,10 @@ def Scope "Serials"
                 {
                     custom string slug = "identity-anny-via-omnigen2"
                 }
+                def "S2188"
+                {
+                    custom string slug = "one-ggml-across-workspace"
+                }
             }
         }
     }
