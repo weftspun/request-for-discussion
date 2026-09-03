@@ -51,7 +51,7 @@ def rfd_index_path(serial: int, slug: str) -> str:
     return f"../rfd/{serial}-{slug}/index.md"
 
 
-def render_page(fname: str, title: str, blurb: str,
+def render_page(level_id: str, fname: str, title: str, blurb: str,
                 items: list[tuple[int, str]]) -> str:
     if items:
         contents = "\n".join(f'    - "{rfd_index_path(s, slug)}"' for s, slug in items)
@@ -78,9 +78,9 @@ def render_page(fname: str, title: str, blurb: str,
         f"{listing}"
         "---\n\n"
         f"{blurb}\n\n"
-        "Tag an RFD by adding `custom string flight_level = \"LN\"` to its\n"
-        "serial-register entry, then rerun this script. RFD 2177 records the\n"
-        "scheme and cites Klaus Leopold, `Rethinking Agile` (LEANability, 2018).\n"
+        f"RFDs tagged `flight_level = \"{level_id}\"` in the serial register. "
+        "RFD 2177 defines the scheme (Klaus Leopold, `Rethinking Agile`,\n"
+        "LEANability, 2018).\n"
     )
 
 
@@ -90,7 +90,7 @@ def write_pages(root: str, tags: dict[str, list[tuple[int, str]]],
     os.makedirs(pages_dir, exist_ok=True)
     missing = 0
     for level, fname, title, blurb in LEVELS:
-        want = render_page(fname, title, blurb, tags[level])
+        want = render_page(level, fname, title, blurb, tags[level])
         p = os.path.join(pages_dir, fname)
         open(p, "w", encoding="utf-8").write(want)
         if not os.path.exists(p):
