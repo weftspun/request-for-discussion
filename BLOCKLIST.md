@@ -1104,10 +1104,10 @@ twelve rows to eleven.
 
 Both AnimeGANv2 and AnimeGANv3 close both ways, same shape as See-Through.
 
-**Ask closed.** The licence reads verbatim: *"This repo is made freely available to
+**Ask closed.** The licence reads verbatim: _"This repo is made freely available to
 academic and non-academic entities for non-commercial purposes such as academic
 research, teaching, scientific publications. Regarding the request for commercial use,
-please contact us via email to help you obtain the authorization letter."* Non-commercial
+please contact us via email to help you obtain the authorization letter."_ Non-commercial
 only, same bar RFD 1028 rejects for shipping.
 
 **Adapt closed.** The published checkpoints train on three named directors' theatrical
