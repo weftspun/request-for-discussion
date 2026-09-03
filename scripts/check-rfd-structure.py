@@ -564,6 +564,13 @@ if __name__ == "__main__":
         sys.exit(self_test())
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     found = check(root)
+    if "--all" in sys.argv:
+        # Explicit alias for the default full-tree mode. Named so a caller
+        # that wants the SPINE backlog visible on demand does not have to
+        # know the default; also refuses to combine with --changed.
+        if "--changed" in sys.argv:
+            sys.exit("FAIL --all and --changed are mutually exclusive")
+        print(f"full mode: {len(rfd_dirs := sorted(d for d in os.listdir(os.path.join(root, RFD_ROOT)) if DIR_RE.match(d)))} RFD dir(s) scanned")
     if "--changed" in sys.argv:
         base = sys.argv[sys.argv.index("--changed") + 1]
         touched = _changed_rfd_prefixes(root, base)
