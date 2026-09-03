@@ -1594,6 +1594,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#decision-206" id="toc-decision-206" class="nav-link" data-scroll-target="#decision-206">Decision</a></li>
   <li><a href="#related-185" id="toc-related-185" class="nav-link" data-scroll-target="#related-185">Related</a></li>
   </ul></li>
+  <li><a href="#rfd-2178-qaft-4-bit-across-the-model-stack" id="toc-rfd-2178-qaft-4-bit-across-the-model-stack" class="nav-link" data-scroll-target="#rfd-2178-qaft-4-bit-across-the-model-stack">RFD 2178: QAFT 4-bit across the model stack</a>
+  <ul class="collapse">
+  <li><a href="#problem-204" id="toc-problem-204" class="nav-link" data-scroll-target="#problem-204">Problem</a></li>
+  <li><a href="#decision-207" id="toc-decision-207" class="nav-link" data-scroll-target="#decision-207">Decision</a></li>
+  <li><a href="#related-186" id="toc-related-186" class="nav-link" data-scroll-target="#related-186">Related</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -6439,6 +6445,28 @@ void  grafcet_static_free(char *buf);</code></pre>
 <section id="related-185" class="level2">
 <h2 class="anchored" data-anchor-id="related-185">Related</h2>
 <p>RFD 1000 (conventions), RFD 1053 (OpenUSD internal format), RFD 2174 + 2176 (citation-drift indexes, same pattern of one document + tag).</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2178-qaft-4-bit-across-the-model-stack" class="level1">
+<h1>RFD 2178: QAFT 4-bit across the model stack</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2178</code></p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> target every model in the atelier-workshop at 4-bit Quantization-Aware Fine-Tuning <strong>Scope:</strong> every model row in RFD 1102’s task catalog</p>
+<section id="problem-204" class="level2">
+<h2 class="anchored" data-anchor-id="problem-204">Problem</h2>
+<p>RFD 1027 committed QAFT-first as the default weights format. RFD 2139 (abandoned) surveyed the stack: only Gemma-4-12B ships a true upstream QAT Q4_0 release. Wan-VACE, Pixal3D, VoxHammer, MoGe-3, and the audio-panel models run at published precision. The plan needs a per-model position: which model is QAFT’d, when, at what compute cost.</p>
+</section>
+<section id="decision-207" class="level2">
+<h2 class="anchored" data-anchor-id="decision-207">Decision</h2>
+<p>Every model in the atelier-workshop targets QAFT 4-bit. Three classes track where each stands.</p>
+<p>Class A (upstream QAFT available): use verbatim. Gemma-4-12B QAT Q4_0 today.</p>
+<p>Class B (upstream QAFT feasible locally): workspace produces one from published weights via a QAFT fine-tune on the RTX 3090. Small models (Qwen3-TTS-1.7B, Kimodo, SkinTokens, MoGe-3, rf-detr-Seg, WavLM, wav2vec2, ipa-whisper) fit in one overnight run each.</p>
+<p>Class C (upstream QAFT infeasible locally): Wan-VACE 14B, Pixal3D 24 GB base. QAFT needs multi-day runs; parked until compute expands or an upstream Q4 release lands.</p>
+<p>See <a href="DETAILS.md">DETAILS.md</a> for the per-model class, size, and compute estimate. See RFD 1027 for the QAFT-first rule.</p>
+</section>
+<section id="related-186" class="level2">
+<h2 class="anchored" data-anchor-id="related-186">Related</h2>
+<p>Extends RFD 1027 (QAFT-first, committed). Consumed by RFD 2167 (voice-reward distillation, parked, needs Class B Qwen3-TTS QAFT).</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Logbook – Taskweft — Manuals</title>
+<title>details – Taskweft — Manuals</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -29,29 +29,27 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f36f388c175c695e587c9d92b6af4f92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f36f388c175c695e587c9d92b6af4f92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -79,65 +77,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -310,7 +250,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Taskweft — Manuals</span>
     </a>
   </div>
@@ -321,7 +261,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../pages/rfd.html"> 
+    <a class="nav-link" href="../../pages/rfd.html"> 
 <span class="menu-text">RFDs</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -330,25 +270,25 @@ window.Quarto = {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-flight-levels">    
         <li>
-    <a class="dropdown-item" href="../pages/flight-level-1-operations.qmd">
+    <a class="dropdown-item" href="../../pages/flight-level-1-operations.qmd">
  <span class="dropdown-text">L1 · Operations</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../pages/flight-level-2-coordination.qmd">
+    <a class="dropdown-item" href="../../pages/flight-level-2-coordination.qmd">
  <span class="dropdown-text">L2 · Coordination</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../pages/flight-level-3-strategy.qmd">
+    <a class="dropdown-item" href="../../pages/flight-level-3-strategy.qmd">
  <span class="dropdown-text">L3 · Strategy</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="../pages/logbook.html" aria-current="page"> 
+    <a class="nav-link" href="../../pages/logbook.html"> 
 <span class="menu-text">Logbook</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../pages/serials.html"> 
+    <a class="nav-link" href="../../pages/serials.html"> 
 <span class="menu-text">Register</span></a>
   </li>  
 </ul>
@@ -363,331 +303,224 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#rfd-2178-details-per-model-qaft-4-bit-position" id="toc-rfd-2178-details-per-model-qaft-4-bit-position" class="nav-link active" data-scroll-target="#rfd-2178-details-per-model-qaft-4-bit-position">RFD 2178 details: per-model QAFT 4-bit position</a>
+  <ul class="collapse">
+  <li><a href="#per-model-table" id="toc-per-model-table" class="nav-link" data-scroll-target="#per-model-table">Per-model table</a></li>
+  <li><a href="#sequencing" id="toc-sequencing" class="nav-link" data-scroll-target="#sequencing">Sequencing</a></li>
+  <li><a href="#compute-cost-of-the-plan" id="toc-compute-cost-of-the-plan" class="nav-link" data-scroll-target="#compute-cost-of-the-plan">Compute cost of the plan</a></li>
+  <li><a href="#retraction-adjustment-note" id="toc-retraction-adjustment-note" class="nav-link" data-scroll-target="#retraction-adjustment-note">Retraction / adjustment note</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2178-qaft-4bit-across-the-stack/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2178-qaft-4bit-across-the-stack/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Logbook</h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>Entries record what was <strong>measured</strong>, not what was intended, and clip enough of the experimental apparatus to re-run the test rather than merely its conclusion.</p>
-<p>These 145 entries were a separate repository until <code>weftspun/logbook</code> was archived. A decision and its measurement sat one repository apart; they no longer do. Entries kept their filenames, so an entry is still findable by the thing it measured rather than by where it used to live.</p>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-      <option value="" disabled="" selected="" hidden="">Order By</option>
-      <option value="index" data-direction="asc">Default</option>
-      <option value="listing-date-sort" data-direction="asc">
-        Date - Oldest
-      </option>
-      <option value="listing-date-sort" data-direction="desc">
-        Date - Newest
-      </option>
-      <option value="listing-title-sort" data-direction="asc">
-        Title
-      </option>
-    </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
-</div>
-<table class="quarto-listing-table table">
+
+<section id="rfd-2178-details-per-model-qaft-4-bit-position" class="level1">
+<h1>RFD 2178 details: per-model QAFT 4-bit position</h1>
+<section id="per-model-table" class="level2">
+<h2 class="anchored" data-anchor-id="per-model-table">Per-model table</h2>
+<p>Compute estimates assume the RTX 3090 (24 GB) and a QAFT fine-tune on each model’s own pretraining data or a distillation-appropriate substitute. “Fits” = QAFT run fits 24 GB VRAM. “Overnight” = &lt;12 h. “Multi-day” = &gt;36 h continuous.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 17%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 13%">
+<col style="width: 13%">
+</colgroup>
 <thead>
-<tr>
-
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
-</th>
-
-<th>
-<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
-</th>
-
+<tr class="header">
+<th>Model</th>
+<th style="text-align: right;">Params</th>
+<th style="text-align: center;">Upstream QAFT?</th>
+<th style="text-align: center;">Class</th>
+<th>QAFT compute</th>
+<th>Notes</th>
 </tr>
 </thead>
-<tbody class="list">
-
-<tr data-index="0" data-listing-file-modified-sort="1788405403234" data-listing-reading-time-sort="4" data-listing-word-count-sort="725" data-listing-title-sort="Blend-shape animation through the flow adapter, and TokenRig's first light" data-listing-filename-sort="logbook-blendshape-animation-and-tokenrig-first-light.md">
-<td>
-<a href="../logbook/logbook-blendshape-animation-and-tokenrig-first-light.html" class="title listing-title">Blend-shape animation through the flow adapter, and TokenRig’s first light</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tbody>
+<tr class="odd">
+<td>Gemma-4-12B</td>
+<td style="text-align: right;">12B</td>
+<td style="text-align: center;">✓ Q4_0 GGUF (Google)</td>
+<td style="text-align: center;">A</td>
+<td>0 (verbatim)</td>
+<td>The anchor case; RFD 1027’s canonical example</td>
 </tr>
-
-<tr data-index="1" data-listing-file-modified-sort="1788405403234" data-listing-reading-time-sort="5" data-listing-word-count-sort="994" data-listing-title-sort="In-betweens, phenotype clips, and what pass-through means" data-listing-filename-sort="logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.md">
-<td>
-<a href="../logbook/logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.html" class="title listing-title">In-betweens, phenotype clips, and what pass-through means</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>Wan-VACE</td>
+<td style="text-align: right;">14B</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">C</td>
+<td>Multi-day, tight</td>
+<td>Doesn’t fit 24 GB in QAFT config without heavy gradient checkpointing; parked</td>
 </tr>
-
-<tr data-index="2" data-listing-file-modified-sort="1788405403234" data-listing-reading-time-sort="8" data-listing-word-count-sort="1464" data-listing-title-sort="Logbook: CineForm in Godot, and what recording actually costs" data-listing-filename-sort="logbook-cineform-movie-writer.md">
-<td>
-<a href="../logbook/logbook-cineform-movie-writer.html" class="title listing-title">Logbook: CineForm in Godot, and what recording actually costs</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>Pixal3D (image → mesh)</td>
+<td style="text-align: right;">~24 GB bf16</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">C</td>
+<td>Multi-day, tight</td>
+<td>Same 24 GB ceiling; staged inference already at peak; QAFT training doesn’t fit</td>
 </tr>
-
-<tr data-index="3" data-listing-file-modified-sort="1788405403235" data-listing-reading-time-sort="4" data-listing-word-count-sort="660" data-listing-title-sort="Logbook: FDB VFS embed into ecto_sqlite3, retracted" data-listing-filename-sort="logbook-rfd2133-vfs-embed-retracted.md">
-<td>
-<a href="../logbook/logbook-rfd2133-vfs-embed-retracted.html" class="title listing-title">Logbook: FDB VFS embed into ecto_sqlite3, retracted</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>VoxHammer</td>
+<td style="text-align: right;">0 (no weights, RFD 1162)</td>
+<td style="text-align: center;">n/a</td>
+<td style="text-align: center;">n/a</td>
+<td>0</td>
+<td>Nothing to quantize</td>
 </tr>
-
-<tr data-index="4" data-listing-file-modified-sort="1788405403235" data-listing-reading-time-sort="2" data-listing-word-count-sort="283" data-listing-title-sort="Logbook: OpenBao on FoundationDB" data-listing-filename-sort="logbook-rfd2140-openbao-on-fdb.md">
-<td>
-<a href="../logbook/logbook-rfd2140-openbao-on-fdb.html" class="title listing-title">Logbook: OpenBao on FoundationDB</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>TRELLIS.2</td>
+<td style="text-align: right;">~8B</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">B</td>
+<td>Overnight</td>
+<td>Fits QAFT run at moderate batch</td>
 </tr>
-
-<tr data-index="5" data-listing-file-modified-sort="1788405403234" data-listing-reading-time-sort="31" data-listing-word-count-sort="6080" data-listing-title-sort="Logbook: RFD 1016 model-repo build-out" data-listing-filename-sort="logbook-rfd1016-model-repos.md">
-<td>
-<a href="../logbook/logbook-rfd1016-model-repos.html" class="title listing-title">Logbook: RFD 1016 model-repo build-out</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>MoGe-3</td>
+<td style="text-align: right;">~1B</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">B</td>
+<td>Hours</td>
+<td>Small; trivial run</td>
 </tr>
-
-<tr data-index="6" data-listing-file-modified-sort="1788405403234" data-listing-reading-time-sort="11" data-listing-word-count-sort="2018" data-listing-title-sort="Logbook: RFD 1122 T01, the pose-library check" data-listing-filename-sort="logbook-rfd1122-t01-pose-check.md">
-<td>
-<a href="../logbook/logbook-rfd1122-t01-pose-check.html" class="title listing-title">Logbook: RFD 1122 T01, the pose-library check</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>SkinTokens</td>
+<td style="text-align: right;">~1B</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">B</td>
+<td>Hours</td>
+<td>Small</td>
 </tr>
-
-<tr data-index="7" data-listing-file-modified-sort="1788405403235" data-listing-reading-time-sort="4" data-listing-word-count-sort="639" data-listing-title-sort="Logbook: bao connected to FDB cluster, credential rotation, 1Password persistence failure" data-listing-filename-sort="logbook-rfd2142-bao-pki-zerotrust.md">
-<td>
-<a href="../logbook/logbook-rfd2142-bao-pki-zerotrust.html" class="title listing-title">Logbook: bao connected to FDB cluster, credential rotation, 1Password persistence failure</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>Kimodo</td>
+<td style="text-align: right;">~0.6B</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">B</td>
+<td>Hours</td>
+<td>Small</td>
 </tr>
-
-<tr data-index="8" data-listing-file-modified-sort="1788405403235" data-listing-reading-time-sort="3" data-listing-word-count-sort="480" data-listing-title-sort="Logbook: cert-auth on Bao, and the DNS edit that ran without 1P" data-listing-filename-sort="logbook-rfd2146-zerotrust-roles-first-run.md">
-<td>
-<a href="../logbook/logbook-rfd2146-zerotrust-roles-first-run.html" class="title listing-title">Logbook: cert-auth on Bao, and the DNS edit that ran without 1P</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>rf-detr-Seg</td>
+<td style="text-align: right;">~0.2B</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">B</td>
+<td>Hours</td>
+<td>Very small</td>
 </tr>
-
-<tr data-index="9" data-listing-file-modified-sort="1788405403235" data-listing-reading-time-sort="4" data-listing-word-count-sort="614" data-listing-title-sort="Logbook: minimum-double weftspun-fdb on Fly" data-listing-filename-sort="logbook-rfd2133-weftspun-fdb-on-fly.md">
-<td>
-<a href="../logbook/logbook-rfd2133-weftspun-fdb-on-fly.html" class="title listing-title">Logbook: minimum-double weftspun-fdb on Fly</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>LaMa (inpainting)</td>
+<td style="text-align: right;">~0.2B</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">B</td>
+<td>Hours</td>
+<td>Very small</td>
 </tr>
-
-<tr data-index="10" data-listing-file-modified-sort="1788405403234" data-listing-reading-time-sort="18" data-listing-word-count-sort="3434" data-listing-title-sort="Logbook: one base, measured, and the rerank" data-listing-filename-sort="logbook-rfd1171-gemma-first-rerank.md">
-<td>
-<a href="../logbook/logbook-rfd1171-gemma-first-rerank.html" class="title listing-title">Logbook: one base, measured, and the rerank</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>Qwen3-TTS-12Hz-1.7B-Base</td>
+<td style="text-align: right;">1.7B</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">B</td>
+<td>Overnight</td>
+<td>Blocks RFD 2167’s voice-reward distillation until done</td>
 </tr>
-
-<tr data-index="11" data-listing-file-modified-sort="1788405403234" data-listing-reading-time-sort="3" data-listing-word-count-sort="474" data-listing-title-sort="Logbook: spot-broker on Fly" data-listing-filename-sort="logbook-rfd2133-spot-broker-on-fly.md">
-<td>
-<a href="../logbook/logbook-rfd2133-spot-broker-on-fly.html" class="title listing-title">Logbook: spot-broker on Fly</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>Voxtral Mini 3B</td>
+<td style="text-align: right;">3B</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">B</td>
+<td>Overnight</td>
+<td>Fits comfortably</td>
 </tr>
-
-<tr data-index="12" data-listing-file-modified-sort="1788405403233" data-listing-reading-time-sort="7" data-listing-word-count-sort="1241" data-listing-title-sort="Logbook: the ANNY fit that the corpus does not need" data-listing-filename-sort="logbook-anny-phenotype-fit-retired.md">
-<td>
-<a href="../logbook/logbook-anny-phenotype-fit-retired.html" class="title listing-title">Logbook: the ANNY fit that the corpus does not need</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>Whisper large-v3</td>
+<td style="text-align: right;">1.55B</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">B</td>
+<td>Hours</td>
+<td>Small</td>
 </tr>
-
-<tr data-index="13" data-listing-file-modified-sort="1788405403235" data-listing-reading-time-sort="7" data-listing-word-count-sort="1299" data-listing-title-sort="Logbook: the DR runbook runs on the day the cluster is gone" data-listing-filename-sort="logbook-rfd2144-dr-runbook-first-run.md">
-<td>
-<a href="../logbook/logbook-rfd2144-dr-runbook-first-run.html" class="title listing-title">Logbook: the DR runbook runs on the day the cluster is gone</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>Parakeet TDT 0.6B v3</td>
+<td style="text-align: right;">0.6B</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">B</td>
+<td>Hours</td>
+<td>Small</td>
 </tr>
-
-<tr data-index="14" data-listing-file-modified-sort="1788405403234" data-listing-reading-time-sort="11" data-listing-word-count-sort="2026" data-listing-title-sort="Logbook: the Qwen3-VL vision tower against the Dataflow Compiler" data-listing-filename-sort="logbook-qwen3vl-vit-translate-walls.md">
-<td>
-<a href="../logbook/logbook-qwen3vl-vit-translate-walls.html" class="title listing-title">Logbook: the Qwen3-VL vision tower against the Dataflow Compiler</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>wav2vec2 large</td>
+<td style="text-align: right;">0.3B</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">B</td>
+<td>Hours</td>
+<td>Small</td>
 </tr>
-
-<tr data-index="15" data-listing-file-modified-sort="1788405403235" data-listing-reading-time-sort="2" data-listing-word-count-sort="375" data-listing-title-sort="Logbook: the backup reaches Tigris through the SNI hop" data-listing-filename-sort="logbook-rfd2134-backup-through-the-sni-hop.md">
-<td>
-<a href="../logbook/logbook-rfd2134-backup-through-the-sni-hop.html" class="title listing-title">Logbook: the backup reaches Tigris through the SNI hop</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>ipa-whisper (small + base)</td>
+<td style="text-align: right;">~0.5 GB</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">B</td>
+<td>Hours</td>
+<td>Small</td>
 </tr>
-
-<tr data-index="16" data-listing-file-modified-sort="1788405403234" data-listing-reading-time-sort="6" data-listing-word-count-sort="1171" data-listing-title-sort="Logbook: the first four-loop rounds on the desk card" data-listing-filename-sort="logbook-fourloops-first-runs.md">
-<td>
-<a href="../logbook/logbook-fourloops-first-runs.html" class="title listing-title">Logbook: the first four-loop rounds on the desk card</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="odd">
+<td>WavLM Base+ SV</td>
+<td style="text-align: right;">~0.1B</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">B</td>
+<td>Minutes</td>
+<td>Trivial</td>
 </tr>
-
-<tr data-index="17" data-listing-file-modified-sort="1788405403235" data-listing-reading-time-sort="5" data-listing-word-count-sort="992" data-listing-title-sort="Logbook: the soft renderer's three constants, and Mitsuba" data-listing-filename-sort="logbook-soft-renderer-and-mitsuba.md">
-<td>
-<a href="../logbook/logbook-soft-renderer-and-mitsuba.html" class="title listing-title">Logbook: the soft renderer’s three constants, and Mitsuba</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
+<tr class="even">
+<td>allosaurus (universal + 27)</td>
+<td style="text-align: right;">~0.03B</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">B</td>
+<td>Minutes</td>
+<td>Trivial; per-language head</td>
 </tr>
-
-<tr data-index="18" data-listing-file-modified-sort="1788405403234" data-listing-reading-time-sort="9" data-listing-word-count-sort="1605" data-listing-title-sort="Logbook: two DFC emulation contexts disagree by six orders of magnitude" data-listing-filename-sort="logbook-dfc-emulation-contexts-disagree.md">
-<td>
-<a href="../logbook/logbook-dfc-emulation-contexts-disagree.html" class="title listing-title">Logbook: two DFC emulation contexts disagree by six orders of magnitude</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="19" data-listing-file-modified-sort="1788405403235" data-listing-reading-time-sort="3" data-listing-word-count-sort="486" data-listing-title-sort="Logbook: two checks, a stopped backup, and curl's signing limits" data-listing-filename-sort="logbook-rfd2135-two-checks-and-a-stopped-backup.md">
-<td>
-<a href="../logbook/logbook-rfd2135-two-checks-and-a-stopped-backup.html" class="title listing-title">Logbook: two checks, a stopped backup, and curl’s signing limits</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="20" data-listing-file-modified-sort="1788405403234" data-listing-reading-time-sort="6" data-listing-word-count-sort="1163" data-listing-title-sort="Logbook: two walls between a translated graph and a HEF" data-listing-filename-sort="logbook-rfd1130-two-walls-to-a-hef.md">
-<td>
-<a href="../logbook/logbook-rfd1130-two-walls-to-a-hef.html" class="title listing-title">Logbook: two walls between a translated graph and a HEF</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="21" data-listing-file-modified-sort="1788405403234" data-listing-reading-time-sort="11" data-listing-word-count-sort="2074" data-listing-title-sort="Logbook: what an edge NPU takes, and what the ANNY forward will not export" data-listing-filename-sort="logbook-edge-npu-and-the-anny-forward.md">
-<td>
-<a href="../logbook/logbook-edge-npu-and-the-anny-forward.html" class="title listing-title">Logbook: what an edge NPU takes, and what the ANNY forward will not export</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="22" data-listing-file-modified-sort="1788405403234" data-listing-reading-time-sort="12" data-listing-word-count-sort="2261" data-listing-title-sort="Logbook: what the Neural Engine reaches, and what it holds" data-listing-filename-sort="logbook-rfd1142-neural-engine-against-the-ugen300.md">
-<td>
-<a href="../logbook/logbook-rfd1142-neural-engine-against-the-ugen300.html" class="title listing-title">Logbook: what the Neural Engine reaches, and what it holds</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="23" data-listing-file-modified-sort="1788405403234" data-listing-reading-time-sort="14" data-listing-word-count-sort="2799" data-listing-title-sort="Logbook: what the plan costs once the durations are real, and the card is a 3090" data-listing-filename-sort="logbook-rfd1122-hailo-first-rerank.md">
-<td>
-<a href="../logbook/logbook-rfd1122-hailo-first-rerank.html" class="title listing-title">Logbook: what the plan costs once the durations are real, and the card is a 3090</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="24" data-listing-file-modified-sort="1788405403234" data-listing-reading-time-sort="6" data-listing-word-count-sort="1157" data-listing-title-sort="The comment ladder" data-listing-filename-sort="logbook-comment-ladder.md">
-<td>
-<a href="../logbook/logbook-comment-ladder.html" class="title listing-title">The comment ladder</a>
-</td>
-<td>
-<span class="listing-date">&nbsp;</span>
-</td>
-
-</tr>
-
 </tbody>
 </table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</section>
+<section id="sequencing" class="level2">
+<h2 class="anchored" data-anchor-id="sequencing">Sequencing</h2>
+<p>Class-B QAFT rungs, cheapest first, so each result unblocks the next:</p>
+<ol type="1">
+<li><strong>Voice-adjacent small models first</strong> – Qwen3-TTS-1.7B, wav2vec2, Parakeet, ipa-whisper. Overnight batch. Unblocks RFD 2167 (voice-reward distillation) because both the reward LoRA base and the TTS candidate generation stop dominating inference cost.</li>
+<li><strong>Segmentation + inpainting</strong> – rf-detr-Seg, LaMa. Hours. Small in the compute budget; large in the RFD 1168 layer-decomposition path’s per-view cost.</li>
+<li><strong>Motion + rigging</strong> – Kimodo, SkinTokens, MoGe-3. Hours each.</li>
+<li><strong>Mid-tier vision + audio</strong> – TRELLIS.2 (~8B), Voxtral (3B), Whisper large-v3. Overnight runs.</li>
+<li><strong>Class C (Wan-VACE, Pixal3D)</strong> – parked. Either an upstream Q4 lands or the workspace acquires &gt;24 GB training capacity.</li>
+</ol>
+</section>
+<section id="compute-cost-of-the-plan" class="level2">
+<h2 class="anchored" data-anchor-id="compute-cost-of-the-plan">Compute cost of the plan</h2>
+<p>Rough total for Class B (all rungs 1-4): about a week of continuous 3090 wall-time if run serially. Roughly a weekend if parallelised across a Mac (MPS QLoRA for the smallest) and the 3090 (true QAFT for the mid-tier). CLAUDE.md’s Compute constraint applies: rented compute stays blocklisted; runs happen on the desktop machine.</p>
+</section>
+<section id="retraction-adjustment-note" class="level2">
+<h2 class="anchored" data-anchor-id="retraction-adjustment-note">Retraction / adjustment note</h2>
+<p>RFD 2139 read “no true-QAFT 4-bit checkpoints exist upstream” as “only Gemma runs QAFT-quantized.” That reading conflated “upstream publishes one” with “the workspace can have one.” This RFD splits those two into Class A vs Class B. Wan-VACE and Pixal3D stay in Class C, matching RFD 2139’s concern for those specific models.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -1109,7 +942,7 @@ window.Quarto = {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/pages/logbook.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/pages/logbook.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2178-qaft-4bit-across-the-stack/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2178-qaft-4bit-across-the-stack/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">

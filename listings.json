@@ -32,6 +32,7 @@
   {
     "listing": "/pages/rfd.html",
     "items": [
+      "/rfd/2178-qaft-4bit-across-the-stack/index.html",
       "/rfd/2177-flight-levels-taxonomy/index.html",
       "/rfd/2176-committed-cites-terminal-index/index.html",
       "/rfd/2175-abandon-rented-compute-rfds/index.html",
