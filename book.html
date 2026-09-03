@@ -49,9 +49,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-ebf6027466d64ce25e353d53063d38f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -1711,6 +1711,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#problem-219" id="toc-problem-219" class="nav-link" data-scroll-target="#problem-219">Problem</a></li>
   <li><a href="#references-38" id="toc-references-38" class="nav-link" data-scroll-target="#references-38">References</a></li>
   <li><a href="#related-201" id="toc-related-201" class="nav-link" data-scroll-target="#related-201">Related</a></li>
+  </ul></li>
+  <li><a href="#rfd-2194-runway-demo-as-a-live-avatar-portfolio-widget" id="toc-rfd-2194-runway-demo-as-a-live-avatar-portfolio-widget" class="nav-link" data-scroll-target="#rfd-2194-runway-demo-as-a-live-avatar-portfolio-widget">RFD 2194: Runway demo as a live-avatar portfolio widget</a>
+  <ul class="collapse">
+  <li><a href="#decision-223" id="toc-decision-223" class="nav-link" data-scroll-target="#decision-223">Decision</a></li>
+  <li><a href="#problem-220" id="toc-problem-220" class="nav-link" data-scroll-target="#problem-220">Problem</a></li>
+  <li><a href="#related-202" id="toc-related-202" class="nav-link" data-scroll-target="#related-202">Related</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
@@ -6980,6 +6986,27 @@ void  grafcet_static_free(char *buf);</code></pre>
 <section id="related-201" class="level2">
 <h2 class="anchored" data-anchor-id="related-201">Related</h2>
 <p>RFD 1157 (EditScore reward model), RFD 1173 (edit-reward corpus; MaskScore), CLAUDE.md constructed-synthetic reproducibility rule.</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2194-runway-demo-as-a-live-avatar-portfolio-widget" class="level1">
+<h1>RFD 2194: Runway demo as a live-avatar portfolio widget</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2194</code></p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> two live-avatar loop widgets on the portfolio <strong>Scope:</strong> <code>chibifire.com</code>, <code>1-transport/weftspun-studio</code>, RFD 2136 rung 9</p>
+<section id="decision-223" class="level2">
+<h2 class="anchored" data-anchor-id="decision-223">Decision</h2>
+<p>Two sub-25-second loop widgets showing the shuttle (portable VRM per RFD 2171 vocabulary), rendered live in Godot or browser, screen-recorded for shareable clips.</p>
+<p><strong>Anime side, text-only anchor</strong> (near-term reachable). Dressing from <code>chibifire/zenodo-ecommerce-text</code> + <code>chibifire/kaggle-womens-ecom-clothing-reviews</code>, CycleGAN-styled via RFD 0036 for anime look. Identity from <code>alfredplpl/anime-with-caption-cc0</code> captions (BLOCKLIST.md permits captions, blocks images). OmniGen2 (RFD 2183) generates from language, no visual anime corpus needed.</p>
+<p><strong>Real-world side.</strong> <code>chibifire/zenodo-second-hand-fashion-v3</code> (32k CC-BY garments) direct as dressing; identity blocked on photorealistic-face licence-clean corpus not yet acquired.</p>
+<p>Motion: motion-bricks.cpp (RFD 1102 catalog) on hand-authored keyframes. FX + palette per chibifire (RFD 2182 operator): ribbon trails on limb motion; peach, coral, blush, cream. Music: CC0 or CC-BY. No commissioned music, no licensed footage. 10-second outro: QR + URL per rung 9.</p>
+</section>
+<section id="problem-220" class="level2">
+<h2 class="anchored" data-anchor-id="problem-220">Problem</h2>
+<p>Atelier-workshop has no shipped demonstrable artifact.</p>
+</section>
+<section id="related-202" class="level2">
+<h2 class="anchored" data-anchor-id="related-202">Related</h2>
+<p>RFD 2136 (gacha ladder rung 9), RFD 2166 (Cineform), RFD 2171 (vocabulary), RFD 2183, RFD 2186 + 2187 (parked), RFD 1102.</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 
