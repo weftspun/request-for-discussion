@@ -28,18 +28,35 @@ own git and is not a candidate for the canonical branch.
 branch name so a rebase moves the tip forward without a manifest
 edit.
 
-## Cherry-pick skipped commits
+## Cherry-pick skipped commits, then re-resolved
 
-Cherry-picked onto `weftspun-consolidated` from `trellis2cpp/ggml`:
+Cherry-picked onto `weftspun-consolidated` from `sam3-metal-ops`:
 
-| commit | subject | outcome |
+| commit | subject | first outcome | resolution |
+|---|---|---|---|
+| `7a466633` | Metal conv\_transpose\_2d, depthwise conv\_2d, K/V flash\_attn\_ext type check, WIN\_PART / WIN\_UNPART on Metal | **SKIPPED**: conflicts in ggml-metal-device.h, ggml-metal-ops.cpp, ggml-metal.metal | **DROPPED after re-verification**. Per-intent verdicts below |
+| `331b9cba` | Metal flash\_attn\_ext head\_dim=16 and head\_dim=56 | **SKIPPED**: dependent on `7a466633`, and first pass claimed the template mechanism was restructured | **PORTED** as PR https://github.com/weftspun/ggml/pull/1 |
+
+### 7a466633 per-intent verdicts
+
+| intent | verdict | evidence |
 |---|---|---|
-| `7a466633` | Metal conv\_transpose\_2d, depthwise conv\_2d, K/V flash\_attn\_ext type check | **SKIPPED**: conflicts in `src/ggml-metal/ggml-metal-device.h`, `src/ggml-metal/ggml-metal-ops.cpp`, `src/ggml-metal/ggml-metal.metal`. The Metal backend has moved substantially between the 2026-03-31 base and the 2026-08-29 tip; the change wants hand-porting against the newer op registration. |
-| `331b9cba` | Metal flash\_attn\_ext head\_dim=16 and head\_dim=56 | **SKIPPED**: dependent on `7a466633`. |
+| conv\_transpose\_2d on Metal | verified covered | consolidated has identical (f32\_f32, f16\_f32) template pair at ggml-metal.metal:5508. Algorithm differs (threadgroup shared-sum reduction on consolidated) but the surface and dtype coverage match |
+| depthwise conv\_2d (CONV\_2D\_DW) | verified covered with more | consolidated has kernel\_conv\_2d\_dw templated over TK (_f32\_f32, _f16\_f32) plus a tiled variant with the same coverage. sam3's plain kernel\_conv\_2d\_dw\_f32 is a strict subset |
+| flash\_attn\_ext K/V type check | verified covered | identical assertion `op->src[1]->type == op->src[2]->type` at ggml-metal-ops.cpp:2721 |
+| WIN\_PART / WIN\_UNPART on Metal | genuinely missing, deferred | sam3 added Metal kernels; consolidated has these ops only in the CPU backend (ggml-cpu.c:2019-2023). No consumer in the workspace uses SAM3-style windowed attention today. CPU fallback correct. Port when a consumer needs it |
 
-Both live on `weftspun/ggml:sam3-metal-ops`, so nothing is lost —
-the Phase 2 skin-tokens.cpp / motion-bricks.cpp migration owns the
-hand-port because those consumers are what asked for the shapes.
+### 331b9cba resolution
+
+The first close-out claimed the template mechanism had been restructured and dk16/dk56 could not be added. That was wrong. The template shape on consolidated matches sam3 exactly; adding two head-dim slots was a mechanical change once the vec dispatch was ruled out.
+
+PR https://github.com/weftspun/ggml/pull/1 adds 16 template instantiations (dk16, dk56 × 8 K/V dtypes) plus 2 entries in the head-size whitelist in supports_op. Vec templates omitted because `ggml_metal_op_flash_attn_ext_use_vec` gates on `ne00 % 32 == 0`, which excludes 16 and 56.
+
+The `sam3-metal-ops` branch stays for archaeology.
+
+### Correction the record keeps
+
+The first close-out was too fast. Two claims failed the same test: "the newer surface restructured the target" was said without reading whether the restructure actually broke the port. The re-investigation kept the same three intents already-covered verdicts, added the WIN\_PART/WIN\_UNPART deferral (which the first pass called "not clearly needed" without evidence), and reversed the dk16/dk56 verdict from "not portable" to "portable with 18 lines." The verdicts moved because they were re-measured; the retraction stays here rather than being tidied out.
 
 ## Compatibility test matrix
 
