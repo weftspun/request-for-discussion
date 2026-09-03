@@ -744,6 +744,10 @@ def Scope "Serials"
                 {
                     custom string slug = "drop-whisper-models"
                 }
+                def "S2180"
+                {
+                    custom string slug = "drop-gemma-auto"
+                }
             }
         }
     }
