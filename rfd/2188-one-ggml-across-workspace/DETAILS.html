@@ -312,7 +312,12 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#discovery-head-dates-for-every-ggml-copy-found" id="toc-discovery-head-dates-for-every-ggml-copy-found" class="nav-link" data-scroll-target="#discovery-head-dates-for-every-ggml-copy-found">Discovery: HEAD dates for every ggml copy found</a></li>
   <li><a href="#consolidation-branch" id="toc-consolidation-branch" class="nav-link" data-scroll-target="#consolidation-branch">Consolidation branch</a></li>
-  <li><a href="#cherry-pick-skipped-commits" id="toc-cherry-pick-skipped-commits" class="nav-link" data-scroll-target="#cherry-pick-skipped-commits">Cherry-pick skipped commits</a></li>
+  <li><a href="#cherry-pick-skipped-commits-then-re-resolved" id="toc-cherry-pick-skipped-commits-then-re-resolved" class="nav-link" data-scroll-target="#cherry-pick-skipped-commits-then-re-resolved">Cherry-pick skipped commits, then re-resolved</a>
+  <ul class="collapse">
+  <li><a href="#a466633-per-intent-verdicts" id="toc-a466633-per-intent-verdicts" class="nav-link" data-scroll-target="#a466633-per-intent-verdicts">7a466633 per-intent verdicts</a></li>
+  <li><a href="#b9cba-resolution" id="toc-b9cba-resolution" class="nav-link" data-scroll-target="#b9cba-resolution">331b9cba resolution</a></li>
+  <li><a href="#correction-the-record-keeps" id="toc-correction-the-record-keeps" class="nav-link" data-scroll-target="#correction-the-record-keeps">Correction the record keeps</a></li>
+  </ul></li>
   <li><a href="#compatibility-test-matrix" id="toc-compatibility-test-matrix" class="nav-link" data-scroll-target="#compatibility-test-matrix">Compatibility test matrix</a></li>
   <li><a href="#phase-1-landing-prs" id="toc-phase-1-landing-prs" class="nav-link" data-scroll-target="#phase-1-landing-prs">Phase 1 landing PRs</a></li>
   <li><a href="#phase-1-non-goals" id="toc-phase-1-non-goals" class="nav-link" data-scroll-target="#phase-1-non-goals">Phase 1 non-goals</a></li>
@@ -404,9 +409,41 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="consolidation-branch">Consolidation branch</h2>
 <p><code>weftspun/ggml:weftspun-consolidated</code> pushed at <code>3404c951</code> (ggml-seethrough HEAD, unmodified). The manifest points at that branch name so a rebase moves the tip forward without a manifest edit.</p>
 </section>
-<section id="cherry-pick-skipped-commits" class="level2">
-<h2 class="anchored" data-anchor-id="cherry-pick-skipped-commits">Cherry-pick skipped commits</h2>
-<p>Cherry-picked onto <code>weftspun-consolidated</code> from <code>trellis2cpp/ggml</code>:</p>
+<section id="cherry-pick-skipped-commits-then-re-resolved" class="level2">
+<h2 class="anchored" data-anchor-id="cherry-pick-skipped-commits-then-re-resolved">Cherry-pick skipped commits, then re-resolved</h2>
+<p>Cherry-picked onto <code>weftspun-consolidated</code> from <code>sam3-metal-ops</code>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>commit</th>
+<th>subject</th>
+<th>first outcome</th>
+<th>resolution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>7a466633</code></td>
+<td>Metal conv_transpose_2d, depthwise conv_2d, K/V flash_attn_ext type check, WIN_PART / WIN_UNPART on Metal</td>
+<td><strong>SKIPPED</strong>: conflicts in ggml-metal-device.h, ggml-metal-ops.cpp, ggml-metal.metal</td>
+<td><strong>DROPPED after re-verification</strong>. Per-intent verdicts below</td>
+</tr>
+<tr class="even">
+<td><code>331b9cba</code></td>
+<td>Metal flash_attn_ext head_dim=16 and head_dim=56</td>
+<td><strong>SKIPPED</strong>: dependent on <code>7a466633</code>, and first pass claimed the template mechanism was restructured</td>
+<td><strong>PORTED</strong> as PR https://github.com/weftspun/ggml/pull/1</td>
+</tr>
+</tbody>
+</table>
+<section id="a466633-per-intent-verdicts" class="level3">
+<h3 class="anchored" data-anchor-id="a466633-per-intent-verdicts">7a466633 per-intent verdicts</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -415,25 +452,45 @@ ul.task-list li input[type="checkbox"] {
 </colgroup>
 <thead>
 <tr class="header">
-<th>commit</th>
-<th>subject</th>
-<th>outcome</th>
+<th>intent</th>
+<th>verdict</th>
+<th>evidence</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>7a466633</code></td>
-<td>Metal conv_transpose_2d, depthwise conv_2d, K/V flash_attn_ext type check</td>
-<td><strong>SKIPPED</strong>: conflicts in <code>src/ggml-metal/ggml-metal-device.h</code>, <code>src/ggml-metal/ggml-metal-ops.cpp</code>, <code>src/ggml-metal/ggml-metal.metal</code>. The Metal backend has moved substantially between the 2026-03-31 base and the 2026-08-29 tip; the change wants hand-porting against the newer op registration.</td>
+<td>conv_transpose_2d on Metal</td>
+<td>verified covered</td>
+<td>consolidated has identical (f32_f32, f16_f32) template pair at ggml-metal.metal:5508. Algorithm differs (threadgroup shared-sum reduction on consolidated) but the surface and dtype coverage match</td>
 </tr>
 <tr class="even">
-<td><code>331b9cba</code></td>
-<td>Metal flash_attn_ext head_dim=16 and head_dim=56</td>
-<td><strong>SKIPPED</strong>: dependent on <code>7a466633</code>.</td>
+<td>depthwise conv_2d (CONV_2D_DW)</td>
+<td>verified covered with more</td>
+<td>consolidated has kernel_conv_2d_dw templated over TK (_f32_f32, _f16_f32) plus a tiled variant with the same coverage. sam3’s plain kernel_conv_2d_dw_f32 is a strict subset</td>
+</tr>
+<tr class="odd">
+<td>flash_attn_ext K/V type check</td>
+<td>verified covered</td>
+<td>identical assertion <code>op-&gt;src[1]-&gt;type == op-&gt;src[2]-&gt;type</code> at ggml-metal-ops.cpp:2721</td>
+</tr>
+<tr class="even">
+<td>WIN_PART / WIN_UNPART on Metal</td>
+<td>genuinely missing, deferred</td>
+<td>sam3 added Metal kernels; consolidated has these ops only in the CPU backend (ggml-cpu.c:2019-2023). No consumer in the workspace uses SAM3-style windowed attention today. CPU fallback correct. Port when a consumer needs it</td>
 </tr>
 </tbody>
 </table>
-<p>Both live on <code>weftspun/ggml:sam3-metal-ops</code>, so nothing is lost — the Phase 2 skin-tokens.cpp / motion-bricks.cpp migration owns the hand-port because those consumers are what asked for the shapes.</p>
+</section>
+<section id="b9cba-resolution" class="level3">
+<h3 class="anchored" data-anchor-id="b9cba-resolution">331b9cba resolution</h3>
+<p>The first close-out claimed the template mechanism had been restructured and dk16/dk56 could not be added. That was wrong. The template shape on consolidated matches sam3 exactly; adding two head-dim slots was a mechanical change once the vec dispatch was ruled out.</p>
+<p>PR https://github.com/weftspun/ggml/pull/1 adds 16 template instantiations (dk16, dk56 × 8 K/V dtypes) plus 2 entries in the head-size whitelist in supports_op. Vec templates omitted because <code>ggml_metal_op_flash_attn_ext_use_vec</code> gates on <code>ne00 % 32 == 0</code>, which excludes 16 and 56.</p>
+<p>The <code>sam3-metal-ops</code> branch stays for archaeology.</p>
+</section>
+<section id="correction-the-record-keeps" class="level3">
+<h3 class="anchored" data-anchor-id="correction-the-record-keeps">Correction the record keeps</h3>
+<p>The first close-out was too fast. Two claims failed the same test: “the newer surface restructured the target” was said without reading whether the restructure actually broke the port. The re-investigation kept the same three intents already-covered verdicts, added the WIN_PART/WIN_UNPART deferral (which the first pass called “not clearly needed” without evidence), and reversed the dk16/dk56 verdict from “not portable” to “portable with 18 lines.” The verdicts moved because they were re-measured; the retraction stays here rather than being tidied out.</p>
+</section>
 </section>
 <section id="compatibility-test-matrix" class="level2">
 <h2 class="anchored" data-anchor-id="compatibility-test-matrix">Compatibility test matrix</h2>
