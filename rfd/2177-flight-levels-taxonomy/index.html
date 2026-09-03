@@ -47,9 +47,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-ebf6027466d64ce25e353d53063d38f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -348,7 +348,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="decision">Decision</h2>
 <p>Every RFD in the register carries an optional <code>flight_level</code> tag:</p>
 <p>L1 Operations how a single team executes; fast cadence L2 Coordination how work flows across teams to deliver value L3 Strategy portfolio decisions about where to invest</p>
-<p>Numbering follows Klaus Leopold’s original – L1 = ground, L3 = altitude – because the flight-altitude metaphor is the point of the naming and this workspace’s register is greenfield for this axis.</p>
+<p>Numbering follows Klaus Leopold’s original. L1 is ground, L3 is altitude, matching the flight-altitude metaphor. The register is greenfield for this axis, so no earlier convention needs inverting.</p>
 <p><code>scripts/render_flight_level_pages.py</code> reads the tag from every serial register and writes three Quarto listings under <code>pages/flight-level-{1,2,3}-*.qmd</code>. Navbar carries a Flight Levels dropdown. Untagged RFDs stay off the three pages; tagging is opt-in.</p>
 <p>See <code>DETAILS.md</code> for the tag schema, the render script’s shape, and the Klaus Leopold citation.</p>
 </section>
