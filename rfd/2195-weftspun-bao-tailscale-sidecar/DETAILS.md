@@ -112,3 +112,104 @@ Your config already sets `min_machines_running: 3` (currently 1). When you scale
 ## Cheaper "dev" alternative that reuses zero Fly changes
 
 Skip everything above and use `flyctl proxy 8200:8200 -a weftspun-bao` while you develop. It forwards localhost:8200 through Fly's WireGuard mesh — no public exposure, no container change. Only good for interactive use; a daemon that depends on it dies when you close the laptop.
+
+## Gotchas that cost the setup an hour each
+
+Six backlog items from the first two agents running against this. Each is a
+one-line footgun that reads as an unrelated problem until you know it.
+
+### Client cert must include the intermediate
+
+Bao's listener trusts only the Root CA. A client that presents only its
+leaf cert is rejected with `unknown certificate authority`, even though the
+leaf is validly signed. Bao expects the client to include the intermediate
+in its own chain.
+
+    cat leaf.pem intermediate.pem > client-fullchain.pem
+    export BAO_CLIENT_CERT=client-fullchain.pem
+
+The same shape bites the listener the other way: full-chain the server cert
+too, or clients see the same error against your Bao.
+
+### Cert-auth alias name is the full CN; KV keys mirror it
+
+The templated policy at `auth/cert/certs/agents-weftspun` uses
+`{{identity.entity.aliases.<accessor>.name}}`, and that resolves to the
+alias's Name field, which cert-auth populates with the CN. Bao does not
+strip a trailing suffix. Two conventions have to line up:
+
+- CN in the CSR is the full `<short>.agents.weftspun` form.
+- KV keys under `agents/` use the same full-CN form (`agents/mps-45994b.agents.weftspun`), not the short form.
+
+Mixing shapes makes the templated write silently no-op — the policy
+resolves to `agents/mps-45994b.agents.weftspun` and your session's write
+to `agents/mps-45994b` gets 403.
+
+### Named grant `agents/data/+ read` for peer visibility
+
+Templated per-agent write isolates *writes* to your own row, but it also
+prevents you seeing peers' rows. Add a separate grant to the same policy:
+
+    path "agents/data/+" { capabilities = ["read"] }
+    path "agents/metadata" { capabilities = ["list"] }
+
+Now every agent can see the coordination store; only its own row is
+writable.
+
+### `flyctl ssh console -C "cat file" | head` truncates on SIGPIPE
+
+`flyctl ssh console -C "cat /some/big/file" | tee copy | head -3` returns
+truncated stdout because the SSH stream races the pipe. The fix is
+write-then-read:
+
+    flyctl ssh console -C "cat /some/big/file" > local.copy
+    head -3 local.copy
+
+Same for any long stdout through `flyctl ssh console -C`.
+
+### `openssl req -subj "/CN=..."` mangles on Git-Bash
+
+MSYS silently rewrites `/CN=weftspun-bao` to a filesystem path when the
+argument starts with a single slash. The resulting cert has `CN=
+C:\...\CN=weftspun-bao` or similar. Escape with a double slash:
+
+    openssl req -new -key key.pem -subj "//CN=weftspun-bao.internal" ...
+
+Same for every `-subj` on Git-Bash. Native shells (zsh, POSIX sh under
+WSL) do not need this.
+
+### Rule zero: every live session gets an identity
+
+Formalised in `weftspun/dot-claude` PR #15's `agent-sync.md` skill body.
+The rule: every session that appears in `ListAgents` gets a Bao client
+cert and a `agents/<cn>.agents.weftspun` KV row, minted by whichever
+session holds the admin policy (currently `mps-45994b` via
+`auth/cert/certs/mps-45994b`). Read-only policy is fine as a first grant;
+write is deferred until the operator or the session itself asks for it.
+The provisioning bundle lands in 1Password (`agent-cert <cn>` item) and
+the receiving session's first action is `bao login` against it.
+
+## Revocation
+
+The Bao cert-auth method does not consult CRLs by default. `pki/revoke
+serial_number=<X>` records the revocation in the PKI store but does not
+gate access — a revoked cert still authenticates until you take one of
+these steps:
+
+1. **Narrow the cert-auth entry's `allowed_common_names`** to exclude the
+   revoked CN. Immediate effect, no reload needed. Best for revoking one
+   CN from a shared wildcard entry (e.g. change `*.agents.weftspun` to
+   `cuda-a63415.agents.weftspun` when revoking mps-dataset).
+2. **Delete the cert-auth entry** entirely (`bao delete
+   auth/cert/certs/<name>`). Immediate effect. Best when revoking every
+   identity that authed through that entry.
+3. **Enable CRL consultation** via `auth/cert/crls/<name>` and reload the
+   CRL after every revoke. Correct but higher operational load and the
+   default intermediate here reports `error building CRLs: x509: issuer
+   certificate doesn't contain a subject key identifier` — a re-issue of
+   the intermediate is needed before this path works.
+
+Options 1 and 2 are what we use. The KV row also gets deleted (`bao kv
+metadata delete agents/<cn>.agents.weftspun`) so peers don't see a stale
+identity. The 1Password item is annotated REVOKED with the reason and the
+cert body kept for audit.
