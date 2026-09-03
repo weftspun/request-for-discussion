@@ -1,28 +1,30 @@
 # RFD 1016: Deep learning model inventory
 
-**State:** published
+**State:** abandoned
 **Feature:** model inventory
-
-## Problem
-
-The repository references many model identifiers. The catalog records
-no type and no runtime location. A reader cannot tell a neural model
-from a geometric algorithm.
 
 ## Decision
 
-src/library/aiModelsCatalog.js stays the source of truth for the
-identifiers. This RFD records the type, the task, and the runtime
-location. The live list filters the catalog when the API connects.
+Abandoned 2026-09-03. The named source-of-truth
+`src/library/aiModelsCatalog.js` was retracted alongside RFD 2169
+(strangler-fig studio-core abandonment). RFD 1102 (task catalog) is
+the current inventory; its DETAILS.md lists every model, task, and
+runtime footprint. This RFD is kept for the retraction record.
 
-Fifteen models form the inventory, each a deep learning model
-packaged as its own model image, per RFD 1036. See `DETAILS.md`
-for the full table, plus the client and external models the table
-excludes.
+Historical decision, as published: `aiModelsCatalog.js` stayed the
+source of truth for identifiers; this RFD recorded type, task, and
+runtime location per model. Fifteen models formed the inventory,
+each packaged as its own model image per RFD 1036.
+
+## Problem
+
+The repository referenced many model identifiers. The catalog
+recorded no type and no runtime location. A reader could not tell a
+neural model from a geometric algorithm.
 
 ## Related
 
-RFD 1004 catalogs the tasks. RFD 1026 gives the memory per model. RFD
-1028 records the license gate. RFD 1030 records the See-Through
-components. RFD 1033 lists the geometric algorithms. RFD 1035 lists
-the legacy identifiers.
+RFD 1102 (task catalog, current inventory), RFD 2169 (studio-core
+abandonment), RFD 2174 (open-to-abandoned citation index).
+
+This RFD was drafted by an AI and read by a human before it shipped.

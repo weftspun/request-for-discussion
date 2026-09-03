@@ -1,36 +1,33 @@
-# RFD 1094: Multiple photos, routed by count, not by user choice
+# RFD 1094: Multi-image splat roadmap
 
-**State:** committed
+**State:** abandoned
 **Scope:** `image-to-splat`, `image-to-world`, avatar mesh generation
-
-## Problem
-
-A single photo gives a weak splat and a weak mesh. More photos help
-both, but only if the API and client agree on how many photos mean
-which engine, and whether an avatar's mesh generation actually fuses
-multiple views instead of using only the first.
 
 ## Decision
 
-Three shipped phases, one shared contract. Phase 1: every splat,
-world, and mesh request accepts an optional primary
-`image_file_id` plus up to seven `reference_image_file_ids` (eight
-images total); the client lets a user multi-select and mark one
-thumbnail primary. Phase 2: mesh generation sets
-`use_multiview_mesh: true` at two or more images, and the TRELLIS
-adapters fuse those views instead of using only the first; a
-"Use all photos for mesh" checkbox surfaces this once two or more
-photos are attached. Phase 3: `image-to-splat` auto-routes by
-count, not by user choice: one photo runs TripoSplat, two or more
-runs WorldMirror 2.0 feed-forward 3DGS, with a COLMAP sparse
-reconstruction as the fallback when WorldMirror is unavailable and
-three or more photos are present.
+Abandoned 2026-09-03. Every underlying model this RFD routed
+between is abandoned per RFD 1102 (task catalog) retraction record:
+TripoSplat, WorldMirror 2.0, weftspun_image_to_world, LingBot-Map
+(RFDs 1049-1052 abandoned). The three-phase routing contract has no
+targets to route to.
 
-See `DETAILS.md` for the per-phase field and status tables, the DGX
-host setup, and what remains unshipped.
+Historical decision, as published: three shipped phases on one
+contract. Phase 1 accepted a primary `image_file_id` plus up to
+seven references. Phase 2 flipped `use_multiview_mesh: true` at
+two-plus images. Phase 3 auto-routed by count between TripoSplat
+(single), WorldMirror 2.0 feed-forward 3DGS (two-plus), and COLMAP
+fallback.
+
+## Problem
+
+A single photo gave a weak splat and a weak mesh. More photos
+helped both, but only if the API and client agreed on how many
+photos meant which engine.
 
 ## Related
 
-RFD 1089 gives HY-World 2.0's own, separate full-world pipeline,
-built on the same WorldMirror dependency this RFD's Phase 3 uses.
-RFD 1083 gives the rig contract a multiview mesh must still pass.
+RFD 1102 (task catalog, current inventory), RFDs 1049-1052
+(underlying models, abandoned), RFD 1089 (HY-World 2.0 companion
+path, also abandoned), RFD 2174 (open-to-abandoned citation index).
+
+This RFD was drafted by an AI and read by a human before it shipped.
