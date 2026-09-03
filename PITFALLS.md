@@ -166,3 +166,36 @@ formulation transfers the pose" verdict; the claim that Delta Mush is implemente
 
 Each sits next to the thing it corrects. A reader who knows the dead ends is better off than
 one who knows only the current answer, which is the reason this file exists.
+
+---
+
+## 11. Rebase-and-force-push in a tight loop deadlocks under a merge storm
+
+The failure pattern seen against `weftspun/request-for-discussion` on 2026-09-03:
+
+- Ruleset requires branches up to date before merging, and requires all status checks
+  green.
+- Many small PRs land in a short window; main advances every few minutes.
+- A green PR shows `mergeStateStatus: BEHIND`; a rebase-and-force-push is the mechanical
+  answer, but it resets prek from scratch, and by the time prek finishes, main has moved
+  again. The PR never catches up.
+- `--force-with-lease` starts rejecting because the remote has shifted between the local
+  rebase and the push.
+
+**Cost:** unbounded rebase loop that keeps a green PR open indefinitely; wasted CI
+minutes; a human eventually admin-merges to break the loop.
+
+**Recovery:** `gh pr merge <N> --repo <r> --admin --merge` bypasses the up-to-date
+requirement for one stuck PR.
+
+**Guard:** GitHub's merge queue. `weftspun/request-for-discussion` main ruleset (id 21131040) enables `merge_queue` with `MERGE` method, `ALLGREEN` grouping,
+`min_entries_to_merge_wait_minutes: 0`, 60-min check timeout. The queue serialises PRs
+into a merge_group event, runs checks on a temporary branch that already has main's tip
+merged in, and merges in order. `.github/workflows/checks.yml` must declare
+`merge_group:` as a trigger; this repo already does.
+
+`gh pr merge --auto --merge` still works — it just adds to the queue instead of firing
+immediately.
+
+**When not to enable:** a repo with a single committer and rarely-concurrent PRs. The
+queue adds serialisation overhead where there is no contention to serialise.
