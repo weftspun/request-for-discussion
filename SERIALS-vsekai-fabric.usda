@@ -736,6 +736,10 @@ def Scope "Serials"
                 {
                     custom string slug = "flight-levels-taxonomy"
                 }
+                def "S2178"
+                {
+                    custom string slug = "qaft-4bit-across-the-stack"
+                }
             }
         }
     }
