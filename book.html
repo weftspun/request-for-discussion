@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Weftspun">
-<meta name="description" content="When tagging an RFD’s altitude, use the flight_level field on its serial-register entry. Values are L1 (operations, single-team execution), L2 (coordination, cross-team value flow), L3 (strategy, portfolio bet). Follow Klaus Leopold’s numbering (L1 = ground, L3 = altitude). Tagging is opt-in.">
+<meta name="description" content="When writing about who runs the atelier-workshop, who consumes the shuttle, or which market the workspace competes in, use these three anchors. Operator is chibifire.com (K. S. Ernest (iFire) Lee). Customer is the V-Sekai social network. Market is avatar-first social VR. The shuttle takes a portable character INTO V-Sekai. Never name third-party social-VR trademarks; use generic vocabulary per CLAUDE.md.">
 
 <title>Weftspun RFDs – Taskweft — Manuals</title>
 <style>
@@ -49,9 +49,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-ebf6027466d64ce25e353d53063d38f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -1619,6 +1619,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#decision-210" id="toc-decision-210" class="nav-link" data-scroll-target="#decision-210">Decision</a></li>
   <li><a href="#related-189" id="toc-related-189" class="nav-link" data-scroll-target="#related-189">Related</a></li>
   </ul></li>
+  <li><a href="#rfd-2182-identity-triangle-for-operator-market-customer" id="toc-rfd-2182-identity-triangle-for-operator-market-customer" class="nav-link" data-scroll-target="#rfd-2182-identity-triangle-for-operator-market-customer">RFD 2182: Identity triangle for operator, market, customer</a>
+  <ul class="collapse">
+  <li><a href="#problem-208" id="toc-problem-208" class="nav-link" data-scroll-target="#problem-208">Problem</a></li>
+  <li><a href="#decision-211" id="toc-decision-211" class="nav-link" data-scroll-target="#decision-211">Decision</a></li>
+  <li><a href="#related-190" id="toc-related-190" class="nav-link" data-scroll-target="#related-190">Related</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -1634,7 +1640,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div>
   <div class="description">
-    When tagging an RFD’s altitude, use the flight_level field on its serial-register entry. Values are L1 (operations, single-team execution), L2 (coordination, cross-team value flow), L3 (strategy, portfolio bet). Follow Klaus Leopold’s numbering (L1 = ground, L3 = altitude). Tagging is opt-in.
+    When writing about who runs the atelier-workshop, who consumes the shuttle, or which market the workspace competes in, use these three anchors. Operator is chibifire.com (K. S. Ernest (iFire) Lee). Customer is the V-Sekai social network. Market is avatar-first social VR. The shuttle takes a portable character INTO V-Sekai. Never name third-party social-VR trademarks; use generic vocabulary per CLAUDE.md.
   </div>
 </div>
 
@@ -6555,6 +6561,34 @@ void  grafcet_static_free(char *buf);</code></pre>
 <section id="related-189" class="level2">
 <h2 class="anchored" data-anchor-id="related-189">Related</h2>
 <p>Extends RFD 2179 (drop Whisper) and RFD 2180 (drop gemma-auto). Amends the panel row in RFD 2170’s decision that named <code>universal + eng + rus</code>.</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2182-identity-triangle-for-operator-market-customer" class="level1">
+<h1>RFD 2182: Identity triangle for operator, market, customer</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2182</code></p>
+<p><strong>State:</strong> committed <strong>Feature:</strong> name the operator, the customer, and the market <strong>Scope:</strong> RFD titles, public prose, README taglines, pitch material</p>
+<section id="problem-208" class="level2">
+<h2 class="anchored" data-anchor-id="problem-208">Problem</h2>
+<p>RFD 2171 fixed the vocabulary for the pipeline and the deliverable but left three L3 gaps a reader could not close from the register: who runs the atelier-workshop, who receives the shuttle, and which market the workspace competes in.</p>
+</section>
+<section id="decision-211" class="level2">
+<h2 class="anchored" data-anchor-id="decision-211">Decision</h2>
+<p>Three anchors, each named once:</p>
+<ul>
+<li><strong>Operator</strong>: <code>chibifire.com</code> (K. S. Ernest (iFire) Lee, github.com/fire). The domain owns the atelier-workshop and ships the shuttle.</li>
+<li><strong>Customer</strong>: the V-Sekai social network. The shuttle enters V-Sekai; a portable character becomes its owner’s presence there.</li>
+<li><strong>Market</strong>: avatar-first social VR. Generic vocabulary per CLAUDE.md’s trademark rule; do not name any specific third-party social-VR platform in shipping prose.</li>
+</ul>
+<p>The atelier-workshop-shuttle vocabulary (RFD 2171) plus this triangle gives one canonical positioning sentence:</p>
+<blockquote class="blockquote">
+<p>chibifire operates an atelier-workshop that shuttles the character-avatars into V-Sekai in the avatar-first social-VR market.</p>
+</blockquote>
+<p>“shuttle” reads as a verb here; “character-avatars” is the object.</p>
+</section>
+<section id="related-190" class="level2">
+<h2 class="anchored" data-anchor-id="related-190">Related</h2>
+<p>Companion to urn:oid:1.3.6.1.4.1.66606.1.1.2171 (vocabulary) and urn:oid:1.3.6.1.4.1.66606.1.1.1106 (open/proprietary boundary, which stops at the moat structure and leaves customer/market unstated). CLAUDE.md’s “Trademarks Stay Out of Shipping Artifacts” constrains the market row.</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 
