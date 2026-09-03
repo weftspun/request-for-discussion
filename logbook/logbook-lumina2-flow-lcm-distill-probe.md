@@ -66,9 +66,13 @@ single-source memorisation, and on unseen pairs the LoRA scored 0/5
 against the no-LoRA baseline. Method not vindicated at this n.
 
 The 100-epoch x n=10 configuration is the memorisation story: each
-pair was seen 100 times, inverting the "large-n, few-epoch" shape
-LCM distillation is built for. The n=1000 scale-up runs 2 epochs, so
-each pair is seen twice.
+pair was seen 100 times. The LCM paper (Luo et al 2023, arXiv
+2310.04378) trains for 100K iterations at batch 16 on
+LAION-Aesthetics-6+ (12M pairs at 512 px, ~0.13 epochs) or
+LAION-Aesthetic-6.5+ (650K pairs at 768 px, ~2.5 epochs). Both
+configurations see each sample a handful of times at most; ours saw
+each pair 100 times. The n=1000 scale-up runs 2 epochs, so each pair
+is seen twice.
 
 Next: n=1000 training on `chibifire/editscore-reward-train` (dataset
 reupload landed today, shard 01 verified clean, full snapshot in
