@@ -722,6 +722,11 @@ def Scope "Serials"
                 {
                     custom string slug = "committed-cites-terminal-index"
                 }
+                def "S2177"
+                {
+                    custom string slug = "flight-levels-taxonomy"
+                    custom string flight_level = "L3"
+                }
             }
         }
     }

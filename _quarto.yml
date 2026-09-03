@@ -30,6 +30,14 @@ website:
     left:
       - text: "RFDs"
         file: pages/rfd.qmd
+      - text: "Flight Levels"
+        menu:
+          - text: "L1 · Operations"
+            file: pages/flight-level-1-operations.qmd
+          - text: "L2 · Coordination"
+            file: pages/flight-level-2-coordination.qmd
+          - text: "L3 · Strategy"
+            file: pages/flight-level-3-strategy.qmd
       - text: "Logbook"
         file: pages/logbook.qmd
       - text: "Register"
