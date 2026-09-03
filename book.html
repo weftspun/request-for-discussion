@@ -856,7 +856,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#decision-90" id="toc-decision-90" class="nav-link" data-scroll-target="#decision-90">Decision</a></li>
   <li><a href="#related-88" id="toc-related-88" class="nav-link" data-scroll-target="#related-88">Related</a></li>
   </ul></li>
-  <li><a href="#rfd-1102-the-supported-3daigc-task-catalog-one-live-source" id="toc-rfd-1102-the-supported-3daigc-task-catalog-one-live-source" class="nav-link" data-scroll-target="#rfd-1102-the-supported-3daigc-task-catalog-one-live-source">RFD 1102: The supported 3DAIGC task catalog, one live source</a>
+  <li><a href="#rfd-1102-the-supported-task-catalog-one-live-source" id="toc-rfd-1102-the-supported-task-catalog-one-live-source" class="nav-link" data-scroll-target="#rfd-1102-the-supported-task-catalog-one-live-source">RFD 1102: The supported task catalog, one live source</a>
   <ul class="collapse">
   <li><a href="#problem-89" id="toc-problem-89" class="nav-link" data-scroll-target="#problem-89">Problem</a></li>
   <li><a href="#decision-91" id="toc-decision-91" class="nav-link" data-scroll-target="#decision-91">Decision</a></li>
@@ -1527,7 +1527,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#decision-198" id="toc-decision-198" class="nav-link" data-scroll-target="#decision-198">Decision</a></li>
   <li><a href="#related-177" id="toc-related-177" class="nav-link" data-scroll-target="#related-177">Related</a></li>
   </ul></li>
-  <li><a href="#rfd-2170-allosaurus-runs-universal-squads-game-localization-language-set" id="toc-rfd-2170-allosaurus-runs-universal-squads-game-localization-language-set" class="nav-link" data-scroll-target="#rfd-2170-allosaurus-runs-universal-squads-game-localization-language-set">RFD 2170: allosaurus runs universal + Squad’s game-localization language set</a>
+  <li><a href="#rfd-2170-allosaurus-runs-universal-a-27-language-commercial-localization-set" id="toc-rfd-2170-allosaurus-runs-universal-a-27-language-commercial-localization-set" class="nav-link" data-scroll-target="#rfd-2170-allosaurus-runs-universal-a-27-language-commercial-localization-set">RFD 2170: allosaurus runs universal + a 27-language commercial localization set</a>
   <ul class="collapse">
   <li><a href="#problem-196" id="toc-problem-196" class="nav-link" data-scroll-target="#problem-196">Problem</a></li>
   <li><a href="#decision-199" id="toc-decision-199" class="nav-link" data-scroll-target="#decision-199">Decision</a></li>
@@ -3541,22 +3541,26 @@ weight GB    = parameters in billions x 2</code></pre>
 <p><strong>Unresolved duplicate:</strong> weftspun-3d-studio’s own <code>thirdparty/m3/docs/SSH_HOST_NAMES.md</code> covers the same topic, with real content differences, including different SSH routes and hostnames. Neither version is authoritative; that reconciliation is still open. RFD 1086 gives the machine topology these two hosts fit into.</p>
 </section>
 </section>
-<section id="rfd-1102-the-supported-3daigc-task-catalog-one-live-source" class="level1">
-<h1>RFD 1102: The supported 3DAIGC task catalog, one live source</h1>
+<section id="rfd-1102-the-supported-task-catalog-one-live-source" class="level1">
+<h1>RFD 1102: The supported task catalog, one live source</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.1.1102</code></p>
-<p><strong>State:</strong> published <strong>Scope:</strong> <code>TaskManager.jsx</code>, <code>src/library/aiModelsCatalog.js</code></p>
+<p><strong>State:</strong> committed <strong>Scope:</strong> RFDs 1036 (packaging), 1173 (pipeline), 2136 (gacha ladder)</p>
 <section id="problem-89" class="level2">
 <h2 class="anchored" data-anchor-id="problem-89">Problem</h2>
-<p>The New Task panel’s own task list, <code>3DAIGC-API</code>’s live model list, and this project’s catalog file can drift from each other, and a reader had no single table naming which model backs which task today, or which task is client-only (no DGX call at all).</p>
+<p>The earlier draft named a browser New Task panel, <code>3DAIGC-API</code> on the DGX at port 7842, and a JS <code>aiModelsCatalog.js</code> as three sources of truth. Every premise was walked back: RFD 2169 abandoned the strangler-fig studio core the browser client fed; RFD 2175 abandoned rented compute; CLAUDE.md’s hard constraint is the local desktop GPU only. Six of the fourteen catalog rows referenced blocklisted or abandoned models (P3-SAM, TripoSplat, WorldMirror 2.0, weftspun_image_to_world, LingBot-Map, Hunyuan3D-2.1).</p>
 </section>
 <section id="decision-91" class="level2">
 <h2 class="anchored" data-anchor-id="decision-91">Decision</h2>
-<p><code>GET /api/v1/system/models</code> on <code>3DAIGC-API</code> (DGX, port 7842) is the live source; <code>src/library/aiModelsCatalog.js</code> mirrors it for the client. Fourteen task types are named in one table (text-to-3D through Avatar From Photo), each with its API feature key and a recommended model. Two tasks run with no <code>3DAIGC-API</code> call at all: “Avatar From Photo” (AvatarSDK, client-only) and the client-side avatar pipeline’s own rig step. Three models are license-blocked on a commercial tier (PartField, PartPacker, FastMesh); “Part completion” exists only in legacy upstream docs, not in this UI.</p>
-<p>See <code>DETAILS.md</code> for the full task table, the Gaussian-splat capability matrix (shipped versus not yet done), the architecture diagram, and the full further-reading index this catalog page carried.</p>
+<p>The task catalog is now the set of Docker images this workspace ships per RFD 1036 (plain HTTP, <code>/health</code> + <code>/predict</code>, weights at build time, one model per image), running on the local desktop GPU per CLAUDE.md, feeding the two pipelines the workspace actually operates:</p>
+<ul>
+<li><strong>MaskScore corpus construction</strong> (RFD 1173): eight stubs across mesh/depth/pose/keypoints/multimodal/speech/text/video. Five shipped on HF (RFD 2164 speech + Rung 1 walking skeleton).</li>
+<li><strong>The gacha critical path</strong> (RFD 2136): ten-rung ladder from a language prompt to a public roll-button-dispensed VRM.</li>
+</ul>
+<p><code>DETAILS.md</code> carries the current per-task table, the pipeline diagrams, and the retraction record for the browser-client + DGX catalog this RFD used to describe.</p>
 </section>
 <section id="related-89" class="level2">
 <h2 class="anchored" data-anchor-id="related-89">Related</h2>
-<p>RFD 1004 (weftspun-3d-studio’s own <code>decisions/</code>) gives the AIGC task catalog’s own original design. RFD 1094 gives the multi-image routing this catalog’s splat and avatar tasks both use. RFD 1100 gives the spatial-fabric publish path a completed mesh task reaches.</p>
+<p>RFD 1036 (Docker packaging), RFD 1053 (OpenUSD internal + glTF/VRM at edge), RFD 1027 (GPU tier), RFD 1173 (multimodal pipeline), RFD 2136 (gacha ladder), RFD 2164 (Speech stub shipped), RFD 2169 (studio-core abandonment), RFD 2175 (rented compute abandoned).</p>
 </section>
 </section>
 <section id="rfd-1103-loot-assets-from-a-cdn-not-a-full-clone-on-vercel" class="level1">
@@ -6239,24 +6243,24 @@ void  grafcet_static_free(char *buf);</code></pre>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 </section>
 </section>
-<section id="rfd-2170-allosaurus-runs-universal-squads-game-localization-language-set" class="level1">
-<h1>RFD 2170: allosaurus runs universal + Squad’s game-localization language set</h1>
+<section id="rfd-2170-allosaurus-runs-universal-a-27-language-commercial-localization-set" class="level1">
+<h1>RFD 2170: allosaurus runs universal + a 27-language commercial localization set</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2170</code></p>
 <p><strong>State:</strong> committed <strong>Feature:</strong> phone-inventory controls for the ASR panel <strong>Scope:</strong> <code>6-datasource/anny-render-corpus/emit_10track_panel.py</code>, <code>6-datasource/anny-render-corpus/add_allosaurus_control.py</code></p>
 <section id="problem-196" class="level2">
 <h2 class="anchored" data-anchor-id="problem-196">Problem</h2>
-<p>RFD 2164’s panel shipped allosaurus at three inventories (<code>universal</code>, <code>eng</code>, <code>rus</code>, picked because the first speaker was Kazakh L2 English). That does not generalize; per-corpus priors make runs incomparable.</p>
+<p>RFD 2164 shipped allosaurus at three inventories (<code>universal</code>, <code>eng</code>, <code>rus</code>, picked because the first speaker was Kazakh L2 English). Per- corpus priors make runs incomparable.</p>
 </section>
 <section id="decision-199" class="level2">
 <h2 class="anchored" data-anchor-id="decision-199">Decision</h2>
-<p>allosaurus runs at <strong>universal + Squad’s full Steam-page language set</strong> (27 languages, verbatim as of 2018-12-15 and preserved into the 2026 store page):</p>
+<p>allosaurus runs at <strong>universal + the 27-language commercial localization set</strong> commonly shipped by an actively-maintained AAA multiplayer game (captured 2018-12-15, unchanged through 2026):</p>
 <p>universal, eng, fra, ita, deu, pol, rus, cmn, cmn-Hant, tur, spa, ara, ces, kor, bul, dan, nld, fin, ell, hun, jpn, nor, por, por-BR, ron, swe, tha, ukr</p>
-<p>28 tracks. Codes ISO 639-3 with a script/region suffix where Squad distinguishes (cmn/cmn-Hant, por/por-BR). Squad’s Steam page drives the standard as the tightest actively-maintained AAA-game localization set spanning every top game market.</p>
+<p>28 tracks. Codes ISO 639-3 with a script/region suffix where the source distinguishes (cmn/cmn-Hant, por/por-BR). The set is the tightest actively-maintained AAA-game localization set spanning every top game market.</p>
 <p>Clip whose L1 is out-of-set scores under <code>universal</code> alone; language-specific rows return empty (real signal, not silent skip). Where allosaurus shares one phone inventory across a pair (cmn/cmn-Hant, por/por-BR), rows share weights; labels survive.</p>
 </section>
 <section id="related-178" class="level2">
 <h2 class="anchored" data-anchor-id="related-178">Related</h2>
-<p>Spine: urn:oid:1.3.6.1.4.1.66606.1.1.1173 (MaskScore). Applies to: urn:oid:1.3.6.1.4.1.66606.1.2.2164 (Speech stub). Squad Steam page: https://store.steampowered.com/app/393380/Squad/ Squad Wiki translation portal: https://squad.fandom.com/wiki/Squad_Wiki:Translation_portal</p>
+<p>Spine: urn:oid:1.3.6.1.4.1.66606.1.1.1173 (MaskScore). Applies to: urn:oid:1.3.6.1.4.1.66606.1.2.2164 (Speech stub).</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 </section>
 </section>

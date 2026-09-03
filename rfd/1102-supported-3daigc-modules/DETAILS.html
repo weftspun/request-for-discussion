@@ -289,18 +289,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#rfd-1102-details-the-task-table-splat-status-architecture-and-further-reading" id="toc-rfd-1102-details-the-task-table-splat-status-architecture-and-further-reading" class="nav-link active" data-scroll-target="#rfd-1102-details-the-task-table-splat-status-architecture-and-further-reading">RFD 1102 details: the task table, splat status, architecture, and further reading</a>
+  <li><a href="#rfd-1102-details-current-task-catalog-pipelines-retraction-record" id="toc-rfd-1102-details-current-task-catalog-pipelines-retraction-record" class="nav-link active" data-scroll-target="#rfd-1102-details-current-task-catalog-pipelines-retraction-record">RFD 1102 details: current task catalog, pipelines, retraction record</a>
   <ul class="collapse">
-  <li><a href="#task-types-new-task-panel" id="toc-task-types-new-task-panel" class="nav-link" data-scroll-target="#task-types-new-task-panel">Task types, New Task panel</a></li>
-  <li><a href="#gaussian-splats-3dgs" id="toc-gaussian-splats-3dgs" class="nav-link" data-scroll-target="#gaussian-splats-3dgs">Gaussian splats (3DGS)</a>
-  <ul class="collapse">
-  <li><a href="#shipped-today" id="toc-shipped-today" class="nav-link" data-scroll-target="#shipped-today">Shipped today</a></li>
-  <li><a href="#not-done-yet" id="toc-not-done-yet" class="nav-link" data-scroll-target="#not-done-yet">Not done yet</a></li>
-  <li><a href="#where-it-lives-architecture" id="toc-where-it-lives-architecture" class="nav-link" data-scroll-target="#where-it-lives-architecture">Where it lives, architecture</a></li>
-  </ul></li>
-  <li><a href="#application-feature-summary" id="toc-application-feature-summary" class="nav-link" data-scroll-target="#application-feature-summary">Application feature summary</a></li>
-  <li><a href="#key-components" id="toc-key-components" class="nav-link" data-scroll-target="#key-components">Key components</a></li>
-  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a></li>
+  <li><a href="#model-catalog-docker-images-per-rfd-1036" id="toc-model-catalog-docker-images-per-rfd-1036" class="nav-link" data-scroll-target="#model-catalog-docker-images-per-rfd-1036">Model catalog (Docker images, per RFD 1036)</a></li>
+  <li><a href="#voice-asr-rfd-2164" id="toc-voice-asr-rfd-2164" class="nav-link" data-scroll-target="#voice-asr-rfd-2164">Voice + ASR (RFD 2164)</a></li>
+  <li><a href="#pipeline-maskscore-corpus-construction-rfd-1173" id="toc-pipeline-maskscore-corpus-construction-rfd-1173" class="nav-link" data-scroll-target="#pipeline-maskscore-corpus-construction-rfd-1173">Pipeline: MaskScore corpus construction (RFD 1173)</a></li>
+  <li><a href="#pipeline-gacha-critical-path-rfd-2136" id="toc-pipeline-gacha-critical-path-rfd-2136" class="nav-link" data-scroll-target="#pipeline-gacha-critical-path-rfd-2136">Pipeline: Gacha critical path (RFD 2136)</a></li>
+  <li><a href="#retraction-record" id="toc-retraction-record" class="nav-link" data-scroll-target="#retraction-record">Retraction record</a></li>
+  <li><a href="#format-boundary" id="toc-format-boundary" class="nav-link" data-scroll-target="#format-boundary">Format boundary</a></li>
+  <li><a href="#packaging" id="toc-packaging" class="nav-link" data-scroll-target="#packaging">Packaging</a></li>
+  <li><a href="#related" id="toc-related" class="nav-link" data-scroll-target="#related">Related</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/1102-supported-3daigc-modules/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/1102-supported-3daigc-modules/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
@@ -312,197 +310,162 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="rfd-1102-details-the-task-table-splat-status-architecture-and-further-reading" class="level1">
-<h1>RFD 1102 details: the task table, splat status, architecture, and further reading</h1>
-<section id="task-types-new-task-panel" class="level2">
-<h2 class="anchored" data-anchor-id="task-types-new-task-panel">Task types, New Task panel</h2>
+<section id="rfd-1102-details-current-task-catalog-pipelines-retraction-record" class="level1">
+<h1>RFD 1102 details: current task catalog, pipelines, retraction record</h1>
+<section id="model-catalog-docker-images-per-rfd-1036" class="level2">
+<h2 class="anchored" data-anchor-id="model-catalog-docker-images-per-rfd-1036">Model catalog (Docker images, per RFD 1036)</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 19%">
-<col style="width: 29%">
+<col style="width: 23%">
+<col style="width: 24%">
 <col style="width: 51%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Task</th>
-<th>API feature</th>
-<th>Example models (DGX, June 2026)</th>
+<th>Model</th>
+<th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Text to 3D</td>
-<td><code>text_to_textured_mesh</code></td>
-<td>TRELLIS</td>
+<td>Text/image reasoning + reward</td>
+<td>Gemma-4-12B (QAT Q4_0)</td>
+<td>Shared VLM per RFD 1173; EditScore fine-tune base (RFD 1157).</td>
 </tr>
 <tr class="even">
-<td>Image to 3D</td>
-<td><code>image_to_textured_mesh</code></td>
-<td>TRELLIS.2 (recommended), Pixal3D (PBR), Hunyuan3D-2.1</td>
+<td>Text/image → image</td>
+<td>Wan-VACE</td>
+<td>~14 GB NF4 (staged per RFD 1027).</td>
 </tr>
 <tr class="odd">
-<td>Image to Raw Mesh</td>
-<td><code>image_to_raw_mesh</code></td>
-<td>Hunyuan3D-2.1, UltraShape</td>
+<td>Image → coarse mesh</td>
+<td>Pixal3D</td>
+<td>24 GB total, ~6.5 GB peak staged.</td>
 </tr>
 <tr class="even">
-<td>Mesh painting (text or image)</td>
-<td><code>text_mesh_painting</code> / <code>image_mesh_painting</code></td>
-<td>TRELLIS.2, Hunyuan</td>
+<td>Mesh refinement</td>
+<td>VoxHammer</td>
+<td>Holds no weights (RFD 1162).</td>
+</tr>
+<tr class="odd">
+<td>Image → mesh (fast)</td>
+<td>TRELLIS.2</td>
+<td>~8 GB bf16.</td>
+</tr>
+<tr class="even">
+<td>Metric depth</td>
+<td>MoGe-3</td>
+<td>~1 GB.</td>
+</tr>
+<tr class="odd">
+<td>Auto-rig</td>
+<td>SkinTokens</td>
+<td>Full GLB against ANNY skeleton.</td>
+</tr>
+<tr class="even">
+<td>Text → motion</td>
+<td>Kimodo</td>
+<td>Into SOMA pose format (78 canonical); consumed by ANNY.</td>
 </tr>
 <tr class="odd">
 <td>Mesh segmentation</td>
-<td><code>mesh_segmentation</code></td>
-<td>P3-SAM</td>
+<td>rf-detr-Seg (RFD 1168)</td>
+<td>Replaces P3-SAM (blocklisted, territory).</td>
 </tr>
 <tr class="even">
+<td>Layer decomposition</td>
+<td>rf-detr-Seg + LaMa inpainting</td>
+<td>Replaces See-Through (blocklisted, no license) per RFD 1168.</td>
+</tr>
+<tr class="odd">
 <td>Mesh retopology</td>
-<td><code>mesh_retopology</code></td>
-<td>AutoRemesher (default), Instant Meshes, Trimesh Decimate</td>
-</tr>
-<tr class="odd">
-<td>Mesh UV unwrapping</td>
-<td><code>uv_unwrapping</code></td>
-<td>xatlas</td>
-</tr>
-<tr class="even">
-<td>Mesh editing (text or image)</td>
-<td><code>text_mesh_editing</code> / <code>image_mesh_editing</code></td>
-<td>VoxHammer</td>
-</tr>
-<tr class="odd">
-<td>Auto rigging</td>
-<td><code>auto_rig</code></td>
-<td>SkinTokens (full GLB, recommended), UniRig (template VRM)</td>
-</tr>
-<tr class="even">
-<td>Text to Motion (Kimodo)</td>
-<td><code>text_to_motion</code></td>
-<td>Kimodo SOMA-RP-v1.1, into studio motion JSON, into VRM/rigged-GLB playback</td>
-</tr>
-<tr class="odd">
-<td>Image to Gaussian Splat</td>
-<td><code>image_to_splat</code></td>
-<td>TripoSplat (1 photo), WorldMirror 2.0 (2+), COLMAP (3+)</td>
-</tr>
-<tr class="even">
-<td>Image to World</td>
-<td><code>image_to_world</code></td>
-<td><code>weftspun_image_to_world</code> (a splat environment, plus optional TRELLIS.2 props)</td>
-</tr>
-<tr class="odd">
-<td>Avatar from Image</td>
-<td>a client pipeline</td>
-<td>TRELLIS.2 mesh, into a UniRig template rig, into a GLB</td>
-</tr>
-<tr class="even">
-<td>Avatar From Photo</td>
-<td>client only</td>
-<td>AvatarSDK, not <code>3DAIGC-API</code></td>
+<td>AutoRemesher, xatlas UV</td>
+<td>Format-adjacent tools, unchanged from prior catalog.</td>
 </tr>
 </tbody>
 </table>
-<p>Also shipped, client plus API: multi-image input, a primary photo plus up to seven references, on splat, world, and avatar tasks (RFD 1094); Publish RP1/OMB validate, sending a mesh job to the spatial fabric through the MSF Map Service (RFD 1100); Kimodo text-to-motion, an animation-bar prompt into a SOMA motion job into viewport playback on a VRM or a rigged GLB (<code>KimodoMotionPromptBar.jsx</code>, <code>kimodoMotionLoader.js</code>).</p>
-<p>Not in the UI: “Part completion” (legacy upstream docs only). License-blocked on a commercial tier: PartField, PartPacker, FastMesh; see <code>3DAIGC-API</code>’s own <code>MODEL_LICENSES.md</code>.</p>
 </section>
-<section id="gaussian-splats-3dgs" class="level2">
-<h2 class="anchored" data-anchor-id="gaussian-splats-3dgs">Gaussian splats (3DGS)</h2>
-<p>Splats live inside this app, the same <code>SceneManager</code> viewport as VRM and mesh workflows, not a separate product. Generation runs on the DGX, through <code>3DAIGC-API</code>; viewing uses Spark.js (<code>sparkSplatManager.js</code>, <code>@sparkjsdev/spark</code>) in the main Three.js scene.</p>
-<section id="shipped-today" class="level3">
-<h3 class="anchored" data-anchor-id="shipped-today">Shipped today</h3>
+<section id="voice-asr-rfd-2164" class="level2">
+<h2 class="anchored" data-anchor-id="voice-asr-rfd-2164">Voice + ASR (RFD 2164)</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 17%">
-<col style="width: 37%">
-<col style="width: 45%">
+<col style="width: 40%">
+<col style="width: 59%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Capability</th>
-<th>Client</th>
-<th>API (DGX)</th>
+<th>Task</th>
+<th>Model</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Splat preview in the viewport</td>
-<td>A <code>SplatMesh</code>, alongside VRM and meshes</td>
-<td><code>POST /api/v1/splat-generation/image-to-splat</code></td>
+<td>Voice cloning</td>
+<td>Qwen3-TTS-12Hz-1.7B-Base</td>
 </tr>
 <tr class="even">
-<td>One photo to a splat</td>
-<td>Task Manager’s multi-select, one primary photo</td>
-<td>TripoSplat</td>
+<td>ASR (canonical)</td>
+<td>Parakeet TDT 0.6B v3 (CC-BY-4.0)</td>
 </tr>
 <tr class="odd">
-<td>Two or more photos to a splat</td>
-<td>The same UI; mark the best front view as primary</td>
-<td>WorldMirror 2.0 (COLMAP as the fallback, at three or more)</td>
+<td>ASR panel (12 tracks)</td>
+<td>Parakeet, Whisper large-v3, Voxtral Mini 3B, wav2vec2, Gemma-4-12B (auto + GBNF-IPA), Voxtral-IPA, ipa-whisper (s + b), allosaurus (universal + 27 commercial-localization langs per RFD 2170)</td>
 </tr>
 <tr class="even">
-<td>World package load</td>
-<td>World Library, plus <code>worldSceneLoader.js</code></td>
-<td><code>POST /api/v1/world-generation/image-to-world</code> (<code>weftspun_image_to_world</code>)</td>
-</tr>
-<tr class="odd">
-<td>A walked, XR environment scan</td>
-<td>Task Manager’s “Environment Scan”</td>
-<td><code>POST /api/v1/world-generation/environment-scan</code> (LingBot-Map)</td>
-</tr>
-<tr class="even">
-<td>Env-scan Phase A, into Spark</td>
-<td>Automatic, when <code>refine_to_3dgs</code> is set</td>
-<td>Isotropic Gaussians, from a point cloud</td>
-</tr>
-<tr class="odd">
-<td>Env-scan Phase B train</td>
-<td>Separate, or <code>train_3dgs: true</code></td>
-<td><code>POST /train-3dgs</code> / <code>env_scan_gsplat_train</code>, 7 or 10,000 steps</td>
-</tr>
-<tr class="even">
-<td>Avatar plus optional splat</td>
-<td>“Avatar from Image,” plus a “Gaussian splat preview” checkbox</td>
-<td>TRELLIS.2 mesh, plus a UniRig template rig, plus an optional TripoSplat</td>
-</tr>
-<tr class="odd">
-<td>Multi-image uploads</td>
-<td><code>multiImageInput.js</code>, on splat, world, and avatar tasks</td>
-<td><code>image_file_id</code> plus <code>reference_image_file_ids</code>, up to eight images total</td>
+<td>Speaker embedding</td>
+<td>Microsoft WavLM Base+ SV</td>
 </tr>
 </tbody>
 </table>
-<p>Task types in the New Task panel: “Image to Gaussian Splat,” “Image to World (splat + props),” “Environment Scan.”</p>
 </section>
-<section id="not-done-yet" class="level3">
-<h3 class="anchored" data-anchor-id="not-done-yet">Not done yet</h3>
-<p>Splat-only world RP1: World Library’s own RP1 needs mesh props in the manifest; a pure Gaussian environment needs a prop-generation path before it can publish to OMB at all (RFD 1100 gives why). Env-scan x402 SKUs: Phase A versus Phase B billing, plus a frame-budget upsell, is roadmap work, not shipped. Gaussian-VRM/RGBAvatar body pipelines: scan-based full-body avatars, and the highest-fidelity head-attachment path, are separate from the viewport’s own TripoSplat preview, not the same code path as <code>image-to-splat</code>.</p>
+<section id="pipeline-maskscore-corpus-construction-rfd-1173" class="level2">
+<h2 class="anchored" data-anchor-id="pipeline-maskscore-corpus-construction-rfd-1173">Pipeline: MaskScore corpus construction (RFD 1173)</h2>
+<p>input Docker container per model, /health + /predict | render Mitsuba llvm_ad_rgb or metal_ad_rgb, sphere_hammersley | MaskScore mask → reconstruct → score decoded outputs | parquet 3-file ZSTD per stub (root + candidates + scores), ETNF (no nulls, interned vocab), RFD 2165.1 schema | HF chibifire/maskscore-rung-1-bootstrap, 5 of 8 stubs shipped (mesh, depth, pose, keypoints, multimodal, speech)</p>
 </section>
-<section id="where-it-lives-architecture" class="level3">
-<h3 class="anchored" data-anchor-id="where-it-lives-architecture">Where it lives, architecture</h3>
-<pre><code>[DGX 3DAIGC-API]  TripoSplat, WorldMirror/COLMAP, image-to-world, LingBot env-scan A/B, avatar mesh/rig jobs
-       |
-[this project /]  SceneManager: one renderer, one WebXR session, VRM + tools
-       |                  SparkRenderer + SplatMesh (LingBot: orientationMode none)</code></pre>
-<p><code>/xr</code> stays an IWSDK lab for grab and locomotion regression (RFD 1090). The main app (<code>/</code>) runs IWSDK Option A on <code>SceneManager</code>: distance and proximity grab (trigger), a grip that opens a context menu or pans, and thumbstick locomotion, alongside loaded splat worlds and a VRM, in the same session.</p>
+<section id="pipeline-gacha-critical-path-rfd-2136" class="level2">
+<h2 class="anchored" data-anchor-id="pipeline-gacha-critical-path-rfd-2136">Pipeline: Gacha critical path (RFD 2136)</h2>
+<p>Ten rungs, each producing an output the next rung consumes:</p>
+<ol start="0" type="1">
+<li>Language prompt → image (OmniGen2)</li>
+<li>Image → mesh (Pixal3D)</li>
+<li>Mesh → judged (EditScore)</li>
+<li>Judged → repaired (VoxHammer, N-attempt bound)</li>
+<li>Repaired → skinned (SkinTokens against ANNY)</li>
+<li>Skinned → tagged (rf-detr-Seg + LaMa)</li>
+<li>Tagged → VRM (portable character)</li>
+<li>Prompt list → pool (~50 VRMs, judged, seed-reproducible)</li>
+<li>Pool → roll button (web page)</li>
+<li>Public (hosted with sponsor link)</li>
+</ol>
 </section>
+<section id="retraction-record" class="level2">
+<h2 class="anchored" data-anchor-id="retraction-record">Retraction record</h2>
+<p>The 2026-06 draft of this RFD listed:</p>
+<ul>
+<li>DGX-hosted <code>3DAIGC-API</code> on port 7842 as the live source.</li>
+<li><code>TaskManager.jsx</code> and <code>src/library/aiModelsCatalog.js</code> as the client half of the strangler-fig plan (RFD 1019).</li>
+<li>14 task types across text-to-3D, image-to-3D, splat, world, and avatar categories, with per-task feature keys.</li>
+<li>Six models now blocklisted or abandoned: P3-SAM (territory restricted), TripoSplat + WorldMirror 2.0 + weftspun_image_to_world
+<ul>
+<li>LingBot-Map (RFDs 1049-1052 abandoned), Hunyuan3D-2.1 (not in current catalog per RFD 1027).</li>
+</ul></li>
+<li>Publish/RP1/OMB via MSF Map Service (RFD 1100 abandoned per RFD 2176 Class F index).</li>
+<li>IWSDK Option A on SceneManager (RFD 1090 abandoned).</li>
+</ul>
+<p>Retracted alongside RFD 2169 (studio-core abandonment) and RFD 2175 (rented-compute abandonment). The task shape the catalog described no longer exists; the model set the catalog listed is the intersection above.</p>
 </section>
-<section id="application-feature-summary" class="level2">
-<h2 class="anchored" data-anchor-id="application-feature-summary">Application feature summary</h2>
-<p>Rendering modes: Solid, Rendered, Wireframe, Skeleton, Part Colorize. File formats: GLB, GLTF, OBJ, FBX, DAE, STL, VRM; images: JPG, PNG, BMP, TGA, for image-to-3D workflows.</p>
-<p>WebXR: VR with a floor-anchored, virtual-sky scene; AR with pass-through transparency; Samsung Galaxy XR (Chrome WebXR) as the primary on-device target; <code>bounded-floor</code>, <code>local-floor</code>, <code>local</code>, and <code>viewer</code> reference spaces (RFD 1108 gives the implementation); WebXR expression tracking when the browser exposes it, a native face relay through a companion APK when it does not (RFD 1096, RFD 1082).</p>
-<p>Also shipped: WebGPU rendering with an automatic WebGL fallback; SSAO, Bloom, and FXAA post-processing; positional (spatial) audio; a Core3D integration for a model and materials library; a shared, mode-detecting 3D viewer (<code>Universal3DViewer</code>).</p>
-<p>Avatar and VRM: a trait-based VRM character system, with a soulbound base body and equippable clothing, hair, and accessory layers; drag-and-drop texture and model overrides; Mixamo integration and Kimodo text-to-motion for animation; blend shapes, lip sync, eye tracking, and automatic blinking; an optimized VRM export with texture atlasing and mesh merging; batch VRM generation from a manifest; one-click optimization down to a single draw call.</p>
+<section id="format-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="format-boundary">Format boundary</h2>
+<p>Internal: OpenUSD <code>.usda</code> / <code>.usdc</code> (RFD 1053 <code>committed</code>), each stage adds a layer. Transmission: glTF binary (asset), VRM (avatar), USDZ (archive). Convert at the boundary only.</p>
 </section>
-<section id="key-components" class="level2">
-<h2 class="anchored" data-anchor-id="key-components">Key components</h2>
-<p>Avatar and viewport: <code>Scene3D</code>, <code>TaskManager</code>, <code>FileUpload</code>, <code>RenderModeSelector</code>, <code>APIStatus</code>, <code>SceneManager</code> (the WebGL-based core), <code>Shared3DViewer</code>, <code>Universal3DViewer</code>, <code>Core3DViewer</code>, <code>Core3DPanel</code>, <code>Core3DContext</code>, <code>Core3DService</code>.</p>
-<p>Character and animation: <code>CharacterManager</code>, <code>AnimationManager</code>, <code>BlinkManager</code>, <code>LookAtManager</code>, <code>EmotionManager</code>. State: <code>taskStore</code>, <code>sceneStore</code>, <code>SceneContext</code>, <code>Core3DContext</code>.</p>
-<p>This project began as Open3DStudio, a WebGL-only foundation with basic 3D AIGC workflows, task management, and file import/export. The Three.js WebGPU and WebXR migration guide documents the move from that foundation to the current rendering stack.</p>
+<section id="packaging" class="level2">
+<h2 class="anchored" data-anchor-id="packaging">Packaging</h2>
+<p>Per RFD 1036 (<code>committed</code>): plain Docker, <code>/health</code> + <code>/predict</code>, weights at build time, two-stage Dockerfile (<code>contract</code> + <code>worker</code>), one model per image. Target 24 GB card (local desktop GPU per CLAUDE.md).</p>
 </section>
-<section id="further-reading" class="level2">
-<h2 class="anchored" data-anchor-id="further-reading">Further reading</h2>
-<p>RFD 1094 (multi-image routing), RFD 1095 (NVIDIA XR AI), RFD 1086 (dev machine topology), RFD 1107 (world package format), RFD 1100 (spatial fabric/RP1), RFD 1084 (avatar pipeline, client side), RFD 1090 (IWSDK integration), RFD 1096 (OpenXR face tracking), RFD 1082 (the Android XR face-bridge APK), RFD 1105 (webcam/avatar control), RFD 1108 (XR floor anchoring and backgrounds), RFD 1088 (HTTPS setup), RFD 1085 (the code map).</p>
-<p>Not yet moved to a numbered RFD, still under weftspun-3d-studio’s own <code>thirdparty/m3/docs/</code> or <code>src/components/</code>: the Three.js WebGPU/WebXR migration guide, VR positioning, the AR/Android XR floor-anchoring fix notes, the Shared3DViewer and Core3D component READMEs, the quickstart and avatar-creation guides, the wallet-owned-assets approach, the model-format specification, the Modder documentation, and the project history page.</p>
+<section id="related" class="level2">
+<h2 class="anchored" data-anchor-id="related">Related</h2>
+<p>RFD 1004 (original AIGC catalog, historical), RFD 1094 (multi-image routing, still current), RFD 1084 (avatar pipeline client side, still current), RFD 1108 (XR floor anchoring, <code>committed</code>), RFD 1088 (HTTPS setup), RFD 1085 (code map), RFD 1105 (webcam avatar control). Removed refs to abandoned RFDs 1049-1052, 1090, 1100, 1019 per RFD 2174 (open→abandoned index) and RFD 2176 (committed→terminal index).</p>
 
 
 </section>
