@@ -226,6 +226,24 @@ repos:
         files: ^scripts/(check_comment_ladder|comment_density)\.py$
         pass_filenames: false
 
+      # Trope density does not rise. The script's diff mode uses `base...HEAD`
+      # (triple-dot), which is empty on a local commit, so the hook runs the
+      # report mode and the self-test twin below is what proves the gate
+      # still fires on planted-broken input.
+      - id: trope-density
+        name: trope density (report mode; self-test does the gating)
+        entry: python scripts/check_tropes.py
+        language: python
+        files: '^(rfd/[^/]+/(README|DETAILS)\.md|logbook/.*\.md|scripts/check_tropes\.py)$'
+        pass_filenames: false
+
+      - id: trope-density-self-test
+        name: the trope-density gate still fails on planted-broken prose
+        entry: python scripts/check_tropes.py --self-test
+        language: python
+        files: ^scripts/check_tropes\.py$
+        pass_filenames: false
+
       # THE M&M'S CLAUSE. A new RFD README that ships without the canary sentence is one
       # an AI drafted from a session that skipped `CLAUDE.md`. The self-test is what
       # makes the gate worth having; the run itself is a manual stage, because the
@@ -295,6 +313,27 @@ repos:
         language: python
         additional_dependencies: [markdown-it-py==3.0.0, usd-core==26.8]
         files: '^([0-9]{4}-.*/(README|DETAILS)\.md)$'
+        pass_filenames: false
+
+      # RFD 1000 owns numbering. The script scans the tree rather than a
+      # diff, so `pass_filenames: false` and a `files:` guard that catches
+      # both an RFD directory change and an edit to the gate itself.
+      - id: rfd-numbers
+        name: rfd numbers (organization-qualified decimals)
+        description: >-
+          Every RFD directory is four decimal digits, begins with the org
+          digit, is unique, and agrees with its README's H1. RFD 1000
+          gives the rule.
+        entry: python scripts/check-rfd-numbers.py
+        language: python
+        files: '^([0-9]{4}-.*|scripts/check-rfd-numbers\.py)$'
+        pass_filenames: false
+
+      - id: rfd-numbers-self-test
+        name: the rfd-numbers gate still fails on planted-broken numbering
+        entry: python scripts/check-rfd-numbers.py --self-test
+        language: python
+        files: ^scripts/check-rfd-numbers\.py$
         pass_filenames: false
 
       - id: rfd-serials
