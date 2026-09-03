@@ -68,6 +68,7 @@
   {
     "listing": "/pages/rfd.html",
     "items": [
+      "/rfd/2195-weftspun-bao-tailscale-sidecar/index.html",
       "/rfd/2194-atelier-shuttle-portfolio-widget/index.html",
       "/rfd/2193-editscore-as-constructed-synthetic-reproducibility-bar/index.html",
       "/rfd/2192-rfdetr-keypoint-weights-licence-verification/index.html",

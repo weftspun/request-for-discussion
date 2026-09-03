@@ -1891,6 +1891,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#problem-250" id="toc-problem-250" class="nav-link" data-scroll-target="#problem-250">Problem</a></li>
   <li><a href="#related-252" id="toc-related-252" class="nav-link" data-scroll-target="#related-252">Related</a></li>
   </ul></li>
+  <li><a href="#rfd-2195-expose-weftspun-bao-privately-via-tailscale" id="toc-rfd-2195-expose-weftspun-bao-privately-via-tailscale" class="nav-link" data-scroll-target="#rfd-2195-expose-weftspun-bao-privately-via-tailscale">RFD 2195: Expose weftspun-bao privately via Tailscale</a>
+  <ul class="collapse">
+  <li><a href="#decision-258" id="toc-decision-258" class="nav-link" data-scroll-target="#decision-258">Decision</a></li>
+  <li><a href="#problem-251" id="toc-problem-251" class="nav-link" data-scroll-target="#problem-251">Problem</a></li>
+  <li><a href="#related-253" id="toc-related-253" class="nav-link" data-scroll-target="#related-253">Related</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -7309,6 +7315,26 @@ scoring     MaskScore + EditScore       n/a          self-supervised reward</cod
 <section id="related-252" class="level2">
 <h2 class="anchored" data-anchor-id="related-252">Related</h2>
 <p>RFD 2136, RFD 2166 (Cineform), RFD 2171 (vocabulary), RFD 2183, RFD 2186 + 2187 (parked), RFD 1102.</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2195-expose-weftspun-bao-privately-via-tailscale" class="level1">
+<h1>RFD 2195: Expose weftspun-bao privately via Tailscale</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2195</code></p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> run Tailscale sidecar in the weftspun-bao Fly machine <strong>Scope:</strong> <code>weftspun-bao</code> Fly app, <code>Dockerfile.fdb</code>, <code>entrypoint.sh</code></p>
+<section id="decision-258" class="level2">
+<h2 class="anchored" data-anchor-id="decision-258">Decision</h2>
+<p>Add a Tailscale sidecar to the <code>weftspun-bao</code> Fly.io machine so peers on the user’s tailnet reach OpenBao at <code>weftspun-bao.&lt;tailnet&gt;.ts.net:8200</code>. No public IP, no fly.toml service exposure. Mutual-TLS at OpenBao’s listener stays as the second factor; Tailscale is transport only.</p>
+<p>Container installs the Tailscale APT package and swaps its entry point to a script that starts <code>tailscaled --tun=userspace-networking</code> (Fly machines lack <code>/dev/net/tun</code>), runs <code>tailscale up</code> with <code>TS_AUTHKEY</code>, then <code>exec dumb-init bao server -config=...</code>.</p>
+<p><code>TS_AUTHKEY</code> is a Tailscale admin-console auth key tagged <code>tag:fly-bao</code> (ephemeral + reusable + pre-approved), set as a Fly secret before deploy. Full steps + scripts in <code>DETAILS.md</code>.</p>
+</section>
+<section id="problem-251" class="level2">
+<h2 class="anchored" data-anchor-id="problem-251">Problem</h2>
+<p>OpenBao is the workspace’s PKI + KV store for agent secrets (future: KV v2 at <code>agents/</code>, cert-auth issued via bao’s PKI). It runs on Fly at <code>weftspun-bao</code> (sjc, 1 machine, FoundationDB backend, mTLS listener). Reaching it from any of the operator’s laptops or workstations without opening a public IP needs a private overlay. Tailscale is what the workspace already uses for that shape.</p>
+</section>
+<section id="related-253" class="level2">
+<h2 class="anchored" data-anchor-id="related-253">Related</h2>
+<p><code>weftspun-bao</code> Fly app (state summarised in DETAILS.md), <code>weftspun-fdb</code> (FoundationDB backend), RFD 2142 (bao PKI zerotrust service TLS), RFD 2146 (zerotrust roles first run).</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 
