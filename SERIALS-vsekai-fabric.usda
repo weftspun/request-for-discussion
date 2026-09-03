@@ -781,6 +781,26 @@ def Scope "Serials"
                 {
                     custom string slug = "one-ggml-across-workspace"
                 }
+                def "S2189"
+                {
+                    custom string slug = "stick-figure-sanity-check-for-pose-corpus"
+                }
+                def "S2190"
+                {
+                    custom string slug = "multi-camera-rig-extrinsics-calibration"
+                }
+                def "S2191"
+                {
+                    custom string slug = "unrolled-solver-residual-measurement"
+                }
+                def "S2192"
+                {
+                    custom string slug = "rfdetr-keypoint-weights-licence-verification"
+                }
+                def "S2193"
+                {
+                    custom string slug = "editscore-as-constructed-synthetic-reproducibility-bar"
+                }
             }
         }
     }
