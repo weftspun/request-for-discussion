@@ -403,6 +403,41 @@ a command rather than being discovered six months later.
 it reads its state list and its README line limit out of RFD 1000 rather than
 restating them, so the document and the gate cannot disagree.
 
+## How Retracted RFD Topics Are Deleted
+
+RFDs and the logbook diverge here, and the split is deliberate. The logbook
+records events, so a retracted measurement is itself an event and its
+retraction paragraph stays next to what it retracts. An RFD records a
+decision, and a retracted decision that keeps sitting in the RFD reads as
+current the moment a fresh reader lands on the section.
+
+Going forward, a retracted RFD topic deletes its body and leaves a one-line
+pointer at the section's former location, of the form:
+
+    **Lumina2 distillation as primary:** retracted 2026-09-04, see
+    `logbook-lumina2-distill-n1000-shelved.md`.
+
+The pointer is what closes both failure modes the pure-deletion form re-opens.
+The pattern the working agreements' own `AND THEN IT HAPPENED AGAIN` paragraph
+was written against is silent drift — a decision quietly disappears and the
+same wrong turn gets re-argued six months later, because there is nothing at
+the site of the deletion to say "we looked at this and it did not work". A
+one-line pointer says exactly that. It also gives the citations that already
+exist across other projects (branch names, commit messages, code comments) a
+place to land — a reader following a citation to the section finds the
+pointer and can follow it to the measurement that produced the retraction.
+
+Retroactive is not required. RFDs that already carry a retraction paragraph
+keep it; the new rule applies to retractions from 2026-09-04 forward.
+
+The two carve-outs the rule does not touch: **the logbook** keeps its
+"retractions stay in place next to what they retract" shape because it
+records events; **this file** keeps its retraction paragraphs because the
+working agreements record institutional memory that other documents cite by
+its wording, and rewriting a paragraph in place changes the meaning of every
+citation of it. The `AND THEN IT HAPPENED AGAIN` paragraph is the canonical
+example of both carve-outs earning their exemption.
+
 ## How AI-drafted RFDs are attested
 
 An RFD drafted with AI help carries one sentence, verbatim, in either its
