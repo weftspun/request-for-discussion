@@ -1,26 +1,31 @@
 # RFD 1004: AIGC task catalog
 
-**State:** published
+**State:** abandoned
 **Feature:** task catalog
-
-## Problem
-
-The app exposes many AI tasks. Each task maps to an API feature and
-a model. The catalog must stay in sync with the backend model list.
 
 ## Decision
 
-Keep one model catalog as the source of truth. The catalog maps a
-task type to an API feature. It also maps a feature to a default
-model.
+Abandoned 2026-09-03. RFD 1102 (supported atelier modules) is the
+current task catalog and source-of-truth for models, tasks, and
+runtime footprints. RFD 1102's DETAILS.md carries the live table
+and its gacha critical path. This RFD is kept for the retraction
+record.
 
-The live model list filters the catalog when the API connects.
-License-blocked models stay out of the UI catalog. They remain only
-in API documentation until the delete pass removes them.
+Historical decision, as published: one model catalog stayed the
+source of truth, mapping task type to API feature and feature to
+default model. Live model list filtered the catalog when the API
+connected; licence-blocked models stayed out of the UI catalog.
 
-See `DETAILS.md` for the task list and file references.
+## Problem
+
+The app exposed many AI tasks, each mapping to an API feature and
+a model. The catalog needed to stay in sync with the backend model
+list.
 
 ## Related
 
-RFD 1003 defines the lifecycle for these tasks. RFD 1005 defines the
-avatar paths.
+RFD 1102 (task catalog, current source of truth), RFD 2174
+(open-to-abandoned citation index), RFD 1016 (deep learning model
+inventory, also abandoned).
+
+This RFD was drafted by an AI and read by a human before it shipped.
