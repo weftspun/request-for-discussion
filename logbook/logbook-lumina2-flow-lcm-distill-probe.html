@@ -47,9 +47,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-ebf6027466d64ce25e353d53063d38f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -308,7 +308,8 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a></li>
   <li><a href="#apparatus" id="toc-apparatus" class="nav-link" data-scroll-target="#apparatus">Apparatus</a></li>
-  <li><a href="#result-at-n10" id="toc-result-at-n10" class="nav-link" data-scroll-target="#result-at-n10">Result at n=10</a></li>
+  <li><a href="#train-set-result-at-n10" id="toc-train-set-result-at-n10" class="nav-link" data-scroll-target="#train-set-result-at-n10">Train-set result at n=10</a></li>
+  <li><a href="#held-out-follow-up-at-n10" id="toc-held-out-follow-up-at-n10" class="nav-link" data-scroll-target="#held-out-follow-up-at-n10">Held-out follow-up at n=10</a></li>
   <li><a href="#verdict" id="toc-verdict" class="nav-link" data-scroll-target="#verdict">Verdict</a></li>
   </ul></li>
   </ul>
@@ -333,6 +334,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><code>3-interactor/omnigen2/artifacts/lumina2-distill/train_flow_lcm_i2i_probe.py</code></li>
 <li><code>3-interactor/omnigen2/artifacts/lumina2-distill/ladder_gate.py</code></li>
+<li><code>3-interactor/omnigen2/artifacts/lumina2-distill/held_out_ladder.py</code></li>
 <li>Branch: RFD-2186</li>
 <li>Base: Lumina2, nf4 quantised</li>
 <li>Adapter: Flow-LCM + teacher LoRA, rank-64, targets <code>to_q/to_k/to_v/to_out.0</code></li>
@@ -343,21 +345,75 @@ ul.task-list li input[type="checkbox"] {
 <li>OmniGen2 baseline: same instruction, published-precision inference</li>
 </ul>
 </section>
-<section id="result-at-n10" class="level2">
-<h2 class="anchored" data-anchor-id="result-at-n10">Result at n=10</h2>
+<section id="train-set-result-at-n10" class="level2">
+<h2 class="anchored" data-anchor-id="train-set-result-at-n10">Train-set result at n=10</h2>
 <p>EditScore <code>overall</code> on a 0-25 scale, one source across the 2/4/6/8/10-step ladder:</p>
 <ul>
 <li>No-LoRA arm (Lumina2 + SDEdit, no adapter): 2.00 across every rung. The LoRA-less base does not follow the instruction at any step count.</li>
-<li>LoRA arm: 7.20 at steps 4, 8, 10 (identical across those three rungs; the LoRA generalises past its trained regime).</li>
+<li>LoRA arm: 7.20 at steps 4, 8, 10 (identical across those three rungs).</li>
 <li>Ratio: 7.20 / 2.00 = 3.6x on the ladder.</li>
 </ul>
 <p>Wall-clock: 1.5 s per edit at 4 steps with LoRA on the 3090; 12 min per edit for OmniGen2 at the same instruction. 480x speed-up.</p>
-<p><strong>The one source used in the ladder was also in the n=10 training set, so 7.20 is a train-set score, not a held-out one.</strong> The immediate follow-up is a held-out ladder on rows the LoRA did not see, runnable today from shard 00 without waiting on the shard 01-15 X-Linked-ETag issue (uploader-side, not Bao-side).</p>
+<p>The one source used in the ladder was also in the n=10 training set, so 7.20 is a train-set score, not a held-out one.</p>
+</section>
+<section id="held-out-follow-up-at-n10" class="level2">
+<h2 class="anchored" data-anchor-id="held-out-follow-up-at-n10">Held-out follow-up at n=10</h2>
+<p>Five unseen pairs from shard 00 (<code>skip=10</code>, matching the n=10 training offset; task mix <code>color_alter</code> x3, <code>ps_human</code>, <code>motion_change</code>), 4-step SDEdit, same LoRA. EditScore pairwise on <code>overall</code>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">pair</th>
+<th>task</th>
+<th style="text-align: right;">no_lora</th>
+<th style="text-align: right;">with_lora</th>
+<th style="text-align: right;">delta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td>color_alter</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">+0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td>color_alter</td>
+<td style="text-align: right;">1.55</td>
+<td style="text-align: right;">1.55</td>
+<td style="text-align: right;">+0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td>color_alter</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">+0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td>ps_human</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">+0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td>motion_change</td>
+<td style="text-align: right;">2.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">-2.00</td>
+</tr>
+</tbody>
+</table>
+<p>Means: no_lora 0.71, with_lora 0.31. Ratio 0.44x (LoRA worse by 2.3x). LoRA wins 0 of 5; one pair (<code>motion_change</code>) regressed 2.00 to 0.00. At n=10 the LoRA memorised its training pairs and does not generalise. <code>motion_change</code> is a video-shaped edit that single-image SDEdit cannot produce at any n, so a fair scale-up should stratify by <code>task_type</code> and exclude <code>motion_change</code> alongside the already-parked <code>text_change</code>.</p>
 </section>
 <section id="verdict" class="level2">
 <h2 class="anchored" data-anchor-id="verdict">Verdict</h2>
-<p>Candidate primary generator for RFD 2186’s dressing-overlay stage, pending scale-up. The 7.20 was measured on training data and the swap into RFD 2183 / RFD 2194 stays off the table until a held-out ladder holds and n&gt;=1000 confirms it.</p>
-<p>Left to the operator to make the actual generator swap in the downstream RFDs when scale-up completes.</p>
+<p><strong>n=10 result does not survive held-out.</strong> The train-set 7.20 was single-source memorisation, and on unseen pairs the LoRA scored 0/5 against the no-LoRA baseline. Method not vindicated at this n.</p>
+<p>The 100-epoch x n=10 configuration is the memorisation story: each pair was seen 100 times. The LCM paper (Luo et al 2023, arXiv 2310.04378) trains for 100K iterations at batch 16 on LAION-Aesthetics-6+ (12M pairs at 512 px, ~0.13 epochs) or LAION-Aesthetic-6.5+ (650K pairs at 768 px, ~2.5 epochs). Both configurations see each sample a handful of times at most; ours saw each pair 100 times. The n=1000 scale-up runs 2 epochs, so each pair is seen twice.</p>
+<p>Next: n=1000 training on <code>chibifire/editscore-reward-train</code> (dataset reupload landed today, shard 01 verified clean, full snapshot in flight). Stratify by <code>task_type</code>; exclude <code>motion_change</code>. If n=1000 held-out also fails at the recipe’s own shape, Lumina2 distillation is not the primary generator for RFD 2186’s dressing overlay.</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 
