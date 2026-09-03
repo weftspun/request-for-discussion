@@ -1,4 +1,4 @@
-# Blend-shape animation through the flow adapter, and TokenRig's first light
+# Logbook: blend-shape animation through the flow adapter, and TokenRig's first light
 
 Two stages of the character pipeline gained running code today: the
 rig stage ran its upstream forward pass for the first time, and the

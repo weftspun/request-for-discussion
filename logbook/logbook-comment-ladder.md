@@ -1,4 +1,4 @@
-# The comment ladder
+# Logbook: the comment ladder
 
 CLAUDE.md gained a rule for how much a comment carries, and for one commit it had
 nothing behind it. `check_comment_density.py` sat in the tree looking like the gate for
