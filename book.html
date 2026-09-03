@@ -1641,6 +1641,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#purposes-ibuka-shape-under-v-sekais-charter" id="toc-purposes-ibuka-shape-under-v-sekais-charter" class="nav-link" data-scroll-target="#purposes-ibuka-shape-under-v-sekais-charter">Purposes (Ibuka-shape, under V-Sekai’s charter)</a></li>
   <li><a href="#related-190" id="toc-related-190" class="nav-link" data-scroll-target="#related-190">Related</a></li>
   </ul></li>
+  <li><a href="#rfd-2183-retrain-omnigen-for-layer-decomposition" id="toc-rfd-2183-retrain-omnigen-for-layer-decomposition" class="nav-link" data-scroll-target="#rfd-2183-retrain-omnigen-for-layer-decomposition">RFD 2183: Retrain OmniGen for layer decomposition</a>
+  <ul class="collapse">
+  <li><a href="#decision-212" id="toc-decision-212" class="nav-link" data-scroll-target="#decision-212">Decision</a></li>
+  <li><a href="#problem-209" id="toc-problem-209" class="nav-link" data-scroll-target="#problem-209">Problem</a></li>
+  <li><a href="#related-191" id="toc-related-191" class="nav-link" data-scroll-target="#related-191">Related</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -6662,6 +6668,25 @@ void  grafcet_static_free(char *buf);</code></pre>
 <section id="related-190" class="level2">
 <h2 class="anchored" data-anchor-id="related-190">Related</h2>
 <p>RFD 2171 (atelier-workshop vocabulary), RFD 1106 (open/proprietary boundary), V-Sekai charter (path above), Ibuka’s 1946 Tokyo Tsushin Kogyo prospectus (structural reference).</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2183-retrain-omnigen-for-layer-decomposition" class="level1">
+<h1>RFD 2183: Retrain OmniGen for layer decomposition</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2183</code></p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> replace rf-detr-Seg + LaMa with a retrained OmniGen <strong>Scope:</strong> layer decomposition rung of the gacha ladder</p>
+<section id="decision-212" class="level2">
+<h2 class="anchored" data-anchor-id="decision-212">Decision</h2>
+<p>Retrain OmniGen (MIT-licensed unified image generator) on multi-view renders of atelier-workshop-passed VRMs for layer decomposition. Replaces the rf-detr-Seg + LaMa plan in RFD 1168 (See-Through blocklist substitute).</p>
+<p>Corpus: VRMs shipped by the pipeline, rendered under <code>sphere_hammersley_sequence</code> (per CLAUDE.md), paired as (composite image, layered ground truth). Constructed synthetic: labels true by construction, seed reproducible, no learned-distribution sampling.</p>
+</section>
+<section id="problem-209" class="level2">
+<h2 class="anchored" data-anchor-id="problem-209">Problem</h2>
+<p>LaMa is a patch inpainter; it fills a hole with pixels resembling its surround. Layer decomposition needs semantic reconstruction of the hidden layer (back hair behind front hair, arm behind sleeve). Nothing behind the mask exists in the composite to copy from, so LaMa produces a plausible surface, not a plausible back layer. rf-detr-Seg gets the mask; LaMa cannot supply what belongs behind it. OmniGen retrained on (composite -&gt; layers) pairs learns the mapping the task actually needs.</p>
+</section>
+<section id="related-191" class="level2">
+<h2 class="anchored" data-anchor-id="related-191">Related</h2>
+<p>RFD 1168 (rf-detr-Seg substitute; superseded), RFD 1173 (edit-reward corpus), RFD 2136 (gacha ladder), RFD 2178 (QAFT-4bit across the stack; OmniGen inherits), RFD 1102 (task catalog; layer-decomp row points here), CLAUDE.md blocklist row for See-Through.</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 
