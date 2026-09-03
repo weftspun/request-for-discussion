@@ -700,7 +700,7 @@ def Scope "Serials"
                 def "S2169"
                 {
                     custom string slug = "abandon-strangler-fig-studio-core"
-                    custom string flight_level = "L3"
+                    custom string flight_level = "L2"
                 }
                 def "S2170"
                 {
