@@ -178,14 +178,48 @@ input, leaving the viewer stuck as "Preview". Fix: convert to parquet
 yourself, push under `data/`, and delete the `.arrow` shards and
 `dataset_info.json` / `state.json` in the same commit.
 
+## Rule 6 — `dataset_info.features` must match the on-disk Arrow shape
+
+An earlier draft of this document listed "explicit `datasets.Features`
+definition" as a non-goal, on the argument that an unambiguous Arrow
+schema was enough. Observed 2026-09-03 on
+`chibifire/zenodo-second-hand-fashion-v3`: on-disk parquet held
+`list<struct<slot, damage, damage_image, damage_location>>` (list of
+struct); the README's `dataset_info.features` block declared
+
+    - name: damage
+      sequence:
+        - name: slot ...
+
+which HF-datasets' YAML loader reads as `Sequence(dict(...))`, and
+that translates to `struct<slot: list, damage: list, ...>` (**struct
+of lists**) in Arrow — the historical tfds convention. The viewer
+tried to cast on-disk list-of-struct to declared struct-of-lists and
+died with `UnexpectedError` on that split, viewer red.
+
+The two Features shapes:
+
+| YAML | datasets class | Arrow shape |
+|---|---|---|
+| `sequence: {...}` | `Sequence(dict)` | `struct<field: list<T>>` (struct of lists) |
+| `list: [{...}]`   | `List(dict)`     | `list<struct<field: T>>` (list of struct) |
+
+For a single-typed sequence (`sequence: string`) both YAML keywords
+land at `list<T>` and the distinction does not matter. For a sequence
+of records the distinction is the whole rule: pick the keyword whose
+Arrow shape matches what you actually wrote, or the auto-cast fails.
+
+The fix is one YAML character (`sequence:` -> `list:`) or a parquet
+rewrite that flips the shape; the character fix is trivial and
+correct-by-construction when the parquet was already list-of-struct.
+
 ## Non-goals for this RFD
 
-- **Dataset card / README frontmatter** (task category, language, licence tags).
+- **Dataset card / README frontmatter** other than `dataset_info` (task
+  category, language, licence tags).
 - **PII gating** — HF's access-control settings are per-repo, out of scope here.
 - **Splits & configs directory conventions** — the auto-detector handles
   the common cases; a dedicated RFD if we hit an ambiguous layout.
-- **`datasets.Features` explicit definition** — unnecessary when the
-  Arrow schema is unambiguous (it is, for our columns).
 
 ## Related RFDs
 
