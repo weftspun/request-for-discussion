@@ -28,8 +28,6 @@ website:
     background: primary
     search: true
     left:
-      - text: "RFDs"
-        file: pages/rfd.qmd
       - text: "Flight Levels"
         menu:
           - text: "L1 · Operations"

@@ -138,16 +138,19 @@ def serials_page(root):
         out = []
         for serial in sorted(t, key=int):
             urn = oid(int(serial), by_arc) or ""
-            out.append("| `%s` | %s | %s | %s |" % (urn, serial, t[serial], note))
+            slug = t[serial]
+            link = "[`%s`](../rfd/%s-%s/)" % (slug, serial, slug) if note == "allocated" else "`%s`" % slug
+            out.append("| `%s` | %s | %s | %s |" % (urn, serial, link, note))
         return out
 
-    lines = ['---', 'title: "Register"', 'toc: true', '---', '', GENERATED, '',
-             '## Serials', '',
-             "Every serial this site has allocated and every one it has retired.",
-             "A serial is appended once. It is never removed and never reused,",
-             "because it is the last arc of an OID and an arc names one document",
-             "for as long as that document exists. The OID column is the RFC 3061",
-             "URN and is stable enough to cite like a DOI.", '']
+    lines = ['---', 'title: "Register"', 'toc: true', '---', '', GENERATED, '']
+    lines += AGREEMENTS + ['']
+    lines += ['## Serials', '',
+              "Every serial this site has allocated and every one it has retired.",
+              "A serial is appended once. It is never removed and never reused,",
+              "because it is the last arc of an OID and an arc names one document",
+              "for as long as that document exists. The OID column is the RFC 3061",
+              "URN and is stable enough to cite like a DOI.", '']
     registers = (("Weftspun (1000)", "SERIALS.usda"),
                  ("V-Sekai-Fabric (2000)", "SERIALS-vsekai-fabric.usda"))
     total_a = total_d = 0
@@ -160,7 +163,6 @@ def serials_page(root):
                   "| --- | --- | --- | --- |"]
         lines += rows(allocated, "allocated", fname) + rows(deleted, "deleted", fname) + ['']
     lines += ["%d allocated, %d retired." % (total_a, total_d), '']
-    lines += AGREEMENTS
     return "\n".join(lines) + "\n"
 
 
