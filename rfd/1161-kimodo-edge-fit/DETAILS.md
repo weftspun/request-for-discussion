@@ -75,7 +75,7 @@ the size envelope and a licence-clean shipping path.
 
 Sequenced work items, with ownership:
 
-1. **HERO**: upstream sampler port. `nv-tlabs/kimodo` → 
+1. **HERO**: upstream sampler port. `nv-tlabs/kimodo` →
    `3-interactor/kimodo-text-to-motion/server.py`. Currently
    `_run_upstream()` raises `NotImplementedError`. Weeks of Python
    / Torch work. HERO has capacity while blocked on ANCHOR's corpus
