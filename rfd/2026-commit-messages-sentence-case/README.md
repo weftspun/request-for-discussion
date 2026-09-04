@@ -1,6 +1,6 @@
 # RFD 2026: Commit messages sentence case
 
-**State:** prediscussion
+**State:** committed
 
 ## Decision
 

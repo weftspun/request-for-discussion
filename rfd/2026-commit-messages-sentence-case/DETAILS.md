@@ -45,7 +45,33 @@ makes true of the system and why.
   signal here, so adopting one later needs a different marker or a
   history rewrite.
 
+## Fork exception
+
+The rule scopes to **our own repos** — anything whose git remote
+points at `github.com/weftspun/...`. Forks — repos this workspace
+mirrors from an upstream that uses its own commit style — follow the
+upstream's convention. A Conventional-Commits upstream gets
+Conventional-Commits subjects on its fork here, because the fork's
+diffs go back to the upstream one day and need to fit its history.
+The gate below detects the fork case and skips.
+
 ## Confirmation
+
+The rule is machine-checked by `scripts/check_commit_style.py`. It
+gates commits reachable in `<base>..HEAD` for three properties:
+
+1. No Conventional-Commits `type:` or `type(scope):` prefix on the
+   subject.
+2. Subject opens with an uppercase letter, digit, or bracket.
+3. Subject does not end with a trailing period.
+
+The gate skips silently on any repo whose remotes do not include a
+`github.com/weftspun/...` URL, per the fork exception above. Its
+self-test carries six subject controls (three that pass, three that
+fail) plus four URL-classification controls (two own, two fork).
+
+    python scripts/check_commit_style.py --base origin/main
+    python scripts/check_commit_style.py --self-test
 
 Review reads each subject as a capitalised sentence with no type
 prefix and no trailing period. The history after this decision shows

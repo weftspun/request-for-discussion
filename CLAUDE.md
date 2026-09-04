@@ -280,6 +280,29 @@ working agreements (`CLAUDE.md`, `BLOCKLIST.md`, `PITFALLS.md`,
     python scripts/check_tropes.py --base origin/main           # gate
     python scripts/check_tropes.py --self-test                  # 8 controls
 
+## How Commit Messages Are Written
+
+Commit subjects on our own repos are sentence-case prose with no
+Conventional-Commits prefix. `Add the macOS and Windows release
+workflows` and `RFD 2200: ReBAC agent roles as tuples in relationships/
+KV` are the shape; `feat: add release workflow` and `chore(deps):
+bump` are not. No trailing period. The body, when there is one,
+states what the change makes true of the system and why. RFD 2026
+carries the argument.
+
+Forks — anything whose git remote points at somewhere other than
+`github.com/weftspun/...` — follow the upstream's convention. A
+Conventional-Commits upstream gets Conventional-Commits subjects on
+its fork here, because the fork's diff goes back one day and needs
+to fit.
+
+`scripts/check_commit_style.py` gates it. Detects the fork case from
+git remotes and skips silently there. Both directions carry a
+control (six subject controls, four URL-classification controls).
+
+    python scripts/check_commit_style.py --base origin/main
+    python scripts/check_commit_style.py --self-test
+
 ## How Our Own C++ Is Typed
 
 C++ we write uses no `auto`. The code this workspace writes in C++ sits at
