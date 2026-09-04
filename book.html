@@ -49,9 +49,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-ebf6027466d64ce25e353d53063d38f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -1902,6 +1902,13 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#decision-259" id="toc-decision-259" class="nav-link" data-scroll-target="#decision-259">Decision</a></li>
   <li><a href="#problem-252" id="toc-problem-252" class="nav-link" data-scroll-target="#problem-252">Problem</a></li>
   <li><a href="#related-254" id="toc-related-254" class="nav-link" data-scroll-target="#related-254">Related</a></li>
+  </ul></li>
+  <li><a href="#rfd-2197-restructure-maskscore-rung-1-bootstrap-for-the-hf-viewer" id="toc-rfd-2197-restructure-maskscore-rung-1-bootstrap-for-the-hf-viewer" class="nav-link" data-scroll-target="#rfd-2197-restructure-maskscore-rung-1-bootstrap-for-the-hf-viewer">RFD 2197: Restructure maskscore-rung-1-bootstrap for the HF viewer</a>
+  <ul class="collapse">
+  <li><a href="#decision-260" id="toc-decision-260" class="nav-link" data-scroll-target="#decision-260">Decision</a></li>
+  <li><a href="#problem-253" id="toc-problem-253" class="nav-link" data-scroll-target="#problem-253">Problem</a></li>
+  <li><a href="#non-goals" id="toc-non-goals" class="nav-link" data-scroll-target="#non-goals">Non-goals</a></li>
+  <li><a href="#related-255" id="toc-related-255" class="nav-link" data-scroll-target="#related-255">Related</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
@@ -7360,6 +7367,28 @@ scoring     MaskScore + EditScore       n/a          self-supervised reward</cod
 <section id="related-254" class="level2">
 <h2 class="anchored" data-anchor-id="related-254">Related</h2>
 <p>Companion skills <code>hf-datasets-no-etnf</code>, <code>hf-parquet-image-column</code>, <code>hf-upload-large</code>, <code>hf-download-streaming</code> are the single-page how-to per rule. RFD 2183 (OmniGen layer decomp) and RFD 2193 (editscore reproducibility bar) both consume datasets published under these rules.</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2197-restructure-maskscore-rung-1-bootstrap-for-the-hf-viewer" class="level1">
+<h1>RFD 2197: Restructure maskscore-rung-1-bootstrap for the HF viewer</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2197</code></p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> rework <code>chibifire/maskscore-rung-1-bootstrap</code> into one wide-row shape per task-type so the HF viewer renders it <strong>Scope:</strong> dataset repository only; no change to the source-of-truth generators</p>
+<section id="decision-260" class="level2">
+<h2 class="anchored" data-anchor-id="decision-260">Decision</h2>
+<p>Republish <code>chibifire/maskscore-rung-1-bootstrap</code> as <strong>six configs, one per task-type</strong> (<code>depth</code>, <code>keypoints</code>, <code>mesh</code>, <code>multimodal</code>, <code>pose</code>, <code>speech-audio</code>), each with its base + candidates + scores tables joined into one wide row per example under <code>data/&lt;config&gt;/train-*.parquet</code>. Media satellites (<code>renders/</code>, <code>speech/</code>, <code>poses/</code>, <code>scores/</code>) get referenced by content-hash path or inlined as <code>struct&lt;bytes, path&gt;</code> per RFD 2196 rule 4, depending on file size. See <code>DETAILS.md</code> for the join plan and media strategy.</p>
+</section>
+<section id="problem-253" class="level2">
+<h2 class="anchored" data-anchor-id="problem-253">Problem</h2>
+<p>The current repository violates RFD 2196 rules 1 and 3: 18 parquets at the repo root (not under <code>data/</code>), organised as six task-types × three satellite tables each. HF viewer preview and viewer both red because the auto-indexer finds no <code>data/train-*.parquet</code> layout it can group into a split. Plus 887 non-parquet files (128 render PNGs, 512 more renders, 150 WAV, 180 VTT, 131 NPZ) whose relationship to the parquet rows the viewer cannot infer.</p>
+</section>
+<section id="non-goals" class="level2">
+<h2 class="anchored" data-anchor-id="non-goals">Non-goals</h2>
+<p>Source-of-truth generators (unchanged); rung-2/3/4 datasets; complete schema audit; media-hosting choice if satellites exceed HF’s ceiling.</p>
+</section>
+<section id="related-255" class="level2">
+<h2 class="anchored" data-anchor-id="related-255">Related</h2>
+<p>RFD 2196 (HF viewer rules), RFD 2165 (maskscore stub emit), RFD 2166 (maskscore cineform bundle), RFD 1173 (edit-reward corpus).</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 
