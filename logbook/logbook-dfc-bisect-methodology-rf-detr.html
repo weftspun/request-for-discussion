@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Level 2 — Coordination – Taskweft — Manuals</title>
+<title>logbook-dfc-bisect-methodology-rf-detr – Taskweft — Manuals</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -36,8 +36,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -79,65 +77,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-rfd','listing-title','listing-state','listing-scope',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -359,180 +299,76 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#dfc-parse-bisect-methodology-from-an-rf-detr-investigation" id="toc-dfc-parse-bisect-methodology-from-an-rf-detr-investigation" class="nav-link active" data-scroll-target="#dfc-parse-bisect-methodology-from-an-rf-detr-investigation">DFC parse-bisect methodology, from an rf-detr investigation</a>
+  <ul class="collapse">
+  <li><a href="#the-two-errors-dfc-emits-and-where-each-localizes" id="toc-the-two-errors-dfc-emits-and-where-each-localizes" class="nav-link" data-scroll-target="#the-two-errors-dfc-emits-and-where-each-localizes">The two errors DFC emits, and where each localizes</a></li>
+  <li><a href="#the-bisect-that-actually-localizes" id="toc-the-bisect-that-actually-localizes" class="nav-link" data-scroll-target="#the-bisect-that-actually-localizes">The bisect that actually localizes</a></li>
+  <li><a href="#prefer-extract_model-when-isolating-a-failure-site" id="toc-prefer-extract_model-when-isolating-a-failure-site" class="nav-link" data-scroll-target="#prefer-extract_model-when-isolating-a-failure-site">Prefer <code>extract_model</code> when isolating a failure site</a></li>
+  <li><a href="#retry-pass-changes-what-a-probe-passes" id="toc-retry-pass-changes-what-a-probe-passes" class="nav-link" data-scroll-target="#retry-pass-changes-what-a-probe-passes">Retry-pass changes what a probe passes</a></li>
+  <li><a href="#what-a-partial-parse-report-reads-as" id="toc-what-a-partial-parse-report-reads-as" class="nav-link" data-scroll-target="#what-a-partial-parse-report-reads-as">What a partial-parse report reads as</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/logbook/logbook-dfc-bisect-methodology-rf-detr.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/logbook/logbook-dfc-bisect-methodology-rf-detr.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Level 2 — Coordination</h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<!-- generated by scripts/render_flight_level_pages.py -->
-<p>How work flows across teams to reach a customer. Medium cadence, product and delivery leads.</p>
-<p>RFDs tagged <code>flight_level = "L2"</code> in the serial register. RFD 2177 defines the scheme (Klaus Leopold, <code>Rethinking Agile</code>, LEANability, 2018).</p>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-      <option value="" disabled="" selected="" hidden="">Order By</option>
-      <option value="index" data-direction="asc">Default</option>
-      <option value="listing-title-sort" data-direction="asc">
-        Title
-      </option>
-    </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
-</div>
-<table class="quarto-listing-table table">
-<thead>
-<tr>
 
-<th>
-rfd
-</th>
+<section id="dfc-parse-bisect-methodology-from-an-rf-detr-investigation" class="level1">
+<h1>DFC parse-bisect methodology, from an rf-detr investigation</h1>
+<p>Recording the methodology two probes converged on today while task #64 tried to place the DFC-vs-rf-detr failure. Journal shape rather than an RFD; the finding is a pattern next probes can copy, not a decision.</p>
+<section id="the-two-errors-dfc-emits-and-where-each-localizes" class="level2">
+<h2 class="anchored" data-anchor-id="the-two-errors-dfc-emits-and-where-each-localizes">The two errors DFC emits, and where each localizes</h2>
+<p>When DFC’s <code>ClientRunner.translate_onnx_model</code> rejects a graph, the pair of errors that surfaces localizes different parts of the failure:</p>
+<ul>
+<li><code>ValueError: channels is not in list</code> (from <code>onnx_translator/onnx_graph.py:444</code>, <code>update_reshape_output_format</code> calling <code>input_format.index(Dims.CHANNELS)</code>) means a Reshape node received a tensor with a format the tracker cannot map to NCHW. Usually fires downstream of an NLD-shaped (sequence) tensor being rewrapped as spatial.</li>
+<li><code>IndexError: list index out of range</code> from <code>_convert_axes_to_nhwc</code> at <code>onnx_graph.py:2463</code> (<code>input_format[axis]</code>) means a LayerNormalization node’s <code>axes</code> attribute references a position beyond what DFC’s format tracker knows. Fires under the simplifier-retry pass. If a first-attempt <code>channels is not in list</code> and a simplifier-retry <code>IndexError</code> come out of the same run, they name two symptoms of the same LayerNormalization mishandling.</li>
+</ul>
+<p>The retry pass ships <code>[info] Simplified ONNX model for a parsing retry attempt (completion time: MM:SS.ss)</code> and saves <code>&lt;model&gt;.sim.onnx</code>. Many minimal repros pass on the retry that fail on the first attempt, which is how a small negative control can accidentally read as green while the real model stays red.</p>
+</section>
+<section id="the-bisect-that-actually-localizes" class="level2">
+<h2 class="anchored" data-anchor-id="the-bisect-that-actually-localizes">The bisect that actually localizes</h2>
+<p>The point is to isolate the failing site by parsing subgraphs, not the whole model. Two techniques, one wrong-then-right one right-from-the-start:</p>
+<p><strong><code>start_node_names</code> + <code>end_node_names</code> on the full ONNX.</strong> Cheap because DFC does the extraction. <strong>Takes NODE names, not tensor names.</strong> A first probe using <code>&lt;node&gt;_output_0</code> tensor names returned <code>MisspellNodeError: Unable to find end node name</code>, silently succeeding on the parser side while returning nothing useful. Once switched to bare node names (<code>.name</code> attribute on <code>onnx.NodeProto</code>, drop the <code>_output_0</code>), the partial parses land.</p>
+<p><strong><code>onnx.utils.extract_model(src, dst, inputs, outputs)</code>.</strong> Extracts a subgraph as a standalone ONNX file. Takes TENSOR names (which the caller maps as new graph inputs and outputs), not node names. Then run <code>translate_onnx_model</code> on the extracted file the same way. Slower per probe (writes an intermediate ONNX) but sidesteps DFC’s own extraction path, so it isolates the failure from any surprise-behavior of the partial-parse machinery.</p>
+<p>Under <code>start_node_names</code>/<code>end_node_names</code>, DFC still walks the ancestors of the requested end nodes. So a cut ending inside the encoder still requires the encoder’s context and can fail during output-layer construction on a raw NLD tensor with <code>IndexError: list index out of range</code>. That error at an encoder-internal cut is not the actual failure site; it is DFC unable to emit a valid output on a tensor whose format is not NCHW. <code>extract_model</code> does not have this problem because the extracted subgraph’s inputs and outputs become the new graph’s boundary, so DFC has no encoder-side context to walk.</p>
+</section>
+<section id="prefer-extract_model-when-isolating-a-failure-site" class="level2">
+<h2 class="anchored" data-anchor-id="prefer-extract_model-when-isolating-a-failure-site">Prefer <code>extract_model</code> when isolating a failure site</h2>
+<p><code>start_node_names</code>/<code>end_node_names</code> is fast and useful for the “does this part fail” question against the whole model. <code>onnx.utils.extract_model</code> is right for the “is the failure in this component alone” question. Confusing the two costs a rewind: the first finding today read <code>end_node_names=projector_end → ValueError: channels is not in list</code> and concluded the projector was the failure site, but the same site when extracted (with the encoder cut off entirely) parsed green. The actual failure was the encoder outputs feeding the projector, and the <code>end_node_names</code> cut ran the whole encoder up to the projector boundary.</p>
+</section>
+<section id="retry-pass-changes-what-a-probe-passes" class="level2">
+<h2 class="anchored" data-anchor-id="retry-pass-changes-what-a-probe-passes">Retry-pass changes what a probe passes</h2>
+<p>DFC’s simplifier retry can transform a <code>Transpose → LayerNormalization → Transpose</code> sequence into an atomic LN that DFC’s channel tracker accepts. A minimal PyTorch reproducer that ships with the same transpose-wrap pattern will therefore pass on the retry, even when the whole model with the same pattern fails. Two ways the minimal repro can miss the real failure:</p>
+<ol type="1">
+<li>The simplifier reduces the minimal repro but not the whole graph (because the whole graph has entangled Concat/Split/residual context the simplifier cannot fold).</li>
+<li>The minimal repro’s LN operates on a tensor rank the tracker can map, while the whole graph’s LN operates on a tensor rank that trips <code>_convert_axes_to_nhwc</code>.</li>
+</ol>
+<p>If the goal is a controlled negative test, extract the failing subgraph literally rather than reconstruct it in PyTorch. The extract preserves the axes, opset, and simplifier-boundary the whole model has.</p>
+</section>
+<section id="what-a-partial-parse-report-reads-as" class="level2">
+<h2 class="anchored" data-anchor-id="what-a-partial-parse-report-reads-as">What a partial-parse report reads as</h2>
+<p>A green partial parse always reports <code>PARSE OK</code> and saves a HAR under the name passed to <code>save_har</code>. A red partial parse hits an exception; the <code>type(exc).__name__</code> + <code>str(exc)[:400]</code> is enough to distinguish <code>MisspellNodeError</code> (methodology bug), <code>ValueError: channels is not in list</code> (format tracker on Reshape), <code>IndexError: list index out of range</code> (format tracker on LN axes), and the shape-mismatch broadcast errors that fire when <code>net_input_shapes</code> overrides a static ONNX input to a resolution its position embeddings cannot span.</p>
+<p>Rule 3 corollary: a probe that catches the exception and returns <code>ok = False</code> without naming the error type is decoration. Log the type and truncated message; save the traceback separately when the error class is genuinely surprising.</p>
+</section>
+<section id="reference" class="level2">
+<h2 class="anchored" data-anchor-id="reference">Reference</h2>
+<p>External sources touched during the investigation are in <code>logbook-rfd-2199-hailo-int4-survey.md</code>. The prototype scripts live in this session’s scratchpad under <code>AppData/Local/Temp/.../scratchpad/dfc-compat/</code> (<code>probe_seg2.py</code> for resolution scan, <code>probe_seg3_bisect.py</code> for the wrong tensor-name bisect, <code>probe_seg4_bisect.py</code> for the corrected node-name bisect, <code>extract_projector.py</code> and <code>extract_encoder.py</code> for <code>extract_model</code> isolation). Not shipped; the pattern is what matters.</p>
 
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
-</th>
 
-<th>
-state
-</th>
+</section>
+</section>
 
-<th>
-scope
-</th>
-
-</tr>
-</thead>
-<tbody class="list">
-
-<tr data-index="0" data-listing-file-modified-sort="1788544803959" data-listing-reading-time-sort="2" data-listing-word-count-sort="251" data-listing-title-sort="RFD 2172: Prose speaks in the tenseless continuous present" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">2172</span>
-</td>
-<td>
-<a href="../rfd/2172-tenseless-continuous-present-voice/index.html" class="title listing-title">RFD 2172: Prose speaks in the tenseless continuous present</a>
-</td>
-<td>
-<span class="listing-state">committed</span>
-</td>
-<td>
-<span class="listing-scope">every <code>.md</code>, <code>.qmd</code>, and code-comment file in the workspace</span>
-</td>
-
-</tr>
-
-<tr data-index="1" data-listing-file-modified-sort="1788544803959" data-listing-reading-time-sort="1" data-listing-word-count-sort="178" data-listing-title-sort="RFD 2170: allosaurus runs universal + a 27-language commercial localization set" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">2170</span>
-</td>
-<td>
-<a href="../rfd/2170-allosaurus-squad-localization-langs/index.html" class="title listing-title">RFD 2170: allosaurus runs universal + a 27-language commercial localization set</a>
-</td>
-<td>
-<span class="listing-state">committed</span>
-</td>
-<td>
-<span class="listing-scope">6-datasource/anny-render-corpus/emit_10track_panel.py<code>,</code>6-datasource/anny-render-corpus/add_allosaurus_control.py</span>
-</td>
-
-</tr>
-
-<tr data-index="2" data-listing-file-modified-sort="1788544803929" data-listing-reading-time-sort="2" data-listing-word-count-sort="217" data-listing-title-sort="RFD 1102: The supported task catalog, one live source" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">1102</span>
-</td>
-<td>
-<a href="../rfd/1102-supported-atelier-modules/index.html" class="title listing-title">RFD 1102: The supported task catalog, one live source</a>
-</td>
-<td>
-<span class="listing-state">committed</span>
-</td>
-<td>
-<span class="listing-scope">RFDs 1036 (packaging), 1173 (pipeline), 2136 (gacha ladder)</span>
-</td>
-
-</tr>
-
-<tr data-index="3" data-listing-file-modified-sort="1788544803922" data-listing-reading-time-sort="1" data-listing-word-count-sort="197" data-listing-title-sort="RFD 1053: OpenUSD as the internal format" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">1053</span>
-</td>
-<td>
-<a href="../rfd/1053-openusd-as-the-internal-format/index.html" class="title listing-title">RFD 1053: OpenUSD as the internal format</a>
-</td>
-<td>
-<span class="listing-state">committed</span>
-</td>
-<td>
-<span class="listing-scope">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="4" data-listing-file-modified-sort="1788544803920" data-listing-reading-time-sort="1" data-listing-word-count-sort="198" data-listing-title-sort="RFD 1036: Model packaging convention" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">1036</span>
-</td>
-<td>
-<a href="../rfd/1036-packaging-convention/index.html" class="title listing-title">RFD 1036: Model packaging convention</a>
-</td>
-<td>
-<span class="listing-state">committed</span>
-</td>
-<td>
-<span class="listing-scope">&nbsp;</span>
-</td>
-
-</tr>
-
-<tr data-index="5" data-listing-file-modified-sort="1788544803919" data-listing-reading-time-sort="2" data-listing-word-count-sort="224" data-listing-title-sort="RFD 1027: GPU tier per model" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">1027</span>
-</td>
-<td>
-<a href="../rfd/1027-gpu-residency-budget/index.html" class="title listing-title">RFD 1027: GPU tier per model</a>
-</td>
-<td>
-<span class="listing-state">committed</span>
-</td>
-<td>
-<span class="listing-scope">&nbsp;</span>
-</td>
-
-</tr>
-
-</tbody>
-</table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -954,7 +790,7 @@ scope
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/pages/flight-level-2-coordination.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/pages/flight-level-2-coordination.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/logbook/logbook-dfc-bisect-methodology-rf-detr.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/logbook/logbook-dfc-bisect-methodology-rf-detr.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">

@@ -1,5 +1,80 @@
 [
   {
+    "listing": "/pages/logbook.html",
+    "items": [
+      "/logbook/logbook-dfc-bisect-methodology-rf-detr.html",
+      "/logbook/logbook-cineform-movie-writer.html",
+      "/logbook/logbook-rfd2133-vfs-embed-retracted.html",
+      "/logbook/logbook-lumina2-flow-lcm-distill-probe.html",
+      "/logbook/logbook-lladao-n1-quality-beats-omnigen2.html",
+      "/logbook/logbook-lladao-n20-held-out-sweep.html",
+      "/logbook/logbook-lladao-5pair-step-sweep.html",
+      "/logbook/logbook-rfd2140-openbao-on-fdb.html",
+      "/logbook/logbook-rfd1016-model-repos.html",
+      "/logbook/logbook-rfd1122-t01-pose-check.html",
+      "/logbook/logbook-rfd2183-baseline-see-through-assets.html",
+      "/logbook/logbook-rfd2142-bao-pki-zerotrust.html",
+      "/logbook/logbook-blendshape-animation-and-tokenrig-first-light.html",
+      "/logbook/logbook-rfd2146-zerotrust-roles-first-run.html",
+      "/logbook/logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.html",
+      "/logbook/logbook-rfd2133-weftspun-fdb-on-fly.html",
+      "/logbook/logbook-lumina2-distill-n1000-shelved.html",
+      "/logbook/logbook-rfd1171-gemma-first-rerank.html",
+      "/logbook/logbook-bao-cert-revocation-cn-narrowing.html",
+      "/logbook/logbook-rfd2133-spot-broker-on-fly.html",
+      "/logbook/logbook-anny-phenotype-fit-retired.html",
+      "/logbook/logbook-rfd2144-dr-runbook-first-run.html",
+      "/logbook/logbook-qwen3vl-vit-translate-walls.html",
+      "/logbook/logbook-rfd2134-backup-through-the-sni-hop.html",
+      "/logbook/logbook-comment-ladder.html",
+      "/logbook/logbook-fourloops-first-runs.html",
+      "/logbook/logbook-soft-renderer-and-mitsuba.html",
+      "/logbook/logbook-dfc-emulation-contexts-disagree.html",
+      "/logbook/logbook-rfd2135-two-checks-and-a-stopped-backup.html",
+      "/logbook/logbook-rfd1130-two-walls-to-a-hef.html",
+      "/logbook/logbook-edge-npu-and-the-anny-forward.html",
+      "/logbook/logbook-rfd1142-neural-engine-against-the-ugen300.html",
+      "/logbook/logbook-rfd1122-hailo-first-rerank.html",
+      "/logbook/logbook-rfd-2199-hailo-int4-survey.html",
+      "/logbook/logbook-maskscore-rung-1-join-keys.html"
+    ]
+  },
+  {
+    "listing": "/pages/flight-level-2-coordination.html",
+    "items": [
+      "/rfd/2172-tenseless-continuous-present-voice/index.html",
+      "/rfd/2170-allosaurus-squad-localization-langs/index.html",
+      "/rfd/1102-supported-atelier-modules/index.html",
+      "/rfd/1053-openusd-as-the-internal-format/index.html",
+      "/rfd/1036-packaging-convention/index.html",
+      "/rfd/1027-gpu-residency-budget/index.html"
+    ]
+  },
+  {
+    "listing": "/pages/flight-level-1-operations.html",
+    "items": [
+      "/rfd/2168-retract-wholebody-detector-keep-renderer/index.html",
+      "/rfd/2167-maskscore-voice-reward-distillation/index.html",
+      "/rfd/2166-maskscore-cineform-mkv-bundle/index.html",
+      "/rfd/2165-maskscore-unified-8-stub-emit/index.html",
+      "/rfd/2164-maskscore-speech-stub-panel-and-cloning/index.html",
+      "/rfd/2163-maskscore-text-stub-gemma-vlm/index.html",
+      "/rfd/2162-maskscore-usdz-skinning-and-15-edit-emit/index.html",
+      "/rfd/1147-what-editscore-costs-and-returns/index.html",
+      "/rfd/1146-latent-to-pixal3d/index.html",
+      "/rfd/1145-stylized-to-omnigen2/index.html",
+      "/rfd/1144-image-to-omnigen2/index.html",
+      "/rfd/1143-keypoints-to-anny/index.html"
+    ]
+  },
+  {
+    "listing": "/pages/flight-level-3-strategy.html",
+    "items": [
+      "/rfd/2182-identity-triangle-operator-market-customer/index.html",
+      "/rfd/2171-atelier-workshop-shuttle-vocabulary/index.html"
+    ]
+  },
+  {
     "listing": "/pages/rfd.html",
     "items": [
       "/rfd/2202-rebac-bao-enforcement/index.html",
@@ -276,80 +351,6 @@
       "/rfd/1002-studio-pipeline-graph/index.html",
       "/rfd/1001-app-shell-and-routing/index.html",
       "/rfd/1000-conventions/index.html"
-    ]
-  },
-  {
-    "listing": "/pages/flight-level-3-strategy.html",
-    "items": [
-      "/rfd/2182-identity-triangle-operator-market-customer/index.html",
-      "/rfd/2171-atelier-workshop-shuttle-vocabulary/index.html"
-    ]
-  },
-  {
-    "listing": "/pages/flight-level-1-operations.html",
-    "items": [
-      "/rfd/2168-retract-wholebody-detector-keep-renderer/index.html",
-      "/rfd/2167-maskscore-voice-reward-distillation/index.html",
-      "/rfd/2166-maskscore-cineform-mkv-bundle/index.html",
-      "/rfd/2165-maskscore-unified-8-stub-emit/index.html",
-      "/rfd/2164-maskscore-speech-stub-panel-and-cloning/index.html",
-      "/rfd/2163-maskscore-text-stub-gemma-vlm/index.html",
-      "/rfd/2162-maskscore-usdz-skinning-and-15-edit-emit/index.html",
-      "/rfd/1147-what-editscore-costs-and-returns/index.html",
-      "/rfd/1146-latent-to-pixal3d/index.html",
-      "/rfd/1145-stylized-to-omnigen2/index.html",
-      "/rfd/1144-image-to-omnigen2/index.html",
-      "/rfd/1143-keypoints-to-anny/index.html"
-    ]
-  },
-  {
-    "listing": "/pages/flight-level-2-coordination.html",
-    "items": [
-      "/rfd/2172-tenseless-continuous-present-voice/index.html",
-      "/rfd/2170-allosaurus-squad-localization-langs/index.html",
-      "/rfd/1102-supported-atelier-modules/index.html",
-      "/rfd/1053-openusd-as-the-internal-format/index.html",
-      "/rfd/1036-packaging-convention/index.html",
-      "/rfd/1027-gpu-residency-budget/index.html"
-    ]
-  },
-  {
-    "listing": "/pages/logbook.html",
-    "items": [
-      "/logbook/logbook-cineform-movie-writer.html",
-      "/logbook/logbook-rfd2133-vfs-embed-retracted.html",
-      "/logbook/logbook-lumina2-flow-lcm-distill-probe.html",
-      "/logbook/logbook-lladao-n1-quality-beats-omnigen2.html",
-      "/logbook/logbook-lladao-n20-held-out-sweep.html",
-      "/logbook/logbook-lladao-5pair-step-sweep.html",
-      "/logbook/logbook-rfd2140-openbao-on-fdb.html",
-      "/logbook/logbook-rfd1016-model-repos.html",
-      "/logbook/logbook-rfd1122-t01-pose-check.html",
-      "/logbook/logbook-rfd2183-baseline-see-through-assets.html",
-      "/logbook/logbook-rfd2142-bao-pki-zerotrust.html",
-      "/logbook/logbook-blendshape-animation-and-tokenrig-first-light.html",
-      "/logbook/logbook-rfd2146-zerotrust-roles-first-run.html",
-      "/logbook/logbook-inbetweens-phenotype-clips-and-the-passthrough-rule.html",
-      "/logbook/logbook-rfd2133-weftspun-fdb-on-fly.html",
-      "/logbook/logbook-lumina2-distill-n1000-shelved.html",
-      "/logbook/logbook-rfd1171-gemma-first-rerank.html",
-      "/logbook/logbook-bao-cert-revocation-cn-narrowing.html",
-      "/logbook/logbook-rfd2133-spot-broker-on-fly.html",
-      "/logbook/logbook-anny-phenotype-fit-retired.html",
-      "/logbook/logbook-rfd2144-dr-runbook-first-run.html",
-      "/logbook/logbook-qwen3vl-vit-translate-walls.html",
-      "/logbook/logbook-rfd2134-backup-through-the-sni-hop.html",
-      "/logbook/logbook-comment-ladder.html",
-      "/logbook/logbook-fourloops-first-runs.html",
-      "/logbook/logbook-soft-renderer-and-mitsuba.html",
-      "/logbook/logbook-dfc-emulation-contexts-disagree.html",
-      "/logbook/logbook-rfd2135-two-checks-and-a-stopped-backup.html",
-      "/logbook/logbook-rfd1130-two-walls-to-a-hef.html",
-      "/logbook/logbook-edge-npu-and-the-anny-forward.html",
-      "/logbook/logbook-rfd1142-neural-engine-against-the-ugen300.html",
-      "/logbook/logbook-rfd1122-hailo-first-rerank.html",
-      "/logbook/logbook-rfd-2199-hailo-int4-survey.html",
-      "/logbook/logbook-maskscore-rung-1-join-keys.html"
     ]
   }
 ]
