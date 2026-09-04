@@ -237,10 +237,30 @@ five-minute token bound to the first agent's real entity: full write on
 its row, `deny` on anything under it. `rm ~/.bao-token && bao login
 -method=cert` fixed both on the first retry.
 
-Two rules follow. Every peer command that touches identity deletes the
-token file before `bao login`. Every session start, and every rotate or
-migrate, ends with `bao token lookup` and an assertion that `entity_id`
-is the entity behind the agent's own alias; a mismatch is a FAIL. An
+The fix above held for thirty minutes. The token "went stale again" on
+one agent, which an eight-hour token does not do. What happens is the
+shared-`$HOME` gotcha one section up, applied to the token file: three
+agents on one box resolve `~/.bao-token` to one file, and every `bao
+login` by any of them overwrites it for all three. The agent whose file
+held another's identity had not inherited a leftover; it had been
+clobbered by a peer's later login, and the peer whose writes worked all
+day was the one who happened to log in last. Deleting and re-logging in
+fixes one agent until the next peer login.
+
+So the durable rule is that no session on a shared box writes the
+shared file at all:
+
+    bao login -method=cert -no-store -token-only > ~/.bao-creds-<agent>/session-token
+    export BAO_TOKEN=$(cat ~/.bao-creds-<agent>/session-token)
+    rm -f ~/.bao-token
+
+`-no-store` keeps the login from touching `~/.bao-token`; `BAO_TOKEN`
+in the session's own environment wins over any file; the per-agent
+directory is the same one the credentials already live in. With the
+shared file gone and every session on `BAO_TOKEN`, there is nothing
+left to clobber. Every session start, and every rotate or migrate,
+still ends with `bao token lookup` and an assertion that `entity_id` is
+the entity behind the agent's own alias; a mismatch is a FAIL. An
 identity check that is not run reads exactly like a pass.
 
 Nothing under a row is writable. `agents/data/<row>/heartbeats/<ts>` is
