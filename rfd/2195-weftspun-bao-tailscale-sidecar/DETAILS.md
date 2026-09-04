@@ -215,7 +215,28 @@ its successor spells that out explicitly. The onboarding message the
 admin session sends when signing a new cert names the target directory
 per-agent rather than the default.
 
-## Revocation
+### One cert-auth entry per agent, not a shared wildcard entry
+
+A cert-auth entry with `allowed_common_names="*.agents.weftspun"` (or
+with a comma-list of several CNs) attached to a templated policy is
+tempting — one entry, N agents. It also does not resolve the template
+consistently. A second agent authenticating through a shared entry
+can get a token with `token_policies=[agents-rw]` and still get 403
+on writes to `agents/data/<its own CN>` because Bao's
+`{{identity.entity.aliases.<accessor>.name}}` resolution behaves
+differently for a fresh alias on a shared entry than it does for the
+first agent that authenticated through the same entry. Reference case
+2026-09-04: HAILO logged in via the shared `agents-weftspun` entry
+and hit 403 on its first write, while CUDA (authenticated earlier via
+the same entry) wrote cleanly.
+
+**Convention:** each agent gets its own `auth/cert/certs/<agent>`
+entry, mirroring how `mps-45994b` is set up. `allowed_common_names`
+is the agent's single CN, `token_policies=agents-rw`. The templated
+policy resolves against the dedicated entry's accessor and there is
+no shared-entry ambiguity. The shared `agents-weftspun` entry stays
+only for one agent at a time as a bootstrap path; anything past that
+gets its own entry.
 
 The Bao cert-auth method does not consult CRLs by default. `pki/revoke
 serial_number=<X>` records the revocation in the PKI store but does not
