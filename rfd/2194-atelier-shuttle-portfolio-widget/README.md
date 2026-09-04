@@ -6,25 +6,24 @@
 
 ## Decision
 
-Rerender the same runway scene N times, different outfits and
-identity per shot, cut in a video editor. Under 25 seconds + 10s
-outro with QR + URL per RFD 2136 (gacha ladder) rung 9. Live Godot
-render is fine if it produces the same shot structure.
+Rerender the same runway scene N times, different outfits per shot,
+cut in a video editor. Under 25 seconds + 10s outro with QR + URL per
+RFD 2136 rung 9. Live Godot render acceptable.
 
-**Anime side, text-only anchor** (near-term reachable). Dressing
-from `chibifire/zenodo-ecommerce-text` +
-`chibifire/kaggle-womens-ecom-clothing-reviews`, CycleGAN-styled
-via RFD 0036 for anime look. Identity from
-`alfredplpl/anime-with-caption-cc0` captions (BLOCKLIST.md permits
-captions). OmniGen2 (RFD 2183) generates from language.
+**Identity: ANNY.** Same avatar every shot. Anime style is the shipped
+look on every shot in the final video.
 
-**Real-world side.** `chibifire/zenodo-second-hand-fashion-v3` (32k
-CC-BY garments) direct as dressing. Identity: text → Wan-VACE or
-OmniGen2 (RFD 1102 catalog) → EditScore per RFD 2193. No footage.
-
-Motion: motion-bricks.cpp on hand-authored keyframes. FX + palette
-per chibifire (RFD 2182): ribbon trails; peach, coral, blush,
-cream. Music: CC0 or CC-BY. No commissioned music.
+**Paired generation.** Each shot is a pair — same identity, same
+garment, same pose — rendered photographic + anime-styled. Anime
+half ships; photographic stays as EditScore anchor. Sources:
+`chibifire/zenodo-second-hand-fashion-v3` (garments),
+`alfredplpl/anime-with-caption-cc0` (style anchor),
+`chibifire/zenodo-ecommerce-text` +
+`chibifire/kaggle-womens-ecom-clothing-reviews` (garment
+vocabulary). CycleGAN styles per BLOCKLIST.md. Generator OmniGen2
+(RFD 2183); LLaDA-o pending RFD 2198. Recursive EditScore
+(RFD 2193) ranks pairs, per-axis critique fed back. Output:
+`chibifire/anny-runway-shots-<yyyymmdd>`. See DETAILS.
 
 ## Problem
 
@@ -32,7 +31,7 @@ Atelier-workshop has no shipped demonstrable artifact.
 
 ## Related
 
-RFD 2136, RFD 2166 (Cineform), RFD 2171 (vocabulary), RFD 2183,
-RFD 2186 + 2187 (parked), RFD 1102.
+RFD 2136, RFD 2166, RFD 2171, RFD 2183, RFD 2193, RFD 2198, RFD 1102,
+BLOCKLIST.md CycleGAN section.
 
 This RFD was drafted by an AI and read by a human before it shipped.
