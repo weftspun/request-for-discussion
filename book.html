@@ -1936,6 +1936,13 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#non-goals-2" id="toc-non-goals-2" class="nav-link" data-scroll-target="#non-goals-2">Non-goals</a></li>
   <li><a href="#related-259" id="toc-related-259" class="nav-link" data-scroll-target="#related-259">Related</a></li>
   </ul></li>
+  <li><a href="#rfd-2202-rebac-role-tuples-enforced-via-bao-identity-groups" id="toc-rfd-2202-rebac-role-tuples-enforced-via-bao-identity-groups" class="nav-link" data-scroll-target="#rfd-2202-rebac-role-tuples-enforced-via-bao-identity-groups">RFD 2202: ReBAC role tuples enforced via Bao identity groups</a>
+  <ul class="collapse">
+  <li><a href="#decision-265" id="toc-decision-265" class="nav-link" data-scroll-target="#decision-265">Decision</a></li>
+  <li><a href="#problem-258" id="toc-problem-258" class="nav-link" data-scroll-target="#problem-258">Problem</a></li>
+  <li><a href="#non-goals-3" id="toc-non-goals-3" class="nav-link" data-scroll-target="#non-goals-3">Non-goals</a></li>
+  <li><a href="#related-260" id="toc-related-260" class="nav-link" data-scroll-target="#related-260">Related</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -7503,6 +7510,28 @@ scoring     MaskScore + EditScore       n/a          self-supervised reward</cod
 <section id="related-259" class="level2">
 <h2 class="anchored" data-anchor-id="related-259">Related</h2>
 <p>RFD 2195 (Bao PKI + Gotchas), RFD 2200 (roles), <code>agent-sync</code> and <code>coordinate-agents</code> skills in dot-claude.</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2202-rebac-role-tuples-enforced-via-bao-identity-groups" class="level1">
+<h1>RFD 2202: ReBAC role tuples enforced via Bao identity groups</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2202</code></p>
+<p><strong>State:</strong> committed <strong>Feature:</strong> wire <code>relationships/*--role--*</code> tuples to Bao identity groups so role capabilities are gated at the API, not just documented <strong>Scope:</strong> Bao coordination store, mps-admin policy, all live agent identities</p>
+<section id="decision-265" class="level2">
+<h2 class="anchored" data-anchor-id="decision-265">Decision</h2>
+<p>Bao <strong>identity groups</strong> enforce the ReBAC role tuples RFD 2200 landed. One group per role, each carrying role-scoped policies; agent entities as members. <code>scripts/sync_rebac_groups.py</code> reads <code>relationships/&lt;agent&gt;--role--&lt;role&gt;</code> and reconciles group memberships. See <code>DETAILS.md</code> for the mapping, reconciler contract, and non-enforcement scope for hardware <code>may-use</code> tuples.</p>
+</section>
+<section id="problem-258" class="level2">
+<h2 class="anchored" data-anchor-id="problem-258">Problem</h2>
+<p>RFD 2200 shipped the role tuples as data and named enforcement as a separate RFD. Today’s provisioning cycles bit twice on the gap: MPS had to hand-attach an <code>agents-rw</code> policy to HAILO’s entity to unblock a 403 (documented in RFD 2195’s cert-auth-swap gotcha), and the “assist” role change for HAILO landed as a tuple update with no mechanical effect on what capabilities HAILO’s token actually carried. Groups close that gap: a role change is one tuple write and one reconciler run, and the token’s next login reflects the new policies through group membership.</p>
+</section>
+<section id="non-goals-3" class="level2">
+<h2 class="anchored" data-anchor-id="non-goals-3">Non-goals</h2>
+<p><code>may-use--&lt;device&gt;</code> tuples stay documentation; Bao does not gate GPU/NPU access. Future compute-lease broker consults them, out of scope here.</p>
+</section>
+<section id="related-260" class="level2">
+<h2 class="anchored" data-anchor-id="related-260">Related</h2>
+<p>RFD 2200 (tuples as data), RFD 2195 (PKI + cert-auth), RFD 2201 (coordinate-agents ceremony).</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 

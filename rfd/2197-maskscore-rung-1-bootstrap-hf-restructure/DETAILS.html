@@ -339,8 +339,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#maskscore-rung-1-bootstrap-hf-restructure-join-plan-and-media-strategy" id="toc-maskscore-rung-1-bootstrap-hf-restructure-join-plan-and-media-strategy" class="nav-link active" data-scroll-target="#maskscore-rung-1-bootstrap-hf-restructure-join-plan-and-media-strategy">maskscore-rung-1-bootstrap HF restructure — join plan and media strategy</a>
+  <li><a href="#maskscore-rung-1-bootstrap-hf-restructure-join-plan-and-media-strategy" id="toc-maskscore-rung-1-bootstrap-hf-restructure-join-plan-and-media-strategy" class="nav-link active" data-scroll-target="#maskscore-rung-1-bootstrap-hf-restructure-join-plan-and-media-strategy">maskscore-rung-1-bootstrap HF restructure: join plan and media strategy</a>
   <ul class="collapse">
+  <li><a href="#amendment-2026-09-04-join-keys-speech-schema-media-budget" id="toc-amendment-2026-09-04-join-keys-speech-schema-media-budget" class="nav-link" data-scroll-target="#amendment-2026-09-04-join-keys-speech-schema-media-budget">Amendment 2026-09-04: join keys, speech schema, media budget</a></li>
   <li><a href="#current-shape-observed-2026-09-03" id="toc-current-shape-observed-2026-09-03" class="nav-link" data-scroll-target="#current-shape-observed-2026-09-03">Current shape (observed 2026-09-03)</a></li>
   <li><a href="#target-shape" id="toc-target-shape" class="nav-link" data-scroll-target="#target-shape">Target shape</a></li>
   <li><a href="#the-join-plan" id="toc-the-join-plan" class="nav-link" data-scroll-target="#the-join-plan">The join plan</a></li>
@@ -360,19 +361,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <section id="maskscore-rung-1-bootstrap-hf-restructure-join-plan-and-media-strategy" class="level1">
-<h1>maskscore-rung-1-bootstrap HF restructure — join plan and media strategy</h1>
+<h1>maskscore-rung-1-bootstrap HF restructure: join plan and media strategy</h1>
+<section id="amendment-2026-09-04-join-keys-speech-schema-media-budget" class="level2">
+<h2 class="anchored" data-anchor-id="amendment-2026-09-04-join-keys-speech-schema-media-budget">Amendment 2026-09-04: join keys, speech schema, media budget</h2>
+<p>The measurement that supersedes the join plan and media strategy below is in <code>logbook/logbook-maskscore-rung-1-join-keys.md</code>. Read that entry before touching a rewrite. What changed against the original draft:</p>
+<ol type="1">
+<li><strong>Base ⋈ candidates join key</strong> is <code>base.key = candidates.row_key</code>, not <code>example_id</code>. Different column names on the two sides, same semantic values, 100 % membership every task.</li>
+<li><strong>Candidates ⋈ scores join key</strong> is composite <code>(row_key, candidate)</code> for the five non-speech tasks, <code>(row_key, candidate_axis)</code> for speech. There is no single <code>candidate_id</code> column.</li>
+<li><strong>Speech is a schema variant</strong>, not one more task-name in the same list. Different filename glob (<code>maskscore_speech*</code>, no <code>rung_1</code> prefix), different location (<code>speech/speech/</code>), different candidate column (<code>candidate_axis</code>), different score schema (long <code>metric_name</code>/<code>metric_value</code> vs the non-speech wide <code>view_index</code>/<code>depth_l1</code>/<code>normal_l1</code>/<code>normal_dot</code>), different base extras (<code>canonical_text</code> vs <code>poses</code>). Own emit branch, not a switch on task-name.</li>
+<li><strong>Scores per candidate is <code>list&lt;struct&gt;</code></strong>. 64 per-view records per candidate for non-speech (from <code>view_index</code>), 15 per-metric records for speech (from <code>metric_name</code>/<code>metric_value</code>). Not one score row per candidate.</li>
+<li><strong>Media budget</strong> at bootstrap scale is under 50 KB total parquet payload. The 20 wide rows across the whole dataset (5 non-speech tasks at 1 base row each, plus 15 speech rows) make the earlier ~300 MB estimate wrong by orders of magnitude. Storage question is trivial; viewer-rendering question is unchanged.</li>
+<li><strong>Join-key check</strong> as originally scripted uses <code>set(base.columns) &amp; set(cands.columns)</code>. That returns empty for every task, since the two sides use different names for the same semantic key, and under the RFD’s own fallback (“publish the base table alone”) would drop candidates+scores from the first pass. Wrong outcome on clean data. The check must become: per-task expected join columns exist by name, and their value-sets match.</li>
+</ol>
+<p>The rest of this file is the original draft, kept for the record. Sections superseded by the measurement carry a pointer at the top rather than reflowing in place, so citations of the RFD’s earlier wording still resolve.</p>
+</section>
 <section id="current-shape-observed-2026-09-03" class="level2">
 <h2 class="anchored" data-anchor-id="current-shape-observed-2026-09-03">Current shape (observed 2026-09-03)</h2>
 <p>The HF repo <code>chibifire/maskscore-rung-1-bootstrap</code> currently holds:</p>
-<pre><code>maskscore_rung_1_&lt;task&gt;.parquet             ×6   # base tables per task-type
-maskscore_rung_1_&lt;task&gt;_candidates.parquet  ×6   # candidate generations per row
-maskscore_rung_1_&lt;task&gt;_scores.parquet      ×6   # scores per candidate
+<pre><code>maskscore_rung_1_&lt;task&gt;.parquet             ×5   # base tables (non-speech)
+maskscore_rung_1_&lt;task&gt;_candidates.parquet  ×5   # candidate generations per row
+maskscore_rung_1_&lt;task&gt;_scores.parquet      ×5   # scores per candidate
 
-renders/  ×512                                    # PNG render frames
-speech/   ×351   ( 150 WAV, 180 VTT, 21 other )   # aligned audio + captions
-poses/    ×4                                      # PNG pose overlays
-scores/   ×2                                      # ancillary score dumps</code></pre>
-<p>Total 887 files, 18 parquets. All 18 parquets at repo root; no <code>data/</code> directory. HF viewer sees no auto-indexer layout it can group and returns <code>viewer=false, preview=false</code>.</p>
+speech/speech/maskscore_speech.parquet             # base (speech)
+speech/speech/maskscore_speech_candidates.parquet  # cand (speech)
+speech/speech/maskscore_speech_scores.parquet      # scores (speech)
+
+renders/  ×512                                     # PNG render frames
+speech/   ×351   ( 150 WAV, 180 VTT, 21 other )    # aligned audio + captions
+poses/    ×4                                       # PNG pose overlays
+scores/   ×2                                       # ancillary score dumps</code></pre>
+<p>Total 887 files, 18 parquets. 15 parquets at repo root, 3 under <code>speech/speech/</code>. No <code>data/</code> directory. HF viewer sees no auto-indexer layout it can group and returns <code>viewer=false, preview=false</code>.</p>
+<p>The original draft placed all 18 parquets at repo root. Corrected above.</p>
 </section>
 <section id="target-shape" class="level2">
 <h2 class="anchored" data-anchor-id="target-shape">Target shape</h2>
@@ -381,13 +400,13 @@ data/keypoints/train-*.parquet
 data/mesh/train-*.parquet
 data/multimodal/train-*.parquet
 data/pose/train-*.parquet
-data/speech-audio/train-*.parquet   # if speech is a task-type, else fold into multimodal</code></pre>
-<p>Six configs (one per task-type) under a single dataset repo. Each config paginates independently in the viewer. Row shape per config:</p>
+data/speech/train-*.parquet         # separate emit branch, see below</code></pre>
+<p>Six configs (one per task-type) under a single dataset repo. Each config paginates independently in the viewer. Row shape per non-speech config:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 12%">
+<col style="width: 34%">
+<col style="width: 53%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -398,29 +417,101 @@ data/speech-audio/train-*.parquet   # if speech is a task-type, else fold into m
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>example_id</code></td>
+<td><code>key</code></td>
 <td>string</td>
-<td>join key across the three source tables</td>
+<td>from base; joins to <code>row_key</code> on candidates</td>
 </tr>
 <tr class="even">
-<td><code>input_*</code></td>
+<td><code>task_type</code></td>
+<td>string</td>
+<td>from base (constant per config; keep to satisfy viewer schema)</td>
+</tr>
+<tr class="odd">
+<td><code>dimension</code></td>
+<td>string</td>
+<td>from base</td>
+</tr>
+<tr class="even">
+<td><code>input_column</code></td>
+<td>string</td>
+<td>from base</td>
+</tr>
+<tr class="odd">
+<td><code>input_asset</code></td>
+<td>(binary or string ref)</td>
+<td>from base; media strategy applies</td>
+</tr>
+<tr class="even">
+<td><code>input_asset_kind</code></td>
+<td>string</td>
+<td>from base</td>
+</tr>
+<tr class="odd">
+<td><code>poses</code></td>
 <td>(task-specific)</td>
-<td>from the base table</td>
-</tr>
-<tr class="odd">
-<td><code>candidates</code></td>
-<td><code>list&lt;struct&lt;candidate_id, generation, ...&gt;&gt;</code></td>
-<td>from candidates table joined on example_id</td>
+<td>from base</td>
 </tr>
 <tr class="even">
-<td><code>scores</code></td>
-<td><code>list&lt;struct&lt;candidate_id, score, ...&gt;&gt;</code></td>
-<td>from scores table joined on candidate_id</td>
+<td><code>candidates</code></td>
+<td><code>list&lt;struct&lt;candidate, rank, candidate_asset, scores: list&lt;struct&lt;view_index, depth_l1, normal_l1, normal_dot&gt;&gt;&gt;&gt;</code></td>
+<td>from candidates, with scores folded in per <code>(row_key, candidate)</code></td>
+</tr>
+</tbody>
+</table>
+<p>Row shape for the speech config differs on three axes:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 34%">
+<col style="width: 53%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>field</th>
+<th>type</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>key</code></td>
+<td>string</td>
+<td>joins to <code>row_key</code></td>
+</tr>
+<tr class="even">
+<td><code>task_type</code></td>
+<td>string</td>
+<td>constant</td>
 </tr>
 <tr class="odd">
-<td>media columns</td>
-<td>see below</td>
-<td>inline or referenced</td>
+<td><code>dimension</code></td>
+<td>string</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>input_column</code></td>
+<td>string</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>input_asset</code></td>
+<td>(media)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>input_asset_kind</code></td>
+<td>string</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>canonical_text</code></td>
+<td>string</td>
+<td>speech-only</td>
+</tr>
+<tr class="even">
+<td><code>candidates</code></td>
+<td><code>list&lt;struct&lt;candidate_axis, rank, candidate_asset, candidate_asset_kind, candidate_kind, candidate_target_text, scores: list&lt;struct&lt;candidate_rank, metric_name, metric_value&gt;&gt;&gt;&gt;</code></td>
+<td>scores fold in per <code>(row_key, candidate_axis)</code>; note the score inner schema is long-form (metric_name/metric_value), not wide</td>
 </tr>
 </tbody>
 </table>
@@ -428,43 +519,45 @@ data/speech-audio/train-*.parquet   # if speech is a task-type, else fold into m
 </section>
 <section id="the-join-plan" class="level2">
 <h2 class="anchored" data-anchor-id="the-join-plan">The join plan</h2>
-<p>For each task-type, three tables become one:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>base  <span class="op">=</span> pq.read_table(<span class="ss">f'maskscore_rung_1_</span><span class="sc">{</span>task<span class="sc">}</span><span class="ss">.parquet'</span>).to_pandas()</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cands <span class="op">=</span> pq.read_table(<span class="ss">f'maskscore_rung_1_</span><span class="sc">{</span>task<span class="sc">}</span><span class="ss">_candidates.parquet'</span>).to_pandas()</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>scores<span class="op">=</span> pq.read_table(<span class="ss">f'maskscore_rung_1_</span><span class="sc">{</span>task<span class="sc">}</span><span class="ss">_scores.parquet'</span>).to_pandas()</span>
+<p>For each non-speech task-type, three tables become one:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>base   <span class="op">=</span> pq.read_table(<span class="ss">f'maskscore_rung_1_</span><span class="sc">{</span>task<span class="sc">}</span><span class="ss">.parquet'</span>).to_pandas()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cands  <span class="op">=</span> pq.read_table(<span class="ss">f'maskscore_rung_1_</span><span class="sc">{</span>task<span class="sc">}</span><span class="ss">_candidates.parquet'</span>).to_pandas()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>scores <span class="op">=</span> pq.read_table(<span class="ss">f'maskscore_rung_1_</span><span class="sc">{</span>task<span class="sc">}</span><span class="ss">_scores.parquet'</span>).to_pandas()</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># candidates → nested list per example_id</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>cands_by_ex <span class="op">=</span> cands.groupby(<span class="st">'example_id'</span>).<span class="bu">apply</span>(</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> g: g.drop(columns<span class="op">=</span><span class="st">'example_id'</span>).to_dict(<span class="st">'records'</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>).rename(<span class="st">'candidates'</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># scores → nested list per (row_key, candidate)</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>scores_by_pair <span class="op">=</span> scores.groupby([<span class="st">'row_key'</span>, <span class="st">'candidate'</span>]).<span class="bu">apply</span>(</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> g: g.drop(columns<span class="op">=</span>[<span class="st">'row_key'</span>, <span class="st">'candidate'</span>]).to_dict(<span class="st">'records'</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>).rename(<span class="st">'scores'</span>)</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># scores → nested list per candidate_id, then joined into candidates</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>scores_by_cid <span class="op">=</span> scores.groupby(<span class="st">'candidate_id'</span>).<span class="bu">apply</span>(</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> g: g.drop(columns<span class="op">=</span><span class="st">'candidate_id'</span>).to_dict(<span class="st">'records'</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>).rename(<span class="st">'scores'</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># fold scores into each candidate record</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> attach_scores(cand_list):</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> cand_list:</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        c[<span class="st">'scores'</span>] <span class="op">=</span> scores_by_cid.get(c[<span class="st">'candidate_id'</span>], [])</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cand_list</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># candidates → nested list per row_key, with scores folded in per pair</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> build_candidates(g):</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> []</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _, r <span class="kw">in</span> g.iterrows():</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        rec <span class="op">=</span> r.drop(labels<span class="op">=</span>[<span class="st">'row_key'</span>]).to_dict()</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        rec[<span class="st">'scores'</span>] <span class="op">=</span> scores_by_pair.get((r[<span class="st">'row_key'</span>], r[<span class="st">'candidate'</span>]), [])</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        out.append(rec)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>cands_by_rk <span class="op">=</span> cands.groupby(<span class="st">'row_key'</span>).<span class="bu">apply</span>(build_candidates).rename(<span class="st">'candidates'</span>)</span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>wide <span class="op">=</span> base.set_index(<span class="st">'example_id'</span>).join(cands_by_ex.<span class="bu">apply</span>(attach_scores))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Two join-key assumptions to verify against the actual data before writing:</p>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># base has one row per key; join on base.key = cands.row_key</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>wide <span class="op">=</span> base.set_index(<span class="st">'key'</span>).join(cands_by_rk, how<span class="op">=</span><span class="st">'left'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Speech uses the same shape with three substitutions: file glob is <code>speech/speech/maskscore_speech*</code>, <code>candidate</code> becomes <code>candidate_axis</code> in every occurrence, and the score inner schema is <code>candidate_rank</code>/<code>metric_name</code>/<code>metric_value</code> instead of <code>view_index</code>/<code>depth_l1</code>/<code>normal_l1</code>/<code>normal_dot</code>.</p>
+<p>Join-key verification gate before running the rewrite, per task:</p>
 <ul>
-<li><strong><code>example_id</code> is the join key in <code>_candidates</code>.</strong> If the column is actually <code>row_id</code>, <code>stem</code>, <code>key</code>, or task-specific, use the actual name. Verify by <code>set(base.columns) &amp; set(cands.columns)</code> for each task.</li>
-<li><strong><code>candidate_id</code> is the join key from <code>_candidates</code> to <code>_scores</code>.</strong> Same caveat; verify per-task.</li>
+<li>assert <code>'key' in base.columns</code> and <code>'row_key' in cands.columns and 'row_key' in scores.columns</code>;</li>
+<li>assert <code>set(base['key']) == set(cands['row_key'])</code> and <code>set(cands[['row_key', &lt;cand_col&gt;]].itertuples(index=False))  &gt;= set(scores[['row_key', &lt;cand_col&gt;]].itertuples(index=False))</code>.</li>
 </ul>
-<p>Fallback if the join keys don’t line up cleanly: publish the base table alone per config for the first pass, and defer candidates+scores until the join can be scripted deterministically.</p>
+<p>The empty-column-intersection fallback the original draft named (“publish the base table alone per config”) is not the failure mode on this data. The keys align cleanly under the corrected names.</p>
 </section>
 <section id="media-strategy" class="level2">
 <h2 class="anchored" data-anchor-id="media-strategy">Media strategy</h2>
-<p>887 non-parquet files sit outside the parquet columns today. The disposition per file kind:</p>
+<p>887 non-parquet files sit outside the parquet columns today. The disposition per file kind is unchanged from the original draft:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
+<col style="width: 10%">
+<col style="width: 6%">
+<col style="width: 82%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -477,7 +570,7 @@ data/speech-audio/train-*.parquet   # if speech is a task-type, else fold into m
 <tr class="odd">
 <td><code>renders/*.png</code></td>
 <td style="text-align: right;">512 + 128</td>
-<td>inline as <code>struct&lt;bytes, path&gt;</code> per RFD 2196 rule 4 if under ~1 MB each; else keep at path, add column <code>image_path: string</code>, note viewer will not thumbnail</td>
+<td>inline as <code>struct&lt;bytes, path&gt;</code> per RFD 2196 rule 4 if under ~1 MB each; else keep at path, add column <code>image_path: string</code></td>
 </tr>
 <tr class="even">
 <td><code>speech/*.wav</code></td>
@@ -501,8 +594,8 @@ data/speech-audio/train-*.parquet   # if speech is a task-type, else fold into m
 </tr>
 </tbody>
 </table>
-<p>The join step reads media by path and embeds bytes into the row it belongs to (identified by filename stem matching <code>example_id</code>). Files whose example_id cannot be inferred stay at their satellite path and get named in the dataset card as unreferenced-but-preserved.</p>
-<p>Total inline media budget check: 512 renders × 400 KB + 150 wav × 500 KB + etc. ≈ 300 MB. Comfortably under HF’s per-shard limits with <code>row_group_size</code> chosen per RFD 2196 rule 2.</p>
+<p>The join step reads media by path and embeds bytes into the row it belongs to (identified by filename stem matching the row key). Files whose row key cannot be inferred stay at their satellite path and get named in the dataset card as unreferenced-but-preserved.</p>
+<p>Inline media budget at bootstrap scale: 20 wide rows across the whole dataset. Under 50 KB parquet payload before media inlining; well under HF’s per-shard limits regardless of media disposition. The original ~300 MB estimate was for a rung the bootstrap does not carry yet.</p>
 </section>
 <section id="reference" class="level2">
 <h2 class="anchored" data-anchor-id="reference">Reference</h2>
@@ -514,16 +607,16 @@ data/speech-audio/train-*.parquet   # if speech is a task-type, else fold into m
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">HF_HUB_DISABLE_XET</span><span class="op">=</span>1 <span class="va">HF_HUB_ENABLE_HF_TRANSFER</span><span class="op">=</span>1 <span class="dt">\</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">hf</span> upload-large-folder chibifire/maskscore-rung-1-bootstrap <span class="dt">\</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    upload_stage <span class="at">--repo-type</span><span class="op">=</span>dataset <span class="at">--include</span><span class="op">=</span><span class="st">"data/*/train-*.parquet"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The old root-level parquets and the old satellite directories can be deleted in the same commit that lands the new layout, since the viewer will not index the old shape and consumers of the old shape (if any exist) should read from the source-of-truth generators anyway.</p>
+<p>The old root-level parquets and the <code>speech/speech/</code> parquets can be deleted in the same commit that lands the new layout, since the viewer will not index the old shape and consumers of the old shape (if any exist) should read from the source-of-truth generators anyway.</p>
 </section>
 <section id="estimated-effort" class="level2">
 <h2 class="anchored" data-anchor-id="estimated-effort">Estimated effort</h2>
 <ul>
-<li>Verify join keys per task-type: 30 min (six tables × two checks each).</li>
-<li>Write the join script: 2-4 h depending on whether keys are consistent.</li>
+<li>Verify join keys per task-type: 30 min (six tables, two checks each). Done 2026-09-04, results in the logbook entry.</li>
+<li>Write the join script per corrected spec: 2-4 h, including the speech-branch schema variant.</li>
 <li>Media inlining: 1-2 h.</li>
 <li>Re-upload + verify viewer: 1 h.</li>
-<li><strong>Total: half a day to a day</strong>, plus whatever the join-key surprises cost.</li>
+<li><strong>Total from here: half a day to a day.</strong></li>
 </ul>
 
 
