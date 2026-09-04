@@ -50,6 +50,25 @@ shipping 3.6.
 `test_preflight.py` red-tests 10 corruptions. `check_readme_claims.py` answers its own red
 test — falsifying two claims trips exactly those two.
 
+**Naming convention for spread-and-threshold gates:** ship the companion mode as a CLI
+switch `--negative-control` on the same script that computes the number. Two shapes seen
+in `anny-keypoint-anchors`:
+
+1. **Re-run with the known-bad selector.** `face_anchors.py --negative-control` calls the
+   same builder with the pre-rework region selector (a per-target 1.5 mm floor over the
+   union, no excluded-vertex filter) and asserts the spread gate rejects the result. The
+   pre-rework worst comes in at 22.4 mm (about a nickel) against a 13 mm cap. A gate the
+   pre-rework selector's output does not fail is a gate that does not measure what the
+   rework changed.
+2. **Re-run the placement check against the previous artifact.** `check_keypoint_anchors.py
+--self-test` reads `face68_v2_snapshot.pth` (v2 weights preserved as evidence per rule 10) and asserts the same placement priors that pass on `face68.pth` fail on the
+   snapshot. v2 fails six priors (jawline monotone-X, chin at min-Z, eyes lateral, mouth
+   corners flanking the nose tip); v3 passes all. A gate whose new build passes it and
+   whose known-broken build passes it too is not a placement gate — it is decoration.
+
+Both shapes name the same rule: the gate must reject the known-broken input. Both survive
+review the same way: a green gate is not evidence until the negative control turns red.
+
 ---
 
 ## 3. A silent skip reads exactly like a pass
