@@ -8,8 +8,9 @@
 ## Decision
 
 The first subset publishes a hybrid row: `image`, `camera`, `anny_posed_vertices` (19,158 × 3
-float32), `keypoints_2d` (133 × 3, baked at the `wholebody133.pth` hash), `soma_pose` (77
-rotvecs as Kimodo emits; anny prepends one root identity to make 78 at call time), and a per-shard manifest carrying the
+float32, makehuman topology via `rig="soma"` + `remove_unattached_vertices=False`; a shard
+whose vertex count differs is rejected by the manifest gate), `keypoints_2d` (133 × 3, baked
+at the `wholebody133.pth` hash), `soma_pose` (77 rotvecs; anny prepends one root at call time), and a per-shard manifest carrying the
 `wholebody133.pth` SHA-256, the observed SOMA joint count, the motion source, the sampler
 configuration, and the render seed. Camera `sphere_hammersley_sequence` per CLAUDE.md.
 Publish path RFD 2196 rule 5: LFS + `hf_transfer`, xet disabled, via `hf upload-large-folder`
@@ -21,11 +22,10 @@ knobs.
 ## Problem
 
 Task #67's living-dataset ANNY-SOMA corpus needs a schema pick before whoever holds the GPU
-grant can render, and the pick closes the immutability-vs-agility tradeoff the two single-
-shape options force. Vertex-only rows are label-scheme-neutral but the RFD 2196 viewer cannot
-render keypoint overlays from vertices, and the `.pth` version becomes an implicit training-
-time dependency. Parquet-baked keypoints are viewer-friendly but freeze the current `.pth`;
-every anchor rework forces a re-render. The hybrid keeps both properties.
+grant can render, and the pick closes the immutability-vs-agility tradeoff two single-shape
+options force. Vertex-only rows are label-scheme-neutral but the RFD 2196 viewer cannot
+overlay keypoints from vertices and the `.pth` version becomes an implicit training-time
+dependency. Baked keypoints are viewer-friendly but freeze the current `.pth`; hybrid holds both.
 
 ## References
 
