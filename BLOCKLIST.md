@@ -1404,3 +1404,53 @@ were never actually trained.
 
 Recorded here rather than as a logbook entry because it is a
 pattern-level rule.
+
+### Apple's convention name for the 52-target facial-action blendshape set is blocked as a shipping-artifact word, and FACS action-unit vocabulary is the substitute
+
+The 52 facial-action blendshape targets ANNY ships under
+`3-interactor/anny/src/anny/data/faceunits01/targets/faceunits/*.target` are
+the shape Apple's face-tracking API popularised with a specific convention
+name. The shapes themselves are fine — they are what anny already exposes,
+and `anny.models.facial_actions.FACIAL_ACTION_LABELS` names them by their
+on-disk file identifiers. What is blocked is the trademarked convention
+name for the set: invoking it in code comments, docstrings, RFDs, logbook
+entries, PR descriptions, or user-facing prose implies affiliation the
+workspace does not have, and it invites the legal question CLAUDE.md's
+"Trademarks Stay Out of Shipping Artifacts" section already refuses.
+
+**Substitute vocabulary.** Describe the set as "the 52 facial-action
+blendshapes" or "the 52 FACS-derived blendshapes". Describe individual
+shapes by their FACS action unit or the underlying muscle motion:
+"jaw-open (AU 26)", "lip-corner puller (AU 12)", "brow lowerer (AU 4)",
+"lid closer (AU 43)". Melinda Ozel's cheat sheet at
+https://melindaozel.com/arkit-to-facs-cheat-sheet/ carries the full
+mapping and is the reference the operator cited when the rule was
+invoked.
+
+**File and identifier names stay verbatim.** The `.target` filenames
+(`jawOpen.target`, `mouthSmileLeft.target`, `browInnerUp.target`, and so
+on) are the package's own on-disk identifiers. Code that opens them by
+name is naming a file, not invoking the mark. Same for
+`FACIAL_ACTION_LABELS` values in Python that reads or writes them, and
+for the identifier keys in a phoneme-to-blend-weight mapping like
+`3-interactor/anny/src/anny/data/phoneme_viseme_facial_action.json`.
+
+**What triggered the row.** Task #66's face-anchor build leaned on the 52
+targets as region evidence for the 68 iBUG face landmarks; the operator
+caught the mark in scratchpad memory files before the code drafted.
+SIDEKICK's `results-anny-viseme-check.json` carried the mark similarly.
+Both stripped before publish. The row lands so future reflexive uses
+across the fleet are catchable via a shared workspace reference rather
+than a coordination round each time.
+
+**What the row does not block.** Working ANNY with the 52 blendshape
+shapes themselves (they are the on-disk file identifiers, not
+trademarked). Grading someone else's model that uses the mark
+internally — inference-only use of a third-party artefact is not
+shipping our own artefact under that name. Naming the mark once in this
+argument to state what is being blocked, the same shape the
+`Square Enix` paragraph in CLAUDE.md's trademark section uses.
+
+Recorded here rather than as a logbook entry because it is a naming
+rule that applies to every future artefact touching the facial-action
+blendshape set.
