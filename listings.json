@@ -2,6 +2,8 @@
   {
     "listing": "/pages/rfd.html",
     "items": [
+      "/rfd/2200-rebac-agent-roles/index.html",
+      "/rfd/2198-lladao-speed-work-for-dressing-overlay/index.html",
       "/rfd/2197-maskscore-rung-1-bootstrap-hf-restructure/index.html",
       "/rfd/2196-huggingface-dataset-viewer-rules/index.html",
       "/rfd/2195-weftspun-bao-tailscale-sidecar/index.html",
@@ -314,6 +316,7 @@
       "/logbook/logbook-cineform-movie-writer.html",
       "/logbook/logbook-rfd2133-vfs-embed-retracted.html",
       "/logbook/logbook-lumina2-flow-lcm-distill-probe.html",
+      "/logbook/logbook-lladao-n1-quality-beats-omnigen2.html",
       "/logbook/logbook-rfd2140-openbao-on-fdb.html",
       "/logbook/logbook-rfd1016-model-repos.html",
       "/logbook/logbook-rfd1122-t01-pose-check.html",
