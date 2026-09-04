@@ -1943,6 +1943,13 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#non-goals-3" id="toc-non-goals-3" class="nav-link" data-scroll-target="#non-goals-3">Non-goals</a></li>
   <li><a href="#related-260" id="toc-related-260" class="nav-link" data-scroll-target="#related-260">Related</a></li>
   </ul></li>
+  <li><a href="#rfd-2203-the-first-subset-row-shape-for-the-anny-soma-keypoint-corpus" id="toc-rfd-2203-the-first-subset-row-shape-for-the-anny-soma-keypoint-corpus" class="nav-link" data-scroll-target="#rfd-2203-the-first-subset-row-shape-for-the-anny-soma-keypoint-corpus">RFD 2203: The first-subset row shape for the anny-soma keypoint corpus</a>
+  <ul class="collapse">
+  <li><a href="#decision-266" id="toc-decision-266" class="nav-link" data-scroll-target="#decision-266">Decision</a></li>
+  <li><a href="#problem-259" id="toc-problem-259" class="nav-link" data-scroll-target="#problem-259">Problem</a></li>
+  <li><a href="#references-26" id="toc-references-26" class="nav-link" data-scroll-target="#references-26">References</a></li>
+  <li><a href="#related-261" id="toc-related-261" class="nav-link" data-scroll-target="#related-261">Related</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -7530,6 +7537,28 @@ scoring     MaskScore + EditScore       n/a          self-supervised reward</cod
 <section id="related-260" class="level2">
 <h2 class="anchored" data-anchor-id="related-260">Related</h2>
 <p>RFD 2200 (tuples as data), RFD 2195 (PKI + cert-auth), RFD 2201 (coordinate-agents ceremony).</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
+<section id="rfd-2203-the-first-subset-row-shape-for-the-anny-soma-keypoint-corpus" class="level1">
+<h1>RFD 2203: The first-subset row shape for the anny-soma keypoint corpus</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2203</code></p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> the RFD 1173 keypoints stub, corpus render side <strong>Scope:</strong> <code>6-datasource/anny-soma-corpus</code> (a new repository; creating it triggers a <code>weftspun-keypoint</code> manifest PR on the 6-datasource side, owned by the GPU-grant holder)</p>
+<section id="decision-266" class="level2">
+<h2 class="anchored" data-anchor-id="decision-266">Decision</h2>
+<p>The first subset publishes a hybrid row: <code>image</code>, <code>camera</code>, <code>anny_posed_vertices</code> (19,158 × 3 float32, makehuman topology via <code>rig="soma"</code> + <code>remove_unattached_vertices=False</code>; a shard whose vertex count differs is rejected by the manifest gate), <code>keypoints_2d</code> (133 × 3, baked at the <code>wholebody133.pth</code> hash), <code>soma_pose</code> (77 rotvecs; anny prepends one root at call time), and a per-shard manifest carrying the <code>wholebody133.pth</code> SHA-256, the observed SOMA joint count, the motion source, the sampler configuration, and the render seed. Camera <code>sphere_hammersley_sequence</code> per CLAUDE.md. Publish path RFD 2196 rule 5: LFS + <code>hf_transfer</code>, xet disabled, via <code>hf upload-large-folder</code> for per-file resumable commits. Additive subsets and motion refinements each land as their own commit set with the prior commit hash cited as retraction-in-place. Blinded holdout untouched. <code>DETAILS.md</code> carries the tradeoff, the SOMA hook, the RFD 1122 lineage, and open knobs.</p>
+</section>
+<section id="problem-259" class="level2">
+<h2 class="anchored" data-anchor-id="problem-259">Problem</h2>
+<p>Task #67’s living-dataset ANNY-SOMA corpus needs a schema pick before whoever holds the GPU grant can render, and the pick closes the immutability-vs-agility tradeoff two single-shape options force. Vertex-only rows are label-scheme-neutral but the RFD 2196 viewer cannot overlay keypoints from vertices and the <code>.pth</code> version becomes an implicit training-time dependency. Baked keypoints are viewer-friendly but freeze the current <code>.pth</code>; hybrid holds both.</p>
+</section>
+<section id="references-26" class="level2">
+<h2 class="anchored" data-anchor-id="references-26">References</h2>
+<p>RFD 2196 (publish rules), RFD 1173 (multimodal pipeline), CLAUDE.md camera-sequence rule.</p>
+</section>
+<section id="related-261" class="level2">
+<h2 class="anchored" data-anchor-id="related-261">Related</h2>
+<p>Rules originated in RFD 1122 (state abandoned), carried forward by RFDs 1121, 1123, 1126, 1128 and by CLAUDE.md. Consumer is task #65 (HERO’s CUDA-only rescope). Anchor source is <code>wholebody133.pth</code> at <code>weftspun/anny-keypoint-anchors</code> main. SOMA joint-count hook is task #76.</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
 
