@@ -1404,3 +1404,62 @@ were never actually trained.
 
 Recorded here rather than as a logbook entry because it is a
 pattern-level rule.
+### Lumina-Image-2.0 is blocklisted as an image-edit base — no native image path
+
+Lumina-Image-2.0 is a text-to-image DiT with no native image-input path.
+Every image-edit path we tried through it went through SDEdit (encode
+source to latent, blend with noise at strength s, run text-conditioned
+denoise), which the row above also blocklists. The two rows go together;
+either one alone would still leave the other open.
+
+The measurement: n=1000 pairs from `chibifire/editscore-reward-train`,
+2-epoch Flow-LCM + teacher-endpoint LoRA on nf4 Lumina2, held-out on 20
+unseen pairs from shard 90 at 4/10/30-step SDEdit. Base scored 0.716 /
+0.244 / 0.862 on the 0-25 EditScore `overall` scale. LoRA scored 0.655
+/ 0.689 / 0.556. The best cell in the matrix is base-Lumina2 nf4 at
+30-step SDEdit, 0.862 mean, and it is still low — 14/20 pairs both arms
+score 0.00 because 4-step Lumina2 SDEdit does not produce
+EditScore-scoring edits on background, tone_transfer, or most
+color_alter regardless of adapter or step count. See
+`logbook-lumina2-flow-lcm-distill-probe.md` for the n=10 probe and
+`logbook-lumina2-distill-n1000-shelved.md` for the scale-up.
+
+**OmniGen2 is the approved exception, and the reason is architecture,
+not weight lineage.** OmniGen2 is built on the Lumina2 backend but adds
+a Qwen2.5-VL vision path so the model consumes the source image
+natively, not through a partial-noise workaround. The inference call is
+`pipeline(prompt=instruction, input_images=[source], ...)` and the
+transformer sees the source through the MLLM's vision encoder at every
+step. That is a different mechanism from Lumina2 + SDEdit, and it is
+what RFD 2186 specifies.
+
+**What is blocked.** Lumina-Image-2.0 as a base for image-edit training
+or inference. **What is not blocked.** OmniGen2 (or any other model that
+gives Lumina2's backend a native image-input path). Text-to-image
+generation with base Lumina2 is out of scope for this workspace and
+therefore not what the row addresses; a future project needing pure
+text-to-image is free to revisit.
+
+### SDEdit is blocklisted as an image-edit sampler — measured under-performance
+
+SDEdit encodes the source to a latent, adds noise at strength s to
+produce a partial-noise starting point, and runs a text-conditioned
+denoise to produce the edited image. On our shard-90 held-out (20
+pairs, seed 20260903) it produced zero-scoring edits on 14/20 pairs at
+every step count we tried (4, 10, 30), and its best mean of 0.862 (base
+Lumina2 nf4 at 30 steps) is still 20-30x below what a native
+image-input model like OmniGen2 would need to score to justify the
+substitution — the shape of the failure is source-and-instruction do
+not co-condition strongly enough at any strength × step-count we
+sampled.
+
+**What is blocked.** SDEdit as an image-edit sampler for RFD 2186's
+dressing overlay, and by extension any edit task that would score
+against EditScore. **What is not blocked.** SDEdit for other purposes
+(refinement of an already-conditioned generation, seed-fixing sampling
+tricks) where the measurement above does not apply.
+
+The measurement lives in `logbook-lumina2-distill-n1000-shelved.md`.
+Any future proposal to use SDEdit for image editing should first ladder
+against OmniGen2's native path on the same held-out slice; if it does
+not clear that bar, this row still holds.
