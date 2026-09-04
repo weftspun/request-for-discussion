@@ -548,6 +548,7 @@ Sources excluded from corpora, with the reason:
 | **bnb NF4 4-bit** as a QAFT / QAT path                            | ships as base+adapter not a single 4-bit checkpoint; slow-kernel fallback on non-64-aligned shapes (OmniGen2's 2520); real QAT with quantized forward instead — see below |
 | **Post-quantization fine-tuning** (quantize-first, adapt-after)   | trains an adapter that never sees quantization; ships as two files at two precisions. Real QAT with quantized forward during training instead — see below                 |
 | **Post-training quantization** (train-then-quantize, no QAT loop) | GPTQ / AWQ / HQQ / Torchao 4-bit as final passes over a bf16 checkpoint — the shipped 4-bit weights were never optimized against quantization noise. Real QAT — see below |
+| **rf-detr object detection**                                      | keypoints and segmentation heads are approved; object-detection head is not a workspace task and the shipped weights invite scope drift into a task RFD 1102 does not include — see below                                                                                                                                                                                             |
 
 The cosplay photo library may be used for **validation only**, never training.
 
