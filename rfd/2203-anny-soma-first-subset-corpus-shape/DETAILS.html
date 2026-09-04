@@ -312,6 +312,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#the-rfd-1122-lineage" id="toc-the-rfd-1122-lineage" class="nav-link" data-scroll-target="#the-rfd-1122-lineage">The RFD 1122 lineage</a></li>
   <li><a href="#the-publish-path" id="toc-the-publish-path" class="nav-link" data-scroll-target="#the-publish-path">The publish path</a></li>
   <li><a href="#what-the-first-subset-covers" id="toc-what-the-first-subset-covers" class="nav-link" data-scroll-target="#what-the-first-subset-covers">What the first subset covers</a></li>
+  <li><a href="#projection-accuracy-verified" id="toc-projection-accuracy-verified" class="nav-link" data-scroll-target="#projection-accuracy-verified">Projection accuracy: verified</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2203-anny-soma-first-subset-corpus-shape/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2203-anny-soma-first-subset-corpus-shape/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
@@ -390,6 +391,16 @@ ul.task-list li input[type="checkbox"] {
 <section id="what-the-first-subset-covers" class="level2">
 <h2 class="anchored" data-anchor-id="what-the-first-subset-covers">What the first subset covers</h2>
 <p>To be settled with HERO in this RFD’s review before the render begins: motion source (a walk cycle set from the pose library), camera policy count (how many <code>sphere_hammersley_sequence</code> views per pose), image resolution (256 × 256 is enough for the keypoints stub; higher costs storage), split shape (train/val, no test — the test set is the blinded holdout, never generated from). None of these change the row shape decision; they change what the first subset’s manifest records under motion source and sampler configuration.</p>
+</section>
+<section id="projection-accuracy-verified" class="level2">
+<h2 class="anchored" data-anchor-id="projection-accuracy-verified">Projection accuracy: verified</h2>
+<p>The projection-path verification hook the topology-decision section named landed via <code>interactor-kimodo-text-to-motion</code> PR #1 (merged 2026-09-04). <code>scripts/verify_projection.py</code> ran 4 random SOMA poses through both <code>anny.Anny(rig="soma", topology="soma")</code> and <code>anny.Anny(rig="soma", topology=TopologyConfig(base_mesh="makehuman", remove_unattached_vertices=False))</code>, extracted bone world transforms from <code>bone_poses</code>, and compared:</p>
+<ul>
+<li>max: <strong>0.000 mm</strong> (sub-credit-card thickness)</li>
+<li>mean: <strong>0.000 mm</strong> (sub-credit-card thickness)</li>
+</ul>
+<p>Bone poses are identical by construction across the two topologies. The projection through <code>apply_procrustes_retopology</code> happens once at model-build time to attach SOMA-rig skinning weights to the makehuman mesh; it does not run per-pose. Once built, the makehuman body does its own LBS from the transferred weights, and the bone chain the LBS reads is the SOMA rig regardless of mesh choice. Vertex-side error is a mesh-quality question, not a pose-correctness question; the <code>wholebody133.pth</code> indexing is safe against the 19,158-vertex makehuman topology as decided.</p>
+<p>Projection stays under a pencil at max; no RFD 2203 amendment required beyond this verification cite.</p>
 
 
 </section>
