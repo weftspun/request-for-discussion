@@ -343,7 +343,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="problem" class="level2">
 <h2 class="anchored" data-anchor-id="problem">Problem</h2>
-<p>The Video-stub USDZ shipped in the Rung 1.5 first pass writes a dummy 1-joint skeleton. The 10 face edits animate correctly because their work happens in <code>SkelAnimation.blendShapeWeights</code>. The 5 pose edits (head_tilt, head_nod, head_turn, jaw_open_bone, shoulders_up) added next need <code>SkelAnimation.jointTransforms</code> time samples over the real 104-joint hierarchy (ANNY total; SOMA canonical pose is 78 of those), and skin weights per vertex, or the animation plays back as a rest pose.</p>
+<p>The Video-stub USDZ shipped in the Rung 1.5 first pass writes a dummy 1-joint skeleton. The 10 face edits animate correctly because their work happens in <code>SkelAnimation.blendShapeWeights</code>. The 5 pose edits (head_tilt, head_nod, head_turn, jaw_open_bone, shoulders_up) added next need <code>SkelAnimation.jointTransforms</code> time samples over the real 104-joint hierarchy (ANNY total; SOMA canonical pose is 78 pose params at anny call time = 77 Kimodo rotvecs + anny-prepended root, task #76), and skin weights per vertex, or the animation plays back as a rest pose.</p>
 </section>
 <section id="related" class="level2">
 <h2 class="anchored" data-anchor-id="related">Related</h2>
