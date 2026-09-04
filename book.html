@@ -7457,12 +7457,11 @@ scoring     MaskScore + EditScore       n/a          self-supervised reward</cod
 <h1>RFD 2199: Real 4-bit QAT with Hailo as target hardware</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2199</code></p>
 <p><strong>State:</strong> discussion <strong>Feature:</strong> real QAT loop producing int4 weights, compiled and deployed on Hailo, filling the PR #256/#257 gap <strong>Scope:</strong> int4 only, end-to-end training loop to Hailo HEF</p>
-<p>Parked 2026-09-04: Hailo USB firmware stuck in bootloader from a partial update; operator parked rather than requiring admin recovery. RFD stays scoped as authored; un-park requires firmware recovery and a named use case. See <code>[[hailo-ugen300-shelved]]</code>.</p>
+<p>Parked 2026-09-04 for two reasons the same day. First: Hailo USB firmware stuck in bootloader from a partial update; operator parked rather than requiring admin recovery. Second: the ViT-base BN backbone accuracy delta measured 4.57% under the on-device pipeline — too large to ship — and the vendor fork the measurement ran under cannot be published, so the on-device QAT path at this backbone is not viable. Un-park requires firmware recovery, a resolved BN measurement on a publishable backbone, and a named use case. See <code>[[hailo-ugen300-shelved]]</code> and <code>logbook-rfd-2199-vit-base-bn-pick-provenance.md</code>.</p>
 <section id="decision-262" class="level2">
 <h2 class="anchored" data-anchor-id="decision-262">Decision</h2>
 <p>Build real 4-bit QAT infrastructure with Hailo as the deployment target. Int4 only. Int8 QAT is not the fallback. If Hailo hardware or the DFC toolchain does not support int4 weights, this RFD terminates with that finding and the operator picks the next target (different NPU vendor, GPU-only int4 QAT via Torchao, or wait for the field).</p>
-<p>Model choice deferred to the first spike.</p>
-<p><strong>First spike (parked):</strong> verify Hailo hardware and DFC support int4. <strong>Loop:</strong> forward fake-quant, STE backward, single quantized ckpt. Torchao <code>Int4WeightOnlyQuantizer</code> or custom STE. <strong>Model priority:</strong> small mtmd model first; workspace target after.</p>
+<p>Model choice deferred to the first spike. <strong>First spike:</strong> verify Hailo int4 support. <strong>Loop:</strong> fake-quant forward, STE backward, single quantized ckpt (Torchao <code>Int4WeightOnlyQuantizer</code> or custom STE). <strong>Model priority:</strong> small mtmd first; workspace target after.</p>
 </section>
 <section id="problem-255" class="level2">
 <h2 class="anchored" data-anchor-id="problem-255">Problem</h2>

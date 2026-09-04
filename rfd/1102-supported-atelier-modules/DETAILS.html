@@ -344,56 +344,61 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>Text/image reasoning + reward</td>
+<td>Text/image reasoning</td>
 <td>Gemma-4-12B (QAT Q4_0)</td>
-<td>Shared VLM per RFD 1173; EditScore fine-tune base (RFD 1157).</td>
+<td>Shared VLM per RFD 1173.</td>
 </tr>
 <tr class="even">
+<td>Reward model (image editing)</td>
+<td>Qwen3-VL-8B + EditScore LoRA (NF4, 6.75 GB)</td>
+<td>Per RFD 1157 and <code>7-service/service-livebook/priv/python/weft_score.py</code>. EditScore is a LoRA over Qwen3-VL (not a fine-tune of Gemma); RFD 1173’s target is to swap the base to Gemma-4-12B later so the same weights serve both roles.</td>
+</tr>
+<tr class="odd">
 <td>Text/image → image</td>
 <td>Wan-VACE</td>
 <td>~14 GB NF4 (staged per RFD 1027).</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Image → coarse mesh</td>
 <td>Pixal3D</td>
 <td>24 GB total, ~6.5 GB peak staged.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Mesh refinement</td>
 <td>VoxHammer</td>
 <td>Holds no weights (RFD 1162).</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Image → mesh (fast)</td>
 <td>TRELLIS.2</td>
 <td>~8 GB bf16.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Metric depth</td>
 <td>MoGe-3</td>
 <td>~1 GB.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Auto-rig</td>
 <td>SkinTokens</td>
 <td>Full GLB against ANNY skeleton.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Text → motion</td>
 <td>Kimodo</td>
 <td>Into SOMA pose format (78 canonical); consumed by ANNY.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Mesh segmentation</td>
 <td>rf-detr-Seg (RFD 1168)</td>
 <td>Replaces P3-SAM (blocklisted, territory).</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Layer decomposition</td>
 <td>rf-detr-Seg + LaMa inpainting</td>
 <td>Replaces See-Through (blocklisted, no license) per RFD 1168.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Mesh retopology</td>
 <td>AutoRemesher, xatlas UV</td>
 <td>Format-adjacent tools, unchanged from prior catalog.</td>

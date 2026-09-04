@@ -312,7 +312,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#the-rfd-1122-lineage" id="toc-the-rfd-1122-lineage" class="nav-link" data-scroll-target="#the-rfd-1122-lineage">The RFD 1122 lineage</a></li>
   <li><a href="#the-publish-path" id="toc-the-publish-path" class="nav-link" data-scroll-target="#the-publish-path">The publish path</a></li>
   <li><a href="#what-the-first-subset-covers" id="toc-what-the-first-subset-covers" class="nav-link" data-scroll-target="#what-the-first-subset-covers">What the first subset covers</a></li>
-  <li><a href="#projection-accuracy-verified" id="toc-projection-accuracy-verified" class="nav-link" data-scroll-target="#projection-accuracy-verified">Projection accuracy: verified</a></li>
+  <li><a href="#projection-accuracy-verified-bone-level-and-vertex-side" id="toc-projection-accuracy-verified-bone-level-and-vertex-side" class="nav-link" data-scroll-target="#projection-accuracy-verified-bone-level-and-vertex-side">Projection accuracy: verified (bone-level and vertex-side)</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2203-anny-soma-first-subset-corpus-shape/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2203-anny-soma-first-subset-corpus-shape/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
@@ -392,15 +392,28 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="what-the-first-subset-covers">What the first subset covers</h2>
 <p>To be settled with HERO in this RFD’s review before the render begins: motion source (a walk cycle set from the pose library), camera policy count (how many <code>sphere_hammersley_sequence</code> views per pose), image resolution (256 × 256 is enough for the keypoints stub; higher costs storage), split shape (train/val, no test — the test set is the blinded holdout, never generated from). None of these change the row shape decision; they change what the first subset’s manifest records under motion source and sampler configuration.</p>
 </section>
-<section id="projection-accuracy-verified" class="level2">
-<h2 class="anchored" data-anchor-id="projection-accuracy-verified">Projection accuracy: verified</h2>
-<p>The projection-path verification hook the topology-decision section named landed via <code>interactor-kimodo-text-to-motion</code> PR #1 (merged 2026-09-04). <code>scripts/verify_projection.py</code> ran 4 random SOMA poses through both <code>anny.Anny(rig="soma", topology="soma")</code> and <code>anny.Anny(rig="soma", topology=TopologyConfig(base_mesh="makehuman", remove_unattached_vertices=False))</code>, extracted bone world transforms from <code>bone_poses</code>, and compared:</p>
+<section id="projection-accuracy-verified-bone-level-and-vertex-side" class="level2">
+<h2 class="anchored" data-anchor-id="projection-accuracy-verified-bone-level-and-vertex-side">Projection accuracy: verified (bone-level and vertex-side)</h2>
+<p>The bone-level number is zero by construction: <code>apply_procrustes_retopology</code> attaches SOMA-rig skinning weights to the makehuman mesh once at model-build time, and both models then run LBS from the same bone chain, so bone world transforms cannot differ. The load-bearing gate for the corpus’s downstream use is the vertex-side diff, verified below.</p>
+<p>The bone-level hook landed via <code>interactor-kimodo-text-to-motion</code> PR #1 (merged 2026-09-04) in <code>scripts/verify_projection.py</code>: 4 random SOMA poses through both <code>anny.Anny(rig="soma", topology="soma")</code> and <code>anny.Anny(rig="soma", topology=TopologyConfig(base_mesh="makehuman", remove_unattached_vertices=False))</code>, bone world transforms extracted from <code>bone_poses</code>:</p>
 <ul>
 <li>max: <strong>0.000 mm</strong> (sub-credit-card thickness)</li>
 <li>mean: <strong>0.000 mm</strong> (sub-credit-card thickness)</li>
 </ul>
-<p>Bone poses are identical by construction across the two topologies. The projection through <code>apply_procrustes_retopology</code> happens once at model-build time to attach SOMA-rig skinning weights to the makehuman mesh; it does not run per-pose. Once built, the makehuman body does its own LBS from the transferred weights, and the bone chain the LBS reads is the SOMA rig regardless of mesh choice. Vertex-side error is a mesh-quality question, not a pose-correctness question; the <code>wholebody133.pth</code> indexing is safe against the 19,158-vertex makehuman topology as decided.</p>
-<p>Projection stays under a pencil at max; no RFD 2203 amendment required beyond this verification cite.</p>
+<p>The vertex-side hook landed via <code>interactor-kimodo-text-to-motion</code> PR #3 in <code>scripts/verify_projection_vertex.py</code>: same 4 poses through both models, makehuman posed vertices compared against SOMA-topology posed vertices interpolated via the barycentric map anny uses at build time (<code>point_to_mesh_distance_and_face_uvs</code> from <code>soma.py:97</code>). Filtered to the body-surface subset (rest distance to nearest SOMA_wrap triangle &lt; 5 mm; 15,778 of 19,158 verts kept) because the 3,380 non-body verts — interior mesh, hair, teeth, eye internals — sit too far from SOMA_wrap for barycentric interpolation to be meaningful and would drive max/p99 without saying anything about pose correctness. <code>wholebody133.pth</code>’s anchors are body-surface points, so the check that matters is on the body-surface subset.</p>
+<ul>
+<li>max: <strong>5.116 mm</strong> (3.4× penny)</li>
+<li>mean: <strong>0.842 mm</strong> (sub-credit-card)</li>
+<li>p99: <strong>4.730 mm</strong> (3.1× penny)</li>
+</ul>
+<p>Under anny’s own thresholds (max&lt;15 mm, mean&lt;5 mm) taken from <code>anny/test/test_soma.py</code>.</p>
+<p>The load-bearing negative control on the same barycentric-interpolated apparatus: corrupt LeftArm rotation on the makehuman pose only; feed SOMA the full arm-rotation pose. Diff spikes on left-arm vertices:</p>
+<ul>
+<li>negative-control max: <strong>222.769 mm</strong> (3.4× soda can, 44× positive)</li>
+<li>negative-control mean: <strong>21.601 mm</strong> (2.1× AAA battery, 26× positive)</li>
+</ul>
+<p>The check catches a broken pose transfer on a load-bearing bone. A weight-slot-column corruption attempt landed as a no-op (documented in the script) because <code>vertex_bone_weights</code> is per-vertex effective-bones (13 slots), not one column per bone — kept in the record as the shape that didn’t work.</p>
+<p>Detection floor at n=4 poses: any defect appearing in &gt;75% of frames per CLAUDE.md rule 5. Production runs scale n with shard motion coverage.</p>
 
 
 </section>
