@@ -101,6 +101,37 @@ it before the compile+measure spec fires. Green parse plus
 `onnx.load(...).graph.node` showing zero LayerNormalization inside the
 encoder subgraph is the double-check.
 
+## Retracted 2026-09-04: pick walked back before pilot kicked
+
+The vit_base_bn recipe pick surfaced two constraints that made it
+unshippable:
+
+- **4.57% BN drop against LN baseline** on the accuracy floor RFD 2199
+  needed. Larger than the "1-3 mAP points" prior this entry cited from
+  classification work. Detection + keypoints heads carry more of the
+  drop than classification does.
+- **Vendor-fork publishability constraint**. The recipe's LN→BN edit
+  applied to rf-detr is a fork of an upstream Roboflow model; the
+  publish path back is not licence-clean for a shipping artefact.
+
+Both surfaced through HERO's scaffold-first pilot analysis before the
+full retrain kicked; the pilot never ran, so the weeks-scale wall was
+spared. RFD 2199 on-device compile + measure is now parked (not
+cancelled). Un-park conditions:
+
+- Hailo DFC gains native support for LayerNormalization axes patterns
+  rf-detr's encoder emits, so the fork stops being needed; or
+- a licence-clean fork-publish path appears (upstream accepts the
+  arch amendment, or the workspace ships a from-scratch trained
+  equivalent with its own provenance); or
+- a different edge target with LN support becomes the deployment path
+  (a `hailo_model_zoo`-native detector, a non-Hailo edge accelerator).
+
+The `channels is not in list` / `_convert_axes_to_nhwc` LN-axes
+diagnosis this entry records stays valid as the reason DFC refuses
+rf-detr's encoder in its current form. If any un-park condition
+lands, that diagnosis is what tells us whether the un-park is real.
+
 ## References
 
 - `logbook-rfd-2199-hailo-int4-survey.md`, original DFC + hardware
