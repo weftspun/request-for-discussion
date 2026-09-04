@@ -825,6 +825,10 @@ def Scope "Serials"
                 {
                     custom string slug = "coordinate-agents-ceremony"
                 }
+                def "S2202"
+                {
+                    custom string slug = "rebac-bao-enforcement"
+                }
             }
         }
     }
