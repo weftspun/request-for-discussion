@@ -320,6 +320,7 @@
       "/logbook/logbook-rfd2133-vfs-embed-retracted.html",
       "/logbook/logbook-lumina2-flow-lcm-distill-probe.html",
       "/logbook/logbook-lladao-n1-quality-beats-omnigen2.html",
+      "/logbook/logbook-lladao-n20-held-out-sweep.html",
       "/logbook/logbook-lladao-5pair-step-sweep.html",
       "/logbook/logbook-rfd2140-openbao-on-fdb.html",
       "/logbook/logbook-rfd1016-model-repos.html",
@@ -347,6 +348,7 @@
       "/logbook/logbook-edge-npu-and-the-anny-forward.html",
       "/logbook/logbook-rfd1142-neural-engine-against-the-ugen300.html",
       "/logbook/logbook-rfd1122-hailo-first-rerank.html",
+      "/logbook/logbook-rfd-2199-hailo-int4-survey.html",
       "/logbook/logbook-maskscore-rung-1-join-keys.html"
     ]
   }
