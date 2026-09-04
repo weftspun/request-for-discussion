@@ -121,3 +121,34 @@ with OmniGen2 and swap if the sweep says so.
 **Not blocking:** the RFD 0036 reference this document used to
 carry has been replaced with the direct BLOCKLIST.md CycleGAN
 pointer.
+
+## Execution parked 2026-09-04 (spec unchanged)
+
+The paired-generation spec above stays as authored. Execution is
+parked on sizing: LLaDA-o at 16-step SDEdit (the chosen generator,
+per the swap decision below) needs ~264 s per edit sharded on
+3090+4090; K=4 candidates × 3 rounds × 12 shots × 264 s = ~158 h
+GPU wall. Not shippable in that shape.
+
+Un-park requires one of:
+- LLaDA-o at ~5x speedup or better (distillation, step-count
+  reduction below 16 that holds quality, sub-quadratic candidate
+  reduction, or batching across GPUs somehow)
+- Smaller scope re-approval (K=2 or rounds=2 or shots<12)
+- Different generator with acceptable quality at shippable wall
+
+Memory `rfd-2194-parked-on-sizing` (operator's) carries the full
+un-park condition list.
+
+## Generator swap decision (2026-09-04)
+
+**LLaDA-o at 16-step SDEdit replaces OmniGen2 as the default
+generator when execution un-parks.** Decided from
+`logbook-lladao-n20-held-out-sweep`: n=20 held-out on shard 90
+gives 17/20 wins over OmniGen2's 3.36 mean (85%), mean 5.972,
+median 6.573. Clears the 80% gating threshold in RFD 2198.
+
+The swap triggers PR #274 condition 4 (LLaDA-o provenance-check
+un-park) but the check itself is deferred with the execution;
+LLaDA-o card + training-corpus documentation for anime-styled
+outputs is owed on un-park, not now.
