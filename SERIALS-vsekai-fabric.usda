@@ -817,6 +817,10 @@ def Scope "Serials"
                 {
                     custom string slug = "maskscore-rung-1-bootstrap-hf-restructure"
                 }
+                def "S2200"
+                {
+                    custom string slug = "rebac-agent-roles"
+                }
             }
         }
     }
