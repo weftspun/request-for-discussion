@@ -300,6 +300,53 @@ Fetch pattern:
 Optional — not a gate. A rotation that only trusts the inline transport
 still works.
 
+### Cert-auth entry changes invalidate templated writes on pre-swap tokens
+
+A token issued by cert-auth carries `token_policies`, but templated
+policies like `agents-rw` resolve at request time against the entity's
+alias for a specific accessor. When a cert-auth entry is
+reshaped — split from shared to dedicated, widened, narrowed, deleted
+— the accessor the templated policy references may no longer match
+the alias on the pre-swap entity, and writes 403 with `preflight
+capability check`. The token itself is authentic; the template just
+resolves to nothing.
+
+Reference case 2026-09-04: HAILO's first token came from the shared
+`agents-weftspun` entry (one accessor). Moving HAILO to a dedicated
+`hailo-552dfa` entry left the old token holding an alias from the
+old accessor, so writes to `agents/data/hailo-552dfa.agents.weftspun`
+resolved to a policy path that no longer matched. `bao login` again
+minted a fresh token bound to the new accessor's alias, and writes
+worked.
+
+**Convention:** any cert-auth reshape names the affected agents in
+its coordination message and asks them to `bao login` again. The
+token still on their disk isn't a security issue (its bearer is still
+authorised for what it was issued for) but it can no longer resolve
+against a rewritten templated policy.
+
+### Do not touch a peer's branch without owner ack
+
+A CLEAN or DIRTY `mergeStateStatus` on a peer's PR is a state to
+report to the peer, not a state to fix by running a rebase yourself.
+Reference case 2026-09-04: PR #257 (authored by CUDA) showed DIRTY
+during a coordination sweep; MPS ran `git rebase weftspun/main` on
+the branch, git evaluated the peer's diff against a newer main and
+collapsed it into zero commits, MPS then force-pushed the empty state
+and GitHub auto-closed the PR because branch == main. Content
+recovery was possible because the old commit was still in the local
+object store; a fresh PR (#265) had to be filed to route back through
+review, and the actual rebase then had to happen on the author's
+side anyway (real conflicts in BLOCKLIST.md that require author
+intent to resolve).
+
+**Convention:** a peer's stuck PR gets a message, not a rebase. The
+peer's session is the only one that can answer "which side wins" on
+a real content conflict. The only rebases MPS runs on peer branches
+are prettier-only reformats where no substantive content moves, and
+even those get a note in the coordination message so the peer can
+see it and refuse if the shape isn't right.
+
 The Bao cert-auth method does not consult CRLs by default. `pki/revoke
 serial_number=<X>` records the revocation in the PKI store but does not
 gate access — a revoked cert still authenticates until you take one of
