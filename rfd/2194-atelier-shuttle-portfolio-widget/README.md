@@ -17,11 +17,14 @@ look on every shot in the final video.
 garment, same pose — rendered photographic + anime-styled. Anime
 half ships; photographic stays as EditScore anchor. Sources:
 `chibifire/zenodo-second-hand-fashion-v3` (garments),
-`alfredplpl/anime-with-caption-cc0` (style anchor),
-`chibifire/zenodo-ecommerce-text` +
+`alfredplpl/anime-with-caption-cc0` (style anchor, captions only per
+BLOCKLIST.md), `chibifire/zenodo-ecommerce-text` +
 `chibifire/kaggle-womens-ecom-clothing-reviews` (garment
-vocabulary). CycleGAN styles per BLOCKLIST.md. Generator OmniGen2
-(RFD 2183); LLaDA-o pending RFD 2198. Recursive EditScore
+vocabulary). Anime style comes from the generator via prompt
+(`in anime style` + caption), not from a post-hoc CycleGAN pass —
+the workspace has no licence-clean anime image corpus to train
+CycleGAN's photo→anime direction on. Generator OmniGen2 (RFD 2183);
+LLaDA-o pending RFD 2198. Recursive EditScore
 (RFD 2193) ranks pairs, per-axis critique fed back. Output:
 `chibifire/anny-runway-shots-<yyyymmdd>`. See DETAILS.
 

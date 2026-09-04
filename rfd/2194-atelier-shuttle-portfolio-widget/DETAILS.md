@@ -29,8 +29,23 @@ and `chibifire/kaggle-womens-ecom-clothing-reviews` supply garment
 vocabulary so the anime render names its clothing coherently rather
 than emitting garment noise.
 
-**Style transfer.** CycleGAN photographic → anime per BLOCKLIST.md
-(AnimeGAN blocklisted; CycleGAN the on-hand substitute).
+**Anime style — via generator prompt, not CycleGAN.** Earlier draft
+proposed CycleGAN for photographic-to-anime style transfer. That
+path is not executable: the workspace has no licence-clean anime
+image corpus to train CycleGAN's photo→anime direction on
+(BLOCKLIST.md's CycleGAN section states this explicitly, and
+`alfredplpl/anime-with-caption-cc0` is captions-only per the
+BLOCKLIST row). Anime style now comes from the generator itself:
+the anime half of each pair is generated with an `in anime style`
+prompt appended to the caption; the photographic half uses the
+caption without the anime prefix. Same generator, same identity,
+same garment — only the style token differs.
+
+Provenance check the generator owes at execution time: what its own
+training corpus was and whether the resulting anime style renders
+carry a licence problem downstream. OmniGen2's card + RFD 2183's
+retrain discussion cover this for OmniGen2; LLaDA-o's card covers
+it for LLaDA-o.
 
 ## Generator
 
