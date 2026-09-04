@@ -1916,19 +1916,25 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#problem-254" id="toc-problem-254" class="nav-link" data-scroll-target="#problem-254">Problem</a></li>
   <li><a href="#related-256" id="toc-related-256" class="nav-link" data-scroll-target="#related-256">Related</a></li>
   </ul></li>
-  <li><a href="#rfd-2200-rebac-agent-roles-as-tuples-not-per-agent-policy-sprawl" id="toc-rfd-2200-rebac-agent-roles-as-tuples-not-per-agent-policy-sprawl" class="nav-link" data-scroll-target="#rfd-2200-rebac-agent-roles-as-tuples-not-per-agent-policy-sprawl">RFD 2200: ReBAC agent roles as tuples, not per-agent policy sprawl</a>
+  <li><a href="#rfd-2199-real-4-bit-qat-with-hailo-as-target-hardware" id="toc-rfd-2199-real-4-bit-qat-with-hailo-as-target-hardware" class="nav-link" data-scroll-target="#rfd-2199-real-4-bit-qat-with-hailo-as-target-hardware">RFD 2199: Real 4-bit QAT with Hailo as target hardware</a>
   <ul class="collapse">
   <li><a href="#decision-262" id="toc-decision-262" class="nav-link" data-scroll-target="#decision-262">Decision</a></li>
   <li><a href="#problem-255" id="toc-problem-255" class="nav-link" data-scroll-target="#problem-255">Problem</a></li>
-  <li><a href="#non-goals-1" id="toc-non-goals-1" class="nav-link" data-scroll-target="#non-goals-1">Non-goals</a></li>
   <li><a href="#related-257" id="toc-related-257" class="nav-link" data-scroll-target="#related-257">Related</a></li>
   </ul></li>
-  <li><a href="#rfd-2201-the-coordinate-agents-ceremony" id="toc-rfd-2201-the-coordinate-agents-ceremony" class="nav-link" data-scroll-target="#rfd-2201-the-coordinate-agents-ceremony">RFD 2201: The coordinate-agents ceremony</a>
+  <li><a href="#rfd-2200-rebac-agent-roles-as-tuples-not-per-agent-policy-sprawl" id="toc-rfd-2200-rebac-agent-roles-as-tuples-not-per-agent-policy-sprawl" class="nav-link" data-scroll-target="#rfd-2200-rebac-agent-roles-as-tuples-not-per-agent-policy-sprawl">RFD 2200: ReBAC agent roles as tuples, not per-agent policy sprawl</a>
   <ul class="collapse">
   <li><a href="#decision-263" id="toc-decision-263" class="nav-link" data-scroll-target="#decision-263">Decision</a></li>
   <li><a href="#problem-256" id="toc-problem-256" class="nav-link" data-scroll-target="#problem-256">Problem</a></li>
-  <li><a href="#non-goals-2" id="toc-non-goals-2" class="nav-link" data-scroll-target="#non-goals-2">Non-goals</a></li>
+  <li><a href="#non-goals-1" id="toc-non-goals-1" class="nav-link" data-scroll-target="#non-goals-1">Non-goals</a></li>
   <li><a href="#related-258" id="toc-related-258" class="nav-link" data-scroll-target="#related-258">Related</a></li>
+  </ul></li>
+  <li><a href="#rfd-2201-the-coordinate-agents-ceremony" id="toc-rfd-2201-the-coordinate-agents-ceremony" class="nav-link" data-scroll-target="#rfd-2201-the-coordinate-agents-ceremony">RFD 2201: The coordinate-agents ceremony</a>
+  <ul class="collapse">
+  <li><a href="#decision-264" id="toc-decision-264" class="nav-link" data-scroll-target="#decision-264">Decision</a></li>
+  <li><a href="#problem-257" id="toc-problem-257" class="nav-link" data-scroll-target="#problem-257">Problem</a></li>
+  <li><a href="#non-goals-2" id="toc-non-goals-2" class="nav-link" data-scroll-target="#non-goals-2">Non-goals</a></li>
+  <li><a href="#related-259" id="toc-related-259" class="nav-link" data-scroll-target="#related-259">Related</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
@@ -5855,7 +5861,7 @@ scoring     MaskScore + EditScore       n/a          self-supervised reward</cod
 <section id="rfd-2026-commit-messages-sentence-case" class="level1">
 <h1>RFD 2026: Commit messages sentence case</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2026</code></p>
-<p><strong>State:</strong> prediscussion</p>
+<p><strong>State:</strong> committed</p>
 <section id="decision-186" class="level2">
 <h2 class="anchored" data-anchor-id="decision-186">Decision</h2>
 <p>See <code>DETAILS.md</code> for the full argument.</p>
@@ -7435,24 +7441,45 @@ scoring     MaskScore + EditScore       n/a          self-supervised reward</cod
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 </section>
 </section>
+<section id="rfd-2199-real-4-bit-qat-with-hailo-as-target-hardware" class="level1">
+<h1>RFD 2199: Real 4-bit QAT with Hailo as target hardware</h1>
+<p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2199</code></p>
+<p><strong>State:</strong> discussion <strong>Feature:</strong> real QAT loop producing int4 weights, compiled and deployed on Hailo, filling the PR #256/#257 gap <strong>Scope:</strong> int4 only, end-to-end training loop to Hailo HEF</p>
+<p>Parked 2026-09-04: Hailo USB firmware stuck in bootloader from a partial update; operator parked rather than requiring admin recovery. RFD stays scoped as authored; un-park requires firmware recovery and a named use case. See <code>[[hailo-ugen300-shelved]]</code>.</p>
+<section id="decision-262" class="level2">
+<h2 class="anchored" data-anchor-id="decision-262">Decision</h2>
+<p>Build real 4-bit QAT infrastructure with Hailo as the deployment target. Int4 only. Int8 QAT is not the fallback. If Hailo hardware or the DFC toolchain does not support int4 weights, this RFD terminates with that finding and the operator picks the next target (different NPU vendor, GPU-only int4 QAT via Torchao, or wait for the field).</p>
+<p>Model choice deferred to the first spike.</p>
+<p><strong>First spike (parked):</strong> verify Hailo hardware and DFC support int4. <strong>Loop:</strong> forward fake-quant, STE backward, single quantized ckpt. Torchao <code>Int4WeightOnlyQuantizer</code> or custom STE. <strong>Model priority:</strong> small mtmd model first; workspace target after.</p>
+</section>
+<section id="problem-255" class="level2">
+<h2 class="anchored" data-anchor-id="problem-255">Problem</h2>
+<p>PR #256 blocks bnb NF4 + post-quantization fine-tuning. PR #257 blocks PTQ. The compliant shape has no framework support for our generative models; the only real-QAT FOSS today is Gemma 4 QAT (language-only). This RFD closes that gap.</p>
+</section>
+<section id="related-257" class="level2">
+<h2 class="anchored" data-anchor-id="related-257">Related</h2>
+<p>RFD 2186, RFD 2198, PR #256, PR #257, <code>[[hailo-ugen300-shelved]]</code>.</p>
+<p>This RFD was drafted by an AI and read by a human before it shipped.</p>
+</section>
+</section>
 <section id="rfd-2200-rebac-agent-roles-as-tuples-not-per-agent-policy-sprawl" class="level1">
 <h1>RFD 2200: ReBAC agent roles as tuples, not per-agent policy sprawl</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2200</code></p>
 <p><strong>State:</strong> discussion <strong>Feature:</strong> relationship tuples in Bao KV under <code>relationships/</code> define agent roles and what they can and cannot do <strong>Scope:</strong> Bao coordination store, all live agents, future onboarding flow</p>
-<section id="decision-262" class="level2">
-<h2 class="anchored" data-anchor-id="decision-262">Decision</h2>
+<section id="decision-263" class="level2">
+<h2 class="anchored" data-anchor-id="decision-263">Decision</h2>
 <p>Model agent roles as <strong>ReBAC relationship tuples</strong> in a Bao KV mount at <code>relationships/</code>, one tuple per row, key shape <code>&lt;subject&gt;--&lt;verb&gt;--&lt;object&gt;</code>. Twelve tuples live for the current fleet across five verbs (<code>authors</code>, <code>admin</code>, <code>owns</code>, <code>runs-on</code>, <code>hosts</code>). Three named roles fall out — coordinator (MPS), gpu-experimenter (CUDA), edge-qat-specialist (HAILO). See <code>DETAILS.md</code> for the tuple listing and role scopes.</p>
 </section>
-<section id="problem-255" class="level2">
-<h2 class="anchored" data-anchor-id="problem-255">Problem</h2>
+<section id="problem-256" class="level2">
+<h2 class="anchored" data-anchor-id="problem-256">Problem</h2>
 <p>The current <code>agents-rw</code> policy is one shared grant across every peer. Adding a fourth agent that shouldn’t touch GPU code, or a Hailo-specific agent that must not touch the 3090, means either a new per-agent policy (RBAC sprawl) or ad-hoc restrictions in prose. Neither answers the question the shared-$HOME clobber raised: the risk is the <strong>relationship</strong> between two agents, not the identity of either.</p>
 </section>
 <section id="non-goals-1" class="level2">
 <h2 class="anchored" data-anchor-id="non-goals-1">Non-goals</h2>
 <p>Not enforced today. The tuples are data; nothing gates a KV write against them yet. When enforcement lands it goes in a separate RFD. Also not covered: an external ReBAC engine (OpenFGA, SpiceDB) — the tuples-in-KV shim is the minimum that answers the question we have. A production ReBAC engine is a future call.</p>
 </section>
-<section id="related-257" class="level2">
-<h2 class="anchored" data-anchor-id="related-257">Related</h2>
+<section id="related-258" class="level2">
+<h2 class="anchored" data-anchor-id="related-258">Related</h2>
 <p>RFD 2195 (Bao PKI + agent-provisioning discipline), agent-sync skill in dot-claude.</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 </section>
@@ -7461,20 +7488,20 @@ scoring     MaskScore + EditScore       n/a          self-supervised reward</cod
 <h1>RFD 2201: The coordinate-agents ceremony</h1>
 <p><strong>OID:</strong> <code>urn:oid:1.3.6.1.4.1.66606.1.2.2201</code></p>
 <p><strong>State:</strong> discussion <strong>Feature:</strong> what “coordinate agents” means as a repeatable procedure the coordinator runs on demand <strong>Scope:</strong> the coordinator role (RFD 2200) and any session that steps into it</p>
-<section id="decision-263" class="level2">
-<h2 class="anchored" data-anchor-id="decision-263">Decision</h2>
+<section id="decision-264" class="level2">
+<h2 class="anchored" data-anchor-id="decision-264">Decision</h2>
 <p>Fold the workspace’s ad-hoc coordination sweep into a named, bounded ceremony that the coordinator role runs when asked. The ceremony has seven steps and each step’s output is a specific artefact — a KV read, a peer message, a PR enqueue, a surface to the operator — with the next step gated on the previous. The steps are enumerated in <code>DETAILS.md</code>; a companion skill <code>coordinate-agents</code> in <code>weftspun/dot-claude</code> is the operational how-to.</p>
 </section>
-<section id="problem-256" class="level2">
-<h2 class="anchored" data-anchor-id="problem-256">Problem</h2>
+<section id="problem-257" class="level2">
+<h2 class="anchored" data-anchor-id="problem-257">Problem</h2>
 <p>“Coordinate agents” was a sentence the operator said and the coordinator did a pass by memory: check the store, message peers, enqueue clean PRs, surface stuck ones, remember the do-not-touch-peer- branch rule. A pass done by memory shipped good work in one turn and broke a peer’s PR the next, because the safeguards were named retroactively (in RFD 2195 DETAILS, after the mistake) rather than carried in the procedure itself. A named ceremony carries them prospectively.</p>
 </section>
 <section id="non-goals-2" class="level2">
 <h2 class="anchored" data-anchor-id="non-goals-2">Non-goals</h2>
 <p>Not a scheduler; not a hook (the prettier-only exception is a shape a hook would reject); not any-agent-runs-this — only the coordinator role from RFD 2200.</p>
 </section>
-<section id="related-258" class="level2">
-<h2 class="anchored" data-anchor-id="related-258">Related</h2>
+<section id="related-259" class="level2">
+<h2 class="anchored" data-anchor-id="related-259">Related</h2>
 <p>RFD 2195 (Bao PKI + Gotchas), RFD 2200 (roles), <code>agent-sync</code> and <code>coordinate-agents</code> skills in dot-claude.</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 
