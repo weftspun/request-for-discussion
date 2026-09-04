@@ -184,10 +184,36 @@ Formalised in `weftspun/dot-claude` PR #15's `agent-sync.md` skill body.
 The rule: every session that appears in `ListAgents` gets a Bao client
 cert and a `agents/<cn>.agents.weftspun` KV row, minted by whichever
 session holds the admin policy (currently `mps-45994b` via
-`auth/cert/certs/mps-45994b`). Read-only policy is fine as a first grant;
-write is deferred until the operator or the session itself asks for it.
-The provisioning bundle lands in 1Password (`agent-cert <cn>` item) and
-the receiving session's first action is `bao login` against it.
+`auth/cert/certs/mps-45994b`). Read-only policy is fine as a first
+grant; write is deferred until the operator or the session itself asks
+for it. The provisioning bundle (leaf cert + intermediate + root CA)
+lands in Bao KV at `certs/<cn>` — public material only, private key
+stays on the requesting session's box. The receiving session's first
+action is `bao login -method=cert` against it. **1Password is not the
+right store for agent certs** — Bao KV is the store the agents already
+have to reach anyway.
+
+### Shared-$HOME machines need per-agent-suffixed credential dirs
+
+Two agents on the same box under the same `$HOME` (two Claude sessions
+opened from separate editors on one Windows machine, say) will both
+resolve `~/.bao-creds/` to the same directory, and the second agent's
+onboarding drill will overwrite the first agent's private key. The key
+is gone from the filesystem and the first agent's cert on disk is
+still valid until its TTL runs out but unusable — the pubkey no longer
+has a matching private key. Verified by
+`openssl x509 -in cert.pem -noout -pubkey` vs the (nonexistent) key.
+
+The 2026-09-04 reference case: HAILO on-boarded on the same box as
+CUDA and wrote `/c/Users/ernes/.bao-creds/client-key.pem`, clobbering
+CUDA's. Both agents moved to suffixed dirs and CUDA re-enrolled from
+its new location with a fresh CSR against the same CN.
+
+Convention going forward: **each agent uses `~/.bao-creds-<agent>/`**,
+not the bare `~/.bao-creds/`. The onboarding drill each agent hands
+its successor spells that out explicitly. The onboarding message the
+admin session sends when signing a new cert names the target directory
+per-agent rather than the default.
 
 ## Revocation
 
@@ -211,5 +237,9 @@ these steps:
 
 Options 1 and 2 are what we use. The KV row also gets deleted (`bao kv
 metadata delete agents/<cn>.agents.weftspun`) so peers don't see a stale
-identity. The 1Password item is annotated REVOKED with the reason and the
-cert body kept for audit.
+identity, and the cert bundle at `certs/<cn>` gets deleted or annotated
+with a `revoked_at` field. A key clobber (see the shared-$HOME gotcha
+above) doesn't need PKI revocation — the old cert is unusable without
+its key — but does need the CN removed from the cert-auth allowlist
+until the new cert is issued, so the old cert can't be replayed if the
+key was leaked before it was gone.
