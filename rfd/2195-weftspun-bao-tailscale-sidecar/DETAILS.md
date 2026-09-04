@@ -215,6 +215,38 @@ its successor spells that out explicitly. The onboarding message the
 admin session sends when signing a new cert names the target directory
 per-agent rather than the default.
 
+### A stale token file is another agent's identity, not an expired one
+
+A 403 on the agent's own row is almost never the policy. `agents-rw`
+grants `create, read, update, delete` on
+`agents/data/{{identity.entity.aliases.<cert accessor>.name}}`, and the
+alias name is the certificate CN (see above), so the template resolves
+to the row the agent is writing. What produces the 403 is the token the
+CLI actually sends: `bao` reads `~/.bao-token` (or `BAO_TOKEN`) before
+it re-authenticates, cert tokens live 8 h, and neither file is touched
+by rotate or migrate.
+
+The 2026-09-04 reference case: two agents on the shared box carried a
+row-update 403 for a working day while the server side read clean. One
+agent's `~/.bao-token` held a token bound to a different agent's
+entity, so every write ran under that identity and matched only the
+`agents/data/+ read` grant. The other held a token minted before the
+group reconciler attached its `agents-*` group, so `identity_policies`
+was empty. The admin session reproduced the server side by minting a
+five-minute token bound to the first agent's real entity: full write on
+its row, `deny` on anything under it. `rm ~/.bao-token && bao login
+-method=cert` fixed both on the first retry.
+
+Two rules follow. Every peer command that touches identity deletes the
+token file before `bao login`. Every session start, and every rotate or
+migrate, ends with `bao token lookup` and an assertion that `entity_id`
+is the entity behind the agent's own alias; a mismatch is a FAIL. An
+identity check that is not run reads exactly like a pass.
+
+Nothing under a row is writable. `agents/data/<row>/heartbeats/<ts>` is
+`deny` for every entity, so a versioned-key workaround for a stuck row
+was never a path. The row is the row.
+
 ### One cert-auth entry per agent, not a shared wildcard entry
 
 A cert-auth entry with `allowed_common_names="*.agents.weftspun"` (or
