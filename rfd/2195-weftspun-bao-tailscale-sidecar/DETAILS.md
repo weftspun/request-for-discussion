@@ -234,9 +234,12 @@ the same entry) wrote cleanly.
 entry, mirroring how `mps-45994b` is set up. `allowed_common_names`
 is the agent's single CN, `token_policies=agents-rw`. The templated
 policy resolves against the dedicated entry's accessor and there is
-no shared-entry ambiguity. The shared `agents-weftspun` entry stays
-only for one agent at a time as a bootstrap path; anything past that
-gets its own entry.
+no shared-entry ambiguity. **No shared wildcard entry, ever** — this
+file's own "narrowest thing that answers it, never a bare `Bash(*)`"
+rule applies to cert-auth entries the same way it applies to shell
+permissions. The shared `agents-weftspun` entry that carried
+CUDA + HAILO for one afternoon is deleted; every subsequent agent
+gets its own entry on first enrolment, no exception.
 
 The Bao cert-auth method does not consult CRLs by default. `pki/revoke
 serial_number=<X>` records the revocation in the PKI store but does not
