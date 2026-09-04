@@ -118,9 +118,16 @@ storage), split shape (train/val, no test — the test set is the blinded holdou
 generated from). None of these change the row shape decision; they change what the first
 subset's manifest records under motion source and sampler configuration.
 
-## Projection accuracy: verified
+## Bone-level projection accuracy: verified (vertex-side pending)
 
-The projection-path verification hook the topology-decision section named landed via
+The bone-level number is zero by construction: `apply_procrustes_retopology` attaches
+SOMA-rig skinning weights to the makehuman mesh once at model-build time, and both models
+then run LBS from the same bone chain, so bone world transforms cannot differ. The
+load-bearing gate for the corpus's downstream use is the vertex-side diff with its limb-bone
+negative control, which lands with the first subset per `render_first_subset.py`'s
+`verify_projection_accuracy`.
+
+The bone-level verification hook the topology-decision section named landed via
 `interactor-kimodo-text-to-motion` PR #1 (merged 2026-09-04). `scripts/verify_projection.py`
 ran 4 random SOMA poses through both `anny.Anny(rig="soma", topology="soma")` and
 `anny.Anny(rig="soma", topology=TopologyConfig(base_mesh="makehuman",
@@ -130,13 +137,6 @@ compared:
 - max: **0.000 mm** (sub-credit-card thickness)
 - mean: **0.000 mm** (sub-credit-card thickness)
 
-Bone poses are identical by construction across the two topologies. The projection through
-`apply_procrustes_retopology` happens once at model-build time to attach SOMA-rig skinning
-weights to the makehuman mesh; it does not run per-pose. Once built, the makehuman body does
-its own LBS from the transferred weights, and the bone chain the LBS reads is the SOMA rig
-regardless of mesh choice. Vertex-side error is a mesh-quality question, not a
-pose-correctness question; the `wholebody133.pth` indexing is safe against the 19,158-vertex
-makehuman topology as decided.
-
-Projection stays under a pencil at max; no RFD 2203 amendment required beyond this
-verification cite.
+The bone number was reported honestly; the earlier heading claimed more than it does. The
+vertex-side number, when it lands with the first subset, replaces "pending" with max / mean
+/ p99 and household anchors, and the limb-bone negative-control magnitudes go beside it.
