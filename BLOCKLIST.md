@@ -1280,23 +1280,14 @@ LoRA config: Lumina2 trained at roughly 0.35 s per step, OmniGen2 was
 killed after 10 minutes with no step 1/50 completed. Different kernel
 path by construction, not a bug we can patch around.
 
-**Approved 4-bit paths for QAFT / QAT.** Anything that produces a
-single 4-bit deployable checkpoint after training:
-
-- **GPTQ** — post-training with calibration; supports quantization-aware
-  fine-tuning on the calibration path; arbitrary hidden_size
-- **AWQ** — activation-aware weight quantization; arbitrary
-  hidden_size; calibration-based
-- **HQQ** — Half-Quadratic Quantization; fast per-tensor 4-bit;
-  arbitrary hidden_size
-- **Torchao 4-bit** — the newer PyTorch-native path; still maturing but
-  produces a single quantized module
-
-**Approved 8-bit fallback.** `bnb 8-bit (LLM.int8)` when we accept a
-2x-of-4-bit memory footprint in exchange for no alignment constraint
-and no calibration pass. It is the same two-file shape as bnb NF4, but
-at 8-bit the LoRA is a rounding-error correction rather than
-compensating for the whole quantization loss.
+**Approved 4-bit path is real QAT only.** See the two rows below for
+what "real QAT" means and what specifically is blocked (post-quantization
+fine-tuning as a pattern; post-training quantization as an alternative
+to training-loop quantization). Between the three rows, the approved
+shape is: a training loop where weights are quantized in the forward
+pass throughout, with straight-through estimation on the backward, and
+the artifact that saves is a single 4-bit checkpoint that was actually
+trained under quantization.
 
 **What is blocked.** bnb NF4 4-bit for any workflow described as QAFT,
 QAT, distillation, or "4-bit training" — including with LoRA. The
@@ -1304,9 +1295,7 @@ apparent 4-bit path is a bf16-adapter-over-nf4-base pattern that ships
 as two pieces at two precisions.
 
 **What is not blocked.** bnb NF4 for inference-only decoding of a
-model somebody else quantized (still a two-file loaded shape but no
-adapter, no training). Any other 4-bit path (GPTQ, AWQ, HQQ, Torchao)
-regardless of alignment.
+model somebody else trained end-to-end at 4-bit.
 
 Recorded here rather than as its own logbook entry because it is a
 general property of the bnb NF4 + LoRA pattern, not a model-specific
@@ -1337,21 +1326,21 @@ similarly-quantized adapter. Post-training you can quantize the
 adapter separately, but the fit was to a different distribution than
 the deployed one.
 
-**Approved pattern for a 4-bit deployable checkpoint.**
+**Approved pattern for a 4-bit deployable checkpoint.** See the
+`Post-training quantization` row below — the fine-tune-then-quantize
+pattern this row used to recommend is itself blocklisted for the same
+reason as post-quantization fine-tuning: the training saw fp32/bf16,
+and the shipped 4-bit weights were never fit against quantization
+noise. Real QAT means quantization in the forward path during
+training, with straight-through estimation on the backward.
 
-Fine-tune the model **unquantized** (bf16, mixed precision) to
-convergence on your task, then quantize the finished weights with
-GPTQ, AWQ, HQQ, or Torchao. The training compute is 2-4x the
-quantized-training path, but the artifact is a single 4-bit file that
-was actually trained. Inference speed is what GPTQ/AWQ deliver, not
-what a bf16-crutch model pretends to.
-
-If genuine quantization-aware training is needed (e.g., 2-bit or
-binary regime where PTQ collapses), use a framework that quantizes
-both base and gradient path throughout AND produces a single
-quantized checkpoint on save. This is a bigger project than the
-workspace currently owns; the fine-tune-then-quantize path covers
-what we actually need.
+If genuine quantization-aware training is needed at any bit width,
+use a framework that quantizes both base and gradient path throughout
+AND produces a single quantized checkpoint on save. Torchao's
+`Int4WeightOnlyQuantizer` with fake-quant during training is one
+starting library; a custom STE loop is another. This is a bigger
+project than the workspace currently owns; it is the compliant
+alternative to the blocked shapes above.
 
 **What is blocked.** Quantize-first-then-adapt as a pattern.
 Includes: bnb NF4 + LoRA (see row above), bnb 8-bit + LoRA framed as
@@ -1359,9 +1348,59 @@ Includes: bnb NF4 + LoRA (see row above), bnb 8-bit + LoRA framed as
 artifact, and future Q-something-adapter frameworks that implement
 the same shape.
 
-**What is not blocked.** Fine-tune-then-quantize (the approved
-pattern). Inference-only quantization of a model somebody else
-trained.
+**What is not blocked.** Real QAT (quantization during training loop
+with STE backward and single-checkpoint save). Inference-only
+quantization of a model somebody else trained end-to-end at 4-bit.
 
 This row and the bnb NF4 row above are separate on purpose: the tool
 is not the pattern.
+
+### Post-training quantization is blocklisted as an alternative to QAT
+
+Post-training quantization runs on a checkpoint that was trained
+end-to-end in fp32 or bf16, then quantizes the final weights to 4-bit
+(or lower) as a final pass. GPTQ, AWQ, HQQ, and Torchao 4-bit are all
+this shape. Real QAT — quantization in the forward pass throughout
+training — is not.
+
+The two rows above (bnb NF4 as QAFT path; post-quantization
+fine-tuning as pattern) covered specific failure shapes. This one is
+the general-position rule they leave open: even if you avoid both, a
+train-then-quantize pipeline still produces a model that was optimized
+against a different weight distribution than the one it ships with.
+
+The shape of the failure.
+
+**Training saw one distribution, deployment sees another.** The
+finished bf16 weights are the optimum of a bf16 loss. Quantizing them
+to 4-bit moves every weight to a nearby-but-different value, and the
+loss at those new values is not the loss the training optimized. The
+gap is usually small on well-conditioned tasks and large on
+poorly-conditioned ones; either way, it was not measured until
+inference.
+
+**Approved shape: real QAT.** A training loop where the forward pass
+quantizes weights (fake-quant or truly-quantized), the backward passes
+gradients through the quantization node via straight-through estimation
+(STE) or a learned surrogate, and the shipped artifact is a single
+4-bit checkpoint. Torchao's Int4WeightOnlyQuantizer with fake-quant
+during training is one path; a custom STE loop is another; PACT and
+LSQ-style learned quantization are variants.
+
+**What is blocked.** Any workflow where quantization happens after
+training. GPTQ, AWQ, HQQ, Torchao 4-bit-as-post-pass, and any
+"quantize the finished bf16 checkpoint" pipeline.
+
+**What is not blocked.** Real QAT (quantization during training).
+Loading a model somebody else trained end-to-end at 4-bit (their
+training was QAT, we are inference-only).
+
+**Cost of the ban.** Real QAT is not a standard workflow. There is no
+one-line "here is the config" for OmniGen2 or Lumina2 today; the
+frameworks (Torchao QAT, torchao's Int4WeightOnlyQuantizer) exist but
+model-specific integration is a real project. This row is a decision
+that we prefer that cost over shipping a model whose deployed weights
+were never actually trained.
+
+Recorded here rather than as a logbook entry because it is a
+pattern-level rule.
