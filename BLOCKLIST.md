@@ -1404,3 +1404,37 @@ were never actually trained.
 
 Recorded here rather than as a logbook entry because it is a
 pattern-level rule.
+
+### rf-detr object detection is blocklisted, keypoints and segmentation stay
+
+The rf-detr family ships heads for detection, keypoints, and
+segmentation on the same backbone. RFD 1102 pulls rf-detr-Seg into
+rung 5 (masking for OmniGen2's layer reconstruction per RFD 2183)
+and RFD 2192 verifies weights licence. The **keypoints** head is
+the workspace's preferred rf-detr use per operator direction
+2026-09-04. The **segmentation** head stays approved for its
+existing RFD 1168 seat. The **object-detection** head is blocked.
+
+**Why blocked.** Object detection is not an on-catalog task per
+RFD 1102 (rung 5 masks with segmentation; there is no rung whose
+input is a bounding-box list). Shipping the detection head invites
+scope drift into a task the workspace has not scoped an RFD around,
+and a corpus + eval pipeline against detection output would compete
+with MaskScore's render-and-compare metric which is not
+box-shaped. If a detection task does become on-catalog, that RFD
+lands first and this row is reconsidered.
+
+**What is blocked.** The rf-detr detection head as a downstream
+consumer, a compile target for Hailo (or any other edge), a
+generation source in any rung, and as a starting point for a QAT
+retrain that would produce a detection checkpoint.
+
+**What is not blocked.** rf-detr-keypoints (preferred) and
+rf-detr-Seg (second choice) heads, on the same backbone weights.
+rf-detr-Seg's RFD 1168 seat is unchanged. The backbone itself, if
+we ever needed to retrain, is not blocked; only detection-head
+outputs are.
+
+**Reference.** Operator directive 2026-09-04 during coordination of
+RFD 2199's rf-detr QAT variant pick: "prefer rf-detr keypoints >
+rf-detr seg and blocklist rf-detr object detect."
