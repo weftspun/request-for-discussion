@@ -1254,3 +1254,114 @@ row. The HF dataset `chibifire/vast-market-snapshots` stays as
 historical record of Vast pricing during the period the workspace
 observed it — the numbers stopped being actionable when the funding
 did.
+
+### bnb NF4 4-bit is blocklisted as a QAFT / QAT path
+
+We want real 4-bit QAFT: a training loop where the base weights are
+genuinely 4-bit throughout, and the artifact that ships is a single
+4-bit checkpoint. bnb NF4 with a LoRA adapter is a different shape
+than that, and it fails in two ways that together make it the wrong
+tool.
+
+**Shipping shape.** bnb NF4 quantizes the base once and trains a
+higher-precision LoRA on top. The artifact is (nf4 base) + (bf16 LoRA)
+— two files, two dtypes, no single 4-bit checkpoint. That is
+post-training-quantized base with adapter, not QAFT. It runs at 4-bit
+memory but ships as two pieces, and the LoRA half never sees the same
+quantization the base does.
+
+**Kernel path.** Even if you accept the two-piece shape, bnb's fast
+NF4 dequant kernel requires quantized-tensor last dims to be a
+multiple of 64. When they are not, bnb silently falls back to a slow
+generic path — the model runs, the LoRA trains, but per-step time
+balloons. Measured on OmniGen2 (hidden_size=2520, not 64-aligned)
+versus Lumina-Image-2.0 (hidden_size=2304, 64-aligned) under identical
+LoRA config: Lumina2 trained at roughly 0.35 s per step, OmniGen2 was
+killed after 10 minutes with no step 1/50 completed. Different kernel
+path by construction, not a bug we can patch around.
+
+**Approved 4-bit paths for QAFT / QAT.** Anything that produces a
+single 4-bit deployable checkpoint after training:
+
+- **GPTQ** — post-training with calibration; supports quantization-aware
+  fine-tuning on the calibration path; arbitrary hidden_size
+- **AWQ** — activation-aware weight quantization; arbitrary
+  hidden_size; calibration-based
+- **HQQ** — Half-Quadratic Quantization; fast per-tensor 4-bit;
+  arbitrary hidden_size
+- **Torchao 4-bit** — the newer PyTorch-native path; still maturing but
+  produces a single quantized module
+
+**Approved 8-bit fallback.** `bnb 8-bit (LLM.int8)` when we accept a
+2x-of-4-bit memory footprint in exchange for no alignment constraint
+and no calibration pass. It is the same two-file shape as bnb NF4, but
+at 8-bit the LoRA is a rounding-error correction rather than
+compensating for the whole quantization loss.
+
+**What is blocked.** bnb NF4 4-bit for any workflow described as QAFT,
+QAT, distillation, or "4-bit training" — including with LoRA. The
+apparent 4-bit path is a bf16-adapter-over-nf4-base pattern that ships
+as two pieces at two precisions.
+
+**What is not blocked.** bnb NF4 for inference-only decoding of a
+model somebody else quantized (still a two-file loaded shape but no
+adapter, no training). Any other 4-bit path (GPTQ, AWQ, HQQ, Torchao)
+regardless of alignment.
+
+Recorded here rather than as its own logbook entry because it is a
+general property of the bnb NF4 + LoRA pattern, not a model-specific
+measurement.
+
+### Post-quantization fine-tuning is blocklisted as a pattern
+
+Any workflow that (a) quantizes a pretrained checkpoint, then (b)
+trains an adapter on top of the quantized base is a specific pattern
+we do not want, regardless of what tool implements it. The bnb NF4 +
+LoRA row above is one instance; QLoRA-shaped pipelines built on other
+quantizers are others. Blocklisting only the tool would leave the
+pattern open for the next Q-something-adapter framework that
+implements the same failure mode.
+
+Two problems, both structural.
+
+**Two-precision shipping.** The base carries quantization noise; the
+adapter is trained at higher precision to compensate for it. The
+artifact is two files at two dtypes, and nothing in the pipeline
+produces a single quantized checkpoint. What ships is not a 4-bit
+model, it is a 4-bit-with-a-bf16-crutch model.
+
+**Adapter never sees quantization during training.** The adapter half
+stays at bf16 (or fp32) throughout, so its parameters are fit against
+the quantized base's noise, not against the noise of a
+similarly-quantized adapter. Post-training you can quantize the
+adapter separately, but the fit was to a different distribution than
+the deployed one.
+
+**Approved pattern for a 4-bit deployable checkpoint.**
+
+Fine-tune the model **unquantized** (bf16, mixed precision) to
+convergence on your task, then quantize the finished weights with
+GPTQ, AWQ, HQQ, or Torchao. The training compute is 2-4x the
+quantized-training path, but the artifact is a single 4-bit file that
+was actually trained. Inference speed is what GPTQ/AWQ deliver, not
+what a bf16-crutch model pretends to.
+
+If genuine quantization-aware training is needed (e.g., 2-bit or
+binary regime where PTQ collapses), use a framework that quantizes
+both base and gradient path throughout AND produces a single
+quantized checkpoint on save. This is a bigger project than the
+workspace currently owns; the fine-tune-then-quantize path covers
+what we actually need.
+
+**What is blocked.** Quantize-first-then-adapt as a pattern.
+Includes: bnb NF4 + LoRA (see row above), bnb 8-bit + LoRA framed as
+"QLoRA at 8-bit", any "QLoRA on X" pipeline that produces a two-piece
+artifact, and future Q-something-adapter frameworks that implement
+the same shape.
+
+**What is not blocked.** Fine-tune-then-quantize (the approved
+pattern). Inference-only quantization of a model somebody else
+trained.
+
+This row and the bnb NF4 row above are separate on purpose: the tool
+is not the pattern.
