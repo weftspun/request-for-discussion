@@ -61,8 +61,7 @@ in `anny-keypoint-anchors`:
    pre-rework selector's output does not fail is a gate that does not measure what the
    rework changed.
 2. **Re-run the placement check against the previous artifact.** `check_keypoint_anchors.py
-   --self-test` reads `face68_v2_snapshot.pth` (v2 weights preserved as evidence per rule
-   10) and asserts the same placement priors that pass on `face68.pth` fail on the
+--self-test` reads `face68_v2_snapshot.pth` (v2 weights preserved as evidence per rule 10) and asserts the same placement priors that pass on `face68.pth` fail on the
    snapshot. v2 fails six priors (jawline monotone-X, chin at min-Z, eyes lateral, mouth
    corners flanking the nose tip); v3 passes all. A gate whose new build passes it and
    whose known-broken build passes it too is not a placement gate — it is decoration.
