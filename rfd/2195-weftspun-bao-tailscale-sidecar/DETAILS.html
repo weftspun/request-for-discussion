@@ -82,9 +82,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5a10fc84a7bff526434d52200a729576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-dd645bdd3be9d8713d016f89b66f7356.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-9dc8f7b0063e587a5bbf917ac285fb0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-ebf6027466d64ce25e353d53063d38f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-285d64067b7bfd38b4f886e30e47acef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -359,6 +359,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#flyctl-ssh-console--c-cat-file-head-truncates-on-sigpipe" id="toc-flyctl-ssh-console--c-cat-file-head-truncates-on-sigpipe" class="nav-link" data-scroll-target="#flyctl-ssh-console--c-cat-file-head-truncates-on-sigpipe"><code>flyctl ssh console -C "cat file" | head</code> truncates on SIGPIPE</a></li>
   <li><a href="#openssl-req--subj-cn...-mangles-on-git-bash" id="toc-openssl-req--subj-cn...-mangles-on-git-bash" class="nav-link" data-scroll-target="#openssl-req--subj-cn...-mangles-on-git-bash"><code>openssl req -subj "/CN=..."</code> mangles on Git-Bash</a></li>
   <li><a href="#rule-zero-every-live-session-gets-an-identity" id="toc-rule-zero-every-live-session-gets-an-identity" class="nav-link" data-scroll-target="#rule-zero-every-live-session-gets-an-identity">Rule zero: every live session gets an identity</a></li>
+  <li><a href="#shared-home-machines-need-per-agent-suffixed-credential-dirs" id="toc-shared-home-machines-need-per-agent-suffixed-credential-dirs" class="nav-link" data-scroll-target="#shared-home-machines-need-per-agent-suffixed-credential-dirs">Shared-$HOME machines need per-agent-suffixed credential dirs</a></li>
   </ul></li>
   <li><a href="#revocation" id="toc-revocation" class="nav-link" data-scroll-target="#revocation">Revocation</a></li>
   </ul></li>
@@ -510,7 +511,13 @@ head -3 local.copy</code></pre>
 </section>
 <section id="rule-zero-every-live-session-gets-an-identity" class="level3">
 <h3 class="anchored" data-anchor-id="rule-zero-every-live-session-gets-an-identity">Rule zero: every live session gets an identity</h3>
-<p>Formalised in <code>weftspun/dot-claude</code> PR #15’s <code>agent-sync.md</code> skill body. The rule: every session that appears in <code>ListAgents</code> gets a Bao client cert and a <code>agents/&lt;cn&gt;.agents.weftspun</code> KV row, minted by whichever session holds the admin policy (currently <code>mps-45994b</code> via <code>auth/cert/certs/mps-45994b</code>). Read-only policy is fine as a first grant; write is deferred until the operator or the session itself asks for it. The provisioning bundle lands in 1Password (<code>agent-cert &lt;cn&gt;</code> item) and the receiving session’s first action is <code>bao login</code> against it.</p>
+<p>Formalised in <code>weftspun/dot-claude</code> PR #15’s <code>agent-sync.md</code> skill body. The rule: every session that appears in <code>ListAgents</code> gets a Bao client cert and a <code>agents/&lt;cn&gt;.agents.weftspun</code> KV row, minted by whichever session holds the admin policy (currently <code>mps-45994b</code> via <code>auth/cert/certs/mps-45994b</code>). Read-only policy is fine as a first grant; write is deferred until the operator or the session itself asks for it. The provisioning bundle (leaf cert + intermediate + root CA) lands in Bao KV at <code>certs/&lt;cn&gt;</code> — public material only, private key stays on the requesting session’s box. The receiving session’s first action is <code>bao login -method=cert</code> against it. <strong>1Password is not the right store for agent certs</strong> — Bao KV is the store the agents already have to reach anyway.</p>
+</section>
+<section id="shared-home-machines-need-per-agent-suffixed-credential-dirs" class="level3">
+<h3 class="anchored" data-anchor-id="shared-home-machines-need-per-agent-suffixed-credential-dirs">Shared-$HOME machines need per-agent-suffixed credential dirs</h3>
+<p>Two agents on the same box under the same <code>$HOME</code> (two Claude sessions opened from separate editors on one Windows machine, say) will both resolve <code>~/.bao-creds/</code> to the same directory, and the second agent’s onboarding drill will overwrite the first agent’s private key. The key is gone from the filesystem and the first agent’s cert on disk is still valid until its TTL runs out but unusable — the pubkey no longer has a matching private key. Verified by <code>openssl x509 -in cert.pem -noout -pubkey</code> vs the (nonexistent) key.</p>
+<p>The 2026-09-04 reference case: HAILO on-boarded on the same box as CUDA and wrote <code>/c/Users/ernes/.bao-creds/client-key.pem</code>, clobbering CUDA’s. Both agents moved to suffixed dirs and CUDA re-enrolled from its new location with a fresh CSR against the same CN.</p>
+<p>Convention going forward: <strong>each agent uses <code>~/.bao-creds-&lt;agent&gt;/</code></strong>, not the bare <code>~/.bao-creds/</code>. The onboarding drill each agent hands its successor spells that out explicitly. The onboarding message the admin session sends when signing a new cert names the target directory per-agent rather than the default.</p>
 </section>
 </section>
 <section id="revocation" class="level2">
@@ -521,7 +528,7 @@ head -3 local.copy</code></pre>
 <li><strong>Delete the cert-auth entry</strong> entirely (<code>bao delete auth/cert/certs/&lt;name&gt;</code>). Immediate effect. Best when revoking every identity that authed through that entry.</li>
 <li><strong>Enable CRL consultation</strong> via <code>auth/cert/crls/&lt;name&gt;</code> and reload the CRL after every revoke. Correct but higher operational load and the default intermediate here reports <code>error building CRLs: x509: issuer certificate doesn't contain a subject key identifier</code> — a re-issue of the intermediate is needed before this path works.</li>
 </ol>
-<p>Options 1 and 2 are what we use. The KV row also gets deleted (<code>bao kv metadata delete agents/&lt;cn&gt;.agents.weftspun</code>) so peers don’t see a stale identity. The 1Password item is annotated REVOKED with the reason and the cert body kept for audit.</p>
+<p>Options 1 and 2 are what we use. The KV row also gets deleted (<code>bao kv metadata delete agents/&lt;cn&gt;.agents.weftspun</code>) so peers don’t see a stale identity, and the cert bundle at <code>certs/&lt;cn&gt;</code> gets deleted or annotated with a <code>revoked_at</code> field. A key clobber (see the shared-$HOME gotcha above) doesn’t need PKI revocation — the old cert is unusable without its key — but does need the CN removed from the cert-auth allowlist until the new cert is issued, so the old cert can’t be replayed if the key was leaked before it was gone.</p>
 
 
 </section>
