@@ -821,6 +821,10 @@ def Scope "Serials"
                 {
                     custom string slug = "rebac-agent-roles"
                 }
+                def "S2201"
+                {
+                    custom string slug = "coordinate-agents-ceremony"
+                }
             }
         }
     }
