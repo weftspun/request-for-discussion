@@ -12,7 +12,7 @@
 | Image → mesh (fast)           | TRELLIS.2                      | ~8 GB bf16.                                                    |
 | Metric depth                  | MoGe-3                         | ~1 GB.                                                         |
 | Auto-rig                      | SkinTokens                     | Full GLB against ANNY skeleton.                                |
-| Text → motion                 | Kimodo                         | Into SOMA pose format (78 canonical); consumed by ANNY.        |
+| Text → motion                 | Kimodo                         | Into SOMA pose format (77 rotvecs Kimodo emits, 78 pose params at anny call time — anny prepends one root identity at index 0; anny/test/test_soma.py:242-283, task #76). Consumed by ANNY. |
 | Mesh segmentation             | rf-detr-Seg (RFD 1168)         | Replaces P3-SAM (blocklisted, territory).                      |
 | Layer decomposition           | rf-detr-Seg + LaMa inpainting  | Replaces See-Through (blocklisted, no license) per RFD 1168.   |
 | Mesh retopology               | AutoRemesher, xatlas UV        | Format-adjacent tools, unchanged from prior catalog.           |
