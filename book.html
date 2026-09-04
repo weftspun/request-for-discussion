@@ -7349,10 +7349,9 @@ scoring     MaskScore + EditScore       n/a          self-supervised reward</cod
 <p><strong>State:</strong> discussion <strong>Feature:</strong> sub-25s runway demo of the shuttle, 10s outro <strong>Scope:</strong> <code>chibifire.com</code>, <code>1-transport/weftspun-studio</code>, RFD 2136 rung 9</p>
 <section id="decision-257" class="level2">
 <h2 class="anchored" data-anchor-id="decision-257">Decision</h2>
-<p>Rerender the same runway scene N times, different outfits and identity per shot, cut in a video editor. Under 25 seconds + 10s outro with QR + URL per RFD 2136 (gacha ladder) rung 9. Live Godot render is fine if it produces the same shot structure.</p>
-<p><strong>Anime side, text-only anchor</strong> (near-term reachable). Dressing from <code>chibifire/zenodo-ecommerce-text</code> + <code>chibifire/kaggle-womens-ecom-clothing-reviews</code>, CycleGAN-styled via RFD 0036 for anime look. Identity from <code>alfredplpl/anime-with-caption-cc0</code> captions (BLOCKLIST.md permits captions). OmniGen2 (RFD 2183) generates from language.</p>
-<p><strong>Real-world side.</strong> <code>chibifire/zenodo-second-hand-fashion-v3</code> (32k CC-BY garments) direct as dressing. Identity: text → Wan-VACE or OmniGen2 (RFD 1102 catalog) → EditScore per RFD 2193. No footage.</p>
-<p>Motion: motion-bricks.cpp on hand-authored keyframes. FX + palette per chibifire (RFD 2182): ribbon trails; peach, coral, blush, cream. Music: CC0 or CC-BY. No commissioned music.</p>
+<p>Rerender the same runway scene N times, different outfits per shot, cut in a video editor. Under 25 seconds + 10s outro with QR + URL per RFD 2136 rung 9. Live Godot render acceptable.</p>
+<p><strong>Identity: ANNY.</strong> Same avatar every shot. Anime style is the shipped look on every shot in the final video.</p>
+<p><strong>Paired generation.</strong> Each shot is a pair — same identity, same garment, same pose — rendered photographic + anime-styled. Anime half ships; photographic stays as EditScore anchor. Sources: <code>chibifire/zenodo-second-hand-fashion-v3</code> (garments), <code>alfredplpl/anime-with-caption-cc0</code> (style anchor), <code>chibifire/zenodo-ecommerce-text</code> + <code>chibifire/kaggle-womens-ecom-clothing-reviews</code> (garment vocabulary). CycleGAN styles per BLOCKLIST.md. Generator OmniGen2 (RFD 2183); LLaDA-o pending RFD 2198. Recursive EditScore (RFD 2193) ranks pairs, per-axis critique fed back. Output: <code>chibifire/anny-runway-shots-&lt;yyyymmdd&gt;</code>. See DETAILS.</p>
 </section>
 <section id="problem-250" class="level2">
 <h2 class="anchored" data-anchor-id="problem-250">Problem</h2>
@@ -7360,7 +7359,7 @@ scoring     MaskScore + EditScore       n/a          self-supervised reward</cod
 </section>
 <section id="related-252" class="level2">
 <h2 class="anchored" data-anchor-id="related-252">Related</h2>
-<p>RFD 2136, RFD 2166 (Cineform), RFD 2171 (vocabulary), RFD 2183, RFD 2186 + 2187 (parked), RFD 1102.</p>
+<p>RFD 2136, RFD 2166, RFD 2171, RFD 2183, RFD 2193, RFD 2198, RFD 1102, BLOCKLIST.md CycleGAN section.</p>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 </section>
 </section>
