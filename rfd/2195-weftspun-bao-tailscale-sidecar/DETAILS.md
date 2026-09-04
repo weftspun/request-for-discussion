@@ -347,6 +347,38 @@ are prettier-only reformats where no substantive content moves, and
 even those get a note in the coordination message so the peer can
 see it and refuse if the shape isn't right.
 
+### Bao requires mTLS on every request, not just login
+
+The listener enforces `tls_require_and_verify_client_cert = true`, so
+the TLS handshake needs the client cert on **every** API call. A
+`bao login -method=cert` handshake gives you a token; that token
+alone is not sufficient for subsequent calls — every follow-up
+request handshakes anew and needs the same client cert. If
+`BAO_TOKEN` is exported but `BAO_CLIENT_CERT` / `BAO_CLIENT_KEY` /
+`BAO_CACERT` are not, the next call fails with:
+
+    remote error: tls: certificate required
+
+Not an authorisation error (token is fine); a TLS-handshake error
+before the token is even sent.
+
+Reference case 2026-09-04: ANCHOR's first `bao kv put` after login
+failed with this exact message when only the token helper was in
+play. Diagnosed as env-var scope, not a Bao config bug. Convention:
+keep all four env vars exported for the shell session:
+
+    export BAO_ADDR=https://weftspun-bao.stonecat-ratio.ts.net:8200
+    export BAO_CACERT=~/.bao-creds-<agent>/root-ca.pem
+    export BAO_CLIENT_CERT=~/.bao-creds-<agent>/client-fullchain.pem
+    export BAO_CLIENT_KEY=~/.bao-creds-<agent>/<agent>-key.pem
+    export BAO_TOKEN=$(cat ~/.bao-creds-<agent>/session-token)
+
+The four together are the working configuration. Dropping any one
+breaks subsequent calls in different ways: dropping the token gives
+403 or "no token"; dropping the client cert / key / CA gives
+"certificate required" or "unknown certificate authority". Diagnosis
+per RFD 2195's other cert-auth gotchas applies.
+
 The Bao cert-auth method does not consult CRLs by default. `pki/revoke
 serial_number=<X>` records the revocation in the PKI store but does not
 gate access — a revoked cert still authenticates until you take one of
