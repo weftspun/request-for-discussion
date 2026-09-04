@@ -366,10 +366,12 @@ three.js                MIT          browser</code></pre>
 </section>
 <section id="the-lip-sync-which-is-the-genuinely-new-part" class="level2">
 <h2 class="anchored" data-anchor-id="the-lip-sync-which-is-the-genuinely-new-part">The lip-sync, which is the genuinely new part</h2>
-<p>TalkingHead is MIT and drives a glTF head from visemes with real-time audio. Two things make it a good fit and one is unknown.</p>
+<p>TalkingHead is MIT and drives a glTF head from visemes with real-time audio. Two things make it a good fit and the third — whether our avatars carry the morph targets it needs — was the unknown at the first draft. That check has run.</p>
 <p><strong>Visemes are morph targets, and morph targets are data.</strong> CLAUDE.md’s deployment rule allows skin weights, animation samplers and morph targets in a glTF export and forbids runtime modifiers, drivers, constraints and custom extensions. A viseme-driven head is the allowed side of that line, which is not an accident — it is why the rule is written that way.</p>
 <p><strong>The Space ships <code>model-en-mixed.bin</code> and two minified vendor modules</strong>, <code>headworklet.min.mjs</code> and <code>headaudio.min.mjs</code>. Those are the audio-to-viseme path and they are shipped minified with no stated licence in the Space. Whatever they are, they are the part to replace rather than reuse, and TalkingHead upstream is where to look for a licensed equivalent.</p>
-<p><strong>What is unknown is whether our avatars have the morph targets.</strong> ANNY and SOMA rigs carry a humanoid skeleton; whether they carry a viseme set, and which naming convention it follows, has not been checked. That is the first thing to find out and it costs one file inspection.</p>
+<p><strong>The morph-target check resolved.</strong> ANNY does not carry viseme-named blendshapes; it carries 52 facial-action blendshapes covering the FACS action units, exposed in <code>3-interactor/anny/src/anny/models/facial_actions.py</code> under <code>FACIAL_ACTION_LABELS</code>. Verified against the on-disk target files at <code>3-interactor/anny/src/anny/data/faceunits01/targets/faceunits/*.target</code>. The 52 shapes are enough to render every viseme by weighted sum — mouth opening from <code>jawOpen</code>, lip rounding from <code>mouthPucker</code> + <code>mouthFunnel</code>, lip closure from <code>mouthClose</code> + the <code>mouthPress*</code> pair, and so on.</p>
+<p><strong>A phoneme-to-viseme-to-facial-action mapping ships as data</strong>, at <code>3-interactor/anny/src/anny/data/phoneme_viseme_facial_action.json</code> (<code>interactor-anny#1</code>). Two-stage: an ASR-emitted phoneme picks a viseme, the viseme selects a weighted subset of the 52 facial-action blendshape identifiers, the lip-sync stage wires the resulting weights into <code>anny_soma(...)</code> at the frame rate. Consistency asserted by <code>test/test_phoneme_viseme_facial_action.py</code> (every blendshape name exists in <code>FACIAL_ACTION_LABELS</code>, every viseme referenced in <code>phonemes</code> exists in <code>visemes</code> keys, every weight sits in [0, 1]) with a companion self-test planting one typo per rule per rule 2.</p>
+<p><strong>The mapping’s weight numbers are placeholders</strong>, cited in the file’s own <code>weight_sources</code> note as derived from Oculus Lipsync and Preston Blair public references. A real per-language measurement replaces them in a refinement — the mapping ships as documented-placeholder, not as-if-measured (rule 4 shape: a number without a baseline is not a measurement, so the file names its baseline as the pending refinement).</p>
 </section>
 <section id="the-body-half-which-that-space-does-not-have-at-all" class="level2">
 <h2 class="anchored" data-anchor-id="the-body-half-which-that-space-does-not-have-at-all">The body half, which that Space does not have at all</h2>
@@ -384,7 +386,9 @@ no camera           Kimodo-SOMA, with a LoRA          wrapper unwired</code></pr
 <pre><code>rf-detr keypoints    rung 3, the only model the DFC has accepted
 Qwen3-ASR encoder    operators clear, untranslated
 Qwen3-TTS backbone   autoregressive, does not compile
-the LLM              autoregressive, does not compile</code></pre>
+the LLM              Qwen3-VL-8B NF4 + EditScore LoRA (RFD 1157);
+                     autoregressive, does not compile; per-turn
+                     cost measured in the tail section below</code></pre>
 <p>So the device carries the thing that must be low-latency and continuous – a body tracked every frame – while the host carries the turn-taking speech, which is bursty and tolerates more delay. That is a better division than it would have been if chosen deliberately.</p>
 <p><strong>SOMA-X to ANNY is already the sanctioned route</strong>, and the blocklist row for the SMPL family says so: <code>anny_from_soma</code> exists in RFD 1122’s <code>AlternativeTopology</code> list, so the retarget is a code path rather than an intention. rf-detr emits keypoints, not a SOMA pose, and what sits between them is RFD 1122’s wholebody gap rather than anything new here.</p>
 </section>
@@ -430,7 +434,7 @@ Mitsuba 3              Godot                 per-pixel, per view</code></pre>
 <section id="what-to-do-cheapest-first" class="level2">
 <h2 class="anchored" data-anchor-id="what-to-do-cheapest-first">What to do, cheapest first</h2>
 <ol type="1">
-<li><strong>Check ANNY for viseme morph targets.</strong> One file. If they are absent, the lip-sync question becomes an authoring question and the rest of this RFD waits on it.</li>
+<li><del><strong>Check ANNY for viseme morph targets.</strong> One file.</del> <strong>Resolved 2026-09-04</strong>: no viseme-named morphs; 52 facial-action blendshapes under <code>FACIAL_ACTION_LABELS</code> handle it via the phoneme→viseme→ facial-action mapping at <code>anny.data.phoneme_viseme_facial_action</code>. Lip-sync is an authoring question no longer; it is a data-file question, and the data file ships.</li>
 <li><strong>Run Qwen3-ASR-1.7B and Qwen3-TTS on the host</strong>, end to end, no device and no avatar. That is the loop’s spine and it needs nothing from this Space.</li>
 <li><strong>Wire rf-detr keypoints through SOMA-X to ANNY</strong>, on the desk GPU before the device. The body path is further along than the voice path and is the half that eventually moves onto the accelerator.</li>
 <li><strong>Only then the face, and the Kimodo LoRA after that.</strong></li>
