@@ -89,7 +89,9 @@ stretch a rule past what it says.
 ## The lip-sync, which is the genuinely new part
 
 TalkingHead is MIT and drives a glTF head from visemes with real-time
-audio. Two things make it a good fit and one is unknown.
+audio. Two things make it a good fit and the third — whether our
+avatars carry the morph targets it needs — was the unknown at the
+first draft. That check has run.
 
 **Visemes are morph targets, and morph targets are data.** CLAUDE.md's
 deployment rule allows skin weights, animation samplers and morph
@@ -105,10 +107,32 @@ licence in the Space. Whatever they are, they are the part to replace
 rather than reuse, and TalkingHead upstream is where to look for a
 licensed equivalent.
 
-**What is unknown is whether our avatars have the morph targets.** ANNY
-and SOMA rigs carry a humanoid skeleton; whether they carry a viseme
-set, and which naming convention it follows, has not been checked.
-That is the first thing to find out and it costs one file inspection.
+**The morph-target check resolved.** ANNY does not carry viseme-named
+blendshapes; it carries 52 facial-action blendshapes covering the FACS
+action units, exposed in `3-interactor/anny/src/anny/models/facial_actions.py`
+under `FACIAL_ACTION_LABELS`. Verified against the on-disk target
+files at `3-interactor/anny/src/anny/data/faceunits01/targets/faceunits/*.target`.
+The 52 shapes are enough to render every viseme by weighted sum — mouth
+opening from `jawOpen`, lip rounding from `mouthPucker` + `mouthFunnel`,
+lip closure from `mouthClose` + the `mouthPress*` pair, and so on.
+
+**A phoneme-to-viseme-to-facial-action mapping ships as data**, at
+`3-interactor/anny/src/anny/data/phoneme_viseme_facial_action.json`
+(`interactor-anny#1`). Two-stage: an ASR-emitted phoneme picks a
+viseme, the viseme selects a weighted subset of the 52 facial-action
+blendshape identifiers, the lip-sync stage wires the resulting weights
+into `anny_soma(...)` at the frame rate. Consistency asserted by
+`test/test_phoneme_viseme_facial_action.py` (every blendshape name
+exists in `FACIAL_ACTION_LABELS`, every viseme referenced in
+`phonemes` exists in `visemes` keys, every weight sits in [0, 1]) with
+a companion self-test planting one typo per rule per rule 2.
+
+**The mapping's weight numbers are placeholders**, cited in the file's
+own `weight_sources` note as derived from Oculus Lipsync and Preston
+Blair public references. A real per-language measurement replaces them
+in a refinement — the mapping ships as documented-placeholder, not
+as-if-measured (rule 4 shape: a number without a baseline is not a
+measurement, so the file names its baseline as the pending refinement).
 
 ## The body half, which that Space does not have at all
 
@@ -133,7 +157,9 @@ That falls out of what has been measured rather than from a preference:
     rf-detr keypoints    rung 3, the only model the DFC has accepted
     Qwen3-ASR encoder    operators clear, untranslated
     Qwen3-TTS backbone   autoregressive, does not compile
-    the LLM              autoregressive, does not compile
+    the LLM              Qwen3-VL-8B NF4 + EditScore LoRA (RFD 1157);
+                         autoregressive, does not compile; per-turn
+                         cost measured in the tail section below
 
 So the device carries the thing that must be low-latency and continuous
 -- a body tracked every frame -- while the host carries the turn-taking
@@ -270,9 +296,12 @@ the architecture says it should not have to.
 
 ## What to do, cheapest first
 
-1. **Check ANNY for viseme morph targets.** One file. If they are
-   absent, the lip-sync question becomes an authoring question and the
-   rest of this RFD waits on it.
+1. ~~**Check ANNY for viseme morph targets.** One file.~~ **Resolved
+   2026-09-04**: no viseme-named morphs; 52 facial-action blendshapes
+   under `FACIAL_ACTION_LABELS` handle it via the phoneme→viseme→
+   facial-action mapping at `anny.data.phoneme_viseme_facial_action`.
+   Lip-sync is an authoring question no longer; it is a data-file
+   question, and the data file ships.
 2. **Run Qwen3-ASR-1.7B and Qwen3-TTS on the host**, end to end, no
    device and no avatar. That is the loop's spine and it needs nothing
    from this Space.
