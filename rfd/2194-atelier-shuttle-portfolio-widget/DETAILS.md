@@ -41,11 +41,10 @@ prompt appended to the caption; the photographic half uses the
 caption without the anime prefix. Same generator, same identity,
 same garment — only the style token differs.
 
-Provenance check the generator owes at execution time: what its own
-training corpus was and whether the resulting anime style renders
-carry a licence problem downstream. OmniGen2's card + RFD 2183's
-retrain discussion cover this for OmniGen2; LLaDA-o's card covers
-it for LLaDA-o.
+**Generator-provenance check: parked 2026-09-04.** Un-park conditions
+are documented in the operator's memory file; the check does not
+happen at execution time. Apache-2.0 weights are taken at face
+value for this demo's purpose.
 
 ## Generator
 
