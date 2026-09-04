@@ -118,25 +118,48 @@ storage), split shape (train/val, no test — the test set is the blinded holdou
 generated from). None of these change the row shape decision; they change what the first
 subset's manifest records under motion source and sampler configuration.
 
-## Bone-level projection accuracy: verified (vertex-side pending)
+## Projection accuracy: verified (bone-level and vertex-side)
 
 The bone-level number is zero by construction: `apply_procrustes_retopology` attaches
 SOMA-rig skinning weights to the makehuman mesh once at model-build time, and both models
 then run LBS from the same bone chain, so bone world transforms cannot differ. The
-load-bearing gate for the corpus's downstream use is the vertex-side diff with its limb-bone
-negative control, which lands with the first subset per `render_first_subset.py`'s
-`verify_projection_accuracy`.
+load-bearing gate for the corpus's downstream use is the vertex-side diff, verified below.
 
-The bone-level verification hook the topology-decision section named landed via
-`interactor-kimodo-text-to-motion` PR #1 (merged 2026-09-04). `scripts/verify_projection.py`
-ran 4 random SOMA poses through both `anny.Anny(rig="soma", topology="soma")` and
-`anny.Anny(rig="soma", topology=TopologyConfig(base_mesh="makehuman",
-remove_unattached_vertices=False))`, extracted bone world transforms from `bone_poses`, and
-compared:
+The bone-level hook landed via `interactor-kimodo-text-to-motion` PR #1 (merged 2026-09-04)
+in `scripts/verify_projection.py`: 4 random SOMA poses through both `anny.Anny(rig="soma",
+topology="soma")` and `anny.Anny(rig="soma", topology=TopologyConfig(base_mesh="makehuman",
+remove_unattached_vertices=False))`, bone world transforms extracted from `bone_poses`:
 
 - max: **0.000 mm** (sub-credit-card thickness)
 - mean: **0.000 mm** (sub-credit-card thickness)
 
-The bone number was reported honestly; the earlier heading claimed more than it does. The
-vertex-side number, when it lands with the first subset, replaces "pending" with max / mean
-/ p99 and household anchors, and the limb-bone negative-control magnitudes go beside it.
+The vertex-side hook landed via `interactor-kimodo-text-to-motion` PR #3 in
+`scripts/verify_projection_vertex.py`: same 4 poses through both models, makehuman posed
+vertices compared against SOMA-topology posed vertices interpolated via the barycentric map
+anny uses at build time (`point_to_mesh_distance_and_face_uvs` from `soma.py:97`). Filtered
+to the body-surface subset (rest distance to nearest SOMA_wrap triangle < 5 mm; 15,778 of
+19,158 verts kept) because the 3,380 non-body verts — interior mesh, hair, teeth, eye
+internals — sit too far from SOMA_wrap for barycentric interpolation to be meaningful and
+would drive max/p99 without saying anything about pose correctness. `wholebody133.pth`'s
+anchors are body-surface points, so the check that matters is on the body-surface subset.
+
+- max: **5.116 mm** (3.4× penny)
+- mean: **0.842 mm** (sub-credit-card)
+- p99: **4.730 mm** (3.1× penny)
+
+Under anny's own thresholds (max<15 mm, mean<5 mm) taken from `anny/test/test_soma.py`.
+
+The load-bearing negative control on the same barycentric-interpolated apparatus: corrupt
+LeftArm rotation on the makehuman pose only; feed SOMA the full arm-rotation pose. Diff
+spikes on left-arm vertices:
+
+- negative-control max: **222.769 mm** (3.4× soda can, 44× positive)
+- negative-control mean: **21.601 mm** (2.1× AAA battery, 26× positive)
+
+The check catches a broken pose transfer on a load-bearing bone. A weight-slot-column
+corruption attempt landed as a no-op (documented in the script) because
+`vertex_bone_weights` is per-vertex effective-bones (13 slots), not one column per bone —
+kept in the record as the shape that didn't work.
+
+Detection floor at n=4 poses: any defect appearing in >75% of frames per CLAUDE.md rule 5.
+Production runs scale n with shard motion coverage.
