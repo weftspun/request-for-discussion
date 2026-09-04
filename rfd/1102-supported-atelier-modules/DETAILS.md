@@ -4,7 +4,8 @@
 
 | Task                          | Model                          | Notes                                                          |
 | ----------------------------- | ------------------------------ | -------------------------------------------------------------- |
-| Text/image reasoning + reward | Gemma-4-12B (QAT Q4_0)         | Shared VLM per RFD 1173; EditScore fine-tune base (RFD 1157). |
+| Text/image reasoning          | Gemma-4-12B (QAT Q4_0)                        | Shared VLM per RFD 1173. |
+| Reward model (image editing)  | Qwen3-VL-8B + EditScore LoRA (NF4, 6.75 GB)   | Per RFD 1157 and `7-service/service-livebook/priv/python/weft_score.py`. EditScore is a LoRA over Qwen3-VL (not a fine-tune of Gemma); RFD 1173's target is to swap the base to Gemma-4-12B later so the same weights serve both roles. |
 | Text/image → image            | Wan-VACE                       | ~14 GB NF4 (staged per RFD 1027).                              |
 | Image → coarse mesh           | Pixal3D                        | 24 GB total, ~6.5 GB peak staged.                              |
 | Mesh refinement               | VoxHammer                      | Holds no weights (RFD 1162).                                   |
