@@ -829,6 +829,10 @@ def Scope "Serials"
                 {
                     custom string slug = "rebac-bao-enforcement"
                 }
+                def "S2203"
+                {
+                    custom string slug = "anny-soma-first-subset-corpus-shape"
+                }
             }
         }
     }
