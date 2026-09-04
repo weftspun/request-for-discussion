@@ -360,8 +360,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#openssl-req--subj-cn...-mangles-on-git-bash" id="toc-openssl-req--subj-cn...-mangles-on-git-bash" class="nav-link" data-scroll-target="#openssl-req--subj-cn...-mangles-on-git-bash"><code>openssl req -subj "/CN=..."</code> mangles on Git-Bash</a></li>
   <li><a href="#rule-zero-every-live-session-gets-an-identity" id="toc-rule-zero-every-live-session-gets-an-identity" class="nav-link" data-scroll-target="#rule-zero-every-live-session-gets-an-identity">Rule zero: every live session gets an identity</a></li>
   <li><a href="#shared-home-machines-need-per-agent-suffixed-credential-dirs" id="toc-shared-home-machines-need-per-agent-suffixed-credential-dirs" class="nav-link" data-scroll-target="#shared-home-machines-need-per-agent-suffixed-credential-dirs">Shared-$HOME machines need per-agent-suffixed credential dirs</a></li>
+  <li><a href="#one-cert-auth-entry-per-agent-not-a-shared-wildcard-entry" id="toc-one-cert-auth-entry-per-agent-not-a-shared-wildcard-entry" class="nav-link" data-scroll-target="#one-cert-auth-entry-per-agent-not-a-shared-wildcard-entry">One cert-auth entry per agent, not a shared wildcard entry</a></li>
   </ul></li>
-  <li><a href="#revocation" id="toc-revocation" class="nav-link" data-scroll-target="#revocation">Revocation</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/weftspun/request-for-discussion/edit/main/rfd/2195-weftspun-bao-tailscale-sidecar/DETAILS.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/weftspun/request-for-discussion/blob/main/rfd/2195-weftspun-bao-tailscale-sidecar/DETAILS.md" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
@@ -519,9 +519,10 @@ head -3 local.copy</code></pre>
 <p>The 2026-09-04 reference case: HAILO on-boarded on the same box as CUDA and wrote <code>/c/Users/ernes/.bao-creds/client-key.pem</code>, clobbering CUDA’s. Both agents moved to suffixed dirs and CUDA re-enrolled from its new location with a fresh CSR against the same CN.</p>
 <p>Convention going forward: <strong>each agent uses <code>~/.bao-creds-&lt;agent&gt;/</code></strong>, not the bare <code>~/.bao-creds/</code>. The onboarding drill each agent hands its successor spells that out explicitly. The onboarding message the admin session sends when signing a new cert names the target directory per-agent rather than the default.</p>
 </section>
-</section>
-<section id="revocation" class="level2">
-<h2 class="anchored" data-anchor-id="revocation">Revocation</h2>
+<section id="one-cert-auth-entry-per-agent-not-a-shared-wildcard-entry" class="level3">
+<h3 class="anchored" data-anchor-id="one-cert-auth-entry-per-agent-not-a-shared-wildcard-entry">One cert-auth entry per agent, not a shared wildcard entry</h3>
+<p>A cert-auth entry with <code>allowed_common_names="*.agents.weftspun"</code> (or with a comma-list of several CNs) attached to a templated policy is tempting — one entry, N agents. It also does not resolve the template consistently. A second agent authenticating through a shared entry can get a token with <code>token_policies=[agents-rw]</code> and still get 403 on writes to <code>agents/data/&lt;its own CN&gt;</code> because Bao’s <code>{{identity.entity.aliases.&lt;accessor&gt;.name}}</code> resolution behaves differently for a fresh alias on a shared entry than it does for the first agent that authenticated through the same entry. Reference case 2026-09-04: HAILO logged in via the shared <code>agents-weftspun</code> entry and hit 403 on its first write, while CUDA (authenticated earlier via the same entry) wrote cleanly.</p>
+<p><strong>Convention:</strong> each agent gets its own <code>auth/cert/certs/&lt;agent&gt;</code> entry, mirroring how <code>mps-45994b</code> is set up. <code>allowed_common_names</code> is the agent’s single CN, <code>token_policies=agents-rw</code>. The templated policy resolves against the dedicated entry’s accessor and there is no shared-entry ambiguity. <strong>No shared wildcard entry, ever</strong> — this file’s own “narrowest thing that answers it, never a bare <code>Bash(*)</code>” rule applies to cert-auth entries the same way it applies to shell permissions. The shared <code>agents-weftspun</code> entry that carried CUDA + HAILO for one afternoon is deleted; every subsequent agent gets its own entry on first enrolment, no exception.</p>
 <p>The Bao cert-auth method does not consult CRLs by default. <code>pki/revoke serial_number=&lt;X&gt;</code> records the revocation in the PKI store but does not gate access — a revoked cert still authenticates until you take one of these steps:</p>
 <ol type="1">
 <li><strong>Narrow the cert-auth entry’s <code>allowed_common_names</code></strong> to exclude the revoked CN. Immediate effect, no reload needed. Best for revoking one CN from a shared wildcard entry (e.g.&nbsp;change <code>*.agents.weftspun</code> to <code>cuda-a63415.agents.weftspun</code> when revoking mps-dataset).</li>
@@ -531,6 +532,7 @@ head -3 local.copy</code></pre>
 <p>Options 1 and 2 are what we use. The KV row also gets deleted (<code>bao kv metadata delete agents/&lt;cn&gt;.agents.weftspun</code>) so peers don’t see a stale identity, and the cert bundle at <code>certs/&lt;cn&gt;</code> gets deleted or annotated with a <code>revoked_at</code> field. A key clobber (see the shared-$HOME gotcha above) doesn’t need PKI revocation — the old cert is unusable without its key — but does need the CN removed from the cert-auth allowlist until the new cert is issued, so the old cert can’t be replayed if the key was leaked before it was gone.</p>
 
 
+</section>
 </section>
 </section>
 
