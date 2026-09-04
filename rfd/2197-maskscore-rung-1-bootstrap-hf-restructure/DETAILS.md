@@ -10,8 +10,16 @@ touching a rewrite. What changed against the original draft:
    `example_id`. Different column names on the two sides, same semantic
    values, 100 % membership every task.
 2. **Candidates ⋈ scores join key** is composite `(row_key, candidate)` for
-   the five non-speech tasks, `(row_key, candidate_axis)` for speech. There
-   is no single `candidate_id` column.
+   the five non-speech tasks, and `(row_key, candidate_axis, rank)` for
+   speech (the score-side column names `candidate_rank` for the third
+   position). There is no single `candidate_id` column. Speech candidates
+   holds 10 rows per `(row_key, candidate_axis)` pair distinguished by
+   `rank`, per RFD 2165's "10 ranks per candidate per edit"; dropping the
+   rank from the composite collapses them and multiplies scores.
+   Amended 2026-09-04-b: the earlier wording of this item omitted `rank`
+   from the speech composite; verified against the real data in the join
+   script (`weftspun/anny-render-corpus`
+   `maskscore_rung_1_hf_publish.py`).
 3. **Speech is a schema variant**, not one more task-name in the same list.
    Different filename glob (`maskscore_speech*`, no `rung_1` prefix),
    different location (`speech/speech/`), different candidate column
@@ -139,11 +147,17 @@ cands_by_rk = cands.groupby('row_key').apply(build_candidates).rename('candidate
 wide = base.set_index('key').join(cands_by_rk, how='left')
 ```
 
-Speech uses the same shape with three substitutions: file glob is
-`speech/speech/maskscore_speech*`, `candidate` becomes `candidate_axis`
-in every occurrence, and the score inner schema is
-`candidate_rank`/`metric_name`/`metric_value` instead of
-`view_index`/`depth_l1`/`normal_l1`/`normal_dot`.
+Speech uses the same shape with four substitutions: file glob is
+`speech/speech/maskscore_speech*`; `candidate` becomes `candidate_axis`
+in every occurrence; the composite gains a third column so the fold
+runs on `(row_key, candidate_axis, rank)` on the cand side and
+`(row_key, candidate_axis, candidate_rank)` on the score side (same
+value, different column name); the score inner schema is
+`metric_name`/`metric_value` instead of the wide
+`view_index`/`depth_l1`/`normal_l1`/`normal_dot`. The reference
+implementation lives in `weftspun/anny-render-corpus`
+(`maskscore_rung_1_hf_publish.py`), keyed by a `CONFIGS` dict that
+carries the per-config composites.
 
 Join-key verification gate before running the rewrite, per task:
 
