@@ -40,21 +40,30 @@ records it in the manifest with an expected value of 77. A count mismatch surfac
 rather than silently corrupting every subsequent frame's pose. The manifest column doubles as
 the evidence source task #76 cites when it back-ports.
 
-## The topology open knob
+## The topology decision and the accuracy verification hook
 
-Anny wears the SOMA rig directly with no separate retarget step; posed vertices come from
-`anny_soma(pose_parameters=...)["vertices"]`. `wholebody133.pth` is indexed against the
-19,158-vertex makehuman topology (`base_mesh="makehuman"`). Whether `anny.Anny(rig="soma",
-topology="soma")` yields a `(V, 3)` at the same 19,158 vertex count is not confirmed by this
-RFD; if it yields a different topology, the `anny_posed_vertices` column and the anchor
-weights do not line up and the row's `anny_posed_vertices` field either changes shape or
-carries the wrong topology's vertices.
+`anny_posed_vertices` is `(19158, 3)` at the makehuman topology, built with `rig="soma"` +
+`TopologyConfig(base_mesh="makehuman", remove_unattached_vertices=False)`. The `wholebody133.pth`
+anchor weights index this topology; a shard whose vertex count differs is rejected by the
+manifest gate, same shape as the SOMA joint-count hook.
 
-Consumer and author confirm on this PR which topology the `topology="soma"` construction
-returns. If it returns 19,158 makehuman vertices the row shape stands. If it returns a
-different topology, the RFD's Decision names the topology the row carries and either the
-anchor weights are re-derived on that topology or the render passes through a
-`topology="makehuman"` variant that ships the vertices `wholebody133.pth` indexes.
+Three vertex counts are shipped by anny's OBJs and are easy to confuse; the trap is named at
+`anny-keypoint-anchors` README lines 63-67 for the first two, and this row adds the third:
+
+| topology | source obj                     | vertex count |
+| --- | --- | --- |
+| makehuman | `legacy_default.obj`         | **19,158** |
+| soma-wrap | `SOMA_wrap.obj`              | 18,056     |
+| body      | `base_body.obj`              | 13,718     |
+
+`topology="soma"` poses `SOMA_wrap.obj` at 18,056 vertices and `wholebody133.pth` cannot
+index it. The SOMA rig reaches the makehuman mesh by barycentric projection onto `SOMA_wrap`
+(`anny/src/anny/models/soma.py:84-125`). HERO re-verifies that projection's accuracy against
+the direct `topology="soma"` path and records max/mean per-vertex displacement with household
+anchors; if it lands worse than the direct path by more than a pencil (~7 mm), that becomes a
+stated cost of choosing the makehuman topology for anchor compatibility. Under a pencil, the
+projection is the row shape; the anchor compatibility justifies whatever the projection cost
+is.
 
 ## The RFD 1122 lineage
 
