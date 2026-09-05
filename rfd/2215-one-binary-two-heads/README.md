@@ -1,5 +1,20 @@
 # RFD 2215: one Godot `platform=web` binary, two heads
 
+**`platform=web` delivery surface:** retracted 2026-09-05 by
+[RFD 2228](../2228-webgpu-native-drop-platform-web/) — operator
+reversal (verbatim): *"drop webgpu platform=web. try webgpu
+native"*. The **one-binary-two-heads architecture survives** —
+the interactive head (Starforged VN game) and the headless
+capture head (marketing video) still run from one source tree,
+one CI workflow, one export template. What changes: it is one
+**native** Godot binary per platform (macOS / Windows / Linux)
+with the interactive head opening a native window and the
+capture head invoked via `godot --headless --write-movie` per
+[CineForm](../../../3-interactor/interactor-cineform/) doctrine.
+The two-head shape is why this RFD is worth keeping; the
+delivery surface name in the title is the pointer landing target
+per retraction doctrine.
+
 **State:** discussion
 **Flight level:** L2 (coordination)
 **Feature:** the shape that dissolves the RFD 2194 vs 2208 conflict
