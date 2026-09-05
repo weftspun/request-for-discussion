@@ -55,11 +55,9 @@ def self_test() -> int:
         a = tdp / "a.cpp"; a.write_text("same")
         b = tdp / "b.cpp"; b.write_text("same")
 
-        # Positive control.
         if sha(a) != sha(b):
             fails.append("identical files should hash equal")
 
-        # Negative control: mutate one byte, MUST diverge.
         b.write_text("diff")
         if sha(a) == sha(b):
             fails.append("divergent files must hash differently")

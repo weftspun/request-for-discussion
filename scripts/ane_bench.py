@@ -63,13 +63,6 @@ import torch.nn as nn
 import coremltools as ct
 from coremltools.models.compute_plan import MLComputePlan
 
-# The device names MLComputePlan returns, shortened for a table. Kept as a mapping
-# rather than string-slicing the class name, because a rename upstream should break
-# loudly here instead of silently producing a column nobody recognises.
-# Which Core ML compute-unit set a run is confined to. Named here so a comparison
-# between devices runs THE SAME GRAPH on each rather than comparing a convolution
-# stack on one against a dense GEMM on another, which measures the two kernels'
-# authors as much as the two devices.
 UNIT_CHOICES = {
     "all": ct.ComputeUnit.ALL,
     "ane": ct.ComputeUnit.CPU_AND_NE,
@@ -210,10 +203,6 @@ def placement(mlpackage_path, compute_units=ct.ComputeUnit.ALL):
             continue
         usage = plan.get_compute_device_usage_for_mlprogram_operation(op)
         if usage is None:
-            # Named rather than pooled. An anonymous "unreported" bucket in the
-            # denominator silently deflates the ANE fraction, and the reader cannot
-            # tell a weight-decompression op -- which is expected to carry no device
-            # -- from arithmetic that failed to place.
             unreported[op.operator_name] += 1
             counts["unreported"] += 1
             continue
@@ -300,16 +289,11 @@ def cmd_tops(args):
             units = UNIT_CHOICES[args.units]
             pkg = save_tmp(convert(model, example, args.precision), tmp, f"t{width}")
             counts, consts, total, _ = placement(pkg, units)
-            # The fraction that matters is the fraction on the device being CLAIMED.
-            # Gating a GPU run on its ANE fraction would reject every row.
             want = {"all": "ane", "ane": "ane", "gpu": "gpu", "cpu": "cpu"}[args.units]
             frac = (counts.get(want, 0) / total) if total else 0.0
             loaded = ct.models.MLModel(pkg, compute_units=units)
             timing = bench(loaded, example, reps=args.reps)
             tflops = (2 * macs) / (timing["ms_med"] / 1e3) / 1e12
-            # A rate is only the DEVICE's rate if the work ran on the device. A row that
-            # slipped to the GPU is reported and excluded from the best, rather than
-            # quietly raising or lowering the headline number.
             if frac >= 0.99:
                 best = max(best, tflops)
             rows.append({"width": width, "gmac": macs / 1e9, "ms": timing["ms_med"],
@@ -412,9 +396,6 @@ def cmd_ceiling(args):
                 size_mib = dir_bytes(pkg) / 1024**2
                 units = UNIT_CHOICES[args.units]
                 counts, consts, total, unrep = placement(pkg, units)
-                # The fraction that matters is the fraction on the device being CLAIMED.
-                # An ANE-centric outcome column reads a full-GPU row as a failure, which
-                # is wrong when the GPU is the device under test.
                 want = {"all": "ane", "ane": "ane", "gpu": "gpu", "cpu": "cpu"}[args.units]
                 frac = (counts.get(want, 0) / total) if total else 0.0
                 row.update(pkg_mib=round(size_mib, 1), ane_frac=round(frac, 3),

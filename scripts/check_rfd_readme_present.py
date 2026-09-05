@@ -51,7 +51,6 @@ def _self_test() -> int:
         os.makedirs(os.path.join(t, "rfd", "1000-clean"))
         open(os.path.join(t, "rfd", "1000-clean", "README.md"), "w").write("# x\n")
         open(os.path.join(t, "rfd", "1000-clean", "DETAILS.md"), "w").write("# d\n")
-        # negative control: planted defect must fail
         os.makedirs(os.path.join(t, "rfd", "1001-broken"))
         open(os.path.join(t, "rfd", "1001-broken", "DETAILS.md"), "w").write("# d\n")
         bad = scan(t)

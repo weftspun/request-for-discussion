@@ -1,12 +1,40 @@
 """Inventory and anti-entropy check over the workspace. CLAUDE.md names this check.
 
-METHOD, AND WHY IT IS MOSTLY NOT RANDOM. CLAUDE.md rule 5: "A sampled check only sees
-defects larger than ~3/n. For a FIXED population, enumerate rather than estimate."
-Manifest projects, serials, blocklist rows and linkfiles are all fixed and countable,
-so sampling them would be strictly worse than reading all of them. They are enumerated.
+Method, and why it is mostly not random. CLAUDE.md rule 5: "A sampled check
+only sees defects larger than ~3/n. For a FIXED population, enumerate rather
+than estimate." Manifest projects, serials, blocklist rows and linkfiles are
+all fixed and countable, so sampling them would be strictly worse than reading
+all of them. They are enumerated.
 
-Randomness earns its place only where enumeration costs too much to run: picking which
-expensive re-verification to perform. That draw uses `secrets`, so it cannot be nudged.
+Randomness earns its place only where enumeration costs too much to run:
+picking which expensive re-verification to perform. That draw uses `secrets`,
+so it cannot be nudged.
+
+## Section F — shuffled full pass
+
+A shuffle rather than a draw, and the difference is coverage. The first
+version of this used `secrets.randbelow` three times, which samples WITH
+REPLACEMENT: one run drew three picks and got two distinct checks, and
+nothing bounds how long an item can go unvisited. A shuffled full pass visits
+every item exactly once, so coverage is total and the only thing randomised
+is the order — which still surfaces anything order-dependent.
+
+Enumerating rather than sampling is also what CLAUDE.md rule 5 asks for: this
+population is fixed and countable, so a sample would see only defects larger
+than about 3/n while costing nearly as much.
+
+## Section B — serials
+
+Serials are PARSED INDEPENDENTLY, on purpose. check-rfd-serials.py reads this
+register through the USD API; this reads the text. Two implementations that
+disagree is the finding, and sharing one reader would retire the check while
+appearing to keep it.
+
+Row form: the register was parallel `int[] serial` and `string[] slug`, and is
+now one prim per row with the serial in the prim name. The old shape could
+hold a duplicate key — `[1, 1, 2]` parses — and could lose a slug without the
+count changing anywhere a reader looked. USD refuses two siblings of one
+name, so the first is now impossible to author rather than merely checked for.
 """
 import os, re, secrets, subprocess, sys, xml.etree.ElementTree as ET
 from pathlib import Path
@@ -23,7 +51,6 @@ def check(name, ok, detail=""):
     if not ok: fails += 1
     out.append(f"  {'ok  ' if ok else 'FAIL'} {name:<42} {detail}")
 
-# --- A. manifest projects, enumerated -------------------------------------------------
 man = ET.parse(ROOT/".repo/manifests/default.xml").getroot()
 projects = [(p.get("name"), p.get("path")) for p in man.iter("project")]
 missing = [p for _, p in projects if not (ROOT/p).is_dir()]
@@ -31,16 +58,6 @@ check("manifest paths exist on disk", not missing, f"{len(projects)} projects, m
 bad = [p for _, p in projects if "_" in p or " " in p]
 check("every path hyphen-only", not bad, f"offenders: {bad or 'none'}")
 
-# --- B. serials, enumerated both directions -------------------------------------------
-# PARSED INDEPENDENTLY, ON PURPOSE. check-rfd-serials.py reads this register through the
-# USD API; this reads the text. Two implementations that disagree is the finding, and
-# sharing one reader would retire the check while appearing to keep it.
-#
-# ROW FORM. The register was parallel `int[] serial` and `string[] slug`, and is now one
-# prim per row with the serial in the prim name. The old shape could hold a duplicate key
-# -- `[1, 1, 2]` parses -- and could lose a slug without the count changing anywhere a
-# reader looked. USD refuses two siblings of one name, so the first is now impossible to
-# author rather than merely checked for.
 s = (RFD/"SERIALS.usda").read_text()
 
 def _section(name):
@@ -68,37 +85,24 @@ check("every serial has a directory", all(any(d.startswith(f"{n}-") for d in dir
 check("slug matches directory name", all(f"{n}-{sl}" in dirs for n,sl in zip(live,slugs)),
       f"mismatches: {[f'{n}-{sl}' for n,sl in zip(live,slugs) if f'{n}-{sl}' not in dirs] or 'none'}")
 
-# --- C. blocklist rows vs sections, enumerated ----------------------------------------
 cl = (RFD/"CLAUDE.md").read_text(); bl = (RFD/"BLOCKLIST.md").read_text()
 rows = [l for l in cl.splitlines() if l.startswith("|") and "see below" in l.lower()]
 secs = [l for l in bl.splitlines() if l.startswith("### ")]
 check("blocklist rows == sections", len(rows)==len(secs), f"{len(rows)} rows / {len(secs)} sections")
-check("  control: counter finds a planted row", 
+check("  control: counter finds a planted row",
       len([l for l in (cl+"\n| planted | See Below |").splitlines() if l.startswith("|") and "see below" in l.lower()]) == len(rows)+1,
       "case-insensitive match verified against a planted row")
 
-# --- D. linkfiles, enumerated ----------------------------------------------------------
 links = [(lf.get("src"), lf.get("dest"), p.get("path"))
          for p in man.iter("project") for lf in p.iter("linkfile")]
 broken = [d for src, d, pp in links if not (ROOT/d).exists()]
 check("every linkfile resolves", not broken, f"{len(links)} links, broken: {broken or 'none'}")
 
-# --- E. README line bound, enumerated over all RFDs ------------------------------------
 limit = 40
 over = [d for d in dirs if (RFD/"rfd"/d/"README.md").is_file()
         and len((RFD/"rfd"/d/"README.md").read_text().splitlines()) > limit]
 check(f"every README <= {limit} lines", not over, f"{len(dirs)} READMEs, over: {over or 'none'}")
 
-# --- F. shuffled full pass over the expensive checks -----------------------------------
-# A SHUFFLE RATHER THAN A DRAW, AND THE DIFFERENCE IS COVERAGE. The first version of this
-# used `secrets.randbelow` three times, which samples WITH REPLACEMENT: one run drew three
-# picks and got two distinct checks, and nothing bounds how long an item can go unvisited.
-# A shuffled full pass visits every item exactly once, so coverage is total and the only
-# thing randomised is the order -- which still surfaces anything order-dependent.
-#
-# Enumerating rather than sampling is also what CLAUDE.md rule 5 asks for: this population
-# is fixed and countable, so a sample would see only defects larger than about 3/n while
-# costing nearly as much.
 EXPENSIVE = ["check_fourloops_plan", "check_fourloops_etnf", "check_rfd1122_plan",
              "check_usd_valid", "check_pen_66606", "check_blocklist_detail",
              "check_goal_manifests", "check-rfd-structure",

@@ -59,7 +59,6 @@ def is_own_repo(cwd: str = ".") -> bool:
     except subprocess.CalledProcessError:
         return False
     for line in out.splitlines():
-        # `remote.<name>.url  <url>`
         parts = line.split(None, 1)
         if len(parts) == 2 and re.search(r"github\.com[/:]weftspun/", parts[1]):
             return True
@@ -134,7 +133,6 @@ def main(argv: list[str]) -> int:
 def self_test() -> int:
     """6 controls: 3 that pass, 3 that fail. Every direction fires."""
     cases = [
-        # (subject, expected_problems_count, label)
         ("Add the macOS and Windows release workflows", 0, "plain sentence"),
         ("RFD 2026: Commit messages sentence case", 0, "RFD prefix, sentence body"),
         ("[urgent] Fix the leaking file descriptor", 0, "bracket-tag open"),
@@ -153,14 +151,12 @@ def self_test() -> int:
                 print(f"       problem: {p}")
             all_pass = False
 
-    # A weftspun URL is detected as own
     for url, expect_own in [
         ("https://github.com/weftspun/request-for-discussion", True),
         ("git@github.com:weftspun/request-for-discussion.git", True),
         ("https://github.com/godotengine/godot", False),
         ("git@github.com:huggingface/transformers.git", False),
     ]:
-        # Simulate: parse URL directly via the same regex
         got_own = bool(re.search(r"github\.com[/:]weftspun/", url))
         ok = got_own == expect_own
         marker = "ok   " if ok else "FAIL "

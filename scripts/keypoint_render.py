@@ -1,51 +1,74 @@
 """Sample corpus renders: Mitsuba depth, keypoints coloured by See-Through layer in OKHSL.
 
-WHAT IT WRITES, AND WHY IT IS ONE FILE. A PNG per view to look at, and one Lottie holding
-everything else: 104 joints and 103 bones as vectors carrying their float positions, names,
-parents and visibility, plus each view's depth pass embedded as a data-URI asset. Lottie takes
-rasters the way SVG does, so the container never forces a choice between vectors and pixels.
-Earlier revisions wrote OpenEXR, then a 32-bit PSB and a sidecar SVG; both are gone.
+## What it writes, and why it is one file
 
-THE DEPTH STAYS EXACT, WHICH TOOK GETTING WRONG FIRST. A PNG channel is 8 bits and depth is a
-32-bit float in metres, so the IEEE pattern is split across RGBA rather than scaled into a
-range. That is lossless by construction and asserted on every write by decoding the bytes back
-and comparing; a single flipped bit fails it. Scaling into 16-bit grey would have quantised this
-render's 0.813 m span at 0.012 mm a step -- about a sixtieth of a credit card -- trading an
-exact measurement for a smaller file.
+A PNG per view to look at, and one Lottie holding everything else: 104
+joints and 103 bones as vectors carrying their float positions, names,
+parents and visibility, plus each view's depth pass embedded as a
+data-URI asset. Lottie takes rasters the way SVG does, so the container
+never forces a choice between vectors and pixels. Earlier revisions
+wrote OpenEXR, then a 32-bit PSB and a sidecar SVG; both are gone.
 
-ONLY DEPTH IS STORED. The matte is `depth > 0` and the shading is a ramp between the near and
-far planes, so both are derivable and neither is written, for the same reason a parquet here
-carries no derivable column.
+## The depth stays exact
 
-WHAT THE COLOUR MEANS, which is the whole design:
+A PNG channel is 8 bits and depth is a 32-bit float in metres, so the
+IEEE pattern is split across RGBA rather than scaled into a range. That
+is lossless by construction and asserted on every write by decoding the
+bytes back and comparing; a single flipped bit fails it. Scaling into
+16-bit grey would have quantised this render's 0.813 m span at 0.012 mm
+a step — about a sixtieth of a credit card — trading an exact
+measurement for a smaller file.
+
+Only depth is stored. The matte is `depth > 0` and the shading is a ramp
+between the near and far planes, so both are derivable and neither is
+written, for the same reason a parquet here carries no derivable column.
+
+## What the colour means
 
     HUE            which See-Through layer the joint drives
     hue +/- 6 deg  which joint within that layer
     LIGHTNESS      position along the chain inside the layer
     SHAPE          visibility: filled if unoccluded, hollow if the surface is in front
 
-RETRACTED: the first version spaced all 104 hues by the golden angle, to make neighbours
-maximally distinct. That is the wrong objective here. It scatters the five finger joints of
-one hand across the entire wheel, so nothing about the picture says they are one garment
-region. Related layers should read as related.
+RETRACTED: the first version spaced all 104 hues by the golden angle, to
+make neighbours maximally distinct. That is the wrong objective here. It
+scatters the five finger joints of one hand across the entire wheel, so
+nothing about the picture says they are one garment region. Related
+layers should read as related.
 
-WHY OKHSL AND NOT HSL. HSL lightness is not perceptual. At a fixed L an HSL sweep makes
-yellows glare and blues sink, so a reader sees brightness differences that encode nothing and
-misses the lightness differences that encode chain position. OKHSL holds perceived lightness
-constant across hue, which is the only reason lightness is free to carry a second variable.
+## Why OKHSL and not HSL
 
-RETRACTED: IT IS 8 TAGS AND 16 WITHOUT A BONE, NOT 9 AND 15. This docstring said 9 until a
-run printed 8, and the code could never have produced 9: `tag_for` has eight distinct return
-values, so the count was wrong when written rather than having drifted. Measured on this
-desk -- driven: bottomwear, footwear, handwear, head, irides, legwear, neck, topwear.
+HSL lightness is not perceptual. At a fixed L an HSL sweep makes yellows
+glare and blues sink, so a reader sees brightness differences that encode
+nothing and misses the lightness differences that encode chain position.
+OKHSL holds perceived lightness constant across hue, which is the only
+reason lightness is free to carry a second variable.
 
-TAG ORDER IS ANATOMICAL, head to foot, so adjacent tags sit 15 degrees apart and the head
-group, the leg group and so on each occupy a contiguous arc.
+RETRACTED: it is 8 tags and 16 without a bone, not 9 and 15. This
+docstring said 9 until a run printed 8, and the code could never have
+produced 9: `tag_for` has eight distinct return values, so the count was
+wrong when written rather than having drifted. Measured on this desk —
+driven: bottomwear, footwear, handwear, head, irides, legwear, neck,
+topwear.
 
-THE GAP THIS MAKES VISIBLE. ANNY drives 8 of See-Through's 24 tags. The other 16 have no bone
-in the skeleton at all, and the legend lists them greyed rather than omitting them, because a
-missing category that is simply absent from the picture reads as a category that does not
-exist. This is the same finding RFD 0121 records: hair and garments are not modelled.
+Tag order is anatomical, head to foot, so adjacent tags sit 15 degrees
+apart and the head group, the leg group and so on each occupy a
+contiguous arc.
+
+## The gap this makes visible
+
+ANNY drives 8 of See-Through's 24 tags. The other 16 have no bone in the
+skeleton at all, and the legend lists them greyed rather than omitting
+them, because a missing category that is simply absent from the picture
+reads as a category that does not exist. This is the same finding
+RFD 0121 records: hair and garments are not modelled.
+
+## coloraide import
+
+ColorAll rather than Color: coloraide keeps OKHSL out of the default
+registry, so `Color('okhsl', ...)` raises `not a registered color space`
+on 8.11.1. The whole colour scheme above is OKHSL, so this import is
+load-bearing rather than stylistic.
 """
 import json
 import math
@@ -56,9 +79,6 @@ import numpy as np
 import torch
 import drjit as dr
 from PIL import Image, ImageDraw
-# ColorAll rather than Color: coloraide keeps OKHSL out of the default registry, so
-# `Color('okhsl', ...)` raises `not a registered color space` on 8.11.1. The whole
-# colour scheme above is OKHSL, so this import is load-bearing rather than stylistic.
 from coloraide.everything import ColorAll as Color
 
 sys.path.insert(0, os.environ.get(
@@ -76,8 +96,6 @@ W = H = 1024
 FOV = 40.0
 SEED = 0
 
-# See-Through's 24 tags, from seethrough-torch/training/configs/finetune_layerdiff_iter2.yaml,
-# reordered head to foot so related layers land on neighbouring hues.
 TAG_ORDER = [
     'head', 'face', 'eyebrow', 'eyelash', 'eyewhite', 'irides', 'nose', 'mouth',
     'ears', 'earwear', 'eyewear', 'headwear', 'front hair', 'back hair',
@@ -134,7 +152,7 @@ for t, idx in groups.items():
     k = len(idx)
     for j, i in enumerate(idx):
         f = 0.5 if k == 1 else j / (k - 1)
-        HUE[i] = (BASE_HUE[t] + (f - 0.5) * 12.0) % 360.0     # +/- 6 degrees inside the layer
+        HUE[i] = (BASE_HUE[t] + (f - 0.5) * 12.0) % 360.0
         LIT[i] = 0.50 + 0.24 * f
         c = Color('okhsl', [HUE[i], 0.95, LIT[i]]).convert('srgb')
         COLS[i] = tuple(int(round(255 * min(max(v, 0.0), 1.0))) for v in c[:3])
@@ -175,9 +193,10 @@ mp.update()
 def render(cam, eye, target, up):
     """Planar camera-space z, and a hit mask.
 
-    The `position` AOV rather than the `depth` AOV, because `depth` is the ray parameter t and
-    every other depth here is planar z. Measured on this body they differ by a median 10.4 mm
-    and up to 137 mm, about three golf balls, in a map that looks entirely plausible.
+    The `position` AOV rather than the `depth` AOV, because `depth` is the
+    ray parameter t and every other depth here is planar z. Measured on
+    this body they differ by a median 10.4 mm and up to 137 mm, about
+    three golf balls, in a map that looks entirely plausible.
     """
     e, t_, u_ = eye.cpu().numpy(), target.cpu().numpy(), up.cpu().numpy()
     scene = mi.load_dict({
@@ -204,10 +223,11 @@ def render(cam, eye, target, up):
 def srgb_to_linear(u8):
     """sRGB 8-bit to linear float. EXR is a LINEAR format.
 
-    Writing 8-bit sRGB values straight into float channels is the ordinary way to get an EXR
-    whose colours are wrong in a way no viewer flags: mid grey lands at 0.5 instead of 0.214,
-    and every hue shifts. The draw is not antialiased, so each pixel carries an exact palette
-    colour and this mapping is exact rather than approximate.
+    Writing 8-bit sRGB values straight into float channels is the ordinary
+    way to get an EXR whose colours are wrong in a way no viewer flags:
+    mid grey lands at 0.5 instead of 0.214, and every hue shifts. The
+    draw is not antialiased, so each pixel carries an exact palette colour
+    and this mapping is exact rather than approximate.
     """
     c = u8.astype(np.float32) / 255.0
     return np.where(c <= 0.04045, c / 12.92, ((c + 0.055) / 1.055) ** 2.4).astype(np.float32)
@@ -216,21 +236,30 @@ def srgb_to_linear(u8):
 def write_lottie(path, views, cols, labels, parents, fps=2):
     """The viewpoints as one Lottie animation, with no in-between frames invented.
 
-    WHY HOLD KEYFRAMES AND NOT INTERPOLATION, which is the whole correctness argument. Lottie
-    tweens between keyframes by default, and a tween between two camera viewpoints is a lie:
-    projected joints do not travel in straight 2D lines while a camera swings around a body, so
-    a linear in-between puts every joint somewhere the geometry never was. Each keyframe is
-    therefore marked `h: 1` -- hold -- so every displayed frame is a rendered viewpoint and
-    nothing between them is asserted. Smooth motion is bought by rendering more viewpoints, not
-    by inventing them.
+    Hold keyframes and not interpolation. Lottie tweens between keyframes
+    by default, and a tween between two camera viewpoints is a lie:
+    projected joints do not travel in straight 2D lines while a camera
+    swings around a body, so a linear in-between puts every joint
+    somewhere the geometry never was. Each keyframe is marked `h: 1` —
+    hold — so every displayed frame is a rendered viewpoint and nothing
+    between them is asserted. Smooth motion is bought by rendering more
+    viewpoints, not by inventing them.
 
-    WHY THE ERROR IS BOUNDED BY ROUNDING ALONE. These coordinates are not traced from pixels;
-    they come from the same camera projection the labels do, so there is no vectorisation step
-    to be inaccurate. The only loss is the decimal places written, and the check below measures
+    The error is bounded by rounding alone. These coordinates are not
+    traced from pixels; they come from the same camera projection the
+    labels do, so there is no vectorisation step to be inaccurate. The
+    only loss is the decimal places written, and the check below measures
     exactly that rather than trusting it.
 
-    NO BORDERS, same as the SVG: joints are fill-only ellipses, and a bone's stroke is the bone
-    itself rather than an outline around a shape.
+    No borders, same as the SVG: joints are fill-only ellipses, and a
+    bone's stroke is the bone itself rather than an outline around a shape.
+
+    The depth rides inside the animation because Lottie embeds rasters
+    the way SVG does: an asset with a data URI and an `ty: 2` image layer
+    pointing at it. One raster per view, held to that view's frame so it
+    changes with the vectors above it. Only depth is embedded — the matte
+    is `depth > 0` and the shaded body is a ramp between the near and
+    far planes, so both are derivable and neither is stored.
     """
     import base64
     import io
@@ -242,12 +271,13 @@ def write_lottie(path, views, cols, labels, parents, fps=2):
     def depth_png(depth):
         """float32 metres -> lossless RGBA8 PNG, one byte per octet of the IEEE pattern.
 
-        A PNG channel is 8 bits and depth is a 32-bit float, so the float is split across RGBA
-        rather than scaled into a range. That is lossless by construction and measured to be:
-        decoded back the array is bit-identical, and flipping one bit makes the check fail.
-        Scaling into 16-bit grey would have quantised the 0.813 m depth span -- twelve
-soda cans end to end -- at 0.012 mm a step, and thrown
-        away the exactness for a smaller file.
+        A PNG channel is 8 bits and depth is a 32-bit float, so the float
+        is split across RGBA rather than scaled into a range. That is
+        lossless by construction and measured to be: decoded back the
+        array is bit-identical, and flipping one bit makes the check fail.
+        Scaling into 16-bit grey would have quantised the 0.813 m depth
+        span — twelve soda cans end to end — at 0.012 mm a step, and
+        thrown away the exactness for a smaller file.
         """
         bits = depth.astype(np.float32).view(np.uint32)
         rgba = np.stack([(bits >> s) & 0xFF for s in (0, 8, 16, 24)], -1).astype(np.uint8)
@@ -267,17 +297,20 @@ soda cans end to end -- at 0.012 mm a step, and thrown
     def held(frames):
         """Lottie keyframes that do not tween.
 
-        THE LAST KEYFRAME CARRIES A VALUE. Players tolerate a bare `{"t": n}` terminator and
-        lottie-web writes one, but the specification makes `s` required on every keyframe, and
-        omitting it failed validation 207 times -- once per shape layer. It also cascaded: with
-        the animated branch rejected, a position property fell back to the static branch and
-        reported "not of type number" on a keyframe object, which points at the wrong line
-        entirely. Repeating the final value costs a few bytes and makes the document conform.
+        The last keyframe carries a value. Players tolerate a bare
+        `{"t": n}` terminator and lottie-web writes one, but the
+        specification makes `s` required on every keyframe, and omitting
+        it failed validation 207 times — once per shape layer. It also
+        cascaded: with the animated branch rejected, a position property
+        fell back to the static branch and reported "not of type number"
+        on a keyframe object, which points at the wrong line entirely.
+        Repeating the final value costs a few bytes and makes the
+        document conform.
         """
         kf = [{"t": i, "s": v, "h": 1} for i, v in enumerate(frames)]
         return kf + [{"t": n, "s": frames[-1], "h": 1}]
 
-    for i, par in enumerate(parents):          # bones first, so joints paint over them
+    for i, par in enumerate(parents):
         if par < 0:
             continue
         r, g, b = cols[i]
@@ -308,9 +341,6 @@ soda cans end to end -- at 0.012 mm a step, and thrown
         r, g, b = cols[i]
         pos = held([[round(float(v["jp"][i][0]), 4), round(float(v["jp"][i][1]), 4)]
                     for v in views])
-        # Visibility rides on fill opacity, because a hollow marker would need a stroke.
-        # `[100]` rather than `100`: a keyframe's `s` is an array even for a scalar property,
-        # which players accept either way and the specification does not.
         opa = held([[100] if v["seen"][i] else [35] for v in views])
         shapes = [{"ty": "el", "nm": "dot", "p": {"a": 1, "k": pos},
                    "s": {"a": 0, "k": [10, 10]}},
@@ -328,13 +358,6 @@ soda cans end to end -- at 0.012 mm a step, and thrown
                        "ip": 0, "op": n, "st": 0, "bm": 0})
         ind += 1
 
-    # THE DEPTH RIDES INSIDE THE ANIMATION, because Lottie embeds rasters the way SVG does:
-    # an asset with a data URI and an `ty: 2` image layer pointing at it. One raster per view,
-    # held to that view's frame so it changes with the vectors above it.
-    #
-    # ONLY DEPTH IS EMBEDDED. The matte is `depth > 0` and the shaded body is a ramp between the
-    # near and far planes, so both are derivable and neither is stored -- the same reason a
-    # parquet here carries no derivable column.
     assets, png_bytes = [], 0
     for k, v in enumerate(views):
         uri, nbytes = depth_png(v["depth"])
@@ -358,7 +381,6 @@ soda cans end to end -- at 0.012 mm a step, and thrown
     with open(path, "w", encoding="utf-8") as fh:
         json.dump(doc, fh)
 
-    # THE ERROR, MEASURED. Read it back and compare every joint against the float it came from.
     got = json.load(open(path, encoding="utf-8"))
     worst = 0.0
     for lay in got["layers"]:
@@ -368,7 +390,6 @@ soda cans end to end -- at 0.012 mm a step, and thrown
         for k, kf in enumerate(lay["shapes"][0]["it"][0]["p"]["k"][:-1]):
             src = views[k]["jp"][i]
             worst = max(worst, abs(kf["s"][0] - float(src[0])), abs(kf["s"][1] - float(src[1])))
-    # And the embedded depth, decoded from the file rather than from the array it came from.
     for k, v in enumerate(views):
         uri = [a for a in got["assets"] if a["id"] == "depth_%d" % k][0]["p"]
         raw = base64.b64decode(uri.split(",", 1)[1])
@@ -381,25 +402,6 @@ soda cans end to end -- at 0.012 mm a step, and thrown
     return n_layers, worst, png_bytes
 
 
-# 20 mm, about thirteen stacked pennies. CORRECTED: this read "thirteen stacked credit
-# cards" until a gate for unpaired measurements went looking. A credit card is 0.76 mm,
-# so thirteen of them is 10 mm and twenty needs twenty-six; a penny is 1.52 mm and
-# thirteen of those is 19.8 mm. The anchor was wrong by a factor of two, in the direction
-# that made the tolerance sound tighter than it is. THIS NUMBER IS NOT SETTLED: joint centres sit
-# inside the body, so a strict test calls every joint occluded and a loose one passes every
-# joint. It decides a supervised label, so it needs deciding on its own terms.
-#
-# MEASURED, AND THE NUMBERS SAY IT IS WRONG RATHER THAN MERELY UNSETTLED. At this tolerance
-# the rest pose reports 14 of 104 joints unoccluded from the front, 42 from three-quarter and
-# 53 from the side. A front view showing the FEWEST visible joints is backwards: the front is
-# where a viewer sees most of a body. What the test actually measures is how deep each joint
-# centre sits beneath the surface along the view ray, and that is largest for a torso seen
-# face-on, so the count tracks body thickness rather than visibility.
-#
-# It is left as it is, and reported, because changing it would be picking a number to make an
-# output look right. Deciding it needs a definition of what a visible joint is -- surface
-# depth at the projected pixel, or the joint's own radius -- and that is RFD 1122's work, not
-# a constant to nudge here.
 TOL = 0.02
 manifest = {"seed": SEED, "space": "okhsl", "s": 0.95,
             "encoding": {"hue": "see-through layer", "hue_jitter_deg": 12.0,
@@ -425,12 +427,10 @@ for tag, az in (("front", 0.0), ("three-quarter", 40.0), ("side", 90.0)):
            @ cam.view.T)[:, 2]).cpu().numpy()
     zc, hc = z.cpu().numpy(), hit.cpu().numpy()
 
-    # The overlay is drawn on its OWN transparent canvas, not onto the depth. That is what
-    # makes it a separable EXR layer rather than something baked into the depth pixels.
     over = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     od = ImageDraw.Draw(over)
 
-    for i, p in enumerate(parents):                    # sticks first, points on top
+    for i, p in enumerate(parents):
         if p < 0:
             continue
         od.line([tuple(jp[p]), tuple(jp[i])], fill=COLS[i] + (255,), width=2)
@@ -465,16 +465,12 @@ for tag, az in (("front", 0.0), ("three-quarter", 40.0), ("side", 90.0)):
 
 nlay, lottie_err, dbytes = write_lottie(os.path.join(OUT, "anny-keypoints-multiview.json"),
                                 VIEWS, COLS, labels, parents)
-# A pixel is not a physical quantity, so the error is reported in both. At FOV 40 degrees and
-# the ~2.99 m the body sits at -- about forty-five soda cans -- 1024 px spans 2.18 m,
-# which is 2.13 mm a pixel, close to three stacked credit cards.
 _MM_PER_PX = 2 * 2.99 * math.tan(math.radians(FOV / 2)) * 1000 / W
 print("lottie: %d views, %d layers, worst coordinate error %.2e px = %.0f nm at the body "
       "(one seven-thousandth of a credit card's thickness), %.1f MB of embedded depth, "
       "all bit-exact"
       % (len(VIEWS), nlay, lottie_err, lottie_err * _MM_PER_PX * 1e6, dbytes / 1e6))
 
-# Legend grouped by layer, including the layers with no bone, greyed.
 ROWH, COLW, PAD = 20, 250, 12
 rows = sum(1 + len(groups.get(t, [])) for t in TAG_ORDER) + len(TAG_ORDER)
 percol = (rows + 2) // 3
@@ -513,4 +509,3 @@ for i in range(N):
 leg.save(os.path.join(OUT, "anny-keypoint-legend.png"))
 with open(os.path.join(OUT, "anny-keypoint-colours.json"), "w") as fh:
     json.dump(manifest, fh, indent=1)
-print("legend + json written to %s" % OUT)

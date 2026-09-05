@@ -1,34 +1,64 @@
 #!/usr/bin/env python3
 """Gate: a blocklist row without its argument, or an argument without its row.
 
-WHY THIS EXISTS. `CLAUDE.md` used to carry the blocklist table and 592 lines of reasoning
-behind it in one document, which put the argument for excluding FLUX.1 between a reader and
-the next working agreement. The reasoning now lives in `BLOCKLIST.md`, one section per row.
+`CLAUDE.md` used to carry the blocklist table and 592 lines of reasoning
+behind it in one document, which put the argument for excluding FLUX.1
+between a reader and the next working agreement. The reasoning now lives
+in `BLOCKLIST.md`, one section per row.
 
-Splitting a document creates the failure this gate is written against. A row can lose its
-argument -- somebody adds an entry, writes "see below", and no section follows. An argument can
-outlive its row -- somebody lifts an entry from the table and the section defending it stays,
-so the next reader finds a case for a rule that no longer exists. Neither shows up in a diff of
-the file you are editing, because the other file is the one that changed.
+Splitting a document creates the failure this gate is written against. A
+row can lose its argument — somebody adds an entry, writes "see below",
+and no section follows. An argument can outlive its row — somebody lifts
+an entry from the table and the section defending it stays, so the next
+reader finds a case for a rule that no longer exists. Neither shows up in
+a diff of the file you are editing, because the other file is the one
+that changed.
 
-WHAT IS CHECKED, in both directions:
+## What is checked, in both directions
 
 1. Every table row saying "see below" resolves to a section in `BLOCKLIST.md`.
 2. Every section in `BLOCKLIST.md` corresponds to a row in the table.
 
-MATCHING IS ON SUBJECT, NOT ON TITLE, and that is the whole difficulty. A row reads
-`**Qwen-Image-Edit** (2509/2511)` and its section reads "Qwen-Image-Edit corrupts at the only
-precision this desk can run it". The titles are prose and will never equal the cells. So a row
-is matched by asking whether its distinctive tokens appear in some section title -- which is
-loose, and the detection floor below says what that costs.
+Matching is on subject, not on title, and that is the whole difficulty.
+A row reads `**Qwen-Image-Edit** (2509/2511)` and its section reads
+"Qwen-Image-Edit corrupts at the only precision this desk can run it".
+The titles are prose and will never equal the cells. So a row is matched
+by asking whether its distinctive tokens appear in some section title —
+which is loose, and the detection floor below says what that costs.
 
-THE DETECTION FLOOR. A section whose title shares no token with its row is reported as
-unmatched even when a human would pair them; that is a false alarm, and the fix is to name the
-subject in the title, which is worth doing anyway. Two rows whose subjects share tokens can
-match the same section, so a duplicated argument is not caught. The gate is a wire, not a
-proof.
+## Detection floor
 
-Usage:
+A section whose title shares no token with its row is reported as
+unmatched even when a human would pair them; that is a false alarm, and
+the fix is to name the subject in the title, which is worth doing anyway.
+Two rows whose subjects share tokens can match the same section, so a
+duplicated argument is not caught. The gate is a wire, not a proof.
+
+## Stopwords are function words only
+
+A first version also excluded corpus, generator, model, source and
+weights as "too common", and those are precisely the words that
+distinguish these rows — it left `hosted-API generators as a corpus
+source` unable to match `A corpus generator must be a checkpoint we
+hold`. Domain words stay; matching is tightened by stemming instead.
+
+## Stems, not words
+
+The table says `abliterated weights` and the section says "Abliteration
+is blocked"; those share no whole word. Truncating to six characters
+pairs them without dragging in a stemmer, and short tokens are kept
+whole so `uv` and `flux` still match.
+
+## Best match, one to one
+
+A first version took the first match instead. Several rows share the
+stem `genera`, so `hosted-API generators as a corpus source` claimed the
+depth conditioning section and the section that was actually its own was
+reported orphaned. Pairs are scored by how many stems they share and
+assigned strongest first, each section spoken for once.
+
+## Usage
+
     python scripts/check_blocklist_detail.py [<dir>]
     python scripts/check_blocklist_detail.py --self-test
 
@@ -40,12 +70,6 @@ import pathlib
 import re
 import sys
 
-#: Words too common to identify a subject. Matching on these pairs anything with anything.
-# FUNCTION WORDS ONLY. A first version also excluded corpus, generator, model, source and
-# weights as "too common", and those are precisely the words that distinguish these rows --
-# it left `hosted-API generators as a corpus source` unable to match `A corpus generator must
-# be a checkpoint we hold`, which is its section. Domain words stay; matching is tightened by
-# stemming instead.
 STOPWORDS = {
     "a", "an", "and", "as", "at", "the", "is", "it", "its", "for", "from", "in", "into", "no",
     "not", "of", "on", "or", "to", "with", "that", "this", "which", "why", "what", "we",
@@ -54,12 +78,7 @@ STOPWORDS = {
 
 
 def tokens(text):
-    """Distinctive lowercase stems, markdown stripped.
-
-    STEMS, NOT WORDS. The table says `abliterated weights` and the section says "Abliteration
-    is blocked"; those share no whole word. Truncating to six characters pairs them without
-    dragging in a stemmer, and short tokens are kept whole so `uv` and `flux` still match.
-    """
+    """Distinctive lowercase stems, markdown stripped."""
     text = re.sub(r"[*_`]", " ", text.lower())
     raw = [t for t in re.findall(r"[a-z0-9][a-z0-9.\-]{2,}", text) if t not in STOPWORDS]
     return {t[:6] for t in raw}
@@ -68,8 +87,9 @@ def tokens(text):
 def table_rows(claude_md):
     """Rows of the blocklist table that promise an argument elsewhere.
 
-    Only rows saying "see below" are required to have one; a row whose one-line reason is the
-    whole reason -- `CMU mocap | provenance` -- needs no section and is not asked for one.
+    Only rows saying "see below" are required to have one; a row whose
+    one-line reason is the whole reason — `CMU mocap | provenance` —
+    needs no section and is not asked for one.
     """
     rows = []
     for line in claude_md.split("\n"):
@@ -103,11 +123,6 @@ def check(claude_md, blocklist_md):
     if not sections:
         problems.append("BLOCKLIST.md has no ### sections; the detail document is empty")
 
-    # BEST MATCH, ONE TO ONE, and a first version took the first match instead. Several rows
-    # share the stem `genera`, so `hosted-API generators as a corpus source` claimed the depth
-    # conditioning section and the section that was actually its own was reported orphaned.
-    # Pairs are scored by how many stems they share and assigned strongest first, each section
-    # spoken for once.
     scored = sorted(
         (
             (len(row_tokens & sec_tokens), r, i)
@@ -180,8 +195,6 @@ def self_test():
         problems = check(table, detail)
         ok = (problems == []) == want_ok
         print("  %s %s" % ("ok  " if ok else "BAD ", label))
-        if problems and not want_ok is False:
-            pass
         if not ok:
             bad += 1
             print("        got: %s" % (problems[:1] or "no problems"))

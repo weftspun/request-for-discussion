@@ -80,8 +80,6 @@ mp.update()
 e, t_, u_ = eye.cpu().numpy(), c.cpu().numpy(), up.cpu().numpy()
 scene = mi.load_dict({
     'type': 'scene',
-    # `t:depth` is the ray parameter and is EXACTLY 0 on a miss, which is the hit mask.
-    # `pos:position` is what becomes planar z. Both, because neither alone is enough.
     'integrator': {'type': 'aov', 'aovs': 'pos:position,t:depth'},
     'sensor': {'type': 'perspective', 'fov': FOV, 'fov_axis': 'x',
                'to_world': mi.ScalarTransform4f().look_at(
@@ -113,12 +111,10 @@ print(f"depth vs exact z-buffer over {int(both.sum())} px: "
       f"median {float(dif.median())*1000:.4f} mm   max {float(dif.max())*1000:.3f} mm")
 print(f"planar z range {float(z_mi[hit].min()):.4f} .. {float(z_mi[hit].max()):.4f} m")
 
-# the t-vs-z trap, quantified rather than asserted
 dz = (tray[both] - z_mi[both]).abs()
 print(f"if we had used the `depth` AOV directly: median error {float(dz.median())*1000:.1f} mm"
       f"   max {float(dz.max())*1000:.1f} mm")
 
-# timing, with Dr.Jit actually synced
 def timed(n, update):
     dr.sync_thread(); torch.cuda.synchronize()
     t0 = time.time()
@@ -141,7 +137,6 @@ torch.cuda.synchronize(); el = (time.time() - t0) / 3
 print(f"torch exact z-buffer         {el*1000:7.2f} ms/img -> 800k = {800000*el/3600:6.1f} GPU-hours")
 print(f"torch soft_depth (baseline)   3451.00 ms/img -> 800k =  767.0 GPU-hours")
 
-# ---- where the 216 mm lives, and whether a corpus render is reproducible -------------
 import torch.nn.functional as Fn
 inner = zhit.float()[None, None]
 inner = (Fn.avg_pool2d(inner, 5, 1, 2) > 0.999)[0, 0] & both   # 2 px in from any edge

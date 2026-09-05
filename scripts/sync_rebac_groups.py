@@ -27,8 +27,6 @@ import subprocess
 import sys
 
 
-# Role → policy(s) mapping. Extension point: adding a role adds an entry here + a
-# matching group in Bao. RFD 2200 defines the current set.
 ROLE_POLICIES = {
     "coordinator":      ["mps-admin"],
     "gpu-experimenter": ["agents-rw"],
@@ -53,7 +51,6 @@ def read_role_tuples() -> dict[str, str]:
     for k in keys:
         if "--role--" not in k:
             continue
-        # <subject>--role--<object>
         parts = k.split("--role--", 1)
         if len(parts) != 2:
             continue
@@ -101,7 +98,6 @@ def reconcile(apply: bool) -> int:
         print("no role tuples in relationships/; nothing to reconcile")
         return 0
 
-    # role -> [entity_id]
     by_role: dict[str, list[str]] = {r: [] for r in ROLE_POLICIES}
     unknown_roles = []
     unresolved_agents = []
@@ -154,7 +150,6 @@ def self_test() -> int:
     """4 controls exercising role mapping + tuple parsing."""
     ok = True
 
-    # tuple parsing
     for k, want in [
         ("mps-45994b--role--coordinator", ("mps-45994b", "coordinator")),
         ("cuda-a63415--role--gpu-experimenter", ("cuda-a63415", "gpu-experimenter")),
@@ -167,7 +162,6 @@ def self_test() -> int:
         if got != want:
             ok = False
 
-    # role → policy mapping present for all currently-used roles
     for role in ["coordinator", "gpu-experimenter", "assist"]:
         present = role in ROLE_POLICIES
         marker = "ok " if present else "FAIL"
@@ -175,7 +169,6 @@ def self_test() -> int:
         if not present:
             ok = False
 
-    # unknown role rejected
     unknown = "not-a-role" not in ROLE_POLICIES
     marker = "ok " if unknown else "FAIL"
     print(f"  {marker} unknown role rejected (control): {unknown}")

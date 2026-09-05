@@ -86,20 +86,12 @@ HERE = pathlib.Path(__file__).resolve().parent
 PROJECT = HERE.parent
 DEFAULT_LAYER = HERE.parent / "rfd" / "1143-keypoints-to-anny" / "fourloops-etnf.usda"
 
-# The scopes holding relations. Naming them rather than treating every scope as relations
-# keeps a prose scope from being read as a set of relations with no columns, which would
-# report four failures about nothing.
 RELATION_SCOPES = ("Interned", "Spine", "Satellites", "Measured")
 
-# Kinds something else emits, and which therefore need a writing stage. `interned` is absent
-# on purpose: an interned vocabulary is typed once by a person.
 EMITTED_KINDS = ("spine", "satellite", "measured")
 
 SEARCH_FLOOR = 10
 
-# How far either side of a small integer a word from its own name may sit. 48 characters is
-# about a line of prose in each direction: "the same 7 steps plan.ex" passes, and a 7 three
-# sentences away from the word "step" does not.
 CONTEXT_WINDOW = 48
 
 NUMBER_WORDS = {
@@ -107,12 +99,6 @@ NUMBER_WORDS = {
     7: "seven", 8: "eight", 9: "nine", 10: "ten", 11: "eleven", 12: "twelve",
 }
 
-# Words that describe the shape of a datum rather than its subject, and which are therefore
-# no evidence at all in a context window. THIS LIST IS NOT TIDINESS. With `count` left in,
-# `Regions.rowCount = 5` passed against "the counts from 18 visible and 5 occluded", a
-# sentence about joints in a render -- the right digit beside the wrong noun. The gate
-# reported a pass for a number nothing had confirmed, which is the exact failure the context
-# search was written to end.
 STEM_STOPWORDS = {"count", "row", "value", "number", "total", "size", "item", "entry"}
 
 
@@ -366,10 +352,6 @@ def check_counts(stage, root, problems):
                 "and is not in uncheckedIntegers"
             )
             continue
-        # Trailing zeros are allowed on a float because USD prints 8.60 as 8.6 and the
-        # source that measured it wrote "8.60 GiB". Requiring the exact characters made the
-        # plan gate report a print format as a drift, which is the convenient proxy rather
-        # than the quantity.
         tail = "" if is_int else "0*"
         pattern = rf"(?<![\d.]){re.escape(printed)}{tail}(?![\d.])"
         if not re.search(pattern, joined):

@@ -1,36 +1,45 @@
 """Time the renderer's SHIPPING variant, which no benchmark here had ever timed.
 
-WHY THIS EXISTS. `logbook-soft-renderer-and-mitsuba.md` reports Mitsuba at 1.79 ms/image and
-projects 0.4 GPU-hours over an 800k-image corpus, and that table is what RFD 1122's ordering
-rests on. Both benchmarks behind it -- `mi_bench.py:19` and `mi_bench2.py:20` -- open with
-`mi.set_variant('cuda_ad_rgb')`, on the local 4090.
+`logbook-soft-renderer-and-mitsuba.md` reports Mitsuba at 1.79 ms/image and
+projects 0.4 GPU-hours over an 800k-image corpus, and that table is what
+RFD 1122's ordering rests on. Both benchmarks behind it — `mi_bench.py:19`
+and `mi_bench2.py:20` — open with `mi.set_variant('cuda_ad_rgb')`, on the
+local 4090.
 
-Neither of those is the configuration that ships. `render_view.py` defaults to `llvm_ad_rgb`
-at `--threads 1`, because that is the pair the determinism measurement pinned: one thread is
-byte-identical over two runs by sha256 and the default thread count drifts by up to 1/255 on a
-dozen pixels through film accumulation order. So the corpus is rendered by a CPU variant whose
-throughput has never been measured, and costed by a GPU variant that is not reproducible and
-that runs on a card no longer plugged in.
+Neither of those is the configuration that ships. `render_view.py` defaults
+to `llvm_ad_rgb` at `--threads 1`, because that is the pair the determinism
+measurement pinned: one thread is byte-identical over two runs by sha256 and
+the default thread count drifts by up to 1/255 on a dozen pixels through
+film accumulation order. So the corpus is rendered by a CPU variant whose
+throughput has never been measured, and costed by a GPU variant that is not
+reproducible and that runs on a card no longer plugged in.
 
-This measures the shipping pair, on this desk, at the resolution and sample count
-`mi_bench2.py` used, so the two numbers may be read against each other.
+This measures the shipping pair, on this desk, at the resolution and sample
+count `mi_bench2.py` used, so the two numbers may be read against each other.
 
-THE GEOMETRY IS A STAND-IN AND THE ENTRY SAYS SO. Building a real ANNY body needs torch, which
-`pixi.toml` does not offer on osx-arm64 -- `feature.anny` takes torch from `whl/cpu`, an index
-with no Apple silicon wheels. Mitsuba's cost per frame is set by face count, ray count and
-sample count rather than by which body the faces describe, so a lat-long proxy at ANNY's vertex
-and face counts measures the same instrument. It does NOT stand in for anything about the body,
-and no result here should be read as an ANNY render. Actual built counts are printed beside
-ANNY's so the reader can see the match rather than trust it.
+## The geometry is a stand-in and the entry says so
 
-THREE VARIANTS, BECAUSE APPLE SILICON HAS ONE NOBODY HERE HAS WRITTEN DOWN. Mitsuba 3.9.1
-enumerates `metal_ad_rgb` on this platform. `pixi.toml`'s determinism table covers
-`llvm_ad_rgb` at one thread, `llvm_ad_rgb` at default threads and `cuda_ad_rgb` at default, and
-says nothing about Metal, so this asks the same sha256 question of it that the others were
-asked. A variant that is fast and not reproducible is not a corpus renderer, and finding that
-out here is cheaper than finding it out in 800k frames.
+Building a real ANNY body needs torch, which `pixi.toml` does not offer on
+osx-arm64 — `feature.anny` takes torch from `whl/cpu`, an index with no
+Apple silicon wheels. Mitsuba's cost per frame is set by face count, ray
+count and sample count rather than by which body the faces describe, so a
+lat-long proxy at ANNY's vertex and face counts measures the same
+instrument. It does NOT stand in for anything about the body, and no
+result here should be read as an ANNY render. Actual built counts are
+printed beside ANNY's so the reader can see the match rather than trust it.
 
-Usage:
+## Three variants, because Apple silicon has one nobody here has written down
+
+Mitsuba 3.9.1 enumerates `metal_ad_rgb` on this platform. `pixi.toml`'s
+determinism table covers `llvm_ad_rgb` at one thread, `llvm_ad_rgb` at
+default threads and `cuda_ad_rgb` at default, and says nothing about
+Metal, so this asks the same sha256 question of it that the others were
+asked. A variant that is fast and not reproducible is not a corpus
+renderer, and finding that out here is cheaper than finding it out in
+800k frames.
+
+## Usage
+
     python mi_bench_llvm.py                      # the full sweep
     python mi_bench_llvm.py --procs 1,2,4,8      # process-level scaling only
     python mi_bench_llvm.py --worker VARIANT N   # one measurement, JSON on stdout
@@ -48,59 +57,43 @@ import time
 
 import numpy as np
 
-# `mi_bench2.py`'s film and sampler, unchanged. A comparison across two scales is not a
-# comparison, and that entry's own lesson is that every control in it ran at one scale and was
-# wrong everywhere else.
 W = H = 1024
 FOV = 40.0
 SPP = 1
 ITERS = 30
-
-# `render_view.py:235` defaults to this, and it is the sample count the corpus is rendered at.
 SHIPPING_SPP = 128
-
-# PINNED, BECAUSE "PROBABLY THE DEFAULT" IS NOT A MEASUREMENT. `render_view.py:155` passes
-# seed=0 explicitly and this file was calling `mi.render` without one. Mitsuba's default is also
-# 0, so this should change nothing -- but the Metal digests differ across processes, and a seed
-# that varied would explain that without any film-accumulation story at all. Pinning it is what
-# separates the two, and it decides whether a 60x speed-up is available.
 SEED = 0
-
-# What the proxy is matched against. ANNY at `base_mesh='makehuman'` with
-# `remove_unattached_vertices=False`, the configuration `mi_bench2.py` instantiates.
 ANNY_VERTS = 19158
 ANNY_FACES = 27420
-
-# The figures this is measured against, both from `logbook-soft-renderer-and-mitsuba.md`.
-CUDA_4090_MS = 1.79       # cuda_ad_rgb, incl. vertex update and BVH, on the 4090
-TORCH_SOFT_MS = 3451.0    # soft_depth + soft_silhouette, the original baseline
+CUDA_4090_MS = 1.79
+TORCH_SOFT_MS = 3451.0
 
 
 def proxy_mesh(target_verts=ANNY_VERTS, target_faces=ANNY_FACES):
     """A lat-long body proxy at ANNY's counts, give or take the grid's own arithmetic.
 
-    A lat-long grid of `rings` x `segments` gives (rings-1)*segments + 2 vertices and
-    2*segments*(rings-1) faces, so the two targets cannot both be hit exactly -- ANNY's
-    face-to-vertex ratio is 1.43 and a closed lat-long grid's tends to 2. Vertices are matched
-    and the face count is reported rather than forced, because forcing it would mean deleting
-    faces and changing the BVH into something that is not a closed surface.
+    A lat-long grid of `rings` x `segments` gives (rings-1)*segments + 2
+    vertices and 2*segments*(rings-1) faces, so the two targets cannot both
+    be hit exactly — ANNY's face-to-vertex ratio is 1.43 and a closed
+    lat-long grid's tends to 2. Faces are matched, not vertices, and the
+    choice is not arbitrary: a ray tracer's per-frame cost is BVH build and
+    triangle intersection, both of which count faces. Vertices are carried
+    along and are reported as the mismatch.
+
+    Body-shaped rather than a ball: 1.7 m tall, elliptical in cross-section,
+    waisted. The silhouette matters only in that it fills a comparable
+    share of the frame; the ray count is fixed by the film.
     """
     best = None
     for segments in range(8, 400):
         for rings in range(3, 400):
             v = (rings - 1) * segments + 2
             f = 2 * segments * (rings - 1)
-            # FACES are matched, not vertices, and the choice is not arbitrary: a ray tracer's
-            # per-frame cost is BVH build and triangle intersection, both of which count faces.
-            # Vertices are carried along and are reported as the mismatch.
             score = abs(f - target_faces)
             if best is None or score < best[0]:
                 best = (score, rings, segments, v, f)
     _, rings, segments, nv, nf = best
 
-    # Body-shaped rather than a ball: 1.7 m tall, elliptical in cross-section, waisted. The
-    # silhouette matters only in that it fills a comparable share of the frame; the ray count
-    # is fixed by the film.
     theta = np.linspace(0.0, math.pi, rings)[1:-1]
     phi = np.linspace(0.0, 2.0 * math.pi, segments, endpoint=False)
     t, p = np.meshgrid(theta, phi, indexing="ij")
@@ -131,29 +124,34 @@ def proxy_mesh(target_verts=ANNY_VERTS, target_faces=ANNY_FACES):
 def build_scene(mi, verts, faces, film="bench", spp=SPP):
     """One of two films, and the difference between them turned out to be the whole finding.
 
-    `bench` is `mi_bench2.py`'s: an aov integrator over position and depth, a box
-    reconstruction filter, one sample per pixel. That is what this script measured first, and
-    it is a DEPTH PASS.
+    `bench` is `mi_bench2.py`'s: an aov integrator over position and depth,
+    a box reconstruction filter, one sample per pixel. That is what this
+    script measured first, and it is a DEPTH PASS.
 
-    `shipping` is `render_view.py`'s, which is what actually renders the corpus: a `path`
-    integrator at max_depth 6, a GAUSSIAN reconstruction filter, 128 samples per pixel, a
-    principled skin BSDF, a constant world emitter and a point key light.
+    `shipping` is `render_view.py`'s, which is what actually renders the
+    corpus: a `path` integrator at max_depth 6, a GAUSSIAN reconstruction
+    filter, 128 samples per pixel, a principled skin BSDF, a constant world
+    emitter and a point key light.
 
-    THE FIRST VERSION OF THIS FILE HAD ONLY `bench` AND CALLED THE RESULT THE CORPUS RENDER.
-    That was wrong twice, and the second error hid the first:
+    The first version of this file had only `bench` and called the result
+    the corpus render. That was wrong twice, and the second error hid the
+    first: the timing was for a depth pass at one sample, projected as
+    though it were the frame the corpus keeps. `render_view.py` path-traces
+    at 128 and then runs a second path-traced pass for the matte, so the
+    real cost is not the same quantity. And the determinism check could
+    not fail — three independent properties of `bench` each guarantee it:
+    an aov position/depth is deterministic geometry with no Monte Carlo
+    noise; a box filter puts every sample in exactly one pixel, so nothing
+    splats across a thread's block boundary; and at one sample per pixel
+    there is no accumulation ORDER to vary. So a check reported `identical`
+    on a film built such that it could not report anything else, and it
+    was pointed at the wrong renderer while doing it. PITFALLS 4 — the
+    convenient proxy lies, and the proxy is always the one that is easy to
+    read.
 
-      * The TIMING was for a depth pass at one sample, projected as though it were the frame
-        the corpus keeps. `render_view.py` path-traces at 128 and then runs a SECOND path-traced
-        pass for the matte, so the real cost is not the same quantity.
-      * The DETERMINISM check could not fail, and three independent properties of `bench` each
-        guarantee that. An aov position/depth is deterministic geometry with no Monte Carlo
-        noise; a box filter puts every sample in exactly one pixel, so nothing splats across a
-        thread's block boundary; and at one sample per pixel there is no accumulation ORDER to
-        vary, which is the mechanism `pixi.toml` names.
-
-    So a check reported `identical` on a film built such that it could not report anything else,
-    and it was pointed at the wrong renderer while doing it. PITFALLS 4 -- the convenient proxy
-    lies, and the proxy is always the one that is easy to read.
+    The shipping film uses `render_view.py:134-153`'s materials and
+    lights. The geometry is still the proxy, so this measures the FILM
+    and not the body.
     """
     mesh = mi.Mesh("body", vertex_count=verts.shape[0], face_count=faces.shape[0],
                    has_vertex_normals=False, has_vertex_texcoords=False)
@@ -170,8 +168,6 @@ def build_scene(mi, verts, faces, film="bench", spp=SPP):
         origin=[float(x) for x in eye], target=[float(x) for x in centre], up=[0.0, 0.0, 1.0])
 
     if film == "shipping":
-        # render_view.py:134-153, with its materials and lights. The geometry is still the
-        # proxy, so this measures the FILM and not the body.
         scene = mi.load_dict({
             "type": "scene",
             "integrator": {"type": "path", "max_depth": 6},
@@ -209,20 +205,43 @@ def build_scene(mi, verts, faces, film="bench", spp=SPP):
 def worker(variant, threads, spp=SPP, film="bench", iters=None):
     """One measurement, in its own process. JSON on stdout, nothing else.
 
-    A process each, for two reasons. Switching variants inside one interpreter leaves the
-    previous backend's state alive, and the process-scaling run below needs a unit of work that
-    a shell can start N of anyway.
+    A process each, for two reasons. Switching variants inside one
+    interpreter leaves the previous backend's state alive, and the
+    process-scaling run below needs a unit of work that a shell can start
+    N of anyway.
+
+    `render_view.py:117` sets thread count via `dr.set_thread_count` and
+    records that `DRJIT_NUM_THREADS` had no effect. Same call here rather
+    than a second mechanism.
+
+    Iters default lower for the shipping film — path-traced at 128 samples,
+    so thirty iterations is not a benchmark, it is an afternoon. Fewer,
+    and the count is reported rather than assumed.
+
+    Determinism is asked of every variant rather than only the ones
+    already recorded. One digest per process, compared by the caller ACROSS
+    processes. The first version of this took two renders inside one
+    interpreter and reported them identical, including for `llvm_ad_rgb`
+    at default threads — which `pixi.toml` records as drifting by up to
+    1/255 on a dozen pixels. That was not a refutation, it was a weaker
+    instrument: film accumulation order is what drifts, and two renders
+    sharing one warm thread pool and one scheduler are the case most likely
+    to repeat it. A digest compared across two fresh processes is the
+    question worth asking.
+
+    Seed is pinned, because "probably the default" is not a measurement.
+    `render_view.py:155` passes seed=0 explicitly and this file was
+    calling `mi.render` without one. Mitsuba's default is also 0, so this
+    should change nothing — but the Metal digests differ across processes,
+    and a seed that varied would explain that without any
+    film-accumulation story at all.
     """
     import drjit as dr
     import mitsuba as mi
     mi.set_variant(variant)
     if threads and variant.startswith("llvm"):
-        # `render_view.py:117` sets it this way and records that `DRJIT_NUM_THREADS` had no
-        # effect at all. Same call here rather than a second mechanism.
         dr.set_thread_count(threads)
 
-    # The shipping film is path-traced at 128 samples, so thirty iterations of it is not a
-    # benchmark, it is an afternoon. Fewer, and the count is reported rather than assumed.
     iters = iters if iters is not None else (2 if film == "shipping" else ITERS)
 
     verts, faces = proxy_mesh()
@@ -241,17 +260,8 @@ def worker(variant, threads, spp=SPP, film="bench", iters=None):
         dr.sync_thread()
         return (time.time() - t0) / n
 
-    timed(1 if film == "shipping" else 3, False)  # warm the BVH and JIT off the measurement
+    timed(1 if film == "shipping" else 3, False)
 
-    # Determinism, asked of every variant rather than only the ones already recorded. ONE
-    # digest per process, compared by the caller ACROSS processes.
-    #
-    # The first version of this took two renders inside one interpreter and reported them
-    # identical, including for `llvm_ad_rgb` at default threads -- which `pixi.toml` records as
-    # drifting by up to 1/255 on a dozen pixels. That was not a refutation, it was a weaker
-    # instrument: film accumulation order is what drifts, and two renders sharing one warm
-    # thread pool and one scheduler are the case most likely to repeat it. A digest compared
-    # across two fresh processes is the question worth asking.
     img = np.array(mi.render(scene, spp=spp, seed=SEED), dtype=np.float32)
     digests = [hashlib.sha256(np.ascontiguousarray(img).tobytes()).hexdigest()]
 
@@ -269,16 +279,19 @@ def worker(variant, threads, spp=SPP, film="bench", iters=None):
     }
 
 
-# EVERY SUBPROCESS IS ARMED WITH A DEADLINE, AND THE REASON IS THIS FILE'S OWN SUBJECT.
-#
-# `logbook-soft-renderer-and-mitsuba.md` records the failure mode directly: at 1024x1024 the
-# card "sat at 24,041 MiB of 24,564 at 100% and never finished. It did not raise: an allocator
-# at its ceiling thrashes rather than failing, so the symptom is a render that never returns."
-# A benchmark that can hang is a benchmark that has to be watched. `timeout(1)` is not present
-# on macOS, so the budget is armed here rather than in the shell, and a config that overruns is
-# NAMED AND COUNTED as TIMEOUT rather than omitted -- a silent skip reads exactly like a pass.
 WORKER_TIMEOUT_S = 300.0
 SWEEP_DEADLINE_S = 1800.0
+"""Every subprocess is armed with a deadline, and the reason is this file's own subject.
+
+`logbook-soft-renderer-and-mitsuba.md` records the failure mode directly:
+at 1024x1024 the card "sat at 24,041 MiB of 24,564 at 100% and never
+finished. It did not raise: an allocator at its ceiling thrashes rather
+than failing, so the symptom is a render that never returns." A benchmark
+that can hang is a benchmark that has to be watched. `timeout(1)` is not
+present on macOS, so the budget is armed here rather than in the shell,
+and a config that overruns is NAMED AND COUNTED as TIMEOUT rather than
+omitted — a silent skip reads exactly like a pass.
+"""
 
 
 def run_worker(variant, threads, timeout=WORKER_TIMEOUT_S, spp=SPP, film="bench"):
@@ -298,17 +311,20 @@ def run_worker(variant, threads, timeout=WORKER_TIMEOUT_S, spp=SPP, film="bench"
 def machine_facts():
     """The desk this ran on, as structured data rather than a parsed one-liner.
 
-    `scripts/README.md` names the absence of this as a gap: "a timing that reaches an entry has
-    to carry the machine it was measured on rather than inherit one from here", and records
-    that only `samples.py` does it. This is the second, and it asks osquery rather than sysctl
-    for the same reason CLAUDE.md gives for rotation order and up axis -- conventions are data,
-    so parse them from something that returns fields rather than scraping a formatted string.
-    A `sysctl -n` output is a string whose shape is the vendor's business; `system_info` is a
+    `scripts/README.md` names the absence of this as a gap: "a timing that
+    reaches an entry has to carry the machine it was measured on rather
+    than inherit one from here", and records that only `samples.py` does
+    it. This is the second, and it asks osquery rather than sysctl for the
+    same reason CLAUDE.md gives for rotation order and up axis —
+    conventions are data, so parse them from something that returns fields
+    rather than scraping a formatted string. A `sysctl -n` output is a
+    string whose shape is the vendor's business; `system_info` is a
     relation with named columns.
 
-    THE FALLBACK IS NAMED IN THE OUTPUT, NOT SILENT. If osquery is absent the run still
-    produces numbers, and a reader has to be able to tell which source answered -- a degraded
-    provenance that prints identically to a good one is the same failure as a silent skip.
+    The fallback is named in the output, not silent. If osquery is absent
+    the run still produces numbers, and a reader has to be able to tell
+    which source answered — a degraded provenance that prints identically
+    to a good one is the same failure as a silent skip.
     """
     import platform
     import subprocess as sp
@@ -332,7 +348,6 @@ def machine_facts():
             **si,
         }
     except Exception as exc:
-        # Named and counted, never omitted.
         return {
             "source": f"FALLBACK, osquery unavailable ({type(exc).__name__}) -- fewer fields",
             "summary": (f"{platform.system()} {platform.machine()}, "
@@ -348,15 +363,18 @@ def hours(ms, n=800_000):
 def human_span(h):
     """A projection said the way a person would say it, rather than to one decimal.
 
-    THE RECORD AND THE PROJECTION ARE DIFFERENT KINDS OF NUMBER AND GET DIFFERENT TREATMENT.
-    73.00 ms/image is an instrument reading and stays SI with its decimals. "800k images in
-    16.2 h" is that reading multiplied by a corpus size nobody has rendered yet, and the decimal
-    invites a confidence the multiplication does not carry. So it gets a span.
+    The record and the projection are different kinds of number and get
+    different treatment. 73.00 ms/image is an instrument reading and stays
+    SI with its decimals. "800k images in 16.2 h" is that reading
+    multiplied by a corpus size nobody has rendered yet, and the decimal
+    invites a confidence the multiplication does not carry. So it gets a
+    span.
 
-    This is CLAUDE.md's household-object rule pointed the other way. A penny is attached to
-    4.3 mm because the millimetres alone do not say whether the error matters; a span replaces
-    the hours because the hours alone say more than is known. Both swap a bare number for
-    something a reader can act on.
+    This is CLAUDE.md's household-object rule pointed the other way. A
+    penny is attached to 4.3 mm because the millimetres alone do not say
+    whether the error matters; a span replaces the hours because the hours
+    alone say more than is known. Both swap a bare number for something a
+    reader can act on.
     """
     for limit, span in ((0.5, "half an hour"), (1.5, "about an hour"), (4, "an afternoon"),
                         (10, "a working day"), (20, "overnight"), (60, "a long weekend"),
@@ -367,6 +385,42 @@ def human_span(h):
 
 
 def main(argv):
+    """The sweep.
+
+    Both films, because measuring only the cheap one is how this script
+    was wrong. Two runs per configuration in fresh processes so the sha256
+    comparison spans process boundaries rather than two renders sharing
+    one warm thread pool.
+
+    Process-level scaling is the whole point of the shipping configuration.
+    Determinism is per-image: one thread makes one frame byte-identical,
+    and says nothing about how many frames are in flight. So a corpus
+    renders at N processes x one thread with every frame still
+    reproducible, and the throughput that matters is aggregate rather
+    than per-process. Reported as a speed-up against one process so the
+    drop-off is visible.
+
+    This table measured the wrong film once and printed it under a corpus
+    heading. The Popen passed no `--film`, so it defaulted to `bench` — an
+    aov depth pass at one sample — while the heading and the 800k column
+    read as corpus throughput. The rest of this file exists to retract
+    exactly that confusion, and the block went on repeating it: "800k = an
+    afternoon" was the most quotable line in the output and it was 447x
+    wrong. The film is now explicit and printed.
+
+    The negative control, without which the determinism column is
+    decoration. `pixi.toml` records `llvm_ad_rgb` at default threads
+    drifting by up to 1/255 on 12-16 pixels of 1,048,576, and the sweep
+    above reports it byte-identical. Two readings of one configuration,
+    so one of them is measuring the wrong thing, and the honest move is
+    to go find the drift rather than to publish the convenient half.
+
+    The mechanism named in that record is FILM ACCUMULATION ORDER. At
+    `spp=1` under a box filter every pixel receives exactly one sample,
+    so there is no accumulation order to vary and no drift to find —
+    which would make the identical result true and narrow rather than a
+    contradiction. Raising spp is what separates those two readings.
+    """
     ap = argparse.ArgumentParser()
     ap.add_argument("--worker", nargs=2, metavar=("VARIANT", "THREADS"))
     ap.add_argument("--spp", type=int, default=SPP)
@@ -399,7 +453,6 @@ def main(argv):
     print(f"films            {W}x{H}; bench = aov/box/spp {SPP}; "
           f"shipping = path d6/gaussian/spp {SHIPPING_SPP}\n")
 
-    # BOTH FILMS, BECAUSE MEASURING ONLY THE CHEAP ONE IS HOW THIS SCRIPT WAS WRONG.
     plan = [("llvm_ad_rgb", 1, "bench", SPP), ("llvm_ad_rgb", 0, "bench", SPP)]
     if "metal_ad_rgb" in available:
         plan.append(("metal_ad_rgb", 0, "bench", SPP))
@@ -413,8 +466,6 @@ def main(argv):
         if time.time() - started > a.deadline:
             skipped.append(f"{variant}/{threads or 'default'}/{film}")
             continue
-        # Twice, in two fresh processes, so the sha256 comparison spans process boundaries
-        # rather than two renders sharing one warm thread pool.
         r = run_worker(variant, threads, a.worker_timeout, spp, film)
         r2 = (run_worker(variant, threads, a.worker_timeout, spp, film)
               if "error" not in r else r)
@@ -450,22 +501,6 @@ def main(argv):
     print("    the shipping film, and no 4090 measurement of that exists. Comparing a shipping")
     print("    row against the 1.79 ms is comparing a lit path trace with a depth probe.")
 
-    # PROCESS-LEVEL SCALING, WHICH IS THE WHOLE POINT OF THE SHIPPING CONFIGURATION.
-    #
-    # Determinism is per-image: one thread makes one frame byte-identical, and says nothing
-    # about how many frames are in flight. So a corpus renders at N processes x one thread with
-    # every frame still reproducible, and the throughput that matters is aggregate rather than
-    # per-process. Reported as a speed-up against one process so the drop-off is visible.
-    # THIS TABLE MEASURED THE WRONG FILM AND PRINTED IT UNDER A CORPUS HEADING.
-    #
-    # The Popen above passed no `--film`, so it defaulted to `bench` -- an aov depth pass at one
-    # sample -- while the heading and the 800k column read as corpus throughput. The rest of this
-    # file exists to retract exactly that confusion, and this block went on repeating it: "800k =
-    # an afternoon" was the most quotable line in the output and it was 447x wrong.
-    #
-    # The film is now explicit and printed. Default is `shipping`, because the question this
-    # table answers is how long the CORPUS takes, and a reader who wants the depth pass can ask
-    # for it by name.
     scale_spp = SHIPPING_SPP if a.scale_film == "shipping" else SPP
     print(f"\nconcurrent single-threaded processes on the {a.scale_film.upper()} film "
           f"(spp {scale_spp}), each still byte-reproducible:\n")
@@ -496,19 +531,6 @@ def main(argv):
         print(f"    {n:2d} procs   {per:8.2f} ms/img each   {agg:7.2f} img/s aggregate   "
               f"{agg/base:5.2f}x   800k = {human_span(800000 / agg / 3600)}")
 
-    # THE NEGATIVE CONTROL, WITHOUT WHICH THE DETERMINISM COLUMN ABOVE IS DECORATION.
-    #
-    # `pixi.toml` records `llvm_ad_rgb` at default threads drifting by up to 1/255 on 12-16
-    # pixels of 1,048,576, and the sweep above reports it byte-identical. Two readings of one
-    # configuration, so one of them is measuring the wrong thing, and the honest move is to go
-    # find the drift rather than to publish the convenient half.
-    #
-    # The mechanism named in that record is FILM ACCUMULATION ORDER. At `spp=1` under a box
-    # filter every pixel receives exactly one sample, so there is no accumulation order to vary
-    # and no drift to find -- which would make the identical result true and narrow rather than
-    # a contradiction. Raising spp is what separates those two readings: if the digests diverge
-    # as spp climbs, this check works and the recorded drift is an spp>1 phenomenon; if they
-    # never diverge at any spp, this check cannot fail and proves nothing.
     print("\ndeterminism, two fresh processes per row, both films:\n")
     print(f"    {'film':10s} {'integrator':12s} {'filter':9s} {'spp':>4s}  "
           f"{'ms/img':>10s}  verdict")
@@ -566,7 +588,6 @@ def main(argv):
     print("\nEvery figure is this desk only. The 3090 and the 4090 are other machines and "
           "nothing here was measured on them.")
 
-    # THE RECORD, WRITTEN WHERE A PERSON WILL FIND IT. Stdout scrolls away; a file does not.
     out = pathlib.Path(a.results).expanduser()
     out.mkdir(parents=True, exist_ok=True)
     dest = out / "mi_bench_llvm-results.json"

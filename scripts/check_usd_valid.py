@@ -1,41 +1,61 @@
 """Gate: every USD layer we write is valid, and survives a round trip through crate.
 
-WHY THIS EXISTS. `rfd1122-plan.usda` opened in Python, composed without error, and read
-back the ten tasks it was supposed to carry -- and it still failed usdchecker's own rules,
-because it declared neither `upAxis` nor `metersPerUnit`. "It opens" is not "it is valid",
-and the gap between the two is exactly where a layer that other tools reject sits looking
-fine. RFD 1035 makes OpenUSD the internal format, so a layer nothing else will take is a
-layer that has not been written yet.
+`rfd1122-plan.usda` opened in Python, composed without error, and read back
+the ten tasks it was supposed to carry — and it still failed usdchecker's
+own rules, because it declared neither `upAxis` nor `metersPerUnit`. "It
+opens" is not "it is valid", and the gap between the two is exactly where
+a layer that other tools reject sits looking fine. RFD 1035 makes OpenUSD
+the internal format, so a layer nothing else will take is a layer that has
+not been written yet.
 
-THE THREE THINGS CHECKED, and why each is separate.
+## Three things checked, and why each is separate
 
 1. PARSE. `Sdf.Layer.FindOrOpen` on the file itself. A malformed layer fails here.
-2. COMPOSE, then VALIDATE. `Usd.Stage.Open` reports composition errors; `UsdValidation`
-   runs every registered validator, which is the machinery `usdchecker` drives. An Error
-   fails the gate and a Warning is printed and counted -- named, never omitted.
-3. ROUND TRIP. Export to `.usdc`, reopen, export back to `.usda`, and compare the two
-   stages by content. A layer that parses but does not survive the binary format is not
-   portable, and .usda is the source form here rather than the wire form.
+2. COMPOSE, then VALIDATE. `Usd.Stage.Open` reports composition errors;
+   `UsdValidation` runs every registered validator, which is the machinery
+   `usdchecker` drives. An Error fails the gate and a Warning is printed
+   and counted — named, never omitted.
+3. ROUND TRIP. Export to `.usdc`, reopen, export back to `.usda`, and
+   compare the two stages by content. A layer that parses but does not
+   survive the binary format is not portable, and .usda is the source form
+   here rather than the wire form.
 
-WHAT THE ROUND-TRIP COMPARISON IGNORES, and why ignoring it is not a loophole. Exporting a
-composed stage appends "Generated from Composed Stage of root layer <path>" to the layer's
-documentation, so a naive string equality reports every file as broken. That line is an
-artefact of the exporter, it names a temporary path, and comparing it would make the gate
-fail on files that are fine. Everything else is compared: prim paths, types, specifiers,
-metadata, every authored attribute name, type and value, and every relationship's targets.
-The first version of this compared exported strings and reported the plan stage as
-DIFFERING on nothing but that stamp.
+## What the round-trip comparison ignores
 
-WHERE THE TEMPORARIES GO. `.local` at the workspace root when it is there, which is what
-CLAUDE.md asks for. In CI the logbook is checked out on its own and there is no workspace
-root, so a temporary directory is used and the run says which it chose. A gate that cannot
-run in CI is a gate nobody runs.
+Exporting a composed stage appends "Generated from Composed Stage of root
+layer <path>" to the layer's documentation, so a naive string equality
+reports every file as broken. That line is an artefact of the exporter,
+it names a temporary path, and comparing it would make the gate fail on
+files that are fine. Everything else is compared: prim paths, types,
+specifiers, metadata, every authored attribute name, type and value, and
+every relationship's targets. The first version of this compared exported
+strings and reported the plan stage as DIFFERING on nothing but that
+stamp.
 
-Usage:
+## Where the temporaries go
+
+`.local` at the workspace root when it is there, which is what CLAUDE.md
+asks for. In CI the logbook is checked out on its own and there is no
+workspace root, so a temporary directory is used and the run says which it
+chose. A gate that cannot run in CI is a gate nobody runs.
+
+## Skipped directories
+
+`.git` was always here; `.pixi` arrived when this repository gained a
+declared environment, and it carries OpenUSD's own schema templates —
+`schemaUserDoc.usda` and its neighbours, which do not resolve outside the
+package that ships them. Walking them made this gate exit non-zero while
+its last printed line still read "ok", so a reader tailing the output saw
+a pass. CI never hit it: prek passes this hook git-tracked files, and
+`.pixi` stays untracked.
+
+## Usage
+
     python check_usd_valid.py [path ...]      default: every USD file in the repo
     python check_usd_valid.py --self-test     the negative controls, each must FAIL
 
-Exit code is non-zero on any invalid layer, and on any control that fails to fail.
+Exit code is non-zero on any invalid layer, and on any control that fails
+to fail.
 """
 
 import pathlib
@@ -45,13 +65,6 @@ import tempfile
 HERE = pathlib.Path(__file__).resolve().parent
 REPO = HERE.parent
 SUFFIXES = (".usda", ".usdc", ".usd", ".usdz")
-
-# Directories holding something other than this repository's layers. `.git` was always
-# here; `.pixi` arrived when this repository gained a declared environment, and it carries
-# OpenUSD's own schema templates -- `schemaUserDoc.usda` and its neighbours, which do not
-# resolve outside the package that ships them. Walking them made this gate exit non-zero
-# while its last printed line still read "ok", so a reader tailing the output saw a pass.
-# CI never hit it: prek passes this hook git-tracked files, and `.pixi` stays untracked.
 SKIP_DIRS = {".git", ".pixi"}
 
 
@@ -74,8 +87,9 @@ def discover():
 def snapshot(stage):
     """Everything about a stage that a round trip must preserve.
 
-    Layer documentation is deliberately absent: `Export` appends its own provenance line to
-    it, so including it would compare the exporter against itself and fail every file.
+    Layer documentation is deliberately absent: `Export` appends its own
+    provenance line to it, so including it would compare the exporter
+    against itself and fail every file.
     """
     out = {
         "defaultPrim": stage.GetDefaultPrim().GetName(),
@@ -119,6 +133,15 @@ def differences(a, b, path="stage"):
 
 
 def check_one(path, scratch):
+    """The three arms — parse, compose+validate, round-trip.
+
+    Validators are loaded directly because `usdchecker` (the console
+    script) is not in the wheel, and a check skipped for want of a binary
+    reads exactly like a pass.
+
+    Round trip exercises both hops: text to binary, and binary back to
+    text. A layer that cannot be re-encoded is not portable.
+    """
     from pxr import Sdf, Usd, UsdValidation
 
     name = path.name
@@ -133,8 +156,6 @@ def check_one(path, scratch):
     for e in stage.GetCompositionErrors():
         failures.append(f"{name}: composition error: {e}")
 
-    # The validators usdchecker drives. Loaded directly, because the console script is not
-    # in the wheel -- and a check skipped for want of a binary reads exactly like a pass.
     results = UsdValidation.ValidationContext(
         UsdValidation.ValidationRegistry().GetOrLoadAllValidators()
     ).Validate(stage)
@@ -145,14 +166,13 @@ def check_one(path, scratch):
             warned += 1
             print(f"  warn {name}: {r.GetMessage().strip()}")
 
-    # Round trip. Both hops are exercised: text to binary, and binary back to text.
     crate = scratch / f"{path.stem}.roundtrip.usdc"
     back = scratch / f"{path.stem}.roundtrip.usda"
     try:
         stage.Export(str(crate))
         Usd.Stage.Open(str(crate)).Export(str(back))
         diffs = differences(snapshot(stage), snapshot(Usd.Stage.Open(str(back))))
-    except Exception as exc:  # a layer that cannot be re-encoded is not portable
+    except Exception as exc:
         diffs = [f"export raised {type(exc).__name__}: {exc}"]
     for d in diffs[:10]:
         failures.append(f"{name}: round trip changed {d}")
@@ -183,14 +203,32 @@ def check(paths):
     return rc
 
 
-# --- negative controls --------------------------------------------------------------------
-#
-# Every file passing proves the files are fine. It does not prove this would notice if they
-# were not, which is the only claim worth making. Each control breaks a copy a different way
-# and each must make `check` fail.
-
-
 def self_test():
+    """Every file passing proves the files are fine. It does not prove this
+    would notice if they were not, which is the only claim worth making.
+    Each control breaks a copy a different way and each must make `check` fail.
+
+    A distinct filename per control. USD caches layers by identifier, so
+    reusing one hands the next control the previous one's layer —
+    `export_hm08_usd.py`'s self-test was wrong that way, and every control
+    still printed FAIL while three of them were reporting the second one's
+    defect.
+
+    The round-trip arm has no file-shaped control, because a layer that
+    parses and then changes under export is exactly the bug this looks for
+    and cannot be written to order. So the comparison is exercised
+    directly: change one value and it must be reported.
+
+    What none of this catches, recorded because the control that was here
+    first assumed otherwise: writing `custom int order = 1.5` does not
+    fail — USD's text parser truncates it to 1 silently, and `= 10`
+    mangled the same way also becomes 1. The layer then parses, validates
+    and round-trips perfectly while carrying two tasks numbered 1. Value
+    corruption is invisible at the USD level by construction, which is
+    the division of labour with `check_rfd1122_plan.py` — this gate says
+    the layer is well formed, and that one says the content means what it
+    claims. It catches the duplicate.
+    """
     import contextlib
     import io
 
@@ -228,10 +266,6 @@ def self_test():
     print("negative controls (each must FAIL):")
     bad = []
     for i, (label, mutate) in enumerate(controls):
-        # A distinct filename per control. USD caches layers by identifier, so reusing one
-        # hands the next control the previous one's layer -- `export_hm08_usd.py`'s
-        # self-test was wrong that way, and every control still printed FAIL while three
-        # of them were reporting the second one's defect.
         dst = scratch / f"control{i}.usda"
         dst.unlink(missing_ok=True)
         mutate(dst)
@@ -240,7 +274,6 @@ def self_test():
             with contextlib.redirect_stdout(buf):
                 rc = check([dst])
         except Exception as exc:
-            # A raise is a rejection too, as long as it is the layer being rejected.
             rc, buf = 1, io.StringIO(f"  FAIL raised {type(exc).__name__}")
         dst.unlink(missing_ok=True)
         first = next((ln.strip() for ln in buf.getvalue().splitlines() if "FAIL" in ln), "")
@@ -250,9 +283,6 @@ def self_test():
             print(f"  BAD  {label}: passed, so this gate certifies the defect")
             bad.append(label)
 
-    # The round-trip arm has no file-shaped control, because a layer that parses and then
-    # changes under export is exactly the bug this looks for and cannot be written to order.
-    # So the comparison is exercised directly: change one value and it must be reported.
     stage = Usd.Stage.Open(str(source))
     before = snapshot(stage)
     stage.GetPrimAtPath("/Rfd1122/Plan/T01_PoseLibraryPlausibility").GetAttribute("order").Set(4)
@@ -262,16 +292,6 @@ def self_test():
         print("  BAD  round-trip comparison notices nothing, so the arm certifies anything")
         bad.append("round-trip comparison")
 
-    # WHAT NONE OF THIS CATCHES, recorded because the control that was here first assumed
-    # otherwise. Writing `custom int order = 1.5` does not fail: USD's text parser truncates
-    # it to 1 silently, and `= 10` mangled the same way also becomes 1. The layer then
-    # parses, validates and round-trips perfectly while carrying two tasks numbered 1.
-    # Value corruption is invisible at the USD level by construction, which is the division
-    # of labour with `check_rfd1122_plan.py` -- this gate says the layer is well formed, and
-    # that one says the content means what it claims. It catches the duplicate.
-
-    # And one positive control: an untouched copy must still pass, or the controls above
-    # are firing on the copying rather than on the defect.
     clean = scratch / "control-clean.usda"
     clean.write_text(text, encoding="utf-8")
     buf = io.StringIO()

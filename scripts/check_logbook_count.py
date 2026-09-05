@@ -60,15 +60,12 @@ def _plant(root: str, qmd_body: str, n_entries: int) -> None:
 
 
 def _self_test() -> int:
-    # positive: declared matches disk
     with tempfile.TemporaryDirectory() as t:
         _plant(t, "These 3 entries...\n", 3)
         assert run(t) == 0
-    # negative: declared does not match disk
     with tempfile.TemporaryDirectory() as t:
         _plant(t, "These 145 entries...\n", 26)
         assert run(t) == 1
-    # silent-skip case: no phrase, but the count is still reported
     with tempfile.TemporaryDirectory() as t:
         _plant(t, "no count here.\n", 5)
         assert run(t) == 0

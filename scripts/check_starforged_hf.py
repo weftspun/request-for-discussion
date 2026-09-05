@@ -42,18 +42,15 @@ def load_rows(shards_dir: Path) -> list[dict]:
 
 
 def check_rows(rows: list[dict], fails: list[str]) -> None:
-    # Schema completeness.
     if rows:
         got_cols = set(rows[0].keys())
         missing = REQUIRED_COLUMNS - got_cols
         if missing:
             fails.append(f"missing columns: {missing}")
 
-    # Total.
     if len(rows) != EXPECTED_TOTAL:
         fails.append(f"total rows: {len(rows)} != {EXPECTED_TOTAL}")
 
-    # By-kind counts.
     from collections import Counter
     by_kind = Counter(r.get("kind") for r in rows)
     for k, want in EXPECTED_BY_KIND.items():
@@ -64,13 +61,11 @@ def check_rows(rows: list[dict], fails: list[str]) -> None:
     if unknown_kinds:
         fails.append(f"unknown kinds present: {unknown_kinds}")
 
-    # Every license == expected.
     bad_lic = [r for r in rows if r.get("license") != EXPECTED_LICENSE]
     if bad_lic:
         fails.append(f"{len(bad_lic)} rows have license != {EXPECTED_LICENSE}; "
                      f"first: id={bad_lic[0].get('id')!r} license={bad_lic[0].get('license')!r}")
 
-    # Every content_json parses.
     unparsed = []
     for r in rows:
         cj = r.get("content_json")
@@ -134,13 +129,11 @@ def self_test() -> int:
 
     failures: list[str] = []
 
-    # Positive: pristine rows → clean.
     fails: list[str] = []
     check_rows(base_rows(), fails)
     if fails:
         failures.append(f"pristine rows should be clean; got {fails}")
 
-    # Defect 1: one row with wrong license.
     rows = base_rows()
     rows[0]["license"] = "CC-BY-NC-4.0"
     fails = []
@@ -148,7 +141,6 @@ def self_test() -> int:
     if not any("license" in f for f in fails):
         failures.append("wrong-license defect not caught")
 
-    # Defect 2: unparseable content_json.
     rows = base_rows()
     rows[10]["content_json"] = "{not valid json"
     fails = []
@@ -156,7 +148,6 @@ def self_test() -> int:
     if not any("content_json" in f for f in fails):
         failures.append("bad-JSON defect not caught")
 
-    # Defect 3: missing kind (unknown kind → count mismatch AND unknown set).
     rows = base_rows()
     rows[20]["kind"] = "wanderer"
     fails = []

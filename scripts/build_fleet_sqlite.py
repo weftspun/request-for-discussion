@@ -78,8 +78,6 @@ def build(src: Path, out: Path) -> dict:
     if fails:
         raise ValueError("fleet.jsonld invalid: " + "; ".join(fails))
 
-    # Canonicalise: sorted keys + no extra whitespace so a rebuild produces
-    # a byte-identical blob when the input didn't change.
     canonical = json.dumps(doc, sort_keys=True, separators=(",", ":"),
                            ensure_ascii=False).encode("utf-8")
 
@@ -125,7 +123,6 @@ def self_test() -> int:
         src = Path(td) / "fleet.jsonld"
         out = Path(td) / "fleet.sqlite"
 
-        # Positive: minimal valid domain writes a single-row domain table.
         src.write_text(json.dumps(minimal))
         stats = build(src, out)
         if stats["actions"] != 1 or stats["methods"] != 1:
@@ -138,21 +135,17 @@ def self_test() -> int:
         got_doc = json.loads(got_blob)
         if got_doc["name"] != "test":
             fails.append("blob round-trip lost content")
-        # Empty runtime tables at build time.
         for tbl in ("skip", "assign"):
             n = conn.execute(f"SELECT COUNT(*) FROM {tbl}").fetchone()[0]
             if n != 0:
                 fails.append(f"{tbl} must ship empty, got {n}")
         conn.close()
 
-        # Deterministic canonicalisation: build twice with same input →
-        # byte-identical blob.
         out2 = Path(td) / "fleet2.sqlite"
         stats2 = build(src, out2)
         if stats["canonical_bytes"] != stats2["canonical_bytes"]:
             fails.append("canonical blob differs across builds on same input")
 
-        # Negative controls (rule 2): each MUST raise ValueError.
         for defect_name, mutator in [
             ("missing_actions",   lambda d: (d.pop("actions"), d)[1]),
             ("wrong_type",        lambda d: {**d, "@type": "foo"}),

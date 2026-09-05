@@ -17,7 +17,6 @@ def _python(text):
                 comment.add(tok.start[0])
     except (tokenize.TokenError, IndentationError, SyntaxError):
         pass
-    # A docstring is where the narrative hides from a comment counter, so it counts.
     try:
         tree = ast.parse(text)
     except SyntaxError:

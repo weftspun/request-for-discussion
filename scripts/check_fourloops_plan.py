@@ -43,29 +43,12 @@ DEFAULT_STAGE = HERE.parent / "rfd" / "1143-keypoints-to-anny" / "fourloops-plan
 DEFAULT_CHART = HERE.parent / "rfd" / "1143-keypoints-to-anny" / "fourloops-etnf.usda"
 
 PRIM_RE = re.compile(r'^\s*def\s+(?:\w+\s+)?"([A-Za-z0-9_]+)"', re.M)
-# A TYPELESS `def "Name"`, which is what a task is. Allowing `def Scope "Name"` here swept
-# up the enclosing `def Scope "Tasks"` block, whose body starts with the first task's own
-# `order`, so the first task was read under the name "Tasks" and its dependency edges
-# disappeared. The negative control "a task needing one that runs later" is what found it.
 ORDER_RE = re.compile(r'def\s+"([A-Za-z0-9_]+)"[^{]*\{(.*?)\n        \}', re.S)
 INT_RE = re.compile(r"custom int (\w+) = (\d+)")
 FLOAT_RE = re.compile(r"custom float (\w+) = ([\d.]+)")
 REL_TARGET_RE = re.compile(r"</([A-Za-z0-9_/]+)>")
 SOURCES_RE = re.compile(r"string\[\] sources = \[(.*?)\]", re.S)
-# ONE DIRECTION SURVIVED THE CHART BECOMING A LAYER, AND THE OTHER WAS DELETED RATHER THAN
-# LOOSENED. While the chart was HTML its `<code>` spans named relations, so "a name the chart
-# uses that the plan does not have" was a real check. A layer has no `<code>`: reading every
-# quoted lowercase token instead reported 29 problems on a clean pair -- `yaw`, `view_mean`,
-# every column name -- because the two layers no longer share a namespace. The chart's prims
-# are relations and the plan's are stages.
-#
-# What remains checkable is the direction that can still drift: a stage in the plan that the
-# chart never mentions is a stage nobody described. That one is kept and its control kept
-# with it.
 
-# The relation names the chart is allowed to mention without the stage naming them: these
-# are columns and vocabularies rather than pipeline stages, and the stage is a task graph.
-# Listed rather than pattern-matched, because a pattern would quietly absorb a typo.
 CHART_ONLY = {
     "loops", "models", "precisions", "instructions", "repair_arms", "runs", "rounds",
     "artifacts", "scores", "view_scores", "observed_points", "fit_residuals",
@@ -239,10 +222,6 @@ def check_counts(text, root, problems):
     for name, value in INT_RE.findall(block):
         if not re.search(rf"(?<![\d.]){re.escape(value)}(?![\d.])", joined):
             problems.append(f"quantity {name} = {value} appears in no source")
-    # A float is matched with trailing zeros allowed, because USD prints 8.60 as 8.6 and
-    # the source that measured it wrote "8.60 GiB". Requiring the exact characters made the
-    # gate report a drift that was a print format, which is the convenient proxy rather
-    # than the quantity.
     for name, value in FLOAT_RE.findall(block):
         pattern = rf"(?<![\d.]){re.escape(value)}0*(?![\d.])"
         if not re.search(pattern, joined):

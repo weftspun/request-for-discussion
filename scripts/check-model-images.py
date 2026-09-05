@@ -1,10 +1,14 @@
 """Checks each model folder's Docker image.
 
-RFD 1036 gives the rules. This script covers the ones a reader
-forgets, and it leaves the rest to `docker build`.
+RFD 1036 gives the rules. This script covers the ones a reader forgets,
+and it leaves the rest to `docker build`.
 
-A broken server.py fails when a rented GPU starts it, which is money
-away from the edit that broke it. These checks run at commit time.
+A broken server.py fails when a rented GPU starts it, which is money away
+from the edit that broke it. These checks run at commit time.
+
+RFD 1036 requires `/health` and `/predict` routes: neither this box's own
+worker nor vast.ai runs a health probe of its own, thus a caller polls
+`/health` until ready.
 """
 
 import ast
@@ -12,12 +16,15 @@ import json
 import sys
 from pathlib import Path
 
-# RFD 1036. Neither this box's own worker nor vast.ai runs a health
-# probe of its own, thus a caller polls /health until ready.
 REQUIRED_ROUTES = ["/health", "/predict"]
 
 
 def check_server(path: Path) -> list[str]:
+    """The server file's contract.
+
+    `WEFTSPUN_STUB` switches to a no-GPU no-weights code path so the
+    contract stage can be tested anywhere but a rented card.
+    """
     problems = []
     source = path.read_text(encoding="utf-8")
 
@@ -30,8 +37,6 @@ def check_server(path: Path) -> list[str]:
         if f'"{route}"' not in source:
             problems.append(f"serves no {route}, which RFD 1036 requires")
 
-    # The contract stage runs with no GPU and no weights. Without this
-    # switch the image cannot be tested anywhere but a rented card.
     if "WEFTSPUN_STUB" not in source:
         problems.append("reads no WEFTSPUN_STUB, thus the contract cannot be tested")
 
@@ -39,6 +44,7 @@ def check_server(path: Path) -> list[str]:
 
 
 def check_dockerfile(path: Path) -> list[str]:
+    """Cog is gone; RFD 1036 records why."""
     problems = []
     source = path.read_text(encoding="utf-8")
 
@@ -48,7 +54,6 @@ def check_dockerfile(path: Path) -> list[str]:
     if "AS worker" not in source:
         problems.append("has no worker stage")
 
-    # Cog is gone. RFD 1036 records why.
     if "cog.yaml" in source or "runpod" in source.lower():
         problems.append("names Cog or RunPod, and RFD 1036 selects plain Docker instead")
 
@@ -56,13 +61,14 @@ def check_dockerfile(path: Path) -> list[str]:
 
 
 def check_input(path: Path) -> list[str]:
+    """An HTTP body is the request. A RunPod-shaped `{"input": ...}` wrapper
+    makes every field missing, and the server answers 422.
+    """
     try:
         body = json.loads(path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as error:
         return [f"does not parse: {error}"]
 
-    # An HTTP body is the request. A RunPod-shaped {"input": ...}
-    # wrapper makes every field missing, and the server answers 422.
     if isinstance(body, dict) and set(body) == {"input"}:
         return ['wraps the body in "input", which no HTTP route reads']
 

@@ -84,9 +84,6 @@ def self_test():
         ("a clean tree passes", {}, False),
         ("wrong organization digit", {"dirname": "2001-a-slug"}, True),
         ("no organization digit", {"dirname": "0001-a-slug"}, True),
-        # The two below are the withdrawn hex rule. A serial with a letter is
-        # the form this repository carried for 131 RFDs, so the gate has to
-        # reject it by name rather than by the slug pattern happening to miss.
         ("a hex directory name", {"dirname": "100a-a-slug"}, True),
         ("a hex heading",
          {"dirname": "1010-a-slug", "heading": "# RFD 100a: A slug\n"}, True),

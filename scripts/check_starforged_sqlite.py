@@ -28,15 +28,15 @@ EXPECTED_COUNTS = {
     "truth_options":   42,
 }
 
+EXPECTED_OUTCOMELESS_MOVES = 18
+"""Session/Suffer/etc. narrative moves that do not roll."""
+
 
 def check_row_counts(conn: sqlite3.Connection, fails: list[str]) -> None:
     for tbl, want in EXPECTED_COUNTS.items():
         got = conn.execute(f"SELECT COUNT(*) FROM {tbl}").fetchone()[0]
         if got != want:
             fails.append(f"{tbl}: got {got}, want {want}")
-
-
-EXPECTED_OUTCOMELESS_MOVES = 18   # Session/Suffer/etc. narrative moves that don't roll.
 
 
 def check_every_move_has_outcome(conn: sqlite3.Connection, fails: list[str]) -> None:
@@ -73,23 +73,19 @@ def check_no_orphan_fks(conn: sqlite3.Connection, fails: list[str]) -> None:
 
 
 def check_oracle_coverage(conn: sqlite3.Connection, fails: list[str]) -> None:
-    """Every oracle's rows cover [1..100] without gap or overlap."""
-    # Sum of (chance_max - chance_min + 1) per oracle should equal 100
-    # and no two rows should share a value. First check the sum invariant.
+    """Every oracle's rows cover [1..100] without gap or overlap.
+
+    Some oracles legitimately have <100 coverage (per-quirk tables of a
+    fixed handful of options), so the sum invariant is a soft signal.
+    The hard fail is overlapping rows within a single oracle.
+    """
     bad_sums = conn.execute("""
         SELECT oracle_id, SUM(chance_max - chance_min + 1) AS width
         FROM oracle_rows GROUP BY oracle_id
         HAVING width <> 100 AND width <> 0
     """).fetchall()
     if bad_sums:
-        # Some oracles legitimately have <100 coverage (e.g. per-quirk
-        # tables of a fixed handful of options). Report and continue —
-        # this is a soft signal, not a hard fail, unless coverage is
-        # inconsistent with the row layout. For strict correctness we
-        # only fail if a numeric oracle covers 100 partially (gap or
-        # overlap detected via next check).
         pass
-    # Hard fail: overlapping rows within a single oracle.
     overlaps = conn.execute("""
         SELECT a.oracle_id, a.chance_min, a.chance_max,
                b.chance_min, b.chance_max
@@ -121,8 +117,6 @@ def check(db_path: Path) -> int:
     return 0
 
 
-# --- Self-test with planted defects ---------------------------------------
-
 _SCHEMA = """
 CREATE TABLE moves (id TEXT PRIMARY KEY, name TEXT, category TEXT,
                     source_page INTEGER, trigger_text TEXT, body_text TEXT,
@@ -149,10 +143,11 @@ CREATE TABLE truth_options (truth_id TEXT, idx INTEGER, chance_min INTEGER,
 
 
 def _plant(defect: str) -> sqlite3.Connection:
+    """Seed one row per table matching EXPECTED_COUNTS shape so the ONLY
+    reason a defect trips is the planted flaw.
+    """
     conn = sqlite3.connect(":memory:")
     conn.executescript(_SCHEMA)
-    # Base: seed one row per table matching EXPECTED_COUNTS shape so the
-    # ONLY reason a defect trips is the planted flaw.
     conn.execute("INSERT INTO moves VALUES ('M/1','n','c',1,'t','b','r')")
     conn.execute("INSERT INTO move_outcomes VALUES ('M/1','Strong Hit','x')")
     conn.execute("INSERT INTO assets VALUES ('A/1','n','c',1,'{}')")
@@ -165,10 +160,8 @@ def _plant(defect: str) -> sqlite3.Connection:
     if defect == "orphan_outcome":
         conn.execute("INSERT INTO move_outcomes VALUES ('M/orphan','Miss','y')")
     elif defect == "missing_outcome_on_move":
-        # Add EXPECTED_OUTCOMELESS_MOVES + 2 orphan moves so we exceed baseline.
         for i in range(EXPECTED_OUTCOMELESS_MOVES + 2):
             conn.execute(f"INSERT INTO moves VALUES ('M/orphan{i}','n','c',1,'t','b','r')")
-        # no matching outcomes
     elif defect == "oracle_overlap":
         conn.execute("INSERT INTO oracle_rows VALUES ('O/2',1,60,'a')")
         conn.execute("INSERT INTO oracles VALUES ('O/2','n','c',2)")
@@ -186,10 +179,14 @@ def _run(conn: sqlite3.Connection) -> list[str]:
 
 
 def self_test() -> int:
+    """Pristine control plus three planted defects.
+
+    Row-count check is skipped since the pristine fixture is not populating
+    56 moves etc.; the pristine DB should be clean under the invariant
+    checks alone.
+    """
     failures: list[str] = []
 
-    # Positive control: pristine DB → no complaints from the invariant checks
-    # (row-count check is skipped since we're not populating 56 moves etc.).
     conn = _plant("none")
     fails = _run(conn)
     if fails:

@@ -35,7 +35,6 @@ def camera(az_deg, elev=0.25, dist=3.0):
     return Camera(width=W, height=H, fx=fx, fy=fx, cx=W / 2, cy=H / 2, view=V)
 
 
-# ---- the throughput sweep: block size against work and wall time --------------------
 cam = camera(0.0)
 tau = tau_for_bleed(0.5, faces.shape[0]); pad = influence_pad(tau, faces.shape[0])
 tri = cam.project(verts)[faces]; tri_o = tri[_morton_order(tri)]
@@ -63,7 +62,6 @@ for mf in (64,):
         best = (mf, el)
 print(f"\nfastest: max_faces={best[0]} at {best[1]:.3f} s/img")
 
-# ---- samples ------------------------------------------------------------------------
 MF = best[0]
 for tag, az in (("front", 0.0), ("three-quarter", 40.0), ("side", 90.0)):
     cam = camera(az)
@@ -80,7 +78,6 @@ for tag, az in (("front", 0.0), ("three-quarter", 40.0), ("side", 90.0)):
     Image.fromarray((body.cpu().numpy() * 255).astype(np.uint8)).save(
         os.path.join(OUT, f"anny-{tag}-silhouette.png"))
 
-    # keypoints on the depth, coloured by whether the body is in front of the joint
     jp = cam.project(joints).detach()
     jc = (cam.view @ torch.cat([joints, torch.ones_like(joints[:, :1])], -1).T).T[:, 2]
     rgb = np.repeat((dn.cpu().numpy() * 255).astype(np.uint8)[:, :, None], 3, 2)

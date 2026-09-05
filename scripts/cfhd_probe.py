@@ -1,12 +1,41 @@
 """Can depth survive CineForm, and does Matroska accept it?
 
-CineForm is a wavelet codec sold as VISUALLY lossless. Depth is not a picture, it is a
-measurement in metres, so "you cannot see the difference" is not the test. The test is how
-many millimetres come back changed, and that is what this measures before any corpus is
-written through it.
+CineForm is a wavelet codec sold as VISUALLY lossless. Depth is not a
+picture, it is a measurement in metres, so "you cannot see the difference"
+is not the test. The test is how many millimetres come back changed, and
+that is what this measures before any corpus is written through it.
 
-The probe encodes a known ramp plus a hard depth discontinuity, because wavelets do their
-worst at edges and a smooth ramp alone would flatter the codec.
+The probe encodes a known ramp plus a hard depth discontinuity, because
+wavelets do their worst at edges and a smooth ramp alone would flatter the
+codec.
+
+## Band and step choice
+
+`NEAR` and `FAR` must contain the step, or the clip in `quantise` shows up
+as codec error. The first version used 2.4 .. 3.5 with a step down to 2.2,
+so 200 mm of pure clipping was reported as a max error and read as if the
+codec had done it. The ramp spans a sub-range of the band, so a 0.2 m step
+down still lands inside it.
+
+## Pixel formats
+
+Both containers behaved identically in the first pass, so Matroska only
+from here — it is the FOSS one. The variable is BIT DEPTH:
+
+    gbrp12le      12-bit planar RGB, depth in all three planes
+    gbrap12le     12-bit planar RGB + alpha, for the overlay layer
+    yuv422p10le   10-bit, depth in luma only so 4:2:2 chroma subsampling
+                  cannot touch it
+
+gbrp12le is planar 12-bit RGB. Depth goes in all three planes identically,
+so the codec sees no chroma detail to spend bits on.
+
+## Two error kinds, reported separately
+
+They have different causes and different fixes.
+
+    quantisation -- chosen, fixed by more bits or a tighter band
+    codec        -- what CineForm ADDS on top, fixed only by a different codec
 """
 import json
 import os
@@ -18,17 +47,11 @@ import numpy as np
 SP = os.path.dirname(os.path.abspath(__file__))
 W = H = 1024
 N = 24
-# The band must contain the step, or the clip in `quantise` shows up as codec error. The
-# first version used 2.4 .. 3.5 with a step down to 2.2, so 200 mm of pure clipping was
-# reported as a max error and read as if the codec had done it.
 NEAR, FAR = 2.0, 3.6
 
 
 def source_depth(i):
-    """A ramp, plus a step of 0.2 m -- an arm crossing a torso -- that moves with the frame."""
-    # The ramp spans a SUB-range of the band, so a 0.2 m step down still lands inside it.
-    # Spanning the full band meant the step clipped at the near end, and 200 mm of clipping
-    # was reported twice as if it were an error the codec had made.
+    """A ramp, plus a step of 0.2 m — an arm crossing a torso — that moves with the frame."""
     y, x = np.mgrid[0:H, 0:W].astype(np.float32)
     z = (NEAR + 0.25) + ((FAR - 0.05) - (NEAR + 0.25)) * (x / (W - 1))
     step = (y > (H * 0.3 + i * 8)) & (y < (H * 0.7 + i * 8))
@@ -52,19 +75,12 @@ def run(cmd, **kw):
 
 
 results = {}
-# Both containers behaved identically in the first pass, so Matroska only from here -- it is
-# the FOSS one. The variable now is BIT DEPTH, which is what actually decides precision.
-#   gbrp12le      12-bit planar RGB, depth in all three planes
-#   gbrap12le     12-bit planar RGB + alpha, for the overlay layer
-#   yuv422p10le   10-bit, depth in luma only so 4:2:2 chroma subsampling cannot touch it
 for container, ext, pix, bits, nplanes in (
         ("matroska", "12bit.mkv", "gbrp12le", 12, 3),
         ("matroska", "10bit.mkv", "yuv422p10le", 10, 1)):
     out = os.path.join(SP, "probe.%s" % ext)
     if os.path.exists(out):
         os.remove(out)
-    # gbrp12le is planar 12-bit RGB. Depth goes in all three planes identically, so the
-    # codec sees no chroma detail to spend bits on.
     enc = subprocess.Popen(
         ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
          "-f", "rawvideo", "-pix_fmt", pix, "-s", "%dx%d" % (W, H),
@@ -76,7 +92,7 @@ for container, ext, pix, bits, nplanes in (
         plane = quantise(source_depth(i), bits).astype("<u2")
         for _ in range(nplanes):
             enc.stdin.write(plane.tobytes())
-        if pix == "yuv422p10le":              # neutral chroma at half width
+        if pix == "yuv422p10le":
             neutral = np.full((H, W // 2), 1 << (bits - 1), dtype="<u2")
             enc.stdin.write(neutral.tobytes())
             enc.stdin.write(neutral.tobytes())
@@ -96,9 +112,6 @@ for container, ext, pix, bits, nplanes in (
     per = W * H * 2
     stride = per * nplanes + (W * H * 2 if pix == "yuv422p10le" else 0)
     frames = len(raw) // stride
-    # Two errors, separated, because they have different causes and different fixes.
-    #   quantisation -- chosen, fixed by more bits or a tighter band
-    #   codec        -- what CineForm ADDS on top, fixed only by a different codec
     worst_med = worst_max = 0.0
     codec_med = codec_max = 0.0
     exact = 0
@@ -108,10 +121,10 @@ for container, ext, pix, bits, nplanes in (
         ref = source_depth(i)
         qref = quantise(ref, bits)
         got = dequantise(g, bits)
-        d = np.abs(got - dequantise(qref, bits))    # codec only
+        d = np.abs(got - dequantise(qref, bits))
         codec_med = max(codec_med, float(np.median(d)))
         codec_max = max(codec_max, float(d.max()))
-        e = np.abs(got - ref)                        # end to end
+        e = np.abs(got - ref)
         worst_med = max(worst_med, float(np.median(e)))
         worst_max = max(worst_max, float(e.max()))
         exact += int((g == qref).sum())
@@ -129,7 +142,6 @@ for container, ext, pix, bits, nplanes in (
           % (pix, frames, r["mb_per_1000_frames"], r["median_mm"], r["max_mm"],
              r["codec_median_mm"], r["codec_max_mm"], r["codes_exact_pct"]))
 
-# the floor: what pure 12-bit quantisation costs, with no codec at all
 for b in (10, 12):
     q = dequantise(quantise(source_depth(0), b), b)
     qe = np.abs(q - source_depth(0))

@@ -1,29 +1,54 @@
 """Measured throughput for the devices in RFD 1122's plan, against their derived peak rates.
 
-WHY THIS EXISTS. `rfd1122-plan.usda`'s Devices scope carries peak rates DERIVED from
-architecture -- units x lanes x 2 for the fused multiply-add x clock -- and every clock in it is
-a vendor boost figure marked ASSUMED. `check_rfd1122_plan.py` re-derives the arithmetic, which
-catches a transcription error and nothing else: a derivation cannot tell you whether a device
-reaches its peak, and the plan currently scales GPU-bound work by ratios of numbers no one has
-observed.
+`rfd1122-plan.usda`'s Devices scope carries peak rates DERIVED from
+architecture — units x lanes x 2 for the fused multiply-add x clock —
+and every clock in it is a vendor boost figure marked ASSUMED.
+`check_rfd1122_plan.py` re-derives the arithmetic, which catches a
+transcription error and nothing else: a derivation cannot tell you
+whether a device reaches its peak, and the plan currently scales
+GPU-bound work by ratios of numbers no one has observed.
 
-`logbook-edge-npu-and-the-anny-forward.md` set the convention this answers to. It divides by
-40 TOPS INT4 at an ASSUMED 30% utilisation and says plainly to "treat those as a ranking and
-not a budget", because the DFC profiler was never run. This runs the profiler for the one
-device that is here.
+`logbook-edge-npu-and-the-anny-forward.md` set the convention this
+answers to. It divides by 40 TOPS INT4 at an ASSUMED 30% utilisation
+and says plainly to "treat those as a ranking and not a budget",
+because the DFC profiler was never run. This runs the profiler for
+the one device that is here.
 
-METHOD, AND IT IS THE ORDINARY ONE. Dense GEMM, C = A @ B at (n, n) @ (n, n), which costs
-exactly 2*n^3 floating-point operations -- n^3 multiplies and n^3 adds, the fused pair counted
-as two, the same convention the derived peak uses. Anything else measures a kernel author. Sizes
-are swept because a single size measures a cache; the best rate over the sweep is what the
-device reaches. The device is synchronised before and after, since an asynchronous queue times
-the enqueue rather than the work -- which is the trap `mi_bench2.py` records paying for.
+## Method
 
-WHAT A RATIO TO PEAK DOES AND DOES NOT MEAN. GEMM is the friendliest shape a device sees. A
-number here is an upper bound on what real work reaches, so a low ratio is evidence and a high
-one is not a promise.
+Dense GEMM, C = A @ B at (n, n) @ (n, n), which costs exactly 2*n^3
+floating-point operations — n^3 multiplies and n^3 adds, the fused
+pair counted as two, the same convention the derived peak uses.
+Anything else measures a kernel author. Sizes are swept because a
+single size measures a cache; the best rate over the sweep is what
+the device reaches. The device is synchronised before and after,
+since an asynchronous queue times the enqueue rather than the work —
+which is the trap `mi_bench2.py` records paying for.
 
-Usage:
+## What a ratio to peak does and does not mean
+
+GEMM is the friendliest shape a device sees. A number here is an
+upper bound on what real work reaches, so a low ratio is evidence
+and a high one is not a promise.
+
+## Derived peak
+
+Read from `rfd1122-plan.usda`'s Devices scope. Restated here would be
+a second place for the fact to live, so the arithmetic is repeated
+rather than the answer: 19 cores x 128 lanes x 2 x 1.398 GHz. If the
+stage changes, edit these constants and let `check_rfd1122_plan.py`
+hold the stage against itself.
+
+## bf16 in the sweep
+
+The Devices scope records `bf16Native = 0` for this part, and the
+consequence it draws is that running a generator at published
+precision here is emulation. That is checkable: if bf16 lands far
+below fp16, the claim holds; if it matches, the claim is wrong and
+the plan should say so.
+
+## Usage
+
     python gpu_tops.py [--sizes 1024,2048,4096] [--results DIR]
 """
 
@@ -34,10 +59,6 @@ import subprocess
 import sys
 import time
 
-# Derived peak, from `rfd1122-plan.usda`'s Devices scope. Restated here would be a second place
-# for the fact to live, so the arithmetic is repeated rather than the answer: 19 cores x 128
-# lanes x 2 x 1.398 GHz. If the stage changes, this line is what should be edited to match, and
-# `check_rfd1122_plan.py` is what checks the stage against itself.
 M2PRO_CORES, M2PRO_LANES, M2PRO_GHZ = 19, 128, 1.398
 DERIVED_TFLOPS = M2PRO_CORES * M2PRO_LANES * 2 * M2PRO_GHZ / 1000.0
 
@@ -73,7 +94,7 @@ def gemm(torch, device, dtype, n, iters=8):
         sync()
         best = min(best, time.perf_counter() - t0)
     del c
-    return 2.0 * n ** 3 / best / 1e12          # TFLOP/s
+    return 2.0 * n ** 3 / best / 1e12
 
 
 def main(argv):
@@ -92,10 +113,6 @@ def main(argv):
     print(f"method           dense GEMM, 2*n^3 flops, best-of-8, synchronised\n")
 
     rows, results = [], {}
-    # bf16 IS IN THE SWEEP TO TEST A CLAIM THE PLAN MAKES. The Devices scope records
-    # `bf16Native = 0` for this part, and the consequence it draws is that running a generator
-    # at published precision here is emulation. That is checkable: if bf16 lands far below
-    # fp16, the claim holds; if it matches, the claim is wrong and the plan should say so.
     for label, device, dtype in (("mps fp32", "mps", torch.float32),
                                  ("mps fp16", "mps", torch.float16),
                                  ("mps bf16", "mps", torch.bfloat16),

@@ -1,18 +1,30 @@
 """T01, projected from the viewpoints Pixal3D's sequence chooses rather than from an axis.
 
-WHY NOT front OR side. The first two sheets picked a world axis by hand, and the choice decided
-the answer: a front view flattened the stride, because mean foot separation is 0.356 m along the
-travel axis against 0.230 m across it -- about five stacked soda cans against three and a half.
-Swapping to the side view fixed that one case and left the same objection standing, since the
-next dataset may travel along a different axis.
+Why not front or side. The first two sheets picked a world axis by hand,
+and the choice decided the answer: a front view flattened the stride,
+because mean foot separation is 0.356 m along the travel axis against
+0.230 m across it — about five stacked soda cans against three and a
+half. Swapping to the side view fixed that one case and left the same
+objection standing, since the next dataset may travel along a different
+axis.
 
-`sphere_hammersley_sequence` removes the choice. It is the camera generator TRELLIS.2 and
-Pixal3D use, ported exactly in `render_view.py`, and it is parameterised by an integer: view i
-of n is a yaw and a pitch, well spread over the sphere and reproducible from the index alone.
-The twenty poses therefore get twenty different viewpoints, none of them argued for.
+`sphere_hammersley_sequence` removes the choice. It is the camera
+generator TRELLIS.2 and Pixal3D use, ported exactly in `render_view.py`,
+and it is parameterised by an integer: view i of n is a yaw and a pitch,
+well spread over the sphere and reproducible from the index alone. The
+twenty poses therefore get twenty different viewpoints, none of them
+argued for.
 
-The projection is orthographic onto the plane facing each camera, with world Y up. No renderer,
-no GPU, no install, which is what the task allows.
+The projection is orthographic onto the plane facing each camera, with
+world Y up. No renderer, no GPU, no install, which is what the task
+allows.
+
+## Basis derivation
+
+`up = forward x right`. Written the other way round first, and every
+figure collapsed to a diagonal line — the basis was degenerate, not the
+data. Checked against the identity case: forward (0,0,1) and right
+(1,0,0) must give up (0,1,0).
 """
 import math
 import pathlib
@@ -24,7 +36,7 @@ from PIL import Image, ImageDraw
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[0]))
 CORPUS = r"C:\weftspun-keypoint\6-datasource\anny-render-corpus"
 sys.path.insert(0, CORPUS)
-from render_view import sphere_hammersley  # noqa: E402  the point of the exercise
+from render_view import sphere_hammersley  # noqa: E402
 
 SRC, OUT = sys.argv[1], sys.argv[2]
 
@@ -55,12 +67,8 @@ cameras = []
 for k, clip in enumerate(clips):
     yaw, pitch = sphere_hammersley(k, n)
     cameras.append((clip, yaw, pitch))
-    # Orthographic basis facing (yaw, pitch), world Y up.
     fx, fy, fz = math.cos(pitch) * math.sin(yaw), math.sin(pitch), math.cos(pitch) * math.cos(yaw)
-    rx, rz = math.cos(yaw), -math.sin(yaw)          # right, horizontal so the horizon stays level
-    # up = forward x right. Written the other way round first, and every figure collapsed to a
-    # diagonal line -- the basis was degenerate, not the data. Checked against the identity
-    # case: forward (0,0,1) and right (1,0,0) must give up (0,1,0).
+    rx, rz = math.cos(yaw), -math.sin(yaw)
     ux, uy, uz = fy * rz, fz * rx - fx * rz, -fy * rx
 
     frames = sorted(by_clip[clip])

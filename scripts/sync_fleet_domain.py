@@ -158,7 +158,6 @@ def self_test() -> int:
     """Every counter carries a control (CLAUDE.md rule 2)."""
     fails = []
 
-    # POSITIVE: two agents, two edges, one role → block matches expected shape.
     roles = {"hero": "gpu-experimenter", "anchor": "assist"}
     edges = [
         {"subject": "hero.mps.agents.weftspun", "rel": "owns", "object": "gpu-3090"},
@@ -174,7 +173,6 @@ def self_test() -> int:
     if len(caps["graph"]["edges"]) != 2:
         fails.append(f"edge count wrong: {len(caps['graph']['edges'])}")
 
-    # NEGATIVE (rule 2): duplicate edges MUST be collapsed to one.
     dup_edges = edges + [edges[0]]
     caps_dup = build_capabilities_block(
         ["hero.mps.agents.weftspun", "anchor.mps.agents.weftspun"],
@@ -182,8 +180,6 @@ def self_test() -> int:
     if len(caps_dup["graph"]["edges"]) != 2:
         fails.append(f"dedup broken: {len(caps_dup['graph']['edges'])} (expected 2)")
 
-    # NEGATIVE (rule 2): an edge with a verb outside CAPABILITY_VERBS must not
-    # enter — parse a synthetic relationships key set and assert filtering.
     synthetic = ["hero.mps--may-use--gpu--gpu-3090",
                  "hero.mps--role--gpu-experimenter",
                  "hero.mps--secret-verb--gpu-3090"]
@@ -198,7 +194,6 @@ def self_test() -> int:
     if len(parsed) != 1 or parsed[0][1] != "may-use--gpu":
         fails.append(f"verb filter broken: {parsed}")
 
-    # NEGATIVE (rule 2): unknown role must resolve to empty cap list, not crash.
     caps_unknown = build_capabilities_block(
         ["ghost.mps.agents.weftspun"], {"ghost": "wizard"}, [])
     if caps_unknown["entities"]["ghost.mps.agents.weftspun"] != []:
