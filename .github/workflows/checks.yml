@@ -55,8 +55,13 @@ jobs:
         working-directory: transport-shepherd
         run: mix deps.get
       - run: pip install prek
+      # GH_TOKEN passthrough for the shepherd goal-manifests port, which asks the
+      # organisation which repos are archived (same reason the goal-manifests
+      # python job below carries it). Without it the shepherd hook reports FAIL
+      # UNCHECKED per rule 3 rather than a silent skip.
       - env:
           SHEPHERD_ROOT: ${{ github.workspace }}/transport-shepherd
+          GH_TOKEN: ${{ github.token }}
         run: prek run --all-files --show-diff-on-failure --color always
 
   # THE GOAL-MANIFEST GATE IS A CI JOB AND NOT A PREK HOOK, AND THE REASON IS THE TOKEN.
