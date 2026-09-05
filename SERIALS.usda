@@ -46,10 +46,6 @@ def Scope "Serials"
                 {
                     custom string slug = "task-manager-job-lifecycle"
                 }
-                def "S1004"
-                {
-                    custom string slug = "aigc-task-catalog"
-                }
                 def "S1005"
                 {
                     custom string slug = "avatar-and-vrm-pipeline"
@@ -66,10 +62,6 @@ def Scope "Serials"
                 {
                     custom string slug = "appearance-trait-extraction-and-remix"
                 }
-                def "S1009"
-                {
-                    custom string slug = "viewport-and-scene-rendering"
-                }
                 def "S1010"
                 {
                     custom string slug = "webxr-and-iwsdk-lab"
@@ -77,10 +69,6 @@ def Scope "Serials"
                 def "S1011"
                 {
                     custom string slug = "spatial-fabric-publish"
-                }
-                def "S1012"
-                {
-                    custom string slug = "wallet-minting-and-x402"
                 }
                 def "S1013"
                 {
@@ -90,14 +78,6 @@ def Scope "Serials"
                 {
                     custom string slug = "batch-processing"
                 }
-                def "S1015"
-                {
-                    custom string slug = "phygital-passport"
-                }
-                def "S1016"
-                {
-                    custom string slug = "deep-learning-model-inventory"
-                }
                 def "S1017"
                 {
                     custom string slug = "fork-rebrand-to-weftspun"
@@ -105,10 +85,6 @@ def Scope "Serials"
                 def "S1018"
                 {
                     custom string slug = "m3-documentation-removal"
-                }
-                def "S1019"
-                {
-                    custom string slug = "strangler-fig-studio-core"
                 }
                 def "S1020"
                 {
@@ -220,22 +196,6 @@ def Scope "Serials"
                 {
                     custom string slug = "voxhammer-image-mesh-editing"
                 }
-                def "S1049"
-                {
-                    custom string slug = "weftspun-image-to-world"
-                }
-                def "S1050"
-                {
-                    custom string slug = "lingbot-map-environment-scan"
-                }
-                def "S1051"
-                {
-                    custom string slug = "worldmirror2-reconstruct"
-                }
-                def "S1052"
-                {
-                    custom string slug = "triposplat-image-to-splat"
-                }
                 def "S1053"
                 {
                     custom string slug = "openusd-as-the-internal-format"
@@ -273,10 +233,6 @@ def Scope "Serials"
                 {
                     custom string slug = "glb-upload-prep-via-idtx-core"
                 }
-                def "S1062"
-                {
-                    custom string slug = "flyio-toplevel-4090-worker-split"
-                }
                 def "S1063"
                 {
                     custom string slug = "ste-enforcement-moves-to-the-plugin"
@@ -288,14 +244,6 @@ def Scope "Serials"
                 def "S1065"
                 {
                     custom string slug = "taskweft-domain-schema-in-etnf"
-                }
-                def "S1066"
-                {
-                    custom string slug = "differential-mamba-for-caption-encoding"
-                }
-                def "S1067"
-                {
-                    custom string slug = "cockroachdb-reranked-against-foundationdb"
                 }
                 def "S1070"
                 {
@@ -353,25 +301,9 @@ def Scope "Serials"
                 {
                     custom string slug = "dev-machine-topology"
                 }
-                def "S1087"
-                {
-                    custom string slug = "gemini"
-                }
                 def "S1088"
                 {
                     custom string slug = "https-setup"
-                }
-                def "S1089"
-                {
-                    custom string slug = "hyworld-image-to-world-scope"
-                }
-                def "S1090"
-                {
-                    custom string slug = "iwsdk-integration"
-                }
-                def "S1091"
-                {
-                    custom string slug = "iwsdk-local-fork"
                 }
                 def "S1092"
                 {
@@ -381,10 +313,6 @@ def Scope "Serials"
                 {
                     custom string slug = "loot-assets-setup"
                 }
-                def "S1094"
-                {
-                    custom string slug = "multi-image-splat-roadmap"
-                }
                 def "S1095"
                 {
                     custom string slug = "nvidia-xr-ai-integration"
@@ -393,21 +321,9 @@ def Scope "Serials"
                 {
                     custom string slug = "openxr-face-tracking-android-xr"
                 }
-                def "S1098"
-                {
-                    custom string slug = "public-deploy"
-                }
                 def "S1099"
                 {
                     custom string slug = "scripts-cheatsheet"
-                }
-                def "S1100"
-                {
-                    custom string slug = "spatial-fabric-integration"
-                }
-                def "S1101"
-                {
-                    custom string slug = "ssh-host-names"
                 }
                 def "S1102"
                 {
@@ -437,10 +353,6 @@ def Scope "Serials"
                 def "S1108"
                 {
                     custom string slug = "xr-mode-floor-anchoring-and-backgrounds"
-                }
-                def "S1109"
-                {
-                    custom string slug = "moat-payment-rails-and-phygital-registry"
                 }
                 def "S1110"
                 {
@@ -490,10 +402,6 @@ def Scope "Serials"
                 {
                     custom string slug = "layers-from-geometry-and-the-missing-categories"
                 }
-                def "S1122"
-                {
-                    custom string slug = "the-wholebody-gap"
-                }
                 def "S1123"
                 {
                     custom string slug = "cineform-in-godot"
@@ -526,10 +434,6 @@ def Scope "Serials"
                 {
                     custom string slug = "operator-emulation-for-the-accelerator"
                 }
-                def "S1132"
-                {
-                    custom string slug = "priority-list-of-converted-models"
-                }
                 def "S1133"
                 {
                     custom string slug = "models-excluded-from-conversion"
@@ -557,10 +461,6 @@ def Scope "Serials"
                 def "S1139"
                 {
                     custom string slug = "conventions-are-measured"
-                }
-                def "S1140"
-                {
-                    custom string slug = "rented-gpus-on-runpod"
                 }
                 def "S1141"
                 {
@@ -619,45 +519,13 @@ def Scope "Serials"
                 {
                     custom string slug = "judging-matte-quality"
                 }
-                def "S1154"
-                {
-                    custom string slug = "pixal3d-at-four-bits"
-                }
-                def "S1155"
-                {
-                    custom string slug = "gemma4-towers-not-decoder"
-                }
-                def "S1156"
-                {
-                    custom string slug = "omnigen2-staged-residency"
-                }
                 def "S1157"
                 {
                     custom string slug = "editscore-merger-lora"
                 }
-                def "S1158"
-                {
-                    custom string slug = "seethrough-layer-decomposition-edge"
-                }
-                def "S1159"
-                {
-                    custom string slug = "trellis2-at-the-ceiling"
-                }
-                def "S1160"
-                {
-                    custom string slug = "skintokens-edge-fit"
-                }
                 def "S1161"
                 {
                     custom string slug = "kimodo-edge-fit"
-                }
-                def "S1162"
-                {
-                    custom string slug = "voxhammer-zero-weights"
-                }
-                def "S1163"
-                {
-                    custom string slug = "the-accelerator-in-the-loops"
                 }
                 def "S1164"
                 {
@@ -666,10 +534,6 @@ def Scope "Serials"
                 def "S1165"
                 {
                     custom string slug = "finetuning-exhausts-the-desk-card"
-                }
-                def "S1166"
-                {
-                    custom string slug = "scoring-the-accelerator-candidates"
                 }
                 def "S1167"
                 {
@@ -738,6 +602,153 @@ def Scope "Serials"
                 custom uniform token kind = "satellite"
                 custom string primaryKey = "serial"
 
+            }
+        }
+
+        def Scope "Deleted"
+        {
+            def "Rfd"
+            {
+                custom string[] columns = ["serial int16 PK", "slug string"]
+                custom uniform token kind = "spine"
+                custom string primaryKey = "serial"
+
+                def "S1004"
+                {
+                    custom string slug = "aigc-task-catalog"
+                }
+                def "S1009"
+                {
+                    custom string slug = "viewport-and-scene-rendering"
+                }
+                def "S1012"
+                {
+                    custom string slug = "wallet-minting-and-x402"
+                }
+                def "S1015"
+                {
+                    custom string slug = "phygital-passport"
+                }
+                def "S1016"
+                {
+                    custom string slug = "deep-learning-model-inventory"
+                }
+                def "S1019"
+                {
+                    custom string slug = "strangler-fig-studio-core"
+                }
+                def "S1049"
+                {
+                    custom string slug = "weftspun-image-to-world"
+                }
+                def "S1050"
+                {
+                    custom string slug = "lingbot-map-environment-scan"
+                }
+                def "S1051"
+                {
+                    custom string slug = "worldmirror2-reconstruct"
+                }
+                def "S1052"
+                {
+                    custom string slug = "triposplat-image-to-splat"
+                }
+                def "S1062"
+                {
+                    custom string slug = "flyio-toplevel-4090-worker-split"
+                }
+                def "S1066"
+                {
+                    custom string slug = "differential-mamba-for-caption-encoding"
+                }
+                def "S1067"
+                {
+                    custom string slug = "cockroachdb-reranked-against-foundationdb"
+                }
+                def "S1087"
+                {
+                    custom string slug = "gemini"
+                }
+                def "S1089"
+                {
+                    custom string slug = "hyworld-image-to-world-scope"
+                }
+                def "S1090"
+                {
+                    custom string slug = "iwsdk-integration"
+                }
+                def "S1091"
+                {
+                    custom string slug = "iwsdk-local-fork"
+                }
+                def "S1094"
+                {
+                    custom string slug = "multi-image-splat-roadmap"
+                }
+                def "S1098"
+                {
+                    custom string slug = "public-deploy"
+                }
+                def "S1100"
+                {
+                    custom string slug = "spatial-fabric-integration"
+                }
+                def "S1101"
+                {
+                    custom string slug = "ssh-host-names"
+                }
+                def "S1109"
+                {
+                    custom string slug = "moat-payment-rails-and-phygital-registry"
+                }
+                def "S1122"
+                {
+                    custom string slug = "the-wholebody-gap"
+                }
+                def "S1132"
+                {
+                    custom string slug = "priority-list-of-converted-models"
+                }
+                def "S1140"
+                {
+                    custom string slug = "rented-gpus-on-runpod"
+                }
+                def "S1154"
+                {
+                    custom string slug = "pixal3d-at-four-bits"
+                }
+                def "S1155"
+                {
+                    custom string slug = "gemma4-towers-not-decoder"
+                }
+                def "S1156"
+                {
+                    custom string slug = "omnigen2-staged-residency"
+                }
+                def "S1158"
+                {
+                    custom string slug = "seethrough-layer-decomposition-edge"
+                }
+                def "S1159"
+                {
+                    custom string slug = "trellis2-at-the-ceiling"
+                }
+                def "S1160"
+                {
+                    custom string slug = "skintokens-edge-fit"
+                }
+                def "S1162"
+                {
+                    custom string slug = "voxhammer-zero-weights"
+                }
+                def "S1163"
+                {
+                    custom string slug = "the-accelerator-in-the-loops"
+                }
+                def "S1166"
+                {
+                    custom string slug = "scoring-the-accelerator-candidates"
+                }
                 def "S1024"
                 {
                     custom int recorded_in = 1070
