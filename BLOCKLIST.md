@@ -1675,3 +1675,29 @@ corpus generator, `interactor-omnigen2`) stays allowlisted with no
 carve-out changes; recorded here so a reader sweeping through the
 2026-09-05 model allowlist/blocklist directives does not need to
 guess whether OmniGen2 was implicitly affected. It was not.
+
+### ONNX Runtime Web and TensorFlow.js are blocklisted as browser inference runtimes
+
+Operator directive 2026-09-05, verbatim: *"onnx runtime web tfjs
+is blocklisted"*.
+
+The workspace's inference stack is **ggml** (RFD 2188 canonical
+source; RFD 2218 WebGPU backend; RFD 2228 native delivery). A
+second browser inference runtime would fork the model conversion
+path, the quantization story, and the debugging surface for
+nothing this workspace needs. RFD 2217's earlier evaluation of
+WebGL2-via-TFJS for ggml was already blocklisted (superseded by
+RFD 2218 which picked WebGPU); this row generalises: TFJS and
+ORT-Web do not enter shipping artefacts regardless of backend
+(WebGL, WebGPU, or WASM).
+
+**What the row does not cover.** ORT and TFJS as native training
+runtimes on the server are not what this row is about; nothing
+in the workspace uses them there either, but this row is scoped
+to browser inference. Reading someone else's TFJS or ORT-Web demo
+to understand a technique is not shipping. Historic RFDs that
+name TFJS as a precedent (RFD 2217 §Precedents) stay as records.
+
+Substitute: ggml compiled to native WebGPU per RFD 2218 / RFD 2228,
+running under Godot's `modules/motionbricks/` or the equivalent
+per-consumer module.
