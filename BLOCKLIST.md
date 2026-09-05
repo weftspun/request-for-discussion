@@ -1563,6 +1563,7 @@ own MToon support and its glTF/VRM importers (via godot-vrm as a
 godot-sandbox ELF per RFD 2213) cover the three-vrm role.
 
 **What this costs.**
+
 - `7-service/service-sqlar-cas/docs/{vrm.js,index.html}` renders
   the Starforged VRM portrait per RFD 2206; moves to Godot or
   retires.
@@ -1576,6 +1577,7 @@ godot-sandbox ELF per RFD 2213) cover the three-vrm role.
   MToon renderer or retires.
 
 **Carve-outs.**
+
 - **Vendored upstream demos are exempt.**
   `3-interactor/moge-upstream/moge/utils/gradio_3d_viewer/`,
   `3-interactor/taskweft/thirdparty/gltf/extensions/.../examples/`,
@@ -1592,8 +1594,8 @@ runtime and the `@pixiv/three-vrm` plugin as our chosen renderer.
 
 ### Gemma 3 is blocklisted as an on-device model; only Gemma 4 is allowlisted
 
-Operator directive 2026-09-05, verbatim: *"gemma3 is blockedlisted
-only gemma4 is allowlisted"*.
+Operator directive 2026-09-05, verbatim: _"gemma3 is blockedlisted
+only gemma4 is allowlisted"_.
 
 The workspace's on-device Gemma line is **Gemma 4 (E2B / E4B)**
 only, per RFD 2199's SIDEKICK survey and the HAILO llama.cpp fork
@@ -1610,7 +1612,7 @@ existing HF datasets we do not own is not a shipping artefact and
 is not covered here.
 
 **Related allowlist note (2026-09-05):** operator confirmed
-verbatim *"edit score's qwen3-vl is allowedlist"* — EditScore-7B's
+verbatim _"edit score's qwen3-vl is allowedlist"_ — EditScore-7B's
 **Qwen3-VL base** is explicitly allowlisted. This is orthogonal to
 the Gemma 3 row above (different model family, different vendor);
 recorded here so a reader wondering whether the workspace's
@@ -1619,7 +1621,7 @@ EditScore Qwen3-VL is the sanctioned VLM base". RFDs 1102 and 2193
 name Qwen3-VL as EditScore's fine-tune base; those citations stand.
 
 **Related allowlist note (2026-09-05):** operator confirmed
-verbatim *"omnigen2 is allowlisted as is"* — OmniGen2 (RFD 2183
+verbatim _"omnigen2 is allowlisted as is"_ — OmniGen2 (RFD 2183
 corpus generator, `interactor-omnigen2`) stays allowlisted with no
 carve-out changes; recorded here so a reader sweeping through the
 2026-09-05 model allowlist/blocklist directives does not need to
@@ -1627,8 +1629,8 @@ guess whether OmniGen2 was implicitly affected. It was not.
 
 ### ONNX Runtime Web and TensorFlow.js are blocklisted as browser inference runtimes
 
-Operator directive 2026-09-05, verbatim: *"onnx runtime web tfjs
-is blocklisted"*.
+Operator directive 2026-09-05, verbatim: _"onnx runtime web tfjs
+is blocklisted"_.
 
 The workspace's inference stack is **ggml** (RFD 2188 canonical
 source), linked with ggml's Vulkan backend in the native binary.
@@ -1649,10 +1651,10 @@ binary as one shared `modules/ggml/` module per RFD 2230.
 
 ### WebGPU is blocklisted as a workspace render / compute target
 
-Operator directive 2026-09-05, verbatim: *"wait a second if we're
+Operator directive 2026-09-05, verbatim: _"wait a second if we're
 native we can blocklist webgpu and only use vulkan which has more
-quality assurance hours in production"* + *"vulkan on mac,
-windows and linux has more quality assurance hours than webgpu"*.
+quality assurance hours in production"_ + _"vulkan on mac,
+windows and linux has more quality assurance hours than webgpu"_.
 
 **Why Vulkan wins on all three targets.** On Linux and Windows,
 Vulkan removes one translation layer that WebGPU-native adds. On

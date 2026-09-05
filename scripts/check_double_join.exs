@@ -7,8 +7,7 @@ defmodule DoubleJoin do
   place, and the result reads past a first pass. The specimen is from
   `anny-render-corpus/check_view_selection.py` and it shipped:
 
-      "mean foot separation about five stacked soda cans along the travel axis
-       and against three and a half across it"
+      "mean foot separation about five stacked soda cans along the travel axis and against three and a half across it"
 
   Neither reading works. If "and" is the join, the words after it are a loose
   "against ..." phrase with nothing to be joined to. If "against" is the join,
