@@ -313,3 +313,49 @@ the architecture says it should not have to.
 Steps 1 and 2 are independent and neither needs the accelerator, which
 is the same ordering RFD 1168 and 1169 use and the same argument
 arXiv:2608.12875 makes: find out with the cheap thing first.
+
+## Measurement pass, 2026-09-04
+
+The reasoning stage that RFD 1157 pairs with EditScore is
+Qwen3-VL-8B-Instruct in bitsandbytes NF4, and cell 1 of this pass
+measured its open-ended 40-token reply on RTX 3090 selected by UUID.
+Clean p50 wall was 1980 ms. The 500 ms budget puts that at 396 per
+cent. Under VRChat co-tenancy on the same card, p50 rose to 2745 ms
+(549 per cent); the co-tenancy cost was 27.9 per cent.
+
+Qwen3-VL-2B-Instruct in the same runtime ran the same prompt at clean
+p50 1386 ms (277 per cent of budget). Contested p50 was 2763 ms; the
+2B cell paid 49.8 per cent to co-tenancy against the 8B's 27.9, so the
+smaller model is the more contention-sensitive of the two on this GPU.
+
+Neither cell fits the 500 ms whole-loop budget on this reasoning stage
+alone. The 2B is closer, but not within a factor.
+
+The bitsandbytes NF4 slow-kernel warning fired on the 8B's inner
+dimension 4304, the same failure mode CLAUDE.md's blocklist row
+records against OmniGen2's inner dimension 2520: "inner dimension is
+not aligned for fast kernel with blocksize=64, falling back to slower
+implementation." The warning is a symptom, not the cost; the cost is
+the wall above.
+
+**Option B, unmeasured.** llama.cpp Q4_K_M via Vulkan on the same GPU
+sidesteps the bitsandbytes slow-kernel fallback and typically runs
+2-4x the bnb speed on this hardware class. The Q4_K_M target GGUF and
+the mmproj were staged and a text-only measurement script was drafted;
+the cell was not run. If Option B lands closer to budget, the
+reasoning path has a live lever; if it lands in the same three-to-four
+times zone, structural levers (streaming, moving EditScore off the
+critical path) are next.
+
+**What the pass does not say.** These are the reasoning-stage numbers
+in isolation, and the 500 ms budget in this document is for the whole
+turn (VAD, ASR, reasoning, TTS, viseme, render). VAD measured in the
+same session at 0.48 ms p50 with Silero, uncontested, and is not the
+lever. The other stages were parked before their cells ran.
+
+Raw results and the co-tenancy snapshots at start and end of each
+cell live at `scratchpad/rfd-1170-measure/`:
+`results-reasoning-base-clean.json`,
+`results-reasoning-2b-clean.json`,
+`results-clean-window-summary.json`,
+`nvsmi-clean-{cell1,2b}-{start,end}.csv`.
