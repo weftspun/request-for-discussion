@@ -300,9 +300,7 @@ second needs measuring against what it replaced.
 Apache-2.0 in base and weights alike, and that is not the problem. It is 20.43B
 parameters, 57.7 GB on disk, needing roughly 38 GB at bf16 against a 24 GB card.
 So it runs here at NF4 or not at all, and at NF4 it corrupts (the measurement
-that follows is the reason). Condition 5, which had also blocked the NF4 fit
-as a matter of policy, was retracted 2026-09-02; that retraction does not
-save this row, because the measurement of NF4 corruption stands on its own.
+that follows is the reason).
 
 What makes it a blocklist entry rather than a hardware note is that the
 quantised path is also measurably broken. At NF4 it peaks at 11.9 GiB and
@@ -396,10 +394,7 @@ Q4_K_M GGUF set: 33.8 GB bf16 down to 9.30 GB quantised, because that is what
 fits. GGUF is blocklisted as a model format (see the ggml row above), and the
 Q4_K_M path is exactly what GGUF's blocklist entry addresses. So even with the
 licence resolved, the deployment shape RFD 1016 planned is closed by the GGUF
-row rather than by the licence row. Condition 5, which had also blocked the
-quantised path on precision grounds, was retracted 2026-09-02; the retraction
-does not open Krea 2 either, because the licence row still bars it and the
-GGUF row still bars the Q4_K_M plan.
+row rather than by the licence row.
 
 Neither reason depends on the other. A permissive re-licence would leave the Q4
 problem, and a 48 GB card running bf16 would leave the revenue gate.
@@ -711,15 +706,12 @@ two tensors of identical (1, 256, 48, 48) shape, so it compared one reference
 against the other output and reported 2.5e+00 on every row. The CPU row is what
 exposed it: Core ML's own CPU cannot disagree with PyTorch by 2.5.
 
-### The tinygrad NVIDIA eGPU is unblocked, and the operational costs are why the record stays
+### The tinygrad NVIDIA eGPU is allowlisted; the operational costs are why the record stays
 
-**Retracted 2026-09-03:** the compute rule in CLAUDE.md now reads "GPUs the
-operator owns are the only compute", covering Thunderbolt-attached owned
-eGPUs alongside the local desktop GPU. This row's decision to drop the eGPU
-is reversed on that basis alone; nothing below moved. The three failure
-modes still hold and are accepted as operational costs, and this section
-stays as the record of what those costs are, so the next reader knows what
-a crash of the daemon spends.
+The eGPU is allowlisted under CLAUDE.md's compute rule ("GPUs the operator
+owns are the only compute"). The three failure modes below still hold and
+are accepted as operational costs; this section stays as the record of
+what those costs are.
 
 An RTX 3090 in a Sonnet eGFX Breakaway Box reaches this Mac mini over
 Thunderbolt, driven by `org.tinygrad.tinygpu.driver2`, a DriverKit extension.
@@ -1220,11 +1212,9 @@ production hygiene.
 model serving, or any interactor path. The `transport-runpod` interactor
 (v-sekai-fabric) is archived alongside this row.
 
-**What replaces it.** The local desktop GPU (RTX 3090). Since Condition 5
-was retracted 2026-09-02, corpus generation lands here too: small models
-at fp16 (Qwen3-VL-4B fits with room to spare), large models at NF4
-(Wan-VACE, VoxHammer). Speed is a measurement question now, not a policy
-one.
+**What replaces it.** The local desktop GPU (RTX 3090). Corpus generation
+lands here too: small models at fp16 (Qwen3-VL-4B fits with room to
+spare), large models at NF4 (Wan-VACE, VoxHammer).
 
 `spot-broker` (managed Vast/RunPod deploys) is archived alongside this
 row.
@@ -1557,63 +1547,34 @@ Recorded here rather than as a logbook entry because it is a naming
 rule that applies to every future artefact touching the facial-action
 blendshape set.
 
-### Three.js is blocklisted as an in-browser 3D runtime, and Godot `platform=web` is why
-
-**Amendment 2026-09-05:** RFD 2228 flipped the atelier delivery
-surface from Godot `platform=web` (Emscripten browser export) to a
-**native Godot binary** with Godot's WebGPU renderer via
-Dawn/wgpu-native. The three.js blocklist rationale is unchanged —
-the workspace ships one 3D runtime and three.js is still the second
-one it declines to ship — but the substitute is now the native
-binary, not the browser export. The section body's `platform=web`
-references stay as the historical reasoning that produced the
-blocklist decision; the section title's phrase is the pointer
-landing target per retraction doctrine.
+### Three.js is blocklisted as an in-browser 3D runtime
 
 Three.js itself is MIT-licensed — the objection is not licence, it is
-runtime story. The workspace ships ANNY through Godot on desktop and
-Android; a three.js path forks that story: a second scene-graph the
-avatar has to be re-authored into, a second material pipeline, a
-second animation graph, a second lighting model. Each fork is a
-place the two runtimes render the same scene differently, and each
-difference is a bug nothing reports.
+runtime story. The workspace ships ANNY through Godot; a three.js
+path forks that story: a second scene-graph, material pipeline,
+animation graph, and lighting model. Each fork is a place the two
+runtimes render the same scene differently, and each difference is
+a bug nothing reports.
 
-The substitute costs nothing to adopt because it already ships.
-Godot 4's `platform=web` export produces `godot.web.*.wasm` +
-`godot.web.*.js` from the same source tree that produces the desktop
-build, and the same `.tscn` / `.tres` assets load in both.
-`3-interactor/entities-godot-sandbox` is the canonical checkout
-(see RFD 2211 for the tree-choice reason). Godot's own MToon support
-and its glTF/VRM importers (via godot-vrm as a godot-sandbox ELF per
-RFD 2213) cover the three-vrm role.
+**Substitute:** Godot as a native binary per platform, from
+`3-interactor/entities-godot-sandbox` (see RFD 2211 for the
+tree-choice reason). Vulkan renderer (MoltenVK on macOS) per
+RFD 2231. Godot's own MToon support and its glTF/VRM importers
+(via godot-vrm as a godot-sandbox ELF per RFD 2213) cover the
+three-vrm role.
 
-**Why this row exists now.** RFD 1170 already picks Godot over
-three.js. RFD 2210 reverses the April-2026 "Godot web dropped"
-decision for the atelier workload and puts the marketing video
-renderer (RFD 2215 Head B) and the game-loop control surface
-(RFD 2215 Head A) on one hat, and that hat is Godot `platform=web`.
-Naming three.js in a shipping demo would re-fork the runtime story
-this workspace deliberately holds to one.
-
-**What this costs, stated rather than discovered.**
-
-- `7-service/service-sqlar-cas/docs/{vrm.js,index.html}` renders the
-  Starforged VRM portrait per RFD 2206; the demo moves to Godot
-  `platform=web` or retires.
+**What this costs.**
+- `7-service/service-sqlar-cas/docs/{vrm.js,index.html}` renders
+  the Starforged VRM portrait per RFD 2206; moves to Godot or
+  retires.
 - `3-interactor/motion-bricks-cpp/demo/web/app.js` renders
   motion-bricks previews; moves to Godot or retires.
 - `1-transport/usd-viewer/src/render-delegate.ts` targets THREE —
-  this render delegate is gone with this entry; USD viewing routes
-  through Godot's own USD importer.
-- `6-datasource/anny-render-corpus/mtoon-reference/` compared our
-  MToon shades against three-vrm; comparison target moves to a
-  Godot MToon renderer or retires.
-
-**The substitute we already own.** Godot 4.7-beta from
-`3-interactor/entities-godot-sandbox` exports to WebAssembly with
-the Godot runtime and the same `.tscn` / `.tres` assets the desktop
-build reads. RFD 2210 is the canonical form of this substitution
-for the atelier surface.
+  gone with this entry; USD viewing routes through Godot's own
+  USD importer.
+- `6-datasource/anny-render-corpus/mtoon-reference/` compared MToon
+  shades against three-vrm; comparison target moves to a Godot
+  MToon renderer or retires.
 
 **Carve-outs.**
 - **Vendored upstream demos are exempt.**
@@ -1627,19 +1588,9 @@ for the atelier surface.
   shipped artefact.
 
 **What the row does not cover.** It does not ban WebGL or WebGPU as
-such. Godot `platform=web` uses WebGL2 under the hood; the
-WebGPU-fork patch series applied to `entities-godot-sandbox` per
-RFD 2211 enables WebGPU for Godot's renderer. WebGPU is separately
-allowlisted for ggml per RFD 2218 (reversal of the earlier "WebGPU
-blocklisted" directive; ggml gets an explicit carve-out because
-WebGPU has native compute shaders and llama.cpp already goes
-there). WebGL2 is blocklisted specifically for ggml (RFD 2217,
-superseded by 2218). This row bans the three.js runtime and the
+such — those are separately handled by RFD 2231 (Vulkan is the
+render/compute target). This row bans the three.js runtime and the
 `@pixiv/three-vrm` plugin as our chosen renderer.
-
-RFDs 1022, 1023, 1073, 1149, 1170, 2206, 2161 name three.js as
-example or dependency; those are doctrine references and stay as
-records of what the choice used to be.
 
 ### Gemma 3 is blocklisted as an on-device model; only Gemma 4 is allowlisted
 

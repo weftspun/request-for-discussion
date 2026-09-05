@@ -11,25 +11,12 @@ root through `default.xml`:
 
 Two links to two files, each reaching the root under its own name.
 
-This block used to read `CLAUDE.md` twice, the second landing as `AGENTS.md`, on
-the reasoning that two tools look for two names and neither reads the other's. A
-second copy would answer the second name and then drift from the first; a link
-cannot. The reasoning is sound and the link was never declared — the manifest
-links the citation instead. So an agent that reads `AGENTS.md` finds nothing at
-this root, and whoever wants that fixed should add the link rather than a copy.
+It has a repository of its own — `weftspun/dot-claude`, checked out at `.claude`.
+What the arrangement buys is at the end under "Why a link after all".
 
-It has a repository of its own — `weftspun/dot-claude`, checked out at `.claude`
-— and **that repository is live.** This paragraph called it archived from
-2026-08-20 until 2026-08-28, and it was never archived: it was updated twice on
-2026-08-25 to sit alongside these links. What the arrangement buys is at the end
-under "Why a link after all".
-
-It has now moved a second time. `weftspun/logbook` is archived and its 145
-commits are here, alongside the RFDs. Two repositories held one workspace's
-record: the RFDs said what was decided and the logbook said what it measured,
-and a decision and its measurement were a repository apart. The `logbook-*.md`
-entries kept their names, so an entry is still findable by the thing it
-measured rather than by where it used to live.
+`weftspun/logbook` is archived and its 145 commits are here, alongside the
+RFDs. The `logbook-*.md` entries kept their names, so an entry is still
+findable by the thing it measured rather than by where it used to live.
 
 Standing constraints follow. Each carries a cost behind it; the incident sits
 alongside this file (`KEYPOINTS.md` for the narrative, `PITFALLS.md` for the
@@ -41,20 +28,8 @@ recurring failure modes and the guards that catch them).
 GPU and Thunderbolt-attached owned eGPUs both count. Rented GPU providers are
 blocklisted (see the RunPod and Vast.ai rows below): no budget for per-hour or
 per-invocation billing, and no way to run corpora on machines the operator does
-not own.
-
-The eGPU half was added 2026-09-03, retracting the "local desktop GPU is the
-only compute" wording and the tinygrad NVIDIA eGPU blocklist row that leaned
-on it. The three failure modes that row recorded — one init per power cycle,
-`boot_id()` usec-drift guard, daemon-restart `BrokenPipeError` — still hold
-and are accepted as operational costs; the BLOCKLIST section is kept as the
-measurement of what those costs are.
-
-The commit discipline the earlier rented-compute paragraph rested on — push
-before you stop, because the box vanishes — still holds. It stands on its own
-now rather than being enforced by hardware going away: work that matters is
-pushed when it is produced, not when the machine is about to vanish. Nothing
-reports uncommitted results on a local GPU.
+not own. Work that matters is pushed when it is produced. Nothing reports
+uncommitted results on a local GPU.
 
 **Archive formats.** OpenUSD `.usda` if we want to remain text editable and ZStandard
 parquet for bulk storage. **zip is not acceptable**, and neither is gzip;
@@ -98,29 +73,9 @@ corpus only when all four hold:
 4. Evaluation uses real or constructed data only. A model measured on its own
    generation distribution has not been measured.
 
-**Retracted 2026-09-02: Condition 5 (quantised weights do not produce corpus
-data) is gone.** The condition read: _"The generator runs at its published
-precision. Quantized weights do not produce corpus data, whatever they cost
-to run."_ It was carried as a decision rather than a measurement — the
-prompt-fixed table (bf16-empty 0.305 vs NF4-upstream-default 0.825) showed
-precision did not measurably move the result. The condition was kept anyway
-on the argument that it was decided rather than derived. That argument no
-longer holds: the funding constraint has closed rented compute, and forcing
-corpus generation to run at published precision on the 3090 (14.7 min per
-1024 px image via sequential CPU offload) makes corpus construction
-uneconomic under owned compute too. The four surviving conditions above
-still handle the actual failure mode Condition 5 was thought to address —
-distribution collapse (condition 3), evaluation contamination (condition 4),
-and provenance loss (condition 1). Precision as such is not a corpus hazard.
-The retraction also closes the "RTX 3090 blocked as corpus generation host"
-row that leaned on it.
-
-The old blanket ban read "generative-model outputs never enter training
-corpora". It was too coarse: it forbade legitimate distillation while saying
-nothing about the actual hazard, which is distribution collapse, not generation
-per se. The four conditions above are that hazard written out. `EasyDiffusion
-outputs` and `seethrough PSDs` stay blocklisted below — those are secondary
-generation with no recorded provenance, which is condition 1 failing.
+`EasyDiffusion outputs` and `seethrough PSDs` stay blocklisted below —
+those are secondary generation with no recorded provenance, which is
+condition 1 failing.
 
 **The blinded holdout.** `coco_person_commercial_val2017` — 523 license-filtered
 COCO person images — is a **blinded** validation set. Blinded means more than
@@ -159,13 +114,6 @@ avatars.
 **Pose sources.** From ANNY/SOMA's own pose library, synthetic, or a
 licence-clean third-party motion set. No scraped or unlicensed pose references.
 
-The old wording read "no scraped or third-party pose references", and it was too
-coarse in the same way the synthetic ban was. Its three targets — CMU
-(provenance), Mixamo (licensing), posemaniacs (scraping) — are each a licence or
-provenance failure, so "third-party" was standing in for "unlicensed
-third-party". As written it also excluded CC-BY-4.0 motion capture clips with clean citation
-metadata, which is not the hazard and never was.
-
 Two axes decide it, and both must hold.
 
 **License.** The set carries a readable license permitting commercial use and
@@ -199,36 +147,11 @@ of the goal manifest it is checked out through is what decides which. There is
 placed when it is added, not later: an unplaced project is the drift the six
 words exist to stop.
 
-This rule used to name one manifest, `weftspun/weftspun`, because there was one.
-That repository is **archived**: the manifest was split per goal, so the shared
-corpus projects appeared in both goal manifests rather than once in a single
-one. The wording matters because the archived manifest still lists projects, and
-a project placed only there is unplaced — placement is what a _live_ goal
-manifest says, not what the last revision of a read-only one says.
-
-**AND THEN IT HAPPENED AGAIN, TO THE SENTENCE THAT SAYS SO.**
-`weftspun/weftspun-mesh-latents` was archived on 2026-08-22, and this rule went
-on naming it as the live manifest for the image-to-geometry goal until
-2026-08-24. The paragraph above states exactly the test that would have caught
-it, and the paragraph below it failed that test — which is the reason both are
-kept rather than tidied into one.
-
-The split did not survive, then. The image-to-geometry projects were not
-stranded: they are `<project>` entries in `weftspun-keypoint`, so the goal's work
-is placed and reachable. What ended is the second manifest, not the second goal.
-
-**They are not pinned under a tag naming where they came from.** This paragraph
-put them at `refs/tags/mesh-latents/v0.1.0-dev.1` from 2026-08-24 until
-2026-08-28. That tag is in no repository — `TRELLIS.2`, `Pixal3D`, `VoxHammer`
-and `MoGe` are pinned at bare commit SHAs, which carry no provenance at all, and
-provenance is exactly what the tag was described as supplying. Placement is
-satisfied, because placement is appearing in the live manifest. Provenance is
-not, and the tag is still worth cutting.
-
-So the rule is now cheaper to check than to argue about: **one live manifest, and
-a repository is placed when it appears in that one.** `repo list` and the org's
-archived set are the two things to read, and they disagree loudly when this rots
-a third time.
+**One live manifest, and a repository is placed when it appears in that
+one.** `repo list` and the org's archived set are the two things to read.
+`TRELLIS.2`, `Pixal3D`, `VoxHammer` and `MoGe` are pinned at bare commit
+SHAs in the manifest; placement is satisfied by the manifest entry,
+provenance rides with the SHA.
 
 **Deliverables.** Video-ready assets land as PSD or a video/image intermediate
 with `.cff` title and metadata, before any pod tear down. PSD because it carries
@@ -365,11 +288,8 @@ avatar hub" — and leave the branded exemplar out. Comparisons in a private
 conversation with the operator are fine; the moment a decision lands in a
 file, the trademark comes out.
 
-This paragraph is here because the first draft of `spot_broker/landing.ex`
-named two Square Enix titles in its moduledoc and three more brands in the
-prose that argued which chrome to use. Both were retracted the same day
-the operator caught them. The rule generalises: if a rewrite in generic
-vocabulary would lose the meaning, the meaning was leaning on the mark.
+If a rewrite in generic vocabulary would lose the meaning, the meaning
+was leaning on the mark.
 
 ## How Our Own Code Is Commented
 
@@ -464,51 +384,21 @@ restating them, so the document and the gate cannot disagree.
 
 ## How Retracted RFD Topics Are Deleted
 
-RFDs and the logbook diverge here, and the split is deliberate. The logbook
-records events, so a retracted measurement is itself an event and its
-retraction paragraph stays next to what it retracts. An RFD records a
-decision, and a retracted decision that keeps sitting in the RFD reads as
-current the moment a fresh reader lands on the section.
-
-Going forward, a retracted RFD topic deletes its body and leaves a one-line
-pointer at the section's former location, of the form:
+A retracted RFD topic deletes its body and leaves a one-line pointer at
+the section's former location, of the form:
 
     **Lumina2 distillation as primary:** retracted 2026-09-04, see
     `logbook-lumina2-distill-n1000-shelved.md`.
 
-The pointer is what closes both failure modes the pure-deletion form re-opens.
-The pattern the working agreements' own `AND THEN IT HAPPENED AGAIN` paragraph
-was written against is silent drift — a decision quietly disappears and the
-same wrong turn gets re-argued six months later, because there is nothing at
-the site of the deletion to say "we looked at this and it did not work". A
-one-line pointer says exactly that. It also gives the citations that already
-exist across other projects (branch names, commit messages, code comments) a
-place to land — a reader following a citation to the section finds the
-pointer and can follow it to the measurement that produced the retraction.
+The pointer gives the citations that already exist across other projects
+(branch names, commit messages, code comments) a place to land — a reader
+following a citation to the section finds the pointer and can follow it
+to the measurement that produced the retraction.
 
-Retroactive is not required. RFDs that already carry a retraction paragraph
-keep it; the new rule applies to retractions from 2026-09-04 forward.
-
-**Retroactive pass 2026-09-05:** operator directive *"globally across the
-rfd git repo on weftspun please peel off all retractions / retire rfds"*
-lifted the "not required" clause for one sweep. Every `**State:** abandoned`
-or `**State:** superseded` RFD in `weftspun/request-for-discussion` was
-peeled to the doctrine shape (title + preserved retraction paragraphs +
-State line + canary). Where an RFD had no retraction paragraph at all, a
-generic pointer to git history was inserted. `DETAILS.md` alongside a
-peeled `README.md` was preserved so the retracted argument is not lost.
-The sweep was applied by an Elixir script at
-`scratchpad/peel_retractions.exs`; the "not required" clause stays in
-place for future retractions since the sweep has now closed the historical
-gap.
-
-The two carve-outs the rule does not touch: **the logbook** keeps its
-"retractions stay in place next to what they retract" shape because it
-records events; **this file** keeps its retraction paragraphs because the
-working agreements record institutional memory that other documents cite by
-its wording, and rewriting a paragraph in place changes the meaning of every
-citation of it. The `AND THEN IT HAPPENED AGAIN` paragraph is the canonical
-example of both carve-outs earning their exemption.
+**The logbook** is the one carve-out: it keeps its "retractions stay in
+place next to what they retract" shape because it records events. Every
+other document, including this file, deletes retraction paragraphs down
+to the pointer per operator directive 2026-09-05.
 
 ## How AI-drafted RFDs are attested
 
@@ -622,19 +512,6 @@ workspace's reviewed permission set; `settings.local.json` beside it is per-desk
 and gitignored, and Claude Code merges the two with local winning. The split is
 the tool's; only the tracking decision is ours.
 
-**This section used to say the opposite, and it was wrong for eight days.** It
-said the two files went read-only when `dot-claude` was archived, that neither
-was carried across, and that the workspace therefore had no shared permission
-set and the rule below had no diff behind it. `dot-claude` was never archived.
-The loss it grieved never happened and the gate it asked someone to restore was
-never gone — the section stood next to the thing it said was missing.
-
-It is kept because the failure is the interesting part. Every other archival
-claim here is checked against the organisation's archived set;
-`check_goal_manifests.py` does exactly that, and by its own docstring it answers
-one direction only — an archived repository named as live. A live repository
-named as archived is the case it does not cover, and this was that case.
-
 ## The Rule for Adding a Permission
 
 An allowlist entry removes a question somebody would otherwise be asked, so add
@@ -650,30 +527,12 @@ anybody's diff.
 
 ## Why a Link After All
 
-This section used to argue the opposite, and the argument is kept rather than
-deleted, because a reader who knows which road was tried is better off than one
-who only knows where the road ends today.
-
-The refused arrangement was exactly the one now in force: a `linkfile` in
-`default.xml` pointing into the repository that holds this file. It was refused
-because a symlink is invisible to every check this workspace has — `repo status` cannot see drift
-in it, nothing gates it, and one repository's permission settings would silently
-become every project's. A repository was ordinary by comparison: a history
-behind each permission, a diff to approve, and `repo status` reporting it like
-anything else.
-
-What changed is the cargo, not the reasoning. The objection was about
-_permissions_ travelling without review, and permissions do not travel this way:
-`settings.json` is a tracked file in `dot-claude`, reviewed as a diff like
-anything else, and no link carries it. What travels here is one document, and
-`repo status` does see drift in it: it is tracked in
-`weftspun/request-for-discussion`, which is a managed project, and the link at
-the root is a second name for that file rather than a place edits can hide.
-
-So the reversal is narrower than it looks. The links carry a document; the
-checkout carries the permissions. The original objection is still correct about
-the thing it was written for, which is why the permission set is a checkout and
-not a third link.
+The links carry a document; the checkout carries the permissions. This
+file is tracked in `weftspun/request-for-discussion`; `repo status` sees
+drift in it, so the link at the root is a second name for that file
+rather than a place edits can hide. `settings.json` is tracked in
+`dot-claude` and reviewed as a diff — permissions do not travel through
+a link.
 
 ## Claude does not write attribution
 
@@ -719,15 +578,5 @@ two distinct checks from three draws, and nothing bounds how long an item goes
 unvisited. A shuffled full pass visits every item once and still surfaces
 anything order-dependent. The pass asserts its own coverage.
 
-**Every counter carries a control.** The first run reported 14 blocklist rows
-against 15 sections, and the register was right: the counter matched `see below`
-case-sensitively and missed a row reading `See below`. A counter that has never
-found a planted row has yet to show it can find a real one.
-
-WHAT IT FOUND ON ITS FIRST REAL PASS, both green in every earlier report.
-`check_usd_valid.py` had been exiting non-zero since this repository gained a
-declared environment, walking `.pixi` and choking on OpenUSD's own schema
-templates, under a last printed line that still read `ok`. Its self-test had been
-dead since the hex-to-decimal renumbering: two references still named the
-`Rfd107a` scope, so one control raised and the other did a string replace that
-matched nothing, leaving it to pass on unbroken input.
+**Every counter carries a control.** A counter that has never found a
+planted row has yet to show it can find a real one.
