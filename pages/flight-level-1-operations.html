@@ -89,9 +89,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-rfd','listing-title','listing-state','listing-scope',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
+      valueNames: ['listing-rfd','listing-title','listing-state','listing-scope',{ data: ['index'] },{ data: ['categories'] }],
       
-      searchColumns: ["listing-title","listing-author"],
+      searchColumns: [],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -394,237 +394,21 @@ window.Quarto = {
 
 <div class="quarto-listing quarto-listing-container-table" id="listing-listing">
 <div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-      <option value="" disabled="" selected="" hidden="">Order By</option>
-      <option value="index" data-direction="asc">Default</option>
-      <option value="listing-title-sort" data-direction="asc">
-        Title
-      </option>
-    </select>
-  </div>
     <div class="input-group input-group-sm quarto-listing-filter">
       <span class="input-group-text"><i class="bi bi-search"></i></span>
       <input type="text" class="search form-control" placeholder="Filter">
     </div>
 </div>
-<table class="quarto-listing-table table">
+<table class="quarto-listing-table table caption-top">
 <thead>
-<tr>
-
-<th>
-rfd
-</th>
-
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
-</th>
-
-<th>
-state
-</th>
-
-<th>
-scope
-</th>
-
+<tr class="header">
+<th data-quarto-table-cell-role="th">rfd</th>
+<th data-quarto-table-cell-role="th">Title</th>
+<th data-quarto-table-cell-role="th">state</th>
+<th data-quarto-table-cell-role="th">scope</th>
 </tr>
 </thead>
 <tbody class="list">
-
-<tr data-index="0" data-listing-file-modified-sort="1788646694961" data-listing-reading-time-sort="2" data-listing-word-count-sort="204" data-listing-title-sort="RFD 2168: Retract RFD 1122's bespoke wholebody detector; keep the renderer" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">2168</span>
-</td>
-<td>
-<a href="../rfd/2168-retract-wholebody-detector-keep-renderer/index.html" class="title listing-title">RFD 2168: Retract RFD 1122’s bespoke wholebody detector; keep the renderer</a>
-</td>
-<td>
-<span class="listing-state">published</span>
-</td>
-<td>
-<span class="listing-scope">rfd/1122-the-wholebody-gap</span>
-</td>
-
-</tr>
-
-<tr data-index="1" data-listing-file-modified-sort="1788646694960" data-listing-reading-time-sort="2" data-listing-word-count-sort="223" data-listing-title-sort="RFD 2167: Voice-clone reward-model distillation" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">2167</span>
-</td>
-<td>
-<a href="../rfd/2167-maskscore-voice-reward-distillation/index.html" class="title listing-title">RFD 2167: Voice-clone reward-model distillation</a>
-</td>
-<td>
-<span class="listing-state">discussion</span>
-</td>
-<td>
-<span class="listing-scope">6-datasource/anny-render-corpus</span>
-</td>
-
-</tr>
-
-<tr data-index="2" data-listing-file-modified-sort="1788646694960" data-listing-reading-time-sort="1" data-listing-word-count-sort="165" data-listing-title-sort="RFD 2166: MaskScore Cineform MKV bundle per RFD 1137" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">2166</span>
-</td>
-<td>
-<a href="../rfd/2166-maskscore-cineform-mkv-bundle/index.html" class="title listing-title">RFD 2166: MaskScore Cineform MKV bundle per RFD 1137</a>
-</td>
-<td>
-<span class="listing-state">discussion</span>
-</td>
-<td>
-<span class="listing-scope">6-datasource/anny-render-corpus<code>,</code>7-service/service-cineform`,</span>
-</td>
-
-</tr>
-
-<tr data-index="3" data-listing-file-modified-sort="1788646694960" data-listing-reading-time-sort="2" data-listing-word-count-sort="201" data-listing-title-sort="RFD 2165: MaskScore unified 8-stub emit refactor" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">2165</span>
-</td>
-<td>
-<a href="../rfd/2165-maskscore-unified-8-stub-emit/index.html" class="title listing-title">RFD 2165: MaskScore unified 8-stub emit refactor</a>
-</td>
-<td>
-<span class="listing-state">discussion</span>
-</td>
-<td>
-<span class="listing-scope">6-datasource/anny-render-corpus</span>
-</td>
-
-</tr>
-
-<tr data-index="4" data-listing-file-modified-sort="1788646694960" data-listing-reading-time-sort="2" data-listing-word-count-sort="248" data-listing-title-sort="RFD 2164: MaskScore Speech-stub 12-track ASR panel + 10-rank voice cloning" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">2164</span>
-</td>
-<td>
-<a href="../rfd/2164-maskscore-speech-stub-panel-and-cloning/index.html" class="title listing-title">RFD 2164: MaskScore Speech-stub 12-track ASR panel + 10-rank voice cloning</a>
-</td>
-<td>
-<span class="listing-state">discussion</span>
-</td>
-<td>
-<span class="listing-scope">6-datasource/anny-render-corpus</span>
-</td>
-
-</tr>
-
-<tr data-index="5" data-listing-file-modified-sort="1788646694960" data-listing-reading-time-sort="1" data-listing-word-count-sort="180" data-listing-title-sort="RFD 2163: MaskScore Text-stub emit via Gemma VLM on frame pairs" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">2163</span>
-</td>
-<td>
-<a href="../rfd/2163-maskscore-text-stub-gemma-vlm/index.html" class="title listing-title">RFD 2163: MaskScore Text-stub emit via Gemma VLM on frame pairs</a>
-</td>
-<td>
-<span class="listing-state">discussion</span>
-</td>
-<td>
-<span class="listing-scope">6-datasource/anny-render-corpus</span>
-</td>
-
-</tr>
-
-<tr data-index="6" data-listing-file-modified-sort="1788646694960" data-listing-reading-time-sort="1" data-listing-word-count-sort="193" data-listing-title-sort="RFD 2162: MaskScore Video-stub USDZ skinning + 15-edit emit" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">2162</span>
-</td>
-<td>
-<a href="../rfd/2162-maskscore-usdz-skinning-and-15-edit-emit/index.html" class="title listing-title">RFD 2162: MaskScore Video-stub USDZ skinning + 15-edit emit</a>
-</td>
-<td>
-<span class="listing-state">discussion</span>
-</td>
-<td>
-<span class="listing-scope">6-datasource/anny-render-corpus</span>
-</td>
-
-</tr>
-
-<tr data-index="7" data-listing-file-modified-sort="1788646694944" data-listing-reading-time-sort="2" data-listing-word-count-sort="220" data-listing-title-sort="RFD 1147: What EditScore costs and returns" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">1147</span>
-</td>
-<td>
-<a href="../rfd/1147-what-editscore-costs-and-returns/index.html" class="title listing-title">RFD 1147: What EditScore costs and returns</a>
-</td>
-<td>
-<span class="listing-state">published</span>
-</td>
-<td>
-<span class="listing-scope">fourloops-plan.usda</span>
-</td>
-
-</tr>
-
-<tr data-index="8" data-listing-file-modified-sort="1788646694944" data-listing-reading-time-sort="1" data-listing-word-count-sort="194" data-listing-title-sort="RFD 1146: The latent-to-Pixal3D loop" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">1146</span>
-</td>
-<td>
-<a href="../rfd/1146-latent-to-pixal3d/index.html" class="title listing-title">RFD 1146: The latent-to-Pixal3D loop</a>
-</td>
-<td>
-<span class="listing-state">published</span>
-</td>
-<td>
-<span class="listing-scope">fourloops-plan.usda</span>
-</td>
-
-</tr>
-
-<tr data-index="9" data-listing-file-modified-sort="1788646694944" data-listing-reading-time-sort="1" data-listing-word-count-sort="186" data-listing-title-sort="RFD 1145: The stylized-to-OmniGen2 loop" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">1145</span>
-</td>
-<td>
-<a href="../rfd/1145-stylized-to-omnigen2/index.html" class="title listing-title">RFD 1145: The stylized-to-OmniGen2 loop</a>
-</td>
-<td>
-<span class="listing-state">published</span>
-</td>
-<td>
-<span class="listing-scope">fourloops-plan.usda</span>
-</td>
-
-</tr>
-
-<tr data-index="10" data-listing-file-modified-sort="1788646694944" data-listing-reading-time-sort="1" data-listing-word-count-sort="193" data-listing-title-sort="RFD 1144: The image-to-OmniGen2 loop" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">1144</span>
-</td>
-<td>
-<a href="../rfd/1144-image-to-omnigen2/index.html" class="title listing-title">RFD 1144: The image-to-OmniGen2 loop</a>
-</td>
-<td>
-<span class="listing-state">published</span>
-</td>
-<td>
-<span class="listing-scope">fourloops-plan.usda</span>
-</td>
-
-</tr>
-
-<tr data-index="11" data-listing-file-modified-sort="1788646694943" data-listing-reading-time-sort="2" data-listing-word-count-sort="224" data-listing-title-sort="RFD 1143: The keypoints-to-ANNY loop" data-listing-filename-sort="index.md">
-<td>
-<span class="listing-rfd">1143</span>
-</td>
-<td>
-<a href="../rfd/1143-keypoints-to-anny/index.html" class="title listing-title">RFD 1143: The keypoints-to-ANNY loop</a>
-</td>
-<td>
-<span class="listing-state">published</span>
-</td>
-<td>
-<span class="listing-scope">fourloops-plan.usda</span>
-</td>
-
-</tr>
-
 </tbody>
 </table>
 <div class="listing-no-matching d-none">No matching items</div>
