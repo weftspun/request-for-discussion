@@ -382,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="the-layering" class="level2">
 <h2 class="anchored" data-anchor-id="the-layering">The layering</h2>
-<p><strong>Layer 1 — native, one module.</strong> <code>entities-godot-sandbox/modules/ggml/</code> hosts <code>2-contract/ggml/</code> (RFD 2188 canonical source) plus the WebGPU backend (RFD 2218 approach A, targeting Dawn/wgpu-native per RFD 2228). Exposes a small GDExtension surface, GDScript- callable:</p>
+<p><strong>Layer 1 — native, one module.</strong> <code>entities-godot-sandbox/modules/ggml/</code> hosts <code>2-contract/ggml/</code> (RFD 2188 canonical source) plus ggml’s Vulkan backend (MoltenVK on macOS). Exposes a small GDExtension surface, GDScript-callable:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode gdscript code-with-copy"><code class="sourceCode gdscript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> model :<span class="op">=</span> Ggml.<span class="fu">load_model</span>(<span class="st">"res://models/motion-bricks.gguf"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> lora :<span class="op">=</span> Ggml.<span class="fu">load_lora</span>(<span class="st">"res://models/motion-bricks-walk.lora"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>model.<span class="fu">apply_lora</span>(lora)</span>
@@ -524,8 +524,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>RFD 2212 (motion-bricks-as-native-godot-module) — this RFD supersedes 2212’s shape; 2212’s L1 execution work becomes Step 2 of this RFD’s sequencing.</li>
 <li>RFD 2213 (VRM via godot-sandbox ELF) — the parallel path for cases needing full ELF sandbox rather than GDScript sandbox.</li>
 <li>RFD 2214 (model bundle SQLite+ZSTD) — the bundle loader surface adapters call.</li>
-<li>RFD 2218 (ggml WebGPU backend) — the backend <code>modules/ggml/</code> builds against Dawn/wgpu-native.</li>
-<li>RFD 2228 (WebGPU native, drop platform=web) — the delivery surface <code>modules/ggml/</code> targets.</li>
 <li>RFD 2229 (interchangeable-parts consolidation policy) — the policy this RFD lands one of; the three-C++-module → one- native-module-plus-N-GDScript-adapters shape is exactly what 2229’s ggml-consumers row proposed.</li>
 </ul>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>

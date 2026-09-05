@@ -342,9 +342,9 @@ ul.task-list li input[type="checkbox"] {
 <p>A VRM presented as an interlocutor is staged as <strong>a 3D character in a small diorama, framed like a video call</strong>. The frame is fixed; the character animates within it; there is no world navigation. Concretely:</p>
 <ol type="1">
 <li><strong>Camera.</strong> Eye-level (Head bone Y, ~1.52 m off the floor for an adult VRM — about the height of an adult wrist reached overhead), offset ~0.55 m along Z (about eight stacked AA batteries), no downward pitch. Targets a point just below the eyes so head + shoulders + up-to-the-ribcage fill the frame. Portrait 4:5 aspect (phone-call-native).</li>
-<li><strong>LookAt.</strong> The VRM’s <code>LookAt</code> target follows the camera every frame via <code>@pixiv/three-vrm</code>’s <code>VRMLookAtQuaternionProxy</code> — no new library. The player IS the caller. A small time-based glance-away every 4-7 s for ~300 ms (about the width of a pencil of time) prevents the death-stare failure mode.</li>
+<li><strong>LookAt.</strong> The VRM’s <code>LookAt</code> target follows the camera every frame via <code>godot-vrm</code>’s <code>VRMTopLevel</code> LookAt proxy (loaded as a sandbox ELF per <a href="../2213-vrm-via-godot-sandbox-elf/">RFD 2213</a>). The player IS the caller. A small time-based glance-away every 4-7 s for ~300 ms (about the width of a pencil of time) prevents the death-stare failure mode.</li>
 <li><strong>Idle motion.</strong> Ambient sway on <code>Spine</code> / <code>UpperChest</code> at 0.02 rad amplitude with a 4-s sinusoid for breathing. Blink cycle ~4 s period with 100 ms closed.</li>
-<li><strong>Reactions.</strong> A move outcome (<code>strong-hit</code> / <code>weak-hit</code> / <code>miss</code>) fires a VRM expression blendshape (<code>happy</code> / <code>neutral</code> / <code>sad</code>) that holds for ~1.5 s then decays over ~100 ms back to neutral. Total envelope ~1.6 s, about the width of a golf ball of time. Reuses the VRM <code>expressionManager</code> already loaded by <code>@pixiv/three-vrm</code>.</li>
+<li><strong>Reactions.</strong> A move outcome (<code>strong-hit</code> / <code>weak-hit</code> / <code>miss</code>) fires a VRM expression blendshape (<code>happy</code> / <code>neutral</code> / <code>sad</code>) that holds for ~1.5 s then decays over ~100 ms back to neutral. Total envelope ~1.6 s, about the width of a golf ball of time. Reuses the VRM expression node <code>godot-vrm</code> exposes.</li>
 <li><strong>Diorama backdrop.</strong> A low-poly scene-flavored backdrop behind the character, swappable per-scene from a small <code>scenes/*.gltf</code> set. Kept deliberately low-detail so the character reads as the subject.</li>
 <li><strong>What is banned.</strong> No WASD, no arrow-key movement, no pointer-lock mouse look, no wheel zoom, no gamepad stick reads, no <code>avatar.pos</code> mutation, no <code>orbit.yaw / pitch / dist</code> camera state. A demo that presents a VRM as an interlocutor and lets the player fly the camera around it undoes the convention.</li>
 </ol>
@@ -362,7 +362,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>RFD 1170 (presence loop) — this RFD is its visual convention.</li>
 <li>RFD 2205 (Taskweft in Bao) — the Starforged play surface that this convention was first applied to.</li>
-<li>Codebase: <code>7-service/service-sqlar-cas/docs/vrm.js</code> — the reference implementation of every element above.</li>
+<li><a href="../2213-vrm-via-godot-sandbox-elf/">RFD 2213</a> — how the VRM loads in the current native Godot binary (godot-vrm ELF via libriscv sandbox); the earlier <code>@pixiv/three-vrm</code> reference implementation at <code>7-service/service-sqlar-cas/docs/vrm.js</code> is retired with the three.js blocklist (RFD 2216).</li>
 </ul>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>
 </section>

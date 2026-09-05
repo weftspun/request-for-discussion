@@ -336,7 +336,7 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Flight level:</strong> L2 (coordination — closes a runtime fork) blocklist as an in-browser 3D runtime in consumer files</p>
 <section id="decision" class="level2">
 <h2 class="anchored" data-anchor-id="decision">Decision</h2>
-<p>Blocklist three.js as an in-browser 3D runtime. Substitute is <strong>Godot as a native binary per platform</strong> built from <code>entities-godot-sandbox</code> with the Vulkan renderer (MoltenVK on macOS) per <a href="../2231-drop-webgpu-use-vulkan/">RFD 2231</a>. Three.js itself is MIT-licensed — the objection is not licence, it is runtime story: the workspace ships every 3D surface via Godot, and a three.js path forks the scene-graph, material pipeline, animation graph, and lighting model.</p>
+<p>Blocklist three.js as an in-browser 3D runtime. Substitute is <strong>Godot as a native binary per platform</strong> built from <code>entities-godot-sandbox</code> with the Vulkan renderer (MoltenVK on macOS). Three.js itself is MIT-licensed — the objection is not licence, it is runtime story: the workspace ships every 3D surface via Godot, and a three.js path forks the scene-graph, material pipeline, animation graph, and lighting model.</p>
 <p>Live rows: <code>CLAUDE.md</code> blocklist table + <code>BLOCKLIST.md</code> full section (the section body carries the argument in current form).</p>
 </section>
 <section id="related" class="level2">
@@ -345,8 +345,6 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="../2210-atelier-godot-web-shipping-surface/">RFD 2210</a> — L3 strategic bet.</li>
 <li><a href="../2211-base-tree-entities-godot-sandbox/">RFD 2211</a> — base tree pick.</li>
 <li><a href="../2215-one-binary-two-heads/">RFD 2215</a> — the “one runtime, not two” argument that also drives this blocklist.</li>
-<li><a href="../2228-webgpu-native-drop-platform-web/">RFD 2228</a> — native delivery.</li>
-<li><a href="../2231-drop-webgpu-use-vulkan/">RFD 2231</a> — Vulkan renderer.</li>
 <li>RFD 1170 (cleanroom presence loop) — earlier RFD picking Godot over three.js for a different workload.</li>
 </ul>
 <p>This RFD was drafted by an AI and read by a human before it shipped.</p>

@@ -2,15 +2,12 @@
   {
     "listing": "/pages/rfd.html",
     "items": [
-      "/rfd/2231-drop-webgpu-use-vulkan/index.html",
       "/rfd/2230-ggml-adapters-in-godot-sandbox/index.html",
       "/rfd/2229-interchangeable-parts-consolidation/index.html",
-      "/rfd/2228-webgpu-native-drop-platform-web/index.html",
       "/rfd/2216-threejs-blocklist/index.html",
       "/rfd/2215-one-binary-two-heads/index.html",
       "/rfd/2214-model-bundle-sqlite-range-fetch-zstd/index.html",
       "/rfd/2213-vrm-via-godot-sandbox-elf/index.html",
-      "/rfd/2212-motion-bricks-as-native-godot-module/index.html",
       "/rfd/2211-base-tree-entities-godot-sandbox/index.html",
       "/rfd/2210-atelier-godot-web-shipping-surface/index.html",
       "/rfd/2209-cc-by-nc-blocklist-entry/index.html",
@@ -284,7 +281,6 @@
       "/rfd/1013-public-demo-deploy/index.html",
       "/rfd/1011-spatial-fabric-publish/index.html",
       "/rfd/1010-webxr-and-iwsdk-lab/index.html",
-      "/rfd/1009-viewport-and-scene-rendering/index.html",
       "/rfd/1008-appearance-trait-extraction-and-remix/index.html",
       "/rfd/1007-motion-validation-kimodo/index.html",
       "/rfd/1006-layer-decomposition-see-through/index.html",
@@ -298,9 +294,7 @@
   {
     "listing": "/pages/flight-level-3-strategy.html",
     "items": [
-      "/rfd/2231-drop-webgpu-use-vulkan/index.html",
       "/rfd/2229-interchangeable-parts-consolidation/index.html",
-      "/rfd/2228-webgpu-native-drop-platform-web/index.html",
       "/rfd/2210-atelier-godot-web-shipping-surface/index.html",
       "/rfd/2182-identity-triangle-operator-market-customer/index.html",
       "/rfd/2171-atelier-workshop-shuttle-vocabulary/index.html"
