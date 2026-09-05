@@ -304,13 +304,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#rfd-1102-details-current-task-catalog-pipelines-retraction-record" id="toc-rfd-1102-details-current-task-catalog-pipelines-retraction-record" class="nav-link active" data-scroll-target="#rfd-1102-details-current-task-catalog-pipelines-retraction-record">RFD 1102 details: current task catalog, pipelines, retraction record</a>
+  <li><a href="#rfd-1102-details-current-task-catalog-on-ggml" id="toc-rfd-1102-details-current-task-catalog-on-ggml" class="nav-link active" data-scroll-target="#rfd-1102-details-current-task-catalog-on-ggml">RFD 1102 details: current task catalog on ggml</a>
   <ul class="collapse">
-  <li><a href="#model-catalog-docker-images-per-rfd-1036" id="toc-model-catalog-docker-images-per-rfd-1036" class="nav-link" data-scroll-target="#model-catalog-docker-images-per-rfd-1036">Model catalog (Docker images, per RFD 1036)</a></li>
+  <li><a href="#model-catalog" id="toc-model-catalog" class="nav-link" data-scroll-target="#model-catalog">Model catalog</a></li>
   <li><a href="#voice-asr-rfd-2164" id="toc-voice-asr-rfd-2164" class="nav-link" data-scroll-target="#voice-asr-rfd-2164">Voice + ASR (RFD 2164)</a></li>
+  <li><a href="#migration-recipe-per-model" id="toc-migration-recipe-per-model" class="nav-link" data-scroll-target="#migration-recipe-per-model">Migration recipe (per model)</a></li>
   <li><a href="#pipeline-maskscore-corpus-construction-rfd-1173" id="toc-pipeline-maskscore-corpus-construction-rfd-1173" class="nav-link" data-scroll-target="#pipeline-maskscore-corpus-construction-rfd-1173">Pipeline: MaskScore corpus construction (RFD 1173)</a></li>
   <li><a href="#pipeline-gacha-critical-path-rfd-2136" id="toc-pipeline-gacha-critical-path-rfd-2136" class="nav-link" data-scroll-target="#pipeline-gacha-critical-path-rfd-2136">Pipeline: Gacha critical path (RFD 2136)</a></li>
-  <li><a href="#retraction-record" id="toc-retraction-record" class="nav-link" data-scroll-target="#retraction-record">Retraction record</a></li>
   <li><a href="#format-boundary" id="toc-format-boundary" class="nav-link" data-scroll-target="#format-boundary">Format boundary</a></li>
   <li><a href="#packaging" id="toc-packaging" class="nav-link" data-scroll-target="#packaging">Packaging</a></li>
   <li><a href="#related" id="toc-related" class="nav-link" data-scroll-target="#related">Related</a></li>
@@ -325,83 +325,98 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="rfd-1102-details-current-task-catalog-pipelines-retraction-record" class="level1">
-<h1>RFD 1102 details: current task catalog, pipelines, retraction record</h1>
-<section id="model-catalog-docker-images-per-rfd-1036" class="level2">
-<h2 class="anchored" data-anchor-id="model-catalog-docker-images-per-rfd-1036">Model catalog (Docker images, per RFD 1036)</h2>
+<section id="rfd-1102-details-current-task-catalog-on-ggml" class="level1">
+<h1>RFD 1102 details: current task catalog on ggml</h1>
+<p>Every module in the atelier catalog runs on <strong>ggml</strong> (RFD 2188 — one ggml source across the workspace at <code>2-contract/ggml/</code>). Weights ship as GGUF, quantised to Q4 unless a measurement asks for wider precision. Consumer projects wrap the shared runtime; per-model adapters (tokenizer, prompt template, LoRA, sampler config) are GDScript files loaded under Godot’s script sandbox per RFD 2230. Models with no upstream GGUF conversion carry a “port needed” note; the six-step migration recipe is at the end of this file.</p>
+<section id="model-catalog" class="level2">
+<h2 class="anchored" data-anchor-id="model-catalog">Model catalog</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 23%">
-<col style="width: 24%">
-<col style="width: 51%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 22%">
+<col style="width: 34%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Task</th>
 <th>Model</th>
-<th>Notes</th>
+<th>Weights (Q4 target)</th>
+<th>Runtime</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Text/image reasoning</td>
 <td>Gemma-4-12B (QAT Q4_0)</td>
-<td>Shared VLM per RFD 1173.</td>
+<td>~6 GB Q4_0 GGUF</td>
+<td>ggml native (llama.cpp Vulkan backend)</td>
 </tr>
 <tr class="even">
 <td>Reward model (image editing)</td>
-<td>Qwen3-VL-8B + EditScore LoRA (NF4, 6.75 GB)</td>
-<td>Per RFD 1157 and <code>7-service/service-livebook/priv/python/weft_score.py</code>. EditScore is a LoRA over Qwen3-VL (not a fine-tune of Gemma); RFD 1173’s target is to swap the base to Gemma-4-12B later so the same weights serve both roles.</td>
+<td>Qwen3-VL-8B + EditScore LoRA</td>
+<td>~4 GB Q4 GGUF + LoRA GGUF sidecar</td>
+<td>ggml native; LoRA applied via <code>Ggml.load_lora</code></td>
 </tr>
 <tr class="odd">
 <td>Text/image → image</td>
 <td>Wan-VACE</td>
-<td>~14 GB NF4 (staged per RFD 1027).</td>
+<td>~7 GB Q4 GGUF</td>
+<td>ggml native; <strong>port needed</strong> (upstream is torch)</td>
 </tr>
 <tr class="even">
 <td>Image → coarse mesh</td>
-<td>Pixal3D</td>
-<td>24 GB total, ~6.5 GB peak staged.</td>
+<td>Pixal3D (TRELLIS.2 impl)</td>
+<td>~2 GB Q4 GGUF</td>
+<td>ggml native; <strong>port needed</strong></td>
 </tr>
 <tr class="odd">
 <td>Mesh refinement</td>
 <td>VoxHammer</td>
-<td>Holds no weights (RFD 1162).</td>
+<td>no weights</td>
+<td>ggml native (procedural, no model file)</td>
 </tr>
 <tr class="even">
 <td>Image → mesh (fast)</td>
-<td>TRELLIS.2</td>
-<td>~8 GB bf16.</td>
+<td>Pixal3D (TRELLIS.2 impl)</td>
+<td>same row as above</td>
+<td>one repo, one GGUF, one row per Pixal3D-is-TRELLIS.2 memory</td>
 </tr>
 <tr class="odd">
 <td>Metric depth</td>
 <td>MoGe-3</td>
-<td>~1 GB.</td>
+<td>~250 MB Q4 GGUF</td>
+<td>ggml native; <strong>port needed</strong></td>
 </tr>
 <tr class="even">
 <td>Auto-rig</td>
 <td>SkinTokens</td>
-<td>Full GLB against ANNY skeleton.</td>
+<td>GGUF (skin-tokens.cpp)</td>
+<td>ggml native (vendor’s own runtime, already GGML)</td>
 </tr>
 <tr class="odd">
 <td>Text → motion</td>
 <td>Kimodo</td>
-<td>Into SOMA pose format (77 rotvecs Kimodo emits, 78 pose params at anny call time — anny prepends one root identity at index 0; anny/test/test_soma.py:242-283, task #76). Consumed by ANNY.</td>
+<td>GGUF (motion-bricks-cpp rev)</td>
+<td>ggml native; SOMA pose format (77 rotvecs → 78 with root identity prepended)</td>
 </tr>
 <tr class="even">
 <td>Mesh segmentation</td>
 <td>rf-detr-Seg (RFD 1168)</td>
-<td>Replaces P3-SAM (blocklisted, territory).</td>
+<td>GGUF (segmentation head)</td>
+<td>ggml native; <strong>port needed</strong> from ONNX</td>
 </tr>
 <tr class="odd">
 <td>Layer decomposition</td>
 <td>rf-detr-Seg + LaMa inpainting</td>
-<td>Replaces See-Through (blocklisted, no license) per RFD 1168.</td>
+<td>GGUF each</td>
+<td>ggml native; <strong>port needed</strong></td>
 </tr>
 <tr class="even">
 <td>Mesh retopology</td>
 <td>AutoRemesher, xatlas UV</td>
-<td>Format-adjacent tools, unchanged from prior catalog.</td>
+<td>no weights</td>
+<td>native binary (format-adjacent tools)</td>
 </tr>
 </tbody>
 </table>
@@ -410,74 +425,87 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="voice-asr-rfd-2164">Voice + ASR (RFD 2164)</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 40%">
-<col style="width: 59%">
+<col style="width: 21%">
+<col style="width: 31%">
+<col style="width: 15%">
+<col style="width: 31%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Task</th>
 <th>Model</th>
+<th>Weights (Q4 target)</th>
+<th>Runtime</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Voice cloning</td>
 <td>Qwen3-TTS-12Hz-1.7B-Base</td>
+<td>~900 MB Q4 GGUF</td>
+<td>ggml native; <strong>port needed</strong></td>
 </tr>
 <tr class="even">
 <td>ASR (canonical)</td>
 <td>Parakeet TDT 0.6B v3 (CC-BY-4.0)</td>
+<td>~350 MB Q4 GGUF</td>
+<td>ggml native; <strong>port needed</strong> from Nemo</td>
 </tr>
 <tr class="odd">
 <td>ASR panel (7 tracks)</td>
-<td>text: Parakeet TDT 0.6B v3, Voxtral Mini 3B, wav2vec2; IPA: Voxtral-IPA, Gemma-4-12B GBNF-IPA; phone: allosaurus universal + eng. Panel narrowed from twelve tracks per RFD 2179 (Whisper drop), RFD 2180 (gemma-auto drop), RFD 2181 (allosaurus-rus drop).</td>
+<td>Parakeet TDT 0.6B v3, Voxtral Mini 3B, wav2vec2, Voxtral-IPA, Gemma-4-12B GBNF-IPA, allosaurus universal + eng</td>
+<td>~various Q4 GGUFs</td>
+<td>ggml native for each; Gemma-4-12B already GGUF; Voxtral + wav2vec2 + allosaurus <strong>ports needed</strong></td>
 </tr>
 <tr class="even">
 <td>Speaker embedding</td>
 <td>Microsoft WavLM Base+ SV</td>
+<td>~100 MB Q4 GGUF</td>
+<td>ggml native; <strong>port needed</strong></td>
 </tr>
 </tbody>
 </table>
 </section>
+<section id="migration-recipe-per-model" class="level2">
+<h2 class="anchored" data-anchor-id="migration-recipe-per-model">Migration recipe (per model)</h2>
+<p>Same recipe RFD 2229 named as the interchangeable-parts consolidation shape, one row per consumer:</p>
+<ol type="1">
+<li><strong>Q4 quantize</strong> — QAT if we train the model, PTQ per the CLAUDE.md Post-training-quantization blocklist exemption (a vendor’s own runtime is exempt from the QAT-only rule) otherwise. Target Q4_0 for text models, Q4_K_M for vision if the K-quant produces a measurable EditScore win over Q4_0 on held-out inputs.</li>
+<li><strong>GGUF conversion</strong> — via llama.cpp’s <code>convert_hf_to_gguf.py</code> for HF-hosted models; per-model script for non-HF checkpoints. Ports for <code>Wan-VACE</code>, <code>Pixal3D</code>, <code>MoGe-3</code>, <code>rf-detr-Seg</code>, <code>LaMa</code>, <code>Qwen3-TTS</code>, <code>Parakeet</code>, <code>Voxtral</code>, <code>wav2vec2</code>, <code>allosaurus</code>, <code>WavLM</code> all follow this step.</li>
+<li><strong>ZSTD-SQLite bundle</strong> — RFD 2214 shape; <code>sqlite3_open()</code> on local disk. One <code>.zstd.sqlite</code> per model bundle, install-time download via the release channel.</li>
+<li><strong><code>Ggml.load_model()</code> GDExtension call</strong> — RFD 2230 surface; the native <code>modules/ggml/</code> module hands bytes to ggml.</li>
+<li><strong>GDScript adapter</strong> — per-model <code>.gd</code> file at <code>res://adapters/&lt;name&gt;.gd</code>, extends <code>GgmlAdapter</code>, defines <code>format_prompt</code> / <code>decode_output</code> / <code>apply_lora</code> per model quirks.</li>
+<li><strong>Docker image</strong> — per RFD 1036 <code>/health</code> + <code>/predict</code> shape still applies; the container binary is now the native Godot binary + shared <code>modules/ggml/</code> + the model’s ZSTD-SQLite bundle + adapter <code>.gd</code>. One model per image (packaging stays RFD 1036), one runtime across images.</li>
+</ol>
+</section>
 <section id="pipeline-maskscore-corpus-construction-rfd-1173" class="level2">
 <h2 class="anchored" data-anchor-id="pipeline-maskscore-corpus-construction-rfd-1173">Pipeline: MaskScore corpus construction (RFD 1173)</h2>
-<p>input Docker container per model, /health + /predict | render Mitsuba llvm_ad_rgb or metal_ad_rgb, sphere_hammersley | MaskScore mask → reconstruct → score decoded outputs | parquet 3-file ZSTD per stub (root + candidates + scores), ETNF (no nulls, interned vocab), RFD 2165.1 schema | HF chibifire/maskscore-rung-1-bootstrap, 5 of 8 stubs shipped (mesh, depth, pose, keypoints, multimodal, speech)</p>
+<pre><code>input      Docker container per model, /health + /predict (RFD 1036)
+     |
+render     Mitsuba llvm_ad_rgb or metal_ad_rgb, sphere_hammersley
+     |
+MaskScore  mask → reconstruct → score decoded outputs
+     |     (reconstruct model = ggml native per this RFD)
+parquet    3-file ZSTD per stub (root + candidates + scores),
+           ETNF (no nulls, interned vocab), RFD 2165.1 schema
+     |
+HF         chibifire/maskscore-rung-1-bootstrap, 5 of 8 stubs shipped
+           (mesh, depth, pose, keypoints, multimodal, speech)</code></pre>
 </section>
 <section id="pipeline-gacha-critical-path-rfd-2136" class="level2">
 <h2 class="anchored" data-anchor-id="pipeline-gacha-critical-path-rfd-2136">Pipeline: Gacha critical path (RFD 2136)</h2>
 <p>Ten rungs, each producing an output the next rung consumes:</p>
-<ol start="0" type="1">
-<li>Language prompt → image (OmniGen2, NF4 + Flow LCM LoRA)</li>
-<li>Image → mesh (Pixal3D)</li>
-<li>Mesh → judged (EditScore)</li>
-<li>Judged → repaired (VoxHammer, N-attempt bound)</li>
-<li>Repaired → skinned (skin-tokens.cpp against ANNY)</li>
-<li>Skinned → tagged (SAM2 or rf-detr-Seg + OmniGen2 per RFD 2183)</li>
-<li>Tagged → VRM (portable character)</li>
-<li>Prompt list → pool (~50 VRMs, judged, seed-reproducible)</li>
-<li>Pool → roll button (web page)</li>
-<li>Public (hosted with sponsor link)</li>
-</ol>
-<p>Rung 0 NF4 quantisation is permitted after CLAUDE.md’s 2026-09-02 retraction of condition 5. Flow LCM LoRA cuts OmniGen2 sampling steps for the 3090 latency budget.</p>
-<p>Rung 4 skin-tokens.cpp is the C++23 / GGML port of the SkinTokens auto-rig (Apache-2.0 code, MIT upstream, GGUF weight bundles). skin-tokens.cpp is a vendor’s own runtime, so it is exempt from CLAUDE.md’s GGUF blocklist row per the exemption stated there.</p>
-<p>Rung 5 pivots from RFD 1168 (rf-detr-Seg + LaMa) to RFD 2183’s three-step pipeline: SAM2 or rf-detr-Seg for masking, OmniGen2 with MaskScore-driven weights for layer reconstruction. See-Through is closed both ways (BLOCKLIST.md).</p>
-<p>Runtime motion: motion-bricks.cpp (C++23 / GGML port of NVIDIA MotionBricks) generates keyframe-driven animation from the shipped VRM. Apache-2.0 code, NVIDIA Open Model License on weights (same license class already accepted for Kimodo-SOMA-* per RFD 1028). 183M params. Runs alongside rungs 7-9 as the animation source for the pool preview and hosted roll page.</p>
-</section>
-<section id="retraction-record" class="level2">
-<h2 class="anchored" data-anchor-id="retraction-record">Retraction record</h2>
-<p>The 2026-06 draft of this RFD listed:</p>
-<ul>
-<li>DGX-hosted <code>3DAIGC-API</code> on port 7842 as the live source.</li>
-<li><code>TaskManager.jsx</code> and <code>src/library/aiModelsCatalog.js</code> as the client half of the strangler-fig plan (RFD 1019).</li>
-<li>14 task types across text-to-3D, image-to-3D, splat, world, and avatar categories, with per-task feature keys.</li>
-<li>Six models now blocklisted or abandoned: P3-SAM (territory restricted), TripoSplat + WorldMirror 2.0 + weftspun_image_to_world
-<ul>
-<li>LingBot-Map (RFDs 1049-1052 abandoned), Hunyuan3D-2.1 (not in current catalog per RFD 1027).</li>
-</ul></li>
-<li>Publish/RP1/OMB via MSF Map Service (RFD 1100 abandoned per RFD 2176 Class F index).</li>
-<li>IWSDK Option A on SceneManager (RFD 1090 abandoned).</li>
-</ul>
-<p>Retracted alongside RFD 2169 (studio-core abandonment) and RFD 2175 (rented-compute abandonment). The task shape the catalog described no longer exists; the model set the catalog listed is the intersection above.</p>
+<pre><code>0. Language prompt → image           (OmniGen2, Q4 GGUF + Flow LCM LoRA GGUF)
+1. Image → mesh                      (Pixal3D, Q4 GGUF)
+2. Mesh → judged                     (EditScore over Qwen3-VL-8B Q4 GGUF)
+3. Judged → repaired                 (VoxHammer, procedural, N-attempt bound)
+4. Repaired → skinned                (skin-tokens.cpp against ANNY, GGUF)
+5. Skinned → tagged                  (SAM2 or rf-detr-Seg + OmniGen2 per RFD 2183, all GGUF)
+6. Tagged → VRM                      (portable character)
+7. Prompt list → pool                (~50 VRMs, judged, seed-reproducible)
+8. Pool → roll button                (native Godot binary head per RFD 2210)
+9. Public                            (hosted with sponsor link)</code></pre>
+<p>Runtime motion: motion-bricks.cpp (already ggml/GGUF) generates keyframe-driven animation from the shipped VRM. Apache-2.0 code, NVIDIA Open Model License on weights (same license class already accepted for Kimodo-SOMA-* per RFD 1028). 183M params. Runs alongside rungs 7-9 as the animation source for the pool preview and hosted roll page. Loaded through the shared <code>modules/ggml/</code> module per RFD 2230.</p>
 </section>
 <section id="format-boundary" class="level2">
 <h2 class="anchored" data-anchor-id="format-boundary">Format boundary</h2>
@@ -485,11 +513,11 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="packaging" class="level2">
 <h2 class="anchored" data-anchor-id="packaging">Packaging</h2>
-<p>Per RFD 1036 (<code>committed</code>): plain Docker, <code>/health</code> + <code>/predict</code>, weights at build time, two-stage Dockerfile (<code>contract</code> + <code>worker</code>), one model per image. Target 24 GB card (local desktop GPU per CLAUDE.md).</p>
+<p>Per RFD 1036 (<code>committed</code>): plain Docker, <code>/health</code> + <code>/predict</code>, weights at build time, two-stage Dockerfile (<code>contract</code> + <code>worker</code>), one model per image. Target 24 GB card (local desktop GPU per CLAUDE.md). The container’s inference binary is the shared native Godot binary from <code>entities-godot-sandbox</code> (RFD 2210) with the per-model adapter mounted; the runtime is ggml with the Vulkan backend per RFD 2231’s substitute (Vulkan on native).</p>
 </section>
 <section id="related" class="level2">
 <h2 class="anchored" data-anchor-id="related">Related</h2>
-<p>RFD 1004 (original AIGC catalog, historical), RFD 1094 (multi-image routing, still current), RFD 1084 (avatar pipeline client side, still current), RFD 1108 (XR floor anchoring, <code>committed</code>), RFD 1088 (HTTPS setup), RFD 1085 (code map), RFD 1105 (webcam avatar control). Removed refs to abandoned RFDs 1049-1052, 1090, 1100, 1019 per RFD 2174 (open→abandoned index) and RFD 2176 (committed→terminal index).</p>
+<p>RFD 1036 (Docker packaging), RFD 1053 (OpenUSD internal + glTF/VRM at edge), RFD 1094 (multi-image routing), RFD 1084 (avatar pipeline client side), RFD 1088 (HTTPS setup), RFD 1085 (code map), RFD 1105 (webcam avatar control), RFD 1108 (XR floor anchoring), RFD 2188 (one ggml across workspace), RFD 2214 (model bundle SQLite+ZSTD), RFD 2229 (interchangeable-parts consolidation policy), RFD 2230 (ggml adapters in godot-sandbox), RFD 2210 (atelier shipping surface, native).</p>
 
 
 </section>
