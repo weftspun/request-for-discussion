@@ -1558,10 +1558,9 @@ a bug nothing reports.
 
 **Substitute:** Godot as a native binary per platform, from
 `3-interactor/entities-godot-sandbox` (see RFD 2211 for the
-tree-choice reason). Vulkan renderer (MoltenVK on macOS) per
-RFD 2231. Godot's own MToon support and its glTF/VRM importers
-(via godot-vrm as a godot-sandbox ELF per RFD 2213) cover the
-three-vrm role.
+tree-choice reason). Vulkan renderer (MoltenVK on macOS). Godot's
+own MToon support and its glTF/VRM importers (via godot-vrm as a
+godot-sandbox ELF per RFD 2213) cover the three-vrm role.
 
 **What this costs.**
 - `7-service/service-sqlar-cas/docs/{vrm.js,index.html}` renders
@@ -1587,10 +1586,9 @@ three-vrm role.
   someone else's three.js viewer to check a glTF export is not a
   shipped artefact.
 
-**What the row does not cover.** It does not ban WebGL or WebGPU as
-such — those are separately handled by RFD 2231 (Vulkan is the
-render/compute target). This row bans the three.js runtime and the
-`@pixiv/three-vrm` plugin as our chosen renderer.
+**What the row does not cover.** It does not ban WebGL as such.
+WebGPU is separately blocklisted below. This row bans the three.js
+runtime and the `@pixiv/three-vrm` plugin as our chosen renderer.
 
 ### Gemma 3 is blocklisted as an on-device model; only Gemma 4 is allowlisted
 
@@ -1602,25 +1600,14 @@ only, per RFD 2199's SIDEKICK survey and the HAILO llama.cpp fork
 (`upgrade-with-hailo` branch). Gemma 3 (any variant, including
 Gemma 3 270M) does not enter shipping artefacts.
 
-**What this retracts.** RFD 2227's earlier pick of Gemma 3 270M as
-the "first ship" model for the workspace-ggml-on-native-WebGPU
-recipe is retracted by this row. The recipe itself (six steps: Q4
-quantize → SQLite ZSTD-fy → CMake WebGPU branch → `_load_from_memory`
-C API → Godot module wrap → CI native workflow) still applies; the
-first-ship pick moves to **Gemma 4 E2B @ Q4 (~750 MB)**, which is
-the smallest Gemma 4 family member the workspace has fetched
-(SIDEKICK task #86 / #92 / #94 measurements). RFD 2227 is itself
-already retracted by RFD 2228 (delivery surface flipped native);
-this row makes the model-pick retraction explicit in case a later
-reader treats the recipe as usable-as-written.
+**First-ship pick.** **Gemma 4 E2B @ Q4 (~750 MB)** is the smallest
+Gemma 4 family member the workspace has fetched (SIDEKICK task
+#86 / #92 / #94 measurements).
 
 **What the row does not cover.** Gemma 4 as such is not blocked;
 it is the sanctioned Gemma line. Reading Gemma 3 outputs from
 existing HF datasets we do not own is not a shipping artefact and
-is not covered here. Historic RFDs that named Gemma 3 by name
-(RFD 2199 SIDEKICK survey, RFD 2227 first-ship pick) are records
-of decisions superseded by this directive; they stay in place as
-retraction pointers per CLAUDE.md doctrine.
+is not covered here.
 
 **Related allowlist note (2026-09-05):** operator confirmed
 verbatim *"edit score's qwen3-vl is allowedlist"* — EditScore-7B's
@@ -1644,25 +1631,21 @@ Operator directive 2026-09-05, verbatim: *"onnx runtime web tfjs
 is blocklisted"*.
 
 The workspace's inference stack is **ggml** (RFD 2188 canonical
-source; RFD 2218 WebGPU backend; RFD 2228 native delivery). A
-second browser inference runtime would fork the model conversion
-path, the quantization story, and the debugging surface for
-nothing this workspace needs. RFD 2217's earlier evaluation of
-WebGL2-via-TFJS for ggml was already blocklisted (superseded by
-RFD 2218 which picked WebGPU); this row generalises: TFJS and
-ORT-Web do not enter shipping artefacts regardless of backend
-(WebGL, WebGPU, or WASM).
+source), linked with ggml's Vulkan backend in the native binary.
+A second browser inference runtime would fork the model
+conversion path, the quantization story, and the debugging
+surface for nothing this workspace needs. TFJS and ORT-Web do
+not enter shipping artefacts regardless of backend (WebGL,
+WebGPU, or WASM).
 
 **What the row does not cover.** ORT and TFJS as native training
 runtimes on the server are not what this row is about; nothing
 in the workspace uses them there either, but this row is scoped
 to browser inference. Reading someone else's TFJS or ORT-Web demo
-to understand a technique is not shipping. Historic RFDs that
-name TFJS as a precedent (RFD 2217 §Precedents) stay as records.
+to understand a technique is not shipping.
 
-Substitute: ggml compiled to native WebGPU per RFD 2218 / RFD 2228,
-running under Godot's `modules/motionbricks/` or the equivalent
-per-consumer module.
+Substitute: ggml with its Vulkan backend, linked into the native
+binary as one shared `modules/ggml/` module per RFD 2230.
 
 ### WebGPU is blocklisted as a workspace render / compute target
 
@@ -1670,15 +1653,6 @@ Operator directive 2026-09-05, verbatim: *"wait a second if we're
 native we can blocklist webgpu and only use vulkan which has more
 quality assurance hours in production"* + *"vulkan on mac,
 windows and linux has more quality assurance hours than webgpu"*.
-
-WebGPU showed up in the workspace stack because the delivery
-surface was `platform=web` (RFDs 2210 / 2211 / 2218 / 2227) —
-the browser can't call Vulkan directly, so ggml matmul on the
-browser side went through WebGPU. WebGPU-native (via Dawn or
-wgpu-native) was picked for desktop too so both surfaces shared
-one backend. RFD 2228 dropped `platform=web`; the browser reason
-is gone, and the shared-backend reason only had value while both
-surfaces existed.
 
 **Why Vulkan wins on all three targets.** On Linux and Windows,
 Vulkan removes one translation layer that WebGPU-native adds. On
@@ -1693,20 +1667,14 @@ shipped 2016 (~10 years); WebGPU stable in Chrome late 2023
 
 **What this blocks.** `Ggml.WebGPU=ON` and any successor flag;
 Dawn / wgpu-native as a build dependency; Godot forks whose sole
-purpose is a WebGPU renderer (the WebGPU-Godot-fork patch series
-in RFD 2211's amendment retracts). ORT-Web + TFJS WebGPU
-execution providers are already covered by the ORT-Web / TFJS
-row above; this row generalises to any WebGPU-first inference
-stack.
+purpose is a WebGPU renderer. ORT-Web + TFJS WebGPU execution
+providers are already covered by the ORT-Web / TFJS row above;
+this row generalises to any WebGPU-first inference stack.
 
 **What the row does not cover.** Reading a WebGPU spec or example
 to understand a Vulkan concept. WebGPU code on a third-party
 site the workspace does not ship (tutorial pages, reference
-docs). ggml's Vulkan backend, which is what replaces the
-retracted WebGPU one. Historic RFDs that name WebGPU as
-example or dependency (RFD 2211 amendment, RFD 2218, RFD 2228's
-Dawn wording) stay as records of the reversal per retraction
-doctrine.
+docs). ggml's Vulkan backend, which is what replaces WebGPU.
 
 **Substitute:** ggml Vulkan backend + Godot's native Vulkan
-renderer + MoltenVK on macOS. Full scope in [RFD 2231](rfd/2231-drop-webgpu-use-vulkan/README.md).
+renderer + MoltenVK on macOS.

@@ -25,10 +25,11 @@ Concretely:
    eyes so head + shoulders + up-to-the-ribcage fill the frame.
    Portrait 4:5 aspect (phone-call-native).
 2. **LookAt.** The VRM's `LookAt` target follows the camera every
-   frame via `@pixiv/three-vrm`'s `VRMLookAtQuaternionProxy` — no
-   new library. The player IS the caller. A small time-based
-   glance-away every 4-7 s for ~300 ms (about the width of a
-   pencil of time) prevents the death-stare failure mode.
+   frame via `godot-vrm`'s `VRMTopLevel` LookAt proxy (loaded as a
+   sandbox ELF per [RFD 2213](../2213-vrm-via-godot-sandbox-elf/)).
+   The player IS the caller. A small time-based glance-away every
+   4-7 s for ~300 ms (about the width of a pencil of time) prevents
+   the death-stare failure mode.
 3. **Idle motion.** Ambient sway on `Spine` / `UpperChest` at 0.02
    rad amplitude with a 4-s sinusoid for breathing. Blink cycle
    ~4 s period with 100 ms closed.
@@ -36,8 +37,7 @@ Concretely:
    `miss`) fires a VRM expression blendshape (`happy` / `neutral`
    / `sad`) that holds for ~1.5 s then decays over ~100 ms back to
    neutral. Total envelope ~1.6 s, about the width of a golf ball
-   of time. Reuses the VRM `expressionManager` already loaded by
-   `@pixiv/three-vrm`.
+   of time. Reuses the VRM expression node `godot-vrm` exposes.
 5. **Diorama backdrop.** A low-poly scene-flavored backdrop behind
    the character, swappable per-scene from a small `scenes/*.gltf`
    set. Kept deliberately low-detail so the character reads as the
@@ -74,7 +74,10 @@ mandated).
 - RFD 1170 (presence loop) — this RFD is its visual convention.
 - RFD 2205 (Taskweft in Bao) — the Starforged play surface that
   this convention was first applied to.
-- Codebase: `7-service/service-sqlar-cas/docs/vrm.js` — the
-  reference implementation of every element above.
+- [RFD 2213](../2213-vrm-via-godot-sandbox-elf/) — how the VRM
+  loads in the current native Godot binary (godot-vrm ELF via
+  libriscv sandbox); the earlier `@pixiv/three-vrm` reference
+  implementation at `7-service/service-sqlar-cas/docs/vrm.js`
+  is retired with the three.js blocklist (RFD 2216).
 
 This RFD was drafted by an AI and read by a human before it shipped.
