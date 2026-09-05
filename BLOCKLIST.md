@@ -1483,6 +1483,30 @@ Any future proposal to use SDEdit for image editing should first ladder
 against OmniGen2's native path on the same held-out slice; if it does
 not clear that bar, this row still holds.
 
+### rf-detr object detection is blocklisted, keypoints and segmentation stay
+
+RF-DETR ships three heads: keypoints, segmentation, and object detection.
+RFD 1102 names keypoints as the workspace's actual task; segmentation is
+already used in the See-Through pipeline. The object-detection head is not
+a task any RFD names, but the shipped weights invite whoever picks up the
+repo to also invoke detection — that is scope drift, and downstream it
+invites the whole detection ecosystem (NMS tuning, mAP metrics, COCO
+detection evaluation) into a workspace that has been kept deliberately
+clear of those.
+
+This row blocks the object-detection head, not the checkpoint. Keypoints
+and segmentation-head usage stay: `rf-detr-cpp` and the See-Through
+segmentation path are unaffected. `rf-detr-detection-data` and
+`rf-detr-segmentation-data` are unaffected. Both remain approved corpora
+for their respective heads.
+
+The failure this row prevents is a downstream reader building an
+object-detection pipeline on the RF-DETR weights, calling it "already
+approved because RF-DETR is approved", and thereby introducing detection
+as a workspace task by accident. Kept as a row rather than a comment
+because a row is the shape the workspace uses to say "this is a bounded
+no", and comments are silent (rule 3).
+
 ### Apple's convention name for the 52-target facial-action blendshape set is blocked as a shipping-artifact word, and FACS action-unit vocabulary is the substitute
 
 The 52 facial-action blendshape targets ANNY ships under
