@@ -489,6 +489,19 @@ pointer and can follow it to the measurement that produced the retraction.
 Retroactive is not required. RFDs that already carry a retraction paragraph
 keep it; the new rule applies to retractions from 2026-09-04 forward.
 
+**Retroactive pass 2026-09-05:** operator directive *"globally across the
+rfd git repo on weftspun please peel off all retractions / retire rfds"*
+lifted the "not required" clause for one sweep. Every `**State:** abandoned`
+or `**State:** superseded` RFD in `weftspun/request-for-discussion` was
+peeled to the doctrine shape (title + preserved retraction paragraphs +
+State line + canary). Where an RFD had no retraction paragraph at all, a
+generic pointer to git history was inserted. `DETAILS.md` alongside a
+peeled `README.md` was preserved so the retracted argument is not lost.
+The sweep was applied by an Elixir script at
+`scratchpad/peel_retractions.exs`; the "not required" clause stays in
+place for future retractions since the sweep has now closed the historical
+gap.
+
 The two carve-outs the rule does not touch: **the logbook** keeps its
 "retractions stay in place next to what they retract" shape because it
 records events; **this file** keeps its retraction paragraphs because the
