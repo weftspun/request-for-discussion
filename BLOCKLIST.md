@@ -1559,6 +1559,17 @@ blendshape set.
 
 ### Three.js is blocklisted as an in-browser 3D runtime, and Godot `platform=web` is why
 
+**Amendment 2026-09-05:** RFD 2228 flipped the atelier delivery
+surface from Godot `platform=web` (Emscripten browser export) to a
+**native Godot binary** with Godot's WebGPU renderer via
+Dawn/wgpu-native. The three.js blocklist rationale is unchanged —
+the workspace ships one 3D runtime and three.js is still the second
+one it declines to ship — but the substitute is now the native
+binary, not the browser export. The section body's `platform=web`
+references stay as the historical reasoning that produced the
+blocklist decision; the section title's phrase is the pointer
+landing target per retraction doctrine.
+
 Three.js itself is MIT-licensed — the objection is not licence, it is
 runtime story. The workspace ships ANNY through Godot on desktop and
 Android; a three.js path forks that story: a second scene-graph the

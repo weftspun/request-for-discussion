@@ -1,5 +1,24 @@
 # RFD 2214: model bundle as ZSTD-compressed SQLite range-fetched from the browser
 
+**Range-fetch-from-browser half:** retracted 2026-09-05 by
+[RFD 2228](../2228-webgpu-native-drop-platform-web/) — operator
+reversal (verbatim): *"drop webgpu platform=web. try webgpu
+native"*. The atelier drops the browser export, so `sql.js`,
+`Accept-Ranges: bytes`, and the decompressing browser VFS are all
+out. What survives: **SQLite + ZSTD as the model bundle format on
+local disk**. The loader path becomes `sqlite3_open()` on a
+filesystem path next to the native binary; Shapes A (whole GGUF as
+one BLOB) and B (per-tensor rows) both still apply, and the
+`mb_model_load_from_memory` / `mb_model_load_from_tensor_provider`
+C APIs still land — they read from a mapped file rather than from a
+JavaScript `Uint8Array`. The RFD title's "range-fetched from the
+browser" phrase is stale; keep it as the pointer's landing target
+per retraction doctrine. The interchangeable-parts consolidation
+directive that also came down 2026-09-05 does not touch this RFD
+directly — the SQLite+ZSTD bundle format is already the single
+shared model-delivery interface across ggml consumers, which is
+what consolidation asks for.
+
 **State:** discussion
 **Flight level:** L2 (coordination)
 **Feature:** how the motion-bricks model (180 MB Q4 GGUF) reaches the

@@ -10,12 +10,21 @@ consumer files
 ## Decision
 
 Blocklist three.js as an in-browser 3D runtime. Substitute is
-**Godot `platform=web`** (see [RFD 2210](../2210-atelier-godot-web-shipping-surface/)
-+ [RFD 2211](../2211-base-tree-entities-godot-sandbox/)). Three.js
+**Godot as a native binary** (see [RFD 2210](../2210-atelier-godot-web-shipping-surface/)
++ [RFD 2211](../2211-base-tree-entities-godot-sandbox/) +
+[RFD 2228](../2228-webgpu-native-drop-platform-web/)). Three.js
 itself is MIT-licensed — the objection is not licence, it is
 runtime story: the workspace ships every other 3D surface via
 Godot, and a three.js path forks the scene-graph, material pipeline,
 animation graph, and lighting model.
+
+**Amendment 2026-09-05:** the earlier substitute wording named
+Godot `platform=web` (Emscripten export). RFD 2228 flipped the
+delivery surface to native binaries with Godot's WebGPU renderer
+via Dawn/wgpu-native; the substitute is now the native binary,
+not the browser export. The three.js blocklist rationale is
+unchanged — the workspace ships one 3D runtime, and three.js is
+still the second one it declines to ship.
 
 ## CLAUDE.md table row
 
