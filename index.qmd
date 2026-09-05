@@ -9,11 +9,3 @@ Taskweft's live design record. Currently one document:
   is building. Native binary, Starforged decision-point VN with a
   VRM portrait as the interlocutor; the "video" is the same game
   captured headless.
-
-## Site
-
-- [Working agreements](https://github.com/weftspun/request-for-discussion/blob/main/CLAUDE.md)
-- [Blocklist](https://github.com/weftspun/request-for-discussion/blob/main/BLOCKLIST.md)
-- [Serial register](pages/serials.md)
-- [Flight Levels](pages/flight-level-3-strategy.qmd)
-- [Logbook](pages/logbook.qmd)
