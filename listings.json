@@ -2,22 +2,14 @@
   {
     "listing": "/pages/rfd.html",
     "items": [
-      "/rfd/1175-video-and-game/index.html"
+      "/rfd/1175-game/index.html"
     ]
   },
   {
     "listing": "/pages/flight-level-3-strategy.html",
     "items": [
-      "/rfd/1175-video-and-game/index.html"
+      "/rfd/1175-game/index.html"
     ]
-  },
-  {
-    "listing": "/pages/flight-level-1-operations.html",
-    "items": []
-  },
-  {
-    "listing": "/pages/flight-level-2-coordination.html",
-    "items": []
   },
   {
     "listing": "/pages/logbook.html",
