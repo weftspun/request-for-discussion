@@ -1,5 +1,16 @@
 # RFD 2228: WebGPU native, drop `platform=web`
 
+**WebGPU half:** superseded 2026-09-05 by
+[RFD 2231](../2231-drop-webgpu-use-vulkan/) — operator directive
+(verbatim): *"if we're native we can blocklist webgpu and only
+use vulkan which has more quality assurance hours in production"*.
+This RFD's "native, drop platform=web" half stands unchanged;
+the compute/render API it named (WebGPU via Dawn/wgpu-native) is
+now **Vulkan (MoltenVK on macOS)**. Everywhere this RFD says
+"WebGPU" or "Dawn", read "Vulkan" or "Godot's Vulkan
+RenderingDevice"; the reasoning about native delivery, native
+memory ceilings, and the surviving/killed pieces is unchanged.
+
 **State:** discussion
 **Flight level:** L3 (strategy — reverses the platform=web premise
 that RFDs 2210/2211/2218/2227 stood on)

@@ -1712,3 +1712,50 @@ name TFJS as a precedent (RFD 2217 §Precedents) stay as records.
 Substitute: ggml compiled to native WebGPU per RFD 2218 / RFD 2228,
 running under Godot's `modules/motionbricks/` or the equivalent
 per-consumer module.
+
+### WebGPU is blocklisted as a workspace render / compute target
+
+Operator directive 2026-09-05, verbatim: *"wait a second if we're
+native we can blocklist webgpu and only use vulkan which has more
+quality assurance hours in production"* + *"vulkan on mac,
+windows and linux has more quality assurance hours than webgpu"*.
+
+WebGPU showed up in the workspace stack because the delivery
+surface was `platform=web` (RFDs 2210 / 2211 / 2218 / 2227) —
+the browser can't call Vulkan directly, so ggml matmul on the
+browser side went through WebGPU. WebGPU-native (via Dawn or
+wgpu-native) was picked for desktop too so both surfaces shared
+one backend. RFD 2228 dropped `platform=web`; the browser reason
+is gone, and the shared-backend reason only had value while both
+surfaces existed.
+
+**Why Vulkan wins on all three targets.** On Linux and Windows,
+Vulkan removes one translation layer that WebGPU-native adds. On
+macOS the raw hop-count favours WebGPU (Dawn → Metal, one hop vs
+MoltenVK's two), but MoltenVK is battle-tested — shipped in
+Godot since 3.x, used by every Vulkan macOS game — while Dawn's
+macOS backend is much newer. Godot 4's primary renderer is
+Vulkan-based (`RenderingDevice` driver); using anything else
+means fighting the engine. Production-QA hours: Vulkan 1.0
+shipped 2016 (~10 years); WebGPU stable in Chrome late 2023
+(~2 years).
+
+**What this blocks.** `Ggml.WebGPU=ON` and any successor flag;
+Dawn / wgpu-native as a build dependency; Godot forks whose sole
+purpose is a WebGPU renderer (the WebGPU-Godot-fork patch series
+in RFD 2211's amendment retracts). ORT-Web + TFJS WebGPU
+execution providers are already covered by the ORT-Web / TFJS
+row above; this row generalises to any WebGPU-first inference
+stack.
+
+**What the row does not cover.** Reading a WebGPU spec or example
+to understand a Vulkan concept. WebGPU code on a third-party
+site the workspace does not ship (tutorial pages, reference
+docs). ggml's Vulkan backend, which is what replaces the
+retracted WebGPU one. Historic RFDs that name WebGPU as
+example or dependency (RFD 2211 amendment, RFD 2218, RFD 2228's
+Dawn wording) stay as records of the reversal per retraction
+doctrine.
+
+**Substitute:** ggml Vulkan backend + Godot's native Vulkan
+renderer + MoltenVK on macOS. Full scope in [RFD 2231](rfd/2231-drop-webgpu-use-vulkan/README.md).

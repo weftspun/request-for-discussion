@@ -1,13 +1,18 @@
 # RFD 2218: ggml WebGPU backend
 
-**Rescoped 2026-09-05 by [RFD 2228](../2228-webgpu-native-drop-platform-web/):**
-target is now Dawn/wgpu-native on the desktop, not Emscripten's
-browser WebGPU binding. llama.cpp's WebGPU backend (the reference
-implementation this RFD adopts) already targets native as its
-primary; the Emscripten port is what changed. The C code is one
-file either way — this RFD's approach A still holds.
+**ggml WebGPU backend:** retracted 2026-09-05, superseded by
+[RFD 2231](../2231-drop-webgpu-use-vulkan/) — operator directive
+(verbatim): *"if we're native we can blocklist webgpu and only
+use vulkan which has more quality assurance hours in production"*.
+Native delivery (RFD 2228) removed the browser-shipping constraint
+that put WebGPU in the stack; Vulkan has ~10 years of production
+QA vs WebGPU's ~2, is Godot 4's primary renderer, and skips a
+translation layer on Linux/Windows. This RFD's approach-A (adopt
+llama.cpp's backend as reference) still applies against
+llama.cpp's **Vulkan** backend rather than its WebGPU one — same
+`ggml_backend_*` interface, older codepath, more field-tested.
 
-**State:** discussion
+**State:** abandoned
 **Flight level:** L2 (coordination — spans ggml + motion-bricks-cpp
 + atelier web surface)
 **Feature:** WebGPU is the browser acceleration path for ggml (and

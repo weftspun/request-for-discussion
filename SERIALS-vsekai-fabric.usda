@@ -920,6 +920,11 @@ def Scope "Serials"
                 {
                     custom string slug = "ggml-adapters-in-godot-sandbox"
                 }
+                def "S2231"
+                {
+                    custom string slug = "drop-webgpu-use-vulkan"
+                    custom string flight_level = "L3"
+                }
             }
         }
     }

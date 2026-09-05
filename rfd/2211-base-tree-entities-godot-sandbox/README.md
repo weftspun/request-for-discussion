@@ -41,6 +41,17 @@ WebGPU backend runs against the same native `WGPUDevice` Godot's
 renderer requests through Dawn, so the desktop binary gets one
 WebGPU adapter, not two.
 
+**Amendment 2026-09-05 (third reversal, retracts the WebGPU-fork
+patch amendment above):** [RFD 2231](../2231-drop-webgpu-use-vulkan/)
+blocklists WebGPU as a workspace render/compute target — native
+delivery removes the reason WebGPU was in the stack, and Vulkan
+has ~10 years of production QA vs WebGPU's ~2 with Godot's
+`RenderingDevice` already Vulkan-based. The WebGPU-Godot-fork
+patch series is retracted; Godot's shipping Vulkan renderer is
+the answer. Base-tree pick (`entities-godot-sandbox`) still
+stands unchanged — this is the third time it survives a reversal,
+which is the signal it was picked for the right reason.
+
 Pin the exact commit in `.repo/manifests/default.xml`, plus the
 patch-series SHA range from the WebGPU fork. Don't track a moving
 branch.
