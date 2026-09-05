@@ -30,10 +30,6 @@ def Scope "Serials"
                 custom uniform token kind = "spine"
                 custom string primaryKey = "serial"
 
-                def "S2000"
-                {
-                    custom string slug = "conventions"
-                }
                 def "S2001"
                 {
                     custom string slug = "zonefabric-roadmap-vs-mas-bandwidth-fps"
@@ -41,10 +37,6 @@ def Scope "Serials"
                 def "S2002"
                 {
                     custom string slug = "taskweft-value-narrowing-primitives-and-refs"
-                }
-                def "S2003"
-                {
-                    custom string slug = "castspell-sandbox-package-and-manifest-encoding"
                 }
                 def "S2004"
                 {
@@ -57,10 +49,6 @@ def Scope "Serials"
                 def "S2006"
                 {
                     custom string slug = "cockroachdb-with-mtls-role-separation"
-                }
-                def "S2007"
-                {
-                    custom string slug = "godot-double-precision-template-release-for-zone"
                 }
                 def "S2008"
                 {
@@ -114,10 +102,6 @@ def Scope "Serials"
                 {
                     custom string slug = "require-pr-and-merge-queue-on-main"
                 }
-                def "S2022"
-                {
-                    custom string slug = "spatial-audio-patched-resonance-audio"
-                }
                 def "S2023"
                 {
                     custom string slug = "webtransport-http3-transport"
@@ -142,17 +126,9 @@ def Scope "Serials"
                 {
                     custom string slug = "hexagonal-core-ports-adapters"
                 }
-                def "S2029"
-                {
-                    custom string slug = "cassie-desktop-curvenet-authoring"
-                }
                 def "S2030"
                 {
                     custom string slug = "cicd-runners-as-queueing-system"
-                }
-                def "S2031"
-                {
-                    custom string slug = "content-build-merged-double-precision-mcp"
                 }
                 def "S2032"
                 {
@@ -162,45 +138,13 @@ def Scope "Serials"
                 {
                     custom string slug = "core-contract-pure-reducer-byte-state"
                 }
-                def "S2034"
-                {
-                    custom string slug = "deterministic-cores-integer-seeded-rng"
-                }
-                def "S2035"
-                {
-                    custom string slug = "first-party-curated-content-zone-baker-budgets"
-                }
                 def "S2036"
                 {
                     custom string slug = "forward-renderer-baked-light"
                 }
-                def "S2037"
-                {
-                    custom string slug = "generated-behavior-sandboxed-riscv"
-                }
-                def "S2038"
-                {
-                    custom string slug = "genre-generic-naming-no-trademarks"
-                }
-                def "S2039"
-                {
-                    custom string slug = "hexagon-budgeter-core"
-                }
                 def "S2040"
                 {
                     custom string slug = "hexagon-combat-core"
-                }
-                def "S2041"
-                {
-                    custom string slug = "hexagon-loot-core"
-                }
-                def "S2042"
-                {
-                    custom string slug = "hexagon-presence-core"
-                }
-                def "S2043"
-                {
-                    custom string slug = "hexagon-progression-core"
                 }
                 def "S2044"
                 {
@@ -209,26 +153,6 @@ def Scope "Serials"
                 def "S2045"
                 {
                     custom string slug = "loot-action-core-loop-mvp-vertical-slice"
-                }
-                def "S2046"
-                {
-                    custom string slug = "server-authoritative-simulation-deferred-rollback"
-                }
-                def "S2047"
-                {
-                    custom string slug = "webtransportd-core-transport-adapter"
-                }
-                def "S2048"
-                {
-                    custom string slug = "android-template-temurin-jdk21"
-                }
-                def "S2049"
-                {
-                    custom string slug = "fabric-channels-as-reliability-classes"
-                }
-                def "S2050"
-                {
-                    custom string slug = "five-second-transaction-limit"
                 }
                 def "S2051"
                 {
@@ -241,18 +165,6 @@ def Scope "Serials"
                 def "S2053"
                 {
                     custom string slug = "integral-entity-transform-wire"
-                }
-                def "S2054"
-                {
-                    custom string slug = "mcp-runtime-bridge-deployed-builds"
-                }
-                def "S2055"
-                {
-                    custom string slug = "r128-fixed-point-as-lean-library"
-                }
-                def "S2056"
-                {
-                    custom string slug = "systemd-quadlet-verification-queue"
                 }
                 def "S2057"
                 {
@@ -273,10 +185,6 @@ def Scope "Serials"
                 def "S2062"
                 {
                     custom string slug = "repository-and-capability-inventory"
-                }
-                def "S2063"
-                {
-                    custom string slug = "repo-markdown-single-source-of-truth-for-project-state"
                 }
                 def "S2064"
                 {
@@ -305,10 +213,6 @@ def Scope "Serials"
                 def "S2070"
                 {
                     custom string slug = "loop-slice-telemetry-to-the-observability-collector"
-                }
-                def "S2071"
-                {
-                    custom string slug = "yagni-times-structure-to-need"
                 }
                 def "S2072"
                 {
@@ -374,10 +278,6 @@ def Scope "Serials"
                 {
                     custom string slug = "avatar-ik-sinew-mocap-align-over-mink"
                 }
-                def "S2088"
-                {
-                    custom string slug = "picoquic-picotls-transport-for-zone-server-h2o"
-                }
                 def "S2089"
                 {
                     custom string slug = "flyio-over-podman-quadlets"
@@ -398,14 +298,6 @@ def Scope "Serials"
                 {
                     custom string slug = "compile-taskweft-to-linear-automata"
                 }
-                def "S2094"
-                {
-                    custom string slug = "minimum-ugc-game-loop-guest-composition"
-                }
-                def "S2095"
-                {
-                    custom string slug = "two-guest-classes-domain-abi-and-bubblewrap"
-                }
                 def "S2096"
                 {
                     custom string slug = "guest-transport-measured-on-fly"
@@ -418,21 +310,9 @@ def Scope "Serials"
                 {
                     custom string slug = "rollback-snapshot-budget"
                 }
-                def "S2099"
-                {
-                    custom string slug = "server-authority-on-fly"
-                }
-                def "S2100"
-                {
-                    custom string slug = "tick-rate-send-rate-and-the-bone-budget"
-                }
                 def "S2101"
                 {
                     custom string slug = "zstd-delta-on-the-wire"
-                }
-                def "S2102"
-                {
-                    custom string slug = "the-whole-deployment-on-15-usd"
                 }
                 def "S2103"
                 {
@@ -445,10 +325,6 @@ def Scope "Serials"
                 def "S2106"
                 {
                     custom string slug = "split-the-archive-into-its-own-repo"
-                }
-                def "S2107"
-                {
-                    custom string slug = "janet-scripting-over-a-c-taskweft-core"
                 }
                 def "S2108"
                 {
@@ -506,10 +382,6 @@ def Scope "Serials"
                 {
                     custom string slug = "amend-rfd-2111-against-the-tree"
                 }
-                def "S2122"
-                {
-                    custom string slug = "the-client-is-native"
-                }
                 def "S2123"
                 {
                     custom string slug = "a-second-webtransport-implementation"
@@ -517,38 +389,6 @@ def Scope "Serials"
                 def "S2124"
                 {
                     custom string slug = "elixir-error-tuples-in-every-reply"
-                }
-                def "S2125"
-                {
-                    custom string slug = "an-interactor-in-another-process"
-                }
-                def "S2126"
-                {
-                    custom string slug = "two-see-through-interactors"
-                }
-                def "S2127"
-                {
-                    custom string slug = "a-service-is-not-a-side"
-                }
-                def "S2128"
-                {
-                    custom string slug = "the-release-ladder-is-not-automated"
-                }
-                def "S2129"
-                {
-                    custom string slug = "cost-and-latency-are-two-budgets"
-                }
-                def "S2130"
-                {
-                    custom string slug = "state-what-a-repository-is-made-of"
-                }
-                def "S2132"
-                {
-                    custom string slug = "a-permission-cannot-be-granted-sideways"
-                }
-                def "S2133"
-                {
-                    custom string slug = "the-pool-rents-from-the-spot-book"
                 }
                 def "S2134"
                 {
@@ -565,14 +405,6 @@ def Scope "Serials"
                 def "S2137"
                 {
                     custom string slug = "rfd-reports-share-one-sheet"
-                }
-                def "S2138"
-                {
-                    custom string slug = "interactor-shuttle-merges-spot-broker-and-uro"
-                }
-                def "S2139"
-                {
-                    custom string slug = "maskscore-qaft-budget"
                 }
                 def "S2140"
                 {
@@ -618,10 +450,6 @@ def Scope "Serials"
                 {
                     custom string slug = "rectgtn-on-openplc4-over-coap-oscore"
                 }
-                def "S2151"
-                {
-                    custom string slug = "coap-oscore-nif-for-taskweft"
-                }
                 def "S2152"
                 {
                     custom string slug = "or-divergence-plcopen-emit"
@@ -645,10 +473,6 @@ def Scope "Serials"
                 def "S2157"
                 {
                     custom string slug = "fbd-to-elf-compiler-in-lean4"
-                }
-                def "S2158"
-                {
-                    custom string slug = "lean4-fbd-compiler-self-hosted-on-riscv"
                 }
                 def "S2159"
                 {
@@ -801,10 +625,6 @@ def Scope "Serials"
                 {
                     custom string slug = "editscore-as-constructed-synthetic-reproducibility-bar"
                 }
-                def "S2194"
-                {
-                    custom string slug = "atelier-shuttle-portfolio-widget"
-                }
                 def "S2195"
                 {
                     custom string slug = "weftspun-bao-tailscale-sidecar"
@@ -857,10 +677,6 @@ def Scope "Serials"
                 {
                     custom string slug = "nord-palette-for-demos"
                 }
-                def "S2208"
-                {
-                    custom string slug = "decision-point-control-surface"
-                }
                 def "S2209"
                 {
                     custom string slug = "cc-by-nc-blocklist-entry"
@@ -873,10 +689,6 @@ def Scope "Serials"
                 def "S2211"
                 {
                     custom string slug = "base-tree-entities-godot-sandbox"
-                }
-                def "S2212"
-                {
-                    custom string slug = "motion-bricks-as-native-godot-module"
                 }
                 def "S2213"
                 {
@@ -894,6 +706,214 @@ def Scope "Serials"
                 {
                     custom string slug = "threejs-blocklist"
                 }
+                def "S2229"
+                {
+                    custom string slug = "interchangeable-parts-consolidation"
+                    custom string flight_level = "L3"
+                }
+                def "S2230"
+                {
+                    custom string slug = "ggml-adapters-in-godot-sandbox"
+                }
+            }
+        }
+
+        def Scope "Deleted"
+        {
+            def "Rfd"
+            {
+                custom string[] columns = ["serial int16 PK", "slug string"]
+                custom uniform token kind = "spine"
+                custom string primaryKey = "serial"
+
+                def "S2000"
+                {
+                    custom string slug = "conventions"
+                }
+                def "S2003"
+                {
+                    custom string slug = "castspell-sandbox-package-and-manifest-encoding"
+                }
+                def "S2007"
+                {
+                    custom string slug = "godot-double-precision-template-release-for-zone"
+                }
+                def "S2022"
+                {
+                    custom string slug = "spatial-audio-patched-resonance-audio"
+                }
+                def "S2029"
+                {
+                    custom string slug = "cassie-desktop-curvenet-authoring"
+                }
+                def "S2031"
+                {
+                    custom string slug = "content-build-merged-double-precision-mcp"
+                }
+                def "S2034"
+                {
+                    custom string slug = "deterministic-cores-integer-seeded-rng"
+                }
+                def "S2035"
+                {
+                    custom string slug = "first-party-curated-content-zone-baker-budgets"
+                }
+                def "S2037"
+                {
+                    custom string slug = "generated-behavior-sandboxed-riscv"
+                }
+                def "S2038"
+                {
+                    custom string slug = "genre-generic-naming-no-trademarks"
+                }
+                def "S2039"
+                {
+                    custom string slug = "hexagon-budgeter-core"
+                }
+                def "S2041"
+                {
+                    custom string slug = "hexagon-loot-core"
+                }
+                def "S2042"
+                {
+                    custom string slug = "hexagon-presence-core"
+                }
+                def "S2043"
+                {
+                    custom string slug = "hexagon-progression-core"
+                }
+                def "S2046"
+                {
+                    custom string slug = "server-authoritative-simulation-deferred-rollback"
+                }
+                def "S2047"
+                {
+                    custom string slug = "webtransportd-core-transport-adapter"
+                }
+                def "S2048"
+                {
+                    custom string slug = "android-template-temurin-jdk21"
+                }
+                def "S2049"
+                {
+                    custom string slug = "fabric-channels-as-reliability-classes"
+                }
+                def "S2050"
+                {
+                    custom string slug = "five-second-transaction-limit"
+                }
+                def "S2054"
+                {
+                    custom string slug = "mcp-runtime-bridge-deployed-builds"
+                }
+                def "S2055"
+                {
+                    custom string slug = "r128-fixed-point-as-lean-library"
+                }
+                def "S2056"
+                {
+                    custom string slug = "systemd-quadlet-verification-queue"
+                }
+                def "S2063"
+                {
+                    custom string slug = "repo-markdown-single-source-of-truth-for-project-state"
+                }
+                def "S2071"
+                {
+                    custom string slug = "yagni-times-structure-to-need"
+                }
+                def "S2088"
+                {
+                    custom string slug = "picoquic-picotls-transport-for-zone-server-h2o"
+                }
+                def "S2094"
+                {
+                    custom string slug = "minimum-ugc-game-loop-guest-composition"
+                }
+                def "S2095"
+                {
+                    custom string slug = "two-guest-classes-domain-abi-and-bubblewrap"
+                }
+                def "S2099"
+                {
+                    custom string slug = "server-authority-on-fly"
+                }
+                def "S2100"
+                {
+                    custom string slug = "tick-rate-send-rate-and-the-bone-budget"
+                }
+                def "S2102"
+                {
+                    custom string slug = "the-whole-deployment-on-15-usd"
+                }
+                def "S2107"
+                {
+                    custom string slug = "janet-scripting-over-a-c-taskweft-core"
+                }
+                def "S2122"
+                {
+                    custom string slug = "the-client-is-native"
+                }
+                def "S2125"
+                {
+                    custom string slug = "an-interactor-in-another-process"
+                }
+                def "S2126"
+                {
+                    custom string slug = "two-see-through-interactors"
+                }
+                def "S2127"
+                {
+                    custom string slug = "a-service-is-not-a-side"
+                }
+                def "S2128"
+                {
+                    custom string slug = "the-release-ladder-is-not-automated"
+                }
+                def "S2129"
+                {
+                    custom string slug = "cost-and-latency-are-two-budgets"
+                }
+                def "S2130"
+                {
+                    custom string slug = "state-what-a-repository-is-made-of"
+                }
+                def "S2132"
+                {
+                    custom string slug = "a-permission-cannot-be-granted-sideways"
+                }
+                def "S2133"
+                {
+                    custom string slug = "the-pool-rents-from-the-spot-book"
+                }
+                def "S2138"
+                {
+                    custom string slug = "interactor-shuttle-merges-spot-broker-and-uro"
+                }
+                def "S2139"
+                {
+                    custom string slug = "maskscore-qaft-budget"
+                }
+                def "S2151"
+                {
+                    custom string slug = "coap-oscore-nif-for-taskweft"
+                }
+                def "S2158"
+                {
+                    custom string slug = "lean4-fbd-compiler-self-hosted-on-riscv"
+                }
+                def "S2194"
+                {
+                    custom string slug = "atelier-shuttle-portfolio-widget"
+                }
+                def "S2208"
+                {
+                    custom string slug = "decision-point-control-surface"
+                }
+                def "S2212"
+                {
+                    custom string slug = "motion-bricks-as-native-godot-module"
+                }
                 def "S2217"
                 {
                     custom string slug = "ggml-webgl2-backend-evaluation"
@@ -910,15 +930,6 @@ def Scope "Serials"
                 {
                     custom string slug = "webgpu-native-drop-platform-web"
                     custom string flight_level = "L3"
-                }
-                def "S2229"
-                {
-                    custom string slug = "interchangeable-parts-consolidation"
-                    custom string flight_level = "L3"
-                }
-                def "S2230"
-                {
-                    custom string slug = "ggml-adapters-in-godot-sandbox"
                 }
                 def "S2231"
                 {
