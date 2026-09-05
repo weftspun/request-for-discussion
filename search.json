@@ -1425,14 +1425,7 @@
     "href": "index.html",
     "title": "Taskweft — Manuals",
     "section": "",
-    "text": "Taskweft’s live design record. Currently one document:"
-  },
-  {
-    "objectID": "index.html#site",
-    "href": "index.html#site",
-    "title": "Taskweft — Manuals",
-    "section": "Site",
-    "text": "Site\n\nWorking agreements\nBlocklist\nSerial register\nFlight Levels\nLogbook"
+    "text": "Taskweft’s live design record. Currently one document:\n\nRFD 1175 — game — the one demo the workspace is building. Native binary, Starforged decision-point VN with a VRM portrait as the interlocutor; the “video” is the same game captured headless."
   },
   {
     "objectID": "book.html",

@@ -10,7 +10,7 @@
 <atom:link href="https://weftspun.github.io/request-for-discussion/pages/rfd.xml" rel="self" type="application/rss+xml"/>
 <description>Request-for-Discussion documents, the serial register, and the logbook.</description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Sat, 05 Sep 2026 22:42:50 GMT</lastBuildDate>
+<lastBuildDate>Sat, 05 Sep 2026 22:45:13 GMT</lastBuildDate>
 <item>
   <title>RFD 1175: game</title>
   <link>https://weftspun.github.io/request-for-discussion/rfd/1175-game/</link>
@@ -38,7 +38,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/1175-game/</guid>
-  <pubDate>Sat, 05 Sep 2026 22:42:50 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 22:45:13 GMT</pubDate>
 </item>
 </channel>
 </rss>
