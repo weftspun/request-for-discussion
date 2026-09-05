@@ -1,9 +1,0 @@
-cff-version: 1.2.0
-message: "If you use MuJoCo or MJX, please cite as below."
-title: "MuJoCo MJX: differentiable physics in JAX"
-type: software
-authors:
-  - name: "Google DeepMind"
-repository-code: "https://github.com/google-deepmind/mujoco"
-license: Apache-2.0
-notes: "A physics engine, not a neural network. It holds no weights and no graph to export."

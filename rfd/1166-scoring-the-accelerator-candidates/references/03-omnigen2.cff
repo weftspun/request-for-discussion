@@ -1,8 +1,0 @@
-cff-version: 1.2.0
-message: "If you use OmniGen2, please cite it as below."
-title: "OmniGen2: unified image generation and instructed editing"
-type: software
-authors:
-  - name: "VectorSpaceLab"
-repository-code: "https://github.com/VectorSpaceLab/OmniGen2"
-license: Apache-2.0

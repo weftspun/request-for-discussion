@@ -126,9 +126,6 @@ The policy is measured by:
   produced the directive.
 - RFD 2211 (base tree entities-godot-sandbox) — picked the tree
   the trim in `weftspun-keypoint#101` acted on.
-- RFD 2228 (WebGPU native, drop platform=web) — the reversal
-  that made post-hoc consolidation cheap because it dropped one
-  build target.
 - Memory `consolidate-interchangeable-parts` — the operator
   directive + how-to-apply, kept as the working memory next to
   this policy.

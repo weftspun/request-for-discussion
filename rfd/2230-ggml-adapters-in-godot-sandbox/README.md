@@ -28,10 +28,9 @@ consumer links, not N per-project C++ modules.
 ## The layering
 
 **Layer 1 — native, one module.** `entities-godot-sandbox/modules/ggml/`
-hosts `2-contract/ggml/` (RFD 2188 canonical source) plus the
-WebGPU backend (RFD 2218 approach A, targeting Dawn/wgpu-native
-per RFD 2228). Exposes a small GDExtension surface, GDScript-
-callable:
+hosts `2-contract/ggml/` (RFD 2188 canonical source) plus ggml's
+Vulkan backend (MoltenVK on macOS). Exposes a small GDExtension
+surface, GDScript-callable:
 
 ```gdscript
 var model := Ggml.load_model("res://models/motion-bricks.gguf")
@@ -176,10 +175,6 @@ to GDExtension (`Ggml.load_model_from_bytes`).
   cases needing full ELF sandbox rather than GDScript sandbox.
 - RFD 2214 (model bundle SQLite+ZSTD) — the bundle loader
   surface adapters call.
-- RFD 2218 (ggml WebGPU backend) — the backend `modules/ggml/`
-  builds against Dawn/wgpu-native.
-- RFD 2228 (WebGPU native, drop platform=web) — the delivery
-  surface `modules/ggml/` targets.
 - RFD 2229 (interchangeable-parts consolidation policy) — the
   policy this RFD lands one of; the three-C++-module → one-
   native-module-plus-N-GDScript-adapters shape is exactly what
