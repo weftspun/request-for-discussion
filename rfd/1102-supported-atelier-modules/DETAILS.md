@@ -1,102 +1,107 @@
-# RFD 1102 details: current task catalog, pipelines, retraction record
+# RFD 1102 details: current task catalog on ggml
 
-## Model catalog (Docker images, per RFD 1036)
+Every module in the atelier catalog runs on **ggml** (RFD 2188 —
+one ggml source across the workspace at `2-contract/ggml/`).
+Weights ship as GGUF, quantised to Q4 unless a measurement asks
+for wider precision. Consumer projects wrap the shared runtime;
+per-model adapters (tokenizer, prompt template, LoRA, sampler
+config) are GDScript files loaded under Godot's script sandbox per
+RFD 2230. Models with no upstream GGUF conversion carry a "port
+needed" note; the six-step migration recipe is at the end of this
+file.
 
-| Task                          | Model                          | Notes                                                          |
-| ----------------------------- | ------------------------------ | -------------------------------------------------------------- |
-| Text/image reasoning          | Gemma-4-12B (QAT Q4_0)                        | Shared VLM per RFD 1173. |
-| Reward model (image editing)  | Qwen3-VL-8B + EditScore LoRA (NF4, 6.75 GB)   | Per RFD 1157 and `7-service/service-livebook/priv/python/weft_score.py`. EditScore is a LoRA over Qwen3-VL (not a fine-tune of Gemma); RFD 1173's target is to swap the base to Gemma-4-12B later so the same weights serve both roles. |
-| Text/image → image            | Wan-VACE                       | ~14 GB NF4 (staged per RFD 1027).                              |
-| Image → coarse mesh           | Pixal3D                        | 24 GB total, ~6.5 GB peak staged.                              |
-| Mesh refinement               | VoxHammer                      | Holds no weights (RFD 1162).                                   |
-| Image → mesh (fast)           | TRELLIS.2                      | ~8 GB bf16.                                                    |
-| Metric depth                  | MoGe-3                         | ~1 GB.                                                         |
-| Auto-rig                      | SkinTokens                     | Full GLB against ANNY skeleton.                                |
-| Text → motion                 | Kimodo                         | Into SOMA pose format (77 rotvecs Kimodo emits, 78 pose params at anny call time — anny prepends one root identity at index 0; anny/test/test_soma.py:242-283, task #76). Consumed by ANNY. |
-| Mesh segmentation             | rf-detr-Seg (RFD 1168)         | Replaces P3-SAM (blocklisted, territory).                      |
-| Layer decomposition           | rf-detr-Seg + LaMa inpainting  | Replaces See-Through (blocklisted, no license) per RFD 1168.   |
-| Mesh retopology               | AutoRemesher, xatlas UV        | Format-adjacent tools, unchanged from prior catalog.           |
+## Model catalog
+
+| Task                          | Model                         | Weights (Q4 target)             | Runtime                                        |
+| ----------------------------- | ----------------------------- | ------------------------------- | ---------------------------------------------- |
+| Text/image reasoning          | Gemma-4-12B (QAT Q4_0)        | ~6 GB Q4_0 GGUF                 | ggml native (llama.cpp Vulkan backend)         |
+| Reward model (image editing)  | Qwen3-VL-8B + EditScore LoRA  | ~4 GB Q4 GGUF + LoRA GGUF sidecar | ggml native; LoRA applied via `Ggml.load_lora` |
+| Text/image → image            | Wan-VACE                      | ~7 GB Q4 GGUF                   | ggml native; **port needed** (upstream is torch) |
+| Image → coarse mesh           | Pixal3D (TRELLIS.2 impl)      | ~2 GB Q4 GGUF                   | ggml native; **port needed**                   |
+| Mesh refinement               | VoxHammer                     | no weights                      | ggml native (procedural, no model file)        |
+| Image → mesh (fast)           | Pixal3D (TRELLIS.2 impl)      | same row as above               | one repo, one GGUF, one row per Pixal3D-is-TRELLIS.2 memory |
+| Metric depth                  | MoGe-3                        | ~250 MB Q4 GGUF                 | ggml native; **port needed**                   |
+| Auto-rig                      | SkinTokens                    | GGUF (skin-tokens.cpp)          | ggml native (vendor's own runtime, already GGML) |
+| Text → motion                 | Kimodo                        | GGUF (motion-bricks-cpp rev)    | ggml native; SOMA pose format (77 rotvecs → 78 with root identity prepended) |
+| Mesh segmentation             | rf-detr-Seg (RFD 1168)        | GGUF (segmentation head)        | ggml native; **port needed** from ONNX         |
+| Layer decomposition           | rf-detr-Seg + LaMa inpainting | GGUF each                       | ggml native; **port needed**                   |
+| Mesh retopology               | AutoRemesher, xatlas UV       | no weights                      | native binary (format-adjacent tools)          |
 
 ## Voice + ASR (RFD 2164)
 
-| Task                          | Model                                      |
-| ----------------------------- | ------------------------------------------ |
-| Voice cloning                 | Qwen3-TTS-12Hz-1.7B-Base                   |
-| ASR (canonical)               | Parakeet TDT 0.6B v3 (CC-BY-4.0)           |
-| ASR panel (7 tracks)          | text: Parakeet TDT 0.6B v3, Voxtral Mini 3B, wav2vec2; IPA: Voxtral-IPA, Gemma-4-12B GBNF-IPA; phone: allosaurus universal + eng. Panel narrowed from twelve tracks per RFD 2179 (Whisper drop), RFD 2180 (gemma-auto drop), RFD 2181 (allosaurus-rus drop). |
-| Speaker embedding             | Microsoft WavLM Base+ SV                   |
+| Task                          | Model                                      | Weights (Q4 target)   | Runtime                                    |
+| ----------------------------- | ------------------------------------------ | --------------------- | ------------------------------------------ |
+| Voice cloning                 | Qwen3-TTS-12Hz-1.7B-Base                   | ~900 MB Q4 GGUF       | ggml native; **port needed**              |
+| ASR (canonical)               | Parakeet TDT 0.6B v3 (CC-BY-4.0)           | ~350 MB Q4 GGUF       | ggml native; **port needed** from Nemo    |
+| ASR panel (7 tracks)          | Parakeet TDT 0.6B v3, Voxtral Mini 3B, wav2vec2, Voxtral-IPA, Gemma-4-12B GBNF-IPA, allosaurus universal + eng | ~various Q4 GGUFs     | ggml native for each; Gemma-4-12B already GGUF; Voxtral + wav2vec2 + allosaurus **ports needed** |
+| Speaker embedding             | Microsoft WavLM Base+ SV                   | ~100 MB Q4 GGUF       | ggml native; **port needed**              |
+
+## Migration recipe (per model)
+
+Same recipe RFD 2229 named as the interchangeable-parts consolidation
+shape, one row per consumer:
+
+1. **Q4 quantize** — QAT if we train the model, PTQ per the CLAUDE.md
+   Post-training-quantization blocklist exemption (a vendor's own
+   runtime is exempt from the QAT-only rule) otherwise. Target Q4_0
+   for text models, Q4_K_M for vision if the K-quant produces a
+   measurable EditScore win over Q4_0 on held-out inputs.
+2. **GGUF conversion** — via llama.cpp's `convert_hf_to_gguf.py` for
+   HF-hosted models; per-model script for non-HF checkpoints. Ports
+   for `Wan-VACE`, `Pixal3D`, `MoGe-3`, `rf-detr-Seg`, `LaMa`,
+   `Qwen3-TTS`, `Parakeet`, `Voxtral`, `wav2vec2`, `allosaurus`,
+   `WavLM` all follow this step.
+3. **ZSTD-SQLite bundle** — RFD 2214 shape; `sqlite3_open()` on
+   local disk. One `.zstd.sqlite` per model bundle, install-time
+   download via the release channel.
+4. **`Ggml.load_model()` GDExtension call** — RFD 2230 surface; the
+   native `modules/ggml/` module hands bytes to ggml.
+5. **GDScript adapter** — per-model `.gd` file at
+   `res://adapters/<name>.gd`, extends `GgmlAdapter`, defines
+   `format_prompt` / `decode_output` / `apply_lora` per model
+   quirks.
+6. **Docker image** — per RFD 1036 `/health` + `/predict` shape
+   still applies; the container binary is now the native Godot
+   binary + shared `modules/ggml/` + the model's ZSTD-SQLite
+   bundle + adapter `.gd`. One model per image (packaging stays
+   RFD 1036), one runtime across images.
 
 ## Pipeline: MaskScore corpus construction (RFD 1173)
 
-  input      Docker container per model, /health + /predict
-       |
-  render     Mitsuba llvm_ad_rgb or metal_ad_rgb, sphere_hammersley
-       |
-  MaskScore  mask → reconstruct → score decoded outputs
-       |
-  parquet    3-file ZSTD per stub (root + candidates + scores),
-             ETNF (no nulls, interned vocab), RFD 2165.1 schema
-       |
-  HF         chibifire/maskscore-rung-1-bootstrap, 5 of 8 stubs shipped
-             (mesh, depth, pose, keypoints, multimodal, speech)
+    input      Docker container per model, /health + /predict (RFD 1036)
+         |
+    render     Mitsuba llvm_ad_rgb or metal_ad_rgb, sphere_hammersley
+         |
+    MaskScore  mask → reconstruct → score decoded outputs
+         |     (reconstruct model = ggml native per this RFD)
+    parquet    3-file ZSTD per stub (root + candidates + scores),
+               ETNF (no nulls, interned vocab), RFD 2165.1 schema
+         |
+    HF         chibifire/maskscore-rung-1-bootstrap, 5 of 8 stubs shipped
+               (mesh, depth, pose, keypoints, multimodal, speech)
 
 ## Pipeline: Gacha critical path (RFD 2136)
 
 Ten rungs, each producing an output the next rung consumes:
 
-  0. Language prompt → image           (OmniGen2, NF4 + Flow LCM LoRA)
-  1. Image → mesh                      (Pixal3D)
-  2. Mesh → judged                     (EditScore)
-  3. Judged → repaired                 (VoxHammer, N-attempt bound)
-  4. Repaired → skinned                (skin-tokens.cpp against ANNY)
-  5. Skinned → tagged                  (SAM2 or rf-detr-Seg + OmniGen2 per RFD 2183)
-  6. Tagged → VRM                      (portable character)
-  7. Prompt list → pool                (~50 VRMs, judged, seed-reproducible)
-  8. Pool → roll button                (web page)
-  9. Public                            (hosted with sponsor link)
+    0. Language prompt → image           (OmniGen2, Q4 GGUF + Flow LCM LoRA GGUF)
+    1. Image → mesh                      (Pixal3D, Q4 GGUF)
+    2. Mesh → judged                     (EditScore over Qwen3-VL-8B Q4 GGUF)
+    3. Judged → repaired                 (VoxHammer, procedural, N-attempt bound)
+    4. Repaired → skinned                (skin-tokens.cpp against ANNY, GGUF)
+    5. Skinned → tagged                  (SAM2 or rf-detr-Seg + OmniGen2 per RFD 2183, all GGUF)
+    6. Tagged → VRM                      (portable character)
+    7. Prompt list → pool                (~50 VRMs, judged, seed-reproducible)
+    8. Pool → roll button                (native Godot binary head per RFD 2210)
+    9. Public                            (hosted with sponsor link)
 
-Rung 0 NF4 quantisation is permitted after CLAUDE.md's 2026-09-02
-retraction of condition 5. Flow LCM LoRA cuts OmniGen2 sampling
-steps for the 3090 latency budget.
-
-Rung 4 skin-tokens.cpp is the C++23 / GGML port of the SkinTokens
-auto-rig (Apache-2.0 code, MIT upstream, GGUF weight bundles).
-skin-tokens.cpp is a vendor's own runtime, so it is exempt from
-CLAUDE.md's GGUF blocklist row per the exemption stated there.
-
-Rung 5 pivots from RFD 1168 (rf-detr-Seg + LaMa) to RFD 2183's
-three-step pipeline: SAM2 or rf-detr-Seg for masking, OmniGen2 with
-MaskScore-driven weights for layer reconstruction. See-Through is
-closed both ways (BLOCKLIST.md).
-
-Runtime motion: motion-bricks.cpp (C++23 / GGML port of NVIDIA
-MotionBricks) generates keyframe-driven animation from the shipped
-VRM. Apache-2.0 code, NVIDIA Open Model License on weights (same
-license class already accepted for Kimodo-SOMA-* per RFD 1028).
-183M params. Runs alongside rungs 7-9 as the animation source for
-the pool preview and hosted roll page.
-
-## Retraction record
-
-The 2026-06 draft of this RFD listed:
-
-- DGX-hosted `3DAIGC-API` on port 7842 as the live source.
-- `TaskManager.jsx` and `src/library/aiModelsCatalog.js` as the client
-  half of the strangler-fig plan (RFD 1019).
-- 14 task types across text-to-3D, image-to-3D, splat, world, and
-  avatar categories, with per-task feature keys.
-- Six models now blocklisted or abandoned: P3-SAM (territory
-  restricted), TripoSplat + WorldMirror 2.0 + weftspun_image_to_world
-  + LingBot-Map (RFDs 1049-1052 abandoned), Hunyuan3D-2.1 (not in
-  current catalog per RFD 1027).
-- Publish/RP1/OMB via MSF Map Service (RFD 1100 abandoned per RFD 2176
-  Class F index).
-- IWSDK Option A on SceneManager (RFD 1090 abandoned).
-
-Retracted alongside RFD 2169 (studio-core abandonment) and RFD 2175
-(rented-compute abandonment). The task shape the catalog described no
-longer exists; the model set the catalog listed is the intersection
-above.
+Runtime motion: motion-bricks.cpp (already ggml/GGUF) generates
+keyframe-driven animation from the shipped VRM. Apache-2.0 code,
+NVIDIA Open Model License on weights (same license class already
+accepted for Kimodo-SOMA-* per RFD 1028). 183M params. Runs
+alongside rungs 7-9 as the animation source for the pool preview
+and hosted roll page. Loaded through the shared `modules/ggml/`
+module per RFD 2230.
 
 ## Format boundary
 
@@ -110,13 +115,18 @@ Convert at the boundary only.
 Per RFD 1036 (`committed`): plain Docker, `/health` + `/predict`,
 weights at build time, two-stage Dockerfile (`contract` + `worker`),
 one model per image. Target 24 GB card (local desktop GPU per
-CLAUDE.md).
+CLAUDE.md). The container's inference binary is the shared native
+Godot binary from `entities-godot-sandbox` (RFD 2210) with the
+per-model adapter mounted; the runtime is ggml with the Vulkan
+backend per RFD 2231's substitute (Vulkan on native).
 
 ## Related
 
-RFD 1004 (original AIGC catalog, historical), RFD 1094 (multi-image
-routing, still current), RFD 1084 (avatar pipeline client side, still
-current), RFD 1108 (XR floor anchoring, `committed`), RFD 1088
-(HTTPS setup), RFD 1085 (code map), RFD 1105 (webcam avatar control).
-Removed refs to abandoned RFDs 1049-1052, 1090, 1100, 1019 per RFD
-2174 (open→abandoned index) and RFD 2176 (committed→terminal index).
+RFD 1036 (Docker packaging), RFD 1053 (OpenUSD internal + glTF/VRM
+at edge), RFD 1094 (multi-image routing), RFD 1084 (avatar pipeline
+client side), RFD 1088 (HTTPS setup), RFD 1085 (code map), RFD 1105
+(webcam avatar control), RFD 1108 (XR floor anchoring), RFD 2188
+(one ggml across workspace), RFD 2214 (model bundle SQLite+ZSTD),
+RFD 2229 (interchangeable-parts consolidation policy), RFD 2230
+(ggml adapters in godot-sandbox), RFD 2210 (atelier shipping
+surface, native).
