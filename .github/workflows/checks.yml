@@ -41,8 +41,28 @@ jobs:
         with:
           otp-version: "27"
           elixir-version: "1.18"
+      # DUAL-TRACK WITH transport-shepherd. Task #83 landed 17 Elixir gate ports;
+      # the `all-shepherd-gates` prek hook shells to `mix gates <name> --self-test`
+      # for each. The CI runner has no goal-manifest checkout, so shepherd is
+      # cloned separately here and SHEPHERD_ROOT points the wrapper at it. Skip
+      # is loud (rule 3) when either half is missing.
+      - name: check out transport-shepherd (dual-track)
+        uses: actions/checkout@v4
+        with:
+          repository: weftspun/transport-shepherd
+          path: transport-shepherd
+      - name: install shepherd deps
+        working-directory: transport-shepherd
+        run: mix deps.get
       - run: pip install prek
-      - run: prek run --all-files --show-diff-on-failure --color always
+      # GH_TOKEN passthrough for the shepherd goal-manifests port, which asks the
+      # organisation which repos are archived (same reason the goal-manifests
+      # python job below carries it). Without it the shepherd hook reports FAIL
+      # UNCHECKED per rule 3 rather than a silent skip.
+      - env:
+          SHEPHERD_ROOT: ${{ github.workspace }}/transport-shepherd
+          GH_TOKEN: ${{ github.token }}
+        run: prek run --all-files --show-diff-on-failure --color always
 
   # THE GOAL-MANIFEST GATE IS A CI JOB AND NOT A PREK HOOK, AND THE REASON IS THE TOKEN.
   #

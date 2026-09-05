@@ -459,6 +459,39 @@ repos:
         files: ^scripts/check_logbook_count\.py$
         pass_filenames: false
 
+      # DUAL-TRACK PARITY WITH transport-shepherd's ELIXIR GATE PORTS.
+      #
+      # Task #83 landed 17 bucket-A gate ports in weftspun/transport-shepherd
+      # (PR#1..#16). Operator picked "dual-track for one week" on the flip
+      # question, so both implementations of each gate run alongside their
+      # python original during the window and the operator sees any drift.
+      #
+      # AGGREGATE HOOK RATHER THAN 17. One BEAM startup instead of seventeen
+      # is the wall-time win; the per-gate breakdown is what
+      # `scripts/run_shepherd_gates.py`'s output already prints. Adding or
+      # removing a gate is a dispatcher-level edit in shepherd, not a
+      # `.pre-commit-config.yaml` diff here.
+      #
+      # SKIP IS NAMED, NOT SILENT (rule 3). The wrapper walks up looking for
+      # `1-transport/transport-shepherd/mix.exs`, or reads `SHEPHERD_ROOT`,
+      # and prints a named skip when neither shepherd nor `mix` is available.
+      # A missing toolchain reports a skip line, not a green pass.
+      #
+      # comment-density drift is documented in the shepherd PR#14 body: the
+      # Elixir line-toggle docstring detection over-counts non-docstring
+      # triple-quoted literals, so its baseline numbers diverge from the
+      # Python original on non-fixture code. The gate itself compares
+      # before/after with the same Elixir function, so the ladder decision
+      # is drift-tolerant by construction. This dual-track hook is running
+      # each gate's `--self-test`, which is drift-free; measurement drift
+      # only surfaces on live-repo baseline invocations, not here.
+      - id: all-shepherd-gates
+        name: shepherd's gate ports still fire (dual-track parity, one week)
+        entry: python scripts/run_shepherd_gates.py
+        language: system
+        pass_filenames: false
+        always_run: true
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
