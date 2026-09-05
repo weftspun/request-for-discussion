@@ -1,11 +1,12 @@
 ---
 title: "Taskweft — Manuals"
 toc: false
+listing:
+  filter-ui: false
+  sort-ui: false
+  type: table
+  contents:
+    - "rfd/1175-game/README.md"
+  fields: [title, state]
+  page-size: 50
 ---
-
-Taskweft's live design record. Currently one document:
-
-- [**RFD 1175 — game**](rfd/1175-game/) — the one demo the workspace
-  is building. Native binary, Starforged decision-point VN with a
-  VRM portrait as the interlocutor; the "video" is the same game
-  captured headless.
