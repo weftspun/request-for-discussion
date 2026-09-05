@@ -406,9 +406,8 @@ repos:
         files: ^scripts/check_ggml_singleton\.py$
         pass_filenames: false
 
-      # A directory that carries DETAILS.md without a README.md renders no
-      # page on the site -- render_site.py's RFD lister filters on README
-      # presence. The 2026-09-03 QA sweep found 90 such directories.
+      # A directory that carries DETAILS.md without a README.md leaves the
+      # RFD's identity implicit -- README carries the title + state header.
       - id: rfd-readme-present
         name: every RFD dir with DETAILS.md carries a README.md
         entry: python scripts/check_rfd_readme_present.py
