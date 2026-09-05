@@ -833,6 +833,84 @@ def Scope "Serials"
                 {
                     custom string slug = "anny-soma-first-subset-corpus-shape"
                 }
+                def "S2198"
+                {
+                    custom string slug = "lladao-speed-work-for-dressing-overlay"
+                }
+                def "S2199"
+                {
+                    custom string slug = "hailo-real-4bit-qat"
+                }
+                def "S2204"
+                {
+                    custom string slug = "rectgtn-fleet-coordination"
+                }
+                def "S2205"
+                {
+                    custom string slug = "taskweft-in-bao"
+                }
+                def "S2206"
+                {
+                    custom string slug = "video-call-vrm-portrait"
+                }
+                def "S2207"
+                {
+                    custom string slug = "nord-palette-for-demos"
+                }
+                def "S2208"
+                {
+                    custom string slug = "decision-point-control-surface"
+                }
+                def "S2209"
+                {
+                    custom string slug = "cc-by-nc-blocklist-entry"
+                }
+                def "S2210"
+                {
+                    custom string slug = "atelier-godot-web-shipping-surface"
+                    custom string flight_level = "L3"
+                }
+                def "S2211"
+                {
+                    custom string slug = "base-tree-entities-godot-sandbox"
+                }
+                def "S2212"
+                {
+                    custom string slug = "motion-bricks-as-native-godot-module"
+                }
+                def "S2213"
+                {
+                    custom string slug = "vrm-via-godot-sandbox-elf"
+                }
+                def "S2214"
+                {
+                    custom string slug = "model-bundle-sqlite-range-fetch-zstd"
+                }
+                def "S2215"
+                {
+                    custom string slug = "one-binary-two-heads"
+                }
+                def "S2216"
+                {
+                    custom string slug = "threejs-blocklist"
+                }
+                def "S2217"
+                {
+                    custom string slug = "ggml-webgl2-backend-evaluation"
+                }
+                def "S2218"
+                {
+                    custom string slug = "ggml-webgpu-backend"
+                }
+                def "S2227"
+                {
+                    custom string slug = "workspace-ggml-models-on-platform-web-webgpu"
+                }
+                def "S2228"
+                {
+                    custom string slug = "webgpu-native-drop-platform-web"
+                    custom string flight_level = "L3"
+                }
             }
         }
     }
