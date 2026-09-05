@@ -34,7 +34,23 @@ def read_tags(root: str) -> dict[str, list[tuple[int, str]]]:
                 or (entry.startswith("SERIALS-") and entry.endswith(".usda"))):
             continue
         text = open(os.path.join(root, entry), encoding="utf-8", errors="replace").read()
-        for m in SERIAL_BLOCK.finditer(text):
+        # Only look inside the Allocated scope; Deleted serials keep their
+        # historical flight_level tag but do not have a live directory to
+        # point at, so listing them here produces broken links.
+        alloc_m = re.search(r'def\s+Scope\s+"Allocated"\s*{', text)
+        if not alloc_m:
+            continue
+        # Walk from Allocated's opening brace forward, tracking depth to find
+        # its closing brace. Everything between is the Allocated body.
+        start = alloc_m.end()
+        depth = 1
+        i = start
+        while i < len(text) and depth > 0:
+            if text[i] == '{': depth += 1
+            elif text[i] == '}': depth -= 1
+            i += 1
+        allocated_body = text[start:i - 1]
+        for m in SERIAL_BLOCK.finditer(allocated_body):
             serial = int(m.group("serial"))
             body = m.group("body")
             level_m = LEVEL_FIELD.search(body)
