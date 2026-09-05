@@ -1295,7 +1295,25 @@ apparent 4-bit path is a bf16-adapter-over-nf4-base pattern that ships
 as two pieces at two precisions.
 
 **What is not blocked.** bnb NF4 for inference-only decoding of a
-model somebody else trained end-to-end at 4-bit.
+model somebody else trained end-to-end at 4-bit. **Also not blocked:
+QAT 4-bit combined with adapter and/or projector training in one
+loop**, when the adapter + projector see quantized forward (fake-quant
+or truly-quantized) throughout training and pass gradients through
+the quantization node via STE the same way the base does. Operator
+directive 2026-09-04 during coordination of RFD 2199's projector-fork
+work: "you can combine QAT 4bit and adapter/projector training." The
+failure this row blocks (adapter never sees quantization, distribution
+mismatch at merge) is closed by construction when adapter + projector
+train under quantized forward — same STE loop as the base, three
+parameter groups under one Torchao Int4WeightOnlyQuantizer wrap.
+
+Distinguishes cleanly from the bnb NF4 shape above: bnb NF4 pairs
+a frozen 4-bit base with a bf16 adapter (two files, two precisions,
+merge is lossy); the QAT+adapter/projector path keeps every tensor
+quantization-aware in one optimizer, and merges to a single INT4
+checkpoint OR ships the three tensors separately at INT4 alongside
+the base — the deployment-shape call is a downstream choice, both
+are compliant.
 
 Recorded here rather than as its own logbook entry because it is a
 general property of the bnb NF4 + LoRA pattern, not a model-specific
