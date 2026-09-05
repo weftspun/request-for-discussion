@@ -916,6 +916,10 @@ def Scope "Serials"
                     custom string slug = "interchangeable-parts-consolidation"
                     custom string flight_level = "L3"
                 }
+                def "S2230"
+                {
+                    custom string slug = "ggml-adapters-in-godot-sandbox"
+                }
             }
         }
     }
