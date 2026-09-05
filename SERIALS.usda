@@ -32,7 +32,7 @@ def Scope "Serials"
 
                 def "S1175"
                 {
-                    custom string slug = "video-and-game"
+                    custom string slug = "game"
                     custom string flight_level = "L3"
                 }
             }
