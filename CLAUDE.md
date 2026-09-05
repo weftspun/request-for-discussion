@@ -303,6 +303,42 @@ control (six subject controls, four URL-classification controls).
     python scripts/check_commit_style.py --base origin/main
     python scripts/check_commit_style.py --self-test
 
+## How Session-Bundle Work Is Landed
+
+Coordinator-authored session-bundle work lands as **one PR**, not
+as N parallel branches. The merge queue on this repo batches up
+to 5 ALLGREEN PRs at a time (ruleset 21131040, `MERGE` method,
+`grouping_strategy: ALLGREEN`), so multiple in-flight PRs on
+unrelated subjects merge together fine; what this rule prevents
+is splitting a single coordinated session's work across parallel
+branches that then race each other into rebase-conflict cascades.
+
+Operator directive 2026-09-05, verbatim: _"can you bundle the
+merges together and allow admin merging"_. The bundle half is
+this rule; the admin half is the bypass added to ruleset 21131040
+(`RepositoryRole 5`, `bypass_mode: always`) that lets an admin
+run `gh pr merge <n> --admin --merge` past a failing required
+check or the merge queue when the situation warrants — a
+convenience, not the default. Prefer letting the merge queue run
+its ALLGREEN batch; reach for `--admin` when a required check is
+wrong (a prettier re-run that's already trivially fixed and the
+gate is now spinning against a stale snapshot) or when the
+session bundle's atomicity matters more than one gate's opinion.
+
+A session bundle is a set of changes that carry each other's
+reasoning: three RFDs whose bodies cite each other, a blocklist
+row plus its BLOCKLIST.md section, a SERIALS backfill for the
+RFDs added in the same session. Landing them separately means
+one PR lands the row while another lands the section, and the
+`check_blocklist_detail.py` gate is red for the interval between.
+Bundling puts them on one PR that lands together or not at all.
+
+What this rule does not cover: unrelated in-flight work by peers
+(HERO's Kimodo port, ANCHOR's shepherd gates, SIDEKICK's Gemma-4
+measurements) still opens its own PR. This rule is about
+coordinator-authored work that shares a subject, not about
+serializing every PR through one branch.
+
 ## How Our Own C++ Is Typed
 
 C++ we write uses no `auto`. The code this workspace writes in C++ sits at
