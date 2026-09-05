@@ -1556,3 +1556,122 @@ argument to state what is being blocked, the same shape the
 Recorded here rather than as a logbook entry because it is a naming
 rule that applies to every future artefact touching the facial-action
 blendshape set.
+
+### Three.js is blocklisted as an in-browser 3D runtime, and Godot `platform=web` is why
+
+Three.js itself is MIT-licensed — the objection is not licence, it is
+runtime story. The workspace ships ANNY through Godot on desktop and
+Android; a three.js path forks that story: a second scene-graph the
+avatar has to be re-authored into, a second material pipeline, a
+second animation graph, a second lighting model. Each fork is a
+place the two runtimes render the same scene differently, and each
+difference is a bug nothing reports.
+
+The substitute costs nothing to adopt because it already ships.
+Godot 4's `platform=web` export produces `godot.web.*.wasm` +
+`godot.web.*.js` from the same source tree that produces the desktop
+build, and the same `.tscn` / `.tres` assets load in both.
+`3-interactor/entities-godot-sandbox` is the canonical checkout
+(see RFD 2211 for the tree-choice reason). Godot's own MToon support
+and its glTF/VRM importers (via godot-vrm as a godot-sandbox ELF per
+RFD 2213) cover the three-vrm role.
+
+**Why this row exists now.** RFD 1170 already picks Godot over
+three.js. RFD 2210 reverses the April-2026 "Godot web dropped"
+decision for the atelier workload and puts the marketing video
+renderer (RFD 2215 Head B) and the game-loop control surface
+(RFD 2215 Head A) on one hat, and that hat is Godot `platform=web`.
+Naming three.js in a shipping demo would re-fork the runtime story
+this workspace deliberately holds to one.
+
+**What this costs, stated rather than discovered.**
+
+- `7-service/service-sqlar-cas/docs/{vrm.js,index.html}` renders the
+  Starforged VRM portrait per RFD 2206; the demo moves to Godot
+  `platform=web` or retires.
+- `3-interactor/motion-bricks-cpp/demo/web/app.js` renders
+  motion-bricks previews; moves to Godot or retires.
+- `1-transport/usd-viewer/src/render-delegate.ts` targets THREE —
+  this render delegate is gone with this entry; USD viewing routes
+  through Godot's own USD importer.
+- `6-datasource/anny-render-corpus/mtoon-reference/` compared our
+  MToon shades against three-vrm; comparison target moves to a
+  Godot MToon renderer or retires.
+
+**The substitute we already own.** Godot 4.7-beta from
+`3-interactor/entities-godot-sandbox` exports to WebAssembly with
+the Godot runtime and the same `.tscn` / `.tres` assets the desktop
+build reads. RFD 2210 is the canonical form of this substitution
+for the atelier surface.
+
+**Carve-outs.**
+- **Vendored upstream demos are exempt.**
+  `3-interactor/moge-upstream/moge/utils/gradio_3d_viewer/`,
+  `3-interactor/taskweft/thirdparty/gltf/extensions/.../examples/`,
+  `3-interactor/physics/thirdparty/mujoco/wasm/`, and
+  `3-interactor/mujoco-mjx/wasm/` carry three.js as part of an
+  upstream we track by pin; touching them is upstream's decision.
+- **A third-party viewer we do not ship is exempt.** Reading
+  someone else's three.js viewer to check a glTF export is not a
+  shipped artefact.
+
+**What the row does not cover.** It does not ban WebGL or WebGPU as
+such. Godot `platform=web` uses WebGL2 under the hood; the
+WebGPU-fork patch series applied to `entities-godot-sandbox` per
+RFD 2211 enables WebGPU for Godot's renderer. WebGPU is separately
+allowlisted for ggml per RFD 2218 (reversal of the earlier "WebGPU
+blocklisted" directive; ggml gets an explicit carve-out because
+WebGPU has native compute shaders and llama.cpp already goes
+there). WebGL2 is blocklisted specifically for ggml (RFD 2217,
+superseded by 2218). This row bans the three.js runtime and the
+`@pixiv/three-vrm` plugin as our chosen renderer.
+
+RFDs 1022, 1023, 1073, 1149, 1170, 2206, 2161 name three.js as
+example or dependency; those are doctrine references and stay as
+records of what the choice used to be.
+
+### Gemma 3 is blocklisted as an on-device model; only Gemma 4 is allowlisted
+
+Operator directive 2026-09-05, verbatim: *"gemma3 is blockedlisted
+only gemma4 is allowlisted"*.
+
+The workspace's on-device Gemma line is **Gemma 4 (E2B / E4B)**
+only, per RFD 2199's SIDEKICK survey and the HAILO llama.cpp fork
+(`upgrade-with-hailo` branch). Gemma 3 (any variant, including
+Gemma 3 270M) does not enter shipping artefacts.
+
+**What this retracts.** RFD 2227's earlier pick of Gemma 3 270M as
+the "first ship" model for the workspace-ggml-on-native-WebGPU
+recipe is retracted by this row. The recipe itself (six steps: Q4
+quantize → SQLite ZSTD-fy → CMake WebGPU branch → `_load_from_memory`
+C API → Godot module wrap → CI native workflow) still applies; the
+first-ship pick moves to **Gemma 4 E2B @ Q4 (~750 MB)**, which is
+the smallest Gemma 4 family member the workspace has fetched
+(SIDEKICK task #86 / #92 / #94 measurements). RFD 2227 is itself
+already retracted by RFD 2228 (delivery surface flipped native);
+this row makes the model-pick retraction explicit in case a later
+reader treats the recipe as usable-as-written.
+
+**What the row does not cover.** Gemma 4 as such is not blocked;
+it is the sanctioned Gemma line. Reading Gemma 3 outputs from
+existing HF datasets we do not own is not a shipping artefact and
+is not covered here. Historic RFDs that named Gemma 3 by name
+(RFD 2199 SIDEKICK survey, RFD 2227 first-ship pick) are records
+of decisions superseded by this directive; they stay in place as
+retraction pointers per CLAUDE.md doctrine.
+
+**Related allowlist note (2026-09-05):** operator confirmed
+verbatim *"edit score's qwen3-vl is allowedlist"* — EditScore-7B's
+**Qwen3-VL base** is explicitly allowlisted. This is orthogonal to
+the Gemma 3 row above (different model family, different vendor);
+recorded here so a reader wondering whether the workspace's
+`on-device VLM` line is entirely blocked answers "no — the
+EditScore Qwen3-VL is the sanctioned VLM base". RFDs 1102 and 2193
+name Qwen3-VL as EditScore's fine-tune base; those citations stand.
+
+**Related allowlist note (2026-09-05):** operator confirmed
+verbatim *"omnigen2 is allowlisted as is"* — OmniGen2 (RFD 2183
+corpus generator, `interactor-omnigen2`) stays allowlisted with no
+carve-out changes; recorded here so a reader sweeping through the
+2026-09-05 model allowlist/blocklist directives does not need to
+guess whether OmniGen2 was implicitly affected. It was not.

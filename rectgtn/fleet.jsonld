@@ -1,0 +1,166 @@
+{
+  "@context": {
+    "khr": "https://registry.khronos.org/glTF/extensions/2.0/KHR_interactivity/",
+    "domain": "khr:planning/domain/"
+  },
+  "@type": "domain:Problem",
+  "name": "weftspun_fleet",
+  "source": "weftspun_fleet",
+  "version": "0.1.0",
+  "description": "RECTGTN fleet coordination domain — one document naming live peer CNs as entities, owned resources as capability edges, fleet verbs as actions, and known decompositions as methods. Peers call Taskweft.plan against this snapshot to pick their next task deterministically. Pilot seed: two entities (hero, anchor), one Goal (ship MotionBricks Q4), the two ship-a-Q4-quant alternatives plus land-a-clean-pr. Reconciled from Bao agents/* rows by scripts/sync_fleet_domain.py once the reconciler ships. See rfd/2204-rectgtn-fleet-coordination/.",
+
+  "enums": {
+    "goal_phase": {
+      "pending":      0,
+      "extracted":    1,
+      "qat_running":  2,
+      "validated":    3,
+      "published":    4,
+      "failed":      -1
+    }
+  },
+
+  "variables": [
+    {
+      "name": "goal_phase",
+      "type": "int",
+      "description": "Current phase of each Goal id — enums.goal_phase names the integer values.",
+      "init": {
+        "motionbricks": 0
+      }
+    },
+    {
+      "name": "gpu_claim",
+      "type": "ref",
+      "description": "Which entity currently claims each GPU id. Sentinel 'unclaimed' means no live claim (CLAUDE.md ETNF: no nulls). Claims released by the assignment row's expires_at caveat (SqlarCas.Caveat) writing 'unclaimed' back.",
+      "init": {
+        "gpu_3090": "unclaimed",
+        "gpu_4090": "unclaimed",
+        "hailo_8":  "unclaimed"
+      }
+    },
+    {
+      "name": "skip",
+      "type": "bool",
+      "description": "TwMethodSkip mirror — pointer /skip/<tw_call_key>#<method_idx> is true when a peer has refused this (task, method) pair. tw_replan_incremental reads these to backjump.",
+      "init": {}
+    }
+  ],
+
+  "capabilities": {
+    "entities": {
+      "hero.mps-45994b.agents.weftspun":   ["gpu-experimenter", "windows-desktop-resident"],
+      "anchor.mps-45994b.agents.weftspun": ["assist", "cpu-only"]
+    },
+    "graph": {
+      "edges": [
+        {"subject": "hero.mps-45994b.agents.weftspun",   "rel": "runs-on",         "object": "windows-desktop"},
+        {"subject": "hero.mps-45994b.agents.weftspun",   "rel": "owns",            "object": "gpu-3090"},
+        {"subject": "hero.mps-45994b.agents.weftspun",   "rel": "owns",            "object": "gpu-4090"},
+        {"subject": "hero.mps-45994b.agents.weftspun",   "rel": "may-use--gpu",    "object": "gpu-3090"},
+        {"subject": "hero.mps-45994b.agents.weftspun",   "rel": "may-use--gpu",    "object": "gpu-4090"},
+        {"subject": "hero.mps-45994b.agents.weftspun",   "rel": "may-use--hf-repo","object": "chibifire/motionbricks-q4"},
+        {"subject": "hero.mps-45994b.agents.weftspun",   "rel": "may-use--uplink", "object": "windows-desktop"},
+
+        {"subject": "anchor.mps-45994b.agents.weftspun", "rel": "runs-on",         "object": "macbook"},
+        {"subject": "anchor.mps-45994b.agents.weftspun", "rel": "may-use--hf-repo","object": "weftspun/anny-soma-corpus"},
+        {"subject": "anchor.mps-45994b.agents.weftspun", "rel": "may-use--uplink", "object": "macbook"}
+      ],
+      "definitions": {}
+    }
+  },
+
+  "actions": {
+    "update-config-pins": {
+      "description": "Bump extract_safe.py pinned config hashes to the currently-published mirror. CPU work, no GPU claim.",
+      "params": ["actor", "model_id"],
+      "duration": "PT30M",
+      "body": [
+        {"pointer/set": "/goal/{model_id}/config_pins", "value": "current"}
+      ]
+    },
+
+    "extract-safetensors": {
+      "description": "Extract safetensors from the model_id's upstream checkpoint. Requires may-use--gpu because the extractor loads weights.",
+      "params": ["actor", "model_id"],
+      "duration": "PT45M",
+      "body": [
+        {"eval": {"type": "rebac/check",
+                  "subject": "{actor}", "rel": "may-use--gpu", "object": "gpu-3090"}},
+        {"pointer/set": "/gpu_claim/gpu_3090", "value": "{actor}"},
+        {"pointer/set": "/goal_phase/{model_id}", "value": 1}
+      ]
+    },
+
+    "train-qat": {
+      "description": "Real QAT with quantized forward. Long GPU claim.",
+      "params": ["actor", "model_id", "precision"],
+      "duration": "PT4H",
+      "body": [
+        {"eval": {"type": "rebac/check",
+                  "subject": "{actor}", "rel": "may-use--gpu", "object": "gpu-3090"}},
+        {"pointer/set": "/gpu_claim/gpu_3090", "value": "{actor}"},
+        {"pointer/set": "/goal_phase/{model_id}", "value": 2}
+      ]
+    },
+
+    "validate": {
+      "description": "Score the quantized checkpoint against the blinded holdout.",
+      "params": ["actor", "model_id"],
+      "duration": "PT1H",
+      "body": [
+        {"eval": {"type": "rebac/check",
+                  "subject": "{actor}", "rel": "may-use--gpu", "object": "gpu-3090"}},
+        {"pointer/set": "/goal_phase/{model_id}", "value": 3}
+      ]
+    },
+
+    "publish-hf-dataset": {
+      "description": "Incremental HF publish per hf-upload-incremental doctrine.",
+      "params": ["actor", "model_id"],
+      "duration": "PT20M",
+      "body": [
+        {"eval": {"type": "rebac/check",
+                  "subject": "{actor}", "rel": "may-use--hf-repo", "object": "chibifire/motionbricks-q4"}},
+        {"pointer/set": "/goal_phase/{model_id}", "value": 4}
+      ]
+    }
+  },
+
+  "methods": {
+    "goal_phase": {
+      "description": "Goal method targeting /goal_phase/{model_id}. Alternatives are tried in order; a /skip/ write on (task, method_idx) makes the planner backjump to the next.",
+      "params": ["actor", "model_id"],
+      "alternatives": [
+        {
+          "name": "extract_then_train",
+          "subtasks": [
+            ["extract-safetensors", "{actor}", "{model_id}"],
+            ["train-qat",           "{actor}", "{model_id}", "int4"],
+            ["validate",            "{actor}", "{model_id}"],
+            ["publish-hf-dataset",  "{actor}", "{model_id}"]
+          ]
+        },
+        {
+          "name": "use_aero_ex_configs",
+          "description": "Fallback when upstream config-hash pins mismatch — update the pins first, then run the standard chain.",
+          "subtasks": [
+            ["update-config-pins",  "{actor}", "{model_id}"],
+            ["extract-safetensors", "{actor}", "{model_id}"],
+            ["train-qat",           "{actor}", "{model_id}", "int4"],
+            ["validate",            "{actor}", "{model_id}"],
+            ["publish-hf-dataset",  "{actor}", "{model_id}"]
+          ]
+        }
+      ]
+    }
+  },
+
+  "todo_list": [
+    {
+      "goal": [
+        {"pointer": "/goal_phase/motionbricks", "eq": 4}
+      ]
+    }
+  ]
+}
