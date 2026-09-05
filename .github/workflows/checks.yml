@@ -14,7 +14,10 @@ on:
     - cron: "17 5 * * *"
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  # One CI run per branch. A pull_request synchronize, a merge_group
+  # entry, and a push to that branch all share the same group, and the
+  # newer one cancels any earlier still running.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
