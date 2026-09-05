@@ -10,7 +10,7 @@
 <atom:link href="https://weftspun.github.io/request-for-discussion/pages/rfd.xml" rel="self" type="application/rss+xml"/>
 <description>Request-for-Discussion documents, the serial register, and the logbook.</description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Sat, 05 Sep 2026 19:52:54 GMT</lastBuildDate>
+<lastBuildDate>Sat, 05 Sep 2026 20:13:03 GMT</lastBuildDate>
 <item>
   <title>RFD 2203: The first-subset row shape for the anny-soma keypoint corpus</title>
   <link>https://weftspun.github.io/request-for-discussion/rfd/2203-anny-soma-first-subset-corpus-shape/</link>
@@ -48,7 +48,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2203-anny-soma-first-subset-corpus-shape/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2202: ReBAC role tuples enforced via Bao identity groups</title>
@@ -86,7 +86,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2202-rebac-bao-enforcement/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2201: The coordinate-agents ceremony</title>
@@ -124,7 +124,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2201-coordinate-agents-ceremony/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2200: ReBAC agent roles as tuples, not per-agent policy sprawl</title>
@@ -162,7 +162,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2200-rebac-agent-roles/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2199: Real 4-bit QAT with Hailo as target hardware</title>
@@ -194,7 +194,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2199-hailo-real-4bit-qat/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2198: LLaDA-o speed work for the dressing overlay</title>
@@ -230,7 +230,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2198-lladao-speed-work-for-dressing-overlay/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2197: Restructure maskscore-rung-1-bootstrap for the HF viewer</title>
@@ -268,7 +268,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2197-maskscore-rung-1-bootstrap-hf-restructure/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2196: HuggingFace dataset viewer rules</title>
@@ -303,7 +303,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2196-huggingface-dataset-viewer-rules/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2195: Expose weftspun-bao privately via Tailscale</title>
@@ -339,7 +339,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2195-weftspun-bao-tailscale-sidecar/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2194: Atelier shuttle portfolio widget</title>
@@ -375,7 +375,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2194-atelier-shuttle-portfolio-widget/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2193: EditScore as the constructed-synthetic reproducibility bar</title>
@@ -411,7 +411,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2193-editscore-as-constructed-synthetic-reproducibility-bar/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2192: rfdetr keypoint weights licence verification</title>
@@ -445,7 +445,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2192-rfdetr-keypoint-weights-licence-verification/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2191: Unrolled solver residual measurement</title>
@@ -479,7 +479,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2191-unrolled-solver-residual-measurement/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2190: Multi-camera rig extrinsics calibration</title>
@@ -513,7 +513,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2190-multi-camera-rig-extrinsics-calibration/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2189: Stick-figure sanity check for the pose corpus</title>
@@ -547,7 +547,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2189-stick-figure-sanity-check-for-pose-corpus/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2188: One GGML across the workspace</title>
@@ -584,7 +584,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2188-one-ggml-across-workspace/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2187: Identity ANNY via OmniGen2</title>
@@ -617,7 +617,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2187-identity-anny-via-omnigen2/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2186: Dress ANNY via OmniGen2</title>
@@ -650,7 +650,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2186-dress-anny-via-omnigen2/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2185: Hierarchical OID part registry under PEN</title>
@@ -682,7 +682,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2185-hierarchical-oid-part-registry/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 <item>
   <title>RFD 2184: EditScore-guided OmniGen bootstrap for unmapped parts</title>
@@ -717,7 +717,7 @@
 
  ]]></description>
   <guid>https://weftspun.github.io/request-for-discussion/rfd/2184-editscore-omnigen-bootstrap-for-unmapped-parts/</guid>
-  <pubDate>Sat, 05 Sep 2026 19:52:54 GMT</pubDate>
+  <pubDate>Sat, 05 Sep 2026 20:13:03 GMT</pubDate>
 </item>
 </channel>
 </rss>
