@@ -4,7 +4,7 @@
     upAxis = "Z"
     customLayerData = {
         string arc = "1.3.6.1.4.1.66606.1.1"
-        string decommissioned = "Frozen 2026-08-31. No new serial is allocated under arc 66606.1.1. Existing serials stay in place and stay citable; slug edits are fine, because renaming a document does not renumber it. New RFDs in this repository take the next unused serial under site 2 (arc 66606.1.2) from SERIALS-vsekai-fabric.usda, whose 2026-08-29 decommission was reactivated on 2026-08-31 for this purpose. When site 2 fills up, RFD 1000 opens site 5 at arc 66606.1.5. See pen-66606.usda sitesDecommissioned for the full argument."
+        string reactivated = "Reactivated 2026-09-05 as the sole registry for this repository. New serials in this repository take the next unused number under arc 66606.1.1, allocated here."
         string category = "1"
         string categoryName = "documents"
         string pen = "1.3.6.1.4.1.66606"
@@ -24,6 +24,54 @@ def Scope "Serials"
 
         def Scope "Allocated"
         {
+            def "Rfd"
+            {
+                custom string[] columns = ["serial int16 PK", "slug string"]
+                custom uniform token kind = "spine"
+                custom string primaryKey = "serial"
+
+                def "S1175"
+                {
+                    custom string slug = "video-and-game"
+                    custom string flight_level = "L3"
+                }
+            }
+        }
+
+        def Scope "Unused"
+        {
+            custom string sectionNote = "A serial nothing was ever written under. These three sat in neither register: not allocated to a document, and not retired from one, so a reader counting the live rows saw a gap and had nothing telling them what it meant. Recorded so the gap reads as a decision rather than as a loss. A satellite relation rather than an empty slug on the spine, because a serial with no document is a different fact from a serial with one, and CLAUDE.md's normal form takes satellites over nullable columns. NOTE THE LIMIT: `check-rfd-serials.py` keys on the scope names Allocated and Deleted and skips this one, so nothing enforces these. What prevents reuse is RFD 1000's rule that a new serial is the next unused one, which is max plus one and never a gap."
+
+            def "NeverWritten"
+            {
+                custom string[] columns = ["serial int16 PK"]
+                custom uniform token kind = "satellite"
+                custom string primaryKey = "serial"
+
+                def "S1081"
+                {
+                }
+                def "S1097"
+                {
+                }
+                def "S1127"
+                {
+                }
+            }
+        }
+
+        def Scope "Deleted"
+        {
+            custom string sectionNote = "A deleted serial keeps its row. The RFDs above still cite it, and deleting a directory does not delete a citation."
+
+            def "Retired"
+            {
+                custom string[] columns = ["serial int16 PK", "recorded_in int16 FK"]
+                custom uniform token kind = "satellite"
+                custom string primaryKey = "serial"
+
+            }
+
             def "Rfd"
             {
                 custom string[] columns = ["serial int16 PK", "slug string"]
@@ -567,52 +615,6 @@ def Scope "Serials"
                 {
                     custom string slug = "publish-the-security-rules-against-soc2-and-iso27001"
                 }
-            }
-        }
-
-        def Scope "Unused"
-        {
-            custom string sectionNote = "A serial nothing was ever written under. These three sat in neither register: not allocated to a document, and not retired from one, so a reader counting the live rows saw a gap and had nothing telling them what it meant. Recorded so the gap reads as a decision rather than as a loss. A satellite relation rather than an empty slug on the spine, because a serial with no document is a different fact from a serial with one, and CLAUDE.md's normal form takes satellites over nullable columns. NOTE THE LIMIT: `check-rfd-serials.py` keys on the scope names Allocated and Deleted and skips this one, so nothing enforces these. What prevents reuse is RFD 1000's rule that a new serial is the next unused one, which is max plus one and never a gap."
-
-            def "NeverWritten"
-            {
-                custom string[] columns = ["serial int16 PK"]
-                custom uniform token kind = "satellite"
-                custom string primaryKey = "serial"
-
-                def "S1081"
-                {
-                }
-                def "S1097"
-                {
-                }
-                def "S1127"
-                {
-                }
-            }
-        }
-
-        def Scope "Deleted"
-        {
-            custom string sectionNote = "A deleted serial keeps its row. The RFDs above still cite it, and deleting a directory does not delete a citation."
-
-            def "Retired"
-            {
-                custom string[] columns = ["serial int16 PK", "recorded_in int16 FK"]
-                custom uniform token kind = "satellite"
-                custom string primaryKey = "serial"
-
-            }
-        }
-
-        def Scope "Deleted"
-        {
-            def "Rfd"
-            {
-                custom string[] columns = ["serial int16 PK", "slug string"]
-                custom uniform token kind = "spine"
-                custom string primaryKey = "serial"
-
                 def "S1004"
                 {
                     custom string slug = "aigc-task-catalog"

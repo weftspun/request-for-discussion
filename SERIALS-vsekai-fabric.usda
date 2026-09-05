@@ -30,6 +30,17 @@ def Scope "Serials"
                 custom uniform token kind = "spine"
                 custom string primaryKey = "serial"
 
+            }
+        }
+
+        def Scope "Deleted"
+        {
+            def "Rfd"
+            {
+                custom string[] columns = ["serial int16 PK", "slug string"]
+                custom uniform token kind = "spine"
+                custom string primaryKey = "serial"
+
                 def "S2001"
                 {
                     custom string slug = "zonefabric-roadmap-vs-mas-bandwidth-fps"
@@ -715,17 +726,6 @@ def Scope "Serials"
                 {
                     custom string slug = "ggml-adapters-in-godot-sandbox"
                 }
-            }
-        }
-
-        def Scope "Deleted"
-        {
-            def "Rfd"
-            {
-                custom string[] columns = ["serial int16 PK", "slug string"]
-                custom uniform token kind = "spine"
-                custom string primaryKey = "serial"
-
                 def "S2000"
                 {
                     custom string slug = "conventions"
