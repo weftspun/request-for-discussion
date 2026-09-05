@@ -911,6 +911,11 @@ def Scope "Serials"
                     custom string slug = "webgpu-native-drop-platform-web"
                     custom string flight_level = "L3"
                 }
+                def "S2229"
+                {
+                    custom string slug = "interchangeable-parts-consolidation"
+                    custom string flight_level = "L3"
+                }
             }
         }
     }
